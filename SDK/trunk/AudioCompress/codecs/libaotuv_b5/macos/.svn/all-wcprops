@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/macos
+END
+libvorbisenc.mcp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/macos/libvorbisenc.mcp
+END
+vorbis.mcp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/macos/vorbis.mcp
+END
+libvorbis.mcp.exp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/macos/libvorbis.mcp.exp
+END
+libvorbisfile.mcp.exp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/macos/libvorbisfile.mcp.exp
+END
+encoder_example.mcp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/macos/encoder_example.mcp
+END
+libvorbis.mcp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/macos/libvorbis.mcp
+END
+libvorbisfile.mcp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/macos/libvorbisfile.mcp
+END
+libvorbisenc.mcp.exp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/macos/libvorbisenc.mcp.exp
+END
+decoder_example.mcp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/macos/decoder_example.mcp
+END

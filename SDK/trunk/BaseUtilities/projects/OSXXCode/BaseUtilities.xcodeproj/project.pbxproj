@@ -1,0 +1,478 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0B0BC3E308A4E696000CDA6E /* BaseTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3B908A4E696000CDA6E /* BaseTypes.h */; };
+		0B0BC3E408A4E696000CDA6E /* bu.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3BA08A4E696000CDA6E /* bu.h */; };
+		0B0BC3E508A4E696000CDA6E /* CAutoDelete.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3BB08A4E696000CDA6E /* CAutoDelete.h */; };
+		0B0BC3E608A4E696000CDA6E /* CAutoLock.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3BC08A4E696000CDA6E /* CAutoLock.h */; };
+		0B0BC3E708A4E696000CDA6E /* CLockReleaser.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3BD08A4E696000CDA6E /* CLockReleaser.h */; };
+		0B0BC3E808A4E696000CDA6E /* CMutexMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3BE08A4E696000CDA6E /* CMutexMac.h */; };
+		0B0BC3E908A4E696000CDA6E /* CMutexWin.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3BF08A4E696000CDA6E /* CMutexWin.h */; };
+		0B0BC3EA08A4E696000CDA6E /* CRefCountable.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3C008A4E696000CDA6E /* CRefCountable.h */; };
+		0B0BC3EB08A4E696000CDA6E /* IChunk.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3C108A4E696000CDA6E /* IChunk.h */; };
+		0B0BC3EC08A4E696000CDA6E /* IChunkFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3C208A4E696000CDA6E /* IChunkFile.h */; };
+		0B0BC3ED08A4E696000CDA6E /* IChunkFileMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3C308A4E696000CDA6E /* IChunkFileMemory.h */; };
+		0B0BC3EE08A4E696000CDA6E /* IDestructable.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3C408A4E696000CDA6E /* IDestructable.h */; };
+		0B0BC3EF08A4E696000CDA6E /* IException.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3C508A4E696000CDA6E /* IException.h */; };
+		0B0BC3F008A4E696000CDA6E /* IFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3C608A4E696000CDA6E /* IFile.h */; };
+		0B0BC3F108A4E696000CDA6E /* IFileMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3C708A4E696000CDA6E /* IFileMemory.h */; };
+		0B0BC3F208A4E696000CDA6E /* IFileSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3C808A4E696000CDA6E /* IFileSearch.h */; };
+		0B0BC3F308A4E696000CDA6E /* IInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3C908A4E696000CDA6E /* IInterface.h */; };
+		0B0BC3F408A4E696000CDA6E /* IRefCountable.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3CA08A4E696000CDA6E /* IRefCountable.h */; };
+		0B0BC3F508A4E696000CDA6E /* ITime.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3CB08A4E696000CDA6E /* ITime.h */; };
+		0B0BC3F608A4E696000CDA6E /* IUniqueID.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3CC08A4E696000CDA6E /* IUniqueID.h */; };
+		0B0BC3F708A4E696000CDA6E /* Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3CD08A4E696000CDA6E /* Utilities.h */; };
+		0B0BC41808A4E6AB000CDA6E /* buInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3FA08A4E6AB000CDA6E /* buInternal.h */; };
+		0B0BC41908A4E6AB000CDA6E /* buInternalOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3FB08A4E6AB000CDA6E /* buInternalOS.h */; };
+		0B0BC41A08A4E6AB000CDA6E /* CChunk.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3FC08A4E6AB000CDA6E /* CChunk.h */; };
+		0B0BC41B08A4E6AB000CDA6E /* CChunkFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3FD08A4E6AB000CDA6E /* CChunkFile.h */; };
+		0B0BC41C08A4E6AB000CDA6E /* CChunkFileMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3FE08A4E6AB000CDA6E /* CChunkFileMemory.h */; };
+		0B0BC41D08A4E6AB000CDA6E /* CChunkMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC3FF08A4E6AB000CDA6E /* CChunkMemory.h */; };
+		0B0BC41E08A4E6AB000CDA6E /* CException.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC40008A4E6AB000CDA6E /* CException.h */; };
+		0B0BC41F08A4E6AB000CDA6E /* CFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC40108A4E6AB000CDA6E /* CFile.h */; };
+		0B0BC42008A4E6AB000CDA6E /* CFileCP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC40208A4E6AB000CDA6E /* CFileCP.h */; };
+		0B0BC42108A4E6AB000CDA6E /* CFileMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC40308A4E6AB000CDA6E /* CFileMemory.h */; };
+		0B0BC42208A4E6AB000CDA6E /* CFileSearchOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC40408A4E6AB000CDA6E /* CFileSearchOSX.h */; };
+		0B0BC42308A4E6AB000CDA6E /* CFileSearchWin.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC40508A4E6AB000CDA6E /* CFileSearchWin.h */; };
+		0B0BC42408A4E6AB000CDA6E /* CTimeOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC40608A4E6AB000CDA6E /* CTimeOSX.h */; };
+		0B0BC42508A4E6AB000CDA6E /* CTimeWin.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC40708A4E6AB000CDA6E /* CTimeWin.h */; };
+		0B0BC42608A4E6AB000CDA6E /* CUniqueID.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0BC40808A4E6AB000CDA6E /* CUniqueID.h */; };
+		0B0BC44908A4E6BF000CDA6E /* CChunkFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B0BC42908A4E6BF000CDA6E /* CChunkFile.cpp */; };
+		0B0BC44A08A4E6BF000CDA6E /* CChunkFileMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B0BC42A08A4E6BF000CDA6E /* CChunkFileMemory.cpp */; };
+		0B0BC44B08A4E6BF000CDA6E /* CChunkMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B0BC42B08A4E6BF000CDA6E /* CChunkMemory.cpp */; };
+		0B0BC44C08A4E6BF000CDA6E /* CException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B0BC42C08A4E6BF000CDA6E /* CException.cpp */; };
+		0B0BC44D08A4E6BF000CDA6E /* CFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B0BC42D08A4E6BF000CDA6E /* CFile.cpp */; };
+		0B0BC44E08A4E6BF000CDA6E /* CFileCP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B0BC42E08A4E6BF000CDA6E /* CFileCP.cpp */; };
+		0B0BC44F08A4E6BF000CDA6E /* CFileMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B0BC42F08A4E6BF000CDA6E /* CFileMemory.cpp */; };
+		0B0BC45008A4E6BF000CDA6E /* CFileSearchOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B0BC43008A4E6BF000CDA6E /* CFileSearchOSX.cpp */; };
+		0B0BC45208A4E6BF000CDA6E /* CRefCountable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B0BC43208A4E6BF000CDA6E /* CRefCountable.cpp */; };
+		0B0BC45308A4E6BF000CDA6E /* CTimeOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B0BC43308A4E6BF000CDA6E /* CTimeOSX.cpp */; };
+		0B0BC45508A4E6BF000CDA6E /* CUniqueID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B0BC43508A4E6BF000CDA6E /* CUniqueID.cpp */; };
+		0B65AA3F08A4EC7C0014A732 /* CChunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B0BC42808A4E6BF000CDA6E /* CChunk.cpp */; };
+		0B77316008A633CC004B30F3 /* BaseUtilities_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 0B77315F08A633CC004B30F3 /* BaseUtilities_Prefix.pch */; };
+		0B883A3B08BB52EF00095026 /* Utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B0BC43608A4E6BF000CDA6E /* Utilities.cpp */; };
+		D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
+		E3EAF65B0B08764800B5C36C /* CTimerOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3EAF65A0B08764800B5C36C /* CTimerOSX.cpp */; };
+		E3EAF6610B08766400B5C36C /* CAutoBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = E3EAF65D0B08766400B5C36C /* CAutoBuffer.h */; };
+		E3EAF6620B08766400B5C36C /* ISystem.h in Headers */ = {isa = PBXBuildFile; fileRef = E3EAF65E0B08766400B5C36C /* ISystem.h */; };
+		E3EAF6630B08766400B5C36C /* ITimer.h in Headers */ = {isa = PBXBuildFile; fileRef = E3EAF65F0B08766400B5C36C /* ITimer.h */; };
+		E3EAF6640B08766400B5C36C /* ITimerCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = E3EAF6600B08766400B5C36C /* ITimerCallback.h */; };
+		E3EAF6670B08767400B5C36C /* CSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = E3EAF6650B08767400B5C36C /* CSystem.h */; };
+		E3EAF6680B08767400B5C36C /* CTimerOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = E3EAF6660B08767400B5C36C /* CTimerOSX.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		0B0BC3B908A4E696000CDA6E /* BaseTypes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = BaseTypes.h; path = ../../interface/BaseTypes.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3BA08A4E696000CDA6E /* bu.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = bu.h; path = ../../interface/bu.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3BB08A4E696000CDA6E /* CAutoDelete.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CAutoDelete.h; path = ../../interface/CAutoDelete.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3BC08A4E696000CDA6E /* CAutoLock.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CAutoLock.h; path = ../../interface/CAutoLock.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3BD08A4E696000CDA6E /* CLockReleaser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CLockReleaser.h; path = ../../interface/CLockReleaser.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3BE08A4E696000CDA6E /* CMutexMac.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CMutexMac.h; path = ../../interface/CMutexMac.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3BF08A4E696000CDA6E /* CMutexWin.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CMutexWin.h; path = ../../interface/CMutexWin.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3C008A4E696000CDA6E /* CRefCountable.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CRefCountable.h; path = ../../interface/CRefCountable.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3C108A4E696000CDA6E /* IChunk.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IChunk.h; path = ../../interface/IChunk.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3C208A4E696000CDA6E /* IChunkFile.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IChunkFile.h; path = ../../interface/IChunkFile.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3C308A4E696000CDA6E /* IChunkFileMemory.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IChunkFileMemory.h; path = ../../interface/IChunkFileMemory.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3C408A4E696000CDA6E /* IDestructable.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDestructable.h; path = ../../interface/IDestructable.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3C508A4E696000CDA6E /* IException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IException.h; path = ../../interface/IException.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3C608A4E696000CDA6E /* IFile.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IFile.h; path = ../../interface/IFile.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3C708A4E696000CDA6E /* IFileMemory.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IFileMemory.h; path = ../../interface/IFileMemory.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3C808A4E696000CDA6E /* IFileSearch.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IFileSearch.h; path = ../../interface/IFileSearch.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3C908A4E696000CDA6E /* IInterface.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IInterface.h; path = ../../interface/IInterface.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3CA08A4E696000CDA6E /* IRefCountable.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IRefCountable.h; path = ../../interface/IRefCountable.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3CB08A4E696000CDA6E /* ITime.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ITime.h; path = ../../interface/ITime.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3CC08A4E696000CDA6E /* IUniqueID.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IUniqueID.h; path = ../../interface/IUniqueID.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3CD08A4E696000CDA6E /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = ../../interface/Utilities.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3FA08A4E6AB000CDA6E /* buInternal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = buInternal.h; path = ../../include/buInternal.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3FB08A4E6AB000CDA6E /* buInternalOS.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = buInternalOS.h; path = ../../include/buInternalOS.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3FC08A4E6AB000CDA6E /* CChunk.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CChunk.h; path = ../../include/CChunk.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3FD08A4E6AB000CDA6E /* CChunkFile.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CChunkFile.h; path = ../../include/CChunkFile.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3FE08A4E6AB000CDA6E /* CChunkFileMemory.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CChunkFileMemory.h; path = ../../include/CChunkFileMemory.h; sourceTree = SOURCE_ROOT; };
+		0B0BC3FF08A4E6AB000CDA6E /* CChunkMemory.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CChunkMemory.h; path = ../../include/CChunkMemory.h; sourceTree = SOURCE_ROOT; };
+		0B0BC40008A4E6AB000CDA6E /* CException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CException.h; path = ../../include/CException.h; sourceTree = SOURCE_ROOT; };
+		0B0BC40108A4E6AB000CDA6E /* CFile.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CFile.h; path = ../../include/CFile.h; sourceTree = SOURCE_ROOT; };
+		0B0BC40208A4E6AB000CDA6E /* CFileCP.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CFileCP.h; path = ../../include/CFileCP.h; sourceTree = SOURCE_ROOT; };
+		0B0BC40308A4E6AB000CDA6E /* CFileMemory.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CFileMemory.h; path = ../../include/CFileMemory.h; sourceTree = SOURCE_ROOT; };
+		0B0BC40408A4E6AB000CDA6E /* CFileSearchOSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CFileSearchOSX.h; path = ../../include/CFileSearchOSX.h; sourceTree = SOURCE_ROOT; };
+		0B0BC40508A4E6AB000CDA6E /* CFileSearchWin.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CFileSearchWin.h; path = ../../include/CFileSearchWin.h; sourceTree = SOURCE_ROOT; };
+		0B0BC40608A4E6AB000CDA6E /* CTimeOSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CTimeOSX.h; path = ../../include/CTimeOSX.h; sourceTree = SOURCE_ROOT; };
+		0B0BC40708A4E6AB000CDA6E /* CTimeWin.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CTimeWin.h; path = ../../include/CTimeWin.h; sourceTree = SOURCE_ROOT; };
+		0B0BC40808A4E6AB000CDA6E /* CUniqueID.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CUniqueID.h; path = ../../include/CUniqueID.h; sourceTree = SOURCE_ROOT; };
+		0B0BC42808A4E6BF000CDA6E /* CChunk.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CChunk.cpp; path = ../../source/CChunk.cpp; sourceTree = SOURCE_ROOT; };
+		0B0BC42908A4E6BF000CDA6E /* CChunkFile.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CChunkFile.cpp; path = ../../source/CChunkFile.cpp; sourceTree = SOURCE_ROOT; };
+		0B0BC42A08A4E6BF000CDA6E /* CChunkFileMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CChunkFileMemory.cpp; path = ../../source/CChunkFileMemory.cpp; sourceTree = SOURCE_ROOT; };
+		0B0BC42B08A4E6BF000CDA6E /* CChunkMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CChunkMemory.cpp; path = ../../source/CChunkMemory.cpp; sourceTree = SOURCE_ROOT; };
+		0B0BC42C08A4E6BF000CDA6E /* CException.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CException.cpp; path = ../../source/CException.cpp; sourceTree = SOURCE_ROOT; };
+		0B0BC42D08A4E6BF000CDA6E /* CFile.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CFile.cpp; path = ../../source/CFile.cpp; sourceTree = SOURCE_ROOT; };
+		0B0BC42E08A4E6BF000CDA6E /* CFileCP.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CFileCP.cpp; path = ../../source/CFileCP.cpp; sourceTree = SOURCE_ROOT; };
+		0B0BC42F08A4E6BF000CDA6E /* CFileMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CFileMemory.cpp; path = ../../source/CFileMemory.cpp; sourceTree = SOURCE_ROOT; };
+		0B0BC43008A4E6BF000CDA6E /* CFileSearchOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CFileSearchOSX.cpp; path = ../../source/CFileSearchOSX.cpp; sourceTree = SOURCE_ROOT; };
+		0B0BC43208A4E6BF000CDA6E /* CRefCountable.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CRefCountable.cpp; path = ../../source/CRefCountable.cpp; sourceTree = SOURCE_ROOT; };
+		0B0BC43308A4E6BF000CDA6E /* CTimeOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CTimeOSX.cpp; path = ../../source/CTimeOSX.cpp; sourceTree = SOURCE_ROOT; };
+		0B0BC43508A4E6BF000CDA6E /* CUniqueID.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CUniqueID.cpp; path = ../../source/CUniqueID.cpp; sourceTree = SOURCE_ROOT; };
+		0B0BC43608A4E6BF000CDA6E /* Utilities.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Utilities.cpp; path = ../../source/Utilities.cpp; sourceTree = SOURCE_ROOT; };
+		0B77315F08A633CC004B30F3 /* BaseUtilities_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BaseUtilities_Prefix.pch; sourceTree = "<group>"; };
+		D2AAC06F0554671400DB518D /* libBaseUtilities.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBaseUtilities.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3EAF65A0B08764800B5C36C /* CTimerOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CTimerOSX.cpp; path = ../../source/CTimerOSX.cpp; sourceTree = SOURCE_ROOT; };
+		E3EAF65D0B08766400B5C36C /* CAutoBuffer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CAutoBuffer.h; path = ../../interface/CAutoBuffer.h; sourceTree = SOURCE_ROOT; };
+		E3EAF65E0B08766400B5C36C /* ISystem.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ISystem.h; path = ../../interface/ISystem.h; sourceTree = SOURCE_ROOT; };
+		E3EAF65F0B08766400B5C36C /* ITimer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ITimer.h; path = ../../interface/ITimer.h; sourceTree = SOURCE_ROOT; };
+		E3EAF6600B08766400B5C36C /* ITimerCallback.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ITimerCallback.h; path = ../../interface/ITimerCallback.h; sourceTree = SOURCE_ROOT; };
+		E3EAF6650B08767400B5C36C /* CSystem.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CSystem.h; path = ../../include/CSystem.h; sourceTree = SOURCE_ROOT; };
+		E3EAF6660B08767400B5C36C /* CTimerOSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CTimerOSX.h; path = ../../include/CTimerOSX.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC06D0554671400DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DDFF38A45A11DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC06F0554671400DB518D /* libBaseUtilities.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* BaseUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77ACFE841707C02AAC07 /* Source */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DDFF38A45A11DB9C8B /* Products */,
+			);
+			name = BaseUtilities;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AAFE841565C02AAC07 /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		08FB77ACFE841707C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0B0BC3B608A4E67B000CDA6E /* Source */,
+				0B77315F08A633CC004B30F3 /* BaseUtilities_Prefix.pch */,
+				0B0BC3B508A4E674000CDA6E /* Interface */,
+				0B0BC3B408A4E668000CDA6E /* Include */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B0BC3B408A4E668000CDA6E /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				E3EAF6650B08767400B5C36C /* CSystem.h */,
+				E3EAF6660B08767400B5C36C /* CTimerOSX.h */,
+				0B0BC3FA08A4E6AB000CDA6E /* buInternal.h */,
+				0B0BC3FB08A4E6AB000CDA6E /* buInternalOS.h */,
+				0B0BC3FC08A4E6AB000CDA6E /* CChunk.h */,
+				0B0BC3FD08A4E6AB000CDA6E /* CChunkFile.h */,
+				0B0BC3FE08A4E6AB000CDA6E /* CChunkFileMemory.h */,
+				0B0BC3FF08A4E6AB000CDA6E /* CChunkMemory.h */,
+				0B0BC40008A4E6AB000CDA6E /* CException.h */,
+				0B0BC40108A4E6AB000CDA6E /* CFile.h */,
+				0B0BC40208A4E6AB000CDA6E /* CFileCP.h */,
+				0B0BC40308A4E6AB000CDA6E /* CFileMemory.h */,
+				0B0BC40408A4E6AB000CDA6E /* CFileSearchOSX.h */,
+				0B0BC40508A4E6AB000CDA6E /* CFileSearchWin.h */,
+				0B0BC40608A4E6AB000CDA6E /* CTimeOSX.h */,
+				0B0BC40708A4E6AB000CDA6E /* CTimeWin.h */,
+				0B0BC40808A4E6AB000CDA6E /* CUniqueID.h */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		0B0BC3B508A4E674000CDA6E /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				E3EAF65D0B08766400B5C36C /* CAutoBuffer.h */,
+				E3EAF65E0B08766400B5C36C /* ISystem.h */,
+				E3EAF65F0B08766400B5C36C /* ITimer.h */,
+				E3EAF6600B08766400B5C36C /* ITimerCallback.h */,
+				0B0BC3B908A4E696000CDA6E /* BaseTypes.h */,
+				0B0BC3BA08A4E696000CDA6E /* bu.h */,
+				0B0BC3BB08A4E696000CDA6E /* CAutoDelete.h */,
+				0B0BC3BC08A4E696000CDA6E /* CAutoLock.h */,
+				0B0BC3BD08A4E696000CDA6E /* CLockReleaser.h */,
+				0B0BC3BE08A4E696000CDA6E /* CMutexMac.h */,
+				0B0BC3BF08A4E696000CDA6E /* CMutexWin.h */,
+				0B0BC3C008A4E696000CDA6E /* CRefCountable.h */,
+				0B0BC3C108A4E696000CDA6E /* IChunk.h */,
+				0B0BC3C208A4E696000CDA6E /* IChunkFile.h */,
+				0B0BC3C308A4E696000CDA6E /* IChunkFileMemory.h */,
+				0B0BC3C408A4E696000CDA6E /* IDestructable.h */,
+				0B0BC3C508A4E696000CDA6E /* IException.h */,
+				0B0BC3C608A4E696000CDA6E /* IFile.h */,
+				0B0BC3C708A4E696000CDA6E /* IFileMemory.h */,
+				0B0BC3C808A4E696000CDA6E /* IFileSearch.h */,
+				0B0BC3C908A4E696000CDA6E /* IInterface.h */,
+				0B0BC3CA08A4E696000CDA6E /* IRefCountable.h */,
+				0B0BC3CB08A4E696000CDA6E /* ITime.h */,
+				0B0BC3CC08A4E696000CDA6E /* IUniqueID.h */,
+				0B0BC3CD08A4E696000CDA6E /* Utilities.h */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
+		0B0BC3B608A4E67B000CDA6E /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E3EAF65A0B08764800B5C36C /* CTimerOSX.cpp */,
+				0B0BC42808A4E6BF000CDA6E /* CChunk.cpp */,
+				0B0BC42908A4E6BF000CDA6E /* CChunkFile.cpp */,
+				0B0BC42A08A4E6BF000CDA6E /* CChunkFileMemory.cpp */,
+				0B0BC42B08A4E6BF000CDA6E /* CChunkMemory.cpp */,
+				0B0BC42C08A4E6BF000CDA6E /* CException.cpp */,
+				0B0BC42D08A4E6BF000CDA6E /* CFile.cpp */,
+				0B0BC42E08A4E6BF000CDA6E /* CFileCP.cpp */,
+				0B0BC42F08A4E6BF000CDA6E /* CFileMemory.cpp */,
+				0B0BC43008A4E6BF000CDA6E /* CFileSearchOSX.cpp */,
+				0B0BC43208A4E6BF000CDA6E /* CRefCountable.cpp */,
+				0B0BC43308A4E6BF000CDA6E /* CTimeOSX.cpp */,
+				0B0BC43508A4E6BF000CDA6E /* CUniqueID.cpp */,
+				0B0BC43608A4E6BF000CDA6E /* Utilities.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC06B0554671400DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B0BC3E308A4E696000CDA6E /* BaseTypes.h in Headers */,
+				0B0BC3E408A4E696000CDA6E /* bu.h in Headers */,
+				0B0BC3E508A4E696000CDA6E /* CAutoDelete.h in Headers */,
+				0B0BC3E608A4E696000CDA6E /* CAutoLock.h in Headers */,
+				0B0BC3E708A4E696000CDA6E /* CLockReleaser.h in Headers */,
+				0B0BC3E808A4E696000CDA6E /* CMutexMac.h in Headers */,
+				0B0BC3E908A4E696000CDA6E /* CMutexWin.h in Headers */,
+				0B0BC3EA08A4E696000CDA6E /* CRefCountable.h in Headers */,
+				0B0BC3EB08A4E696000CDA6E /* IChunk.h in Headers */,
+				0B0BC3EC08A4E696000CDA6E /* IChunkFile.h in Headers */,
+				0B0BC3ED08A4E696000CDA6E /* IChunkFileMemory.h in Headers */,
+				0B0BC3EE08A4E696000CDA6E /* IDestructable.h in Headers */,
+				0B0BC3EF08A4E696000CDA6E /* IException.h in Headers */,
+				0B0BC3F008A4E696000CDA6E /* IFile.h in Headers */,
+				0B0BC3F108A4E696000CDA6E /* IFileMemory.h in Headers */,
+				0B0BC3F208A4E696000CDA6E /* IFileSearch.h in Headers */,
+				0B0BC3F308A4E696000CDA6E /* IInterface.h in Headers */,
+				0B0BC3F408A4E696000CDA6E /* IRefCountable.h in Headers */,
+				0B0BC3F508A4E696000CDA6E /* ITime.h in Headers */,
+				0B0BC3F608A4E696000CDA6E /* IUniqueID.h in Headers */,
+				0B0BC3F708A4E696000CDA6E /* Utilities.h in Headers */,
+				0B0BC41808A4E6AB000CDA6E /* buInternal.h in Headers */,
+				0B0BC41908A4E6AB000CDA6E /* buInternalOS.h in Headers */,
+				0B0BC41A08A4E6AB000CDA6E /* CChunk.h in Headers */,
+				0B0BC41B08A4E6AB000CDA6E /* CChunkFile.h in Headers */,
+				0B0BC41C08A4E6AB000CDA6E /* CChunkFileMemory.h in Headers */,
+				0B0BC41D08A4E6AB000CDA6E /* CChunkMemory.h in Headers */,
+				0B0BC41E08A4E6AB000CDA6E /* CException.h in Headers */,
+				0B0BC41F08A4E6AB000CDA6E /* CFile.h in Headers */,
+				0B0BC42008A4E6AB000CDA6E /* CFileCP.h in Headers */,
+				0B0BC42108A4E6AB000CDA6E /* CFileMemory.h in Headers */,
+				0B0BC42208A4E6AB000CDA6E /* CFileSearchOSX.h in Headers */,
+				0B0BC42308A4E6AB000CDA6E /* CFileSearchWin.h in Headers */,
+				0B0BC42408A4E6AB000CDA6E /* CTimeOSX.h in Headers */,
+				0B0BC42508A4E6AB000CDA6E /* CTimeWin.h in Headers */,
+				0B0BC42608A4E6AB000CDA6E /* CUniqueID.h in Headers */,
+				0B77316008A633CC004B30F3 /* BaseUtilities_Prefix.pch in Headers */,
+				E3EAF6610B08766400B5C36C /* CAutoBuffer.h in Headers */,
+				E3EAF6620B08766400B5C36C /* ISystem.h in Headers */,
+				E3EAF6630B08766400B5C36C /* ITimer.h in Headers */,
+				E3EAF6640B08766400B5C36C /* ITimerCallback.h in Headers */,
+				E3EAF6670B08767400B5C36C /* CSystem.h in Headers */,
+				E3EAF6680B08767400B5C36C /* CTimerOSX.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC06E0554671400DB518D /* BaseUtilities */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B0BC39308A4E517000CDA6E /* Build configuration list for PBXNativeTarget "BaseUtilities" */;
+			buildPhases = (
+				D2AAC06B0554671400DB518D /* Headers */,
+				D2AAC06C0554671400DB518D /* Sources */,
+				D2AAC06D0554671400DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BaseUtilities;
+			productName = BaseUtilities;
+			productReference = D2AAC06F0554671400DB518D /* libBaseUtilities.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 0B0BC39708A4E517000CDA6E /* Build configuration list for PBXProject "BaseUtilities" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* BaseUtilities */;
+			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC06E0554671400DB518D /* BaseUtilities */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC06C0554671400DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B0BC44908A4E6BF000CDA6E /* CChunkFile.cpp in Sources */,
+				0B0BC44A08A4E6BF000CDA6E /* CChunkFileMemory.cpp in Sources */,
+				0B0BC44B08A4E6BF000CDA6E /* CChunkMemory.cpp in Sources */,
+				0B0BC44C08A4E6BF000CDA6E /* CException.cpp in Sources */,
+				0B0BC44D08A4E6BF000CDA6E /* CFile.cpp in Sources */,
+				0B0BC44E08A4E6BF000CDA6E /* CFileCP.cpp in Sources */,
+				0B0BC44F08A4E6BF000CDA6E /* CFileMemory.cpp in Sources */,
+				0B0BC45008A4E6BF000CDA6E /* CFileSearchOSX.cpp in Sources */,
+				0B0BC45208A4E6BF000CDA6E /* CRefCountable.cpp in Sources */,
+				0B0BC45308A4E6BF000CDA6E /* CTimeOSX.cpp in Sources */,
+				0B0BC45508A4E6BF000CDA6E /* CUniqueID.cpp in Sources */,
+				0B65AA3F08A4EC7C0014A732 /* CChunk.cpp in Sources */,
+				0B883A3B08BB52EF00095026 /* Utilities.cpp in Sources */,
+				E3EAF65B0B08764800B5C36C /* CTimerOSX.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0B0BC39408A4E517000CDA6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH)";
+				COPY_PHASE_STRIP = NO;
+				EXPORTED_SYMBOLS_FILE = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BaseUtilities_Prefix.pch;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				MACH_O_TYPE = staticlib;
+				PREBINDING = NO;
+				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include;
+				PRODUCT_NAME = BaseUtilities;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		0B0BC39508A4E517000CDA6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BaseUtilities_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				MACH_O_TYPE = staticlib;
+				PREBINDING = NO;
+				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include;
+				PRODUCT_NAME = BaseUtilities;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		0B0BC39808A4E517000CDA6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				EXPORTED_SYMBOLS_FILE = "";
+				GCC_ONE_BYTE_BOOL = NO;
+				HEADER_SEARCH_PATHS = "\"/Developer/Headers/FlatCarbon/\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		0B0BC39908A4E517000CDA6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				EXPORTED_SYMBOLS_FILE = "";
+				HEADER_SEARCH_PATHS = "\"/Developer/Headers/FlatCarbon/\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0B0BC39308A4E517000CDA6E /* Build configuration list for PBXNativeTarget "BaseUtilities" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B0BC39408A4E517000CDA6E /* Debug */,
+				0B0BC39508A4E517000CDA6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0B0BC39708A4E517000CDA6E /* Build configuration list for PBXProject "BaseUtilities" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B0BC39808A4E517000CDA6E /* Debug */,
+				0B0BC39908A4E517000CDA6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

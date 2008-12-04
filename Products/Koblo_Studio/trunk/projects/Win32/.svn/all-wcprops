@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/repos/!svn/ver/3018/Products/Koblo_Studio/trunk/projects/Win32
+END
+KS.vcproj
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/!svn/ver/2980/Products/Koblo_Studio/trunk/projects/Win32/KS.vcproj
+END
+KS.rc
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/repos/!svn/ver/3018/Products/Koblo_Studio/trunk/projects/Win32/KS.rc
+END
+KS.sln
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/repos/!svn/ver/2982/Products/Koblo_Studio/trunk/projects/Win32/KS.sln
+END
+resource.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/!svn/ver/2589/Products/Koblo_Studio/trunk/projects/Win32/resource.h
+END
+_BuildResources.bat
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/repos/!svn/ver/1543/Products/Koblo_Studio/trunk/projects/Win32/_BuildResources.bat
+END

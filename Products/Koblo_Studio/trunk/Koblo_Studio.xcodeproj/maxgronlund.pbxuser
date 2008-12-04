@@ -1,0 +1,91 @@
+// !$*UTF8*$!
+{
+	20286C28FDCF999611CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = FC6E04640EE55BCA00C04094 /* Koblo Studio */;
+		activeTarget = 8D0C4E890486CD37000505A6 /* Koblo Studio */;
+		codeSenseManager = FC6E047D0EE55BD400C04094 /* Code sense */;
+		executables = (
+			FC6E04640EE55BCA00C04094 /* Koblo Studio */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					10,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 250093074;
+			PBXWorkspaceStateSaveDate = 250093074;
+		};
+		sourceControlManager = FC6E047C0EE55BD400C04094 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	8D0C4E890486CD37000505A6 /* Koblo Studio */ = {
+		activeExec = 0;
+		executables = (
+			FC6E04640EE55BCA00C04094 /* Koblo Studio */,
+		);
+	};
+	E3ED2A0F0C68573700D125D1 /* CBaseGUI.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {812, 9294}}";
+			sepNavSelRange = "{1878, 12}";
+			sepNavVisRange = "{1616, 323}";
+		};
+	};
+	FC6E04640EE55BCA00C04094 /* Koblo Studio */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "Koblo Studio";
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+	};
+	FC6E047C0EE55BD400C04094 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	FC6E047D0EE55BD400C04094 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+}

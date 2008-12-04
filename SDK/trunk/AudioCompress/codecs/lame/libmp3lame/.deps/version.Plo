@@ -1,0 +1,25 @@
+version.lo version.o: version.c ../config.h /usr/include/stdio.h \
+  /usr/include/_types.h /usr/include/sys/_types.h \
+  /usr/include/sys/cdefs.h /usr/include/machine/_types.h \
+  /usr/include/i386/_types.h version.h ../include/lame.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h
+
+../config.h:
+
+/usr/include/stdio.h:
+
+/usr/include/_types.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/i386/_types.h:
+
+version.h:
+
+../include/lame.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h:

@@ -1,0 +1,347 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0BC933B109A09A440046D53D /* MIDIIOEngine_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 0BC933B009A09A440046D53D /* MIDIIOEngine_Prefix.pch */; };
+		0BC933B509A09A5F0046D53D /* CDeviceManagerOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BC933B209A09A5F0046D53D /* CDeviceManagerOSX.cpp */; };
+		0BC933B609A09A5F0046D53D /* CIDeviceOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BC933B309A09A5F0046D53D /* CIDeviceOSX.cpp */; };
+		0BC933BB09A09A720046D53D /* CDeviceManagerOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC933B809A09A720046D53D /* CDeviceManagerOSX.h */; };
+		0BC933BC09A09A720046D53D /* CIDeviceOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC933B909A09A720046D53D /* CIDeviceOSX.h */; };
+		0BC933BD09A09A720046D53D /* mioeInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC933BA09A09A720046D53D /* mioeInternal.h */; };
+		0BC933C309A09A7D0046D53D /* IDeviceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC933BE09A09A7D0046D53D /* IDeviceManager.h */; };
+		0BC933C409A09A7D0046D53D /* IIDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC933BF09A09A7D0046D53D /* IIDevice.h */; };
+		0BC933C509A09A7D0046D53D /* IIDeviceCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC933C009A09A7D0046D53D /* IIDeviceCallback.h */; };
+		0BC933C609A09A7D0046D53D /* IODevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC933C109A09A7D0046D53D /* IODevice.h */; };
+		0BC933C709A09A7D0046D53D /* mioe.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC933C209A09A7D0046D53D /* mioe.h */; };
+		D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0B8839F508BB499100095026 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+		0B8839F708BB499B00095026 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };
+		0BC933B009A09A440046D53D /* MIDIIOEngine_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MIDIIOEngine_Prefix.pch; sourceTree = "<group>"; };
+		0BC933B209A09A5F0046D53D /* CDeviceManagerOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CDeviceManagerOSX.cpp; path = ../../source/CDeviceManagerOSX.cpp; sourceTree = SOURCE_ROOT; };
+		0BC933B309A09A5F0046D53D /* CIDeviceOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CIDeviceOSX.cpp; path = ../../source/CIDeviceOSX.cpp; sourceTree = SOURCE_ROOT; };
+		0BC933B809A09A720046D53D /* CDeviceManagerOSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CDeviceManagerOSX.h; path = ../../include/CDeviceManagerOSX.h; sourceTree = SOURCE_ROOT; };
+		0BC933B909A09A720046D53D /* CIDeviceOSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CIDeviceOSX.h; path = ../../include/CIDeviceOSX.h; sourceTree = SOURCE_ROOT; };
+		0BC933BA09A09A720046D53D /* mioeInternal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = mioeInternal.h; path = ../../include/mioeInternal.h; sourceTree = SOURCE_ROOT; };
+		0BC933BE09A09A7D0046D53D /* IDeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDeviceManager.h; path = ../../interface/IDeviceManager.h; sourceTree = SOURCE_ROOT; };
+		0BC933BF09A09A7D0046D53D /* IIDevice.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IIDevice.h; path = ../../interface/IIDevice.h; sourceTree = SOURCE_ROOT; };
+		0BC933C009A09A7D0046D53D /* IIDeviceCallback.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IIDeviceCallback.h; path = ../../interface/IIDeviceCallback.h; sourceTree = SOURCE_ROOT; };
+		0BC933C109A09A7D0046D53D /* IODevice.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IODevice.h; path = ../../interface/IODevice.h; sourceTree = SOURCE_ROOT; };
+		0BC933C209A09A7D0046D53D /* mioe.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = mioe.h; path = ../../interface/mioe.h; sourceTree = SOURCE_ROOT; };
+		D2AAC06F0554671400DB518D /* libMIDIIOEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMIDIIOEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC06D0554671400DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DDFF38A45A11DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC06F0554671400DB518D /* libMIDIIOEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* DataEngine */ = {
+			isa = PBXGroup;
+			children = (
+				0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */,
+				08FB77ACFE841707C02AAC07 /* Source */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DDFF38A45A11DB9C8B /* Products */,
+			);
+			name = DataEngine;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AAFE841565C02AAC07 /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		08FB77ACFE841707C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0BC933B009A09A440046D53D /* MIDIIOEngine_Prefix.pch */,
+				0B77318208A634D6004B30F3 /* Source */,
+				0B77318108A634CF004B30F3 /* Include */,
+				0B77317608A634BB004B30F3 /* Interface */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B77317608A634BB004B30F3 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				0BC933BE09A09A7D0046D53D /* IDeviceManager.h */,
+				0BC933BF09A09A7D0046D53D /* IIDevice.h */,
+				0BC933C009A09A7D0046D53D /* IIDeviceCallback.h */,
+				0BC933C109A09A7D0046D53D /* IODevice.h */,
+				0BC933C209A09A7D0046D53D /* mioe.h */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
+		0B77318108A634CF004B30F3 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				0BC933B809A09A720046D53D /* CDeviceManagerOSX.h */,
+				0BC933B909A09A720046D53D /* CIDeviceOSX.h */,
+				0BC933BA09A09A720046D53D /* mioeInternal.h */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		0B77318208A634D6004B30F3 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0BC933B209A09A5F0046D53D /* CDeviceManagerOSX.cpp */,
+				0BC933B309A09A5F0046D53D /* CIDeviceOSX.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B8839F208BB499100095026 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0B8839F608BB499100095026 /* libBaseUtilities.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC06B0554671400DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BC933B109A09A440046D53D /* MIDIIOEngine_Prefix.pch in Headers */,
+				0BC933BB09A09A720046D53D /* CDeviceManagerOSX.h in Headers */,
+				0BC933BC09A09A720046D53D /* CIDeviceOSX.h in Headers */,
+				0BC933BD09A09A720046D53D /* mioeInternal.h in Headers */,
+				0BC933C309A09A7D0046D53D /* IDeviceManager.h in Headers */,
+				0BC933C409A09A7D0046D53D /* IIDevice.h in Headers */,
+				0BC933C509A09A7D0046D53D /* IIDeviceCallback.h in Headers */,
+				0BC933C609A09A7D0046D53D /* IODevice.h in Headers */,
+				0BC933C709A09A7D0046D53D /* mioe.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC06E0554671400DB518D /* MIDIIOEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B77317708A634BB004B30F3 /* Build configuration list for PBXNativeTarget "MIDIIOEngine" */;
+			buildPhases = (
+				D2AAC06B0554671400DB518D /* Headers */,
+				D2AAC06C0554671400DB518D /* Sources */,
+				D2AAC06D0554671400DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0B8839F808BB499B00095026 /* PBXTargetDependency */,
+			);
+			name = MIDIIOEngine;
+			productName = DataEngine;
+			productReference = D2AAC06F0554671400DB518D /* libMIDIIOEngine.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 0B77317B08A634BB004B30F3 /* Build configuration list for PBXProject "MIDIIOEngine" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* DataEngine */;
+			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0B8839F208BB499100095026 /* Products */;
+					ProjectRef = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D2AAC06E0554671400DB518D /* MIDIIOEngine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0B8839F608BB499100095026 /* libBaseUtilities.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBaseUtilities.a;
+			remoteRef = 0B8839F508BB499100095026 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC06C0554671400DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BC933B509A09A5F0046D53D /* CDeviceManagerOSX.cpp in Sources */,
+				0BC933B609A09A5F0046D53D /* CIDeviceOSX.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0B8839F808BB499B00095026 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BaseUtilities;
+			targetProxy = 0B8839F708BB499B00095026 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0B77317808A634BB004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MIDIIOEngine_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				PREBINDING = NO;
+				PRODUCT_NAME = MIDIIOEngine;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		0B77317908A634BB004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				COPY_PHASE_STRIP = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MIDIIOEngine_Prefix.pch;
+				GCC_UNROLL_LOOPS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				PREBINDING = NO;
+				PRODUCT_NAME = MIDIIOEngine;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		0B77317C08A634BB004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		0B77317D08A634BB004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0B77317708A634BB004B30F3 /* Build configuration list for PBXNativeTarget "MIDIIOEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77317808A634BB004B30F3 /* Debug */,
+				0B77317908A634BB004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0B77317B08A634BB004B30F3 /* Build configuration list for PBXProject "MIDIIOEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77317C08A634BB004B30F3 /* Debug */,
+				0B77317D08A634BB004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

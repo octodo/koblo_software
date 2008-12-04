@@ -1,0 +1,12 @@
+#define IDF_ARIAL10 1000
+#define IDB_Button_Sync 1001
+#define IDB_Dial_Big 1002
+#define IDB_Dial_Small 1003
+#define IDB_DialMedium 1004
+#define IDB_RythmComposer 1005
+#define IDB_Button_Seq 1006
+#define IDB_Button_Copy 1007
+#define IDB_Button_Paste 1008
+#define IDB_Button_Clear 1009
+#define IDB_Button_Steps 1010
+#define IDB_Button_Song 1011

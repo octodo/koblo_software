@@ -1,0 +1,19 @@
+// Prefix header
+
+#include <Carbon/Carbon.h>
+
+
+#define TARGET_OS_MAC 1
+#define TARGET_RT_MAC_MACHO 1
+
+#define _Carbon 1
+#define _MachO 1
+#define _Mac 1
+#define _MAC 1
+#define macintosh 1
+
+#define _NDEBUG
+
+#include "Filter.h"
+
+#define _RESOURCE_FILE_HARDLINKED

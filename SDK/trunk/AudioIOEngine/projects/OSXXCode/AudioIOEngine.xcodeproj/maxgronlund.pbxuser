@@ -1,0 +1,140 @@
+// !$*UTF8*$!
+{
+	0867D690FE84028FC02AAC07 /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeTarget = D2AAC06E0554671400DB518D /* AudioIOEngine */;
+		codeSenseManager = FC3A9B340E9616AA00F3C417 /* Code sense */;
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					10,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 244717223;
+			PBXWorkspaceStateSaveDate = 244717223;
+		};
+		perUserProjectItems = {
+			FC3A9B4B0E96233A00F3C417 /* PBXTextBookmark */ = FC3A9B4B0E96233A00F3C417 /* PBXTextBookmark */;
+			FC3A9B4C0E96233A00F3C417 /* PBXTextBookmark */ = FC3A9B4C0E96233A00F3C417 /* PBXTextBookmark */;
+			FC3A9B4E0E96233A00F3C417 /* PBXTextBookmark */ = FC3A9B4E0E96233A00F3C417 /* PBXTextBookmark */;
+			FC3A9B500E96233A00F3C417 /* PBXTextBookmark */ = FC3A9B500E96233A00F3C417 /* PBXTextBookmark */;
+			FC3A9B510E96233A00F3C417 /* PBXTextBookmark */ = FC3A9B510E96233A00F3C417 /* PBXTextBookmark */;
+		};
+		sourceControlManager = FC3A9B330E9616AA00F3C417 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	0BC70F6E099CA7CD0076AEE9 /* CDeviceCoreAudio.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {810, 1218}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 0}";
+			sepNavWindowFrame = "{{15, 107}, {854, 1066}}";
+		};
+	};
+	D2AAC06E0554671400DB518D /* AudioIOEngine */ = {
+		activeExec = 0;
+	};
+	FC3A9B330E9616AA00F3C417 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	FC3A9B340E9616AA00F3C417 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	FC3A9B4B0E96233A00F3C417 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0BC70F6E099CA7CD0076AEE9 /* CDeviceCoreAudio.h */;
+		name = "CDeviceCoreAudio.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC3A9B4C0E96233A00F3C417 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC3A9B4D0E96233A00F3C417 /* nsp.h */;
+		name = "nsp.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC3A9B4D0E96233A00F3C417 /* nsp.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = nsp.h;
+		path = /Users/maxgronlund/Documents/koblo_source_code/SDK/trunk/DSPEngine/Include/nsp/nsp.h;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {36, 3514}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 0}";
+		};
+	};
+	FC3A9B4E0E96233A00F3C417 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC3A9B4F0E96233A00F3C417 /* nsp.h */;
+		name = "nsp.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC3A9B4F0E96233A00F3C417 /* nsp.h */ = {
+		isa = PBXFileReference;
+		name = nsp.h;
+		path = /Users/maxgronlund/Documents/koblo_source_code/SDK/trunk/DSPEngine/Include/nsp/nsp.h;
+		sourceTree = "<absolute>";
+	};
+	FC3A9B500E96233A00F3C417 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0BC70F6E099CA7CD0076AEE9 /* CDeviceCoreAudio.h */;
+		name = "CDeviceCoreAudio.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC3A9B510E96233A00F3C417 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC3A9B520E96233A00F3C417 /* nsp.h */;
+		name = "nsp.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC3A9B520E96233A00F3C417 /* nsp.h */ = {
+		isa = PBXFileReference;
+		name = nsp.h;
+		path = /Users/maxgronlund/Documents/koblo_source_code/SDK/trunk/DSPEngine/Include/nsp/nsp.h;
+		sourceTree = "<absolute>";
+	};
+}

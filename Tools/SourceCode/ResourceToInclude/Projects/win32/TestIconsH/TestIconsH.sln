@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestIconsH", "TestIconsH.vcproj", "{0F4801B0-EF60-4219-92E1-2D7841F1066A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03B7D5CB-2A38-46F0-9AF5-5B0C8357EAC0} = {03B7D5CB-2A38-46F0-9AF5-5B0C8357EAC0}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bu", "..\..\..\..\..\..\SDK\trunk\BaseUtilities\projects\win32\bu.vcproj", "{03B7D5CB-2A38-46F0-9AF5-5B0C8357EAC0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F4801B0-EF60-4219-92E1-2D7841F1066A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0F4801B0-EF60-4219-92E1-2D7841F1066A}.Debug|Win32.Build.0 = Debug|Win32
+		{0F4801B0-EF60-4219-92E1-2D7841F1066A}.Release|Win32.ActiveCfg = Release|Win32
+		{0F4801B0-EF60-4219-92E1-2D7841F1066A}.Release|Win32.Build.0 = Release|Win32
+		{03B7D5CB-2A38-46F0-9AF5-5B0C8357EAC0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{03B7D5CB-2A38-46F0-9AF5-5B0C8357EAC0}.Debug|Win32.Build.0 = Debug|Win32
+		{03B7D5CB-2A38-46F0-9AF5-5B0C8357EAC0}.Release|Win32.ActiveCfg = Release|Win32
+		{03B7D5CB-2A38-46F0-9AF5-5B0C8357EAC0}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

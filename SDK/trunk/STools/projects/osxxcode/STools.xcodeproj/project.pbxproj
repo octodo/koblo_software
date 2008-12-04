@@ -1,0 +1,679 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		32B86E480EDC04DD00AC707E /* stXlat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32B86E470EDC04DD00AC707E /* stXlat.cpp */; };
+		32B86E4A0EDC04F300AC707E /* stXlat.h in Headers */ = {isa = PBXBuildFile; fileRef = 32B86E490EDC04F300AC707E /* stXlat.h */; };
+		7C599B350AF75821009A286B /* CAmpSim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C599B340AF75821009A286B /* CAmpSim.cpp */; };
+		7C599B380AF75839009A286B /* CLimiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C599B360AF75839009A286B /* CLimiter.cpp */; };
+		7C599B390AF75839009A286B /* CSoftDistortion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C599B370AF75839009A286B /* CSoftDistortion.cpp */; };
+		7C599B3B0AF75850009A286B /* IAmpSim.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C599B3A0AF75850009A286B /* IAmpSim.h */; };
+		7C599B3E0AF75868009A286B /* ILimiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C599B3C0AF75868009A286B /* ILimiter.h */; };
+		7C599B3F0AF75868009A286B /* ISoftDistortion.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C599B3D0AF75868009A286B /* ISoftDistortion.h */; };
+		7C599B410AF75879009A286B /* CAmpSim.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C599B400AF75879009A286B /* CAmpSim.h */; };
+		7C599B440AF7589A009A286B /* CLimiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C599B420AF7589A009A286B /* CLimiter.h */; };
+		7C599B450AF7589A009A286B /* CSoftDistortion.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C599B430AF7589A009A286B /* CSoftDistortion.h */; };
+		D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
+		E36F7C900C883B440077A93D /* CStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E36F7C8E0C883B440077A93D /* CStream.cpp */; };
+		E36F7C910C883B440077A93D /* CStreamManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E36F7C8F0C883B440077A93D /* CStreamManager.cpp */; };
+		E36F7C940C883B530077A93D /* CStream.h in Headers */ = {isa = PBXBuildFile; fileRef = E36F7C920C883B530077A93D /* CStream.h */; };
+		E36F7C950C883B530077A93D /* CStreamManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E36F7C930C883B530077A93D /* CStreamManager.h */; };
+		E36F7C970C883B5D0077A93D /* IStreamManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E36F7C960C883B5D0077A93D /* IStreamManager.h */; };
+		E381909209E1319000C75A29 /* CEnv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E381909009E1319000C75A29 /* CEnv.cpp */; };
+		E381909309E1319000C75A29 /* CModEnvelope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E381909109E1319000C75A29 /* CModEnvelope.cpp */; };
+		E381909609E1319E00C75A29 /* CEnv.h in Headers */ = {isa = PBXBuildFile; fileRef = E381909409E1319E00C75A29 /* CEnv.h */; };
+		E381909709E1319E00C75A29 /* CModEnvelope.h in Headers */ = {isa = PBXBuildFile; fileRef = E381909509E1319E00C75A29 /* CModEnvelope.h */; };
+		E381909A09E131AC00C75A29 /* IEnv.h in Headers */ = {isa = PBXBuildFile; fileRef = E381909809E131AC00C75A29 /* IEnv.h */; };
+		E381909B09E131AC00C75A29 /* IModEnvelope.h in Headers */ = {isa = PBXBuildFile; fileRef = E381909909E131AC00C75A29 /* IModEnvelope.h */; };
+		E3BC580D09C9829500741132 /* STools_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = E3BC580C09C9829500741132 /* STools_Prefix.pch */; };
+		E3BC582409C982AB00741132 /* IChamberlinFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581109C982AB00741132 /* IChamberlinFilter.h */; };
+		E3BC582609C982AB00741132 /* IDrive.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581309C982AB00741132 /* IDrive.h */; };
+		E3BC582709C982AB00741132 /* IDSPTools.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581409C982AB00741132 /* IDSPTools.h */; };
+		E3BC582809C982AB00741132 /* IEnvelope.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581509C982AB00741132 /* IEnvelope.h */; };
+		E3BC582909C982AB00741132 /* IInterpolate.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581609C982AB00741132 /* IInterpolate.h */; };
+		E3BC582A09C982AB00741132 /* ILFOLOT.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581709C982AB00741132 /* ILFOLOT.h */; };
+		E3BC582B09C982AB00741132 /* IMemAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581809C982AB00741132 /* IMemAllocator.h */; };
+		E3BC582C09C982AB00741132 /* IModulate.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581909C982AB00741132 /* IModulate.h */; };
+		E3BC582D09C982AB00741132 /* IOscillatorBLIT.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581A09C982AB00741132 /* IOscillatorBLIT.h */; };
+		E3BC582E09C982AB00741132 /* IOscillatorLOT.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581B09C982AB00741132 /* IOscillatorLOT.h */; };
+		E3BC582F09C982AB00741132 /* IOscillatorNoise.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581C09C982AB00741132 /* IOscillatorNoise.h */; };
+		E3BC583009C982AB00741132 /* IRBJFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581D09C982AB00741132 /* IRBJFilter.h */; };
+		E3BC583109C982AB00741132 /* ITableCreator.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581E09C982AB00741132 /* ITableCreator.h */; };
+		E3BC583209C982AB00741132 /* IVCFFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC581F09C982AB00741132 /* IVCFFilter.h */; };
+		E3BC583309C982AB00741132 /* IVoice.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC582009C982AB00741132 /* IVoice.h */; };
+		E3BC583409C982AB00741132 /* IVoiceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC582109C982AB00741132 /* IVoiceManager.h */; };
+		E3BC583509C982AB00741132 /* SMIDIEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC582209C982AB00741132 /* SMIDIEvent.h */; };
+		E3BC583609C982AB00741132 /* STools.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC582309C982AB00741132 /* STools.h */; };
+		E3BC584A09C982B700741132 /* BLITTable.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC583709C982B700741132 /* BLITTable.h */; };
+		E3BC584B09C982B700741132 /* CChamberlinFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC583809C982B700741132 /* CChamberlinFilter.h */; };
+		E3BC584D09C982B700741132 /* CDrive.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC583A09C982B700741132 /* CDrive.h */; };
+		E3BC584E09C982B700741132 /* CDSPTools.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC583B09C982B700741132 /* CDSPTools.h */; };
+		E3BC584F09C982B700741132 /* CEnvelope.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC583C09C982B700741132 /* CEnvelope.h */; };
+		E3BC585009C982B700741132 /* CInterpolateLinar.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC583D09C982B700741132 /* CInterpolateLinar.h */; };
+		E3BC585109C982B700741132 /* CLFOLOT.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC583E09C982B700741132 /* CLFOLOT.h */; };
+		E3BC585209C982B700741132 /* CMemAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC583F09C982B700741132 /* CMemAllocator.h */; };
+		E3BC585309C982B700741132 /* CModulate.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC584009C982B700741132 /* CModulate.h */; };
+		E3BC585409C982B700741132 /* COscillatorBLIT.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC584109C982B700741132 /* COscillatorBLIT.h */; };
+		E3BC585509C982B700741132 /* COscillatorLOT.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC584209C982B700741132 /* COscillatorLOT.h */; };
+		E3BC585609C982B700741132 /* COscillatorNoise.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC584309C982B700741132 /* COscillatorNoise.h */; };
+		E3BC585709C982B700741132 /* CRBJFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC584409C982B700741132 /* CRBJFilter.h */; };
+		E3BC585809C982B700741132 /* CTableCreator.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC584509C982B700741132 /* CTableCreator.h */; };
+		E3BC585909C982B700741132 /* CVCFFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC584609C982B700741132 /* CVCFFilter.h */; };
+		E3BC585A09C982B700741132 /* CVoiceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC584709C982B700741132 /* CVoiceManager.h */; };
+		E3BC585B09C982B700741132 /* SToolsInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC584809C982B700741132 /* SToolsInternal.h */; };
+		E3BC585C09C982B700741132 /* SToolsInternalOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BC584909C982B700741132 /* SToolsInternalOS.h */; };
+		E3BC586D09C982C300741132 /* CChamberlinFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC585D09C982C300741132 /* CChamberlinFilter.cpp */; };
+		E3BC586F09C982C300741132 /* CDrive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC585F09C982C300741132 /* CDrive.cpp */; settings = {COMPILER_FLAGS = "-ftree-vectorize -DGCC_AUTO_VECTORIZATION"; }; };
+		E3BC587009C982C300741132 /* CDSPTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC586009C982C300741132 /* CDSPTools.cpp */; };
+		E3BC587109C982C300741132 /* CEnvelope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC586109C982C300741132 /* CEnvelope.cpp */; };
+		E3BC587209C982C300741132 /* CInterpolateLinar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC586209C982C300741132 /* CInterpolateLinar.cpp */; };
+		E3BC587309C982C300741132 /* CLFOLOT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC586309C982C300741132 /* CLFOLOT.cpp */; };
+		E3BC587409C982C300741132 /* CMemAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC586409C982C300741132 /* CMemAllocator.cpp */; };
+		E3BC587509C982C300741132 /* CModulate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC586509C982C300741132 /* CModulate.cpp */; };
+		E3BC587609C982C300741132 /* COscillatorBLIT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC586609C982C300741132 /* COscillatorBLIT.cpp */; };
+		E3BC587709C982C300741132 /* COscillatorLOT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC586709C982C300741132 /* COscillatorLOT.cpp */; };
+		E3BC587809C982C300741132 /* COscillatorNoise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC586809C982C300741132 /* COscillatorNoise.cpp */; };
+		E3BC587909C982C300741132 /* CRBJFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC586909C982C300741132 /* CRBJFilter.cpp */; };
+		E3BC587A09C982C300741132 /* CTableCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC586A09C982C300741132 /* CTableCreator.cpp */; };
+		E3BC587B09C982C300741132 /* CVCFFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC586B09C982C300741132 /* CVCFFilter.cpp */; };
+		E3BC587C09C982C300741132 /* CVoiceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3BC586C09C982C300741132 /* CVoiceManager.cpp */; };
+		E3CA92890A3D57E600E0822F /* CResampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3CA92870A3D57E600E0822F /* CResampler.cpp */; };
+		E3CA928A0A3D57E600E0822F /* CWaveOscStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3CA92880A3D57E600E0822F /* CWaveOscStream.cpp */; };
+		E3CA928F0A3D57F200E0822F /* CResampler.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CA928D0A3D57F200E0822F /* CResampler.h */; };
+		E3CA92900A3D57F200E0822F /* CWaveOscStream.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CA928E0A3D57F200E0822F /* CWaveOscStream.h */; };
+		E3CA92950A3D57FF00E0822F /* IResampler.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CA92910A3D57FF00E0822F /* IResampler.h */; };
+		E3CA92960A3D57FF00E0822F /* IVoiceManagerCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CA92920A3D57FF00E0822F /* IVoiceManagerCallback.h */; };
+		E3CA92970A3D57FF00E0822F /* IWaveOscStream.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CA92930A3D57FF00E0822F /* IWaveOscStream.h */; };
+		E3CA92980A3D57FF00E0822F /* IWaveOscStreamCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CA92940A3D57FF00E0822F /* IWaveOscStreamCallback.h */; };
+		E3F9D80709CA940600DC8EBD /* CDSPToolsOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3F9D80609CA940600DC8EBD /* CDSPToolsOSX.cpp */; settings = {COMPILER_FLAGS = "-faltivec"; }; };
+		E3F9D80909CA941100DC8EBD /* CDSPToolsOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = E3F9D80809CA941100DC8EBD /* CDSPToolsOSX.h */; };
+		FC98A2F00EC2F36B00B0CF30 /* IClipper.h in Headers */ = {isa = PBXBuildFile; fileRef = FC98A2EF0EC2F36B00B0CF30 /* IClipper.h */; };
+		FC98A2F60EC2F3A000B0CF30 /* CClipper.h in Headers */ = {isa = PBXBuildFile; fileRef = FC98A2F50EC2F3A000B0CF30 /* CClipper.h */; };
+		FC98A2F90EC2F3E300B0CF30 /* CClipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC98A2F80EC2F3E300B0CF30 /* CClipper.cpp */; };
+		FC98A4A20EC33B0900B0CF30 /* CAmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC98A4A10EC33B0900B0CF30 /* CAmp.cpp */; };
+		FC98A4A50EC33B4000B0CF30 /* CAmp.h in Headers */ = {isa = PBXBuildFile; fileRef = FC98A4A40EC33B4000B0CF30 /* CAmp.h */; };
+		FC98A4A70EC33B7000B0CF30 /* IAmp.h in Headers */ = {isa = PBXBuildFile; fileRef = FC98A4A60EC33B7000B0CF30 /* IAmp.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0B8839F508BB499100095026 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+		0B8839F708BB499B00095026 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };
+		32B86E470EDC04DD00AC707E /* stXlat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stXlat.cpp; path = ../../source/stXlat.cpp; sourceTree = SOURCE_ROOT; };
+		32B86E490EDC04F300AC707E /* stXlat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stXlat.h; path = ../../interface/stXlat.h; sourceTree = SOURCE_ROOT; };
+		7C599B340AF75821009A286B /* CAmpSim.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CAmpSim.cpp; path = ../../source/CAmpSim.cpp; sourceTree = SOURCE_ROOT; };
+		7C599B360AF75839009A286B /* CLimiter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CLimiter.cpp; path = ../../source/CLimiter.cpp; sourceTree = SOURCE_ROOT; };
+		7C599B370AF75839009A286B /* CSoftDistortion.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CSoftDistortion.cpp; path = ../../source/CSoftDistortion.cpp; sourceTree = SOURCE_ROOT; };
+		7C599B3A0AF75850009A286B /* IAmpSim.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IAmpSim.h; path = ../../interface/IAmpSim.h; sourceTree = SOURCE_ROOT; };
+		7C599B3C0AF75868009A286B /* ILimiter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ILimiter.h; path = ../../interface/ILimiter.h; sourceTree = SOURCE_ROOT; };
+		7C599B3D0AF75868009A286B /* ISoftDistortion.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ISoftDistortion.h; path = ../../interface/ISoftDistortion.h; sourceTree = SOURCE_ROOT; };
+		7C599B400AF75879009A286B /* CAmpSim.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CAmpSim.h; path = ../../include/CAmpSim.h; sourceTree = SOURCE_ROOT; };
+		7C599B420AF7589A009A286B /* CLimiter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CLimiter.h; path = ../../include/CLimiter.h; sourceTree = SOURCE_ROOT; };
+		7C599B430AF7589A009A286B /* CSoftDistortion.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CSoftDistortion.h; path = ../../include/CSoftDistortion.h; sourceTree = SOURCE_ROOT; };
+		D2AAC06F0554671400DB518D /* libSTools.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSTools.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E36F7C8E0C883B440077A93D /* CStream.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CStream.cpp; path = ../../source/CStream.cpp; sourceTree = SOURCE_ROOT; };
+		E36F7C8F0C883B440077A93D /* CStreamManager.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CStreamManager.cpp; path = ../../source/CStreamManager.cpp; sourceTree = SOURCE_ROOT; };
+		E36F7C920C883B530077A93D /* CStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CStream.h; path = ../../include/CStream.h; sourceTree = SOURCE_ROOT; };
+		E36F7C930C883B530077A93D /* CStreamManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CStreamManager.h; path = ../../include/CStreamManager.h; sourceTree = SOURCE_ROOT; };
+		E36F7C960C883B5D0077A93D /* IStreamManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IStreamManager.h; path = ../../interface/IStreamManager.h; sourceTree = SOURCE_ROOT; };
+		E381909009E1319000C75A29 /* CEnv.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CEnv.cpp; path = ../../source/CEnv.cpp; sourceTree = SOURCE_ROOT; };
+		E381909109E1319000C75A29 /* CModEnvelope.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CModEnvelope.cpp; path = ../../source/CModEnvelope.cpp; sourceTree = SOURCE_ROOT; };
+		E381909409E1319E00C75A29 /* CEnv.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CEnv.h; path = ../../include/CEnv.h; sourceTree = SOURCE_ROOT; };
+		E381909509E1319E00C75A29 /* CModEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CModEnvelope.h; path = ../../include/CModEnvelope.h; sourceTree = SOURCE_ROOT; };
+		E381909809E131AC00C75A29 /* IEnv.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IEnv.h; path = ../../interface/IEnv.h; sourceTree = SOURCE_ROOT; };
+		E381909909E131AC00C75A29 /* IModEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IModEnvelope.h; path = ../../interface/IModEnvelope.h; sourceTree = SOURCE_ROOT; };
+		E3BC580C09C9829500741132 /* STools_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = STools_Prefix.pch; sourceTree = "<group>"; };
+		E3BC581109C982AB00741132 /* IChamberlinFilter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IChamberlinFilter.h; path = ../../interface/IChamberlinFilter.h; sourceTree = SOURCE_ROOT; };
+		E3BC581309C982AB00741132 /* IDrive.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDrive.h; path = ../../interface/IDrive.h; sourceTree = SOURCE_ROOT; };
+		E3BC581409C982AB00741132 /* IDSPTools.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDSPTools.h; path = ../../interface/IDSPTools.h; sourceTree = SOURCE_ROOT; };
+		E3BC581509C982AB00741132 /* IEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IEnvelope.h; path = ../../interface/IEnvelope.h; sourceTree = SOURCE_ROOT; };
+		E3BC581609C982AB00741132 /* IInterpolate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IInterpolate.h; path = ../../interface/IInterpolate.h; sourceTree = SOURCE_ROOT; };
+		E3BC581709C982AB00741132 /* ILFOLOT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ILFOLOT.h; path = ../../interface/ILFOLOT.h; sourceTree = SOURCE_ROOT; };
+		E3BC581809C982AB00741132 /* IMemAllocator.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IMemAllocator.h; path = ../../interface/IMemAllocator.h; sourceTree = SOURCE_ROOT; };
+		E3BC581909C982AB00741132 /* IModulate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IModulate.h; path = ../../interface/IModulate.h; sourceTree = SOURCE_ROOT; };
+		E3BC581A09C982AB00741132 /* IOscillatorBLIT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IOscillatorBLIT.h; path = ../../interface/IOscillatorBLIT.h; sourceTree = SOURCE_ROOT; };
+		E3BC581B09C982AB00741132 /* IOscillatorLOT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IOscillatorLOT.h; path = ../../interface/IOscillatorLOT.h; sourceTree = SOURCE_ROOT; };
+		E3BC581C09C982AB00741132 /* IOscillatorNoise.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IOscillatorNoise.h; path = ../../interface/IOscillatorNoise.h; sourceTree = SOURCE_ROOT; };
+		E3BC581D09C982AB00741132 /* IRBJFilter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IRBJFilter.h; path = ../../interface/IRBJFilter.h; sourceTree = SOURCE_ROOT; };
+		E3BC581E09C982AB00741132 /* ITableCreator.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ITableCreator.h; path = ../../interface/ITableCreator.h; sourceTree = SOURCE_ROOT; };
+		E3BC581F09C982AB00741132 /* IVCFFilter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IVCFFilter.h; path = ../../interface/IVCFFilter.h; sourceTree = SOURCE_ROOT; };
+		E3BC582009C982AB00741132 /* IVoice.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IVoice.h; path = ../../interface/IVoice.h; sourceTree = SOURCE_ROOT; };
+		E3BC582109C982AB00741132 /* IVoiceManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IVoiceManager.h; path = ../../interface/IVoiceManager.h; sourceTree = SOURCE_ROOT; };
+		E3BC582209C982AB00741132 /* SMIDIEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SMIDIEvent.h; path = ../../interface/SMIDIEvent.h; sourceTree = SOURCE_ROOT; };
+		E3BC582309C982AB00741132 /* STools.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = STools.h; path = ../../interface/STools.h; sourceTree = SOURCE_ROOT; };
+		E3BC583709C982B700741132 /* BLITTable.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = BLITTable.h; path = ../../include/BLITTable.h; sourceTree = SOURCE_ROOT; };
+		E3BC583809C982B700741132 /* CChamberlinFilter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CChamberlinFilter.h; path = ../../include/CChamberlinFilter.h; sourceTree = SOURCE_ROOT; };
+		E3BC583A09C982B700741132 /* CDrive.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CDrive.h; path = ../../include/CDrive.h; sourceTree = SOURCE_ROOT; };
+		E3BC583B09C982B700741132 /* CDSPTools.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CDSPTools.h; path = ../../include/CDSPTools.h; sourceTree = SOURCE_ROOT; };
+		E3BC583C09C982B700741132 /* CEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CEnvelope.h; path = ../../include/CEnvelope.h; sourceTree = SOURCE_ROOT; };
+		E3BC583D09C982B700741132 /* CInterpolateLinar.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CInterpolateLinar.h; path = ../../include/CInterpolateLinar.h; sourceTree = SOURCE_ROOT; };
+		E3BC583E09C982B700741132 /* CLFOLOT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CLFOLOT.h; path = ../../include/CLFOLOT.h; sourceTree = SOURCE_ROOT; };
+		E3BC583F09C982B700741132 /* CMemAllocator.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CMemAllocator.h; path = ../../include/CMemAllocator.h; sourceTree = SOURCE_ROOT; };
+		E3BC584009C982B700741132 /* CModulate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CModulate.h; path = ../../include/CModulate.h; sourceTree = SOURCE_ROOT; };
+		E3BC584109C982B700741132 /* COscillatorBLIT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = COscillatorBLIT.h; path = ../../include/COscillatorBLIT.h; sourceTree = SOURCE_ROOT; };
+		E3BC584209C982B700741132 /* COscillatorLOT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = COscillatorLOT.h; path = ../../include/COscillatorLOT.h; sourceTree = SOURCE_ROOT; };
+		E3BC584309C982B700741132 /* COscillatorNoise.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = COscillatorNoise.h; path = ../../include/COscillatorNoise.h; sourceTree = SOURCE_ROOT; };
+		E3BC584409C982B700741132 /* CRBJFilter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CRBJFilter.h; path = ../../include/CRBJFilter.h; sourceTree = SOURCE_ROOT; };
+		E3BC584509C982B700741132 /* CTableCreator.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CTableCreator.h; path = ../../include/CTableCreator.h; sourceTree = SOURCE_ROOT; };
+		E3BC584609C982B700741132 /* CVCFFilter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CVCFFilter.h; path = ../../include/CVCFFilter.h; sourceTree = SOURCE_ROOT; };
+		E3BC584709C982B700741132 /* CVoiceManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CVoiceManager.h; path = ../../include/CVoiceManager.h; sourceTree = SOURCE_ROOT; };
+		E3BC584809C982B700741132 /* SToolsInternal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SToolsInternal.h; path = ../../include/SToolsInternal.h; sourceTree = SOURCE_ROOT; };
+		E3BC584909C982B700741132 /* SToolsInternalOS.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SToolsInternalOS.h; path = ../../include/SToolsInternalOS.h; sourceTree = SOURCE_ROOT; };
+		E3BC585D09C982C300741132 /* CChamberlinFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CChamberlinFilter.cpp; path = ../../source/CChamberlinFilter.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC585F09C982C300741132 /* CDrive.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CDrive.cpp; path = ../../source/CDrive.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC586009C982C300741132 /* CDSPTools.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CDSPTools.cpp; path = ../../source/CDSPTools.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC586109C982C300741132 /* CEnvelope.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CEnvelope.cpp; path = ../../source/CEnvelope.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC586209C982C300741132 /* CInterpolateLinar.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CInterpolateLinar.cpp; path = ../../source/CInterpolateLinar.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC586309C982C300741132 /* CLFOLOT.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CLFOLOT.cpp; path = ../../source/CLFOLOT.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC586409C982C300741132 /* CMemAllocator.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CMemAllocator.cpp; path = ../../source/CMemAllocator.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC586509C982C300741132 /* CModulate.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CModulate.cpp; path = ../../source/CModulate.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC586609C982C300741132 /* COscillatorBLIT.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = COscillatorBLIT.cpp; path = ../../source/COscillatorBLIT.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC586709C982C300741132 /* COscillatorLOT.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = COscillatorLOT.cpp; path = ../../source/COscillatorLOT.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC586809C982C300741132 /* COscillatorNoise.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = COscillatorNoise.cpp; path = ../../source/COscillatorNoise.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC586909C982C300741132 /* CRBJFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CRBJFilter.cpp; path = ../../source/CRBJFilter.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC586A09C982C300741132 /* CTableCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CTableCreator.cpp; path = ../../source/CTableCreator.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC586B09C982C300741132 /* CVCFFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CVCFFilter.cpp; path = ../../source/CVCFFilter.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC586C09C982C300741132 /* CVoiceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CVoiceManager.cpp; path = ../../source/CVoiceManager.cpp; sourceTree = SOURCE_ROOT; };
+		E3CA92870A3D57E600E0822F /* CResampler.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CResampler.cpp; path = ../../source/CResampler.cpp; sourceTree = SOURCE_ROOT; };
+		E3CA92880A3D57E600E0822F /* CWaveOscStream.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CWaveOscStream.cpp; path = ../../source/CWaveOscStream.cpp; sourceTree = SOURCE_ROOT; };
+		E3CA928D0A3D57F200E0822F /* CResampler.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CResampler.h; path = ../../include/CResampler.h; sourceTree = SOURCE_ROOT; };
+		E3CA928E0A3D57F200E0822F /* CWaveOscStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CWaveOscStream.h; path = ../../include/CWaveOscStream.h; sourceTree = SOURCE_ROOT; };
+		E3CA92910A3D57FF00E0822F /* IResampler.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IResampler.h; path = ../../interface/IResampler.h; sourceTree = SOURCE_ROOT; };
+		E3CA92920A3D57FF00E0822F /* IVoiceManagerCallback.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IVoiceManagerCallback.h; path = ../../interface/IVoiceManagerCallback.h; sourceTree = SOURCE_ROOT; };
+		E3CA92930A3D57FF00E0822F /* IWaveOscStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IWaveOscStream.h; path = ../../interface/IWaveOscStream.h; sourceTree = SOURCE_ROOT; };
+		E3CA92940A3D57FF00E0822F /* IWaveOscStreamCallback.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IWaveOscStreamCallback.h; path = ../../interface/IWaveOscStreamCallback.h; sourceTree = SOURCE_ROOT; };
+		E3F9D80609CA940600DC8EBD /* CDSPToolsOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CDSPToolsOSX.cpp; path = ../../source/CDSPToolsOSX.cpp; sourceTree = SOURCE_ROOT; };
+		E3F9D80809CA941100DC8EBD /* CDSPToolsOSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CDSPToolsOSX.h; path = ../../include/CDSPToolsOSX.h; sourceTree = SOURCE_ROOT; };
+		FC98A2EF0EC2F36B00B0CF30 /* IClipper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IClipper.h; path = ../../interface/IClipper.h; sourceTree = SOURCE_ROOT; };
+		FC98A2F50EC2F3A000B0CF30 /* CClipper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CClipper.h; path = ../../include/CClipper.h; sourceTree = SOURCE_ROOT; };
+		FC98A2F80EC2F3E300B0CF30 /* CClipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CClipper.cpp; path = ../../source/CClipper.cpp; sourceTree = SOURCE_ROOT; };
+		FC98A4A10EC33B0900B0CF30 /* CAmp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAmp.cpp; path = ../../source/CAmp.cpp; sourceTree = SOURCE_ROOT; };
+		FC98A4A40EC33B4000B0CF30 /* CAmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAmp.h; path = ../../include/CAmp.h; sourceTree = SOURCE_ROOT; };
+		FC98A4A60EC33B7000B0CF30 /* IAmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAmp.h; path = ../../interface/IAmp.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC06D0554671400DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DDFF38A45A11DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC06F0554671400DB518D /* libSTools.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* DataEngine */ = {
+			isa = PBXGroup;
+			children = (
+				0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */,
+				E3BC580C09C9829500741132 /* STools_Prefix.pch */,
+				08FB77ACFE841707C02AAC07 /* Source */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DDFF38A45A11DB9C8B /* Products */,
+			);
+			name = DataEngine;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AAFE841565C02AAC07 /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		08FB77ACFE841707C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0B77318208A634D6004B30F3 /* Source */,
+				0B77318108A634CF004B30F3 /* Include */,
+				0B77317608A634BB004B30F3 /* Interface */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B77317608A634BB004B30F3 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				32B86E490EDC04F300AC707E /* stXlat.h */,
+				FC98A4A60EC33B7000B0CF30 /* IAmp.h */,
+				FC98A2EF0EC2F36B00B0CF30 /* IClipper.h */,
+				E36F7C960C883B5D0077A93D /* IStreamManager.h */,
+				E3CA92910A3D57FF00E0822F /* IResampler.h */,
+				E3CA92920A3D57FF00E0822F /* IVoiceManagerCallback.h */,
+				E3CA92930A3D57FF00E0822F /* IWaveOscStream.h */,
+				E3CA92940A3D57FF00E0822F /* IWaveOscStreamCallback.h */,
+				E381909809E131AC00C75A29 /* IEnv.h */,
+				E381909909E131AC00C75A29 /* IModEnvelope.h */,
+				E3BC581109C982AB00741132 /* IChamberlinFilter.h */,
+				E3BC581309C982AB00741132 /* IDrive.h */,
+				E3BC581409C982AB00741132 /* IDSPTools.h */,
+				E3BC581509C982AB00741132 /* IEnvelope.h */,
+				E3BC581609C982AB00741132 /* IInterpolate.h */,
+				E3BC581709C982AB00741132 /* ILFOLOT.h */,
+				7C599B3C0AF75868009A286B /* ILimiter.h */,
+				E3BC581809C982AB00741132 /* IMemAllocator.h */,
+				E3BC581909C982AB00741132 /* IModulate.h */,
+				E3BC581A09C982AB00741132 /* IOscillatorBLIT.h */,
+				E3BC581B09C982AB00741132 /* IOscillatorLOT.h */,
+				E3BC581C09C982AB00741132 /* IOscillatorNoise.h */,
+				E3BC581D09C982AB00741132 /* IRBJFilter.h */,
+				7C599B3D0AF75868009A286B /* ISoftDistortion.h */,
+				E3BC581E09C982AB00741132 /* ITableCreator.h */,
+				E3BC581F09C982AB00741132 /* IVCFFilter.h */,
+				E3BC582009C982AB00741132 /* IVoice.h */,
+				E3BC582109C982AB00741132 /* IVoiceManager.h */,
+				E3BC582209C982AB00741132 /* SMIDIEvent.h */,
+				E3BC582309C982AB00741132 /* STools.h */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
+		0B77318108A634CF004B30F3 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				FC98A4A40EC33B4000B0CF30 /* CAmp.h */,
+				7C599B400AF75879009A286B /* CAmpSim.h */,
+				FC98A2F50EC2F3A000B0CF30 /* CClipper.h */,
+				E36F7C920C883B530077A93D /* CStream.h */,
+				E36F7C930C883B530077A93D /* CStreamManager.h */,
+				E3CA928D0A3D57F200E0822F /* CResampler.h */,
+				E3CA928E0A3D57F200E0822F /* CWaveOscStream.h */,
+				E381909409E1319E00C75A29 /* CEnv.h */,
+				7C599B3A0AF75850009A286B /* IAmpSim.h */,
+				E381909509E1319E00C75A29 /* CModEnvelope.h */,
+				E3F9D80809CA941100DC8EBD /* CDSPToolsOSX.h */,
+				E3BC583709C982B700741132 /* BLITTable.h */,
+				E3BC583809C982B700741132 /* CChamberlinFilter.h */,
+				E3BC583A09C982B700741132 /* CDrive.h */,
+				E3BC583B09C982B700741132 /* CDSPTools.h */,
+				E3BC583C09C982B700741132 /* CEnvelope.h */,
+				E3BC583D09C982B700741132 /* CInterpolateLinar.h */,
+				E3BC583E09C982B700741132 /* CLFOLOT.h */,
+				7C599B420AF7589A009A286B /* CLimiter.h */,
+				E3BC583F09C982B700741132 /* CMemAllocator.h */,
+				E3BC584009C982B700741132 /* CModulate.h */,
+				E3BC584109C982B700741132 /* COscillatorBLIT.h */,
+				E3BC584209C982B700741132 /* COscillatorLOT.h */,
+				E3BC584309C982B700741132 /* COscillatorNoise.h */,
+				E3BC584409C982B700741132 /* CRBJFilter.h */,
+				7C599B430AF7589A009A286B /* CSoftDistortion.h */,
+				E3BC584509C982B700741132 /* CTableCreator.h */,
+				E3BC584609C982B700741132 /* CVCFFilter.h */,
+				E3BC584709C982B700741132 /* CVoiceManager.h */,
+				E3BC584809C982B700741132 /* SToolsInternal.h */,
+				E3BC584909C982B700741132 /* SToolsInternalOS.h */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		0B77318208A634D6004B30F3 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				32B86E470EDC04DD00AC707E /* stXlat.cpp */,
+				FC98A4A10EC33B0900B0CF30 /* CAmp.cpp */,
+				7C599B340AF75821009A286B /* CAmpSim.cpp */,
+				FC98A2F80EC2F3E300B0CF30 /* CClipper.cpp */,
+				E36F7C8E0C883B440077A93D /* CStream.cpp */,
+				E36F7C8F0C883B440077A93D /* CStreamManager.cpp */,
+				E3CA92870A3D57E600E0822F /* CResampler.cpp */,
+				E3CA92880A3D57E600E0822F /* CWaveOscStream.cpp */,
+				E381909009E1319000C75A29 /* CEnv.cpp */,
+				E381909109E1319000C75A29 /* CModEnvelope.cpp */,
+				E3F9D85109CA973100DC8EBD /* Altivec */,
+				E3F9D7E509CA8E9E00DC8EBD /* AutoAltivec */,
+				E3BC585D09C982C300741132 /* CChamberlinFilter.cpp */,
+				E3BC586009C982C300741132 /* CDSPTools.cpp */,
+				E3BC586109C982C300741132 /* CEnvelope.cpp */,
+				E3BC586209C982C300741132 /* CInterpolateLinar.cpp */,
+				E3BC586309C982C300741132 /* CLFOLOT.cpp */,
+				7C599B360AF75839009A286B /* CLimiter.cpp */,
+				E3BC586409C982C300741132 /* CMemAllocator.cpp */,
+				E3BC586509C982C300741132 /* CModulate.cpp */,
+				E3BC586609C982C300741132 /* COscillatorBLIT.cpp */,
+				E3BC586709C982C300741132 /* COscillatorLOT.cpp */,
+				E3BC586809C982C300741132 /* COscillatorNoise.cpp */,
+				E3BC586909C982C300741132 /* CRBJFilter.cpp */,
+				7C599B370AF75839009A286B /* CSoftDistortion.cpp */,
+				E3BC586A09C982C300741132 /* CTableCreator.cpp */,
+				E3BC586B09C982C300741132 /* CVCFFilter.cpp */,
+				E3BC586C09C982C300741132 /* CVoiceManager.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B8839F208BB499100095026 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0B8839F608BB499100095026 /* libBaseUtilities.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3F9D7E509CA8E9E00DC8EBD /* AutoAltivec */ = {
+			isa = PBXGroup;
+			children = (
+				E3BC585F09C982C300741132 /* CDrive.cpp */,
+			);
+			name = AutoAltivec;
+			sourceTree = "<group>";
+		};
+		E3F9D85109CA973100DC8EBD /* Altivec */ = {
+			isa = PBXGroup;
+			children = (
+				E3F9D80609CA940600DC8EBD /* CDSPToolsOSX.cpp */,
+			);
+			name = Altivec;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC06B0554671400DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3BC580D09C9829500741132 /* STools_Prefix.pch in Headers */,
+				E3BC582409C982AB00741132 /* IChamberlinFilter.h in Headers */,
+				E3BC582609C982AB00741132 /* IDrive.h in Headers */,
+				E3BC582709C982AB00741132 /* IDSPTools.h in Headers */,
+				E3BC582809C982AB00741132 /* IEnvelope.h in Headers */,
+				E3BC582909C982AB00741132 /* IInterpolate.h in Headers */,
+				E3BC582A09C982AB00741132 /* ILFOLOT.h in Headers */,
+				E3BC582B09C982AB00741132 /* IMemAllocator.h in Headers */,
+				E3BC582C09C982AB00741132 /* IModulate.h in Headers */,
+				E3BC582D09C982AB00741132 /* IOscillatorBLIT.h in Headers */,
+				E3BC582E09C982AB00741132 /* IOscillatorLOT.h in Headers */,
+				E3BC582F09C982AB00741132 /* IOscillatorNoise.h in Headers */,
+				E3BC583009C982AB00741132 /* IRBJFilter.h in Headers */,
+				E3BC583109C982AB00741132 /* ITableCreator.h in Headers */,
+				E3BC583209C982AB00741132 /* IVCFFilter.h in Headers */,
+				E3BC583309C982AB00741132 /* IVoice.h in Headers */,
+				E3BC583409C982AB00741132 /* IVoiceManager.h in Headers */,
+				E3BC583509C982AB00741132 /* SMIDIEvent.h in Headers */,
+				E3BC583609C982AB00741132 /* STools.h in Headers */,
+				E3BC584A09C982B700741132 /* BLITTable.h in Headers */,
+				E3BC584B09C982B700741132 /* CChamberlinFilter.h in Headers */,
+				E3BC584D09C982B700741132 /* CDrive.h in Headers */,
+				E3BC584E09C982B700741132 /* CDSPTools.h in Headers */,
+				E3BC584F09C982B700741132 /* CEnvelope.h in Headers */,
+				E3BC585009C982B700741132 /* CInterpolateLinar.h in Headers */,
+				E3BC585109C982B700741132 /* CLFOLOT.h in Headers */,
+				E3BC585209C982B700741132 /* CMemAllocator.h in Headers */,
+				E3BC585309C982B700741132 /* CModulate.h in Headers */,
+				E3BC585409C982B700741132 /* COscillatorBLIT.h in Headers */,
+				E3BC585509C982B700741132 /* COscillatorLOT.h in Headers */,
+				E3BC585609C982B700741132 /* COscillatorNoise.h in Headers */,
+				E3BC585709C982B700741132 /* CRBJFilter.h in Headers */,
+				E3BC585809C982B700741132 /* CTableCreator.h in Headers */,
+				E3BC585909C982B700741132 /* CVCFFilter.h in Headers */,
+				E3BC585A09C982B700741132 /* CVoiceManager.h in Headers */,
+				E3BC585B09C982B700741132 /* SToolsInternal.h in Headers */,
+				E3BC585C09C982B700741132 /* SToolsInternalOS.h in Headers */,
+				E3F9D80909CA941100DC8EBD /* CDSPToolsOSX.h in Headers */,
+				E381909609E1319E00C75A29 /* CEnv.h in Headers */,
+				E381909709E1319E00C75A29 /* CModEnvelope.h in Headers */,
+				E381909A09E131AC00C75A29 /* IEnv.h in Headers */,
+				E381909B09E131AC00C75A29 /* IModEnvelope.h in Headers */,
+				E3CA928F0A3D57F200E0822F /* CResampler.h in Headers */,
+				E3CA92900A3D57F200E0822F /* CWaveOscStream.h in Headers */,
+				E3CA92950A3D57FF00E0822F /* IResampler.h in Headers */,
+				E3CA92960A3D57FF00E0822F /* IVoiceManagerCallback.h in Headers */,
+				E3CA92970A3D57FF00E0822F /* IWaveOscStream.h in Headers */,
+				E3CA92980A3D57FF00E0822F /* IWaveOscStreamCallback.h in Headers */,
+				7C599B3B0AF75850009A286B /* IAmpSim.h in Headers */,
+				7C599B3E0AF75868009A286B /* ILimiter.h in Headers */,
+				7C599B3F0AF75868009A286B /* ISoftDistortion.h in Headers */,
+				7C599B410AF75879009A286B /* CAmpSim.h in Headers */,
+				7C599B440AF7589A009A286B /* CLimiter.h in Headers */,
+				7C599B450AF7589A009A286B /* CSoftDistortion.h in Headers */,
+				E36F7C940C883B530077A93D /* CStream.h in Headers */,
+				E36F7C950C883B530077A93D /* CStreamManager.h in Headers */,
+				E36F7C970C883B5D0077A93D /* IStreamManager.h in Headers */,
+				FC98A2F00EC2F36B00B0CF30 /* IClipper.h in Headers */,
+				FC98A2F60EC2F3A000B0CF30 /* CClipper.h in Headers */,
+				FC98A4A50EC33B4000B0CF30 /* CAmp.h in Headers */,
+				FC98A4A70EC33B7000B0CF30 /* IAmp.h in Headers */,
+				32B86E4A0EDC04F300AC707E /* stXlat.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC06E0554671400DB518D /* STools */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B77317708A634BB004B30F3 /* Build configuration list for PBXNativeTarget "STools" */;
+			buildPhases = (
+				D2AAC06B0554671400DB518D /* Headers */,
+				D2AAC06C0554671400DB518D /* Sources */,
+				D2AAC06D0554671400DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0B8839F808BB499B00095026 /* PBXTargetDependency */,
+			);
+			name = STools;
+			productName = DataEngine;
+			productReference = D2AAC06F0554671400DB518D /* libSTools.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 0B77317B08A634BB004B30F3 /* Build configuration list for PBXProject "STools" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* DataEngine */;
+			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0B8839F208BB499100095026 /* Products */;
+					ProjectRef = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D2AAC06E0554671400DB518D /* STools */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0B8839F608BB499100095026 /* libBaseUtilities.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBaseUtilities.a;
+			remoteRef = 0B8839F508BB499100095026 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC06C0554671400DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3BC586D09C982C300741132 /* CChamberlinFilter.cpp in Sources */,
+				E3BC586F09C982C300741132 /* CDrive.cpp in Sources */,
+				E3BC587009C982C300741132 /* CDSPTools.cpp in Sources */,
+				E3BC587109C982C300741132 /* CEnvelope.cpp in Sources */,
+				E3BC587209C982C300741132 /* CInterpolateLinar.cpp in Sources */,
+				E3BC587309C982C300741132 /* CLFOLOT.cpp in Sources */,
+				E3BC587409C982C300741132 /* CMemAllocator.cpp in Sources */,
+				E3BC587509C982C300741132 /* CModulate.cpp in Sources */,
+				E3BC587609C982C300741132 /* COscillatorBLIT.cpp in Sources */,
+				E3BC587709C982C300741132 /* COscillatorLOT.cpp in Sources */,
+				E3BC587809C982C300741132 /* COscillatorNoise.cpp in Sources */,
+				E3BC587909C982C300741132 /* CRBJFilter.cpp in Sources */,
+				E3BC587A09C982C300741132 /* CTableCreator.cpp in Sources */,
+				E3BC587B09C982C300741132 /* CVCFFilter.cpp in Sources */,
+				E3BC587C09C982C300741132 /* CVoiceManager.cpp in Sources */,
+				E3F9D80709CA940600DC8EBD /* CDSPToolsOSX.cpp in Sources */,
+				E381909209E1319000C75A29 /* CEnv.cpp in Sources */,
+				E381909309E1319000C75A29 /* CModEnvelope.cpp in Sources */,
+				E3CA92890A3D57E600E0822F /* CResampler.cpp in Sources */,
+				E3CA928A0A3D57E600E0822F /* CWaveOscStream.cpp in Sources */,
+				7C599B350AF75821009A286B /* CAmpSim.cpp in Sources */,
+				7C599B380AF75839009A286B /* CLimiter.cpp in Sources */,
+				7C599B390AF75839009A286B /* CSoftDistortion.cpp in Sources */,
+				E36F7C900C883B440077A93D /* CStream.cpp in Sources */,
+				E36F7C910C883B440077A93D /* CStreamManager.cpp in Sources */,
+				FC98A2F90EC2F3E300B0CF30 /* CClipper.cpp in Sources */,
+				FC98A4A20EC33B0900B0CF30 /* CAmp.cpp in Sources */,
+				32B86E480EDC04DD00AC707E /* stXlat.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0B8839F808BB499B00095026 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BaseUtilities;
+			targetProxy = 0B8839F708BB499B00095026 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0B77317808A634BB004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = STools_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				PREBINDING = NO;
+				PRODUCT_NAME = STools;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		0B77317908A634BB004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				COPY_PHASE_STRIP = YES;
+				GCC_AUTO_VECTORIZATION = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = STools_Prefix.pch;
+				GCC_UNROLL_LOOPS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				PREBINDING = NO;
+				PRODUCT_NAME = STools;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		0B77317C08A634BB004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		0B77317D08A634BB004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0B77317708A634BB004B30F3 /* Build configuration list for PBXNativeTarget "STools" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77317808A634BB004B30F3 /* Debug */,
+				0B77317908A634BB004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0B77317B08A634BB004B30F3 /* Build configuration list for PBXProject "STools" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77317C08A634BB004B30F3 /* Debug */,
+				0B77317D08A634BB004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

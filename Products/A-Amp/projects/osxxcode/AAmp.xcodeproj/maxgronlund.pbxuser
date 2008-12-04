@@ -1,0 +1,426 @@
+// !$*UTF8*$!
+{
+	089C1669FE841209C02AAC07 /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = FC98A36B0EC30C7500B0CF30 /* Executable */;
+		activeTarget = 8D01CCC60486CAD60068D4B7 /* AAmp */;
+		breakpoints = (
+			FC98A5E90EC3572900B0CF30 /* CAAmpDSP.cpp:282 */,
+		);
+		codeSenseManager = FC9047A80EC0A9AF0065F760 /* Code sense */;
+		executables = (
+			FC98A36B0EC30C7500B0CF30 /* Executable */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXErrorsWarningsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXErrorsWarningsDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					300,
+					45.20849609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXErrorsWarningsDataSource_TypeID,
+					PBXErrorsWarningsDataSource_MessageID,
+					PBXErrorsWarningsDataSource_LocationID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					22,
+					300,
+					57.58349609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXExecutablesDataSource_ActiveFlagID,
+					PBXExecutablesDataSource_NameID,
+					PBXExecutablesDataSource_CommentsID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					10,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 250086100;
+			PBXWorkspaceStateSaveDate = 250086100;
+		};
+		perUserProjectItems = {
+			FC0A06C30EE8034D00BD362A /* PBXTextBookmark */ = FC0A06C30EE8034D00BD362A /* PBXTextBookmark */;
+			FC0A06C40EE8034D00BD362A /* PBXTextBookmark */ = FC0A06C40EE8034D00BD362A /* PBXTextBookmark */;
+			FC0A06C60EE8034D00BD362A /* PBXTextBookmark */ = FC0A06C60EE8034D00BD362A /* PBXTextBookmark */;
+			FC0A06C80EE8034D00BD362A /* PBXTextBookmark */ = FC0A06C80EE8034D00BD362A /* PBXTextBookmark */;
+			FC0A06CA0EE8034D00BD362A /* PBXTextBookmark */ = FC0A06CA0EE8034D00BD362A /* PBXTextBookmark */;
+			FC0A06CC0EE8034D00BD362A /* PBXTextBookmark */ = FC0A06CC0EE8034D00BD362A /* PBXTextBookmark */;
+			FC0A06CE0EE8034D00BD362A /* PBXBookmark */ = FC0A06CE0EE8034D00BD362A /* PBXBookmark */;
+			FC0A06CF0EE8034D00BD362A /* PBXTextBookmark */ = FC0A06CF0EE8034D00BD362A /* PBXTextBookmark */;
+			FC0A06D00EE8034D00BD362A /* PBXTextBookmark */ = FC0A06D00EE8034D00BD362A /* PBXTextBookmark */;
+			FC0A06D20EE8034D00BD362A /* PBXTextBookmark */ = FC0A06D20EE8034D00BD362A /* PBXTextBookmark */;
+			FC0A06D40EE8034D00BD362A /* PBXTextBookmark */ = FC0A06D40EE8034D00BD362A /* PBXTextBookmark */;
+			FC0A06D60EE8034D00BD362A /* PBXTextBookmark */ = FC0A06D60EE8034D00BD362A /* PBXTextBookmark */;
+			FC0A06D80EE8034D00BD362A /* PBXTextBookmark */ = FC0A06D80EE8034D00BD362A /* PBXTextBookmark */;
+			FC0A06DA0EE8034D00BD362A /* PBXTextBookmark */ = FC0A06DA0EE8034D00BD362A /* PBXTextBookmark */;
+			FC98A5700EC3436600B0CF30 /* PBXTextBookmark */ = FC98A5700EC3436600B0CF30 /* PBXTextBookmark */;
+			FC98A5720EC3436600B0CF30 /* PBXTextBookmark */ = FC98A5720EC3436600B0CF30 /* PBXTextBookmark */;
+		};
+		sourceControlManager = FC9047A70EC0A9AF0065F760 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	0BC04C1F08C1159E00A1F829 /* ParmIDs.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {324, 532}}";
+			sepNavSelRange = "{163, 15}";
+			sepNavVisRange = "{0, 436}";
+			sepNavWindowFrame = "{{15, 533}, {383, 640}}";
+		};
+	};
+	8D01CCC60486CAD60068D4B7 /* AAmp */ = {
+		activeExec = 0;
+	};
+	FC0A06C30EE8034D00BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FCDB9D770E2421890069A75D /* CAAmpDSP.cpp */;
+		name = "CAAmpDSP.cpp: 148";
+		rLen = 0;
+		rLoc = 2531;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC0A06C40EE8034D00BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0A06C50EE8034D00BD362A /* CFFTOSX.h */;
+		name = "CFFTOSX.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC0A06C50EE8034D00BD362A /* CFFTOSX.h */ = {
+		isa = PBXFileReference;
+		name = CFFTOSX.h;
+		path = /Users/maxgronlund/Documents/Koblo_Cource_Code/SDK/trunk/DSPEngine/Include/CFFTOSX.h;
+		sourceTree = "<absolute>";
+	};
+	FC0A06C60EE8034D00BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0A06C70EE8034D00BD362A /* dspeInternal.h */;
+		name = "dspeInternal.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC0A06C70EE8034D00BD362A /* dspeInternal.h */ = {
+		isa = PBXFileReference;
+		name = dspeInternal.h;
+		path = /Users/maxgronlund/Documents/Koblo_Cource_Code/SDK/trunk/DSPEngine/Include/dspeInternal.h;
+		sourceTree = "<absolute>";
+	};
+	FC0A06C80EE8034D00BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0A06C90EE8034D00BD362A /* CWindowdspe.h */;
+		name = "CWindowdspe.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC0A06C90EE8034D00BD362A /* CWindowdspe.h */ = {
+		isa = PBXFileReference;
+		name = CWindowdspe.h;
+		path = /Users/maxgronlund/Documents/Koblo_Cource_Code/SDK/trunk/DSPEngine/Include/CWindowdspe.h;
+		sourceTree = "<absolute>";
+	};
+	FC0A06CA0EE8034D00BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0A06CB0EE8034D00BD362A /* dspeInternalOS.h */;
+		name = "dspeInternalOS.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC0A06CB0EE8034D00BD362A /* dspeInternalOS.h */ = {
+		isa = PBXFileReference;
+		name = dspeInternalOS.h;
+		path = /Users/maxgronlund/Documents/Koblo_Cource_Code/SDK/trunk/DSPEngine/Include/dspeInternalOS.h;
+		sourceTree = "<absolute>";
+	};
+	FC0A06CC0EE8034D00BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0A06CD0EE8034D00BD362A /* CFFTWin.h */;
+		name = "CFFTWin.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC0A06CD0EE8034D00BD362A /* CFFTWin.h */ = {
+		isa = PBXFileReference;
+		name = CFFTWin.h;
+		path = /Users/maxgronlund/Documents/Koblo_Cource_Code/SDK/trunk/DSPEngine/Include/CFFTWin.h;
+		sourceTree = "<absolute>";
+	};
+	FC0A06CE0EE8034D00BD362A /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = FCDB9D750E2421890069A75D /* CAAmpPane.cpp */;
+	};
+	FC0A06CF0EE8034D00BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FCDB9D770E2421890069A75D /* CAAmpDSP.cpp */;
+		name = "CAAmpDSP.cpp: 148";
+		rLen = 0;
+		rLoc = 2531;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC0A06D00EE8034D00BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0A06D10EE8034D00BD362A /* CFFTOSX.h */;
+		name = "CFFTOSX.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC0A06D10EE8034D00BD362A /* CFFTOSX.h */ = {
+		isa = PBXFileReference;
+		name = CFFTOSX.h;
+		path = /Users/maxgronlund/Documents/Koblo_Cource_Code/SDK/trunk/DSPEngine/Include/CFFTOSX.h;
+		sourceTree = "<absolute>";
+	};
+	FC0A06D20EE8034D00BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0A06D30EE8034D00BD362A /* dspeInternal.h */;
+		name = "dspeInternal.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC0A06D30EE8034D00BD362A /* dspeInternal.h */ = {
+		isa = PBXFileReference;
+		name = dspeInternal.h;
+		path = /Users/maxgronlund/Documents/Koblo_Cource_Code/SDK/trunk/DSPEngine/Include/dspeInternal.h;
+		sourceTree = "<absolute>";
+	};
+	FC0A06D40EE8034D00BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0A06D50EE8034D00BD362A /* CWindowdspe.h */;
+		name = "CWindowdspe.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC0A06D50EE8034D00BD362A /* CWindowdspe.h */ = {
+		isa = PBXFileReference;
+		name = CWindowdspe.h;
+		path = /Users/maxgronlund/Documents/Koblo_Cource_Code/SDK/trunk/DSPEngine/Include/CWindowdspe.h;
+		sourceTree = "<absolute>";
+	};
+	FC0A06D60EE8034D00BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0A06D70EE8034D00BD362A /* dspeInternalOS.h */;
+		name = "dspeInternalOS.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC0A06D70EE8034D00BD362A /* dspeInternalOS.h */ = {
+		isa = PBXFileReference;
+		name = dspeInternalOS.h;
+		path = /Users/maxgronlund/Documents/Koblo_Cource_Code/SDK/trunk/DSPEngine/Include/dspeInternalOS.h;
+		sourceTree = "<absolute>";
+	};
+	FC0A06D80EE8034D00BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0A06D90EE8034D00BD362A /* CFFTWin.h */;
+		name = "CFFTWin.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC0A06D90EE8034D00BD362A /* CFFTWin.h */ = {
+		isa = PBXFileReference;
+		name = CFFTWin.h;
+		path = /Users/maxgronlund/Documents/Koblo_Cource_Code/SDK/trunk/DSPEngine/Include/CFFTWin.h;
+		sourceTree = "<absolute>";
+	};
+	FC0A06DA0EE8034D00BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FCDB9D750E2421890069A75D /* CAAmpPane.cpp */;
+		name = "CAAmpPane.cpp: 26";
+		rLen = 93;
+		rLoc = 452;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC9047A70EC0A9AF0065F760 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	FC9047A80EC0A9AF0065F760 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	FC98A36B0EC30C7500B0CF30 /* Executable */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		launchableReference = FC98A36C0EC30C7500B0CF30 /* Koblo Studio.app */;
+		libgmallocEnabled = 0;
+		name = Executable;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+		};
+	};
+	FC98A36C0EC30C7500B0CF30 /* Koblo Studio.app */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = wrapper.application;
+		name = "Koblo Studio.app";
+		path = "/Users/maxgronlund/Documents/WorkingDir/Products/Koblo_Studio/branch.max/build/Debug/Koblo Studio.app";
+		sourceTree = "<absolute>";
+	};
+	FC98A5700EC3436600B0CF30 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FCDB9D720E2421890069A75D /* CAAmpModule.cpp */;
+		name = "CAAmpModule.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC98A5720EC3436600B0CF30 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FCDB9D720E2421890069A75D /* CAAmpModule.cpp */;
+		name = "CAAmpModule.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC98A5E90EC3572900B0CF30 /* CAAmpDSP.cpp:282 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = FCDB9D770E2421890069A75D /* CAAmpDSP.cpp */;
+		functionName = "CAAmpDSP::Set_Gain(tfloat32 fValue)";
+		hitCount = 2;
+		ignoreCount = 0;
+		lineNumber = 282;
+		location = AAmp;
+		modificationTime = 247682882.590514;
+		state = 1;
+	};
+	FCDB9D720E2421890069A75D /* CAAmpModule.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {12, 1190}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 0}";
+		};
+	};
+	FCDB9D730E2421890069A75D /* CAAmpGUI.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {624, 2338}}";
+			sepNavSelRange = "{2860, 0}";
+			sepNavVisRange = "{1205, 1690}";
+			sepNavWindowFrame = "{{1041, 151}, {681, 998}}";
+		};
+	};
+	FCDB9D750E2421890069A75D /* CAAmpPane.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {618, 1274}}";
+			sepNavSelRange = "{452, 93}";
+			sepNavVisRange = "{0, 0}";
+			sepNavWindowFrame = "{{15, 163}, {1113, 1010}}";
+		};
+	};
+	FCDB9D760E2421890069A75D /* CAAmpPlugIn.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {996, 2128}}";
+			sepNavSelRange = "{1558, 0}";
+			sepNavVisRange = "{840, 1756}";
+			sepNavWindowFrame = "{{651, 133}, {1051, 1011}}";
+		};
+	};
+	FCDB9D770E2421890069A75D /* CAAmpDSP.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {378, 4032}}";
+			sepNavSelRange = "{2531, 0}";
+			sepNavVisRange = "{0, 0}";
+			sepNavWindowFrame = "{{305, 152}, {1159, 1006}}";
+		};
+	};
+	FCDB9D820E2421990069A75D /* CAAmpDSP.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1100, 1078}}";
+			sepNavSelRange = "{1345, 7}";
+			sepNavVisRange = "{239, 1541}";
+			sepNavWindowFrame = "{{38, 146}, {1159, 1006}}";
+		};
+	};
+}

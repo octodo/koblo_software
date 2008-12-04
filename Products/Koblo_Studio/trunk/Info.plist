@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Koblo Studio</string>
+	<key>CFBundleIconFile</key>
+	<string>KS</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.Koblo.KS</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>KS  </string>
+	<key>CFBundleVersion</key>
+	<string>0.9 rXXXX</string>
+  <key>CFBundleShortVersionString</key>
+  <string>0.9 rXXXX</string>
+  <key>CFBundleGetInfoString</key>
+  <string>Koblo Studio beta 0.9 rXXXX,
+Copyright © Koblo 2008</string>
+  <key>CSResourcesFileMapped</key>
+	<true/>
+</dict>
+</plist>

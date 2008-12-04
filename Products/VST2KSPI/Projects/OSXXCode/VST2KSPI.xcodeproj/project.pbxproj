@@ -1,0 +1,691 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0BBA14EC08B4DAE40001EB6F /* IOKit in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BBA14EB08B4DAE40001EB6F /* IOKit */; };
+		8D01CCCA0486CAD60068D4B7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
+		8D01CCCE0486CAD60068D4B7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */; };
+		E338DABE0BD494BB009ABE91 /* CParmGlobal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E338DAB80BD494BB009ABE91 /* CParmGlobal.cpp */; };
+		E3C81BEF0D62007300B474D3 /* audioeffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3C81BEC0D62007300B474D3 /* audioeffect.cpp */; };
+		E3C81BF00D62007300B474D3 /* audioeffectx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3C81BED0D62007300B474D3 /* audioeffectx.cpp */; };
+		E3C81BF10D62007300B474D3 /* vstplugmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3C81BEE0D62007300B474D3 /* vstplugmain.cpp */; };
+		E3CC108E0D2CD40300A41EE8 /* CBaseDezipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3CC10850D2CD40300A41EE8 /* CBaseDezipper.cpp */; };
+		E3CC108F0D2CD40300A41EE8 /* CBaseDSPEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3CC10860D2CD40300A41EE8 /* CBaseDSPEngine.cpp */; };
+		E3CC10900D2CD40300A41EE8 /* CBaseGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3CC10870D2CD40300A41EE8 /* CBaseGUI.cpp */; };
+		E3CC10910D2CD40300A41EE8 /* CBaseMIDICCEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3CC10880D2CD40300A41EE8 /* CBaseMIDICCEvent.cpp */; };
+		E3CC10920D2CD40300A41EE8 /* CBaseModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3CC10890D2CD40300A41EE8 /* CBaseModule.cpp */; };
+		E3CC10930D2CD40300A41EE8 /* CBasePane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3CC108A0D2CD40300A41EE8 /* CBasePane.cpp */; };
+		E3CC10940D2CD40300A41EE8 /* CBasePaneStd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3CC108B0D2CD40300A41EE8 /* CBasePaneStd.cpp */; };
+		E3CC10950D2CD40300A41EE8 /* CBasePlugIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3CC108C0D2CD40300A41EE8 /* CBasePlugIn.cpp */; };
+		E3CC10960D2CD40300A41EE8 /* CBaseTopPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3CC108D0D2CD40300A41EE8 /* CBaseTopPane.cpp */; };
+		E3CC10AB0D2CD43100A41EE8 /* kspiC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3CC10AA0D2CD43100A41EE8 /* kspiC.cpp */; };
+		E3CC11C70D2CF22800A41EE8 /* libGUIEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3CC10410D2CC86400A41EE8 /* libGUIEngine.a */; };
+		E3CC11C80D2CF22A00A41EE8 /* libDataEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3CC103B0D2CC85400A41EE8 /* libDataEngine.a */; };
+		E3CC11C90D2CF22C00A41EE8 /* libBaseUtilities.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3CC10350D2CC83E00A41EE8 /* libBaseUtilities.a */; };
+		E3E019700D49EBC1003F459F /* CVST2KSPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E0196F0D49EBC1003F459F /* CVST2KSPI.cpp */; };
+		E3F3895C0BD4A20A00101957 /* CVST2KSPIGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3F389580BD4A20A00101957 /* CVST2KSPIGUI.cpp */; };
+		E3F3895D0BD4A20A00101957 /* CVST2KSPIModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3F389590BD4A20A00101957 /* CVST2KSPIModule.cpp */; };
+		E3F3895E0BD4A20A00101957 /* CVST2KSPIPlugIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3F3895A0BD4A20A00101957 /* CVST2KSPIPlugIn.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E3CC10340D2CC83E00A41EE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3CC10300D2CC83E00A41EE8 /* BaseUtilities.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+		E3CC103A0D2CC85400A41EE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3CC10360D2CC85400A41EE8 /* DataEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = DataEngine;
+		};
+		E3CC10400D2CC86400A41EE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3CC103C0D2CC86400A41EE8 /* GUIEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = GUIEngine;
+		};
+		E3CC10450D2CC87800A41EE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3CC103C0D2CC86400A41EE8 /* GUIEngine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = GUIEngine;
+		};
+		E3CC10470D2CC87B00A41EE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3CC10360D2CC85400A41EE8 /* DataEngine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = DataEngine;
+		};
+		E3CC10490D2CC87F00A41EE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3CC10300D2CC83E00A41EE8 /* BaseUtilities.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		0BBA14EB08B4DAE40001EB6F /* IOKit */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = IOKit; path = /System/Library/Frameworks/IOKit.framework/Versions/A/IOKit; sourceTree = "<absolute>"; };
+		8D01CCD10486CAD60068D4B7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D01CCD20486CAD60068D4B7 /* VST2KSPI.kspi */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VST2KSPI.kspi; sourceTree = BUILT_PRODUCTS_DIR; };
+		E338DAAE0BD494AD009ABE91 /* CParmGlobal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CParmGlobal.h; path = ../../Include/CParmGlobal.h; sourceTree = SOURCE_ROOT; };
+		E338DAB80BD494BB009ABE91 /* CParmGlobal.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CParmGlobal.cpp; path = ../../Source/CParmGlobal.cpp; sourceTree = SOURCE_ROOT; };
+		E3BC57C609C9808B00741132 /* VST2KSPI_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = VST2KSPI_Prefix.pch; sourceTree = "<group>"; };
+		E3C81BE60D62006700B474D3 /* aeffect.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = aeffect.h; path = ../../Include/VST/aeffect.h; sourceTree = SOURCE_ROOT; };
+		E3C81BE70D62006700B474D3 /* aeffectx.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = aeffectx.h; path = ../../Include/VST/aeffectx.h; sourceTree = SOURCE_ROOT; };
+		E3C81BE80D62006700B474D3 /* aeffeditor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = aeffeditor.h; path = ../../Include/VST/aeffeditor.h; sourceTree = SOURCE_ROOT; };
+		E3C81BE90D62006700B474D3 /* audioeffect.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = audioeffect.h; path = ../../Include/VST/audioeffect.h; sourceTree = SOURCE_ROOT; };
+		E3C81BEA0D62006700B474D3 /* audioeffectx.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = audioeffectx.h; path = ../../Include/VST/audioeffectx.h; sourceTree = SOURCE_ROOT; };
+		E3C81BEB0D62006700B474D3 /* vstfxstore.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = vstfxstore.h; path = ../../Include/VST/vstfxstore.h; sourceTree = SOURCE_ROOT; };
+		E3C81BEC0D62007300B474D3 /* audioeffect.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = audioeffect.cpp; path = ../../Source/VST/audioeffect.cpp; sourceTree = SOURCE_ROOT; };
+		E3C81BED0D62007300B474D3 /* audioeffectx.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = audioeffectx.cpp; path = ../../Source/VST/audioeffectx.cpp; sourceTree = SOURCE_ROOT; };
+		E3C81BEE0D62007300B474D3 /* vstplugmain.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = vstplugmain.cpp; path = ../../Source/VST/vstplugmain.cpp; sourceTree = SOURCE_ROOT; };
+		E3CC10300D2CC83E00A41EE8 /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../../SDK/trunk/BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E3CC10360D2CC85400A41EE8 /* DataEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DataEngine.xcodeproj; path = ../../../../SDK/trunk/DataEngine/projects/OSXXCode/DataEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E3CC103C0D2CC86400A41EE8 /* GUIEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GUIEngine.xcodeproj; path = ../../../../SDK/trunk/GUIEngine/projects/OSXXCode/GUIEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E3CC10790D2CD3F300A41EE8 /* BaseControlIDs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = BaseControlIDs.h; path = ../../../../SDK/trunk/BaseClasses/Include/BaseControlIDs.h; sourceTree = SOURCE_ROOT; };
+		E3CC107A0D2CD3F300A41EE8 /* CBaseDezipper.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CBaseDezipper.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBaseDezipper.h; sourceTree = SOURCE_ROOT; };
+		E3CC107B0D2CD3F300A41EE8 /* CBaseDSPEngine.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CBaseDSPEngine.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBaseDSPEngine.h; sourceTree = SOURCE_ROOT; };
+		E3CC107C0D2CD3F300A41EE8 /* CBaseGUI.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CBaseGUI.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBaseGUI.h; sourceTree = SOURCE_ROOT; };
+		E3CC107D0D2CD3F300A41EE8 /* CBaseMIDICCEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CBaseMIDICCEvent.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBaseMIDICCEvent.h; sourceTree = SOURCE_ROOT; };
+		E3CC107E0D2CD3F300A41EE8 /* CBaseModule.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CBaseModule.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBaseModule.h; sourceTree = SOURCE_ROOT; };
+		E3CC107F0D2CD3F300A41EE8 /* CBasePane.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CBasePane.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBasePane.h; sourceTree = SOURCE_ROOT; };
+		E3CC10800D2CD3F300A41EE8 /* CBasePaneStd.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CBasePaneStd.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBasePaneStd.h; sourceTree = SOURCE_ROOT; };
+		E3CC10810D2CD3F300A41EE8 /* CBasePlugIn.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CBasePlugIn.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBasePlugIn.h; sourceTree = SOURCE_ROOT; };
+		E3CC10820D2CD3F300A41EE8 /* CBaseTopPane.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CBaseTopPane.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBaseTopPane.h; sourceTree = SOURCE_ROOT; };
+		E3CC10830D2CD3F300A41EE8 /* FontSizes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = FontSizes.h; path = ../../../../SDK/trunk/BaseClasses/Include/FontSizes.h; sourceTree = SOURCE_ROOT; };
+		E3CC10840D2CD3F300A41EE8 /* IBaseDezipperCallback.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IBaseDezipperCallback.h; path = ../../../../SDK/trunk/BaseClasses/Include/IBaseDezipperCallback.h; sourceTree = SOURCE_ROOT; };
+		E3CC10850D2CD40300A41EE8 /* CBaseDezipper.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseDezipper.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBaseDezipper.cpp; sourceTree = SOURCE_ROOT; };
+		E3CC10860D2CD40300A41EE8 /* CBaseDSPEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseDSPEngine.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBaseDSPEngine.cpp; sourceTree = SOURCE_ROOT; };
+		E3CC10870D2CD40300A41EE8 /* CBaseGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseGUI.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBaseGUI.cpp; sourceTree = SOURCE_ROOT; };
+		E3CC10880D2CD40300A41EE8 /* CBaseMIDICCEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseMIDICCEvent.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBaseMIDICCEvent.cpp; sourceTree = SOURCE_ROOT; };
+		E3CC10890D2CD40300A41EE8 /* CBaseModule.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseModule.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBaseModule.cpp; sourceTree = SOURCE_ROOT; };
+		E3CC108A0D2CD40300A41EE8 /* CBasePane.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBasePane.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBasePane.cpp; sourceTree = SOURCE_ROOT; };
+		E3CC108B0D2CD40300A41EE8 /* CBasePaneStd.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBasePaneStd.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBasePaneStd.cpp; sourceTree = SOURCE_ROOT; };
+		E3CC108C0D2CD40300A41EE8 /* CBasePlugIn.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBasePlugIn.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBasePlugIn.cpp; sourceTree = SOURCE_ROOT; };
+		E3CC108D0D2CD40300A41EE8 /* CBaseTopPane.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseTopPane.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBaseTopPane.cpp; sourceTree = SOURCE_ROOT; };
+		E3CC10A00D2CD42100A41EE8 /* IGUI.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IGUI.h; path = ../../../../SDK/trunk/KSPI/Interface/IGUI.h; sourceTree = SOURCE_ROOT; };
+		E3CC10A10D2CD42100A41EE8 /* IHost.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IHost.h; path = ../../../../SDK/trunk/KSPI/Interface/IHost.h; sourceTree = SOURCE_ROOT; };
+		E3CC10A20D2CD42100A41EE8 /* IModule.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IModule.h; path = ../../../../SDK/trunk/KSPI/Interface/IModule.h; sourceTree = SOURCE_ROOT; };
+		E3CC10A30D2CD42100A41EE8 /* IPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IPlugIn.h; path = ../../../../SDK/trunk/KSPI/Interface/IPlugIn.h; sourceTree = SOURCE_ROOT; };
+		E3CC10A40D2CD42100A41EE8 /* kspi.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = kspi.h; path = ../../../../SDK/trunk/KSPI/Interface/kspi.h; sourceTree = SOURCE_ROOT; };
+		E3CC10A50D2CD42100A41EE8 /* kspiC.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = kspiC.h; path = ../../../../SDK/trunk/KSPI/Interface/kspiC.h; sourceTree = SOURCE_ROOT; };
+		E3CC10A60D2CD42100A41EE8 /* kspiCHost.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = kspiCHost.h; path = ../../../../SDK/trunk/KSPI/Interface/kspiCHost.h; sourceTree = SOURCE_ROOT; };
+		E3CC10A70D2CD42100A41EE8 /* kspimain.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = kspimain.h; path = ../../../../SDK/trunk/KSPI/Interface/kspimain.h; sourceTree = SOURCE_ROOT; };
+		E3CC10A80D2CD42100A41EE8 /* SMIDIEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SMIDIEvent.h; path = ../../../../SDK/trunk/KSPI/Interface/SMIDIEvent.h; sourceTree = SOURCE_ROOT; };
+		E3CC10A90D2CD42100A41EE8 /* SParameterInfo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SParameterInfo.h; path = ../../../../SDK/trunk/KSPI/Interface/SParameterInfo.h; sourceTree = SOURCE_ROOT; };
+		E3CC10AA0D2CD43100A41EE8 /* kspiC.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = kspiC.cpp; path = ../../../../SDK/trunk/KSPI/source/kspiC.cpp; sourceTree = SOURCE_ROOT; };
+		E3CC11EA0D2CF2C400A41EE8 /* kspiCHost.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = kspiCHost.cpp; path = ../../../../SDK/trunk/KSPI/source/kspiCHost.cpp; sourceTree = SOURCE_ROOT; };
+		E3CC843A0BD49CF6005C7AEB /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
+		E3E019100D49EA3F003F459F /* VST2KSPI.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VST2KSPI.h; path = ../../Include/VST2KSPI.h; sourceTree = SOURCE_ROOT; };
+		E3E0196F0D49EBC1003F459F /* CVST2KSPI.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CVST2KSPI.cpp; path = ../../Source/CVST2KSPI.cpp; sourceTree = SOURCE_ROOT; };
+		E3F389580BD4A20A00101957 /* CVST2KSPIGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CVST2KSPIGUI.cpp; path = ../../Source/CVST2KSPIGUI.cpp; sourceTree = SOURCE_ROOT; };
+		E3F389590BD4A20A00101957 /* CVST2KSPIModule.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CVST2KSPIModule.cpp; path = ../../Source/CVST2KSPIModule.cpp; sourceTree = SOURCE_ROOT; };
+		E3F3895A0BD4A20A00101957 /* CVST2KSPIPlugIn.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CVST2KSPIPlugIn.cpp; path = ../../Source/CVST2KSPIPlugIn.cpp; sourceTree = SOURCE_ROOT; };
+		E3F389600BD4A21E00101957 /* CVST2KSPI.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CVST2KSPI.h; path = ../../Include/CVST2KSPI.h; sourceTree = SOURCE_ROOT; };
+		E3F389610BD4A21E00101957 /* CVST2KSPIGUI.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CVST2KSPIGUI.h; path = ../../Include/CVST2KSPIGUI.h; sourceTree = SOURCE_ROOT; };
+		E3F389620BD4A21E00101957 /* CVST2KSPIModule.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CVST2KSPIModule.h; path = ../../Include/CVST2KSPIModule.h; sourceTree = SOURCE_ROOT; };
+		E3F389630BD4A21E00101957 /* CVST2KSPIPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CVST2KSPIPlugIn.h; path = ../../Include/CVST2KSPIPlugIn.h; sourceTree = SOURCE_ROOT; };
+		E3F389650BD4A21E00101957 /* CVST2KSPIGUI.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CVST2KSPIGUI.h; path = ../../Include/CVST2KSPIGUI.h; sourceTree = SOURCE_ROOT; };
+		E3F389660BD4A21E00101957 /* VST2KSPIOS.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VST2KSPIOS.h; path = ../../Include/VST2KSPIOS.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D01CCCD0486CAD60068D4B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D01CCCE0486CAD60068D4B7 /* Carbon.framework in Frameworks */,
+				0BBA14EC08B4DAE40001EB6F /* IOKit in Frameworks */,
+				E3CC11C70D2CF22800A41EE8 /* libGUIEngine.a in Frameworks */,
+				E3CC11C80D2CF22A00A41EE8 /* libDataEngine.a in Frameworks */,
+				E3CC11C90D2CF22C00A41EE8 /* libBaseUtilities.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* INetSynth */ = {
+			isa = PBXGroup;
+			children = (
+				E3CC103C0D2CC86400A41EE8 /* GUIEngine.xcodeproj */,
+				E3CC10360D2CC85400A41EE8 /* DataEngine.xcodeproj */,
+				E3CC10300D2CC83E00A41EE8 /* BaseUtilities.xcodeproj */,
+				E3BC57C609C9808B00741132 /* VST2KSPI_Prefix.pch */,
+				08FB77ADFE841716C02AAC07 /* Source */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
+				19C28FB4FE9D528D11CA2CBB /* Products */,
+			);
+			name = INetSynth;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				0BBA14EB08B4DAE40001EB6F /* IOKit */,
+				08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D01CCD10486CAD60068D4B7 /* Info.plist */,
+				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				E3CC843A0BD49CF6005C7AEB /* Info copy.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77ADFE841716C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E3C81BE50D62005700B474D3 /* VST */,
+				E308AA0D0B538A9A009A1CAA /* KSPI */,
+				E308AA0B0B538A93009A1CAA /* BaseClasses */,
+				0B77339D08A63E92004B30F3 /* Source */,
+				0B77339C08A63E8D004B30F3 /* Include */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B77339C08A63E8D004B30F3 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				E3E019100D49EA3F003F459F /* VST2KSPI.h */,
+				E3F389600BD4A21E00101957 /* CVST2KSPI.h */,
+				E3F389610BD4A21E00101957 /* CVST2KSPIGUI.h */,
+				E3F389620BD4A21E00101957 /* CVST2KSPIModule.h */,
+				E3F389630BD4A21E00101957 /* CVST2KSPIPlugIn.h */,
+				E3F389650BD4A21E00101957 /* CVST2KSPIGUI.h */,
+				E3F389660BD4A21E00101957 /* VST2KSPIOS.h */,
+				E338DAAE0BD494AD009ABE91 /* CParmGlobal.h */,
+				0B7733E108A63EA9004B30F3 /* IP */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		0B77339D08A63E92004B30F3 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E3E0196F0D49EBC1003F459F /* CVST2KSPI.cpp */,
+				E3F389580BD4A20A00101957 /* CVST2KSPIGUI.cpp */,
+				E3F389590BD4A20A00101957 /* CVST2KSPIModule.cpp */,
+				E3F3895A0BD4A20A00101957 /* CVST2KSPIPlugIn.cpp */,
+				E338DAB80BD494BB009ABE91 /* CParmGlobal.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B7733E108A63EA9004B30F3 /* IP */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = IP;
+			path = ../../include/IP;
+			sourceTree = SOURCE_ROOT;
+		};
+		19C28FB4FE9D528D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D01CCD20486CAD60068D4B7 /* VST2KSPI.kspi */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E308AA0B0B538A93009A1CAA /* BaseClasses */ = {
+			isa = PBXGroup;
+			children = (
+				E3CC10850D2CD40300A41EE8 /* CBaseDezipper.cpp */,
+				E3CC10860D2CD40300A41EE8 /* CBaseDSPEngine.cpp */,
+				E3CC10870D2CD40300A41EE8 /* CBaseGUI.cpp */,
+				E3CC10880D2CD40300A41EE8 /* CBaseMIDICCEvent.cpp */,
+				E3CC10890D2CD40300A41EE8 /* CBaseModule.cpp */,
+				E3CC108A0D2CD40300A41EE8 /* CBasePane.cpp */,
+				E3CC108B0D2CD40300A41EE8 /* CBasePaneStd.cpp */,
+				E3CC108C0D2CD40300A41EE8 /* CBasePlugIn.cpp */,
+				E3CC108D0D2CD40300A41EE8 /* CBaseTopPane.cpp */,
+				E3CC10790D2CD3F300A41EE8 /* BaseControlIDs.h */,
+				E3CC107A0D2CD3F300A41EE8 /* CBaseDezipper.h */,
+				E3CC107B0D2CD3F300A41EE8 /* CBaseDSPEngine.h */,
+				E3CC107C0D2CD3F300A41EE8 /* CBaseGUI.h */,
+				E3CC107D0D2CD3F300A41EE8 /* CBaseMIDICCEvent.h */,
+				E3CC107E0D2CD3F300A41EE8 /* CBaseModule.h */,
+				E3CC107F0D2CD3F300A41EE8 /* CBasePane.h */,
+				E3CC10800D2CD3F300A41EE8 /* CBasePaneStd.h */,
+				E3CC10810D2CD3F300A41EE8 /* CBasePlugIn.h */,
+				E3CC10820D2CD3F300A41EE8 /* CBaseTopPane.h */,
+				E3CC10830D2CD3F300A41EE8 /* FontSizes.h */,
+				E3CC10840D2CD3F300A41EE8 /* IBaseDezipperCallback.h */,
+			);
+			name = BaseClasses;
+			sourceTree = "<group>";
+		};
+		E308AA0D0B538A9A009A1CAA /* KSPI */ = {
+			isa = PBXGroup;
+			children = (
+				E3CC11EA0D2CF2C400A41EE8 /* kspiCHost.cpp */,
+				E3CC10AA0D2CD43100A41EE8 /* kspiC.cpp */,
+				E3CC10A00D2CD42100A41EE8 /* IGUI.h */,
+				E3CC10A10D2CD42100A41EE8 /* IHost.h */,
+				E3CC10A20D2CD42100A41EE8 /* IModule.h */,
+				E3CC10A30D2CD42100A41EE8 /* IPlugIn.h */,
+				E3CC10A40D2CD42100A41EE8 /* kspi.h */,
+				E3CC10A50D2CD42100A41EE8 /* kspiC.h */,
+				E3CC10A60D2CD42100A41EE8 /* kspiCHost.h */,
+				E3CC10A70D2CD42100A41EE8 /* kspimain.h */,
+				E3CC10A80D2CD42100A41EE8 /* SMIDIEvent.h */,
+				E3CC10A90D2CD42100A41EE8 /* SParameterInfo.h */,
+			);
+			name = KSPI;
+			sourceTree = "<group>";
+		};
+		E3C81BE50D62005700B474D3 /* VST */ = {
+			isa = PBXGroup;
+			children = (
+				E3C81BEC0D62007300B474D3 /* audioeffect.cpp */,
+				E3C81BED0D62007300B474D3 /* audioeffectx.cpp */,
+				E3C81BEE0D62007300B474D3 /* vstplugmain.cpp */,
+				E3C81BE60D62006700B474D3 /* aeffect.h */,
+				E3C81BE70D62006700B474D3 /* aeffectx.h */,
+				E3C81BE80D62006700B474D3 /* aeffeditor.h */,
+				E3C81BE90D62006700B474D3 /* audioeffect.h */,
+				E3C81BEA0D62006700B474D3 /* audioeffectx.h */,
+				E3C81BEB0D62006700B474D3 /* vstfxstore.h */,
+			);
+			name = VST;
+			sourceTree = "<group>";
+		};
+		E3CC10310D2CC83E00A41EE8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3CC10350D2CC83E00A41EE8 /* libBaseUtilities.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3CC10370D2CC85400A41EE8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3CC103B0D2CC85400A41EE8 /* libDataEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3CC103D0D2CC86400A41EE8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3CC10410D2CC86400A41EE8 /* libGUIEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D01CCC60486CAD60068D4B7 /* VST2KSPI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B77338408A63E2A004B30F3 /* Build configuration list for PBXNativeTarget "VST2KSPI" */;
+			buildPhases = (
+				8D01CCC90486CAD60068D4B7 /* Resources */,
+				8D01CCCB0486CAD60068D4B7 /* Sources */,
+				8D01CCCD0486CAD60068D4B7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E3CC10460D2CC87800A41EE8 /* PBXTargetDependency */,
+				E3CC10480D2CC87B00A41EE8 /* PBXTargetDependency */,
+				E3CC104A0D2CC87F00A41EE8 /* PBXTargetDependency */,
+			);
+			name = VST2KSPI;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = INetSynth;
+			productReference = 8D01CCD20486CAD60068D4B7 /* VST2KSPI.kspi */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 0B77338808A63E2A004B30F3 /* Build configuration list for PBXProject "VST2KSPI" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 089C166AFE841209C02AAC07 /* INetSynth */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E3CC10310D2CC83E00A41EE8 /* Products */;
+					ProjectRef = E3CC10300D2CC83E00A41EE8 /* BaseUtilities.xcodeproj */;
+				},
+				{
+					ProductGroup = E3CC10370D2CC85400A41EE8 /* Products */;
+					ProjectRef = E3CC10360D2CC85400A41EE8 /* DataEngine.xcodeproj */;
+				},
+				{
+					ProductGroup = E3CC103D0D2CC86400A41EE8 /* Products */;
+					ProjectRef = E3CC103C0D2CC86400A41EE8 /* GUIEngine.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				8D01CCC60486CAD60068D4B7 /* VST2KSPI */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E3CC10350D2CC83E00A41EE8 /* libBaseUtilities.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBaseUtilities.a;
+			remoteRef = E3CC10340D2CC83E00A41EE8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E3CC103B0D2CC85400A41EE8 /* libDataEngine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDataEngine.a;
+			remoteRef = E3CC103A0D2CC85400A41EE8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E3CC10410D2CC86400A41EE8 /* libGUIEngine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGUIEngine.a;
+			remoteRef = E3CC10400D2CC86400A41EE8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D01CCC90486CAD60068D4B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D01CCCA0486CAD60068D4B7 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D01CCCB0486CAD60068D4B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E338DABE0BD494BB009ABE91 /* CParmGlobal.cpp in Sources */,
+				E3F3895C0BD4A20A00101957 /* CVST2KSPIGUI.cpp in Sources */,
+				E3F3895D0BD4A20A00101957 /* CVST2KSPIModule.cpp in Sources */,
+				E3F3895E0BD4A20A00101957 /* CVST2KSPIPlugIn.cpp in Sources */,
+				E3CC108E0D2CD40300A41EE8 /* CBaseDezipper.cpp in Sources */,
+				E3CC108F0D2CD40300A41EE8 /* CBaseDSPEngine.cpp in Sources */,
+				E3CC10900D2CD40300A41EE8 /* CBaseGUI.cpp in Sources */,
+				E3CC10910D2CD40300A41EE8 /* CBaseMIDICCEvent.cpp in Sources */,
+				E3CC10920D2CD40300A41EE8 /* CBaseModule.cpp in Sources */,
+				E3CC10930D2CD40300A41EE8 /* CBasePane.cpp in Sources */,
+				E3CC10940D2CD40300A41EE8 /* CBasePaneStd.cpp in Sources */,
+				E3CC10950D2CD40300A41EE8 /* CBasePlugIn.cpp in Sources */,
+				E3CC10960D2CD40300A41EE8 /* CBaseTopPane.cpp in Sources */,
+				E3CC10AB0D2CD43100A41EE8 /* kspiC.cpp in Sources */,
+				E3E019700D49EBC1003F459F /* CVST2KSPI.cpp in Sources */,
+				E3C81BEF0D62007300B474D3 /* audioeffect.cpp in Sources */,
+				E3C81BF00D62007300B474D3 /* audioeffectx.cpp in Sources */,
+				E3C81BF10D62007300B474D3 /* vstplugmain.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E3CC10460D2CC87800A41EE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GUIEngine;
+			targetProxy = E3CC10450D2CC87800A41EE8 /* PBXContainerItemProxy */;
+		};
+		E3CC10480D2CC87B00A41EE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DataEngine;
+			targetProxy = E3CC10470D2CC87B00A41EE8 /* PBXContainerItemProxy */;
+		};
+		E3CC104A0D2CC87F00A41EE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BaseUtilities;
+			targetProxy = E3CC10490D2CC87F00A41EE8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C167EFE841241C02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0B77338508A63E2A004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_LOCATION = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = VST2KSPI_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				GENERATE_PKGINFO_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../../SDK/trunk/BaseUtilities/Interface/,
+					../../../../SDK/trunk/DataEngine/Interface/,
+					../../../../SDK/trunk/GUIEngine/Interface,
+					../../../../SDK/trunk/KSPI/Interface/,
+					../../../../SDK/trunk/STools/Interface,
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = /Library/Kjaerhus;
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../../SDK/trunk/GUIEngine/projects/OSXXCode/build/Debug",
+					"$(SRCROOT)/../../../../SDK/trunk/BaseUtilities/projects/OSXXCode/build/Debug",
+					"$(SRCROOT)/../../../../SDK/trunk/DataEngine/projects/OSXXCode/build/Debug",
+				);
+				PREBINDING = YES;
+				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders /usr/local/include";
+				PRODUCT_NAME = VST2KSPI;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers /usr/local/include";
+				WRAPPER_EXTENSION = kspi;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		0B77338608A63E2A004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				DEPLOYMENT_LOCATION = NO;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Echo_Prefix.pch;
+				GCC_UNROLL_LOOPS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				GENERATE_PKGINFO_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../../../SDK/BaseUtilities/Interface/,
+					../../../../../SDK/DataEngine/Interface/,
+					../../../../../SDK/GUIEngine/Interface,
+					../../../../../SDK/KSPI/Interface/,
+					../../../../../SDK/STools/Interface,
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = /Library/KeyToSound/Kjaerhus;
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../../../SDK/BaseUtilities/projects/OSXXCode/build/Release",
+					"$(SRCROOT)/../../../../../SDK/DataEngine/projects/OSXXCode/build/Release",
+					"$(SRCROOT)/../../../../../SDK/GUIEngine/projects/OSXXCode/build/Release",
+					"$(SRCROOT)/../../../../../SDK/STools/projects/OSXXCode/build/Release",
+					"$(SRCROOT)",
+				);
+				PREBINDING = YES;
+				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders /usr/local/include";
+				PRODUCT_NAME = Echo;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers /usr/local/include";
+				WRAPPER_EXTENSION = kspi;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		0B77338708A63E2A004B30F3 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEPLOYMENT_LOCATION = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Echo_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = /Library/KeyToSound/Kjaerhus;
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../GUIEngine/projects/OSXXCode/build/Debug",
+					"$(SRCROOT)/../../../BaseUtilities/projects/OSXXCode/build/Debug",
+					"$(SRCROOT)/../../../DataEngine/projects/OSXXCode/build/Debug",
+					"$(SRCROOT)/../../../BaseUtilities/projects/OSXXCode/build/Release",
+					"$(SRCROOT)/../../../DataEngine/projects/OSXXCode/build/Release",
+					"$(SRCROOT)/../../../GUIEngine/projects/OSXXCode/build/Release",
+					"$(SRCROOT)",
+				);
+				PREBINDING = YES;
+				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders /usr/local/include";
+				PRODUCT_NAME = Echo;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers /usr/local/include";
+				WRAPPER_EXTENSION = kspi;
+				ZERO_LINK = NO;
+			};
+			name = Default;
+		};
+		0B77338908A63E2A004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEPLOYMENT_LOCATION = YES;
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+					../../../DataEngine/Interface/,
+					../../../GUIEngine/Interface,
+					../../../KSPI/Interface/,
+					../../../BaseUtilities/Include/,
+					../../../DataEngine/Include/,
+					../../../GUIEngine/Include/,
+				);
+				INSTALL_PATH = /Library/KeyToSound/Kjaerhus;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = YES;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		0B77338A08A63E2A004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEPLOYMENT_LOCATION = YES;
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+					../../../DataEngine/Interface/,
+					../../../GUIEngine/Interface,
+					../../../KSPI/Interface/,
+					../../../BaseUtilities/Include/,
+					../../../DataEngine/Include/,
+					../../../GUIEngine/Include/,
+				);
+				INSTALL_PATH = /Library/KeyToSound/Kjaerhus;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = YES;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+		0B77338B08A63E2A004B30F3 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEPLOYMENT_LOCATION = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../BaseUtilities/Interface/,
+					../../../DataEngine/Interface/,
+					../../../GUIEngine/Interface,
+					../../../KSPI/Interface/,
+				);
+				INSTALL_PATH = /Library/KeyToSound/Kjaerhus;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0B77338408A63E2A004B30F3 /* Build configuration list for PBXNativeTarget "VST2KSPI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77338508A63E2A004B30F3 /* Debug */,
+				0B77338608A63E2A004B30F3 /* Release */,
+				0B77338708A63E2A004B30F3 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		0B77338808A63E2A004B30F3 /* Build configuration list for PBXProject "VST2KSPI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77338908A63E2A004B30F3 /* Debug */,
+				0B77338A08A63E2A004B30F3 /* Release */,
+				0B77338B08A63E2A004B30F3 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

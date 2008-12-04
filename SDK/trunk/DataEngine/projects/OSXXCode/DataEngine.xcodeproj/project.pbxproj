@@ -1,0 +1,401 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0B77318908A634EC004B30F3 /* de.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77318308A634EC004B30F3 /* de.h */; };
+		0B77318A08A634EC004B30F3 /* IConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77318408A634EC004B30F3 /* IConverter.h */; };
+		0B77318B08A634EC004B30F3 /* IDisplayConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77318508A634EC004B30F3 /* IDisplayConverter.h */; };
+		0B77318C08A634EC004B30F3 /* IParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77318608A634EC004B30F3 /* IParameter.h */; };
+		0B77318D08A634EC004B30F3 /* IParameterManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77318708A634EC004B30F3 /* IParameterManager.h */; };
+		0B77318E08A634EC004B30F3 /* IParameterManagerCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77318808A634EC004B30F3 /* IParameterManagerCallback.h */; };
+		0B77319608A634FF004B30F3 /* CConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77318F08A634FF004B30F3 /* CConverter.h */; };
+		0B77319708A634FF004B30F3 /* CConverterLinear.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77319008A634FF004B30F3 /* CConverterLinear.h */; };
+		0B77319808A634FF004B30F3 /* CConverterLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77319108A634FF004B30F3 /* CConverterLog.h */; };
+		0B77319908A634FF004B30F3 /* CDisplayConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77319208A634FF004B30F3 /* CDisplayConverter.h */; };
+		0B77319A08A634FF004B30F3 /* CParameterManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77319308A634FF004B30F3 /* CParameterManager.h */; };
+		0B77319B08A634FF004B30F3 /* deInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77319408A634FF004B30F3 /* deInternal.h */; };
+		0B77319C08A634FF004B30F3 /* deInternalOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77319508A634FF004B30F3 /* deInternalOS.h */; };
+		0B7731A308A63510004B30F3 /* CConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77319D08A63510004B30F3 /* CConverter.cpp */; };
+		0B7731A408A63510004B30F3 /* CConverterLinear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77319E08A63510004B30F3 /* CConverterLinear.cpp */; };
+		0B7731A508A63510004B30F3 /* CConverterLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77319F08A63510004B30F3 /* CConverterLog.cpp */; };
+		0B7731A608A63510004B30F3 /* CDisplayConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7731A008A63510004B30F3 /* CDisplayConverter.cpp */; };
+		0B7731A708A63510004B30F3 /* CParameterManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7731A108A63510004B30F3 /* CParameterManager.cpp */; };
+		0BD5637B0958137600016748 /* CConverterX3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BD5637A0958137600016748 /* CConverterX3.cpp */; };
+		0BD5637D0958138300016748 /* CConverterX3.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD5637C0958138300016748 /* CConverterX3.h */; };
+		0BFDD3F5090CE6F7008D99CE /* CConverterEnum.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BFDD3F3090CE6F7008D99CE /* CConverterEnum.h */; };
+		0BFDD3F6090CE6F7008D99CE /* CConverterTrueLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BFDD3F4090CE6F7008D99CE /* CConverterTrueLog.h */; };
+		0BFDD3F9090CE71B008D99CE /* CConverterEnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BFDD3F7090CE71B008D99CE /* CConverterEnum.cpp */; };
+		0BFDD3FA090CE71B008D99CE /* CConverterTrueLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BFDD3F8090CE71B008D99CE /* CConverterTrueLog.cpp */; };
+		D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0B8839F508BB499100095026 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+		0B8839F708BB499B00095026 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		0B77318308A634EC004B30F3 /* de.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = de.h; path = ../../interface/de.h; sourceTree = SOURCE_ROOT; };
+		0B77318408A634EC004B30F3 /* IConverter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IConverter.h; path = ../../interface/IConverter.h; sourceTree = SOURCE_ROOT; };
+		0B77318508A634EC004B30F3 /* IDisplayConverter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDisplayConverter.h; path = ../../interface/IDisplayConverter.h; sourceTree = SOURCE_ROOT; };
+		0B77318608A634EC004B30F3 /* IParameter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IParameter.h; path = ../../interface/IParameter.h; sourceTree = SOURCE_ROOT; };
+		0B77318708A634EC004B30F3 /* IParameterManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IParameterManager.h; path = ../../interface/IParameterManager.h; sourceTree = SOURCE_ROOT; };
+		0B77318808A634EC004B30F3 /* IParameterManagerCallback.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IParameterManagerCallback.h; path = ../../interface/IParameterManagerCallback.h; sourceTree = SOURCE_ROOT; };
+		0B77318F08A634FF004B30F3 /* CConverter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CConverter.h; path = ../../include/CConverter.h; sourceTree = SOURCE_ROOT; };
+		0B77319008A634FF004B30F3 /* CConverterLinear.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CConverterLinear.h; path = ../../include/CConverterLinear.h; sourceTree = SOURCE_ROOT; };
+		0B77319108A634FF004B30F3 /* CConverterLog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CConverterLog.h; path = ../../include/CConverterLog.h; sourceTree = SOURCE_ROOT; };
+		0B77319208A634FF004B30F3 /* CDisplayConverter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CDisplayConverter.h; path = ../../include/CDisplayConverter.h; sourceTree = SOURCE_ROOT; };
+		0B77319308A634FF004B30F3 /* CParameterManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CParameterManager.h; path = ../../include/CParameterManager.h; sourceTree = SOURCE_ROOT; };
+		0B77319408A634FF004B30F3 /* deInternal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = deInternal.h; path = ../../include/deInternal.h; sourceTree = SOURCE_ROOT; };
+		0B77319508A634FF004B30F3 /* deInternalOS.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = deInternalOS.h; path = ../../include/deInternalOS.h; sourceTree = SOURCE_ROOT; };
+		0B77319D08A63510004B30F3 /* CConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CConverter.cpp; path = ../../source/CConverter.cpp; sourceTree = SOURCE_ROOT; };
+		0B77319E08A63510004B30F3 /* CConverterLinear.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CConverterLinear.cpp; path = ../../source/CConverterLinear.cpp; sourceTree = SOURCE_ROOT; };
+		0B77319F08A63510004B30F3 /* CConverterLog.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CConverterLog.cpp; path = ../../source/CConverterLog.cpp; sourceTree = SOURCE_ROOT; };
+		0B7731A008A63510004B30F3 /* CDisplayConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CDisplayConverter.cpp; path = ../../source/CDisplayConverter.cpp; sourceTree = SOURCE_ROOT; };
+		0B7731A108A63510004B30F3 /* CParameterManager.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CParameterManager.cpp; path = ../../source/CParameterManager.cpp; sourceTree = SOURCE_ROOT; };
+		0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };
+		0BD5637A0958137600016748 /* CConverterX3.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CConverterX3.cpp; path = ../../source/CConverterX3.cpp; sourceTree = SOURCE_ROOT; };
+		0BD5637C0958138300016748 /* CConverterX3.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CConverterX3.h; path = ../../include/CConverterX3.h; sourceTree = SOURCE_ROOT; };
+		0BFDD3F3090CE6F7008D99CE /* CConverterEnum.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CConverterEnum.h; path = ../../include/CConverterEnum.h; sourceTree = SOURCE_ROOT; };
+		0BFDD3F4090CE6F7008D99CE /* CConverterTrueLog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CConverterTrueLog.h; path = ../../include/CConverterTrueLog.h; sourceTree = SOURCE_ROOT; };
+		0BFDD3F7090CE71B008D99CE /* CConverterEnum.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CConverterEnum.cpp; path = ../../source/CConverterEnum.cpp; sourceTree = SOURCE_ROOT; };
+		0BFDD3F8090CE71B008D99CE /* CConverterTrueLog.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CConverterTrueLog.cpp; path = ../../source/CConverterTrueLog.cpp; sourceTree = SOURCE_ROOT; };
+		32BAE0B70371A74B00C91783 /* DataEngine_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataEngine_Prefix.pch; sourceTree = "<group>"; };
+		D2AAC06F0554671400DB518D /* libDataEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDataEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC06D0554671400DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DDFF38A45A11DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC06F0554671400DB518D /* libDataEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* DataEngine */ = {
+			isa = PBXGroup;
+			children = (
+				0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */,
+				08FB77ACFE841707C02AAC07 /* Source */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DDFF38A45A11DB9C8B /* Products */,
+			);
+			name = DataEngine;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AAFE841565C02AAC07 /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		08FB77ACFE841707C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0B77318208A634D6004B30F3 /* Source */,
+				0B77318108A634CF004B30F3 /* Include */,
+				0B77317608A634BB004B30F3 /* Interface */,
+				32BAE0B70371A74B00C91783 /* DataEngine_Prefix.pch */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B77317608A634BB004B30F3 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				0B77318308A634EC004B30F3 /* de.h */,
+				0B77318408A634EC004B30F3 /* IConverter.h */,
+				0B77318508A634EC004B30F3 /* IDisplayConverter.h */,
+				0B77318608A634EC004B30F3 /* IParameter.h */,
+				0B77318708A634EC004B30F3 /* IParameterManager.h */,
+				0B77318808A634EC004B30F3 /* IParameterManagerCallback.h */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
+		0B77318108A634CF004B30F3 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				0BD5637C0958138300016748 /* CConverterX3.h */,
+				0BFDD3F3090CE6F7008D99CE /* CConverterEnum.h */,
+				0BFDD3F4090CE6F7008D99CE /* CConverterTrueLog.h */,
+				0B77318F08A634FF004B30F3 /* CConverter.h */,
+				0B77319008A634FF004B30F3 /* CConverterLinear.h */,
+				0B77319108A634FF004B30F3 /* CConverterLog.h */,
+				0B77319208A634FF004B30F3 /* CDisplayConverter.h */,
+				0B77319308A634FF004B30F3 /* CParameterManager.h */,
+				0B77319408A634FF004B30F3 /* deInternal.h */,
+				0B77319508A634FF004B30F3 /* deInternalOS.h */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		0B77318208A634D6004B30F3 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0BD5637A0958137600016748 /* CConverterX3.cpp */,
+				0BFDD3F7090CE71B008D99CE /* CConverterEnum.cpp */,
+				0BFDD3F8090CE71B008D99CE /* CConverterTrueLog.cpp */,
+				0B77319D08A63510004B30F3 /* CConverter.cpp */,
+				0B77319E08A63510004B30F3 /* CConverterLinear.cpp */,
+				0B77319F08A63510004B30F3 /* CConverterLog.cpp */,
+				0B7731A008A63510004B30F3 /* CDisplayConverter.cpp */,
+				0B7731A108A63510004B30F3 /* CParameterManager.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B8839F208BB499100095026 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0B8839F608BB499100095026 /* libBaseUtilities.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC06B0554671400DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B77318908A634EC004B30F3 /* de.h in Headers */,
+				0B77318A08A634EC004B30F3 /* IConverter.h in Headers */,
+				0B77318B08A634EC004B30F3 /* IDisplayConverter.h in Headers */,
+				0B77318C08A634EC004B30F3 /* IParameter.h in Headers */,
+				0B77318D08A634EC004B30F3 /* IParameterManager.h in Headers */,
+				0B77318E08A634EC004B30F3 /* IParameterManagerCallback.h in Headers */,
+				0B77319608A634FF004B30F3 /* CConverter.h in Headers */,
+				0B77319708A634FF004B30F3 /* CConverterLinear.h in Headers */,
+				0B77319808A634FF004B30F3 /* CConverterLog.h in Headers */,
+				0B77319908A634FF004B30F3 /* CDisplayConverter.h in Headers */,
+				0B77319A08A634FF004B30F3 /* CParameterManager.h in Headers */,
+				0B77319B08A634FF004B30F3 /* deInternal.h in Headers */,
+				0B77319C08A634FF004B30F3 /* deInternalOS.h in Headers */,
+				0BFDD3F5090CE6F7008D99CE /* CConverterEnum.h in Headers */,
+				0BFDD3F6090CE6F7008D99CE /* CConverterTrueLog.h in Headers */,
+				0BD5637D0958138300016748 /* CConverterX3.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC06E0554671400DB518D /* DataEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B77317708A634BB004B30F3 /* Build configuration list for PBXNativeTarget "DataEngine" */;
+			buildPhases = (
+				D2AAC06B0554671400DB518D /* Headers */,
+				D2AAC06C0554671400DB518D /* Sources */,
+				D2AAC06D0554671400DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0B8839F808BB499B00095026 /* PBXTargetDependency */,
+			);
+			name = DataEngine;
+			productName = DataEngine;
+			productReference = D2AAC06F0554671400DB518D /* libDataEngine.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 0B77317B08A634BB004B30F3 /* Build configuration list for PBXProject "DataEngine" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* DataEngine */;
+			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0B8839F208BB499100095026 /* Products */;
+					ProjectRef = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D2AAC06E0554671400DB518D /* DataEngine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0B8839F608BB499100095026 /* libBaseUtilities.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBaseUtilities.a;
+			remoteRef = 0B8839F508BB499100095026 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC06C0554671400DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B7731A308A63510004B30F3 /* CConverter.cpp in Sources */,
+				0B7731A408A63510004B30F3 /* CConverterLinear.cpp in Sources */,
+				0B7731A508A63510004B30F3 /* CConverterLog.cpp in Sources */,
+				0B7731A608A63510004B30F3 /* CDisplayConverter.cpp in Sources */,
+				0B7731A708A63510004B30F3 /* CParameterManager.cpp in Sources */,
+				0BFDD3F9090CE71B008D99CE /* CConverterEnum.cpp in Sources */,
+				0BFDD3FA090CE71B008D99CE /* CConverterTrueLog.cpp in Sources */,
+				0BD5637B0958137600016748 /* CConverterX3.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0B8839F808BB499B00095026 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BaseUtilities;
+			targetProxy = 0B8839F708BB499B00095026 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0B77317808A634BB004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = DataEngine_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				PREBINDING = NO;
+				PRODUCT_NAME = DataEngine;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		0B77317908A634BB004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				COPY_PHASE_STRIP = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = DataEngine_Prefix.pch;
+				GCC_UNROLL_LOOPS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				PREBINDING = NO;
+				PRODUCT_NAME = DataEngine;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		0B77317C08A634BB004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		0B77317D08A634BB004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0B77317708A634BB004B30F3 /* Build configuration list for PBXNativeTarget "DataEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77317808A634BB004B30F3 /* Debug */,
+				0B77317908A634BB004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0B77317B08A634BB004B30F3 /* Build configuration list for PBXProject "DataEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77317C08A634BB004B30F3 /* Debug */,
+				0B77317D08A634BB004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

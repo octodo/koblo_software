@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/repos/!svn/ver/2461/Products/DigitalEcho/source
+END
+CDigitalEchoPlugIn.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/repos/!svn/ver/2437/Products/DigitalEcho/source/CDigitalEchoPlugIn.cpp
+END
+CDigitalEchoPane.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/repos/!svn/ver/2437/Products/DigitalEcho/source/CDigitalEchoPane.cpp
+END
+CParmGlobal.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/repos/!svn/ver/2437/Products/DigitalEcho/source/CParmGlobal.cpp
+END
+CDigitalEchoGUI.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/repos/!svn/ver/2437/Products/DigitalEcho/source/CDigitalEchoGUI.cpp
+END
+CDigitalEchoModule.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/repos/!svn/ver/2437/Products/DigitalEcho/source/CDigitalEchoModule.cpp
+END
+CDigitalEchoDSP.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/repos/!svn/ver/2461/Products/DigitalEcho/source/CDigitalEchoDSP.cpp
+END
+DigitalEcho.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/repos/!svn/ver/2437/Products/DigitalEcho/source/DigitalEcho.cpp
+END

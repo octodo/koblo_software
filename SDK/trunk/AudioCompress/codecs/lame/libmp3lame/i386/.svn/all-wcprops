@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/lame/libmp3lame/i386
+END
+fft.nas
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/lame/libmp3lame/i386/fft.nas
+END
+ffttbl.nas
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/lame/libmp3lame/i386/ffttbl.nas
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/lame/libmp3lame/i386/Makefile.in
+END
+fft3dn.nas
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/lame/libmp3lame/i386/fft3dn.nas
+END
+nasm.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/lame/libmp3lame/i386/nasm.h
+END
+cpu_feat.nas
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/lame/libmp3lame/i386/cpu_feat.nas
+END
+choose_table.nas
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/lame/libmp3lame/i386/choose_table.nas
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/lame/libmp3lame/i386/Makefile.am
+END
+fftfpu.nas
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/lame/libmp3lame/i386/fftfpu.nas
+END
+fftsse.nas
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/lame/libmp3lame/i386/fftsse.nas
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/lame/libmp3lame/i386/Makefile
+END

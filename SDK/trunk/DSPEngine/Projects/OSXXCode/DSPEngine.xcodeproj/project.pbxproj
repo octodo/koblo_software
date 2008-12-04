@@ -1,0 +1,353 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0BD562200957ED5200016748 /* DSPEngine_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 0BD5621F0957ED5200016748 /* DSPEngine_Prefix.pch */; };
+		0BD562230957ED6A00016748 /* dspe.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD562210957ED6A00016748 /* dspe.h */; };
+		0BD562240957ED6A00016748 /* IFFT.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD562220957ED6A00016748 /* IFFT.h */; };
+		0BD562290957ED7B00016748 /* CFFTOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD562250957ED7B00016748 /* CFFTOSX.h */; };
+		0BD5622B0957ED7B00016748 /* dspeInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD562270957ED7B00016748 /* dspeInternal.h */; };
+		0BD5622C0957ED7B00016748 /* dspeInternalOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD562280957ED7B00016748 /* dspeInternalOS.h */; };
+		0BD5622E0957ED9700016748 /* CFFTOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BD5622D0957ED9700016748 /* CFFTOSX.cpp */; };
+		0BFEBAC2095B10D400B5E366 /* CWindowdspe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEBAC1095B10D400B5E366 /* CWindowdspe.cpp */; };
+		0BFEBAC7095B10E600B5E366 /* CWindowdspe.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BFEBAC6095B10E600B5E366 /* CWindowdspe.h */; };
+		0BFEBAC9095B10F000B5E366 /* IWindowdspe.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BFEBAC8095B10F000B5E366 /* IWindowdspe.h */; };
+		D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0BD5621B0957ED3500016748 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BD562160957ED3500016748 /* BaseUtilities.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+		0BD5621D0957ED3E00016748 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BD562160957ED3500016748 /* BaseUtilities.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		0BD562160957ED3500016748 /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };
+		0BD5621F0957ED5200016748 /* DSPEngine_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DSPEngine_Prefix.pch; sourceTree = "<group>"; };
+		0BD562210957ED6A00016748 /* dspe.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = dspe.h; path = ../../Interface/dspe.h; sourceTree = SOURCE_ROOT; };
+		0BD562220957ED6A00016748 /* IFFT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IFFT.h; path = ../../Interface/IFFT.h; sourceTree = SOURCE_ROOT; };
+		0BD562250957ED7B00016748 /* CFFTOSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CFFTOSX.h; path = ../../Include/CFFTOSX.h; sourceTree = SOURCE_ROOT; };
+		0BD562270957ED7B00016748 /* dspeInternal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = dspeInternal.h; path = ../../Include/dspeInternal.h; sourceTree = SOURCE_ROOT; };
+		0BD562280957ED7B00016748 /* dspeInternalOS.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = dspeInternalOS.h; path = ../../Include/dspeInternalOS.h; sourceTree = SOURCE_ROOT; };
+		0BD5622D0957ED9700016748 /* CFFTOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CFFTOSX.cpp; path = ../../Source/CFFTOSX.cpp; sourceTree = SOURCE_ROOT; };
+		0BFEBAC1095B10D400B5E366 /* CWindowdspe.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CWindowdspe.cpp; path = ../../Source/CWindowdspe.cpp; sourceTree = SOURCE_ROOT; };
+		0BFEBAC6095B10E600B5E366 /* CWindowdspe.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CWindowdspe.h; path = ../../Include/CWindowdspe.h; sourceTree = SOURCE_ROOT; };
+		0BFEBAC8095B10F000B5E366 /* IWindowdspe.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IWindowdspe.h; path = ../../Interface/IWindowdspe.h; sourceTree = SOURCE_ROOT; };
+		D2AAC06F0554671400DB518D /* libDSPEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDSPEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC06D0554671400DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DDFF38A45A11DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC06F0554671400DB518D /* libDSPEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* GUIEngine */ = {
+			isa = PBXGroup;
+			children = (
+				0BD562160957ED3500016748 /* BaseUtilities.xcodeproj */,
+				08FB77ACFE841707C02AAC07 /* Source */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DDFF38A45A11DB9C8B /* Products */,
+			);
+			name = GUIEngine;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AAFE841565C02AAC07 /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		08FB77ACFE841707C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0BD5621F0957ED5200016748 /* DSPEngine_Prefix.pch */,
+				0B7731C708A63701004B30F3 /* Source */,
+				0B7731C608A636FA004B30F3 /* Include */,
+				0B7731C508A636F4004B30F3 /* Interface */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B7731C508A636F4004B30F3 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				0BFEBAC8095B10F000B5E366 /* IWindowdspe.h */,
+				0BD562210957ED6A00016748 /* dspe.h */,
+				0BD562220957ED6A00016748 /* IFFT.h */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
+		0B7731C608A636FA004B30F3 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				0BFEBAC6095B10E600B5E366 /* CWindowdspe.h */,
+				0BD562250957ED7B00016748 /* CFFTOSX.h */,
+				0BD562270957ED7B00016748 /* dspeInternal.h */,
+				0BD562280957ED7B00016748 /* dspeInternalOS.h */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		0B7731C708A63701004B30F3 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0BFEBAC1095B10D400B5E366 /* CWindowdspe.cpp */,
+				0BD5622D0957ED9700016748 /* CFFTOSX.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0BD562170957ED3500016748 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0BD5621C0957ED3500016748 /* libBaseUtilities.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC06B0554671400DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BD562200957ED5200016748 /* DSPEngine_Prefix.pch in Headers */,
+				0BD562230957ED6A00016748 /* dspe.h in Headers */,
+				0BD562240957ED6A00016748 /* IFFT.h in Headers */,
+				0BD562290957ED7B00016748 /* CFFTOSX.h in Headers */,
+				0BD5622B0957ED7B00016748 /* dspeInternal.h in Headers */,
+				0BD5622C0957ED7B00016748 /* dspeInternalOS.h in Headers */,
+				0BFEBAC7095B10E600B5E366 /* CWindowdspe.h in Headers */,
+				0BFEBAC9095B10F000B5E366 /* IWindowdspe.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC06E0554671400DB518D /* DSPEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B7731BA08A636D7004B30F3 /* Build configuration list for PBXNativeTarget "DSPEngine" */;
+			buildPhases = (
+				D2AAC06B0554671400DB518D /* Headers */,
+				D2AAC06C0554671400DB518D /* Sources */,
+				D2AAC06D0554671400DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0BD5621E0957ED3E00016748 /* PBXTargetDependency */,
+			);
+			name = DSPEngine;
+			productName = GUIEngine;
+			productReference = D2AAC06F0554671400DB518D /* libDSPEngine.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 0B7731BE08A636D7004B30F3 /* Build configuration list for PBXProject "DSPEngine" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* GUIEngine */;
+			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0BD562170957ED3500016748 /* Products */;
+					ProjectRef = 0BD562160957ED3500016748 /* BaseUtilities.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D2AAC06E0554671400DB518D /* DSPEngine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0BD5621C0957ED3500016748 /* libBaseUtilities.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBaseUtilities.a;
+			remoteRef = 0BD5621B0957ED3500016748 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC06C0554671400DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BD5622E0957ED9700016748 /* CFFTOSX.cpp in Sources */,
+				0BFEBAC2095B10D400B5E366 /* CWindowdspe.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0BD5621E0957ED3E00016748 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BaseUtilities;
+			targetProxy = 0BD5621D0957ED3E00016748 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0B7731BB08A636D7004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = DSPEngine_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				PREBINDING = NO;
+				PRODUCT_NAME = DSPEngine;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		0B7731BC08A636D7004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				COPY_PHASE_STRIP = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = DSPEngine_Prefix.pch;
+				GCC_UNROLL_LOOPS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				PREBINDING = NO;
+				PRODUCT_NAME = DSPEngine;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		0B7731BF08A636D7004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+					../../../DataEngine/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		0B7731C008A636D7004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_FAST_MATH = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_UNROLL_LOOPS = YES;
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+					../../../DataEngine/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0B7731BA08A636D7004B30F3 /* Build configuration list for PBXNativeTarget "DSPEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B7731BB08A636D7004B30F3 /* Debug */,
+				0B7731BC08A636D7004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0B7731BE08A636D7004B30F3 /* Build configuration list for PBXProject "DSPEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B7731BF08A636D7004B30F3 /* Debug */,
+				0B7731C008A636D7004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

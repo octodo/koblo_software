@@ -1,0 +1,482 @@
+// !$*UTF8*$!
+{
+	089C1669FE841209C02AAC07 /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeTarget = 8D01CCC60486CAD60068D4B7 /* RhythmComposer */;
+		addToTargets = (
+			8D01CCC60486CAD60068D4B7 /* RhythmComposer */,
+		);
+		codeSenseManager = FC914F190ED0DAF9001B9957 /* Code sense */;
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXErrorsWarningsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXErrorsWarningsDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					300,
+					45.20849609375,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXErrorsWarningsDataSource_TypeID,
+					PBXErrorsWarningsDataSource_MessageID,
+					PBXErrorsWarningsDataSource_LocationID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					10,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					10,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 250078237;
+			PBXWorkspaceStateSaveDate = 250078237;
+		};
+		perUserProjectItems = {
+			FC0A068F0EE7E42100BD362A /* PBXTextBookmark */ = FC0A068F0EE7E42100BD362A /* PBXTextBookmark */;
+			FC0A06930EE7E42100BD362A /* PBXTextBookmark */ = FC0A06930EE7E42100BD362A /* PBXTextBookmark */;
+			FC0A06940EE7E42100BD362A /* PBXTextBookmark */ = FC0A06940EE7E42100BD362A /* PBXTextBookmark */;
+			FC5FC1B90EE5DBA6004D89F2 /* PBXTextBookmark */ = FC5FC1B90EE5DBA6004D89F2 /* PBXTextBookmark */;
+			FC5FC1BB0EE5DBA6004D89F2 /* PBXTextBookmark */ = FC5FC1BB0EE5DBA6004D89F2 /* PBXTextBookmark */;
+			FC5FC1BC0EE5DBA6004D89F2 /* PBXTextBookmark */ = FC5FC1BC0EE5DBA6004D89F2 /* PBXTextBookmark */;
+			FC6B9B5A0ED6135400EC0775 /* PBXTextBookmark */ = FC6B9B5A0ED6135400EC0775 /* PBXTextBookmark */;
+			FC914F240ED0DBE8001B9957 /* PBXTextBookmark */ = FC914F240ED0DBE8001B9957 /* PBXTextBookmark */;
+			FC914F260ED0DBE8001B9957 /* PBXTextBookmark */ = FC914F260ED0DBE8001B9957 /* PBXTextBookmark */;
+			FC914F810ED0E059001B9957 /* PBXTextBookmark */ = FC914F810ED0E059001B9957 /* PBXTextBookmark */;
+			FC914F820ED0E059001B9957 /* PBXTextBookmark */ = FC914F820ED0E059001B9957 /* PBXTextBookmark */;
+			FC914F840ED0E059001B9957 /* PBXTextBookmark */ = FC914F840ED0E059001B9957 /* PBXTextBookmark */;
+			FC914F860ED0E059001B9957 /* PBXTextBookmark */ = FC914F860ED0E059001B9957 /* PBXTextBookmark */;
+			FC914F870ED0E059001B9957 /* PBXTextBookmark */ = FC914F870ED0E059001B9957 /* PBXTextBookmark */;
+			FC914F890ED0E059001B9957 /* PBXTextBookmark */ = FC914F890ED0E059001B9957 /* PBXTextBookmark */;
+			FC914F9B0ED0E0D9001B9957 /* PBXTextBookmark */ = FC914F9B0ED0E0D9001B9957 /* PBXTextBookmark */;
+			FC914F9C0ED0E0D9001B9957 /* PBXTextBookmark */ = FC914F9C0ED0E0D9001B9957 /* PBXTextBookmark */;
+			FC914F9E0ED0E0D9001B9957 /* PBXTextBookmark */ = FC914F9E0ED0E0D9001B9957 /* PBXTextBookmark */;
+			FC914F9F0ED0E0D9001B9957 /* PBXTextBookmark */ = FC914F9F0ED0E0D9001B9957 /* PBXTextBookmark */;
+			FC914FDB0ED0E471001B9957 /* PBXTextBookmark */ = FC914FDB0ED0E471001B9957 /* PBXTextBookmark */;
+			FC914FDD0ED0E471001B9957 /* PBXTextBookmark */ = FC914FDD0ED0E471001B9957 /* PBXTextBookmark */;
+			FC914FDE0ED0E471001B9957 /* PBXTextBookmark */ = FC914FDE0ED0E471001B9957 /* PBXTextBookmark */;
+		};
+		sourceControlManager = FC914F180ED0DAF9001B9957 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	0BC04C2508C115AF00A1F829 /* CParmGlobal.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1054, 952}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1138}";
+			sepNavWindowFrame = "{{107, 79}, {1113, 1010}}";
+		};
+	};
+	7CB5A3070A07FDCC00954A7E /* Resources.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1054, 882}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 138}";
+			sepNavWindowFrame = "{{130, 58}, {1113, 1010}}";
+		};
+	};
+	8D01CCC60486CAD60068D4B7 /* RhythmComposer */ = {
+		activeExec = 0;
+	};
+	E3E668CB0E0A6C2B00215EC0 /* CBaseGUI.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {812, 9380}}";
+			sepNavSelRange = "{5941, 10}";
+			sepNavVisRange = "{5834, 289}";
+			sepNavWindowFrame = "{{15, 163}, {1113, 1010}}";
+		};
+	};
+	FC0A068F0EE7E42100BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0A06900EE7E42100BD362A /* CWindowOSX.cpp */;
+		name = "CWindowOSX.cpp: 151";
+		rLen = 10;
+		rLoc = 7704;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC0A06900EE7E42100BD362A /* CWindowOSX.cpp */ = {
+		isa = PBXFileReference;
+		name = CWindowOSX.cpp;
+		path = /Users/maxgronlund/Documents/WorkingDir/SDK/trunk/GUIEngine/source/CWindowOSX.cpp;
+		sourceTree = "<absolute>";
+	};
+	FC0A06930EE7E42100BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914F730ED0DF73001B9957 /* CRhythmComposerPane.cpp */;
+		name = "CRhythmComposerPane.cpp: 137";
+		rLen = 0;
+		rLoc = 3705;
+		rType = 0;
+		vrLen = 1808;
+		vrLoc = 3217;
+	};
+	FC0A06940EE7E42100BD362A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0A06950EE7E42100BD362A /* ControlIDs.h */;
+		name = "ControlIDs.h: 56";
+		rLen = 0;
+		rLoc = 769;
+		rType = 0;
+		vrLen = 899;
+		vrLoc = 0;
+	};
+	FC0A06950EE7E42100BD362A /* ControlIDs.h */ = {
+		isa = PBXFileReference;
+		name = ControlIDs.h;
+		path = /Users/maxgronlund/Documents/WorkingDir/Products/Rythm_Composer/include/ControlIDs.h;
+		sourceTree = "<absolute>";
+	};
+	FC5FC1B90EE5DBA6004D89F2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC5FC1BA0EE5DBA6004D89F2 /* CWindowOSX.cpp */;
+		name = "CWindowOSX.cpp: 151";
+		rLen = 10;
+		rLoc = 7704;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC5FC1BA0EE5DBA6004D89F2 /* CWindowOSX.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = CWindowOSX.cpp;
+		path = /Users/maxgronlund/Documents/WorkingDir/SDK/trunk/GUIEngine/source/CWindowOSX.cpp;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {156, 16324}}";
+			sepNavSelRange = "{7704, 10}";
+			sepNavVisRange = "{0, 0}";
+		};
+	};
+	FC5FC1BB0EE5DBA6004D89F2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914F730ED0DF73001B9957 /* CRhythmComposerPane.cpp */;
+		name = "CRhythmComposerPane.cpp: 137";
+		rLen = 0;
+		rLoc = 3705;
+		rType = 0;
+		vrLen = 1809;
+		vrLoc = 3217;
+	};
+	FC5FC1BC0EE5DBA6004D89F2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC5FC1BD0EE5DBA6004D89F2 /* ControlIDs.h */;
+		name = "ControlIDs.h: 56";
+		rLen = 0;
+		rLoc = 769;
+		rType = 0;
+		vrLen = 899;
+		vrLoc = 0;
+	};
+	FC5FC1BD0EE5DBA6004D89F2 /* ControlIDs.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = ControlIDs.h;
+		path = /Users/maxgronlund/Documents/WorkingDir/Products/Rythm_Composer/include/ControlIDs.h;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1082, 1078}}";
+			sepNavSelRange = "{769, 0}";
+			sepNavVisRange = "{0, 899}";
+			sepNavWindowFrame = "{{15, 130}, {1141, 1043}}";
+		};
+	};
+	FC6B9B5A0ED6135400EC0775 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914FA10ED0E107001B9957 /* CRhythmComposerDSP.cpp */;
+		name = "CRhythmComposerDSP.cpp: 251";
+		rLen = 0;
+		rLoc = 4864;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914E990ED0D6DD001B9957 /* RhythmComposer.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1054, 882}}";
+			sepNavSelRange = "{862, 0}";
+			sepNavVisRange = "{0, 871}";
+			sepNavWindowFrame = "{{857, 129}, {1113, 1010}}";
+		};
+	};
+	FC914F180ED0DAF9001B9957 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	FC914F190ED0DAF9001B9957 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	FC914F1B0ED0DB88001B9957 /* CRhythmComposerPlugIn.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1054, 1134}}";
+			sepNavSelRange = "{2490, 0}";
+			sepNavVisRange = "{627, 2034}";
+			sepNavWindowFrame = "{{15, 163}, {1113, 1010}}";
+		};
+	};
+	FC914F1C0ED0DB96001B9957 /* CRhythmComposerPlugIn.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1056, 2198}}";
+			sepNavSelRange = "{3661, 0}";
+			sepNavVisRange = "{2139, 1904}";
+			sepNavWindowFrame = "{{130, 58}, {1113, 1010}}";
+		};
+	};
+	FC914F240ED0DBE8001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914F1B0ED0DB88001B9957 /* CRhythmComposerPlugIn.h */;
+		name = "CRhythmComposerPlugIn.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914F260ED0DBE8001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914F1B0ED0DB88001B9957 /* CRhythmComposerPlugIn.h */;
+		name = "CRhythmComposerPlugIn.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914F450ED0DEC4001B9957 /* CRhythmComposerModule.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {12, 1204}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 0}";
+			sepNavWindowFrame = "{{107, 79}, {1113, 1010}}";
+		};
+	};
+	FC914F720ED0DF60001B9957 /* CRhythmComposerPane.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1054, 882}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 438}";
+			sepNavWindowFrame = "{{61, 121}, {1113, 1010}}";
+		};
+	};
+	FC914F730ED0DF73001B9957 /* CRhythmComposerPane.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1054, 3024}}";
+			sepNavSelRange = "{3705, 0}";
+			sepNavVisRange = "{3217, 1808}";
+			sepNavWindowFrame = "{{237, 118}, {1113, 1010}}";
+		};
+	};
+	FC914F790ED0DFD5001B9957 /* CRhythmComposerModule.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {12, 336}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 0}";
+		};
+	};
+	FC914F810ED0E059001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914F450ED0DEC4001B9957 /* CRhythmComposerModule.cpp */;
+		name = "CRhythmComposerModule.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914F820ED0E059001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914F720ED0DF60001B9957 /* CRhythmComposerPane.h */;
+		name = "CRhythmComposerPane.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914F840ED0E059001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914E990ED0D6DD001B9957 /* RhythmComposer.h */;
+		name = "RhythmComposer.h: 49";
+		rLen = 0;
+		rLoc = 752;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914F860ED0E059001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914F450ED0DEC4001B9957 /* CRhythmComposerModule.cpp */;
+		name = "CRhythmComposerModule.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914F870ED0E059001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914F720ED0DF60001B9957 /* CRhythmComposerPane.h */;
+		name = "CRhythmComposerPane.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914F890ED0E059001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914E990ED0D6DD001B9957 /* RhythmComposer.h */;
+		name = "RhythmComposer.h: 49";
+		rLen = 0;
+		rLoc = 752;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914F940ED0E0AE001B9957 /* CRhythmComposerGUI.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1054, 882}}";
+			sepNavSelRange = "{210, 0}";
+			sepNavVisRange = "{0, 1250}";
+			sepNavWindowFrame = "{{15, 163}, {1113, 1010}}";
+		};
+	};
+	FC914F950ED0E0B3001B9957 /* CRhythmComposerGUI.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1054, 1162}}";
+			sepNavSelRange = "{598, 1}";
+			sepNavVisRange = "{319, 1407}";
+			sepNavWindowFrame = "{{764, 95}, {1113, 1010}}";
+		};
+	};
+	FC914F9B0ED0E0D9001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914F790ED0DFD5001B9957 /* CRhythmComposerModule.h */;
+		name = "CRhythmComposerModule.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914F9C0ED0E0D9001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914F940ED0E0AE001B9957 /* CRhythmComposerGUI.h */;
+		name = "CRhythmComposerGUI.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914F9E0ED0E0D9001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914F790ED0DFD5001B9957 /* CRhythmComposerModule.h */;
+		name = "CRhythmComposerModule.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914F9F0ED0E0D9001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914F940ED0E0AE001B9957 /* CRhythmComposerGUI.h */;
+		name = "CRhythmComposerGUI.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914FA10ED0E107001B9957 /* CRhythmComposerDSP.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {12, 3668}}";
+			sepNavSelRange = "{4864, 0}";
+			sepNavVisRange = "{0, 0}";
+			sepNavWindowFrame = "{{84, 100}, {1113, 1010}}";
+		};
+	};
+	FC914FA30ED0E10D001B9957 /* CRhythmComposerDSP.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1054, 1078}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1668}";
+			sepNavWindowFrame = "{{107, 79}, {1113, 1010}}";
+		};
+	};
+	FC914FDB0ED0E471001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914FA30ED0E10D001B9957 /* CRhythmComposerDSP.h */;
+		name = "CRhythmComposerDSP.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914FDD0ED0E471001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914FA10ED0E107001B9957 /* CRhythmComposerDSP.cpp */;
+		name = "CRhythmComposerDSP.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FC914FDE0ED0E471001B9957 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC914FA30ED0E10D001B9957 /* CRhythmComposerDSP.h */;
+		name = "CRhythmComposerDSP.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+}

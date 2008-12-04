@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/repos/!svn/ver/3003/Products/Koblo_Studio/trunk/source/Import_GUI
+END
+CKSImportGUI.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/repos/!svn/ver/2780/Products/Koblo_Studio/trunk/source/Import_GUI/CKSImportGUI.cpp
+END
+CKSImportGUIPane.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/repos/!svn/ver/3003/Products/Koblo_Studio/trunk/source/Import_GUI/CKSImportGUIPane.cpp
+END
+CKS_Import_File_Browser.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/repos/!svn/ver/2982/Products/Koblo_Studio/trunk/source/Import_GUI/CKS_Import_File_Browser.cpp
+END
+CKS_Import_Files.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/repos/!svn/ver/2779/Products/Koblo_Studio/trunk/source/Import_GUI/CKS_Import_Files.cpp
+END

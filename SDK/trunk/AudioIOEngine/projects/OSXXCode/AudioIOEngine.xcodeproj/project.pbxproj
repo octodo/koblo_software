@@ -1,0 +1,352 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0BC70F52099CA69E0076AEE9 /* AudioIOEngine_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 0BC70F51099CA69E0076AEE9 /* AudioIOEngine_Prefix.pch */; };
+		0BC70F57099CA7020076AEE9 /* aioeInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC70F56099CA7020076AEE9 /* aioeInternal.h */; };
+		0BC70F5C099CA70F0076AEE9 /* aioe.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC70F58099CA70F0076AEE9 /* aioe.h */; };
+		0BC70F5D099CA70F0076AEE9 /* IDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC70F59099CA70F0076AEE9 /* IDevice.h */; };
+		0BC70F5E099CA70F0076AEE9 /* IDeviceCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC70F5A099CA70F0076AEE9 /* IDeviceCallback.h */; };
+		0BC70F5F099CA70F0076AEE9 /* IDeviceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC70F5B099CA70F0076AEE9 /* IDeviceManager.h */; };
+		0BC70F6C099CA7BE0076AEE9 /* CDeviceCoreAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BC70F6A099CA7BE0076AEE9 /* CDeviceCoreAudio.cpp */; };
+		0BC70F6D099CA7BE0076AEE9 /* CDeviceManagerCoreAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BC70F6B099CA7BE0076AEE9 /* CDeviceManagerCoreAudio.cpp */; };
+		0BC70F70099CA7CD0076AEE9 /* CDeviceCoreAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC70F6E099CA7CD0076AEE9 /* CDeviceCoreAudio.h */; };
+		0BC70F71099CA7CD0076AEE9 /* CDeviceManagerCoreAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BC70F6F099CA7CD0076AEE9 /* CDeviceManagerCoreAudio.h */; };
+		D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0B8839F508BB499100095026 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+		0B8839F708BB499B00095026 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };
+		0BC70F51099CA69E0076AEE9 /* AudioIOEngine_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AudioIOEngine_Prefix.pch; sourceTree = "<group>"; };
+		0BC70F56099CA7020076AEE9 /* aioeInternal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = aioeInternal.h; path = ../../include/aioeInternal.h; sourceTree = SOURCE_ROOT; };
+		0BC70F58099CA70F0076AEE9 /* aioe.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = aioe.h; path = ../../interface/aioe.h; sourceTree = SOURCE_ROOT; };
+		0BC70F59099CA70F0076AEE9 /* IDevice.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDevice.h; path = ../../interface/IDevice.h; sourceTree = SOURCE_ROOT; };
+		0BC70F5A099CA70F0076AEE9 /* IDeviceCallback.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDeviceCallback.h; path = ../../interface/IDeviceCallback.h; sourceTree = SOURCE_ROOT; };
+		0BC70F5B099CA70F0076AEE9 /* IDeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDeviceManager.h; path = ../../interface/IDeviceManager.h; sourceTree = SOURCE_ROOT; };
+		0BC70F6A099CA7BE0076AEE9 /* CDeviceCoreAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CDeviceCoreAudio.cpp; path = ../../source/CDeviceCoreAudio.cpp; sourceTree = SOURCE_ROOT; };
+		0BC70F6B099CA7BE0076AEE9 /* CDeviceManagerCoreAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CDeviceManagerCoreAudio.cpp; path = ../../source/CDeviceManagerCoreAudio.cpp; sourceTree = SOURCE_ROOT; };
+		0BC70F6E099CA7CD0076AEE9 /* CDeviceCoreAudio.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CDeviceCoreAudio.h; path = ../../include/CDeviceCoreAudio.h; sourceTree = SOURCE_ROOT; };
+		0BC70F6F099CA7CD0076AEE9 /* CDeviceManagerCoreAudio.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CDeviceManagerCoreAudio.h; path = ../../include/CDeviceManagerCoreAudio.h; sourceTree = SOURCE_ROOT; };
+		D2AAC06F0554671400DB518D /* libAudioIOEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAudioIOEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC06D0554671400DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DDFF38A45A11DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC06F0554671400DB518D /* libAudioIOEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* DataEngine */ = {
+			isa = PBXGroup;
+			children = (
+				0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */,
+				08FB77ACFE841707C02AAC07 /* Source */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DDFF38A45A11DB9C8B /* Products */,
+			);
+			comments = bls;
+			name = DataEngine;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AAFE841565C02AAC07 /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		08FB77ACFE841707C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0BC70F51099CA69E0076AEE9 /* AudioIOEngine_Prefix.pch */,
+				0B77318208A634D6004B30F3 /* Source */,
+				0B77318108A634CF004B30F3 /* Include */,
+				0B77317608A634BB004B30F3 /* Interface */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B77317608A634BB004B30F3 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				0BC70F58099CA70F0076AEE9 /* aioe.h */,
+				0BC70F59099CA70F0076AEE9 /* IDevice.h */,
+				0BC70F5A099CA70F0076AEE9 /* IDeviceCallback.h */,
+				0BC70F5B099CA70F0076AEE9 /* IDeviceManager.h */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
+		0B77318108A634CF004B30F3 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				0BC70F6E099CA7CD0076AEE9 /* CDeviceCoreAudio.h */,
+				0BC70F6F099CA7CD0076AEE9 /* CDeviceManagerCoreAudio.h */,
+				0BC70F56099CA7020076AEE9 /* aioeInternal.h */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		0B77318208A634D6004B30F3 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0BC70F6A099CA7BE0076AEE9 /* CDeviceCoreAudio.cpp */,
+				0BC70F6B099CA7BE0076AEE9 /* CDeviceManagerCoreAudio.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B8839F208BB499100095026 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0B8839F608BB499100095026 /* libBaseUtilities.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC06B0554671400DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BC70F52099CA69E0076AEE9 /* AudioIOEngine_Prefix.pch in Headers */,
+				0BC70F57099CA7020076AEE9 /* aioeInternal.h in Headers */,
+				0BC70F5C099CA70F0076AEE9 /* aioe.h in Headers */,
+				0BC70F5D099CA70F0076AEE9 /* IDevice.h in Headers */,
+				0BC70F5E099CA70F0076AEE9 /* IDeviceCallback.h in Headers */,
+				0BC70F5F099CA70F0076AEE9 /* IDeviceManager.h in Headers */,
+				0BC70F70099CA7CD0076AEE9 /* CDeviceCoreAudio.h in Headers */,
+				0BC70F71099CA7CD0076AEE9 /* CDeviceManagerCoreAudio.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC06E0554671400DB518D /* AudioIOEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B77317708A634BB004B30F3 /* Build configuration list for PBXNativeTarget "AudioIOEngine" */;
+			buildPhases = (
+				D2AAC06B0554671400DB518D /* Headers */,
+				D2AAC06C0554671400DB518D /* Sources */,
+				D2AAC06D0554671400DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0B8839F808BB499B00095026 /* PBXTargetDependency */,
+			);
+			name = AudioIOEngine;
+			productName = DataEngine;
+			productReference = D2AAC06F0554671400DB518D /* libAudioIOEngine.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 0B77317B08A634BB004B30F3 /* Build configuration list for PBXProject "AudioIOEngine" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* DataEngine */;
+			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0B8839F208BB499100095026 /* Products */;
+					ProjectRef = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D2AAC06E0554671400DB518D /* AudioIOEngine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0B8839F608BB499100095026 /* libBaseUtilities.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBaseUtilities.a;
+			remoteRef = 0B8839F508BB499100095026 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC06C0554671400DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BC70F6C099CA7BE0076AEE9 /* CDeviceCoreAudio.cpp in Sources */,
+				0BC70F6D099CA7BE0076AEE9 /* CDeviceManagerCoreAudio.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0B8839F808BB499B00095026 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BaseUtilities;
+			targetProxy = 0B8839F708BB499B00095026 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0B77317808A634BB004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AudioIOEngine_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				PREBINDING = NO;
+				PRODUCT_NAME = AudioIOEngine;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		0B77317908A634BB004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				COPY_PHASE_STRIP = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AudioIOEngine_Prefix.pch;
+				GCC_UNROLL_LOOPS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				PREBINDING = NO;
+				PRODUCT_NAME = AudioIOEngine;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		0B77317C08A634BB004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		0B77317D08A634BB004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0B77317708A634BB004B30F3 /* Build configuration list for PBXNativeTarget "AudioIOEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77317808A634BB004B30F3 /* Debug */,
+				0B77317908A634BB004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0B77317B08A634BB004B30F3 /* Build configuration list for PBXProject "AudioIOEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77317C08A634BB004B30F3 /* Debug */,
+				0B77317D08A634BB004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

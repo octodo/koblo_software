@@ -1,0 +1,1081 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A624C070C97E40C00F87B69 /* IPanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A624C060C97E40C00F87B69 /* IPanner.h */; };
+		0A624C0D0C97E5DD00F87B69 /* CPanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A624C0C0C97E5DD00F87B69 /* CPanner.h */; };
+		0A624C130C97E67300F87B69 /* CPanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A624C120C97E67300F87B69 /* CPanner.cpp */; };
+		0B7731F708A63734004B30F3 /* EMouseMsg.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731C808A63734004B30F3 /* EMouseMsg.h */; };
+		0B7731F808A63734004B30F3 /* ge.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731C908A63734004B30F3 /* ge.h */; };
+		0B7731F908A63734004B30F3 /* geUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731CA08A63734004B30F3 /* geUtilities.h */; };
+		0B7731FA08A63734004B30F3 /* IBitmap.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731CB08A63734004B30F3 /* IBitmap.h */; };
+		0B7731FB08A63734004B30F3 /* IBitmapResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731CC08A63734004B30F3 /* IBitmapResource.h */; };
+		0B7731FC08A63734004B30F3 /* IBitmapResourceText.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731CD08A63734004B30F3 /* IBitmapResourceText.h */; };
+		0B7731FD08A63734004B30F3 /* IBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731CE08A63734004B30F3 /* IBrowser.h */; };
+		0B7731FE08A63734004B30F3 /* IBrowserCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731CF08A63734004B30F3 /* IBrowserCallback.h */; };
+		0B7731FF08A63734004B30F3 /* IButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731D008A63734004B30F3 /* IButton.h */; };
+		0B77320008A63734004B30F3 /* IContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731D108A63734004B30F3 /* IContext.h */; };
+		0B77320108A63734004B30F3 /* IContextCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731D208A63734004B30F3 /* IContextCallback.h */; };
+		0B77320208A63734004B30F3 /* IControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731D308A63734004B30F3 /* IControl.h */; };
+		0B77320308A63734004B30F3 /* ICustomControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731D408A63734004B30F3 /* ICustomControl.h */; };
+		0B77320408A63734004B30F3 /* ICustomControlCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731D508A63734004B30F3 /* ICustomControlCallback.h */; };
+		0B77320508A63734004B30F3 /* IDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731D608A63734004B30F3 /* IDialog.h */; };
+		0B77320608A63734004B30F3 /* IDialogCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731D708A63734004B30F3 /* IDialogCallback.h */; };
+		0B77320708A63734004B30F3 /* IDrawPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731D808A63734004B30F3 /* IDrawPrimitives.h */; };
+		0B77320808A63734004B30F3 /* IDropDownListBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731D908A63734004B30F3 /* IDropDownListBox.h */; };
+		0B77320908A63734004B30F3 /* IEventReceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731DA08A63734004B30F3 /* IEventReceiver.h */; };
+		0B77320A08A63734004B30F3 /* IFontResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731DB08A63734004B30F3 /* IFontResource.h */; };
+		0B77320B08A63734004B30F3 /* IInContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731DC08A63734004B30F3 /* IInContext.h */; };
+		0B77320C08A63734004B30F3 /* IInvalidater.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731DD08A63734004B30F3 /* IInvalidater.h */; };
+		0B77320D08A63734004B30F3 /* IKnob.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731DE08A63734004B30F3 /* IKnob.h */; };
+		0B77320E08A63734004B30F3 /* ILine.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731DF08A63734004B30F3 /* ILine.h */; };
+		0B77320F08A63734004B30F3 /* IMultiStateButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731E008A63734004B30F3 /* IMultiStateButton.h */; };
+		0B77321008A63734004B30F3 /* IOpenDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731E108A63734004B30F3 /* IOpenDialog.h */; };
+		0B77321108A63734004B30F3 /* IPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731E208A63734004B30F3 /* IPane.h */; };
+		0B77321208A63734004B30F3 /* IPickDirDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731E308A63734004B30F3 /* IPickDirDialog.h */; };
+		0B77321308A63734004B30F3 /* IPopupMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731E408A63734004B30F3 /* IPopupMenu.h */; };
+		0B77321408A63734004B30F3 /* IRadioButtons.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731E508A63734004B30F3 /* IRadioButtons.h */; };
+		0B77321508A63734004B30F3 /* IRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731E608A63734004B30F3 /* IRect.h */; };
+		0B77321608A63734004B30F3 /* IResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731E708A63734004B30F3 /* IResource.h */; };
+		0B77321708A63734004B30F3 /* IResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731E808A63734004B30F3 /* IResourceManager.h */; };
+		0B77321808A63734004B30F3 /* ISaveAsDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731E908A63734004B30F3 /* ISaveAsDialog.h */; };
+		0B77321908A63734004B30F3 /* IScrollBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731EA08A63734004B30F3 /* IScrollBar.h */; };
+		0B77321A08A63734004B30F3 /* IScrollPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731EB08A63734004B30F3 /* IScrollPane.h */; };
+		0B77321C08A63734004B30F3 /* ISetContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731ED08A63734004B30F3 /* ISetContext.h */; };
+		0B77321D08A63734004B30F3 /* IText.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731EE08A63734004B30F3 /* IText.h */; };
+		0B77321E08A63734004B30F3 /* IWaitCursor.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731EF08A63734004B30F3 /* IWaitCursor.h */; };
+		0B77321F08A63734004B30F3 /* IWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731F008A63734004B30F3 /* IWindow.h */; };
+		0B77322008A63734004B30F3 /* SPos.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731F108A63734004B30F3 /* SPos.h */; };
+		0B77322108A63734004B30F3 /* SRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731F208A63734004B30F3 /* SRect.h */; };
+		0B77322208A63734004B30F3 /* SRGB.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731F308A63734004B30F3 /* SRGB.h */; };
+		0B77322308A63734004B30F3 /* SRGBA.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731F408A63734004B30F3 /* SRGBA.h */; };
+		0B77322408A63734004B30F3 /* SScrollPos.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731F508A63734004B30F3 /* SScrollPos.h */; };
+		0B77322508A63734004B30F3 /* SSize.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B7731F608A63734004B30F3 /* SSize.h */; };
+		0B77325908A63748004B30F3 /* CBitmap.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77322608A63747004B30F3 /* CBitmap.h */; };
+		0B77325A08A63748004B30F3 /* CBitmapResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77322708A63747004B30F3 /* CBitmapResource.h */; };
+		0B77325B08A63748004B30F3 /* CBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77322808A63747004B30F3 /* CBrowser.h */; };
+		0B77325C08A63748004B30F3 /* CButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77322908A63747004B30F3 /* CButton.h */; };
+		0B77325D08A63748004B30F3 /* CContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77322A08A63747004B30F3 /* CContext.h */; };
+		0B77325E08A63748004B30F3 /* CContextOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77322B08A63747004B30F3 /* CContextOSX.h */; };
+		0B77326008A63748004B30F3 /* CControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77322D08A63747004B30F3 /* CControl.h */; };
+		0B77326108A63748004B30F3 /* CCustomControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77322E08A63747004B30F3 /* CCustomControl.h */; };
+		0B77326208A63748004B30F3 /* CDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77322F08A63747004B30F3 /* CDialog.h */; };
+		0B77326408A63748004B30F3 /* CDrawPrimitivesQT.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77323108A63747004B30F3 /* CDrawPrimitivesQT.h */; };
+		0B77326508A63748004B30F3 /* CDropDownListBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77323208A63747004B30F3 /* CDropDownListBox.h */; };
+		0B77326608A63748004B30F3 /* CEventReceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77323308A63747004B30F3 /* CEventReceiver.h */; };
+		0B77326708A63748004B30F3 /* CFontResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77323408A63747004B30F3 /* CFontResource.h */; };
+		0B77326808A63748004B30F3 /* CInContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77323508A63747004B30F3 /* CInContext.h */; };
+		0B77326908A63748004B30F3 /* CInvalidater.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77323608A63748004B30F3 /* CInvalidater.h */; };
+		0B77326A08A63748004B30F3 /* CKnob.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77323708A63748004B30F3 /* CKnob.h */; };
+		0B77326B08A63748004B30F3 /* CLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77323808A63748004B30F3 /* CLine.h */; };
+		0B77326C08A63748004B30F3 /* CMemoryDC.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77323908A63748004B30F3 /* CMemoryDC.h */; };
+		0B77326E08A63748004B30F3 /* CMemoryDCQT.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77323B08A63748004B30F3 /* CMemoryDCQT.h */; };
+		0B77326F08A63748004B30F3 /* CMultiStateButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77323C08A63748004B30F3 /* CMultiStateButton.h */; };
+		0B77327008A63748004B30F3 /* COpenDialogOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77323D08A63748004B30F3 /* COpenDialogOSX.h */; };
+		0B77327208A63748004B30F3 /* CPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77323F08A63748004B30F3 /* CPane.h */; };
+		0B77327308A63748004B30F3 /* CPickDirDialogOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77324008A63748004B30F3 /* CPickDirDialogOSX.h */; };
+		0B77327508A63748004B30F3 /* CPopupMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77324208A63748004B30F3 /* CPopupMenu.h */; };
+		0B77327608A63748004B30F3 /* CRadioButtons.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77324308A63748004B30F3 /* CRadioButtons.h */; };
+		0B77327708A63748004B30F3 /* CRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77324408A63748004B30F3 /* CRect.h */; };
+		0B77327808A63748004B30F3 /* CResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77324508A63748004B30F3 /* CResource.h */; };
+		0B77327908A63748004B30F3 /* CResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77324608A63748004B30F3 /* CResourceManager.h */; };
+		0B77327A08A63748004B30F3 /* CSaveAsDialogOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77324708A63748004B30F3 /* CSaveAsDialogOSX.h */; };
+		0B77327C08A63748004B30F3 /* CScrollBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77324908A63748004B30F3 /* CScrollBar.h */; };
+		0B77327D08A63748004B30F3 /* CScrollPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77324A08A63748004B30F3 /* CScrollPane.h */; };
+		0B77327F08A63748004B30F3 /* CSetContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77324C08A63748004B30F3 /* CSetContext.h */; };
+		0B77328008A63748004B30F3 /* CText.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77324D08A63748004B30F3 /* CText.h */; };
+		0B77328108A63748004B30F3 /* CWaitCursorOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77324E08A63748004B30F3 /* CWaitCursorOSX.h */; };
+		0B77328308A63748004B30F3 /* CWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77325008A63748004B30F3 /* CWindow.h */; };
+		0B77328408A63748004B30F3 /* CWindowOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77325108A63748004B30F3 /* CWindowOSX.h */; };
+		0B77328508A63748004B30F3 /* CWindowOSXQT.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77325208A63748004B30F3 /* CWindowOSXQT.h */; };
+		0B77328908A63748004B30F3 /* geInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77325608A63748004B30F3 /* geInternal.h */; };
+		0B77328A08A63748004B30F3 /* geInternalOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77325708A63748004B30F3 /* geInternalOS.h */; };
+		0B77328B08A63748004B30F3 /* IDC.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B77325808A63748004B30F3 /* IDC.h */; };
+		0B7732BF08A63796004B30F3 /* CBitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77328C08A63796004B30F3 /* CBitmap.cpp */; };
+		0B7732C008A63796004B30F3 /* CBitmapResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77328D08A63796004B30F3 /* CBitmapResource.cpp */; };
+		0B7732C208A63796004B30F3 /* CBrowser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77328F08A63796004B30F3 /* CBrowser.cpp */; };
+		0B7732C308A63796004B30F3 /* CButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329008A63796004B30F3 /* CButton.cpp */; };
+		0B7732C408A63796004B30F3 /* CContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329108A63796004B30F3 /* CContext.cpp */; };
+		0B7732C508A63796004B30F3 /* CContextOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329208A63796004B30F3 /* CContextOSX.cpp */; };
+		0B7732C708A63796004B30F3 /* CControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329408A63796004B30F3 /* CControl.cpp */; };
+		0B7732C808A63796004B30F3 /* CCustomControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329508A63796004B30F3 /* CCustomControl.cpp */; };
+		0B7732C908A63796004B30F3 /* CDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329608A63796004B30F3 /* CDialog.cpp */; };
+		0B7732CB08A63796004B30F3 /* CDrawPrimitivesQT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329808A63796004B30F3 /* CDrawPrimitivesQT.cpp */; };
+		0B7732CC08A63796004B30F3 /* CDropDownListBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329908A63796004B30F3 /* CDropDownListBox.cpp */; };
+		0B7732CD08A63796004B30F3 /* CEventReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329A08A63796004B30F3 /* CEventReceiver.cpp */; };
+		0B7732CE08A63796004B30F3 /* CFontResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329B08A63796004B30F3 /* CFontResource.cpp */; };
+		0B7732CF08A63796004B30F3 /* CInContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329C08A63796004B30F3 /* CInContext.cpp */; };
+		0B7732D008A63796004B30F3 /* CInvalidater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329D08A63796004B30F3 /* CInvalidater.cpp */; };
+		0B7732D108A63796004B30F3 /* CKnob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329E08A63796004B30F3 /* CKnob.cpp */; };
+		0B7732D208A63796004B30F3 /* CLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B77329F08A63796004B30F3 /* CLine.cpp */; };
+		0B7732D308A63796004B30F3 /* CMemoryDC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732A008A63796004B30F3 /* CMemoryDC.cpp */; };
+		0B7732D508A63796004B30F3 /* CMemoryDCQT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732A208A63796004B30F3 /* CMemoryDCQT.cpp */; };
+		0B7732D608A63796004B30F3 /* CMultiStateButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732A308A63796004B30F3 /* CMultiStateButton.cpp */; };
+		0B7732D708A63796004B30F3 /* COpenDialogOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732A408A63796004B30F3 /* COpenDialogOSX.cpp */; };
+		0B7732D908A63796004B30F3 /* CPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732A608A63796004B30F3 /* CPane.cpp */; };
+		0B7732DA08A63796004B30F3 /* CPickDirDialogOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732A708A63796004B30F3 /* CPickDirDialogOSX.cpp */; };
+		0B7732DC08A63796004B30F3 /* CPopupMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732A908A63796004B30F3 /* CPopupMenu.cpp */; };
+		0B7732DD08A63796004B30F3 /* CRadioButtons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732AA08A63796004B30F3 /* CRadioButtons.cpp */; };
+		0B7732DE08A63796004B30F3 /* CRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732AB08A63796004B30F3 /* CRect.cpp */; };
+		0B7732DF08A63796004B30F3 /* CResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732AC08A63796004B30F3 /* CResource.cpp */; };
+		0B7732E008A63796004B30F3 /* CResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732AD08A63796004B30F3 /* CResourceManager.cpp */; };
+		0B7732E108A63796004B30F3 /* CSaveAsDialogOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732AE08A63796004B30F3 /* CSaveAsDialogOSX.cpp */; };
+		0B7732E308A63796004B30F3 /* CScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732B008A63796004B30F3 /* CScrollBar.cpp */; };
+		0B7732E408A63796004B30F3 /* CScrollPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732B108A63796004B30F3 /* CScrollPane.cpp */; };
+		0B7732E608A63796004B30F3 /* CSetContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732B308A63796004B30F3 /* CSetContext.cpp */; };
+		0B7732E708A63796004B30F3 /* CText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732B408A63796004B30F3 /* CText.cpp */; };
+		0B7732E808A63796004B30F3 /* CWaitCursorOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732B508A63796004B30F3 /* CWaitCursorOSX.cpp */; };
+		0B7732EA08A63796004B30F3 /* CWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732B708A63796004B30F3 /* CWindow.cpp */; };
+		0B7732EB08A63796004B30F3 /* CWindowOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732B808A63796004B30F3 /* CWindowOSX.cpp */; };
+		0B7732EC08A63796004B30F3 /* CWindowOSXQT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732B908A63796004B30F3 /* CWindowOSXQT.cpp */; };
+		0B7732F008A63796004B30F3 /* geInternal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732BD08A63796004B30F3 /* geInternal.cpp */; };
+		0B7732F108A63796004B30F3 /* SRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B7732BE08A63796004B30F3 /* SRect.cpp */; };
+		0BBA14E208B4D86C0001EB6F /* CSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BBA14E108B4D86C0001EB6F /* CSlider.cpp */; };
+		0BCF8D0208D5722400624E46 /* CLED.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BCF8D0108D5722300624E46 /* CLED.cpp */; };
+		0BCF8D0408D5723D00624E46 /* CLED.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BCF8D0308D5723D00624E46 /* CLED.h */; };
+		0BCF8D0608D5724A00624E46 /* ILED.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BCF8D0508D5724A00624E46 /* ILED.h */; };
+		0BD563960958167100016748 /* C2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD563930958167100016748 /* C2D.h */; };
+		0BD563970958167100016748 /* CEQDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD563940958167100016748 /* CEQDisplay.h */; };
+		0BD563980958167100016748 /* CFFT.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD563950958167100016748 /* CFFT.h */; };
+		0BD5639C0958168400016748 /* C2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BD563990958168300016748 /* C2D.cpp */; };
+		0BD5639D0958168400016748 /* CEQDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BD5639A0958168300016748 /* CEQDisplay.cpp */; };
+		0BD5639E0958168400016748 /* CFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BD5639B0958168400016748 /* CFFT.cpp */; };
+		0BFDD405090CE74D008D99CE /* CKnob2.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BFDD402090CE74D008D99CE /* CKnob2.h */; };
+		0BFDD406090CE74D008D99CE /* CSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BFDD403090CE74D008D99CE /* CSlider.h */; };
+		0BFDD407090CE74D008D99CE /* CURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BFDD404090CE74D008D99CE /* CURL.h */; };
+		0BFDD40A090CE767008D99CE /* CKnob2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BFDD408090CE767008D99CE /* CKnob2.cpp */; };
+		0BFDD40B090CE767008D99CE /* CURL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BFDD409090CE767008D99CE /* CURL.cpp */; };
+		3252CAF70E01310E00D5DE3B /* CRawResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 3252CAF60E01310E00D5DE3B /* CRawResource.h */; };
+		3252CAF90E01312600D5DE3B /* IRawResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 3252CAF80E01312600D5DE3B /* IRawResource.h */; };
+		3252CAFB0E01319400D5DE3B /* CRawResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3252CAFA0E01319400D5DE3B /* CRawResource.cpp */; };
+		D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
+		E3005AF90DC07A330059BB9C /* CListBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3005AF80DC07A330059BB9C /* CListBox.cpp */; };
+		E3005AFB0DC07A410059BB9C /* CListBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E3005AFA0DC07A410059BB9C /* CListBox.h */; };
+		E3005AFD0DC07A4D0059BB9C /* IListBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E3005AFC0DC07A4D0059BB9C /* IListBox.h */; };
+		E308AA9A0B538D0B009A1CAA /* CMultiStateDropDownListBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E308AA990B538D0B009A1CAA /* CMultiStateDropDownListBox.cpp */; };
+		E308AA9D0B538D18009A1CAA /* CMultiStateDropDownListBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E308AA9C0B538D18009A1CAA /* CMultiStateDropDownListBox.h */; };
+		E308AA9F0B538D24009A1CAA /* IMultiStateDropDownListBox.h in Headers */ = {isa = PBXBuildFile; fileRef = E308AA9E0B538D24009A1CAA /* IMultiStateDropDownListBox.h */; };
+		E30B15480D8535080007908F /* IApplicationCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = E30B15470D8535080007908F /* IApplicationCallback.h */; };
+		E34C8EB30C9015BF003E7B37 /* IPaneSwitcher.h in Headers */ = {isa = PBXBuildFile; fileRef = E34C8EB20C9015BF003E7B37 /* IPaneSwitcher.h */; };
+		E34C8EBB0C9015F3003E7B37 /* CPaneSwitcher.h in Headers */ = {isa = PBXBuildFile; fileRef = E34C8EBA0C9015F3003E7B37 /* CPaneSwitcher.h */; };
+		E34C8EBD0C9015FF003E7B37 /* CPaneSwitcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E34C8EBC0C9015FF003E7B37 /* CPaneSwitcher.cpp */; };
+		E385AD160DCECAA500CC6EEB /* IInvert.h in Headers */ = {isa = PBXBuildFile; fileRef = E385AD150DCECAA500CC6EEB /* IInvert.h */; };
+		E385AD180DCECAB400CC6EEB /* CInvert.h in Headers */ = {isa = PBXBuildFile; fileRef = E385AD170DCECAB400CC6EEB /* CInvert.h */; };
+		E385AD1A0DCECAC100CC6EEB /* CInvert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E385AD190DCECAC100CC6EEB /* CInvert.cpp */; };
+		E38AFBE10A5A819D0022E0FF /* ITextField.h in Headers */ = {isa = PBXBuildFile; fileRef = E38AFBE00A5A819D0022E0FF /* ITextField.h */; };
+		E38AFBE40A5A81A80022E0FF /* CTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = E38AFBE30A5A81A80022E0FF /* CTextField.h */; };
+		E38AFBE60A5A81B30022E0FF /* CTextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38AFBE50A5A81B30022E0FF /* CTextField.cpp */; };
+		E3C709590ABFBBAE002C2728 /* CSpinner.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C709570ABFBBAE002C2728 /* CSpinner.h */; };
+		E3C7095A0ABFBBAE002C2728 /* CTextList.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C709580ABFBBAE002C2728 /* CTextList.h */; };
+		E3C709C20ABFBE8C002C2728 /* CSpinner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3C709C00ABFBE8C002C2728 /* CSpinner.cpp */; };
+		E3C709C30ABFBE8C002C2728 /* CTextList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3C709C10ABFBE8C002C2728 /* CTextList.cpp */; };
+		E3CBC6390AC3C0B200D42EFA /* CPeakMeter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3CBC6380AC3C0B200D42EFA /* CPeakMeter.cpp */; };
+		E3CBC63B0AC3C0C200D42EFA /* CPeakMeter.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CBC63A0AC3C0C200D42EFA /* CPeakMeter.h */; };
+		E3CBC63D0AC3C0D400D42EFA /* IPeakMeter.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CBC63C0AC3C0D400D42EFA /* IPeakMeter.h */; };
+		E3CBC6C00AC3C5E800D42EFA /* ISpinner.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CBC6BF0AC3C5E800D42EFA /* ISpinner.h */; };
+		E3CBC6C20AC3C5F400D42EFA /* I2D.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CBC6C10AC3C5F400D42EFA /* I2D.h */; };
+		E3CBC6CA0AC3C60800D42EFA /* IEQDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CBC6C30AC3C60800D42EFA /* IEQDisplay.h */; };
+		E3CBC6CB0AC3C60800D42EFA /* IEQDisplayCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CBC6C40AC3C60800D42EFA /* IEQDisplayCallback.h */; };
+		E3CBC6CC0AC3C60800D42EFA /* IFFT.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CBC6C50AC3C60800D42EFA /* IFFT.h */; };
+		E3CBC6CD0AC3C60800D42EFA /* IKnob2.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CBC6C60AC3C60800D42EFA /* IKnob2.h */; };
+		E3CBC6CE0AC3C60800D42EFA /* ISlider.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CBC6C70AC3C60800D42EFA /* ISlider.h */; };
+		E3CBC6CF0AC3C60800D42EFA /* ITextList.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CBC6C80AC3C60800D42EFA /* ITextList.h */; };
+		E3CBC6D00AC3C60800D42EFA /* IURL.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CBC6C90AC3C60800D42EFA /* IURL.h */; };
+		E3ED219D0AFF08E20011532F /* CMouseTrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED219C0AFF08E20011532F /* CMouseTrap.cpp */; };
+		E3ED219F0AFF08EF0011532F /* CMouseTrap.h in Headers */ = {isa = PBXBuildFile; fileRef = E3ED219E0AFF08EF0011532F /* CMouseTrap.h */; };
+		E3ED21A20AFF08FC0011532F /* IMouseTrap.h in Headers */ = {isa = PBXBuildFile; fileRef = E3ED21A10AFF08FC0011532F /* IMouseTrap.h */; };
+		E3ED21AD0AFF13290011532F /* SEventGeneric.h in Headers */ = {isa = PBXBuildFile; fileRef = E3ED21AC0AFF13290011532F /* SEventGeneric.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0B8839EB08BB491900095026 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B8839E708BB491900095026 /* DataEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = DataEngine;
+		};
+		0B8839ED08BB492700095026 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B8839E708BB491900095026 /* DataEngine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = DataEngine;
+		};
+		0BD563170958051C00016748 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BD563110958051C00016748 /* DSPEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = DSPEngine;
+		};
+		0BD563190958053500016748 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BD563110958051C00016748 /* DSPEngine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = DSPEngine;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		0A624C060C97E40C00F87B69 /* IPanner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IPanner.h; path = ../../interface/IPanner.h; sourceTree = SOURCE_ROOT; };
+		0A624C0C0C97E5DD00F87B69 /* CPanner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CPanner.h; path = ../../include/CPanner.h; sourceTree = SOURCE_ROOT; };
+		0A624C120C97E67300F87B69 /* CPanner.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CPanner.cpp; path = ../../source/CPanner.cpp; sourceTree = SOURCE_ROOT; };
+		0B7731C808A63734004B30F3 /* EMouseMsg.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = EMouseMsg.h; path = ../../interface/EMouseMsg.h; sourceTree = SOURCE_ROOT; };
+		0B7731C908A63734004B30F3 /* ge.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ge.h; path = ../../interface/ge.h; sourceTree = SOURCE_ROOT; };
+		0B7731CA08A63734004B30F3 /* geUtilities.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = geUtilities.h; path = ../../interface/geUtilities.h; sourceTree = SOURCE_ROOT; };
+		0B7731CB08A63734004B30F3 /* IBitmap.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IBitmap.h; path = ../../interface/IBitmap.h; sourceTree = SOURCE_ROOT; };
+		0B7731CC08A63734004B30F3 /* IBitmapResource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IBitmapResource.h; path = ../../interface/IBitmapResource.h; sourceTree = SOURCE_ROOT; };
+		0B7731CD08A63734004B30F3 /* IBitmapResourceText.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IBitmapResourceText.h; path = ../../interface/IBitmapResourceText.h; sourceTree = SOURCE_ROOT; };
+		0B7731CE08A63734004B30F3 /* IBrowser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IBrowser.h; path = ../../interface/IBrowser.h; sourceTree = SOURCE_ROOT; };
+		0B7731CF08A63734004B30F3 /* IBrowserCallback.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IBrowserCallback.h; path = ../../interface/IBrowserCallback.h; sourceTree = SOURCE_ROOT; };
+		0B7731D008A63734004B30F3 /* IButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IButton.h; path = ../../interface/IButton.h; sourceTree = SOURCE_ROOT; };
+		0B7731D108A63734004B30F3 /* IContext.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IContext.h; path = ../../interface/IContext.h; sourceTree = SOURCE_ROOT; };
+		0B7731D208A63734004B30F3 /* IContextCallback.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IContextCallback.h; path = ../../interface/IContextCallback.h; sourceTree = SOURCE_ROOT; };
+		0B7731D308A63734004B30F3 /* IControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IControl.h; path = ../../interface/IControl.h; sourceTree = SOURCE_ROOT; };
+		0B7731D408A63734004B30F3 /* ICustomControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ICustomControl.h; path = ../../interface/ICustomControl.h; sourceTree = SOURCE_ROOT; };
+		0B7731D508A63734004B30F3 /* ICustomControlCallback.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ICustomControlCallback.h; path = ../../interface/ICustomControlCallback.h; sourceTree = SOURCE_ROOT; };
+		0B7731D608A63734004B30F3 /* IDialog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDialog.h; path = ../../interface/IDialog.h; sourceTree = SOURCE_ROOT; };
+		0B7731D708A63734004B30F3 /* IDialogCallback.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDialogCallback.h; path = ../../interface/IDialogCallback.h; sourceTree = SOURCE_ROOT; };
+		0B7731D808A63734004B30F3 /* IDrawPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDrawPrimitives.h; path = ../../interface/IDrawPrimitives.h; sourceTree = SOURCE_ROOT; };
+		0B7731D908A63734004B30F3 /* IDropDownListBox.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDropDownListBox.h; path = ../../interface/IDropDownListBox.h; sourceTree = SOURCE_ROOT; };
+		0B7731DA08A63734004B30F3 /* IEventReceiver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IEventReceiver.h; path = ../../interface/IEventReceiver.h; sourceTree = SOURCE_ROOT; };
+		0B7731DB08A63734004B30F3 /* IFontResource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IFontResource.h; path = ../../interface/IFontResource.h; sourceTree = SOURCE_ROOT; };
+		0B7731DC08A63734004B30F3 /* IInContext.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IInContext.h; path = ../../interface/IInContext.h; sourceTree = SOURCE_ROOT; };
+		0B7731DD08A63734004B30F3 /* IInvalidater.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IInvalidater.h; path = ../../interface/IInvalidater.h; sourceTree = SOURCE_ROOT; };
+		0B7731DE08A63734004B30F3 /* IKnob.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IKnob.h; path = ../../interface/IKnob.h; sourceTree = SOURCE_ROOT; };
+		0B7731DF08A63734004B30F3 /* ILine.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ILine.h; path = ../../interface/ILine.h; sourceTree = SOURCE_ROOT; };
+		0B7731E008A63734004B30F3 /* IMultiStateButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IMultiStateButton.h; path = ../../interface/IMultiStateButton.h; sourceTree = SOURCE_ROOT; };
+		0B7731E108A63734004B30F3 /* IOpenDialog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IOpenDialog.h; path = ../../interface/IOpenDialog.h; sourceTree = SOURCE_ROOT; };
+		0B7731E208A63734004B30F3 /* IPane.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IPane.h; path = ../../interface/IPane.h; sourceTree = SOURCE_ROOT; };
+		0B7731E308A63734004B30F3 /* IPickDirDialog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IPickDirDialog.h; path = ../../interface/IPickDirDialog.h; sourceTree = SOURCE_ROOT; };
+		0B7731E408A63734004B30F3 /* IPopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IPopupMenu.h; path = ../../interface/IPopupMenu.h; sourceTree = SOURCE_ROOT; };
+		0B7731E508A63734004B30F3 /* IRadioButtons.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IRadioButtons.h; path = ../../interface/IRadioButtons.h; sourceTree = SOURCE_ROOT; };
+		0B7731E608A63734004B30F3 /* IRect.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IRect.h; path = ../../interface/IRect.h; sourceTree = SOURCE_ROOT; };
+		0B7731E708A63734004B30F3 /* IResource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IResource.h; path = ../../interface/IResource.h; sourceTree = SOURCE_ROOT; };
+		0B7731E808A63734004B30F3 /* IResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IResourceManager.h; path = ../../interface/IResourceManager.h; sourceTree = SOURCE_ROOT; };
+		0B7731E908A63734004B30F3 /* ISaveAsDialog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ISaveAsDialog.h; path = ../../interface/ISaveAsDialog.h; sourceTree = SOURCE_ROOT; };
+		0B7731EA08A63734004B30F3 /* IScrollBar.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IScrollBar.h; path = ../../interface/IScrollBar.h; sourceTree = SOURCE_ROOT; };
+		0B7731EB08A63734004B30F3 /* IScrollPane.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IScrollPane.h; path = ../../interface/IScrollPane.h; sourceTree = SOURCE_ROOT; };
+		0B7731ED08A63734004B30F3 /* ISetContext.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ISetContext.h; path = ../../interface/ISetContext.h; sourceTree = SOURCE_ROOT; };
+		0B7731EE08A63734004B30F3 /* IText.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IText.h; path = ../../interface/IText.h; sourceTree = SOURCE_ROOT; };
+		0B7731EF08A63734004B30F3 /* IWaitCursor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IWaitCursor.h; path = ../../interface/IWaitCursor.h; sourceTree = SOURCE_ROOT; };
+		0B7731F008A63734004B30F3 /* IWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IWindow.h; path = ../../interface/IWindow.h; sourceTree = SOURCE_ROOT; };
+		0B7731F108A63734004B30F3 /* SPos.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SPos.h; path = ../../interface/SPos.h; sourceTree = SOURCE_ROOT; };
+		0B7731F208A63734004B30F3 /* SRect.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SRect.h; path = ../../interface/SRect.h; sourceTree = SOURCE_ROOT; };
+		0B7731F308A63734004B30F3 /* SRGB.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SRGB.h; path = ../../interface/SRGB.h; sourceTree = SOURCE_ROOT; };
+		0B7731F408A63734004B30F3 /* SRGBA.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SRGBA.h; path = ../../interface/SRGBA.h; sourceTree = SOURCE_ROOT; };
+		0B7731F508A63734004B30F3 /* SScrollPos.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SScrollPos.h; path = ../../interface/SScrollPos.h; sourceTree = SOURCE_ROOT; };
+		0B7731F608A63734004B30F3 /* SSize.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SSize.h; path = ../../interface/SSize.h; sourceTree = SOURCE_ROOT; };
+		0B77322608A63747004B30F3 /* CBitmap.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CBitmap.h; path = ../../include/CBitmap.h; sourceTree = SOURCE_ROOT; };
+		0B77322708A63747004B30F3 /* CBitmapResource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CBitmapResource.h; path = ../../include/CBitmapResource.h; sourceTree = SOURCE_ROOT; };
+		0B77322808A63747004B30F3 /* CBrowser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CBrowser.h; path = ../../include/CBrowser.h; sourceTree = SOURCE_ROOT; };
+		0B77322908A63747004B30F3 /* CButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CButton.h; path = ../../include/CButton.h; sourceTree = SOURCE_ROOT; };
+		0B77322A08A63747004B30F3 /* CContext.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CContext.h; path = ../../include/CContext.h; sourceTree = SOURCE_ROOT; };
+		0B77322B08A63747004B30F3 /* CContextOSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CContextOSX.h; path = ../../include/CContextOSX.h; sourceTree = SOURCE_ROOT; };
+		0B77322D08A63747004B30F3 /* CControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CControl.h; path = ../../include/CControl.h; sourceTree = SOURCE_ROOT; };
+		0B77322E08A63747004B30F3 /* CCustomControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CCustomControl.h; path = ../../include/CCustomControl.h; sourceTree = SOURCE_ROOT; };
+		0B77322F08A63747004B30F3 /* CDialog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CDialog.h; path = ../../include/CDialog.h; sourceTree = SOURCE_ROOT; };
+		0B77323108A63747004B30F3 /* CDrawPrimitivesQT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CDrawPrimitivesQT.h; path = ../../include/CDrawPrimitivesQT.h; sourceTree = SOURCE_ROOT; };
+		0B77323208A63747004B30F3 /* CDropDownListBox.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CDropDownListBox.h; path = ../../include/CDropDownListBox.h; sourceTree = SOURCE_ROOT; };
+		0B77323308A63747004B30F3 /* CEventReceiver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CEventReceiver.h; path = ../../include/CEventReceiver.h; sourceTree = SOURCE_ROOT; };
+		0B77323408A63747004B30F3 /* CFontResource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CFontResource.h; path = ../../include/CFontResource.h; sourceTree = SOURCE_ROOT; };
+		0B77323508A63747004B30F3 /* CInContext.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CInContext.h; path = ../../include/CInContext.h; sourceTree = SOURCE_ROOT; };
+		0B77323608A63748004B30F3 /* CInvalidater.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CInvalidater.h; path = ../../include/CInvalidater.h; sourceTree = SOURCE_ROOT; };
+		0B77323708A63748004B30F3 /* CKnob.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CKnob.h; path = ../../include/CKnob.h; sourceTree = SOURCE_ROOT; };
+		0B77323808A63748004B30F3 /* CLine.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CLine.h; path = ../../include/CLine.h; sourceTree = SOURCE_ROOT; };
+		0B77323908A63748004B30F3 /* CMemoryDC.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CMemoryDC.h; path = ../../include/CMemoryDC.h; sourceTree = SOURCE_ROOT; };
+		0B77323B08A63748004B30F3 /* CMemoryDCQT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CMemoryDCQT.h; path = ../../include/CMemoryDCQT.h; sourceTree = SOURCE_ROOT; };
+		0B77323C08A63748004B30F3 /* CMultiStateButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CMultiStateButton.h; path = ../../include/CMultiStateButton.h; sourceTree = SOURCE_ROOT; };
+		0B77323D08A63748004B30F3 /* COpenDialogOSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = COpenDialogOSX.h; path = ../../include/COpenDialogOSX.h; sourceTree = SOURCE_ROOT; };
+		0B77323F08A63748004B30F3 /* CPane.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CPane.h; path = ../../include/CPane.h; sourceTree = SOURCE_ROOT; };
+		0B77324008A63748004B30F3 /* CPickDirDialogOSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CPickDirDialogOSX.h; path = ../../include/CPickDirDialogOSX.h; sourceTree = SOURCE_ROOT; };
+		0B77324208A63748004B30F3 /* CPopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CPopupMenu.h; path = ../../include/CPopupMenu.h; sourceTree = SOURCE_ROOT; };
+		0B77324308A63748004B30F3 /* CRadioButtons.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CRadioButtons.h; path = ../../include/CRadioButtons.h; sourceTree = SOURCE_ROOT; };
+		0B77324408A63748004B30F3 /* CRect.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CRect.h; path = ../../include/CRect.h; sourceTree = SOURCE_ROOT; };
+		0B77324508A63748004B30F3 /* CResource.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CResource.h; path = ../../include/CResource.h; sourceTree = SOURCE_ROOT; };
+		0B77324608A63748004B30F3 /* CResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CResourceManager.h; path = ../../include/CResourceManager.h; sourceTree = SOURCE_ROOT; };
+		0B77324708A63748004B30F3 /* CSaveAsDialogOSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CSaveAsDialogOSX.h; path = ../../include/CSaveAsDialogOSX.h; sourceTree = SOURCE_ROOT; };
+		0B77324908A63748004B30F3 /* CScrollBar.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CScrollBar.h; path = ../../include/CScrollBar.h; sourceTree = SOURCE_ROOT; };
+		0B77324A08A63748004B30F3 /* CScrollPane.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CScrollPane.h; path = ../../include/CScrollPane.h; sourceTree = SOURCE_ROOT; };
+		0B77324C08A63748004B30F3 /* CSetContext.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CSetContext.h; path = ../../include/CSetContext.h; sourceTree = SOURCE_ROOT; };
+		0B77324D08A63748004B30F3 /* CText.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CText.h; path = ../../include/CText.h; sourceTree = SOURCE_ROOT; };
+		0B77324E08A63748004B30F3 /* CWaitCursorOSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CWaitCursorOSX.h; path = ../../include/CWaitCursorOSX.h; sourceTree = SOURCE_ROOT; };
+		0B77325008A63748004B30F3 /* CWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CWindow.h; path = ../../include/CWindow.h; sourceTree = SOURCE_ROOT; };
+		0B77325108A63748004B30F3 /* CWindowOSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CWindowOSX.h; path = ../../include/CWindowOSX.h; sourceTree = SOURCE_ROOT; };
+		0B77325208A63748004B30F3 /* CWindowOSXQT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CWindowOSXQT.h; path = ../../include/CWindowOSXQT.h; sourceTree = SOURCE_ROOT; };
+		0B77325608A63748004B30F3 /* geInternal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = geInternal.h; path = ../../include/geInternal.h; sourceTree = SOURCE_ROOT; };
+		0B77325708A63748004B30F3 /* geInternalOS.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = geInternalOS.h; path = ../../include/geInternalOS.h; sourceTree = SOURCE_ROOT; };
+		0B77325808A63748004B30F3 /* IDC.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDC.h; path = ../../include/IDC.h; sourceTree = SOURCE_ROOT; };
+		0B77328C08A63796004B30F3 /* CBitmap.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBitmap.cpp; path = ../../source/CBitmap.cpp; sourceTree = SOURCE_ROOT; };
+		0B77328D08A63796004B30F3 /* CBitmapResource.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBitmapResource.cpp; path = ../../source/CBitmapResource.cpp; sourceTree = SOURCE_ROOT; };
+		0B77328F08A63796004B30F3 /* CBrowser.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBrowser.cpp; path = ../../source/CBrowser.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329008A63796004B30F3 /* CButton.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CButton.cpp; path = ../../source/CButton.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329108A63796004B30F3 /* CContext.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CContext.cpp; path = ../../source/CContext.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329208A63796004B30F3 /* CContextOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CContextOSX.cpp; path = ../../source/CContextOSX.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329408A63796004B30F3 /* CControl.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CControl.cpp; path = ../../source/CControl.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329508A63796004B30F3 /* CCustomControl.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CCustomControl.cpp; path = ../../source/CCustomControl.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329608A63796004B30F3 /* CDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CDialog.cpp; path = ../../source/CDialog.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329808A63796004B30F3 /* CDrawPrimitivesQT.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CDrawPrimitivesQT.cpp; path = ../../source/CDrawPrimitivesQT.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329908A63796004B30F3 /* CDropDownListBox.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CDropDownListBox.cpp; path = ../../source/CDropDownListBox.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329A08A63796004B30F3 /* CEventReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CEventReceiver.cpp; path = ../../source/CEventReceiver.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329B08A63796004B30F3 /* CFontResource.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CFontResource.cpp; path = ../../source/CFontResource.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329C08A63796004B30F3 /* CInContext.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CInContext.cpp; path = ../../source/CInContext.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329D08A63796004B30F3 /* CInvalidater.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CInvalidater.cpp; path = ../../source/CInvalidater.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329E08A63796004B30F3 /* CKnob.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CKnob.cpp; path = ../../source/CKnob.cpp; sourceTree = SOURCE_ROOT; };
+		0B77329F08A63796004B30F3 /* CLine.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CLine.cpp; path = ../../source/CLine.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732A008A63796004B30F3 /* CMemoryDC.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CMemoryDC.cpp; path = ../../source/CMemoryDC.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732A208A63796004B30F3 /* CMemoryDCQT.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CMemoryDCQT.cpp; path = ../../source/CMemoryDCQT.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732A308A63796004B30F3 /* CMultiStateButton.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CMultiStateButton.cpp; path = ../../source/CMultiStateButton.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732A408A63796004B30F3 /* COpenDialogOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = COpenDialogOSX.cpp; path = ../../source/COpenDialogOSX.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732A608A63796004B30F3 /* CPane.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CPane.cpp; path = ../../source/CPane.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732A708A63796004B30F3 /* CPickDirDialogOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CPickDirDialogOSX.cpp; path = ../../source/CPickDirDialogOSX.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732A908A63796004B30F3 /* CPopupMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CPopupMenu.cpp; path = ../../source/CPopupMenu.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732AA08A63796004B30F3 /* CRadioButtons.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CRadioButtons.cpp; path = ../../source/CRadioButtons.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732AB08A63796004B30F3 /* CRect.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CRect.cpp; path = ../../source/CRect.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732AC08A63796004B30F3 /* CResource.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CResource.cpp; path = ../../source/CResource.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732AD08A63796004B30F3 /* CResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CResourceManager.cpp; path = ../../source/CResourceManager.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732AE08A63796004B30F3 /* CSaveAsDialogOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CSaveAsDialogOSX.cpp; path = ../../source/CSaveAsDialogOSX.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732B008A63796004B30F3 /* CScrollBar.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CScrollBar.cpp; path = ../../source/CScrollBar.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732B108A63796004B30F3 /* CScrollPane.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CScrollPane.cpp; path = ../../source/CScrollPane.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732B308A63796004B30F3 /* CSetContext.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CSetContext.cpp; path = ../../source/CSetContext.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732B408A63796004B30F3 /* CText.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CText.cpp; path = ../../source/CText.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732B508A63796004B30F3 /* CWaitCursorOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CWaitCursorOSX.cpp; path = ../../source/CWaitCursorOSX.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732B708A63796004B30F3 /* CWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CWindow.cpp; path = ../../source/CWindow.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732B808A63796004B30F3 /* CWindowOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CWindowOSX.cpp; path = ../../source/CWindowOSX.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732B908A63796004B30F3 /* CWindowOSXQT.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CWindowOSXQT.cpp; path = ../../source/CWindowOSXQT.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732BD08A63796004B30F3 /* geInternal.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = geInternal.cpp; path = ../../source/geInternal.cpp; sourceTree = SOURCE_ROOT; };
+		0B7732BE08A63796004B30F3 /* SRect.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = SRect.cpp; path = ../../source/SRect.cpp; sourceTree = SOURCE_ROOT; };
+		0B8839E708BB491900095026 /* DataEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DataEngine.xcodeproj; path = ../../../DataEngine/projects/OSXXCode/DataEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
+		0BBA14E108B4D86C0001EB6F /* CSlider.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CSlider.cpp; path = ../../source/CSlider.cpp; sourceTree = SOURCE_ROOT; };
+		0BCF8D0108D5722300624E46 /* CLED.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CLED.cpp; path = ../../source/CLED.cpp; sourceTree = SOURCE_ROOT; };
+		0BCF8D0308D5723D00624E46 /* CLED.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CLED.h; path = ../../include/CLED.h; sourceTree = SOURCE_ROOT; };
+		0BCF8D0508D5724A00624E46 /* ILED.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ILED.h; path = ../../interface/ILED.h; sourceTree = SOURCE_ROOT; };
+		0BD563110958051C00016748 /* DSPEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DSPEngine.xcodeproj; path = ../../../DSPEngine/Projects/OSXXCode/DSPEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
+		0BD563930958167100016748 /* C2D.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = C2D.h; path = ../../include/C2D.h; sourceTree = SOURCE_ROOT; };
+		0BD563940958167100016748 /* CEQDisplay.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CEQDisplay.h; path = ../../include/CEQDisplay.h; sourceTree = SOURCE_ROOT; };
+		0BD563950958167100016748 /* CFFT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CFFT.h; path = ../../include/CFFT.h; sourceTree = SOURCE_ROOT; };
+		0BD563990958168300016748 /* C2D.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = C2D.cpp; path = ../../source/C2D.cpp; sourceTree = SOURCE_ROOT; };
+		0BD5639A0958168300016748 /* CEQDisplay.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CEQDisplay.cpp; path = ../../source/CEQDisplay.cpp; sourceTree = SOURCE_ROOT; };
+		0BD5639B0958168400016748 /* CFFT.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CFFT.cpp; path = ../../source/CFFT.cpp; sourceTree = SOURCE_ROOT; };
+		0BFDD402090CE74D008D99CE /* CKnob2.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CKnob2.h; path = ../../include/CKnob2.h; sourceTree = SOURCE_ROOT; };
+		0BFDD403090CE74D008D99CE /* CSlider.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CSlider.h; path = ../../include/CSlider.h; sourceTree = SOURCE_ROOT; };
+		0BFDD404090CE74D008D99CE /* CURL.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CURL.h; path = ../../include/CURL.h; sourceTree = SOURCE_ROOT; };
+		0BFDD408090CE767008D99CE /* CKnob2.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CKnob2.cpp; path = ../../source/CKnob2.cpp; sourceTree = SOURCE_ROOT; };
+		0BFDD409090CE767008D99CE /* CURL.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CURL.cpp; path = ../../source/CURL.cpp; sourceTree = SOURCE_ROOT; };
+		3252CAF60E01310E00D5DE3B /* CRawResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRawResource.h; path = ../../include/CRawResource.h; sourceTree = SOURCE_ROOT; };
+		3252CAF80E01312600D5DE3B /* IRawResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRawResource.h; path = ../../interface/IRawResource.h; sourceTree = SOURCE_ROOT; };
+		3252CAFA0E01319400D5DE3B /* CRawResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CRawResource.cpp; path = ../../source/CRawResource.cpp; sourceTree = SOURCE_ROOT; };
+		32BAE0B70371A74B00C91783 /* GUIEngine_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIEngine_Prefix.pch; sourceTree = "<group>"; };
+		D2AAC06F0554671400DB518D /* libGUIEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGUIEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3005AF80DC07A330059BB9C /* CListBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CListBox.cpp; path = ../../source/CListBox.cpp; sourceTree = SOURCE_ROOT; };
+		E3005AFA0DC07A410059BB9C /* CListBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CListBox.h; path = ../../include/CListBox.h; sourceTree = SOURCE_ROOT; };
+		E3005AFC0DC07A4D0059BB9C /* IListBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IListBox.h; path = ../../interface/IListBox.h; sourceTree = SOURCE_ROOT; };
+		E308AA990B538D0B009A1CAA /* CMultiStateDropDownListBox.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CMultiStateDropDownListBox.cpp; path = ../../source/CMultiStateDropDownListBox.cpp; sourceTree = SOURCE_ROOT; };
+		E308AA9C0B538D18009A1CAA /* CMultiStateDropDownListBox.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CMultiStateDropDownListBox.h; path = ../../include/CMultiStateDropDownListBox.h; sourceTree = SOURCE_ROOT; };
+		E308AA9E0B538D24009A1CAA /* IMultiStateDropDownListBox.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IMultiStateDropDownListBox.h; path = ../../interface/IMultiStateDropDownListBox.h; sourceTree = SOURCE_ROOT; };
+		E30B15470D8535080007908F /* IApplicationCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IApplicationCallback.h; path = ../../interface/IApplicationCallback.h; sourceTree = SOURCE_ROOT; };
+		E34C8EB20C9015BF003E7B37 /* IPaneSwitcher.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IPaneSwitcher.h; path = ../../interface/IPaneSwitcher.h; sourceTree = SOURCE_ROOT; };
+		E34C8EBA0C9015F3003E7B37 /* CPaneSwitcher.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CPaneSwitcher.h; path = ../../include/CPaneSwitcher.h; sourceTree = SOURCE_ROOT; };
+		E34C8EBC0C9015FF003E7B37 /* CPaneSwitcher.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CPaneSwitcher.cpp; path = ../../source/CPaneSwitcher.cpp; sourceTree = SOURCE_ROOT; };
+		E385AD150DCECAA500CC6EEB /* IInvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IInvert.h; path = ../../interface/IInvert.h; sourceTree = SOURCE_ROOT; };
+		E385AD170DCECAB400CC6EEB /* CInvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CInvert.h; path = ../../include/CInvert.h; sourceTree = SOURCE_ROOT; };
+		E385AD190DCECAC100CC6EEB /* CInvert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CInvert.cpp; path = ../../source/CInvert.cpp; sourceTree = SOURCE_ROOT; };
+		E38AFBE00A5A819D0022E0FF /* ITextField.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ITextField.h; path = ../../interface/ITextField.h; sourceTree = SOURCE_ROOT; };
+		E38AFBE30A5A81A80022E0FF /* CTextField.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CTextField.h; path = ../../include/CTextField.h; sourceTree = SOURCE_ROOT; };
+		E38AFBE50A5A81B30022E0FF /* CTextField.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CTextField.cpp; path = ../../source/CTextField.cpp; sourceTree = SOURCE_ROOT; };
+		E3C709570ABFBBAE002C2728 /* CSpinner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CSpinner.h; path = ../../include/CSpinner.h; sourceTree = SOURCE_ROOT; };
+		E3C709580ABFBBAE002C2728 /* CTextList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CTextList.h; path = ../../include/CTextList.h; sourceTree = SOURCE_ROOT; };
+		E3C709C00ABFBE8C002C2728 /* CSpinner.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CSpinner.cpp; path = ../../source/CSpinner.cpp; sourceTree = SOURCE_ROOT; };
+		E3C709C10ABFBE8C002C2728 /* CTextList.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CTextList.cpp; path = ../../source/CTextList.cpp; sourceTree = SOURCE_ROOT; };
+		E3CBC6380AC3C0B200D42EFA /* CPeakMeter.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CPeakMeter.cpp; path = ../../source/CPeakMeter.cpp; sourceTree = SOURCE_ROOT; };
+		E3CBC63A0AC3C0C200D42EFA /* CPeakMeter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CPeakMeter.h; path = ../../include/CPeakMeter.h; sourceTree = SOURCE_ROOT; };
+		E3CBC63C0AC3C0D400D42EFA /* IPeakMeter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IPeakMeter.h; path = ../../interface/IPeakMeter.h; sourceTree = SOURCE_ROOT; };
+		E3CBC6BF0AC3C5E800D42EFA /* ISpinner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ISpinner.h; path = ../../interface/ISpinner.h; sourceTree = SOURCE_ROOT; };
+		E3CBC6C10AC3C5F400D42EFA /* I2D.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = I2D.h; path = ../../interface/I2D.h; sourceTree = SOURCE_ROOT; };
+		E3CBC6C30AC3C60800D42EFA /* IEQDisplay.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IEQDisplay.h; path = ../../interface/IEQDisplay.h; sourceTree = SOURCE_ROOT; };
+		E3CBC6C40AC3C60800D42EFA /* IEQDisplayCallback.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IEQDisplayCallback.h; path = ../../interface/IEQDisplayCallback.h; sourceTree = SOURCE_ROOT; };
+		E3CBC6C50AC3C60800D42EFA /* IFFT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IFFT.h; path = ../../interface/IFFT.h; sourceTree = SOURCE_ROOT; };
+		E3CBC6C60AC3C60800D42EFA /* IKnob2.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IKnob2.h; path = ../../interface/IKnob2.h; sourceTree = SOURCE_ROOT; };
+		E3CBC6C70AC3C60800D42EFA /* ISlider.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ISlider.h; path = ../../interface/ISlider.h; sourceTree = SOURCE_ROOT; };
+		E3CBC6C80AC3C60800D42EFA /* ITextList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ITextList.h; path = ../../interface/ITextList.h; sourceTree = SOURCE_ROOT; };
+		E3CBC6C90AC3C60800D42EFA /* IURL.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IURL.h; path = ../../interface/IURL.h; sourceTree = SOURCE_ROOT; };
+		E3ED219C0AFF08E20011532F /* CMouseTrap.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CMouseTrap.cpp; path = ../../source/CMouseTrap.cpp; sourceTree = SOURCE_ROOT; };
+		E3ED219E0AFF08EF0011532F /* CMouseTrap.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CMouseTrap.h; path = ../../include/CMouseTrap.h; sourceTree = SOURCE_ROOT; };
+		E3ED21A10AFF08FC0011532F /* IMouseTrap.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IMouseTrap.h; path = ../../interface/IMouseTrap.h; sourceTree = SOURCE_ROOT; };
+		E3ED21AC0AFF13290011532F /* SEventGeneric.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SEventGeneric.h; path = ../../interface/SEventGeneric.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC06D0554671400DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DDFF38A45A11DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC06F0554671400DB518D /* libGUIEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* GUIEngine */ = {
+			isa = PBXGroup;
+			children = (
+				0BD563110958051C00016748 /* DSPEngine.xcodeproj */,
+				0B8839E708BB491900095026 /* DataEngine.xcodeproj */,
+				08FB77ACFE841707C02AAC07 /* Source */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DDFF38A45A11DB9C8B /* Products */,
+			);
+			name = GUIEngine;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AAFE841565C02AAC07 /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		08FB77ACFE841707C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0B7731C508A636F4004B30F3 /* Interface */,
+				0B7731C608A636FA004B30F3 /* Include */,
+				0B7731C708A63701004B30F3 /* Source */,
+				32BAE0B70371A74B00C91783 /* GUIEngine_Prefix.pch */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B7731C508A636F4004B30F3 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				3252CAF80E01312600D5DE3B /* IRawResource.h */,
+				E385AD150DCECAA500CC6EEB /* IInvert.h */,
+				E3005AFC0DC07A4D0059BB9C /* IListBox.h */,
+				E30B15470D8535080007908F /* IApplicationCallback.h */,
+				0A624C060C97E40C00F87B69 /* IPanner.h */,
+				E34C8EB20C9015BF003E7B37 /* IPaneSwitcher.h */,
+				E308AA9E0B538D24009A1CAA /* IMultiStateDropDownListBox.h */,
+				E3ED21AC0AFF13290011532F /* SEventGeneric.h */,
+				E3ED21A10AFF08FC0011532F /* IMouseTrap.h */,
+				E3CBC6C30AC3C60800D42EFA /* IEQDisplay.h */,
+				E3CBC6C40AC3C60800D42EFA /* IEQDisplayCallback.h */,
+				E3CBC6C50AC3C60800D42EFA /* IFFT.h */,
+				E3CBC6C60AC3C60800D42EFA /* IKnob2.h */,
+				E3CBC6C70AC3C60800D42EFA /* ISlider.h */,
+				E3CBC6C80AC3C60800D42EFA /* ITextList.h */,
+				E3CBC6C90AC3C60800D42EFA /* IURL.h */,
+				E3CBC6C10AC3C5F400D42EFA /* I2D.h */,
+				E3CBC6BF0AC3C5E800D42EFA /* ISpinner.h */,
+				E3CBC63C0AC3C0D400D42EFA /* IPeakMeter.h */,
+				E38AFBE00A5A819D0022E0FF /* ITextField.h */,
+				0BCF8D0508D5724A00624E46 /* ILED.h */,
+				0B7731C808A63734004B30F3 /* EMouseMsg.h */,
+				0B7731C908A63734004B30F3 /* ge.h */,
+				0B7731CA08A63734004B30F3 /* geUtilities.h */,
+				0B7731CB08A63734004B30F3 /* IBitmap.h */,
+				0B7731CC08A63734004B30F3 /* IBitmapResource.h */,
+				0B7731CD08A63734004B30F3 /* IBitmapResourceText.h */,
+				0B7731CE08A63734004B30F3 /* IBrowser.h */,
+				0B7731CF08A63734004B30F3 /* IBrowserCallback.h */,
+				0B7731D008A63734004B30F3 /* IButton.h */,
+				0B7731D108A63734004B30F3 /* IContext.h */,
+				0B7731D208A63734004B30F3 /* IContextCallback.h */,
+				0B7731D308A63734004B30F3 /* IControl.h */,
+				0B7731D408A63734004B30F3 /* ICustomControl.h */,
+				0B7731D508A63734004B30F3 /* ICustomControlCallback.h */,
+				0B7731D608A63734004B30F3 /* IDialog.h */,
+				0B7731D708A63734004B30F3 /* IDialogCallback.h */,
+				0B7731D808A63734004B30F3 /* IDrawPrimitives.h */,
+				0B7731D908A63734004B30F3 /* IDropDownListBox.h */,
+				0B7731DA08A63734004B30F3 /* IEventReceiver.h */,
+				0B7731DB08A63734004B30F3 /* IFontResource.h */,
+				0B7731DC08A63734004B30F3 /* IInContext.h */,
+				0B7731DD08A63734004B30F3 /* IInvalidater.h */,
+				0B7731DE08A63734004B30F3 /* IKnob.h */,
+				0B7731DF08A63734004B30F3 /* ILine.h */,
+				0B7731E008A63734004B30F3 /* IMultiStateButton.h */,
+				0B7731E108A63734004B30F3 /* IOpenDialog.h */,
+				0B7731E208A63734004B30F3 /* IPane.h */,
+				0B7731E308A63734004B30F3 /* IPickDirDialog.h */,
+				0B7731E408A63734004B30F3 /* IPopupMenu.h */,
+				0B7731E508A63734004B30F3 /* IRadioButtons.h */,
+				0B7731E608A63734004B30F3 /* IRect.h */,
+				0B7731E708A63734004B30F3 /* IResource.h */,
+				0B7731E808A63734004B30F3 /* IResourceManager.h */,
+				0B7731E908A63734004B30F3 /* ISaveAsDialog.h */,
+				0B7731EA08A63734004B30F3 /* IScrollBar.h */,
+				0B7731EB08A63734004B30F3 /* IScrollPane.h */,
+				0B7731ED08A63734004B30F3 /* ISetContext.h */,
+				0B7731EE08A63734004B30F3 /* IText.h */,
+				0B7731EF08A63734004B30F3 /* IWaitCursor.h */,
+				0B7731F008A63734004B30F3 /* IWindow.h */,
+				0B7731F108A63734004B30F3 /* SPos.h */,
+				0B7731F208A63734004B30F3 /* SRect.h */,
+				0B7731F308A63734004B30F3 /* SRGB.h */,
+				0B7731F408A63734004B30F3 /* SRGBA.h */,
+				0B7731F508A63734004B30F3 /* SScrollPos.h */,
+				0B7731F608A63734004B30F3 /* SSize.h */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
+		0B7731C608A636FA004B30F3 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				3252CAF60E01310E00D5DE3B /* CRawResource.h */,
+				E385AD170DCECAB400CC6EEB /* CInvert.h */,
+				E3005AFA0DC07A410059BB9C /* CListBox.h */,
+				0A624C0C0C97E5DD00F87B69 /* CPanner.h */,
+				E34C8EBA0C9015F3003E7B37 /* CPaneSwitcher.h */,
+				E308AA9C0B538D18009A1CAA /* CMultiStateDropDownListBox.h */,
+				E3ED219E0AFF08EF0011532F /* CMouseTrap.h */,
+				E3CBC63A0AC3C0C200D42EFA /* CPeakMeter.h */,
+				E3C709570ABFBBAE002C2728 /* CSpinner.h */,
+				E3C709580ABFBBAE002C2728 /* CTextList.h */,
+				E38AFBE30A5A81A80022E0FF /* CTextField.h */,
+				0BD563930958167100016748 /* C2D.h */,
+				0BD563940958167100016748 /* CEQDisplay.h */,
+				0BD563950958167100016748 /* CFFT.h */,
+				0BFDD402090CE74D008D99CE /* CKnob2.h */,
+				0BFDD403090CE74D008D99CE /* CSlider.h */,
+				0BFDD404090CE74D008D99CE /* CURL.h */,
+				0BCF8D0308D5723D00624E46 /* CLED.h */,
+				0B77322608A63747004B30F3 /* CBitmap.h */,
+				0B77322708A63747004B30F3 /* CBitmapResource.h */,
+				0B77322808A63747004B30F3 /* CBrowser.h */,
+				0B77322908A63747004B30F3 /* CButton.h */,
+				0B77322A08A63747004B30F3 /* CContext.h */,
+				0B77322B08A63747004B30F3 /* CContextOSX.h */,
+				0B77322D08A63747004B30F3 /* CControl.h */,
+				0B77322E08A63747004B30F3 /* CCustomControl.h */,
+				0B77322F08A63747004B30F3 /* CDialog.h */,
+				0B77323108A63747004B30F3 /* CDrawPrimitivesQT.h */,
+				0B77323208A63747004B30F3 /* CDropDownListBox.h */,
+				0B77323308A63747004B30F3 /* CEventReceiver.h */,
+				0B77323408A63747004B30F3 /* CFontResource.h */,
+				0B77323508A63747004B30F3 /* CInContext.h */,
+				0B77323608A63748004B30F3 /* CInvalidater.h */,
+				0B77323708A63748004B30F3 /* CKnob.h */,
+				0B77323808A63748004B30F3 /* CLine.h */,
+				0B77323908A63748004B30F3 /* CMemoryDC.h */,
+				0B77323B08A63748004B30F3 /* CMemoryDCQT.h */,
+				0B77323C08A63748004B30F3 /* CMultiStateButton.h */,
+				0B77323D08A63748004B30F3 /* COpenDialogOSX.h */,
+				0B77323F08A63748004B30F3 /* CPane.h */,
+				0B77324008A63748004B30F3 /* CPickDirDialogOSX.h */,
+				0B77324208A63748004B30F3 /* CPopupMenu.h */,
+				0B77324308A63748004B30F3 /* CRadioButtons.h */,
+				0B77324408A63748004B30F3 /* CRect.h */,
+				0B77324508A63748004B30F3 /* CResource.h */,
+				0B77324608A63748004B30F3 /* CResourceManager.h */,
+				0B77324708A63748004B30F3 /* CSaveAsDialogOSX.h */,
+				0B77324908A63748004B30F3 /* CScrollBar.h */,
+				0B77324A08A63748004B30F3 /* CScrollPane.h */,
+				0B77324C08A63748004B30F3 /* CSetContext.h */,
+				0B77324D08A63748004B30F3 /* CText.h */,
+				0B77324E08A63748004B30F3 /* CWaitCursorOSX.h */,
+				0B77325008A63748004B30F3 /* CWindow.h */,
+				0B77325108A63748004B30F3 /* CWindowOSX.h */,
+				0B77325208A63748004B30F3 /* CWindowOSXQT.h */,
+				0B77325608A63748004B30F3 /* geInternal.h */,
+				0B77325708A63748004B30F3 /* geInternalOS.h */,
+				0B77325808A63748004B30F3 /* IDC.h */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		0B7731C708A63701004B30F3 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				3252CAFA0E01319400D5DE3B /* CRawResource.cpp */,
+				E385AD190DCECAC100CC6EEB /* CInvert.cpp */,
+				E3005AF80DC07A330059BB9C /* CListBox.cpp */,
+				0A624C120C97E67300F87B69 /* CPanner.cpp */,
+				E34C8EBC0C9015FF003E7B37 /* CPaneSwitcher.cpp */,
+				E308AA990B538D0B009A1CAA /* CMultiStateDropDownListBox.cpp */,
+				E3ED219C0AFF08E20011532F /* CMouseTrap.cpp */,
+				E3CBC6380AC3C0B200D42EFA /* CPeakMeter.cpp */,
+				E3C709C00ABFBE8C002C2728 /* CSpinner.cpp */,
+				E3C709C10ABFBE8C002C2728 /* CTextList.cpp */,
+				E38AFBE50A5A81B30022E0FF /* CTextField.cpp */,
+				0BD563990958168300016748 /* C2D.cpp */,
+				0BD5639A0958168300016748 /* CEQDisplay.cpp */,
+				0BD5639B0958168400016748 /* CFFT.cpp */,
+				0BFDD408090CE767008D99CE /* CKnob2.cpp */,
+				0BFDD409090CE767008D99CE /* CURL.cpp */,
+				0BCF8D0108D5722300624E46 /* CLED.cpp */,
+				0BBA14E108B4D86C0001EB6F /* CSlider.cpp */,
+				0B77328C08A63796004B30F3 /* CBitmap.cpp */,
+				0B77328D08A63796004B30F3 /* CBitmapResource.cpp */,
+				0B77328F08A63796004B30F3 /* CBrowser.cpp */,
+				0B77329008A63796004B30F3 /* CButton.cpp */,
+				0B77329108A63796004B30F3 /* CContext.cpp */,
+				0B77329208A63796004B30F3 /* CContextOSX.cpp */,
+				0B77329408A63796004B30F3 /* CControl.cpp */,
+				0B77329508A63796004B30F3 /* CCustomControl.cpp */,
+				0B77329608A63796004B30F3 /* CDialog.cpp */,
+				0B77329808A63796004B30F3 /* CDrawPrimitivesQT.cpp */,
+				0B77329908A63796004B30F3 /* CDropDownListBox.cpp */,
+				0B77329A08A63796004B30F3 /* CEventReceiver.cpp */,
+				0B77329B08A63796004B30F3 /* CFontResource.cpp */,
+				0B77329C08A63796004B30F3 /* CInContext.cpp */,
+				0B77329D08A63796004B30F3 /* CInvalidater.cpp */,
+				0B77329E08A63796004B30F3 /* CKnob.cpp */,
+				0B77329F08A63796004B30F3 /* CLine.cpp */,
+				0B7732A008A63796004B30F3 /* CMemoryDC.cpp */,
+				0B7732A208A63796004B30F3 /* CMemoryDCQT.cpp */,
+				0B7732A308A63796004B30F3 /* CMultiStateButton.cpp */,
+				0B7732A408A63796004B30F3 /* COpenDialogOSX.cpp */,
+				0B7732A608A63796004B30F3 /* CPane.cpp */,
+				0B7732A708A63796004B30F3 /* CPickDirDialogOSX.cpp */,
+				0B7732A908A63796004B30F3 /* CPopupMenu.cpp */,
+				0B7732AA08A63796004B30F3 /* CRadioButtons.cpp */,
+				0B7732AB08A63796004B30F3 /* CRect.cpp */,
+				0B7732AC08A63796004B30F3 /* CResource.cpp */,
+				0B7732AD08A63796004B30F3 /* CResourceManager.cpp */,
+				0B7732AE08A63796004B30F3 /* CSaveAsDialogOSX.cpp */,
+				0B7732B008A63796004B30F3 /* CScrollBar.cpp */,
+				0B7732B108A63796004B30F3 /* CScrollPane.cpp */,
+				0B7732B308A63796004B30F3 /* CSetContext.cpp */,
+				0B7732B408A63796004B30F3 /* CText.cpp */,
+				0B7732B508A63796004B30F3 /* CWaitCursorOSX.cpp */,
+				0B7732B708A63796004B30F3 /* CWindow.cpp */,
+				0B7732B808A63796004B30F3 /* CWindowOSX.cpp */,
+				0B7732B908A63796004B30F3 /* CWindowOSXQT.cpp */,
+				0B7732BD08A63796004B30F3 /* geInternal.cpp */,
+				0B7732BE08A63796004B30F3 /* SRect.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B8839E808BB491900095026 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0B8839EC08BB491900095026 /* libDataEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0BD563120958051C00016748 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0BD563180958051C00016748 /* libDSPEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC06B0554671400DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B7731F708A63734004B30F3 /* EMouseMsg.h in Headers */,
+				0B7731F808A63734004B30F3 /* ge.h in Headers */,
+				0B7731F908A63734004B30F3 /* geUtilities.h in Headers */,
+				0B7731FA08A63734004B30F3 /* IBitmap.h in Headers */,
+				0B7731FB08A63734004B30F3 /* IBitmapResource.h in Headers */,
+				0B7731FC08A63734004B30F3 /* IBitmapResourceText.h in Headers */,
+				0B7731FD08A63734004B30F3 /* IBrowser.h in Headers */,
+				0B7731FE08A63734004B30F3 /* IBrowserCallback.h in Headers */,
+				0B7731FF08A63734004B30F3 /* IButton.h in Headers */,
+				0B77320008A63734004B30F3 /* IContext.h in Headers */,
+				0B77320108A63734004B30F3 /* IContextCallback.h in Headers */,
+				0B77320208A63734004B30F3 /* IControl.h in Headers */,
+				0B77320308A63734004B30F3 /* ICustomControl.h in Headers */,
+				0B77320408A63734004B30F3 /* ICustomControlCallback.h in Headers */,
+				0B77320508A63734004B30F3 /* IDialog.h in Headers */,
+				0B77320608A63734004B30F3 /* IDialogCallback.h in Headers */,
+				0B77320708A63734004B30F3 /* IDrawPrimitives.h in Headers */,
+				0B77320808A63734004B30F3 /* IDropDownListBox.h in Headers */,
+				0B77320908A63734004B30F3 /* IEventReceiver.h in Headers */,
+				0B77320A08A63734004B30F3 /* IFontResource.h in Headers */,
+				0B77320B08A63734004B30F3 /* IInContext.h in Headers */,
+				0B77320C08A63734004B30F3 /* IInvalidater.h in Headers */,
+				0B77320D08A63734004B30F3 /* IKnob.h in Headers */,
+				0B77320E08A63734004B30F3 /* ILine.h in Headers */,
+				0B77320F08A63734004B30F3 /* IMultiStateButton.h in Headers */,
+				0B77321008A63734004B30F3 /* IOpenDialog.h in Headers */,
+				0B77321108A63734004B30F3 /* IPane.h in Headers */,
+				0B77321208A63734004B30F3 /* IPickDirDialog.h in Headers */,
+				0B77321308A63734004B30F3 /* IPopupMenu.h in Headers */,
+				0B77321408A63734004B30F3 /* IRadioButtons.h in Headers */,
+				0B77321508A63734004B30F3 /* IRect.h in Headers */,
+				0B77321608A63734004B30F3 /* IResource.h in Headers */,
+				0B77321708A63734004B30F3 /* IResourceManager.h in Headers */,
+				0B77321808A63734004B30F3 /* ISaveAsDialog.h in Headers */,
+				0B77321908A63734004B30F3 /* IScrollBar.h in Headers */,
+				0B77321A08A63734004B30F3 /* IScrollPane.h in Headers */,
+				0B77321C08A63734004B30F3 /* ISetContext.h in Headers */,
+				0B77321D08A63734004B30F3 /* IText.h in Headers */,
+				0B77321E08A63734004B30F3 /* IWaitCursor.h in Headers */,
+				0B77321F08A63734004B30F3 /* IWindow.h in Headers */,
+				0B77322008A63734004B30F3 /* SPos.h in Headers */,
+				0B77322108A63734004B30F3 /* SRect.h in Headers */,
+				0B77322208A63734004B30F3 /* SRGB.h in Headers */,
+				0B77322308A63734004B30F3 /* SRGBA.h in Headers */,
+				0B77322408A63734004B30F3 /* SScrollPos.h in Headers */,
+				0B77322508A63734004B30F3 /* SSize.h in Headers */,
+				0B77325908A63748004B30F3 /* CBitmap.h in Headers */,
+				0B77325A08A63748004B30F3 /* CBitmapResource.h in Headers */,
+				0B77325B08A63748004B30F3 /* CBrowser.h in Headers */,
+				0B77325C08A63748004B30F3 /* CButton.h in Headers */,
+				0B77325D08A63748004B30F3 /* CContext.h in Headers */,
+				0B77325E08A63748004B30F3 /* CContextOSX.h in Headers */,
+				0B77326008A63748004B30F3 /* CControl.h in Headers */,
+				0B77326108A63748004B30F3 /* CCustomControl.h in Headers */,
+				0B77326208A63748004B30F3 /* CDialog.h in Headers */,
+				0B77326408A63748004B30F3 /* CDrawPrimitivesQT.h in Headers */,
+				0B77326508A63748004B30F3 /* CDropDownListBox.h in Headers */,
+				0B77326608A63748004B30F3 /* CEventReceiver.h in Headers */,
+				0B77326708A63748004B30F3 /* CFontResource.h in Headers */,
+				0B77326808A63748004B30F3 /* CInContext.h in Headers */,
+				0B77326908A63748004B30F3 /* CInvalidater.h in Headers */,
+				0B77326A08A63748004B30F3 /* CKnob.h in Headers */,
+				0B77326B08A63748004B30F3 /* CLine.h in Headers */,
+				0B77326C08A63748004B30F3 /* CMemoryDC.h in Headers */,
+				0B77326E08A63748004B30F3 /* CMemoryDCQT.h in Headers */,
+				0B77326F08A63748004B30F3 /* CMultiStateButton.h in Headers */,
+				0B77327008A63748004B30F3 /* COpenDialogOSX.h in Headers */,
+				0B77327208A63748004B30F3 /* CPane.h in Headers */,
+				0B77327308A63748004B30F3 /* CPickDirDialogOSX.h in Headers */,
+				0B77327508A63748004B30F3 /* CPopupMenu.h in Headers */,
+				0B77327608A63748004B30F3 /* CRadioButtons.h in Headers */,
+				0B77327708A63748004B30F3 /* CRect.h in Headers */,
+				0B77327808A63748004B30F3 /* CResource.h in Headers */,
+				0B77327908A63748004B30F3 /* CResourceManager.h in Headers */,
+				0B77327A08A63748004B30F3 /* CSaveAsDialogOSX.h in Headers */,
+				0B77327C08A63748004B30F3 /* CScrollBar.h in Headers */,
+				0B77327D08A63748004B30F3 /* CScrollPane.h in Headers */,
+				0B77327F08A63748004B30F3 /* CSetContext.h in Headers */,
+				0B77328008A63748004B30F3 /* CText.h in Headers */,
+				0B77328108A63748004B30F3 /* CWaitCursorOSX.h in Headers */,
+				0B77328308A63748004B30F3 /* CWindow.h in Headers */,
+				0B77328408A63748004B30F3 /* CWindowOSX.h in Headers */,
+				0B77328508A63748004B30F3 /* CWindowOSXQT.h in Headers */,
+				0B77328908A63748004B30F3 /* geInternal.h in Headers */,
+				0B77328A08A63748004B30F3 /* geInternalOS.h in Headers */,
+				0B77328B08A63748004B30F3 /* IDC.h in Headers */,
+				0BCF8D0408D5723D00624E46 /* CLED.h in Headers */,
+				0BCF8D0608D5724A00624E46 /* ILED.h in Headers */,
+				0BFDD405090CE74D008D99CE /* CKnob2.h in Headers */,
+				0BFDD406090CE74D008D99CE /* CSlider.h in Headers */,
+				0BFDD407090CE74D008D99CE /* CURL.h in Headers */,
+				0BD563960958167100016748 /* C2D.h in Headers */,
+				0BD563970958167100016748 /* CEQDisplay.h in Headers */,
+				0BD563980958167100016748 /* CFFT.h in Headers */,
+				E38AFBE10A5A819D0022E0FF /* ITextField.h in Headers */,
+				E38AFBE40A5A81A80022E0FF /* CTextField.h in Headers */,
+				E3C709590ABFBBAE002C2728 /* CSpinner.h in Headers */,
+				E3C7095A0ABFBBAE002C2728 /* CTextList.h in Headers */,
+				E3CBC63B0AC3C0C200D42EFA /* CPeakMeter.h in Headers */,
+				E3CBC63D0AC3C0D400D42EFA /* IPeakMeter.h in Headers */,
+				E3CBC6C00AC3C5E800D42EFA /* ISpinner.h in Headers */,
+				E3CBC6C20AC3C5F400D42EFA /* I2D.h in Headers */,
+				E3CBC6CA0AC3C60800D42EFA /* IEQDisplay.h in Headers */,
+				E3CBC6CB0AC3C60800D42EFA /* IEQDisplayCallback.h in Headers */,
+				E3CBC6CC0AC3C60800D42EFA /* IFFT.h in Headers */,
+				E3CBC6CD0AC3C60800D42EFA /* IKnob2.h in Headers */,
+				E3CBC6CE0AC3C60800D42EFA /* ISlider.h in Headers */,
+				E3CBC6CF0AC3C60800D42EFA /* ITextList.h in Headers */,
+				E3CBC6D00AC3C60800D42EFA /* IURL.h in Headers */,
+				E3ED219F0AFF08EF0011532F /* CMouseTrap.h in Headers */,
+				E3ED21A20AFF08FC0011532F /* IMouseTrap.h in Headers */,
+				E3ED21AD0AFF13290011532F /* SEventGeneric.h in Headers */,
+				E308AA9D0B538D18009A1CAA /* CMultiStateDropDownListBox.h in Headers */,
+				E308AA9F0B538D24009A1CAA /* IMultiStateDropDownListBox.h in Headers */,
+				E34C8EB30C9015BF003E7B37 /* IPaneSwitcher.h in Headers */,
+				E34C8EBB0C9015F3003E7B37 /* CPaneSwitcher.h in Headers */,
+				0A624C070C97E40C00F87B69 /* IPanner.h in Headers */,
+				0A624C0D0C97E5DD00F87B69 /* CPanner.h in Headers */,
+				E30B15480D8535080007908F /* IApplicationCallback.h in Headers */,
+				E3005AFB0DC07A410059BB9C /* CListBox.h in Headers */,
+				E3005AFD0DC07A4D0059BB9C /* IListBox.h in Headers */,
+				E385AD160DCECAA500CC6EEB /* IInvert.h in Headers */,
+				E385AD180DCECAB400CC6EEB /* CInvert.h in Headers */,
+				3252CAF70E01310E00D5DE3B /* CRawResource.h in Headers */,
+				3252CAF90E01312600D5DE3B /* IRawResource.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC06E0554671400DB518D /* GUIEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B7731BA08A636D7004B30F3 /* Build configuration list for PBXNativeTarget "GUIEngine" */;
+			buildPhases = (
+				D2AAC06B0554671400DB518D /* Headers */,
+				D2AAC06C0554671400DB518D /* Sources */,
+				D2AAC06D0554671400DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0B8839EE08BB492700095026 /* PBXTargetDependency */,
+				0BD5631A0958053500016748 /* PBXTargetDependency */,
+			);
+			name = GUIEngine;
+			productName = GUIEngine;
+			productReference = D2AAC06F0554671400DB518D /* libGUIEngine.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 0B7731BE08A636D7004B30F3 /* Build configuration list for PBXProject "GUIEngine" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* GUIEngine */;
+			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0B8839E808BB491900095026 /* Products */;
+					ProjectRef = 0B8839E708BB491900095026 /* DataEngine.xcodeproj */;
+				},
+				{
+					ProductGroup = 0BD563120958051C00016748 /* Products */;
+					ProjectRef = 0BD563110958051C00016748 /* DSPEngine.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D2AAC06E0554671400DB518D /* GUIEngine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0B8839EC08BB491900095026 /* libDataEngine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDataEngine.a;
+			remoteRef = 0B8839EB08BB491900095026 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0BD563180958051C00016748 /* libDSPEngine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDSPEngine.a;
+			remoteRef = 0BD563170958051C00016748 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC06C0554671400DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B7732BF08A63796004B30F3 /* CBitmap.cpp in Sources */,
+				0B7732C008A63796004B30F3 /* CBitmapResource.cpp in Sources */,
+				0B7732C208A63796004B30F3 /* CBrowser.cpp in Sources */,
+				0B7732C308A63796004B30F3 /* CButton.cpp in Sources */,
+				0B7732C408A63796004B30F3 /* CContext.cpp in Sources */,
+				0B7732C508A63796004B30F3 /* CContextOSX.cpp in Sources */,
+				0B7732C708A63796004B30F3 /* CControl.cpp in Sources */,
+				0B7732C808A63796004B30F3 /* CCustomControl.cpp in Sources */,
+				0B7732C908A63796004B30F3 /* CDialog.cpp in Sources */,
+				0B7732CB08A63796004B30F3 /* CDrawPrimitivesQT.cpp in Sources */,
+				0B7732CC08A63796004B30F3 /* CDropDownListBox.cpp in Sources */,
+				0B7732CD08A63796004B30F3 /* CEventReceiver.cpp in Sources */,
+				0B7732CE08A63796004B30F3 /* CFontResource.cpp in Sources */,
+				0B7732CF08A63796004B30F3 /* CInContext.cpp in Sources */,
+				0B7732D008A63796004B30F3 /* CInvalidater.cpp in Sources */,
+				0B7732D108A63796004B30F3 /* CKnob.cpp in Sources */,
+				0B7732D208A63796004B30F3 /* CLine.cpp in Sources */,
+				0B7732D308A63796004B30F3 /* CMemoryDC.cpp in Sources */,
+				0B7732D508A63796004B30F3 /* CMemoryDCQT.cpp in Sources */,
+				0B7732D608A63796004B30F3 /* CMultiStateButton.cpp in Sources */,
+				0B7732D708A63796004B30F3 /* COpenDialogOSX.cpp in Sources */,
+				0B7732D908A63796004B30F3 /* CPane.cpp in Sources */,
+				0B7732DA08A63796004B30F3 /* CPickDirDialogOSX.cpp in Sources */,
+				0B7732DC08A63796004B30F3 /* CPopupMenu.cpp in Sources */,
+				0B7732DD08A63796004B30F3 /* CRadioButtons.cpp in Sources */,
+				0B7732DE08A63796004B30F3 /* CRect.cpp in Sources */,
+				0B7732DF08A63796004B30F3 /* CResource.cpp in Sources */,
+				0B7732E008A63796004B30F3 /* CResourceManager.cpp in Sources */,
+				0B7732E108A63796004B30F3 /* CSaveAsDialogOSX.cpp in Sources */,
+				0B7732E308A63796004B30F3 /* CScrollBar.cpp in Sources */,
+				0B7732E408A63796004B30F3 /* CScrollPane.cpp in Sources */,
+				0B7732E608A63796004B30F3 /* CSetContext.cpp in Sources */,
+				0B7732E708A63796004B30F3 /* CText.cpp in Sources */,
+				0B7732E808A63796004B30F3 /* CWaitCursorOSX.cpp in Sources */,
+				0B7732EA08A63796004B30F3 /* CWindow.cpp in Sources */,
+				0B7732EB08A63796004B30F3 /* CWindowOSX.cpp in Sources */,
+				0B7732EC08A63796004B30F3 /* CWindowOSXQT.cpp in Sources */,
+				0B7732F008A63796004B30F3 /* geInternal.cpp in Sources */,
+				0B7732F108A63796004B30F3 /* SRect.cpp in Sources */,
+				0BBA14E208B4D86C0001EB6F /* CSlider.cpp in Sources */,
+				0BCF8D0208D5722400624E46 /* CLED.cpp in Sources */,
+				0BFDD40A090CE767008D99CE /* CKnob2.cpp in Sources */,
+				0BFDD40B090CE767008D99CE /* CURL.cpp in Sources */,
+				0BD5639C0958168400016748 /* C2D.cpp in Sources */,
+				0BD5639D0958168400016748 /* CEQDisplay.cpp in Sources */,
+				0BD5639E0958168400016748 /* CFFT.cpp in Sources */,
+				E38AFBE60A5A81B30022E0FF /* CTextField.cpp in Sources */,
+				E3C709C20ABFBE8C002C2728 /* CSpinner.cpp in Sources */,
+				E3C709C30ABFBE8C002C2728 /* CTextList.cpp in Sources */,
+				E3CBC6390AC3C0B200D42EFA /* CPeakMeter.cpp in Sources */,
+				E3ED219D0AFF08E20011532F /* CMouseTrap.cpp in Sources */,
+				E308AA9A0B538D0B009A1CAA /* CMultiStateDropDownListBox.cpp in Sources */,
+				E34C8EBD0C9015FF003E7B37 /* CPaneSwitcher.cpp in Sources */,
+				0A624C130C97E67300F87B69 /* CPanner.cpp in Sources */,
+				E3005AF90DC07A330059BB9C /* CListBox.cpp in Sources */,
+				E385AD1A0DCECAC100CC6EEB /* CInvert.cpp in Sources */,
+				3252CAFB0E01319400D5DE3B /* CRawResource.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0B8839EE08BB492700095026 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DataEngine;
+			targetProxy = 0B8839ED08BB492700095026 /* PBXContainerItemProxy */;
+		};
+		0BD5631A0958053500016748 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DSPEngine;
+			targetProxy = 0BD563190958053500016748 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0B7731BB08A636D7004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH)";
+				COPY_PHASE_STRIP = NO;
+				EXECUTABLE_EXTENSION = a;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = GUIEngine_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LD_GENERATE_MAP_FILE = YES;
+				LIBRARY_STYLE = STATIC;
+				MACH_O_TYPE = staticlib;
+				PREBINDING = NO;
+				PRODUCT_NAME = GUIEngine;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		0B7731BC08A636D7004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				EXECUTABLE_EXTENSION = a;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = GUIEngine_Prefix.pch;
+				GCC_UNROLL_LOOPS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LD_GENERATE_MAP_FILE = YES;
+				LIBRARY_STYLE = STATIC;
+				MACH_O_TYPE = staticlib;
+				PREBINDING = NO;
+				PRODUCT_NAME = GUIEngine;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		0B7731BF08A636D7004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = i386;
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+					../../../DataEngine/Interface/,
+					../../../DSPEngine/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		0B7731C008A636D7004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_FAST_MATH = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_UNROLL_LOOPS = YES;
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+					../../../DataEngine/Interface/,
+					../../../DSPEngine/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0B7731BA08A636D7004B30F3 /* Build configuration list for PBXNativeTarget "GUIEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B7731BB08A636D7004B30F3 /* Debug */,
+				0B7731BC08A636D7004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0B7731BE08A636D7004B30F3 /* Build configuration list for PBXProject "GUIEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B7731BF08A636D7004B30F3 /* Debug */,
+				0B7731C008A636D7004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

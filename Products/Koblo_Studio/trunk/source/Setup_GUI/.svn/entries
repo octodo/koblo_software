@@ -1,0 +1,54 @@
+8
+
+dir
+3033
+https://dev.koblo.com:444/repos/Products/Koblo_Studio/trunk/source/Setup_GUI
+https://dev.koblo.com:444/repos
+
+
+
+2008-11-28T08:43:52.436455Z
+2987
+lsb-win
+has-props
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+850aafe4-0746-43d5-bba1-ccadfad06b28
+
+CKSSetupGUI.cpp
+file
+
+
+
+
+2008-12-02T12:03:09.000000Z
+d03645f9b82611ba780652f45a83174c
+2008-11-27T14:01:26.856290Z
+2974
+lsb-win
+has-props
+
+CKSSetupGUIPane.cpp
+file
+
+
+
+
+2008-12-02T12:03:09.000000Z
+056f76dd978b566b35ada58eabec3ce0
+2008-11-28T08:43:52.436455Z
+2987
+lsb-win
+has-props
+

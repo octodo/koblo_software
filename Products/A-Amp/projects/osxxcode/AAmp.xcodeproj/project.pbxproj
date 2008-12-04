@@ -1,0 +1,673 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0BBA14EC08B4DAE40001EB6F /* IOKit in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BBA14EB08B4DAE40001EB6F /* IOKit */; };
+		0BC04C2A08C115AF00A1F829 /* CParmGlobal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BC04C2508C115AF00A1F829 /* CParmGlobal.cpp */; };
+		0BC723A708A7D705003CCF8D /* kspiC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BC723A608A7D705003CCF8D /* kspiC.cpp */; };
+		8D01CCCA0486CAD60068D4B7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
+		8D01CCCE0486CAD60068D4B7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */; };
+		E34903AC0E0ABAF900DA145C /* libGUIEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E668A70E0A6AE600215EC0 /* libGUIEngine.a */; };
+		E34903AD0E0ABAFB00DA145C /* libDataEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E668AC0E0A6AF500215EC0 /* libDataEngine.a */; };
+		E34903AE0E0ABAFE00DA145C /* libBaseUtilities.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3E668B10E0A6B0B00215EC0 /* libBaseUtilities.a */; };
+		E3E668D20E0A6C2B00215EC0 /* CBaseDezipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E668C80E0A6C2B00215EC0 /* CBaseDezipper.cpp */; };
+		E3E668D30E0A6C2B00215EC0 /* CBaseDezipper2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E668C90E0A6C2B00215EC0 /* CBaseDezipper2.cpp */; };
+		E3E668D40E0A6C2B00215EC0 /* CBaseDSPEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E668CA0E0A6C2B00215EC0 /* CBaseDSPEngine.cpp */; };
+		E3E668D50E0A6C2B00215EC0 /* CBaseGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E668CB0E0A6C2B00215EC0 /* CBaseGUI.cpp */; };
+		E3E668D60E0A6C2B00215EC0 /* CBaseMIDICCEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E668CC0E0A6C2B00215EC0 /* CBaseMIDICCEvent.cpp */; };
+		E3E668D70E0A6C2B00215EC0 /* CBaseModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E668CD0E0A6C2B00215EC0 /* CBaseModule.cpp */; };
+		E3E668D80E0A6C2B00215EC0 /* CBasePane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E668CE0E0A6C2B00215EC0 /* CBasePane.cpp */; };
+		E3E668D90E0A6C2B00215EC0 /* CBasePaneStd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E668CF0E0A6C2B00215EC0 /* CBasePaneStd.cpp */; };
+		E3E668DA0E0A6C2B00215EC0 /* CBasePlugIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E668D00E0A6C2B00215EC0 /* CBasePlugIn.cpp */; };
+		E3E668DB0E0A6C2B00215EC0 /* CBaseTopPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E668D10E0A6C2B00215EC0 /* CBaseTopPane.cpp */; };
+		FCDB9D780E2421890069A75D /* CAAmpModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCDB9D720E2421890069A75D /* CAAmpModule.cpp */; };
+		FCDB9D790E2421890069A75D /* CAAmpGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCDB9D730E2421890069A75D /* CAAmpGUI.cpp */; };
+		FCDB9D7A0E2421890069A75D /* AAmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCDB9D740E2421890069A75D /* AAmp.cpp */; };
+		FCDB9D7B0E2421890069A75D /* CAAmpPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCDB9D750E2421890069A75D /* CAAmpPane.cpp */; };
+		FCDB9D7C0E2421890069A75D /* CAAmpPlugIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCDB9D760E2421890069A75D /* CAAmpPlugIn.cpp */; };
+		FCDB9D7D0E2421890069A75D /* CAAmpDSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCDB9D770E2421890069A75D /* CAAmpDSP.cpp */; };
+		FCE397330E0FC172006B6694 /* libSTools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE3970D0E0FBEE3006B6694 /* libSTools.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E34903B00E0ABB0900DA145C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BB6FFE008A8B5A300B2BD35 /* BaseUtilities.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+		E34903B20E0ABB0C00DA145C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BB6FFE908A8B5B100B2BD35 /* DataEngine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = DataEngine;
+		};
+		E34903B40E0ABB0F00DA145C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BB6FFF208A8B5BD00B2BD35 /* GUIEngine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = GUIEngine;
+		};
+		E3E668A60E0A6AE600215EC0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BB6FFF208A8B5BD00B2BD35 /* GUIEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = GUIEngine;
+		};
+		E3E668AB0E0A6AF500215EC0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BB6FFE908A8B5B100B2BD35 /* DataEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = DataEngine;
+		};
+		E3E668B00E0A6B0B00215EC0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BB6FFE008A8B5A300B2BD35 /* BaseUtilities.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+		FCE3970C0E0FBEE3006B6694 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FCE397080E0FBEE3006B6694 /* STools.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = STools;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		0BB6FFE008A8B5A300B2BD35 /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../../SDK/trunk/BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };
+		0BB6FFE908A8B5B100B2BD35 /* DataEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DataEngine.xcodeproj; path = ../../../../SDK/trunk/DataEngine/projects/OSXXCode/DataEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
+		0BB6FFF208A8B5BD00B2BD35 /* GUIEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GUIEngine.xcodeproj; path = ../../../../SDK/trunk/GUIEngine/projects/OSXXCode/GUIEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
+		0BBA14EB08B4DAE40001EB6F /* IOKit */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = IOKit; path = /System/Library/Frameworks/IOKit.framework/Versions/A/IOKit; sourceTree = "<absolute>"; };
+		0BC04C1F08C1159E00A1F829 /* ParmIDs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ParmIDs.h; path = ../../include/ParmIDs.h; sourceTree = SOURCE_ROOT; };
+		0BC04C2508C115AF00A1F829 /* CParmGlobal.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CParmGlobal.cpp; path = ../../source/CParmGlobal.cpp; sourceTree = SOURCE_ROOT; };
+		0BC7239C08A7D6F4003CCF8D /* IGUI.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IGUI.h; path = ../../../../SDK/trunk/KSPI/Interface/IGUI.h; sourceTree = SOURCE_ROOT; };
+		0BC723A608A7D705003CCF8D /* kspiC.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = kspiC.cpp; path = ../../../../SDK/trunk/KSPI/source/kspiC.cpp; sourceTree = SOURCE_ROOT; };
+		0BFDD398090CE3DF008D99CE /* ControlIDs.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ControlIDs.h; path = ../../Include/ControlIDs.h; sourceTree = SOURCE_ROOT; };
+		7CB5A2960A07F93600954A7E /* Template_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Template_Prefix.pch; sourceTree = "<group>"; };
+		7CB5A3070A07FDCC00954A7E /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../../include/Resources.h; sourceTree = SOURCE_ROOT; };
+		7CB5A3300A07FF9400954A7E /* CParmGlobal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CParmGlobal.h; path = ../../include/CParmGlobal.h; sourceTree = SOURCE_ROOT; };
+		8D01CCD10486CAD60068D4B7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D01CCD20486CAD60068D4B7 /* AAmp.kspi */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AAmp.kspi; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3E668B20E0A6BEB00215EC0 /* IHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IHost.h; path = ../../../../SDK/trunk/KSPI/Interface/IHost.h; sourceTree = SOURCE_ROOT; };
+		E3E668B30E0A6BEB00215EC0 /* IModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IModule.h; path = ../../../../SDK/trunk/KSPI/Interface/IModule.h; sourceTree = SOURCE_ROOT; };
+		E3E668B40E0A6BEB00215EC0 /* IPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPlugIn.h; path = ../../../../SDK/trunk/KSPI/Interface/IPlugIn.h; sourceTree = SOURCE_ROOT; };
+		E3E668B50E0A6BEB00215EC0 /* kspi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kspi.h; path = ../../../../SDK/trunk/KSPI/Interface/kspi.h; sourceTree = SOURCE_ROOT; };
+		E3E668B60E0A6BEB00215EC0 /* kspiC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kspiC.h; path = ../../../../SDK/trunk/KSPI/Interface/kspiC.h; sourceTree = SOURCE_ROOT; };
+		E3E668B70E0A6BEB00215EC0 /* kspiCHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kspiCHost.h; path = ../../../../SDK/trunk/KSPI/Interface/kspiCHost.h; sourceTree = SOURCE_ROOT; };
+		E3E668B80E0A6BEB00215EC0 /* kspimain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kspimain.h; path = ../../../../SDK/trunk/KSPI/Interface/kspimain.h; sourceTree = SOURCE_ROOT; };
+		E3E668B90E0A6BEB00215EC0 /* SMIDIEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMIDIEvent.h; path = ../../../../SDK/trunk/KSPI/Interface/SMIDIEvent.h; sourceTree = SOURCE_ROOT; };
+		E3E668BA0E0A6BEB00215EC0 /* SParameterInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SParameterInfo.h; path = ../../../../SDK/trunk/KSPI/Interface/SParameterInfo.h; sourceTree = SOURCE_ROOT; };
+		E3E668BB0E0A6C0300215EC0 /* BaseControlIDs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseControlIDs.h; path = ../../../../SDK/trunk/BaseClasses/Include/BaseControlIDs.h; sourceTree = SOURCE_ROOT; };
+		E3E668BC0E0A6C0300215EC0 /* CBaseDezipper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBaseDezipper.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBaseDezipper.h; sourceTree = SOURCE_ROOT; };
+		E3E668BD0E0A6C0300215EC0 /* CBaseDezipper2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBaseDezipper2.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBaseDezipper2.h; sourceTree = SOURCE_ROOT; };
+		E3E668BE0E0A6C0300215EC0 /* CBaseDSPEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBaseDSPEngine.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBaseDSPEngine.h; sourceTree = SOURCE_ROOT; };
+		E3E668BF0E0A6C0300215EC0 /* CBaseGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBaseGUI.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBaseGUI.h; sourceTree = SOURCE_ROOT; };
+		E3E668C00E0A6C0300215EC0 /* CBaseMIDICCEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBaseMIDICCEvent.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBaseMIDICCEvent.h; sourceTree = SOURCE_ROOT; };
+		E3E668C10E0A6C0300215EC0 /* CBaseModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBaseModule.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBaseModule.h; sourceTree = SOURCE_ROOT; };
+		E3E668C20E0A6C0300215EC0 /* CBasePane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBasePane.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBasePane.h; sourceTree = SOURCE_ROOT; };
+		E3E668C30E0A6C0300215EC0 /* CBasePaneStd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBasePaneStd.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBasePaneStd.h; sourceTree = SOURCE_ROOT; };
+		E3E668C40E0A6C0300215EC0 /* CBasePlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBasePlugIn.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBasePlugIn.h; sourceTree = SOURCE_ROOT; };
+		E3E668C50E0A6C0300215EC0 /* CBaseTopPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBaseTopPane.h; path = ../../../../SDK/trunk/BaseClasses/Include/CBaseTopPane.h; sourceTree = SOURCE_ROOT; };
+		E3E668C60E0A6C0300215EC0 /* FontSizes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontSizes.h; path = ../../../../SDK/trunk/BaseClasses/Include/FontSizes.h; sourceTree = SOURCE_ROOT; };
+		E3E668C70E0A6C0300215EC0 /* IBaseDezipperCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IBaseDezipperCallback.h; path = ../../../../SDK/trunk/BaseClasses/Include/IBaseDezipperCallback.h; sourceTree = SOURCE_ROOT; };
+		E3E668C80E0A6C2B00215EC0 /* CBaseDezipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseDezipper.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBaseDezipper.cpp; sourceTree = SOURCE_ROOT; };
+		E3E668C90E0A6C2B00215EC0 /* CBaseDezipper2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseDezipper2.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBaseDezipper2.cpp; sourceTree = SOURCE_ROOT; };
+		E3E668CA0E0A6C2B00215EC0 /* CBaseDSPEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseDSPEngine.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBaseDSPEngine.cpp; sourceTree = SOURCE_ROOT; };
+		E3E668CB0E0A6C2B00215EC0 /* CBaseGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseGUI.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBaseGUI.cpp; sourceTree = SOURCE_ROOT; };
+		E3E668CC0E0A6C2B00215EC0 /* CBaseMIDICCEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseMIDICCEvent.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBaseMIDICCEvent.cpp; sourceTree = SOURCE_ROOT; };
+		E3E668CD0E0A6C2B00215EC0 /* CBaseModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseModule.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBaseModule.cpp; sourceTree = SOURCE_ROOT; };
+		E3E668CE0E0A6C2B00215EC0 /* CBasePane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CBasePane.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBasePane.cpp; sourceTree = SOURCE_ROOT; };
+		E3E668CF0E0A6C2B00215EC0 /* CBasePaneStd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CBasePaneStd.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBasePaneStd.cpp; sourceTree = SOURCE_ROOT; };
+		E3E668D00E0A6C2B00215EC0 /* CBasePlugIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CBasePlugIn.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBasePlugIn.cpp; sourceTree = SOURCE_ROOT; };
+		E3E668D10E0A6C2B00215EC0 /* CBaseTopPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseTopPane.cpp; path = ../../../../SDK/trunk/BaseClasses/Source/CBaseTopPane.cpp; sourceTree = SOURCE_ROOT; };
+		FCDB9D720E2421890069A75D /* CAAmpModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAAmpModule.cpp; path = ../../source/CAAmpModule.cpp; sourceTree = SOURCE_ROOT; };
+		FCDB9D730E2421890069A75D /* CAAmpGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAAmpGUI.cpp; path = ../../source/CAAmpGUI.cpp; sourceTree = SOURCE_ROOT; };
+		FCDB9D740E2421890069A75D /* AAmp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AAmp.cpp; path = ../../source/AAmp.cpp; sourceTree = SOURCE_ROOT; };
+		FCDB9D750E2421890069A75D /* CAAmpPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAAmpPane.cpp; path = ../../source/CAAmpPane.cpp; sourceTree = SOURCE_ROOT; };
+		FCDB9D760E2421890069A75D /* CAAmpPlugIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAAmpPlugIn.cpp; path = ../../source/CAAmpPlugIn.cpp; sourceTree = SOURCE_ROOT; };
+		FCDB9D770E2421890069A75D /* CAAmpDSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAAmpDSP.cpp; path = ../../source/CAAmpDSP.cpp; sourceTree = SOURCE_ROOT; };
+		FCDB9D7F0E2421990069A75D /* CAAmpModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAAmpModule.h; path = ../../include/CAAmpModule.h; sourceTree = SOURCE_ROOT; };
+		FCDB9D800E2421990069A75D /* CAAmpPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAAmpPlugIn.h; path = ../../include/CAAmpPlugIn.h; sourceTree = SOURCE_ROOT; };
+		FCDB9D810E2421990069A75D /* CAAmpGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAAmpGUI.h; path = ../../include/CAAmpGUI.h; sourceTree = SOURCE_ROOT; };
+		FCDB9D820E2421990069A75D /* CAAmpDSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAAmpDSP.h; path = ../../include/CAAmpDSP.h; sourceTree = SOURCE_ROOT; };
+		FCDB9D830E2421990069A75D /* AAmpOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAmpOS.h; path = ../../include/AAmpOS.h; sourceTree = SOURCE_ROOT; };
+		FCDB9D840E2421990069A75D /* AAmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAmp.h; path = ../../include/AAmp.h; sourceTree = SOURCE_ROOT; };
+		FCDB9D850E2421990069A75D /* CAAmpPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAAmpPane.h; path = ../../include/CAAmpPane.h; sourceTree = SOURCE_ROOT; };
+		FCE397080E0FBEE3006B6694 /* STools.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = STools.xcodeproj; path = ../../../../SDK/trunk/STools/projects/osxxcode/STools.xcodeproj; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D01CCCD0486CAD60068D4B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D01CCCE0486CAD60068D4B7 /* Carbon.framework in Frameworks */,
+				0BBA14EC08B4DAE40001EB6F /* IOKit in Frameworks */,
+				E34903AC0E0ABAF900DA145C /* libGUIEngine.a in Frameworks */,
+				E34903AD0E0ABAFB00DA145C /* libDataEngine.a in Frameworks */,
+				E34903AE0E0ABAFE00DA145C /* libBaseUtilities.a in Frameworks */,
+				FCE397330E0FC172006B6694 /* libSTools.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* INetSynth */ = {
+			isa = PBXGroup;
+			children = (
+				7CB5A2960A07F93600954A7E /* Template_Prefix.pch */,
+				FCE397080E0FBEE3006B6694 /* STools.xcodeproj */,
+				0BB6FFF208A8B5BD00B2BD35 /* GUIEngine.xcodeproj */,
+				0BB6FFE908A8B5B100B2BD35 /* DataEngine.xcodeproj */,
+				0BB6FFE008A8B5A300B2BD35 /* BaseUtilities.xcodeproj */,
+				08FB77ADFE841716C02AAC07 /* Source */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
+				19C28FB4FE9D528D11CA2CBB /* Products */,
+			);
+			name = INetSynth;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				0BBA14EB08B4DAE40001EB6F /* IOKit */,
+				08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D01CCD10486CAD60068D4B7 /* Info.plist */,
+				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77ADFE841716C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0BFDD3A7090CE3FF008D99CE /* BaseClasses */,
+				0BC7239B08A7D6E2003CCF8D /* KSPI */,
+				0B77339D08A63E92004B30F3 /* Source */,
+				0B77339C08A63E8D004B30F3 /* Include */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B77339C08A63E8D004B30F3 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				FCDB9D800E2421990069A75D /* CAAmpPlugIn.h */,
+				FCDB9D7F0E2421990069A75D /* CAAmpModule.h */,
+				FCDB9D810E2421990069A75D /* CAAmpGUI.h */,
+				FCDB9D820E2421990069A75D /* CAAmpDSP.h */,
+				FCDB9D850E2421990069A75D /* CAAmpPane.h */,
+				FCDB9D840E2421990069A75D /* AAmp.h */,
+				FCDB9D830E2421990069A75D /* AAmpOS.h */,
+				0BFDD398090CE3DF008D99CE /* ControlIDs.h */,
+				7CB5A3300A07FF9400954A7E /* CParmGlobal.h */,
+				7CB5A3070A07FDCC00954A7E /* Resources.h */,
+				0BC04C1F08C1159E00A1F829 /* ParmIDs.h */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		0B77339D08A63E92004B30F3 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				FCDB9D730E2421890069A75D /* CAAmpGUI.cpp */,
+				FCDB9D760E2421890069A75D /* CAAmpPlugIn.cpp */,
+				FCDB9D750E2421890069A75D /* CAAmpPane.cpp */,
+				FCDB9D720E2421890069A75D /* CAAmpModule.cpp */,
+				FCDB9D770E2421890069A75D /* CAAmpDSP.cpp */,
+				FCDB9D740E2421890069A75D /* AAmp.cpp */,
+				0BC04C2508C115AF00A1F829 /* CParmGlobal.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0BC7239B08A7D6E2003CCF8D /* KSPI */ = {
+			isa = PBXGroup;
+			children = (
+				E3E668B20E0A6BEB00215EC0 /* IHost.h */,
+				E3E668B30E0A6BEB00215EC0 /* IModule.h */,
+				E3E668B40E0A6BEB00215EC0 /* IPlugIn.h */,
+				E3E668B50E0A6BEB00215EC0 /* kspi.h */,
+				E3E668B60E0A6BEB00215EC0 /* kspiC.h */,
+				E3E668B70E0A6BEB00215EC0 /* kspiCHost.h */,
+				E3E668B80E0A6BEB00215EC0 /* kspimain.h */,
+				E3E668B90E0A6BEB00215EC0 /* SMIDIEvent.h */,
+				E3E668BA0E0A6BEB00215EC0 /* SParameterInfo.h */,
+				0BC723A608A7D705003CCF8D /* kspiC.cpp */,
+				0BC7239C08A7D6F4003CCF8D /* IGUI.h */,
+			);
+			name = KSPI;
+			sourceTree = "<group>";
+		};
+		0BFDD3A7090CE3FF008D99CE /* BaseClasses */ = {
+			isa = PBXGroup;
+			children = (
+				0BFDD3A9090CE40B008D99CE /* Source */,
+				0BFDD3A8090CE404008D99CE /* Include */,
+			);
+			name = BaseClasses;
+			sourceTree = "<group>";
+		};
+		0BFDD3A8090CE404008D99CE /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				E3E668BB0E0A6C0300215EC0 /* BaseControlIDs.h */,
+				E3E668BC0E0A6C0300215EC0 /* CBaseDezipper.h */,
+				E3E668BD0E0A6C0300215EC0 /* CBaseDezipper2.h */,
+				E3E668BE0E0A6C0300215EC0 /* CBaseDSPEngine.h */,
+				E3E668BF0E0A6C0300215EC0 /* CBaseGUI.h */,
+				E3E668C00E0A6C0300215EC0 /* CBaseMIDICCEvent.h */,
+				E3E668C10E0A6C0300215EC0 /* CBaseModule.h */,
+				E3E668C20E0A6C0300215EC0 /* CBasePane.h */,
+				E3E668C30E0A6C0300215EC0 /* CBasePaneStd.h */,
+				E3E668C40E0A6C0300215EC0 /* CBasePlugIn.h */,
+				E3E668C50E0A6C0300215EC0 /* CBaseTopPane.h */,
+				E3E668C60E0A6C0300215EC0 /* FontSizes.h */,
+				E3E668C70E0A6C0300215EC0 /* IBaseDezipperCallback.h */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		0BFDD3A9090CE40B008D99CE /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E3E668C80E0A6C2B00215EC0 /* CBaseDezipper.cpp */,
+				E3E668C90E0A6C2B00215EC0 /* CBaseDezipper2.cpp */,
+				E3E668CA0E0A6C2B00215EC0 /* CBaseDSPEngine.cpp */,
+				E3E668CB0E0A6C2B00215EC0 /* CBaseGUI.cpp */,
+				E3E668CC0E0A6C2B00215EC0 /* CBaseMIDICCEvent.cpp */,
+				E3E668CD0E0A6C2B00215EC0 /* CBaseModule.cpp */,
+				E3E668CE0E0A6C2B00215EC0 /* CBasePane.cpp */,
+				E3E668CF0E0A6C2B00215EC0 /* CBasePaneStd.cpp */,
+				E3E668D00E0A6C2B00215EC0 /* CBasePlugIn.cpp */,
+				E3E668D10E0A6C2B00215EC0 /* CBaseTopPane.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		19C28FB4FE9D528D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D01CCD20486CAD60068D4B7 /* AAmp.kspi */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3E668A30E0A6AE600215EC0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3E668A70E0A6AE600215EC0 /* libGUIEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3E668A80E0A6AF500215EC0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3E668AC0E0A6AF500215EC0 /* libDataEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3E668AD0E0A6B0B00215EC0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3E668B10E0A6B0B00215EC0 /* libBaseUtilities.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FCE397090E0FBEE3006B6694 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FCE3970D0E0FBEE3006B6694 /* libSTools.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D01CCC60486CAD60068D4B7 /* AAmp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B77338408A63E2A004B30F3 /* Build configuration list for PBXNativeTarget "AAmp" */;
+			buildPhases = (
+				8D01CCC90486CAD60068D4B7 /* Resources */,
+				8D01CCCB0486CAD60068D4B7 /* Sources */,
+				8D01CCCD0486CAD60068D4B7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E34903B10E0ABB0900DA145C /* PBXTargetDependency */,
+				E34903B30E0ABB0C00DA145C /* PBXTargetDependency */,
+				E34903B50E0ABB0F00DA145C /* PBXTargetDependency */,
+			);
+			name = AAmp;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = INetSynth;
+			productReference = 8D01CCD20486CAD60068D4B7 /* AAmp.kspi */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 0B77338808A63E2A004B30F3 /* Build configuration list for PBXProject "AAmp" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 089C166AFE841209C02AAC07 /* INetSynth */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E3E668AD0E0A6B0B00215EC0 /* Products */;
+					ProjectRef = 0BB6FFE008A8B5A300B2BD35 /* BaseUtilities.xcodeproj */;
+				},
+				{
+					ProductGroup = E3E668A80E0A6AF500215EC0 /* Products */;
+					ProjectRef = 0BB6FFE908A8B5B100B2BD35 /* DataEngine.xcodeproj */;
+				},
+				{
+					ProductGroup = E3E668A30E0A6AE600215EC0 /* Products */;
+					ProjectRef = 0BB6FFF208A8B5BD00B2BD35 /* GUIEngine.xcodeproj */;
+				},
+				{
+					ProductGroup = FCE397090E0FBEE3006B6694 /* Products */;
+					ProjectRef = FCE397080E0FBEE3006B6694 /* STools.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				8D01CCC60486CAD60068D4B7 /* AAmp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E3E668A70E0A6AE600215EC0 /* libGUIEngine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGUIEngine.a;
+			remoteRef = E3E668A60E0A6AE600215EC0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E3E668AC0E0A6AF500215EC0 /* libDataEngine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDataEngine.a;
+			remoteRef = E3E668AB0E0A6AF500215EC0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E3E668B10E0A6B0B00215EC0 /* libBaseUtilities.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBaseUtilities.a;
+			remoteRef = E3E668B00E0A6B0B00215EC0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FCE3970D0E0FBEE3006B6694 /* libSTools.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSTools.a;
+			remoteRef = FCE3970C0E0FBEE3006B6694 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D01CCC90486CAD60068D4B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D01CCCA0486CAD60068D4B7 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D01CCCB0486CAD60068D4B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BC723A708A7D705003CCF8D /* kspiC.cpp in Sources */,
+				0BC04C2A08C115AF00A1F829 /* CParmGlobal.cpp in Sources */,
+				E3E668D20E0A6C2B00215EC0 /* CBaseDezipper.cpp in Sources */,
+				E3E668D30E0A6C2B00215EC0 /* CBaseDezipper2.cpp in Sources */,
+				E3E668D40E0A6C2B00215EC0 /* CBaseDSPEngine.cpp in Sources */,
+				E3E668D50E0A6C2B00215EC0 /* CBaseGUI.cpp in Sources */,
+				E3E668D60E0A6C2B00215EC0 /* CBaseMIDICCEvent.cpp in Sources */,
+				E3E668D70E0A6C2B00215EC0 /* CBaseModule.cpp in Sources */,
+				E3E668D80E0A6C2B00215EC0 /* CBasePane.cpp in Sources */,
+				E3E668D90E0A6C2B00215EC0 /* CBasePaneStd.cpp in Sources */,
+				E3E668DA0E0A6C2B00215EC0 /* CBasePlugIn.cpp in Sources */,
+				E3E668DB0E0A6C2B00215EC0 /* CBaseTopPane.cpp in Sources */,
+				FCDB9D780E2421890069A75D /* CAAmpModule.cpp in Sources */,
+				FCDB9D790E2421890069A75D /* CAAmpGUI.cpp in Sources */,
+				FCDB9D7A0E2421890069A75D /* AAmp.cpp in Sources */,
+				FCDB9D7B0E2421890069A75D /* CAAmpPane.cpp in Sources */,
+				FCDB9D7C0E2421890069A75D /* CAAmpPlugIn.cpp in Sources */,
+				FCDB9D7D0E2421890069A75D /* CAAmpDSP.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E34903B10E0ABB0900DA145C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BaseUtilities;
+			targetProxy = E34903B00E0ABB0900DA145C /* PBXContainerItemProxy */;
+		};
+		E34903B30E0ABB0C00DA145C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DataEngine;
+			targetProxy = E34903B20E0ABB0C00DA145C /* PBXContainerItemProxy */;
+		};
+		E34903B50E0ABB0F00DA145C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GUIEngine;
+			targetProxy = E34903B40E0ABB0F00DA145C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C167EFE841241C02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0B77338508A63E2A004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_LOCATION = NO;
+				DSTROOT = "/tmp/$(PROJECT_NAME).dst";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Template_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				GENERATE_PKGINFO_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../../SDK/trunk/STools/Interface,
+					/Developer/Headers/FlatCarbon/,
+					../../../../SDK/trunk/BaseUtilities/Interface,
+					../../../../SDK/trunk/DataEngine/Interface,
+					../../../../SDK/trunk/KSPI/Interface,
+					../../../../SDK/trunk/GUIEngine/interface,
+					../../../../SDK/trunk/BaseClasses/Include,
+					../../,
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = /Library/Kjaerhus;
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../../SDK/trunk/STools/projects/OSXXCode/build/Debug",
+					"$(LIBRARY_SEARCH_PATHS)",
+					"$(SRCROOT)/../../../../SDK/trunk/BaseUtilities/projects/OSXXCode/build/Debug",
+					"$(SRCROOT)/../../../../SDK/trunk/GUIEngine/projects/OSXXCode/build/Debug",
+					"$(SRCROOT)/../../../../SDK/trunk/DataEngine/projects/OSXXCode/build/Debug",
+				);
+				PREBINDING = YES;
+				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders /usr/local/include";
+				PRODUCT_NAME = AAmp;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers /usr/local/include";
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				WRAPPER_EXTENSION = kspi;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		0B77338608A63E2A004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				DEPLOYMENT_LOCATION = NO;
+				DSTROOT = "/tmp/$(PROJECT_NAME).dst";
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Template_Prefix.pch;
+				GCC_UNROLL_LOOPS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				GENERATE_PKGINFO_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../../SDK/trunk/STools/Interface,
+					/Developer/Headers/FlatCarbon/,
+					../../../../SDK/trunk/BaseUtilities/Interface,
+					../../../../SDK/trunk/DataEngine/Interface,
+					../../../../SDK/trunk/KSPI/Interface,
+					../../../../SDK/trunk/GUIEngine/interface,
+					../../../../SDK/trunk/BaseClasses/Include,
+					../../,
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = /Library/KeyToSound/Kjaerhus;
+				LIBRARY_SEARCH_PATHS = (
+					/../../../../SDK/trunk/STools/projects/OSXXCode/build/Release,
+					"$(LIBRARY_SEARCH_PATHS)",
+					"$(SRCROOT)/../../../../SDK/trunk/BaseUtilities/projects/OSXXCode/build/Release",
+					/../../../../SDK/trunk/DataEngine/projects/OSXXCode/build/Release,
+					/../../../../SDK/trunk/GUIEngine/projects/OSXXCode/build/Release,
+				);
+				PREBINDING = YES;
+				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders /usr/local/include";
+				PRODUCT_NAME = AAmp;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers /usr/local/include";
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				WRAPPER_EXTENSION = kspi;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		0B77338908A63E2A004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEPLOYMENT_LOCATION = YES;
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+					../../../DataEngine/Interface/,
+					../../../GUIEngine/Interface,
+					../../../KSPI/Interface/,
+					../../../BaseUtilities/Include/,
+					../../../DataEngine/Include/,
+					../../../GUIEngine/Include/,
+				);
+				INFOPLIST_PREFIX_HEADER = "$(INFOPLIST_PREFIX_HEADER)";
+				INSTALL_PATH = /Library/KeyToSound/Kjaerhus;
+				PREBINDING = YES;
+			};
+			name = Debug;
+		};
+		0B77338A08A63E2A004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEPLOYMENT_LOCATION = YES;
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+					../../../DataEngine/Interface/,
+					../../../GUIEngine/Interface,
+					../../../KSPI/Interface/,
+					../../../BaseUtilities/Include/,
+					../../../DataEngine/Include/,
+					../../../GUIEngine/Include/,
+				);
+				INFOPLIST_PREFIX_HEADER = "$(INFOPLIST_PREFIX_HEADER)";
+				INSTALL_PATH = /Library/KeyToSound/Kjaerhus;
+				PREBINDING = YES;
+				SHARED_PRECOMPS_DIR = "$(SHARED_PRECOMPS_DIR)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0B77338408A63E2A004B30F3 /* Build configuration list for PBXNativeTarget "AAmp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77338508A63E2A004B30F3 /* Debug */,
+				0B77338608A63E2A004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0B77338808A63E2A004B30F3 /* Build configuration list for PBXProject "AAmp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77338908A63E2A004B30F3 /* Debug */,
+				0B77338A08A63E2A004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

@@ -1,0 +1,602 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A45C2980CD08C320074D764 /* AudioCompress_Prefix_Debug.pch in Headers */ = {isa = PBXBuildFile; fileRef = 0A45C2970CD08C320074D764 /* AudioCompress_Prefix_Debug.pch */; };
+		0AA664E60CD0740300775CDB /* ac.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AA664E30CD0740300775CDB /* ac.h */; };
+		0AA664E70CD0740300775CDB /* IDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AA664E40CD0740300775CDB /* IDecoder.h */; };
+		0AA664E80CD0740300775CDB /* IEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AA664E50CD0740300775CDB /* IEncoder.h */; };
+		0AA664ED0CD0741300775CDB /* acInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AA664E90CD0741300775CDB /* acInternal.h */; };
+		0AA664EE0CD0741300775CDB /* acInternalOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AA664EA0CD0741300775CDB /* acInternalOS.h */; };
+		0AA664EF0CD0741300775CDB /* CVorbisDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AA664EB0CD0741300775CDB /* CVorbisDecoder.h */; };
+		0AA664F00CD0741300775CDB /* CVorbisEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AA664EC0CD0741300775CDB /* CVorbisEncoder.h */; };
+		0AA664F30CD0742300775CDB /* CVorbisDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AA664F10CD0742300775CDB /* CVorbisDecoder.cpp */; };
+		0AA664F40CD0742300775CDB /* CVorbisEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AA664F20CD0742300775CDB /* CVorbisEncoder.cpp */; };
+		321BF7E50E62A4A200270BAA /* CDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 321BF7E30E62A4A200270BAA /* CDecoder.h */; };
+		321BF7E60E62A4A200270BAA /* CWaveDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 321BF7E40E62A4A200270BAA /* CWaveDecoder.h */; };
+		321BF7E90E62A4C900270BAA /* CDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 321BF7E70E62A4C900270BAA /* CDecoder.cpp */; };
+		321BF7EA0E62A4C900270BAA /* CWaveDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 321BF7E80E62A4C900270BAA /* CWaveDecoder.cpp */; };
+		32203E410DA380F200A835AC /* CEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 32203E400DA380F100A835AC /* CEncoder.h */; };
+		32203E430DA3810000A835AC /* CEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32203E420DA3810000A835AC /* CEncoder.cpp */; };
+		32480ADF0D9D081800FE2547 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32BEC2ED0D9BD50F008FF7D9 /* libmp3lame.a */; };
+		32480AEB0D9D083600FE2547 /* libvorbis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3202DF1B0D9AC5A5006CD249 /* libvorbis.a */; };
+		32480AEC0D9D083700FE2547 /* libvorbisenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3202DF1D0D9AC5A5006CD249 /* libvorbisenc.a */; };
+		32480AED0D9D083A00FE2547 /* libogg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3202DF220D9AC5C6006CD249 /* libogg.a */; };
+		32B55E580D9DB66F0002638F /* CLameDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 32B55E570D9DB66F0002638F /* CLameDecoder.h */; };
+		32B55E5A0D9DB6910002638F /* CLameDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32B55E590D9DB6910002638F /* CLameDecoder.cpp */; };
+		32BEC2F80D9BD5D3008FF7D9 /* CLameEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32BEC2F70D9BD5D3008FF7D9 /* CLameEncoder.cpp */; };
+		32BEC2FB0D9BD6C5008FF7D9 /* CLameEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 32BEC2FA0D9BD6C5008FF7D9 /* CLameEncoder.h */; };
+		32CB50BB0E6E74C8005FDEFA /* acUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CB50B90E6E74C8005FDEFA /* acUtilities.h */; };
+		32CB50BD0E6E7719005FDEFA /* CWaveEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CB50BC0E6E7719005FDEFA /* CWaveEncoder.h */; };
+		32CB50BF0E6E7735005FDEFA /* CWaveEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32CB50BE0E6E7735005FDEFA /* CWaveEncoder.cpp */; };
+		D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0AA665040CD0747300775CDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AA664FD0CD0747300775CDB /* BaseUtilities.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+		0AA665060CD0747F00775CDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AA664FD0CD0747300775CDB /* BaseUtilities.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+		3202DF1A0D9AC5A5006CD249 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AC1C49B0CD1D389002A6F45 /* Vorbis.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 738835E40B18F870005C7A69;
+			remoteInfo = "libvorbis (static)";
+		};
+		3202DF1C0D9AC5A5006CD249 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AC1C49B0CD1D389002A6F45 /* Vorbis.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 738836130B190488005C7A69;
+			remoteInfo = "libvorbisenc (static)";
+		};
+		3202DF210D9AC5C6006CD249 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AC1C4920CD1D372002A6F45 /* Ogg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 738835E40B18F870005C7A69;
+			remoteInfo = "libogg (static)";
+		};
+		3202DF260D9AC5E3006CD249 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AC1C49B0CD1D389002A6F45 /* Vorbis.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 738835E30B18F870005C7A69;
+			remoteInfo = "libvorbis (static)";
+		};
+		3202DF280D9AC5E3006CD249 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AC1C49B0CD1D389002A6F45 /* Vorbis.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 738836120B190488005C7A69;
+			remoteInfo = "libvorbisenc (static)";
+		};
+		3202DF2A0D9AC5E3006CD249 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AC1C4920CD1D372002A6F45 /* Ogg.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 738835E30B18F870005C7A69;
+			remoteInfo = "libogg (static)";
+		};
+		32BD9E740EE42CCF007430C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 32BD9E700EE42CCF007430C2 /* STools.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D /* libSTools.a */;
+			remoteInfo = STools;
+		};
+		32BD9E760EE42CE4007430C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 32BD9E700EE42CCF007430C2 /* STools.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D /* STools */;
+			remoteInfo = STools;
+		};
+		32BEC2EC0D9BD50F008FF7D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 32BEC2E50D9BD50F008FF7D9 /* libmp3lame.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
+			remoteInfo = libmp3lame;
+		};
+		32BEC2EE0D9BD51F008FF7D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 32BEC2E50D9BD50F008FF7D9 /* libmp3lame.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteInfo = libmp3lame;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		0A45C2970CD08C320074D764 /* AudioCompress_Prefix_Debug.pch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AudioCompress_Prefix_Debug.pch; sourceTree = "<group>"; };
+		0AA664E30CD0740300775CDB /* ac.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ac.h; path = ../../interface/ac.h; sourceTree = SOURCE_ROOT; };
+		0AA664E40CD0740300775CDB /* IDecoder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IDecoder.h; path = ../../interface/IDecoder.h; sourceTree = SOURCE_ROOT; };
+		0AA664E50CD0740300775CDB /* IEncoder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IEncoder.h; path = ../../interface/IEncoder.h; sourceTree = SOURCE_ROOT; };
+		0AA664E90CD0741300775CDB /* acInternal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = acInternal.h; path = ../../include/acInternal.h; sourceTree = SOURCE_ROOT; };
+		0AA664EA0CD0741300775CDB /* acInternalOS.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = acInternalOS.h; path = ../../include/acInternalOS.h; sourceTree = SOURCE_ROOT; };
+		0AA664EB0CD0741300775CDB /* CVorbisDecoder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CVorbisDecoder.h; path = ../../include/CVorbisDecoder.h; sourceTree = SOURCE_ROOT; };
+		0AA664EC0CD0741300775CDB /* CVorbisEncoder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CVorbisEncoder.h; path = ../../include/CVorbisEncoder.h; sourceTree = SOURCE_ROOT; };
+		0AA664F10CD0742300775CDB /* CVorbisDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CVorbisDecoder.cpp; path = ../../source/CVorbisDecoder.cpp; sourceTree = SOURCE_ROOT; };
+		0AA664F20CD0742300775CDB /* CVorbisEncoder.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CVorbisEncoder.cpp; path = ../../source/CVorbisEncoder.cpp; sourceTree = SOURCE_ROOT; };
+		0AA664FD0CD0747300775CDB /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };
+		0AC1C4920CD1D372002A6F45 /* Ogg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Ogg.xcodeproj; path = ../../codecs/libogg/macosx/Ogg.xcodeproj; sourceTree = SOURCE_ROOT; };
+		0AC1C49B0CD1D389002A6F45 /* Vorbis.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Vorbis.xcodeproj; path = ../../codecs/libaotuv_b5/macosx/Vorbis.xcodeproj; sourceTree = SOURCE_ROOT; };
+		321BF7E30E62A4A200270BAA /* CDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDecoder.h; path = ../../include/CDecoder.h; sourceTree = SOURCE_ROOT; };
+		321BF7E40E62A4A200270BAA /* CWaveDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CWaveDecoder.h; path = ../../include/CWaveDecoder.h; sourceTree = SOURCE_ROOT; };
+		321BF7E70E62A4C900270BAA /* CDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDecoder.cpp; path = ../../source/CDecoder.cpp; sourceTree = SOURCE_ROOT; };
+		321BF7E80E62A4C900270BAA /* CWaveDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CWaveDecoder.cpp; path = ../../source/CWaveDecoder.cpp; sourceTree = SOURCE_ROOT; };
+		32203E400DA380F100A835AC /* CEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CEncoder.h; path = ../../include/CEncoder.h; sourceTree = SOURCE_ROOT; };
+		32203E420DA3810000A835AC /* CEncoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CEncoder.cpp; path = ../../source/CEncoder.cpp; sourceTree = SOURCE_ROOT; };
+		32B55E570D9DB66F0002638F /* CLameDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLameDecoder.h; path = ../../include/CLameDecoder.h; sourceTree = SOURCE_ROOT; };
+		32B55E590D9DB6910002638F /* CLameDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CLameDecoder.cpp; path = ../../source/CLameDecoder.cpp; sourceTree = SOURCE_ROOT; };
+		32BAE0B70371A74B00C91783 /* AudioCompress_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioCompress_Prefix.pch; sourceTree = "<group>"; };
+		32BD9E700EE42CCF007430C2 /* STools.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = STools.xcodeproj; path = ../../../STools/projects/osxxcode/STools.xcodeproj; sourceTree = SOURCE_ROOT; };
+		32BEC2E50D9BD50F008FF7D9 /* libmp3lame.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libmp3lame.xcodeproj; path = ../../codecs/lame/libmp3lame/Projects/OSXXCode/libmp3lame.xcodeproj; sourceTree = SOURCE_ROOT; };
+		32BEC2F70D9BD5D3008FF7D9 /* CLameEncoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CLameEncoder.cpp; path = ../../source/CLameEncoder.cpp; sourceTree = SOURCE_ROOT; };
+		32BEC2FA0D9BD6C5008FF7D9 /* CLameEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLameEncoder.h; path = ../../include/CLameEncoder.h; sourceTree = SOURCE_ROOT; };
+		32CB50B90E6E74C8005FDEFA /* acUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = acUtilities.h; path = ../../interface/acUtilities.h; sourceTree = SOURCE_ROOT; };
+		32CB50BC0E6E7719005FDEFA /* CWaveEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CWaveEncoder.h; path = ../../include/CWaveEncoder.h; sourceTree = SOURCE_ROOT; };
+		32CB50BE0E6E7735005FDEFA /* CWaveEncoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CWaveEncoder.cpp; path = ../../source/CWaveEncoder.cpp; sourceTree = SOURCE_ROOT; };
+		D2AAC06F0554671400DB518D /* libAudioCompress.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAudioCompress.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC06D0554671400DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */,
+				32480ADF0D9D081800FE2547 /* libmp3lame.a in Frameworks */,
+				32480AEB0D9D083600FE2547 /* libvorbis.a in Frameworks */,
+				32480AEC0D9D083700FE2547 /* libvorbisenc.a in Frameworks */,
+				32480AED0D9D083A00FE2547 /* libogg.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DDFF38A45A11DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC06F0554671400DB518D /* libAudioCompress.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* AudioCompress */ = {
+			isa = PBXGroup;
+			children = (
+				32BD9E700EE42CCF007430C2 /* STools.xcodeproj */,
+				32BEC2E50D9BD50F008FF7D9 /* libmp3lame.xcodeproj */,
+				0AC1C49B0CD1D389002A6F45 /* Vorbis.xcodeproj */,
+				0AC1C4920CD1D372002A6F45 /* Ogg.xcodeproj */,
+				0AA664FD0CD0747300775CDB /* BaseUtilities.xcodeproj */,
+				08FB77ACFE841707C02AAC07 /* Source */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DDFF38A45A11DB9C8B /* Products */,
+			);
+			name = AudioCompress;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AAFE841565C02AAC07 /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		08FB77ACFE841707C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				32BAE0B70371A74B00C91783 /* AudioCompress_Prefix.pch */,
+				0A45C2970CD08C320074D764 /* AudioCompress_Prefix_Debug.pch */,
+				0AA664E00CD073D500775CDB /* interface */,
+				0AA664E10CD073DF00775CDB /* include */,
+				0AA664E20CD073E500775CDB /* source */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0AA664E00CD073D500775CDB /* interface */ = {
+			isa = PBXGroup;
+			children = (
+				0AA664E30CD0740300775CDB /* ac.h */,
+				32CB50B90E6E74C8005FDEFA /* acUtilities.h */,
+				0AA664E40CD0740300775CDB /* IDecoder.h */,
+				0AA664E50CD0740300775CDB /* IEncoder.h */,
+			);
+			name = interface;
+			sourceTree = "<group>";
+		};
+		0AA664E10CD073DF00775CDB /* include */ = {
+			isa = PBXGroup;
+			children = (
+				0AA664E90CD0741300775CDB /* acInternal.h */,
+				0AA664EA0CD0741300775CDB /* acInternalOS.h */,
+				321BF7E30E62A4A200270BAA /* CDecoder.h */,
+				32203E400DA380F100A835AC /* CEncoder.h */,
+				321BF7E40E62A4A200270BAA /* CWaveDecoder.h */,
+				32CB50BC0E6E7719005FDEFA /* CWaveEncoder.h */,
+				32B55E570D9DB66F0002638F /* CLameDecoder.h */,
+				32BEC2FA0D9BD6C5008FF7D9 /* CLameEncoder.h */,
+				0AA664EB0CD0741300775CDB /* CVorbisDecoder.h */,
+				0AA664EC0CD0741300775CDB /* CVorbisEncoder.h */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		0AA664E20CD073E500775CDB /* source */ = {
+			isa = PBXGroup;
+			children = (
+				321BF7E70E62A4C900270BAA /* CDecoder.cpp */,
+				32203E420DA3810000A835AC /* CEncoder.cpp */,
+				321BF7E80E62A4C900270BAA /* CWaveDecoder.cpp */,
+				32CB50BE0E6E7735005FDEFA /* CWaveEncoder.cpp */,
+				32B55E590D9DB6910002638F /* CLameDecoder.cpp */,
+				32BEC2F70D9BD5D3008FF7D9 /* CLameEncoder.cpp */,
+				0AA664F10CD0742300775CDB /* CVorbisDecoder.cpp */,
+				0AA664F20CD0742300775CDB /* CVorbisEncoder.cpp */,
+			);
+			name = source;
+			sourceTree = "<group>";
+		};
+		0AA664FE0CD0747300775CDB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0AA665050CD0747300775CDB /* libBaseUtilities.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3202DF160D9AC5A5006CD249 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3202DF1B0D9AC5A5006CD249 /* libvorbis.a */,
+				3202DF1D0D9AC5A5006CD249 /* libvorbisenc.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3202DF1E0D9AC5C6006CD249 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3202DF220D9AC5C6006CD249 /* libogg.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		32BD9E710EE42CCF007430C2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				32BD9E750EE42CCF007430C2 /* libSTools.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		32BEC2E60D9BD50F008FF7D9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				32BEC2ED0D9BD50F008FF7D9 /* libmp3lame.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC06B0554671400DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AA664E60CD0740300775CDB /* ac.h in Headers */,
+				0AA664E70CD0740300775CDB /* IDecoder.h in Headers */,
+				0AA664E80CD0740300775CDB /* IEncoder.h in Headers */,
+				0AA664ED0CD0741300775CDB /* acInternal.h in Headers */,
+				0AA664EE0CD0741300775CDB /* acInternalOS.h in Headers */,
+				0AA664EF0CD0741300775CDB /* CVorbisDecoder.h in Headers */,
+				0AA664F00CD0741300775CDB /* CVorbisEncoder.h in Headers */,
+				0A45C2980CD08C320074D764 /* AudioCompress_Prefix_Debug.pch in Headers */,
+				32BEC2FB0D9BD6C5008FF7D9 /* CLameEncoder.h in Headers */,
+				32B55E580D9DB66F0002638F /* CLameDecoder.h in Headers */,
+				32203E410DA380F200A835AC /* CEncoder.h in Headers */,
+				321BF7E50E62A4A200270BAA /* CDecoder.h in Headers */,
+				321BF7E60E62A4A200270BAA /* CWaveDecoder.h in Headers */,
+				32CB50BB0E6E74C8005FDEFA /* acUtilities.h in Headers */,
+				32CB50BD0E6E7719005FDEFA /* CWaveEncoder.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC06E0554671400DB518D /* AudioCompress */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB920108733DBB0010E9CD /* Build configuration list for PBXNativeTarget "AudioCompress" */;
+			buildPhases = (
+				D2AAC06B0554671400DB518D /* Headers */,
+				D2AAC06C0554671400DB518D /* Sources */,
+				D2AAC06D0554671400DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0AA665070CD0747F00775CDB /* PBXTargetDependency */,
+				3202DF270D9AC5E3006CD249 /* PBXTargetDependency */,
+				3202DF290D9AC5E3006CD249 /* PBXTargetDependency */,
+				3202DF2B0D9AC5E3006CD249 /* PBXTargetDependency */,
+				32BEC2EF0D9BD51F008FF7D9 /* PBXTargetDependency */,
+				32BD9E770EE42CE4007430C2 /* PBXTargetDependency */,
+			);
+			name = AudioCompress;
+			productName = AudioCompress;
+			productReference = D2AAC06F0554671400DB518D /* libAudioCompress.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB920508733DBB0010E9CD /* Build configuration list for PBXProject "AudioCompress" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* AudioCompress */;
+			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0AA664FE0CD0747300775CDB /* Products */;
+					ProjectRef = 0AA664FD0CD0747300775CDB /* BaseUtilities.xcodeproj */;
+				},
+				{
+					ProductGroup = 32BEC2E60D9BD50F008FF7D9 /* Products */;
+					ProjectRef = 32BEC2E50D9BD50F008FF7D9 /* libmp3lame.xcodeproj */;
+				},
+				{
+					ProductGroup = 3202DF1E0D9AC5C6006CD249 /* Products */;
+					ProjectRef = 0AC1C4920CD1D372002A6F45 /* Ogg.xcodeproj */;
+				},
+				{
+					ProductGroup = 32BD9E710EE42CCF007430C2 /* Products */;
+					ProjectRef = 32BD9E700EE42CCF007430C2 /* STools.xcodeproj */;
+				},
+				{
+					ProductGroup = 3202DF160D9AC5A5006CD249 /* Products */;
+					ProjectRef = 0AC1C49B0CD1D389002A6F45 /* Vorbis.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D2AAC06E0554671400DB518D /* AudioCompress */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0AA665050CD0747300775CDB /* libBaseUtilities.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBaseUtilities.a;
+			remoteRef = 0AA665040CD0747300775CDB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3202DF1B0D9AC5A5006CD249 /* libvorbis.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libvorbis.a;
+			remoteRef = 3202DF1A0D9AC5A5006CD249 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3202DF1D0D9AC5A5006CD249 /* libvorbisenc.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libvorbisenc.a;
+			remoteRef = 3202DF1C0D9AC5A5006CD249 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3202DF220D9AC5C6006CD249 /* libogg.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libogg.a;
+			remoteRef = 3202DF210D9AC5C6006CD249 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		32BD9E750EE42CCF007430C2 /* libSTools.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSTools.a;
+			remoteRef = 32BD9E740EE42CCF007430C2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		32BEC2ED0D9BD50F008FF7D9 /* libmp3lame.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libmp3lame.a;
+			remoteRef = 32BEC2EC0D9BD50F008FF7D9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC06C0554671400DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AA664F30CD0742300775CDB /* CVorbisDecoder.cpp in Sources */,
+				0AA664F40CD0742300775CDB /* CVorbisEncoder.cpp in Sources */,
+				32BEC2F80D9BD5D3008FF7D9 /* CLameEncoder.cpp in Sources */,
+				32B55E5A0D9DB6910002638F /* CLameDecoder.cpp in Sources */,
+				32203E430DA3810000A835AC /* CEncoder.cpp in Sources */,
+				321BF7E90E62A4C900270BAA /* CDecoder.cpp in Sources */,
+				321BF7EA0E62A4C900270BAA /* CWaveDecoder.cpp in Sources */,
+				32CB50BF0E6E7735005FDEFA /* CWaveEncoder.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0AA665070CD0747F00775CDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BaseUtilities;
+			targetProxy = 0AA665060CD0747F00775CDB /* PBXContainerItemProxy */;
+		};
+		3202DF270D9AC5E3006CD249 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libvorbis (static)";
+			targetProxy = 3202DF260D9AC5E3006CD249 /* PBXContainerItemProxy */;
+		};
+		3202DF290D9AC5E3006CD249 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libvorbisenc (static)";
+			targetProxy = 3202DF280D9AC5E3006CD249 /* PBXContainerItemProxy */;
+		};
+		3202DF2B0D9AC5E3006CD249 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libogg (static)";
+			targetProxy = 3202DF2A0D9AC5E3006CD249 /* PBXContainerItemProxy */;
+		};
+		32BD9E770EE42CE4007430C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = STools;
+			targetProxy = 32BD9E760EE42CE4007430C2 /* PBXContainerItemProxy */;
+		};
+		32BEC2EF0D9BD51F008FF7D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libmp3lame;
+			targetProxy = 32BEC2EE0D9BD51F008FF7D9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB920208733DBB0010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AudioCompress_Prefix_Debug.pch;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = AudioCompress;
+				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		1DEB920308733DBB0010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AudioCompress_Prefix.pch;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = AudioCompress;
+				USER_HEADER_SEARCH_PATHS = "$(inherited)";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		1DEB920608733DBB0010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				GCC_PREFIX_HEADER = AudioCompress_Prefix_Debug.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../BaseUtilities/interface,
+					../../../STools/interface,
+					../../codecs/libogg/include,
+					../../codecs/libaotuv_b5/include,
+					../../codecs/lame/include,
+				);
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				USER_HEADER_SEARCH_PATHS = "../../../BaseUtilities/interface ../../codecs/libogg/include ../../codecs/libaotuv_b5/include ../../codecs/lame/include";
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		1DEB920708733DBB0010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				GCC_PREFIX_HEADER = AudioCompress_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../BaseUtilities/interface,
+					../../../STools/interface,
+					../../codecs/libogg/include,
+					../../codecs/libaotuv_b5/include,
+					../../codecs/lame/include,
+				);
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				USER_HEADER_SEARCH_PATHS = "../../../BaseUtilities/interface ../../codecs/libogg/include ../../codecs/libaotuv_b5/include ../../codecs/lame/include";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB920108733DBB0010E9CD /* Build configuration list for PBXNativeTarget "AudioCompress" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB920208733DBB0010E9CD /* Debug */,
+				1DEB920308733DBB0010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB920508733DBB0010E9CD /* Build configuration list for PBXProject "AudioCompress" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB920608733DBB0010E9CD /* Debug */,
+				1DEB920708733DBB0010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

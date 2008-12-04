@@ -1,0 +1,155 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/repos/!svn/ver/992/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32
+END
+build_vorbisenc_dynamic.bat
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/build_vorbisenc_dynamic.bat
+END
+vorbisenc_dynamic.dsp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/vorbisenc_dynamic.dsp
+END
+build_vorbisenc_static.bat
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/build_vorbisenc_static.bat
+END
+vorbisenc_static.dsp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/vorbisenc_static.dsp
+END
+libvorbis.sln
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/!svn/ver/992/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/libvorbis.sln
+END
+vorbisenc.def
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/vorbisenc.def
+END
+build_vorbisenc_dynamic_debug.bat
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/build_vorbisenc_dynamic_debug.bat
+END
+build_vorbisenc_static_debug.bat
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/build_vorbisenc_static_debug.bat
+END
+build_vorbis_dynamic.bat
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/build_vorbis_dynamic.bat
+END
+build_vorbisfile_dynamic.bat
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/build_vorbisfile_dynamic.bat
+END
+vorbisfile_dynamic.dsp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/vorbisfile_dynamic.dsp
+END
+vorbis_dynamic.dsp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/vorbis_dynamic.dsp
+END
+libvorbis.vcproj
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/repos/!svn/ver/992/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/libvorbis.vcproj
+END
+build_vorbis_static.bat
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/build_vorbis_static.bat
+END
+build_vorbisfile_static.bat
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/build_vorbisfile_static.bat
+END
+vorbis.dsw
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/vorbis.dsw
+END
+vorbis_static.dsp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/vorbis_static.dsp
+END
+vorbisfile_static.dsp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/vorbisfile_static.dsp
+END
+vorbis.def
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/vorbis.def
+END
+vorbisfile.def
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/vorbisfile.def
+END
+build_vorbisfile_dynamic_debug.bat
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/build_vorbisfile_dynamic_debug.bat
+END
+build_vorbis_dynamic_debug.bat
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/build_vorbis_dynamic_debug.bat
+END
+build_vorbisfile_static_debug.bat
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/build_vorbisfile_static_debug.bat
+END
+build_vorbis_static_debug.bat
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/build_vorbis_static_debug.bat
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libaotuv_b5/win32/.cvsignore
+END

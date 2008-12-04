@@ -1,0 +1,287 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib
+END
+masking.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/masking.h
+END
+lsp.c
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/lsp.c
+END
+misc.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/misc.h
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/Makefile.in
+END
+floor0.c
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/floor0.c
+END
+floor1.c
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/floor1.c
+END
+lsp.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/lsp.h
+END
+tone.c
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/tone.c
+END
+psytune.c
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/psytune.c
+END
+registry.c
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/registry.c
+END
+mapping0.c
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/mapping0.c
+END
+psy.c
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/psy.c
+END
+barkmel.c
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/barkmel.c
+END
+envelope.c
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/envelope.c
+END
+registry.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/registry.h
+END
+codec_internal.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/codec_internal.h
+END
+lpc.c
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/lpc.c
+END
+backends.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/backends.h
+END
+psy.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/psy.h
+END
+envelope.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/envelope.h
+END
+lpc.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/lpc.h
+END
+codebook.c
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/codebook.c
+END
+os.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/os.h
+END
+synthesis.c
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/synthesis.c
+END
+vorbisenc.c
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/vorbisenc.c
+END
+codebook.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/codebook.h
+END
+bitrate.c
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/bitrate.c
+END
+info.c
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/info.c
+END
+bitrate.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/bitrate.h
+END
+smallft.c
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/smallft.c
+END
+vorbisfile.c
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/vorbisfile.c
+END
+lookup_data.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/lookup_data.h
+END
+smallft.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/smallft.h
+END
+window.c
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/window.c
+END
+lookup.c
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/lookup.c
+END
+res0.c
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/res0.c
+END
+highlevel.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/highlevel.h
+END
+window.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/window.h
+END
+lookup.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/lookup.h
+END
+scales.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/scales.h
+END
+sharedbook.c
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/sharedbook.c
+END
+analysis.c
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/analysis.c
+END
+lookups.pl
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/lookups.pl
+END
+mdct.c
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/mdct.c
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/Makefile.am
+END
+block.c
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/block.c
+END
+mdct.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/repos/!svn/ver/958/SDK/trunk/AudioCompress/codecs/libvorbis/lib/mdct.h
+END
