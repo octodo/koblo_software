@@ -6,5 +6,7 @@
 *.a
 *~
 
+SDK/trunk/BaseUtilities/projects/OSXXCode/build/*
 SDK/trunk/STools/projects/osxxcode/build/*
-SDK/trunk/BaseUtilities/projects/osxxcode/build/*
+SDK/trunk/BaseUtilities/projects/OSXXCode/build/*
+
