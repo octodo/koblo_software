@@ -2,6 +2,9 @@
 *.LinkFileList  # Will exclude all .log files
 *.DS_Store
 *.dep
+*.o
+*.a
+*~
 
-
-SDK/trunk/STools/projects/osxxcode/build*
+SDK/trunk/STools/projects/osxxcode/build/*
+SDK/trunk/BaseUtilities/projects/osxxcode/build/*
