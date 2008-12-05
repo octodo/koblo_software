@@ -53,6 +53,7 @@
 		E3ED2A170C68573700D125D1 /* CBaseMIDICCEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A100C68573700D125D1 /* CBaseMIDICCEvent.cpp */; };
 		E3ED2A190C68573700D125D1 /* CBasePlugIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A120C68573700D125D1 /* CBasePlugIn.cpp */; };
 		E3ED2A1A0C68573700D125D1 /* CBaseTopPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A130C68573700D125D1 /* CBaseTopPane.cpp */; };
+		FC000FEC0EE9C8A4009277F5 /* libINetEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC000FEB0EE9C88F009277F5 /* libINetEngine.a */; };
 		FC3B74240DB1176600A1E7DD /* CTrack_Player2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC3B74230DB1176600A1E7DD /* CTrack_Player2.cpp */; };
 		FC45162A0DC200F900ADDE81 /* CMix_Buss_AUX_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC4516290DC200F900ADDE81 /* CMix_Buss_AUX_Insert.cpp */; };
 		FC6117820DA4D61B00334DDF /* CKSSplashScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC6117810DA4D61B00334DDF /* CKSSplashScreen.cpp */; };
@@ -152,6 +153,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC06E0554671400DB518D;
 			remoteInfo = MIDIIOEngine;
+		};
+		FC000FEA0EE9C88F009277F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC000FDF0EE9C88F009277F5 /* INetEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D /* libINetEngine.a */;
+			remoteInfo = INetEngine;
 		};
 		FC7C6F6B0D0455AF00A8D8D8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -315,6 +323,7 @@
 		E3ED2A120C68573700D125D1 /* CBasePlugIn.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBasePlugIn.cpp; path = ../../../SDK/trunk/BaseClasses/Source/CBasePlugIn.cpp; sourceTree = SOURCE_ROOT; };
 		E3ED2A130C68573700D125D1 /* CBaseTopPane.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseTopPane.cpp; path = ../../../SDK/trunk/BaseClasses/Source/CBaseTopPane.cpp; sourceTree = SOURCE_ROOT; };
 		E3F83F350C7D42CF00D2E408 /* main.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		FC000FDF0EE9C88F009277F5 /* INetEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = INetEngine.xcodeproj; path = ../../../../WorkingDir/SDK/trunk/INetEngine/projects/osxxcode/INetEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
 		FC202A880DB0C711005DC5E1 /* CTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack.h; path = include/Track_GUI/CTrack.h; sourceTree = "<group>"; };
 		FC3B741B0DB1175300A1E7DD /* CTrack_Player2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Player2.h; path = include/Track_GUI/CTrack_Player2.h; sourceTree = "<group>"; };
 		FC3B74230DB1176600A1E7DD /* CTrack_Player2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Player2.cpp; path = source/Track_GUI/CTrack_Player2.cpp; sourceTree = "<group>"; };
@@ -422,6 +431,7 @@
 				324DA49D0DB5F64B00268686 /* ApplicationServices.framework in Frameworks */,
 				324DA49F0DB5F65500268686 /* CoreServices.framework in Frameworks */,
 				32E09DCB0E14C38500FF980B /* libAudioCompress.a in Frameworks */,
+				FC000FEC0EE9C8A4009277F5 /* libINetEngine.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +469,7 @@
 			children = (
 				FC6117A90DA4D7FE00334DDF /* KS_OSX_Prefix.pch */,
 				FC6117AA0DA4D80900334DDF /* KS.icns */,
+				FC000FDF0EE9C88F009277F5 /* INetEngine.xcodeproj */,
 				E3EBB3C10B7C520800F0A345 /* BaseUtilities.xcodeproj */,
 				E39A35A00C87DB5E0035602E /* STools.xcodeproj */,
 				E3ED29340C68468100D125D1 /* DataEngine.xcodeproj */,
@@ -763,6 +774,14 @@
 			name = BaseClasses;
 			sourceTree = "<group>";
 		};
+		FC000FE00EE9C88F009277F5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FC000FEB0EE9C88F009277F5 /* libINetEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		FC9D46840CB13CF4006CEDB6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -947,6 +966,10 @@
 					ProjectRef = E3ED28F80C6845BE00D125D1 /* GUIEngine.xcodeproj */;
 				},
 				{
+					ProductGroup = FC000FE00EE9C88F009277F5 /* Products */;
+					ProjectRef = FC000FDF0EE9C88F009277F5 /* INetEngine.xcodeproj */;
+				},
+				{
 					ProductGroup = FC9D46A90CB13D5C006CEDB6 /* Products */;
 					ProjectRef = E3EBB3D00B7C522B00F0A345 /* MIDIIOEngine.xcodeproj */;
 				},
@@ -968,6 +991,13 @@
 			fileType = archive.ar;
 			path = libAudioCompress.a;
 			remoteRef = 32E09DC10E14BED500FF980B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FC000FEB0EE9C88F009277F5 /* libINetEngine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libINetEngine.a;
+			remoteRef = FC000FEA0EE9C88F009277F5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		FC9D46880CB13CF4006CEDB6 /* libSTools.a */ = {
