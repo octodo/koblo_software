@@ -1,12 +1,38 @@
-
-*.LinkFileList  # Will exclude all .log files
-*.DS_Store
-*.dep
+*.scc
+tmp
+obj
+*.csproj.user
+*.suo
+*.ncb
+*.aps
+Debug
+debug
+Release
+release
+*.vcproj.*.*.user
+Resources.h
+ResourcesInc.cpp
+res.k2s
 *.o
-*.a
+*.lo
+*.la
+#*#
+.*.rej
+*.rej .*~
 *~
+.#*
+.DS_Store
+*.mode1
+*.pbxuser
+build
+Build
+Builds
+*.mode1
+*.mode1v3
+DoesntMatter.k2s
+*.APS
 
-SDK/trunk/BaseUtilities/projects/OSXXCode/build/*
-SDK/trunk/STools/projects/osxxcode/build/*
-SDK/trunk/BaseUtilities/projects/OSXXCode/build/*
+
+
+
 

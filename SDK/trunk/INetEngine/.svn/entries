@@ -1,43 +1,0 @@
-8
-
-dir
-3033
-https://dev.koblo.com:444/repos/SDK/trunk/INetEngine
-https://dev.koblo.com:444/repos
-
-
-
-2008-04-04T14:21:32.572016Z
-992
-lsb-win
-has-props
-
-svn:special svn:externals svn:needs-lock
-
-
-
-
-
-
-
-
-
-
-
-850aafe4-0746-43d5-bba1-ccadfad06b28
-
-interface
-dir
-
-source
-dir
-
-include
-dir
-
-documentation
-dir
-
-projects
-dir
-
