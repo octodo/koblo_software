@@ -1218,6 +1218,7 @@
 					../../../SDK/trunk/DataEngine/interface,
 					../../../SDK/trunk/BaseClasses/Include,
 					../../../SDK/trunk/STools/Interface,
+					../../../SDK/trunk/INetEngine/interface,
 					../../../SDK/trunk/AudioCompress/interface,
 				);
 				INFOPLIST_FILE = Info.plist;
@@ -1262,6 +1263,7 @@
 					../../../SDK/trunk/DataEngine/interface,
 					../../../SDK/trunk/BaseClasses/Include,
 					../../../SDK/trunk/STools/Interface,
+					../../../SDK/trunk/INetEngine/interface,
 					../../../SDK/trunk/AudioCompress/interface,
 				);
 				INFOPLIST_FILE = Info.plist;

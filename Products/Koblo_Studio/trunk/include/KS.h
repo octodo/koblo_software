@@ -25,6 +25,9 @@
 // Graphical Engine
 #include "ge.h"
 
+// Internet Engine
+#include "ine.h"
+
 // STools
 #include "stools.h"
 
