@@ -36,6 +36,9 @@ CKS_TrackEditorPane::~CKS_TrackEditorPane()
 
 void CKS_TrackEditorPane::Init()
 {
+	//!!!Max added some git test code here
+	
+	
 	mpScrollBarHorizontal = NULL;
 	mpScrollBarVertical = NULL;
 	// Create the main pane
