@@ -12,7 +12,7 @@ void GetGetLastError(tchar pszMsg[256])
 
 #define POST_GET(post, get) ((Parameters == NULL)?get:post)
 #define POST_CONTENT_TYPE "Content-Type: application/x-www-form-urlencoded"
-void IINetUtil::GetWebFile(tchar* Parameters, tchar* pszServer, tchar* pszFileName, tint32* OutputLength, tchar** OutputBuffer)
+void IINetUtil::GetWebFile(const tchar* Parameters, const tchar* pszServer, const tchar* pszFileName, tint32* OutputLength, tchar** OutputBuffer)
 {
 	*OutputBuffer = NULL;
 	*OutputLength = 0;
@@ -97,7 +97,13 @@ void IINetUtil::GetWebFile(tchar* Parameters, tchar* pszServer, tchar* pszFileNa
 			// .. Lasse
 		}
 		/*Read the file*/
-		if(HttpSendRequest(File,POST_GET(POST_CONTENT_TYPE,NULL),POST_GET(strlen(POST_CONTENT_TYPE),0),POST_GET(Parameters,NULL),POST_GET(strlen((const char *) Parameters),0)))
+		if(HttpSendRequest(
+			File,
+			POST_GET(POST_CONTENT_TYPE,NULL),
+			POST_GET(strlen(POST_CONTENT_TYPE),0),
+			POST_GET((void*)Parameters,NULL),
+			POST_GET(strlen((const char *) Parameters),0)
+		))
 		{
 			*OutputBuffer = new tchar[MAX_PAGE_SIZE];
 			// Lasse, changed 2007-09-11 - fix for prematurely return before all data have been received

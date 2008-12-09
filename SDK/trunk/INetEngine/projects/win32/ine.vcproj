@@ -2,8 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="INet Engine"
+	Name="INetEngine"
 	ProjectGUID="{85AE5FED-FD14-4EC6-AD91-6830154E4EF6}"
+	RootNamespace="INetEngine"
 	>
 	<Platforms>
 		<Platform
