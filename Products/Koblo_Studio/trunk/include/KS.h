@@ -49,9 +49,8 @@
 #include "CBasePaneStd.h"
 #include "CBaseGUI.h"
 #include "CBaseTopPane.h"
-
 #include "IRegionCallback.h"
-
+#include "ine.h"
 
 // Parameter
 #include "KSGlobals.h"

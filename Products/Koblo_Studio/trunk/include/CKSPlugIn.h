@@ -20,6 +20,7 @@
 class CKSGUI;
 class CEffect;
 class CKSDSP;
+
 // The max buffer size of the audio processing. Larger buffers will be split into smaller ones
 // This should be set to the buffer size over which performance will start to decrease.
 // Note: The dezipper is using this buffer size, that is, it is only called each giAudioMaxBufferSize samples.
@@ -522,5 +523,7 @@ protected:
 	
 	tbool mbWasPlayingWhenMovePlayheadWasStarted;
 	tuint64 muiMoveToPos;
+	
+	
 };
 
