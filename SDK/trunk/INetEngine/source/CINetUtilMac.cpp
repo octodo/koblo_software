@@ -11,7 +11,7 @@
 
 #if 1
 
-void IINetUtil::GetWebFile(tchar* Parameters, tchar* pszServer, tchar* pszFileName, tint32* OutputLength, tchar** OutputBuffer)
+void IINetUtil::GetWebFile(const tchar* Parameters, const tchar* pszServer, const tchar* pszFileName, tint32* OutputLength, tchar** OutputBuffer)
 {
     char                    vFormattedUrl[2000];
     bool                    vSuccess;

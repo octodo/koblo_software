@@ -1,7 +1,7 @@
 
 #include "ineInternalOS.h"
 
-tbool IINetUtil::GetValue(tchar* SourceString, tint32* OutputLength, tchar** OutputBuffer) {
+tbool IINetUtil::GetValue(const tchar* SourceString, tint32* OutputLength, tchar** OutputBuffer) {
 	*OutputBuffer = NULL;
 	*OutputLength = 0;
 	// Lasse, modified 2007-09-07 - avoid Claus Riber crash
@@ -35,10 +35,10 @@ tbool IINetUtil::GetValue(tchar* SourceString, tint32* OutputLength, tchar** Out
 }
 
 
-tbool IINetUtil::FindLowerCaseString(tchar* pszLowerCaseString, tchar* pszBuffer, tint32 iBufferLen, tchar** ppszIndexAt, tchar** ppszIndexAfter)
+tbool IINetUtil::FindLowerCaseString(const tchar* pszLowerCaseString, const tchar* pszBuffer, tint32 iBufferLen, tchar** ppszIndexAt, tchar** ppszIndexAfter)
 {
 	tint32 iLenLowerCaseString = strlen(pszLowerCaseString);
-	tchar* pcBufIndexAt = pszBuffer;
+	tchar* pcBufIndexAt = (tchar*)pszBuffer;
 	tint32 iBufferRemainder = iBufferLen - iLenLowerCaseString;
 	while ((*pcBufIndexAt) && (iBufferRemainder >= 0)) {
 		tchar* pcBuf = pcBufIndexAt;
@@ -47,7 +47,7 @@ tbool IINetUtil::FindLowerCaseString(tchar* pszLowerCaseString, tchar* pszBuffer
 			cBuf += (tchar)('a'-'A');
 		if (cBuf == *pszLowerCaseString) {
 			// First char match found
-			tchar* pcStr = pszLowerCaseString + 1;
+			tchar* pcStr = ((tchar*)pszLowerCaseString) + 1;
 			tchar* pcBuf = pcBufIndexAt + 1;
 			// Look for the rest of the string
 			tbool bMatches = true;
@@ -84,7 +84,7 @@ tbool IINetUtil::FindLowerCaseString(tchar* pszLowerCaseString, tchar* pszBuffer
 }
 
 
-tbool IINetUtil::GetTagContentsPtr(const tchar* pszTagNameConst, tchar* pszSourceString, tint32 iSourceLen, tchar** ppszOutput, tint32* piOutputLength)
+tbool IINetUtil::GetTagContentsPtr(const tchar* pszTagNameConst, const tchar* pszSourceString, tint32 iSourceLen, tchar** ppszOutput, tint32* piOutputLength)
 {
 	*ppszOutput = NULL;
 	*piOutputLength = 0;
@@ -146,7 +146,7 @@ tbool IINetUtil::GetTagContentsPtr(const tchar* pszTagNameConst, tchar* pszSourc
 	return true;
 }
 
-tbool IINetUtil::GetValuePtr(tchar* szSourceString, tchar** ppszOutput, tint32* piOutputLength) {
+tbool IINetUtil::GetValuePtr(const tchar* szSourceString, tchar** ppszOutput, tint32* piOutputLength) {
 	return GetTagContentsPtr("value", szSourceString, strlen(szSourceString), ppszOutput, piOutputLength);
 /*	*ppszOutput = NULL;
 	*piOutputLength = 0;
@@ -186,11 +186,11 @@ void IINetUtil::ReleaseBuffer(tchar** Buffer) {
 	*Buffer = NULL;
 }
 
-bool IINetUtil::IsResultOK(tchar* SourceString) {
-    return strstr((const char*) SourceString,"<result status=\"ok\">") != NULL;
+bool IINetUtil::IsResultOK(const tchar* SourceString) {
+    return strstr(SourceString,"<result status=\"ok\">") != NULL;
 }
 
-tfloat64 IINetUtil::GetNumericWebValue(tchar* Parameters, tchar* pszServer, tchar* FileName) throw(IException*)
+tfloat64 IINetUtil::GetNumericWebValue(const tchar* Parameters, const tchar* pszServer, const tchar* FileName) throw(IException*)
 {
 	int length;
 	tchar* szS;

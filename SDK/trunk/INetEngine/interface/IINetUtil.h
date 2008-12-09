@@ -21,7 +21,7 @@ public:
 		\param OutputLength [out]: Number of bytes returned
 		\param OutputBuffer [out]: Handle to a bytebuffer which is allocated and contains the web file
 	*/
-	static void GetWebFile(tchar* PostParameters, tchar* pszServer, tchar* pszFileName, tint32* OutputLength, tchar** OutputBuffer);
+	static void GetWebFile(const tchar* PostParameters, const tchar* pszServer, const tchar* pszFileName, tint32* OutputLength, tchar** OutputBuffer);
 
 	//! Find the value element of a string (<value>xxx</value>), allocate the buffer and copy the value (xxx) to it
 	//! If no value element is found OutputLength is 0 and OutputBuffer is empty string
@@ -33,7 +33,7 @@ public:
 		\param OutputBuffer [out]: Handle to a bytebuffer which is allocated and contains the value
 		\return tbool: True if a value tag was found (also true for empty contents - check OutputLength for that instead)
 	*/
-	static tbool GetValue(tchar* SourceString, tint32* OutputLength, tchar** OutputBuffer);
+	static tbool GetValue(const tchar* SourceString, tint32* OutputLength, tchar** OutputBuffer);
 
 	//! Find the first a tag element of a string (<tag>xxx</tag>). No buffer copying is done.
 	/*!
@@ -44,7 +44,7 @@ public:
 		\param piOutputLength [out]: Number of chars in value string
 		\return tbool: True on success
 	*/
-	static tbool GetTagContentsPtr(const tchar* pszTagName, tchar* pszSourceString, tint32 iSourceLen, tchar** ppszOutput, tint32* piOutputLength);
+	static tbool GetTagContentsPtr(const tchar* pszTagName, const tchar* pszSourceString, tint32 iSourceLen, tchar** ppszOutput, tint32* piOutputLength);
 
 	//! Find the value element of a string (<value>xxx</value>). No buffer copying is done.
 	//! If no value element is found OutputLength is 0 and OutputBuffer is NULL
@@ -54,7 +54,7 @@ public:
 		\param piOutputLength [out]: Number of chars in value string
 		\return tbool: True on success
 	*/
-	static tbool GetValuePtr(tchar* szSourceString, tchar** ppszOutput, tint32* piOutputLength);
+	static tbool GetValuePtr(const tchar* szSourceString, tchar** ppszOutput, tint32* piOutputLength);
 
 	//! Find string in contents. The string to search for must be lowercase
 	/*!
@@ -65,7 +65,7 @@ public:
 		\param ppszIndexAfter [out]: Upon success: Receives a pointer to the rest of the contents (following the found text)
 		\return tbool: True upon success, False upon error
 	*/
-	static tbool FindLowerCaseString(tchar* pszLowerCaseString, tchar* pszBuffer, tint32 iBufferLen, tchar** ppszIndexAt, tchar** ppszIndexAfter);
+	static tbool FindLowerCaseString(const tchar* pszLowerCaseString, const tchar* pszBuffer, tint32 iBufferLen, tchar** ppszIndexAt, tchar** ppszIndexAfter);
 
 	//! Deallocate the buffer allocated by GetWebFile or GetValue - can be called allways, but no need when value null
 	//! \param Buffer [in]: Handle to the buffer	
@@ -76,17 +76,19 @@ public:
 	/*!
         \param SourceString [in]: inputstring to be searched
 	*/
-	static bool IsResultOK(tchar* SourceString);
+	static bool IsResultOK(const tchar* SourceString);
 
 	//! Reads web page and return integer result. Handles/throws exceptions
+	//! (lasse) Note! May not be relevant for Koblo Studio ???
 	/*!
 		\param Parameters [in]: inputstring (eg. userid=cri&password=cri), NULL if none
 		\param pszServer [in]: The server (DO NOT include protocol prefix!, i.e. "http://"). Can be fx "172.16.3.4" or "koblo.com"
 		\param FileName [in]: The actual file (eg. "checkxxx.aspx")
 	*/
-    static tfloat64 GetNumericWebValue(tchar* Parameters, tchar* pszServer, tchar* FileName) throw(IException*);
+    static tfloat64 GetNumericWebValue(const tchar* Parameters, const tchar* pszServer, const tchar* FileName) throw(IException*);
 
-	//returns the middle string between matching start and end and advances the buffer
+	//!returns the middle string between matching start and end and advances the buffer
+	//! (lasse) Note! May not be relevant for Koblo Studio ???
 	static bool GetMiddleStr(tchar **s, const char *sStart, const char *sEnd, char *sMiddle);
 
 protected:
