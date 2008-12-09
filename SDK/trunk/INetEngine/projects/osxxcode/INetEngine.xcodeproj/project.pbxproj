@@ -7,21 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3237EA350EEE756D00E21895 /* IINetUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 3237EA340EEE756D00E21895 /* IINetUtil.h */; };
 		D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
-		E3E010630A4FE70F00857352 /* Base64UrlEncode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E0105D0A4FE70F00857352 /* Base64UrlEncode.cpp */; };
-		E3E010640A4FE70F00857352 /* CINet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E0105E0A4FE70F00857352 /* CINet.cpp */; };
 		E3E010650A4FE70F00857352 /* CINetUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */; };
 		E3E010660A4FE70F00857352 /* CINetUtilMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E010600A4FE70F00857352 /* CINetUtilMac.cpp */; };
-		E3E010670A4FE70F00857352 /* CyoDecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E010610A4FE70F00857352 /* CyoDecode.cpp */; };
-		E3E010680A4FE70F00857352 /* CyoEncode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E010620A4FE70F00857352 /* CyoEncode.cpp */; };
-		E3E010700A4FE71F00857352 /* Base64UrlEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E010690A4FE71F00857352 /* Base64UrlEncode.h */; };
-		E3E010710A4FE71F00857352 /* CINet.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106A0A4FE71F00857352 /* CINet.h */; };
 		E3E010720A4FE71F00857352 /* CINetUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106B0A4FE71F00857352 /* CINetUtil.h */; };
-		E3E010730A4FE71F00857352 /* CyoDecode.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106C0A4FE71F00857352 /* CyoDecode.h */; };
-		E3E010740A4FE71F00857352 /* CyoEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106D0A4FE71F00857352 /* CyoEncode.h */; };
 		E3E010750A4FE71F00857352 /* ineInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106E0A4FE71F00857352 /* ineInternal.h */; };
 		E3E010760A4FE71F00857352 /* ineInternalOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106F0A4FE71F00857352 /* ineInternalOS.h */; };
-		E3E010790A4FE72C00857352 /* IINet.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E010770A4FE72C00857352 /* IINet.h */; };
 		E3E0107A0A4FE72C00857352 /* ine.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E010780A4FE72C00857352 /* ine.h */; };
 /* End PBXBuildFile section */
 
@@ -45,21 +37,13 @@
 /* Begin PBXFileReference section */
 		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3237EA340EEE756D00E21895 /* IINetUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IINetUtil.h; path = ../../interface/IINetUtil.h; sourceTree = SOURCE_ROOT; };
 		D2AAC06F0554671400DB518D /* libINetEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libINetEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E3E0105D0A4FE70F00857352 /* Base64UrlEncode.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Base64UrlEncode.cpp; path = ../../source/Base64UrlEncode.cpp; sourceTree = SOURCE_ROOT; };
-		E3E0105E0A4FE70F00857352 /* CINet.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CINet.cpp; path = ../../source/CINet.cpp; sourceTree = SOURCE_ROOT; };
 		E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CINetUtil.cpp; path = ../../source/CINetUtil.cpp; sourceTree = SOURCE_ROOT; };
 		E3E010600A4FE70F00857352 /* CINetUtilMac.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CINetUtilMac.cpp; path = ../../source/CINetUtilMac.cpp; sourceTree = SOURCE_ROOT; };
-		E3E010610A4FE70F00857352 /* CyoDecode.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CyoDecode.cpp; path = ../../source/CyoDecode.cpp; sourceTree = SOURCE_ROOT; };
-		E3E010620A4FE70F00857352 /* CyoEncode.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CyoEncode.cpp; path = ../../source/CyoEncode.cpp; sourceTree = SOURCE_ROOT; };
-		E3E010690A4FE71F00857352 /* Base64UrlEncode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Base64UrlEncode.h; path = ../../include/Base64UrlEncode.h; sourceTree = SOURCE_ROOT; };
-		E3E0106A0A4FE71F00857352 /* CINet.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CINet.h; path = ../../include/CINet.h; sourceTree = SOURCE_ROOT; };
 		E3E0106B0A4FE71F00857352 /* CINetUtil.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CINetUtil.h; path = ../../include/CINetUtil.h; sourceTree = SOURCE_ROOT; };
-		E3E0106C0A4FE71F00857352 /* CyoDecode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CyoDecode.h; path = ../../include/CyoDecode.h; sourceTree = SOURCE_ROOT; };
-		E3E0106D0A4FE71F00857352 /* CyoEncode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CyoEncode.h; path = ../../include/CyoEncode.h; sourceTree = SOURCE_ROOT; };
 		E3E0106E0A4FE71F00857352 /* ineInternal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ineInternal.h; path = ../../include/ineInternal.h; sourceTree = SOURCE_ROOT; };
 		E3E0106F0A4FE71F00857352 /* ineInternalOS.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ineInternalOS.h; path = ../../include/ineInternalOS.h; sourceTree = SOURCE_ROOT; };
-		E3E010770A4FE72C00857352 /* IINet.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IINet.h; path = ../../interface/IINet.h; sourceTree = SOURCE_ROOT; };
 		E3E010780A4FE72C00857352 /* ine.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ine.h; path = ../../interface/ine.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -115,7 +99,7 @@
 		0B77317608A634BB004B30F3 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				E3E010770A4FE72C00857352 /* IINet.h */,
+				3237EA340EEE756D00E21895 /* IINetUtil.h */,
 				E3E010780A4FE72C00857352 /* ine.h */,
 			);
 			name = Interface;
@@ -124,11 +108,7 @@
 		0B77318108A634CF004B30F3 /* Include */ = {
 			isa = PBXGroup;
 			children = (
-				E3E010690A4FE71F00857352 /* Base64UrlEncode.h */,
-				E3E0106A0A4FE71F00857352 /* CINet.h */,
 				E3E0106B0A4FE71F00857352 /* CINetUtil.h */,
-				E3E0106C0A4FE71F00857352 /* CyoDecode.h */,
-				E3E0106D0A4FE71F00857352 /* CyoEncode.h */,
 				E3E0106E0A4FE71F00857352 /* ineInternal.h */,
 				E3E0106F0A4FE71F00857352 /* ineInternalOS.h */,
 			);
@@ -138,12 +118,8 @@
 		0B77318208A634D6004B30F3 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				E3E0105D0A4FE70F00857352 /* Base64UrlEncode.cpp */,
-				E3E0105E0A4FE70F00857352 /* CINet.cpp */,
 				E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */,
 				E3E010600A4FE70F00857352 /* CINetUtilMac.cpp */,
-				E3E010610A4FE70F00857352 /* CyoDecode.cpp */,
-				E3E010620A4FE70F00857352 /* CyoEncode.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -163,15 +139,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3E010700A4FE71F00857352 /* Base64UrlEncode.h in Headers */,
-				E3E010710A4FE71F00857352 /* CINet.h in Headers */,
 				E3E010720A4FE71F00857352 /* CINetUtil.h in Headers */,
-				E3E010730A4FE71F00857352 /* CyoDecode.h in Headers */,
-				E3E010740A4FE71F00857352 /* CyoEncode.h in Headers */,
 				E3E010750A4FE71F00857352 /* ineInternal.h in Headers */,
 				E3E010760A4FE71F00857352 /* ineInternalOS.h in Headers */,
-				E3E010790A4FE72C00857352 /* IINet.h in Headers */,
 				E3E0107A0A4FE72C00857352 /* ine.h in Headers */,
+				3237EA350EEE756D00E21895 /* IINetUtil.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,12 +207,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3E010630A4FE70F00857352 /* Base64UrlEncode.cpp in Sources */,
-				E3E010640A4FE70F00857352 /* CINet.cpp in Sources */,
 				E3E010650A4FE70F00857352 /* CINetUtil.cpp in Sources */,
 				E3E010660A4FE70F00857352 /* CINetUtilMac.cpp in Sources */,
-				E3E010670A4FE70F00857352 /* CyoDecode.cpp in Sources */,
-				E3E010680A4FE70F00857352 /* CyoEncode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,7 +11,7 @@
 
 #if 1
 
-void CINetUtil::GetWebFile(tchar* Parameters, tchar* FileName, tint32* OutputLength, tchar** OutputBuffer)
+void IINetUtil::GetWebFile(tchar* Parameters, tchar* pszServer, tchar* pszFileName, tint32* OutputLength, tchar** OutputBuffer)
 {
     char                    vFormattedUrl[2000];
     bool                    vSuccess;
@@ -37,7 +37,8 @@ void CINetUtil::GetWebFile(tchar* Parameters, tchar* FileName, tint32* OutputLen
 	
 	vSuccess = false;
 	
-	snprintf((char*)vFormattedUrl,2000,"http://%s%s%s",WEB_SERVER,INTERFACE_PATH,(char*)FileName);
+	//snprintf((char*)vFormattedUrl,2000,"http://%s%s%s",WEB_SERVER,INTERFACE_PATH,(char*)FileName);
+	snprintf((char*)vFormattedUrl, 2000, "http://%s%s", pszServer, pszFileName);
 	
 	//
 	// format CF url and prepare stream connection
