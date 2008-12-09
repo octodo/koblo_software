@@ -1,7 +1,6 @@
 
 #include "KSOS.h"
 
-
 CKS_TrackEditor::CKS_TrackEditor(CKSPlugIn* pPlugIn, de::IParameterManager* pParmMan)
 	: CKSBaseGUI(dynamic_cast<CBasePlugIn*>(pPlugIn), pParmMan),
 	CBaseGUI(dynamic_cast<CBasePlugIn*>(pPlugIn), pParmMan)
@@ -16,6 +15,7 @@ CKS_TrackEditor::~CKS_TrackEditor()
 
 void CKS_TrackEditor::Destroy()
 {
+
 	GetPlugIn()->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
 
 	delete dynamic_cast<CKS_TrackEditor*>(this);
@@ -30,6 +30,7 @@ void CKS_TrackEditor::GetSize(tuint32* piSizeX, tuint32* piSizeY)
 
 void CKS_TrackEditor::Initialize()
 {
+
 	mpWindow->SetFineAdjustModifier(ge::IWindow::ModifierControl);
 
 	CBasePane* pPane = new CKS_TrackEditorPane(NULL, dynamic_cast<CBaseGUI*>(this));

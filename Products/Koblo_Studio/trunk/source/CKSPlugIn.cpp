@@ -4092,9 +4092,7 @@ tbool CKSPlugIn::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 		
 		// Save wave regions of visible tracks
 		for (iTrack = 0; iTrack < iTracksToSave; iTrack++) {
-			CAutoDelete<IChunk> pChunk(IChunk::Create(NULL,
-													  0,
-													  'REGI'));
+			CAutoDelete<IChunk> pChunk(IChunk::Create(NULL, 0, 'REGI'));
 			
 			if (pDSP->SaveTrackRegionDataToChunk(iTrack, pChunk)) {
 				// chunk was updated implicitly - do nothing here

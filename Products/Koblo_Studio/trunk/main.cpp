@@ -18,9 +18,10 @@ static void HandleNew_Audio();
 static void HandleNew_MIDI();
 static void HandleNew_Menu();
 
-//static IBNibRef        sNibRef;
 
-//WindowRef              gpNexsynWindow;
+
+
+
 
 
 volatile bool gbClosingDown = false;

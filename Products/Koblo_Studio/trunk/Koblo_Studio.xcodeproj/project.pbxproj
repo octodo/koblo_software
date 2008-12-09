@@ -1190,6 +1190,8 @@
 					../../../SDK/trunk/STools/Interface,
 					../../../SDK/trunk/INetEngine/interface,
 					../../../SDK/trunk/AudioCompress/interface,
+					"/src//**",
+					"../../../SDK/xercesc/**",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -1235,6 +1237,8 @@
 					../../../SDK/trunk/STools/Interface,
 					../../../SDK/trunk/INetEngine/interface,
 					../../../SDK/trunk/AudioCompress/interface,
+					"/src//**",
+					"../../../SDK/xercesc/**",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";

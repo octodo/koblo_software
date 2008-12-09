@@ -1,1 +1,362 @@
-// !$*UTF8*$!{	archiveVersion = 1;	classes = {	};	objectVersion = 42;	objects = {/* Begin PBXBuildFile section */		D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };		E3E010630A4FE70F00857352 /* Base64UrlEncode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E0105D0A4FE70F00857352 /* Base64UrlEncode.cpp */; };		E3E010640A4FE70F00857352 /* CINet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E0105E0A4FE70F00857352 /* CINet.cpp */; };		E3E010650A4FE70F00857352 /* CINetUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */; };		E3E010660A4FE70F00857352 /* CINetUtilMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E010600A4FE70F00857352 /* CINetUtilMac.cpp */; };		E3E010670A4FE70F00857352 /* CyoDecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E010610A4FE70F00857352 /* CyoDecode.cpp */; };		E3E010680A4FE70F00857352 /* CyoEncode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E010620A4FE70F00857352 /* CyoEncode.cpp */; };		E3E010700A4FE71F00857352 /* Base64UrlEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E010690A4FE71F00857352 /* Base64UrlEncode.h */; };		E3E010710A4FE71F00857352 /* CINet.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106A0A4FE71F00857352 /* CINet.h */; };		E3E010720A4FE71F00857352 /* CINetUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106B0A4FE71F00857352 /* CINetUtil.h */; };		E3E010730A4FE71F00857352 /* CyoDecode.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106C0A4FE71F00857352 /* CyoDecode.h */; };		E3E010740A4FE71F00857352 /* CyoEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106D0A4FE71F00857352 /* CyoEncode.h */; };		E3E010750A4FE71F00857352 /* ineInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106E0A4FE71F00857352 /* ineInternal.h */; };		E3E010760A4FE71F00857352 /* ineInternalOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106F0A4FE71F00857352 /* ineInternalOS.h */; };		E3E010790A4FE72C00857352 /* IINet.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E010770A4FE72C00857352 /* IINet.h */; };		E3E0107A0A4FE72C00857352 /* ine.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E010780A4FE72C00857352 /* ine.h */; };/* End PBXBuildFile section *//* Begin PBXBuildStyle section */		4F0BB7EC011F40E904CA0E50 /* Debug */ = {			isa = PBXBuildStyle;			buildSettings = {				COPY_PHASE_STRIP = NO;				GCC_DYNAMIC_NO_PIC = NO;				GCC_ENABLE_FIX_AND_CONTINUE = YES;				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;				GCC_OPTIMIZATION_LEVEL = 0;				ZERO_LINK = YES;			};			name = Debug;		};		4F0BB7ED011F40E904CA0E50 /* Release */ = {			isa = PBXBuildStyle;			buildSettings = {				COPY_PHASE_STRIP = YES;				GCC_ENABLE_FIX_AND_CONTINUE = NO;				ZERO_LINK = NO;			};			name = Release;		};/* End PBXBuildStyle section *//* Begin PBXContainerItemProxy section */		0B8839F508BB499100095026 /* PBXContainerItemProxy */ = {			isa = PBXContainerItemProxy;			containerPortal = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;			proxyType = 2;			remoteGlobalIDString = D2AAC06F0554671400DB518D;			remoteInfo = BaseUtilities;		};		0B8839F708BB499B00095026 /* PBXContainerItemProxy */ = {			isa = PBXContainerItemProxy;			containerPortal = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;			proxyType = 1;			remoteGlobalIDString = D2AAC06E0554671400DB518D;			remoteInfo = BaseUtilities;		};/* End PBXContainerItemProxy section *//* Begin PBXFileReference section */		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };		0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };		D2AAC06F0554671400DB518D /* libINetEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libINetEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };		E3E0105D0A4FE70F00857352 /* Base64UrlEncode.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Base64UrlEncode.cpp; path = ../../source/Base64UrlEncode.cpp; sourceTree = SOURCE_ROOT; };		E3E0105E0A4FE70F00857352 /* CINet.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CINet.cpp; path = ../../source/CINet.cpp; sourceTree = SOURCE_ROOT; };		E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CINetUtil.cpp; path = ../../source/CINetUtil.cpp; sourceTree = SOURCE_ROOT; };		E3E010600A4FE70F00857352 /* CINetUtilMac.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CINetUtilMac.cpp; path = ../../source/CINetUtilMac.cpp; sourceTree = SOURCE_ROOT; };		E3E010610A4FE70F00857352 /* CyoDecode.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CyoDecode.cpp; path = ../../source/CyoDecode.cpp; sourceTree = SOURCE_ROOT; };		E3E010620A4FE70F00857352 /* CyoEncode.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CyoEncode.cpp; path = ../../source/CyoEncode.cpp; sourceTree = SOURCE_ROOT; };		E3E010690A4FE71F00857352 /* Base64UrlEncode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Base64UrlEncode.h; path = ../../include/Base64UrlEncode.h; sourceTree = SOURCE_ROOT; };		E3E0106A0A4FE71F00857352 /* CINet.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CINet.h; path = ../../include/CINet.h; sourceTree = SOURCE_ROOT; };		E3E0106B0A4FE71F00857352 /* CINetUtil.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CINetUtil.h; path = ../../include/CINetUtil.h; sourceTree = SOURCE_ROOT; };		E3E0106C0A4FE71F00857352 /* CyoDecode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CyoDecode.h; path = ../../include/CyoDecode.h; sourceTree = SOURCE_ROOT; };		E3E0106D0A4FE71F00857352 /* CyoEncode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CyoEncode.h; path = ../../include/CyoEncode.h; sourceTree = SOURCE_ROOT; };		E3E0106E0A4FE71F00857352 /* ineInternal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ineInternal.h; path = ../../include/ineInternal.h; sourceTree = SOURCE_ROOT; };		E3E0106F0A4FE71F00857352 /* ineInternalOS.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ineInternalOS.h; path = ../../include/ineInternalOS.h; sourceTree = SOURCE_ROOT; };		E3E010770A4FE72C00857352 /* IINet.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IINet.h; path = ../../interface/IINet.h; sourceTree = SOURCE_ROOT; };		E3E010780A4FE72C00857352 /* ine.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ine.h; path = ../../interface/ine.h; sourceTree = SOURCE_ROOT; };/* End PBXFileReference section *//* Begin PBXFrameworksBuildPhase section */		D2AAC06D0554671400DB518D /* Frameworks */ = {			isa = PBXFrameworksBuildPhase;			buildActionMask = 2147483647;			files = (				D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */,			);			runOnlyForDeploymentPostprocessing = 0;		};/* End PBXFrameworksBuildPhase section *//* Begin PBXGroup section */		034768DDFF38A45A11DB9C8B /* Products */ = {			isa = PBXGroup;			children = (				D2AAC06F0554671400DB518D /* libINetEngine.a */,			);			name = Products;			sourceTree = "<group>";		};		0867D691FE84028FC02AAC07 /* DataEngine */ = {			isa = PBXGroup;			children = (				0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */,				08FB77ACFE841707C02AAC07 /* Source */,				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,				034768DDFF38A45A11DB9C8B /* Products */,			);			name = DataEngine;			sourceTree = "<group>";		};		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {			isa = PBXGroup;			children = (				08FB77AAFE841565C02AAC07 /* Carbon.framework */,			);			name = "External Frameworks and Libraries";			sourceTree = "<group>";		};		08FB77ACFE841707C02AAC07 /* Source */ = {			isa = PBXGroup;			children = (				0B77318208A634D6004B30F3 /* Source */,				0B77318108A634CF004B30F3 /* Include */,				0B77317608A634BB004B30F3 /* Interface */,			);			name = Source;			sourceTree = "<group>";		};		0B77317608A634BB004B30F3 /* Interface */ = {			isa = PBXGroup;			children = (				E3E010770A4FE72C00857352 /* IINet.h */,				E3E010780A4FE72C00857352 /* ine.h */,			);			name = Interface;			sourceTree = "<group>";		};		0B77318108A634CF004B30F3 /* Include */ = {			isa = PBXGroup;			children = (				E3E010690A4FE71F00857352 /* Base64UrlEncode.h */,				E3E0106A0A4FE71F00857352 /* CINet.h */,				E3E0106B0A4FE71F00857352 /* CINetUtil.h */,				E3E0106C0A4FE71F00857352 /* CyoDecode.h */,				E3E0106D0A4FE71F00857352 /* CyoEncode.h */,				E3E0106E0A4FE71F00857352 /* ineInternal.h */,				E3E0106F0A4FE71F00857352 /* ineInternalOS.h */,			);			name = Include;			sourceTree = "<group>";		};		0B77318208A634D6004B30F3 /* Source */ = {			isa = PBXGroup;			children = (				E3E0105D0A4FE70F00857352 /* Base64UrlEncode.cpp */,				E3E0105E0A4FE70F00857352 /* CINet.cpp */,				E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */,				E3E010600A4FE70F00857352 /* CINetUtilMac.cpp */,				E3E010610A4FE70F00857352 /* CyoDecode.cpp */,				E3E010620A4FE70F00857352 /* CyoEncode.cpp */,			);			name = Source;			sourceTree = "<group>";		};		0B8839F208BB499100095026 /* Products */ = {			isa = PBXGroup;			children = (				0B8839F608BB499100095026 /* libBaseUtilities.a */,			);			name = Products;			sourceTree = "<group>";		};/* End PBXGroup section *//* Begin PBXHeadersBuildPhase section */		D2AAC06B0554671400DB518D /* Headers */ = {			isa = PBXHeadersBuildPhase;			buildActionMask = 2147483647;			files = (				E3E010700A4FE71F00857352 /* Base64UrlEncode.h in Headers */,				E3E010710A4FE71F00857352 /* CINet.h in Headers */,				E3E010720A4FE71F00857352 /* CINetUtil.h in Headers */,				E3E010730A4FE71F00857352 /* CyoDecode.h in Headers */,				E3E010740A4FE71F00857352 /* CyoEncode.h in Headers */,				E3E010750A4FE71F00857352 /* ineInternal.h in Headers */,				E3E010760A4FE71F00857352 /* ineInternalOS.h in Headers */,				E3E010790A4FE72C00857352 /* IINet.h in Headers */,				E3E0107A0A4FE72C00857352 /* ine.h in Headers */,			);			runOnlyForDeploymentPostprocessing = 0;		};/* End PBXHeadersBuildPhase section *//* Begin PBXNativeTarget section */		D2AAC06E0554671400DB518D /* INetEngine */ = {			isa = PBXNativeTarget;			buildConfigurationList = 0B77317708A634BB004B30F3 /* Build configuration list for PBXNativeTarget "INetEngine" */;			buildPhases = (				D2AAC06B0554671400DB518D /* Headers */,				D2AAC06C0554671400DB518D /* Sources */,				D2AAC06D0554671400DB518D /* Frameworks */,			);			buildRules = (			);			buildSettings = {				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;				GCC_MODEL_TUNING = G5;				GCC_PRECOMPILE_PREFIX_HEADER = YES;				GCC_PREFIX_HEADER = DataEngine_Prefix.pch;				GCC_WARN_ABOUT_RETURN_TYPE = YES;				GCC_WARN_UNUSED_VARIABLE = YES;				INSTALL_PATH = /usr/local/lib;				LIBRARY_STYLE = STATIC;				PREBINDING = NO;				PRODUCT_NAME = DataEngine;			};			dependencies = (				0B8839F808BB499B00095026 /* PBXTargetDependency */,			);			name = INetEngine;			productName = DataEngine;			productReference = D2AAC06F0554671400DB518D /* libINetEngine.a */;			productType = "com.apple.product-type.library.static";		};/* End PBXNativeTarget section *//* Begin PBXProject section */		0867D690FE84028FC02AAC07 /* Project object */ = {			isa = PBXProject;			buildConfigurationList = 0B77317B08A634BB004B30F3 /* Build configuration list for PBXProject "INetEngine" */;			buildSettings = {			};			buildStyles = (				4F0BB7EC011F40E904CA0E50 /* Debug */,				4F0BB7ED011F40E904CA0E50 /* Release */,			);			hasScannedForEncodings = 1;			mainGroup = 0867D691FE84028FC02AAC07 /* DataEngine */;			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;			projectDirPath = "";			projectReferences = (				{					ProductGroup = 0B8839F208BB499100095026 /* Products */;					ProjectRef = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;				},			);			targets = (				D2AAC06E0554671400DB518D /* INetEngine */,			);		};/* End PBXProject section *//* Begin PBXReferenceProxy section */		0B8839F608BB499100095026 /* libBaseUtilities.a */ = {			isa = PBXReferenceProxy;			fileType = archive.ar;			path = libBaseUtilities.a;			remoteRef = 0B8839F508BB499100095026 /* PBXContainerItemProxy */;			sourceTree = BUILT_PRODUCTS_DIR;		};/* End PBXReferenceProxy section *//* Begin PBXSourcesBuildPhase section */		D2AAC06C0554671400DB518D /* Sources */ = {			isa = PBXSourcesBuildPhase;			buildActionMask = 2147483647;			files = (				E3E010630A4FE70F00857352 /* Base64UrlEncode.cpp in Sources */,				E3E010640A4FE70F00857352 /* CINet.cpp in Sources */,				E3E010650A4FE70F00857352 /* CINetUtil.cpp in Sources */,				E3E010660A4FE70F00857352 /* CINetUtilMac.cpp in Sources */,				E3E010670A4FE70F00857352 /* CyoDecode.cpp in Sources */,				E3E010680A4FE70F00857352 /* CyoEncode.cpp in Sources */,			);			runOnlyForDeploymentPostprocessing = 0;		};/* End PBXSourcesBuildPhase section *//* Begin PBXTargetDependency section */		0B8839F808BB499B00095026 /* PBXTargetDependency */ = {			isa = PBXTargetDependency;			name = BaseUtilities;			targetProxy = 0B8839F708BB499B00095026 /* PBXContainerItemProxy */;		};/* End PBXTargetDependency section *//* Begin XCBuildConfiguration section */		0B77317808A634BB004B30F3 /* Debug */ = {			isa = XCBuildConfiguration;			buildSettings = {				ARCHS = (					ppc,					i386,				);				COPY_PHASE_STRIP = NO;				GCC_DYNAMIC_NO_PIC = NO;				GCC_ENABLE_FIX_AND_CONTINUE = YES;				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;				GCC_MODEL_TUNING = G5;				GCC_OPTIMIZATION_LEVEL = 0;				GCC_PRECOMPILE_PREFIX_HEADER = YES;				GCC_PREFIX_HEADER = INetEngine_Prefix.pch;				GCC_WARN_ABOUT_RETURN_TYPE = YES;				GCC_WARN_UNUSED_VARIABLE = YES;				INSTALL_PATH = /usr/local/lib;				LIBRARY_STYLE = STATIC;				PREBINDING = NO;				PRODUCT_NAME = INetEngine;				ZERO_LINK = NO;			};			name = Debug;		};		0B77317908A634BB004B30F3 /* Release */ = {			isa = XCBuildConfiguration;			buildSettings = {				ARCHS = (					ppc,					i386,				);				COPY_PHASE_STRIP = YES;				GCC_AUTO_VECTORIZATION = YES;				GCC_ENABLE_FIX_AND_CONTINUE = NO;				GCC_FAST_MATH = YES;				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;				GCC_MODEL_TUNING = G5;				GCC_OPTIMIZATION_LEVEL = 3;				GCC_PRECOMPILE_PREFIX_HEADER = YES;				GCC_PREFIX_HEADER = INetEngine_Prefix.pch;				GCC_UNROLL_LOOPS = YES;				GCC_WARN_ABOUT_RETURN_TYPE = YES;				GCC_WARN_UNUSED_VARIABLE = YES;				INSTALL_PATH = /usr/local/lib;				LIBRARY_STYLE = STATIC;				PREBINDING = NO;				PRODUCT_NAME = INetEngine;				ZERO_LINK = NO;			};			name = Release;		};		0B77317C08A634BB004B30F3 /* Debug */ = {			isa = XCBuildConfiguration;			buildSettings = {				HEADER_SEARCH_PATHS = (					/Developer/Headers/FlatCarbon/,					../../../BaseUtilities/Interface/,				);				MACOSX_DEPLOYMENT_TARGET = 10.4;				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;			};			name = Debug;		};		0B77317D08A634BB004B30F3 /* Release */ = {			isa = XCBuildConfiguration;			buildSettings = {				ARCHS = (					i386,					ppc,				);				HEADER_SEARCH_PATHS = (					/Developer/Headers/FlatCarbon/,					../../../BaseUtilities/Interface/,				);				MACOSX_DEPLOYMENT_TARGET = 10.4;				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;			};			name = Release;		};/* End XCBuildConfiguration section *//* Begin XCConfigurationList section */		0B77317708A634BB004B30F3 /* Build configuration list for PBXNativeTarget "INetEngine" */ = {			isa = XCConfigurationList;			buildConfigurations = (				0B77317808A634BB004B30F3 /* Debug */,				0B77317908A634BB004B30F3 /* Release */,			);			defaultConfigurationIsVisible = 0;			defaultConfigurationName = Debug;		};		0B77317B08A634BB004B30F3 /* Build configuration list for PBXProject "INetEngine" */ = {			isa = XCConfigurationList;			buildConfigurations = (				0B77317C08A634BB004B30F3 /* Debug */,				0B77317D08A634BB004B30F3 /* Release */,			);			defaultConfigurationIsVisible = 0;			defaultConfigurationName = Debug;		};/* End XCConfigurationList section */	};	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;}
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
+		E3E010630A4FE70F00857352 /* Base64UrlEncode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E0105D0A4FE70F00857352 /* Base64UrlEncode.cpp */; };
+		E3E010640A4FE70F00857352 /* CINet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E0105E0A4FE70F00857352 /* CINet.cpp */; };
+		E3E010650A4FE70F00857352 /* CINetUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */; };
+		E3E010660A4FE70F00857352 /* CINetUtilMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E010600A4FE70F00857352 /* CINetUtilMac.cpp */; };
+		E3E010670A4FE70F00857352 /* CyoDecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E010610A4FE70F00857352 /* CyoDecode.cpp */; };
+		E3E010680A4FE70F00857352 /* CyoEncode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E010620A4FE70F00857352 /* CyoEncode.cpp */; };
+		E3E010700A4FE71F00857352 /* Base64UrlEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E010690A4FE71F00857352 /* Base64UrlEncode.h */; };
+		E3E010710A4FE71F00857352 /* CINet.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106A0A4FE71F00857352 /* CINet.h */; };
+		E3E010720A4FE71F00857352 /* CINetUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106B0A4FE71F00857352 /* CINetUtil.h */; };
+		E3E010730A4FE71F00857352 /* CyoDecode.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106C0A4FE71F00857352 /* CyoDecode.h */; };
+		E3E010740A4FE71F00857352 /* CyoEncode.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106D0A4FE71F00857352 /* CyoEncode.h */; };
+		E3E010750A4FE71F00857352 /* ineInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106E0A4FE71F00857352 /* ineInternal.h */; };
+		E3E010760A4FE71F00857352 /* ineInternalOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E0106F0A4FE71F00857352 /* ineInternalOS.h */; };
+		E3E010790A4FE72C00857352 /* IINet.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E010770A4FE72C00857352 /* IINet.h */; };
+		E3E0107A0A4FE72C00857352 /* ine.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E010780A4FE72C00857352 /* ine.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0B8839F508BB499100095026 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+		0B8839F708BB499B00095026 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
+			remoteInfo = BaseUtilities;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };
+		D2AAC06F0554671400DB518D /* libINetEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libINetEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3E0105D0A4FE70F00857352 /* Base64UrlEncode.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Base64UrlEncode.cpp; path = ../../source/Base64UrlEncode.cpp; sourceTree = SOURCE_ROOT; };
+		E3E0105E0A4FE70F00857352 /* CINet.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CINet.cpp; path = ../../source/CINet.cpp; sourceTree = SOURCE_ROOT; };
+		E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CINetUtil.cpp; path = ../../source/CINetUtil.cpp; sourceTree = SOURCE_ROOT; };
+		E3E010600A4FE70F00857352 /* CINetUtilMac.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CINetUtilMac.cpp; path = ../../source/CINetUtilMac.cpp; sourceTree = SOURCE_ROOT; };
+		E3E010610A4FE70F00857352 /* CyoDecode.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CyoDecode.cpp; path = ../../source/CyoDecode.cpp; sourceTree = SOURCE_ROOT; };
+		E3E010620A4FE70F00857352 /* CyoEncode.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CyoEncode.cpp; path = ../../source/CyoEncode.cpp; sourceTree = SOURCE_ROOT; };
+		E3E010690A4FE71F00857352 /* Base64UrlEncode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Base64UrlEncode.h; path = ../../include/Base64UrlEncode.h; sourceTree = SOURCE_ROOT; };
+		E3E0106A0A4FE71F00857352 /* CINet.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CINet.h; path = ../../include/CINet.h; sourceTree = SOURCE_ROOT; };
+		E3E0106B0A4FE71F00857352 /* CINetUtil.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CINetUtil.h; path = ../../include/CINetUtil.h; sourceTree = SOURCE_ROOT; };
+		E3E0106C0A4FE71F00857352 /* CyoDecode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CyoDecode.h; path = ../../include/CyoDecode.h; sourceTree = SOURCE_ROOT; };
+		E3E0106D0A4FE71F00857352 /* CyoEncode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CyoEncode.h; path = ../../include/CyoEncode.h; sourceTree = SOURCE_ROOT; };
+		E3E0106E0A4FE71F00857352 /* ineInternal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ineInternal.h; path = ../../include/ineInternal.h; sourceTree = SOURCE_ROOT; };
+		E3E0106F0A4FE71F00857352 /* ineInternalOS.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ineInternalOS.h; path = ../../include/ineInternalOS.h; sourceTree = SOURCE_ROOT; };
+		E3E010770A4FE72C00857352 /* IINet.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = IINet.h; path = ../../interface/IINet.h; sourceTree = SOURCE_ROOT; };
+		E3E010780A4FE72C00857352 /* ine.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ine.h; path = ../../interface/ine.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC06D0554671400DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DDFF38A45A11DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC06F0554671400DB518D /* libINetEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* DataEngine */ = {
+			isa = PBXGroup;
+			children = (
+				0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */,
+				08FB77ACFE841707C02AAC07 /* Source */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DDFF38A45A11DB9C8B /* Products */,
+			);
+			name = DataEngine;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AAFE841565C02AAC07 /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		08FB77ACFE841707C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0B77318208A634D6004B30F3 /* Source */,
+				0B77318108A634CF004B30F3 /* Include */,
+				0B77317608A634BB004B30F3 /* Interface */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B77317608A634BB004B30F3 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				E3E010770A4FE72C00857352 /* IINet.h */,
+				E3E010780A4FE72C00857352 /* ine.h */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
+		0B77318108A634CF004B30F3 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				E3E010690A4FE71F00857352 /* Base64UrlEncode.h */,
+				E3E0106A0A4FE71F00857352 /* CINet.h */,
+				E3E0106B0A4FE71F00857352 /* CINetUtil.h */,
+				E3E0106C0A4FE71F00857352 /* CyoDecode.h */,
+				E3E0106D0A4FE71F00857352 /* CyoEncode.h */,
+				E3E0106E0A4FE71F00857352 /* ineInternal.h */,
+				E3E0106F0A4FE71F00857352 /* ineInternalOS.h */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		0B77318208A634D6004B30F3 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E3E0105D0A4FE70F00857352 /* Base64UrlEncode.cpp */,
+				E3E0105E0A4FE70F00857352 /* CINet.cpp */,
+				E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */,
+				E3E010600A4FE70F00857352 /* CINetUtilMac.cpp */,
+				E3E010610A4FE70F00857352 /* CyoDecode.cpp */,
+				E3E010620A4FE70F00857352 /* CyoEncode.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0B8839F208BB499100095026 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0B8839F608BB499100095026 /* libBaseUtilities.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC06B0554671400DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3E010700A4FE71F00857352 /* Base64UrlEncode.h in Headers */,
+				E3E010710A4FE71F00857352 /* CINet.h in Headers */,
+				E3E010720A4FE71F00857352 /* CINetUtil.h in Headers */,
+				E3E010730A4FE71F00857352 /* CyoDecode.h in Headers */,
+				E3E010740A4FE71F00857352 /* CyoEncode.h in Headers */,
+				E3E010750A4FE71F00857352 /* ineInternal.h in Headers */,
+				E3E010760A4FE71F00857352 /* ineInternalOS.h in Headers */,
+				E3E010790A4FE72C00857352 /* IINet.h in Headers */,
+				E3E0107A0A4FE72C00857352 /* ine.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC06E0554671400DB518D /* INetEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B77317708A634BB004B30F3 /* Build configuration list for PBXNativeTarget "INetEngine" */;
+			buildPhases = (
+				D2AAC06B0554671400DB518D /* Headers */,
+				D2AAC06C0554671400DB518D /* Sources */,
+				D2AAC06D0554671400DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0B8839F808BB499B00095026 /* PBXTargetDependency */,
+			);
+			name = INetEngine;
+			productName = DataEngine;
+			productReference = D2AAC06F0554671400DB518D /* libINetEngine.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 0B77317B08A634BB004B30F3 /* Build configuration list for PBXProject "INetEngine" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* DataEngine */;
+			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0B8839F208BB499100095026 /* Products */;
+					ProjectRef = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D2AAC06E0554671400DB518D /* INetEngine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0B8839F608BB499100095026 /* libBaseUtilities.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBaseUtilities.a;
+			remoteRef = 0B8839F508BB499100095026 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC06C0554671400DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3E010630A4FE70F00857352 /* Base64UrlEncode.cpp in Sources */,
+				E3E010640A4FE70F00857352 /* CINet.cpp in Sources */,
+				E3E010650A4FE70F00857352 /* CINetUtil.cpp in Sources */,
+				E3E010660A4FE70F00857352 /* CINetUtilMac.cpp in Sources */,
+				E3E010670A4FE70F00857352 /* CyoDecode.cpp in Sources */,
+				E3E010680A4FE70F00857352 /* CyoEncode.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0B8839F808BB499B00095026 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BaseUtilities;
+			targetProxy = 0B8839F708BB499B00095026 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0B77317808A634BB004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = INetEngine_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				PREBINDING = NO;
+				PRODUCT_NAME = INetEngine;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		0B77317908A634BB004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = INetEngine_Prefix.pch;
+				GCC_UNROLL_LOOPS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = STATIC;
+				PREBINDING = NO;
+				PRODUCT_NAME = INetEngine;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		0B77317C08A634BB004B30F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		0B77317D08A634BB004B30F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				HEADER_SEARCH_PATHS = (
+					/Developer/Headers/FlatCarbon/,
+					../../../BaseUtilities/Interface/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0B77317708A634BB004B30F3 /* Build configuration list for PBXNativeTarget "INetEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77317808A634BB004B30F3 /* Debug */,
+				0B77317908A634BB004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0B77317B08A634BB004B30F3 /* Build configuration list for PBXProject "INetEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B77317C08A634BB004B30F3 /* Debug */,
+				0B77317D08A634BB004B30F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}
