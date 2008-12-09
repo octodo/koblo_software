@@ -105,6 +105,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		32557ED90EEEB62C00A9247A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC2D34710EEE868D004DFC3D /* INetEngine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D /* INetEngine */;
+			remoteInfo = INetEngine;
+		};
 		32E09DC10E14BED500FF980B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 32E09DAD0E14BED500FF980B /* AudioCompress.xcodeproj */;
@@ -927,6 +934,7 @@
 				E3ADBE9B0CD71D7B00ABD0DB /* PBXTargetDependency */,
 				E3ADBE9D0CD71D7F00ABD0DB /* PBXTargetDependency */,
 				32E09DEB0E14C7E100FF980B /* PBXTargetDependency */,
+				32557EDA0EEEB62C00A9247A /* PBXTargetDependency */,
 			);
 			name = "Koblo Studio";
 			productInstallPath = "$(HOME)/Applications";
@@ -1147,6 +1155,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		32557EDA0EEEB62C00A9247A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = INetEngine;
+			targetProxy = 32557ED90EEEB62C00A9247A /* PBXContainerItemProxy */;
+		};
 		32E09DEB0E14C7E100FF980B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AudioCompress;
