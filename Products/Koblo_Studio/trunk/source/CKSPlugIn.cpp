@@ -46,8 +46,7 @@ CKSPlugIn::CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex)
 	
 	tchar pszBuff = NULL;
 	tint32 iOutLen = 0;
-	ine::IINetUtil::GetWebFile(NULL, "koblo.com", "/projects/16/branches/22.xml", &iOutLen, &pszBuff);
-
+	IINetUtil::GetWebFile(NULL, "koblo.com", "/projects/16/branches/22.xml", &iOutLen, &pszBuff);
 	mpDezipper->SetCallback(dynamic_cast<IBaseDezipperCallback*>(this));
 	
 	//!!! Max Temp quick fix

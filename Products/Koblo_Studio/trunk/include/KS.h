@@ -31,6 +31,10 @@
 // AudioCompress
 #include "ac.h"
 
+// Inet engine
+#include "ine.h"
+#include "IINetUtil.h"
+
 // KSPI
 #include "kspi.h"
 #include "kspiC.h"
@@ -50,7 +54,9 @@
 #include "CBaseGUI.h"
 #include "CBaseTopPane.h"
 #include "IRegionCallback.h"
-#include "ine.h"
+
+
+
 
 // Parameter
 #include "KSGlobals.h"
