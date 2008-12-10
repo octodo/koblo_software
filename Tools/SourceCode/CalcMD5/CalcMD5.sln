@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcMD5", "CalcMD5.csproj", "{2A8DEBFF-D4B9-40F8-8214-94D459B3CCEA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A8DEBFF-D4B9-40F8-8214-94D459B3CCEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A8DEBFF-D4B9-40F8-8214-94D459B3CCEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A8DEBFF-D4B9-40F8-8214-94D459B3CCEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A8DEBFF-D4B9-40F8-8214-94D459B3CCEA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

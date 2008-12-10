@@ -75,12 +75,12 @@ int main(int argc, char* argv[])
 		tint iLineLen;
 
 		if (bLargeFile) {
-			// For large input files we must output signed int 64 arrays
+			// For large input files we must output signed int 32 arrays
 
 			// Load the data
-			tint32 iSizeDiv16x8 =  (iInSize / (16 * sizeof(tuint64))) + 1;
-			tint32 iSizeArray = iSizeDiv16x8 * 16;
-			tchar* pszInBuff = (tchar*)(new tuint64[iSizeArray]);
+			tint32 iSizeDiv16x4 =  (iInSize / (16 * sizeof(tuint32))) + 1;
+			tint32 iSizeArray = iSizeDiv16x4 * 16;
+			tchar* pszInBuff = (tchar*)(new tuint32[iSizeArray]);
 			if (iInSize > 0)
 				fIn->Read(pszInBuff, iInSize);
 
@@ -90,36 +90,33 @@ int main(int argc, char* argv[])
 				fOut->Write(pszLine, iLineLen);
 
 				// Then the array variable
-				iLineLen = sprintf(pszLine, "static const tint64 _gai_%s[] = {%s", pszName, NL);
+				iLineLen = sprintf(pszLine, "static const tint32 _gai_%s[] = {%s", pszName, NL);
 				fOut->Write(pszLine, iLineLen);
 				
 				// Write data
-				tuint64* puiSrc = (tuint64*)pszInBuff;
-				for (tint i = 0; i < iSizeDiv16x8; i++) {
+				tuint32* puiSrc = (tuint32*)pszInBuff;
+				for (tint i = 0; i < iSizeDiv16x4; i++) {
 					tchar* pcDst = pszLine;
 					tint iChars;
 					iChars = sprintf(pcDst, "\t");
 					pcDst += iChars;
 					iLineLen = iChars;
+					
+#ifdef _Mac_PowerPC
+					const tint32 kiWhenToSwap = 0;
+#else _Mac_PowerPC
+					const tint32 kiWhenToSwap = 1;
+#endif // _Mac_PowerPC
 
 					for (tint i2 = 0; i2 < 16; i2++) {
-						tuint64 ull = *puiSrc++;
-						if (iSwapped != 0) {
-							//ul = (((ul>>24) & 0x000000FFL) | ((ul>>8) & 0x0000FF00L) | ((ul<<8) & 0x00FF0000L) | ((ul<<24) & 0xFF000000L));
-							ull = (
-								((ull>>56) & 0x000000FFL) | ((ull>>40) & 0x0000FF00L) | ((ull>>24) & 0x00FF0000L) | ((ull>>8) & 0xFF000000L)
-								|
-								((ull<<8) & 0x000000FF00000000L) | ((ull<<24) & 0x0000FF0000000000L) | ((ull<<40) & 0x00FF000000000000L) | ((ull<<56) & 0xFF00000000000000L)
-								);
+						tuint32 ul = *puiSrc++;
+						if (iSwapped == kiWhenToSwap) {
+							ul = (((ul>>24) & 0x000000FFL) | ((ul>>8) & 0x0000FF00L) | ((ul<<8) & 0x00FF0000L) | ((ul<<24) & 0xFF000000L));
 						}
-						if (ull == 0x8000000000000000L)
-							iChars = sprintf(pcDst, "(tint64)0x8000000000000000L,");
+						if (ul == 0x80000000L)
+							iChars = sprintf(pcDst, "(tint32)0x80000000L,");
 						else
-#ifdef WIN32
-							iChars = sprintf(pcDst, "%I64d,", ull);
-#else WIN32
-							iChars = sprintf(pcDst, "%lld,", ull);
-#endif
+							iChars = sprintf(pcDst, "%d,", ul);
 						iLineLen += iChars;
 						pcDst += iChars;
 					}
