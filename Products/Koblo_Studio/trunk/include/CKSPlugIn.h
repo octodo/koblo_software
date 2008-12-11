@@ -186,6 +186,8 @@ public:
 //	virtual tbool DoAudioFileImport(const std::string& sPathName, tbool bDoCopy = true, tbool bAlwaysStereo = false);
 	virtual tbool QueueAudioFileImport(const tchar* pszPathName, tbool bAlwaysKeepStereo, tint32 iTrackID =-1, tint64 iTrackPos = -1);
 
+	virtual tbool CanWaveFilePlay(const std::string& sWaveFilePath, tbool bAllowErrorDialog, tbool bIsMissingFileAnError);
+
 	//! Song playback states
 	enum EPlaybackState
 	{
@@ -325,7 +327,7 @@ public:
 	std::string GetFromWaveName_ClipWaveOld(const tchar* pszWaveName) const;
 	std::string GetFromWaveName_ClipDefaultOgg(const tchar* pszWaveName) const;
 	std::string GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveName) const;
-	std::string GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName) const;
+	std::string GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName);
 	std::string GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName) const;
 	SFileInfo* GetFromListName_ClipEntry(const tchar* pszListName) const;
 	tint32 GetFromListName_ClipWavePathNames(const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed = NULL) const;
