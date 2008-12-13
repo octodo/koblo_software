@@ -2554,13 +2554,13 @@ tbool CKSPlugIn::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/, tbo
 
 						sWaveOriginalR = "";
 
-						if (IFile::Exists(sWaveOriginalL.c_str())) {
+						if (CanWaveFilePlay(sWaveOriginalL, true, false)) {
 							bFoundAllWaveOriginals = true;
 						}
 						else {
 							// Check for backward compatible path (mono only)
 							sWaveOriginalL = sProjDir_Audio_Old + pInfo->sWaveNameL + ".wav";
-							if (IFile::Exists(sWaveOriginalL.c_str())) {
+							if (CanWaveFilePlay(sWaveOriginalL, true, false)) {
 								bFoundAllWaveOriginals = true;
 							}
 							else {
@@ -2572,11 +2572,11 @@ tbool CKSPlugIn::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/, tbo
 						// Original for import was stereo
 
 						tint32 iCountMissing = 0;
-						if ((pInfo->iOriginalChannelMask & 0x01) && (!IFile::Exists(sWaveOriginalL.c_str()))) {
+						if ((pInfo->iOriginalChannelMask & 0x01) && (!CanWaveFilePlay(sWaveOriginalL, true, false))) {
 							// Left side orginal wave missing
 							iCountMissing++;
 						}
-						if ((pInfo->iOriginalChannelMask & 0x02) && (!IFile::Exists(sWaveOriginalR.c_str()))) {
+						if ((pInfo->iOriginalChannelMask & 0x02) && (!CanWaveFilePlay(sWaveOriginalR, true, false))) {
 							// Right side orginal wave missing
 							iCountMissing++;
 						}
@@ -3506,6 +3506,69 @@ tbool CKSPlugIn::MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::list<CIm
 	// - not here - UpdateGUIFileList();
 	return true;
 } // MenuFileLoadProject_QueueClips
+
+
+tbool CKSPlugIn::CanWaveFilePlay(const std::string& sWaveFilePath, tbool bAllowErrorDialog, tbool bIsMissingFileAnError)
+{
+	std::string sError = "";
+
+	CAutoDelete<IFile> pFileWave(IFile::Create());
+	if (pFileWave) {
+		if (!pFileWave->Open(sWaveFilePath.c_str(), IFile::FileRead)) {
+			// No file
+			if (!bIsMissingFileAnError) {
+				// That's ok - just tell we don't have it
+				return false;
+			}
+		}
+		else {
+			// We do have a file - now test it
+			CAutoDelete<ac::IDecoder> pWaveDecoder(ac::IDecoder::Create(ac::geAudioCodecWave));
+			if (pWaveDecoder) {
+				tbool bSuccess = true;
+				if (!pWaveDecoder->TestFile(pFileWave)) {
+					tchar pszMsg[1024];
+					pWaveDecoder->GetErrMsg(pszMsg, 1024);
+					sError += pszMsg;
+					bSuccess = false;
+				}
+				else {
+					if (pWaveDecoder->miLastInputChannels != 1) {
+						tchar pszMsg[64];
+						sprintf(pszMsg, "Expected mono file, found %d channels\n", pWaveDecoder->miLastInputChannels);
+						sError += pszMsg;
+						bSuccess = false;
+					}
+					if (pWaveDecoder->miLastInputSamples <= 0) {
+						tchar pszMsg[64];
+						sprintf(pszMsg, "Expected > 0 samples, found %d samples\n", pWaveDecoder->miLastInputSamples);
+						sError += pszMsg;
+						bSuccess = false;
+					}
+					if ((pWaveDecoder->miLastInputBitWidth != 16) && (pWaveDecoder->miLastInputBitWidth != 24)) {
+						tchar pszMsg[64];
+						sprintf(pszMsg, "Expected 16 or 26 bits, found %d bits\n", pWaveDecoder->miLastInputBitWidth);
+						sError += pszMsg;
+						bSuccess = false;
+					}
+				}
+
+				if (bSuccess) {
+					return true;
+				}
+			}
+		}
+	}
+
+	if (sError.length() == 0) {
+		sError = "Unknown error.\n";
+	}
+	sError += "\nParsing file '" + sWaveFilePath + "'";
+	if (bAllowErrorDialog) {
+		ShowMessageBox_NonModal(sError.c_str(), "Wave file error");
+	}
+	return false;
+} // CanWaveFilePlay
 
 
 void CKSPlugIn::MenuFileDistributeMix(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
@@ -4634,18 +4697,18 @@ void CKSPlugIn::VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar* ps
 	std::auto_ptr<CWaveFile> pWaveFileL(new CWaveFile());
 	std::auto_ptr<CWaveFile> pWaveFileR(new CWaveFile());
 	IFile* pSrcFileL;
-	tint32 iOffsetL;
-	tint32 iLengthL;
-	IFile* pSrcFileR;
-	tint32 iOffsetR;
-	tint32 iLengthR;
-	tint32 iBitWidthL, iBitWidthR = 0, iChannels_Dummy;
+	tint32 iOffsetL = 0;
+	tint32 iLengthL = 0;
+	IFile* pSrcFileR = 0;
+	tint32 iOffsetR = 0;
+	tint32 iLengthR = 0;
+	tint32 iBitWidthL = 0, iBitWidthR = 0, iChannels_Dummy;
 	tint32 iByteWidthL, iByteWidthR;
-	pWaveFileL->LoadSoundStream(512, pszWavePathL);
-	pWaveFileL->GetStreamInfo(pSrcFileL, iOffsetL, iLengthL, &iBitWidthL, &iChannels_Dummy);
+	if (pWaveFileL->LoadSoundStream(512, pszWavePathL))
+		pWaveFileL->GetStreamInfo(pSrcFileL, iOffsetL, iLengthL, &iBitWidthL, &iChannels_Dummy);
 	if (bStereo) {
-		pWaveFileR->LoadSoundStream(512, pszWavePathR);
-		pWaveFileR->GetStreamInfo(pSrcFileR, iOffsetR, iLengthR, &iBitWidthR, &iChannels_Dummy);
+		if (pWaveFileR->LoadSoundStream(512, pszWavePathR))
+			pWaveFileR->GetStreamInfo(pSrcFileR, iOffsetR, iLengthR, &iBitWidthR, &iChannels_Dummy);
 	}
 	iByteWidthL = iBitWidthL / 8;
 	iByteWidthR = iBitWidthR / 8;
@@ -5504,16 +5567,16 @@ std::string CKSPlugIn::GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveName) 
 	return GetProjDir_ClipsDecomp() + std::string(pszWaveName) + ".wav";
 }
 
-std::string CKSPlugIn::GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName) const
+std::string CKSPlugIn::GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName)
 {
 	std::string sWavePath = GetFromWaveName_ClipWave(pszWaveName);
-	if (!IFile::Exists(sWavePath.c_str())) {
+	if (!CanWaveFilePlay(sWavePath, true, false)) {
 		sWavePath = GetFromWaveName_ClipWaveOld(pszWaveName);
 	}
-	if (!IFile::Exists(sWavePath.c_str())) {
+	if (!CanWaveFilePlay(sWavePath, true, false)) {
 		sWavePath = GetFromWaveName_ClipWaveDecomp(pszWaveName);
 	}
-	if (!IFile::Exists(sWavePath.c_str())) {
+	if (!CanWaveFilePlay(sWavePath, true, false)) {
 		sWavePath = "";
 	}
 	return sWavePath;
