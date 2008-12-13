@@ -398,3 +398,12 @@ enum ERegionEdit
 	//giEdit_Trim_Start,
 };
 
+enum ETinyXmlTypes
+{
+	
+	giTinyXml_Type_String = 0,
+	giTinyXml_Type_Int,
+	giTinyXml_Type_Float
+	
+};
+

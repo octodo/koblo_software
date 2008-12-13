@@ -16,7 +16,9 @@
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
 
-const tint32 giNrOfStreams = (giNumber_Of_Tracks * 2) +(giNumber_Of_Busses * 2); //!!! MO Check
+//!!! max there might be an issue with the streams
+// are they freed up, is one pr region the right way to do it?
+const tint32 giNrOfStreams = 4096; //(giNumber_Of_Tracks * 2) +(giNumber_Of_Busses * 2); //!!! MO Check
 
 class CKSDSP;
 class IRegionCallback;

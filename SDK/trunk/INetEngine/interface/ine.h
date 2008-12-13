@@ -7,8 +7,11 @@
 #ifndef _INE_INCLUDED
 #define _INE_INCLUDED
 
+
+
 // BaseUtilities
 #include "bu.h"
+
 
 namespace k2s {
 

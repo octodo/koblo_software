@@ -98,14 +98,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 32BD9E700EE42CCF007430C2 /* STools.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC06F0554671400DB518D /* libSTools.a */;
+			remoteGlobalIDString = D2AAC06F0554671400DB518D;
 			remoteInfo = STools;
 		};
 		32BD9E760EE42CE4007430C2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 32BD9E700EE42CCF007430C2 /* STools.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC06E0554671400DB518D /* STools */;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
 			remoteInfo = STools;
 		};
 		32BEC2EC0D9BD50F008FF7D9 /* PBXContainerItemProxy */ = {

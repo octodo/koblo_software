@@ -90,7 +90,7 @@ void CFileSearchOSX::Init(const tchar* pszPathName)
 		mSearchIndex = 0;
 		miBulkIx = -1;
 		
-		std::cout << "pszFullPath:\n  " << pszFullPath << "\n";
+	//	std::cout << "pszFullPath:\n  " << pszFullPath << "\n";
 
 		Boolean bFolder = false;
 		OSStatus rc = FSPathMakeRef((UInt8*)pszFullPath, &mFSRef, &bFolder);

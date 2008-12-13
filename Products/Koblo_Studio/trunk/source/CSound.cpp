@@ -18,6 +18,7 @@ CSound::CSound(const std::string& sPathName)
 	CWaveFile* pWaveFile = new CWaveFile();
 	pWaveFile->LoadSoundStream(512, msPathName.c_str());
 
+	//!!! Bug sometime mpp[0] is NULL after GetStream is called
 	mppStream[0] = gpStreamManager->GetStream();
 
 	IFile* pFile;

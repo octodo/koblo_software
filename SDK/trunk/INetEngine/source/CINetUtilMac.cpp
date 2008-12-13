@@ -150,6 +150,9 @@ void IINetUtil::GetWebFile(const tchar* Parameters, const tchar* pszServer, cons
                         }     
                     }
                 } 
+				//!!! max
+				// Prevent hanging if no Internet avaliable 
+			//	else vDone = true;
                 
                 if (CFReadStreamGetStatus(vReadStreamRef) == kCFStreamStatusAtEnd)
                 {                 

@@ -53,7 +53,12 @@
 		E3ED2A170C68573700D125D1 /* CBaseMIDICCEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A100C68573700D125D1 /* CBaseMIDICCEvent.cpp */; };
 		E3ED2A190C68573700D125D1 /* CBasePlugIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A120C68573700D125D1 /* CBasePlugIn.cpp */; };
 		E3ED2A1A0C68573700D125D1 /* CBaseTopPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A130C68573700D125D1 /* CBaseTopPane.cpp */; };
+		FC1C5C2B0EF3B15D00077033 /* CKSXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC1C5C2A0EF3B15D00077033 /* CKSXML.cpp */; };
 		FC2D347B0EEE8691004DFC3D /* libINetEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2D347A0EEE868D004DFC3D /* libINetEngine.a */; };
+		FC31AC950EEFE9D400B3D3B7 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC940EEFE9D400B3D3B7 /* tinystr.cpp */; };
+		FC31AC970EEFE9DE00B3D3B7 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC960EEFE9DE00B3D3B7 /* tinyxml.cpp */; };
+		FC31AC9B0EEFE9ED00B3D3B7 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC990EEFE9ED00B3D3B7 /* tinyxmlparser.cpp */; };
+		FC31AC9C0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC9A0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp */; };
 		FC3B74240DB1176600A1E7DD /* CTrack_Player2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC3B74230DB1176600A1E7DD /* CTrack_Player2.cpp */; };
 		FC45162A0DC200F900ADDE81 /* CMix_Buss_AUX_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC4516290DC200F900ADDE81 /* CMix_Buss_AUX_Insert.cpp */; };
 		FC6117820DA4D61B00334DDF /* CKSSplashScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC6117810DA4D61B00334DDF /* CKSSplashScreen.cpp */; };
@@ -109,7 +114,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = FC2D34710EEE868D004DFC3D /* INetEngine.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC06E0554671400DB518D /* INetEngine */;
+			remoteGlobalIDString = D2AAC06E0554671400DB518D;
 			remoteInfo = INetEngine;
 		};
 		32E09DC10E14BED500FF980B /* PBXContainerItemProxy */ = {
@@ -330,8 +335,16 @@
 		E3ED2A120C68573700D125D1 /* CBasePlugIn.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBasePlugIn.cpp; path = ../../../SDK/trunk/BaseClasses/Source/CBasePlugIn.cpp; sourceTree = SOURCE_ROOT; };
 		E3ED2A130C68573700D125D1 /* CBaseTopPane.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseTopPane.cpp; path = ../../../SDK/trunk/BaseClasses/Source/CBaseTopPane.cpp; sourceTree = SOURCE_ROOT; };
 		E3F83F350C7D42CF00D2E408 /* main.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		FC1C5C290EF3B14300077033 /* CKSXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSXML.h; path = include/CKSXML.h; sourceTree = "<group>"; };
+		FC1C5C2A0EF3B15D00077033 /* CKSXML.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSXML.cpp; path = source/CKSXML.cpp; sourceTree = "<group>"; };
 		FC202A880DB0C711005DC5E1 /* CTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack.h; path = include/Track_GUI/CTrack.h; sourceTree = "<group>"; };
 		FC2D34710EEE868D004DFC3D /* INetEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = INetEngine.xcodeproj; path = ../../../SDK/trunk/INetEngine/projects/osxxcode/INetEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
+		FC31AC930EEFE9D400B3D3B7 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinystr.h; path = ../../../SDK/tinyxml/tinystr.h; sourceTree = SOURCE_ROOT; };
+		FC31AC940EEFE9D400B3D3B7 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinystr.cpp; path = ../../../SDK/tinyxml/tinystr.cpp; sourceTree = SOURCE_ROOT; };
+		FC31AC960EEFE9DE00B3D3B7 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml.cpp; path = ../../../SDK/tinyxml/tinyxml.cpp; sourceTree = SOURCE_ROOT; };
+		FC31AC980EEFE9E500B3D3B7 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinyxml.h; path = ../../../SDK/tinyxml/tinyxml.h; sourceTree = SOURCE_ROOT; };
+		FC31AC990EEFE9ED00B3D3B7 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlparser.cpp; path = ../../../SDK/tinyxml/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
+		FC31AC9A0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlerror.cpp; path = ../../../SDK/tinyxml/tinyxmlerror.cpp; sourceTree = SOURCE_ROOT; };
 		FC3B741B0DB1175300A1E7DD /* CTrack_Player2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Player2.h; path = include/Track_GUI/CTrack_Player2.h; sourceTree = "<group>"; };
 		FC3B74230DB1176600A1E7DD /* CTrack_Player2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Player2.cpp; path = source/Track_GUI/CTrack_Player2.cpp; sourceTree = "<group>"; };
 		FC4516290DC200F900ADDE81 /* CMix_Buss_AUX_Insert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CMix_Buss_AUX_Insert.cpp; path = source/Mix_GUI/CMix_Buss_AUX_Insert.cpp; sourceTree = "<group>"; };
@@ -474,6 +487,7 @@
 		20286C29FDCF999611CA2CEA /* INSPasswordStorer */ = {
 			isa = PBXGroup;
 			children = (
+				FC31AC910EEFE86400B3D3B7 /* TinyXml */,
 				FC6117A90DA4D7FE00334DDF /* KS_OSX_Prefix.pch */,
 				FC6117AA0DA4D80900334DDF /* KS.icns */,
 				FC2D34710EEE868D004DFC3D /* INetEngine.xcodeproj */,
@@ -702,6 +716,7 @@
 				FC6117950DA4D6FB00334DDF /* CKSModule.h */,
 				FC6117960DA4D70500334DDF /* CKSPlugIn.h */,
 				FC6117970DA4D71A00334DDF /* KSOS.h */,
+				FC1C5C290EF3B14300077033 /* CKSXML.h */,
 				E3ED29C50C6855A600D125D1 /* CParmGlobal.h */,
 				E3ED29C80C6855A600D125D1 /* Resources.h */,
 				FC6117920DA4D6DA00334DDF /* KSGlobals.h */,
@@ -724,6 +739,7 @@
 				FC8471E10E75535700100D99 /* CKSExportForWebGUI.cpp */,
 				FC8471E20E75535700100D99 /* CKSExportForWebGUIPane.cpp */,
 				FC61178D0DA4D68300334DDF /* CKSPlugIn.cpp */,
+				FC1C5C2A0EF3B15D00077033 /* CKSXML.cpp */,
 				E3D60AF80E010AA7005E7B43 /* CKSPlugInEffectPane.cpp */,
 				E3C3613D0E00F8B10061AEB4 /* CKSPlugInGUI.cpp */,
 				E3C3613E0E00F8B10061AEB4 /* CKSPlugInGUIPane.cpp */,
@@ -787,6 +803,19 @@
 				FC2D347A0EEE868D004DFC3D /* libINetEngine.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FC31AC910EEFE86400B3D3B7 /* TinyXml */ = {
+			isa = PBXGroup;
+			children = (
+				FC31AC980EEFE9E500B3D3B7 /* tinyxml.h */,
+				FC31AC930EEFE9D400B3D3B7 /* tinystr.h */,
+				FC31AC960EEFE9DE00B3D3B7 /* tinyxml.cpp */,
+				FC31AC940EEFE9D400B3D3B7 /* tinystr.cpp */,
+				FC31AC990EEFE9ED00B3D3B7 /* tinyxmlparser.cpp */,
+				FC31AC9A0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp */,
+			);
+			name = TinyXml;
 			sourceTree = "<group>";
 		};
 		FC9D46840CB13CF4006CEDB6 /* Products */ = {
@@ -1149,6 +1178,11 @@
 				329BD8BB0EB89A020084EC13 /* CProgressTaskList.cpp in Sources */,
 				320072BC0ED18FC30035E5A8 /* CKSPreferences.cpp in Sources */,
 				320072BE0ED18FF00035E5A8 /* CAfterImportTask.cpp in Sources */,
+				FC31AC950EEFE9D400B3D3B7 /* tinystr.cpp in Sources */,
+				FC31AC970EEFE9DE00B3D3B7 /* tinyxml.cpp in Sources */,
+				FC31AC9B0EEFE9ED00B3D3B7 /* tinyxmlparser.cpp in Sources */,
+				FC31AC9C0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp in Sources */,
+				FC1C5C2B0EF3B15D00077033 /* CKSXML.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -61,7 +61,7 @@ class CProgressTask; // Forward declaration
 class CProgressTaskList; // Forward declaration
 
 
-class CKSPlugIn : public virtual CBasePlugIn, public virtual IBaseDezipperCallback, public virtual ITimerCallback_CanStop
+class CKSPlugIn : public virtual CBasePlugIn, public virtual IBaseDezipperCallback, public virtual ITimerCallback_CanStop, public virtual CKSXML
 {
 public:
 	CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex);
@@ -391,6 +391,8 @@ public:
 	void SetRecord(tbool bNew) {mbRecord = bNew;}
 
 	tbool IsRecording() const {return mbRecord;}
+	
+	
 
 protected:
 	tbool mbRecord;
@@ -523,6 +525,24 @@ protected:
 	
 	tbool mbWasPlayingWhenMovePlayheadWasStarted;
 	tuint64 muiMoveToPos;
+	
+	
+	
+	
+	
+	
+/*
+	virtual void ReadOnlineXML();
+	void dump_to_stdout( TiXmlNode* pParent, unsigned int indent = 0 );
+	void HandleEllement(TiXmlNode* pParent);
+	void Set_Project(TiXmlElement* pElement);
+	void Set_Branch(TiXmlElement* pElement);
+	void Set_Settings(TiXmlElement* pElement);
+	void Set_Signature(TiXmlElement* pElement);
+	void Set_Edditing(TiXmlElement* pElement);
+	void Set_Loop(TiXmlElement* pElement);
+	void Set_Param( TiXmlNode* pParent,tuint uiType, tuint32 uiID, tuint32 Section );
+ */
 	
 	
 };

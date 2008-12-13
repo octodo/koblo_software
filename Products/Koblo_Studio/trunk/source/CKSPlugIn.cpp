@@ -37,21 +37,13 @@ CKSPlugIn::CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex)
 	mbBypass(false), miSongPos(0), mePlaybackState(geStateStopped),
 	mpPlugInManager(NULL),
 	mbAreGUIsReady(false),
-	mbRecord(false)
+	mbRecord(false),
+	CKSXML(this)
 {
 	gpDSPEngine = dynamic_cast<CKSDSP*>(mpDSPEngine);
 
 	dynamic_cast<CKSDSP*>(mpDSPEngine)->SetChannels(2);
 	
-	
-	tchar* pszBuff = NULL;
-	tint32 iOutLen = 0;
-	ine::IINetUtil::GetWebFile(NULL, "koblo.com", "/projects/16/branches/22.xml", &iOutLen, &pszBuff);
-	if ((pszBuff) && (iOutLen > 0)) {
-		// Do what-ever
-		
-	}
-	ine::IINetUtil::ReleaseBuffer(&pszBuff);
 		
 	mpDezipper->SetCallback(dynamic_cast<IBaseDezipperCallback*>(this));
 	
@@ -134,6 +126,8 @@ CKSPlugIn::CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex)
 	mbAudioInput_IntermediateBuffer_EverFull = false;
 	miAudioInput_IntermediateBuffer_FirstLinkIx = 0;
 	miAudioInput_IntermediateBuffer_FirstLinkSamples = 0;
+	
+	ReadOnlineXML();
 
 } // constructor
 
@@ -6018,8 +6012,391 @@ void CKSPlugIn::ProcessNonInPlace_NoLock(tfloat** ppfSamplesOut, const tfloat** 
 	}
 } // ProcessNonInPlace_NoLock
 
+/*
+
+void CKSPlugIn::ReadOnlineXML()
+{
+	
+	tchar* pszBuff = NULL;
+	tint32 iOutLen = 0;
+	ine::IINetUtil::GetWebFile(NULL, "koblo.com", "/projects/16/branches/21.xml", &iOutLen, &pszBuff);
+	if ((pszBuff) && (iOutLen > 0)) {
+
+		TiXmlDocument doc("koblo_studio project");
+		doc.Parse(pszBuff);
+		dump_to_stdout( &doc );
+		ine::IINetUtil::ReleaseBuffer(&pszBuff);
+	}
+	
+}
 
 
 
 
 
+// ----------------------------------------------------------------------
+// STDOUT dump and indenting utility functions
+// ----------------------------------------------------------------------
+const unsigned int NUM_INDENTS_PER_SPACE=2;
+
+
+void CKSPlugIn::dump_to_stdout( TiXmlNode* pParent, unsigned int indent )
+{
+	if ( !pParent ) return;
+	
+	TiXmlNode* pChild;
+	int t = pParent->Type();
+
+
+	switch ( t )
+	{
+		case TiXmlNode::DOCUMENT:
+			printf( "Document" );
+			break;
+			
+		case TiXmlNode::ELEMENT:
+			HandleEllement(pParent);
+			break;
+			
+		case TiXmlNode::COMMENT:
+		//	printf( "Comment: [%s]", pParent->Value());
+			break;
+			
+		case TiXmlNode::UNKNOWN:
+		//	printf( "Unknown" );
+			break;
+			
+		case TiXmlNode::TEXT:
+		//	pText = pParent->ToText();
+		//	printf( "Text: [%s]", pText->Value() );
+			break;
+			
+		case TiXmlNode::DECLARATION:
+		//	printf( "Declaration" );
+			break;
+		default:
+			break;
+	}
+	//printf( "\n" );
+	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
+	{
+		dump_to_stdout( pChild, indent+1 );
+	}
+}
+
+
+void CKSPlugIn::HandleEllement(TiXmlNode* pParent)
+{
+	
+//	printf( "Element [%s]", pParent->Value() );
+	
+	if (stricmp("project", pParent->Value()) == 0) {
+		printf("===============================================================");
+		printf( "\nPROJECT" );
+		printf( "\n" );
+		Set_Project(pParent->ToElement());
+	}
+	else if (stricmp("branch", pParent->Value()) == 0) {
+		printf("===============================================================");
+		printf( "\nBRANCH" );
+		printf( "\n" );
+		Set_Branch(pParent->ToElement());
+	}
+	else if (stricmp("settings", pParent->Value()) == 0) {
+		printf("===============================================================");
+		printf( "\nSETTINGS" );
+		printf( "\n" );
+		Set_Settings(pParent->ToElement());
+	}
+	else if (stricmp("editing", pParent->Value()) == 0) {
+		printf("===============================================================");
+		printf( "\nEDDITING" );
+		printf( "\n" );
+		Set_Edditing(pParent->ToElement());
+	}
+	else if (stricmp("sample", pParent->Value()) == 0) {
+		printf("===============================================================");
+		printf( "\nSAMPLE" );
+		printf( "\n" );
+		Set_Edditing(pParent->ToElement());
+	}
+}
+
+void CKSPlugIn::Set_Project(TiXmlElement* pElement)
+{
+	if ( !pElement ) return ;
+	
+	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
+	tint32 ival;
+	
+	// project ID
+	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
+		printf( "project id =  %d", ival);
+	printf( "\n" );
+	// scema
+	if(pAttrib=pAttrib->Next())
+		printf( "%s: %s", pAttrib->Name(), pAttrib->Value());
+	printf( "\n" );
+	// schema Location 
+	if(pAttrib=pAttrib->Next())
+		printf( "%s: %s", pAttrib->Name(), pAttrib->Value());
+	printf( "\n" );
+	
+	
+}
+
+void CKSPlugIn::Set_Branch(TiXmlElement* pElement)
+{
+	if ( !pElement ) return ;
+	
+	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
+	tint32 ival;
+	
+	// project ID
+	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
+		printf( "branch id =  %d", ival);
+	printf( "\n" );
+	
+	TiXmlNode* pChild;
+	
+	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
+		
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			
+			if (stricmp("name", pChild->Value()) == 0) {
+				printf( "branch name:  ");
+				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				printf( "\n" );
+			}
+			
+			else if (stricmp("description", pChild->Value()) == 0) {
+				printf( "branch description:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
+				printf( "\n" );
+			}
+			
+			else if (stricmp("revision", pChild->Value()) == 0){
+				printf( "branch revision:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
+				printf( "\n" );
+			}
+		}
+	}
+}
+
+
+
+
+
+void CKSPlugIn::Set_Settings(TiXmlElement* pElement)
+{
+	if ( !pElement ) return ;
+	
+	
+	TiXmlNode* pChild;
+	
+	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
+		
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			
+			if (stricmp("name", pChild->Value()) == 0) {
+				printf( "project name:  ");
+				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				printf( "\n" );
+			}
+			
+			else if (stricmp("description", pChild->Value()) == 0) {
+				printf( "project description:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("image", pChild->Value()) == 0){
+				printf( "image link:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("samplerate", pChild->Value()) == 0){
+				printf( "samplerate:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("tempo", pChild->Value()) == 0){
+				printf( "tempo:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("signature", pChild->Value()) == 0){
+				printf( "signature:  ");
+				Set_Signature(pChild->ToElement());
+				printf( "\n" );
+				
+			}
+		}
+	}
+}
+
+
+
+
+void CKSPlugIn::Set_Signature(TiXmlElement* pElement)
+{
+	if ( !pElement ) return ;
+	
+	
+	TiXmlNode* pChild;
+	
+	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
+		
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			
+			if (stricmp("numerator", pChild->Value()) == 0) {
+				Set_Param(pChild, giTinyXml_Type_Int, 0, 0);
+				printf( ":" );
+			}
+			if (stricmp("denominator", pChild->Value()) == 0) {
+				Set_Param(pChild, giTinyXml_Type_Int, 0, 0);
+			}
+			
+			
+		}
+	}
+}
+
+
+
+
+
+void CKSPlugIn::Set_Edditing(TiXmlElement* pElement)
+{
+	if ( !pElement ) return ;
+	
+	
+	TiXmlNode* pChild;
+	
+	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
+		
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			
+			if (stricmp("record", pChild->Value()) == 0) {
+				printf( "record:  ");
+				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				printf( "\n" );
+			}
+			
+			else if (stricmp("tool", pChild->Value()) == 0) {
+				printf( "tool:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("zoom", pChild->Value()) == 0){
+				printf( "zoom:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("grid", pChild->Value()) == 0){
+				printf( "grid:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("snap", pChild->Value()) == 0){
+				printf( "snap:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
+				printf( "\n" );
+				
+			}
+			else if (stricmp("waves", pChild->Value()) == 0){
+				printf( "waves:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
+				printf( "\n" );
+				
+			}
+			else if (stricmp("fades", pChild->Value()) == 0){
+				printf( "fades:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
+				printf( "\n" );
+				
+			}
+			else if (stricmp("loop", pChild->Value()) == 0){
+				printf( "loop:  ");
+				Set_Loop(pChild->ToElement());
+				printf( "\n" );
+				
+			}
+			else if (stricmp("position", pChild->Value()) == 0){
+				printf( "position:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
+				printf( "\n" );
+			}
+		}
+	}
+}
+
+void CKSPlugIn::Set_Loop(TiXmlElement* pElement)
+{
+	if ( !pElement ) return ;
+	
+	
+	TiXmlNode* pChild;
+	
+	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
+		
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			
+			if (stricmp("active", pChild->Value()) == 0) {
+				//printf( "active:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("start", pChild->Value()) == 0) {
+				printf( "start:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("end", pChild->Value()) == 0) {
+				printf( "end:  ");
+				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
+				printf( "\n" );
+			}
+			
+			
+		}
+	}
+}
+
+
+void CKSPlugIn::Set_Param( TiXmlNode* pParent, tuint uiType,tuint32 uiID, tuint uiSection )
+{
+	if ( !pParent ) return;
+	
+	TiXmlNode* pChild;
+	TiXmlText* pText;
+	
+	if (  pParent->Type() == TiXmlNode::TEXT )
+	{
+		switch(uiType){
+			case giTinyXml_Type_String:
+				pText = pParent->ToText();
+				printf( "%s", pText->Value() );
+				break;
+				
+			case giTinyXml_Type_Int:{
+				
+				pText = pParent->ToText();
+				std::string s = pText->Value();
+				int number = atoi(s.c_str());
+				printf( "%d", number );
+				break;
+			
+			}
+			default : break;
+		}
+	}
+	
+	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
+	{
+		Set_Param( pChild, uiType, 0, 0);
+	}
+	
+}
+
+*/

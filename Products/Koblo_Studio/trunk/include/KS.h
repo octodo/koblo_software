@@ -15,6 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
+// XML File parser
+#include "tinyxml.h"
+#include "CKSXML.h"
 
 // Base Utilities
 #include "bu.h"
