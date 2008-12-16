@@ -53,7 +53,8 @@
 		E3ED2A170C68573700D125D1 /* CBaseMIDICCEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A100C68573700D125D1 /* CBaseMIDICCEvent.cpp */; };
 		E3ED2A190C68573700D125D1 /* CBasePlugIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A120C68573700D125D1 /* CBasePlugIn.cpp */; };
 		E3ED2A1A0C68573700D125D1 /* CBaseTopPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A130C68573700D125D1 /* CBaseTopPane.cpp */; };
-		FC1C5C2B0EF3B15D00077033 /* CKSXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC1C5C2A0EF3B15D00077033 /* CKSXML.cpp */; };
+		FC0F84170EF7D2CA0005211B /* CKSXML_Write.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC0F84160EF7D2CA0005211B /* CKSXML_Write.cpp */; };
+		FC1C5C2B0EF3B15D00077033 /* CKSXML_Read.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC1C5C2A0EF3B15D00077033 /* CKSXML_Read.cpp */; };
 		FC2D347B0EEE8691004DFC3D /* libINetEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2D347A0EEE868D004DFC3D /* libINetEngine.a */; };
 		FC31AC950EEFE9D400B3D3B7 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC940EEFE9D400B3D3B7 /* tinystr.cpp */; };
 		FC31AC970EEFE9DE00B3D3B7 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC960EEFE9DE00B3D3B7 /* tinyxml.cpp */; };
@@ -335,8 +336,10 @@
 		E3ED2A120C68573700D125D1 /* CBasePlugIn.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBasePlugIn.cpp; path = ../../../SDK/trunk/BaseClasses/Source/CBasePlugIn.cpp; sourceTree = SOURCE_ROOT; };
 		E3ED2A130C68573700D125D1 /* CBaseTopPane.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseTopPane.cpp; path = ../../../SDK/trunk/BaseClasses/Source/CBaseTopPane.cpp; sourceTree = SOURCE_ROOT; };
 		E3F83F350C7D42CF00D2E408 /* main.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
-		FC1C5C290EF3B14300077033 /* CKSXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSXML.h; path = include/CKSXML.h; sourceTree = "<group>"; };
-		FC1C5C2A0EF3B15D00077033 /* CKSXML.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSXML.cpp; path = source/CKSXML.cpp; sourceTree = "<group>"; };
+		FC0F84080EF7D2B50005211B /* CKSXML_Write.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSXML_Write.h; path = include/CKSXML_Write.h; sourceTree = "<group>"; };
+		FC0F84160EF7D2CA0005211B /* CKSXML_Write.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSXML_Write.cpp; path = source/CKSXML_Write.cpp; sourceTree = "<group>"; };
+		FC1C5C290EF3B14300077033 /* CKSXML_Read.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSXML_Read.h; path = include/CKSXML_Read.h; sourceTree = "<group>"; };
+		FC1C5C2A0EF3B15D00077033 /* CKSXML_Read.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSXML_Read.cpp; path = source/CKSXML_Read.cpp; sourceTree = "<group>"; };
 		FC202A880DB0C711005DC5E1 /* CTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack.h; path = include/Track_GUI/CTrack.h; sourceTree = "<group>"; };
 		FC2D34710EEE868D004DFC3D /* INetEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = INetEngine.xcodeproj; path = ../../../SDK/trunk/INetEngine/projects/osxxcode/INetEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
 		FC31AC930EEFE9D400B3D3B7 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinystr.h; path = ../../../SDK/tinyxml/tinystr.h; sourceTree = SOURCE_ROOT; };
@@ -487,7 +490,6 @@
 		20286C29FDCF999611CA2CEA /* INSPasswordStorer */ = {
 			isa = PBXGroup;
 			children = (
-				FC31AC910EEFE86400B3D3B7 /* TinyXml */,
 				FC6117A90DA4D7FE00334DDF /* KS_OSX_Prefix.pch */,
 				FC6117AA0DA4D80900334DDF /* KS.icns */,
 				FC2D34710EEE868D004DFC3D /* INetEngine.xcodeproj */,
@@ -509,6 +511,7 @@
 		20286C2AFDCF999611CA2CEA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				FC31AC910EEFE86400B3D3B7 /* TinyXml */,
 				E3ED2A020C68570C00D125D1 /* BaseClasses */,
 				E3ED29B50C68558900D125D1 /* source */,
 				E3ED29B40C68558200D125D1 /* include */,
@@ -716,7 +719,8 @@
 				FC6117950DA4D6FB00334DDF /* CKSModule.h */,
 				FC6117960DA4D70500334DDF /* CKSPlugIn.h */,
 				FC6117970DA4D71A00334DDF /* KSOS.h */,
-				FC1C5C290EF3B14300077033 /* CKSXML.h */,
+				FC1C5C290EF3B14300077033 /* CKSXML_Read.h */,
+				FC0F84080EF7D2B50005211B /* CKSXML_Write.h */,
 				E3ED29C50C6855A600D125D1 /* CParmGlobal.h */,
 				E3ED29C80C6855A600D125D1 /* Resources.h */,
 				FC6117920DA4D6DA00334DDF /* KSGlobals.h */,
@@ -739,7 +743,8 @@
 				FC8471E10E75535700100D99 /* CKSExportForWebGUI.cpp */,
 				FC8471E20E75535700100D99 /* CKSExportForWebGUIPane.cpp */,
 				FC61178D0DA4D68300334DDF /* CKSPlugIn.cpp */,
-				FC1C5C2A0EF3B15D00077033 /* CKSXML.cpp */,
+				FC1C5C2A0EF3B15D00077033 /* CKSXML_Read.cpp */,
+				FC0F84160EF7D2CA0005211B /* CKSXML_Write.cpp */,
 				E3D60AF80E010AA7005E7B43 /* CKSPlugInEffectPane.cpp */,
 				E3C3613D0E00F8B10061AEB4 /* CKSPlugInGUI.cpp */,
 				E3C3613E0E00F8B10061AEB4 /* CKSPlugInGUIPane.cpp */,
@@ -1182,7 +1187,8 @@
 				FC31AC970EEFE9DE00B3D3B7 /* tinyxml.cpp in Sources */,
 				FC31AC9B0EEFE9ED00B3D3B7 /* tinyxmlparser.cpp in Sources */,
 				FC31AC9C0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp in Sources */,
-				FC1C5C2B0EF3B15D00077033 /* CKSXML.cpp in Sources */,
+				FC1C5C2B0EF3B15D00077033 /* CKSXML_Read.cpp in Sources */,
+				FC0F84170EF7D2CA0005211B /* CKSXML_Write.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

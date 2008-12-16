@@ -38,7 +38,8 @@ CKSPlugIn::CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex)
 	mpPlugInManager(NULL),
 	mbAreGUIsReady(false),
 	mbRecord(false),
-	CKSXML(this)
+	CKSXML_Read(this),
+	CKSXML_Write(this)
 {
 	gpDSPEngine = dynamic_cast<CKSDSP*>(mpDSPEngine);
 
@@ -127,7 +128,6 @@ CKSPlugIn::CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex)
 	miAudioInput_IntermediateBuffer_FirstLinkIx = 0;
 	miAudioInput_IntermediateBuffer_FirstLinkSamples = 0;
 	
-	ReadOnlineXML();
 
 } // constructor
 
@@ -697,18 +697,6 @@ void CKSPlugIn::UpdateAUX2Data(tint32 iID, tint32 iValue)
 } // UpdateAUX2Data
 
 
-/*
-void CKSPlugIn::UpdateAuxMonitorData(tint32 iID, tint32 iValue)
-{
-	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
-	for (; it != mGUIs.end(); it++) {
-		CBaseGUI* pGUI = *it;
-		dynamic_cast<CKSBaseGUI*>(pGUI)->UpdateAuxMonitorData(iID, iValue);
-	}
-}
-*/
-
-
 void CKSPlugIn::SetValue(tint32 iParmID, tint32 iValue)
 {
 	if (UpdateEngineSettings()) {
@@ -1273,19 +1261,24 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 		MenuSetupAudio();
 	}
 	
+	else if (s.compare("Setup@ColLaboration") == 0) {
+		MenuCollaboration();
+	}
+	
 	
 	else if(s.compare("File@New Project") == 0) {
 		// Create
 		if (!MenuFileCreateNewProject()) {
 			LoadSaveErrDlg("Error creating project");			
 		}
+		
 	}
 	else if (s.compare("File@Load Project") == 0) {
+		
 		// Load
 		if (!MenuFileLoadProject()) {
 			LoadSaveErrDlg("Error loading project");
 		}
-
 		//	GetModule()->GetHost()->ActivateWindow(0);
 	}
 	else if (s.compare("File@Save Project") == 0) {
@@ -1357,7 +1350,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 		MenuFileImportAudio();
 	}
 	
-	
+
 	
 	//-------------------------------------------
 	// Edit Menu
@@ -1535,6 +1528,18 @@ void CKSPlugIn::MenuSetupAudio()
 	(*it)->GetPane()->SendMsgFromTop(&Msg);
 	}		
 } // MenuSetupAudio
+
+void CKSPlugIn::MenuCollaboration()
+{
+	CleanProject(0);
+	
+	
+//	ReadOnlineXML("/projects/13/branches/1.xml");
+	
+//	static int iNr =	0;
+	
+	Write_XML("funky beats.xml");
+}
 
 
 void CKSPlugIn::Export(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
@@ -2943,8 +2948,8 @@ tbool CKSPlugIn::MenuFileLoadProject()
 	
 	CAutoDelete<ge::IOpenDialog> pDlg(ge::IOpenDialog::Create());
 
-	//CAutoLock Lock(mMutex);
 
+	// Default Name
 	tchar pszDefaultFolder[1024];
 	std::string sDefaultName = "";
 	if (msProjectFolder.length()) {
@@ -4239,28 +4244,6 @@ tbool CKSPlugIn::QueueAudioFileImport(const tchar* pszPathName, tbool bAlwaysKee
 	return bSuccess;
 } // QueueAudioFileImport
 
-/*		if (bAlwaysStereo == false) {
-			ge::IWindow::EMsgBoxReturn eRet = ge::IWindow::ShowMessageBox(
-			  "This is a stereo file. Do you want to use it like that?\n"
-			"\n"
-			" Yes:\tImport as a stereo stream\n"
-			" No:\tSplit file into two mono streams\n"
-			" Cancel:\tSkip file",
-			"Stereo file",
-			ge::IWindow::MsgBoxYesNoCancel);
-			switch (eRet) {
-				case ge::IWindow::MsgBoxRetYes:
-					bSplit = false;
-					break;
-				case ge::IWindow::MsgBoxRetNo:
-					bSplit = true;
-					break;
-					case ge::IWindow::MsgBoxRetCancel: 
-						// Not an error
-					return true;
-			}
-*/
-
 tbool CKSPlugIn::IsClipNameInUse(const tchar* pszClipName, const tchar* pszWaveNameL, const tchar* pszWaveNameR, std::string* psDescription)
 {
 	const tchar** ppszNames = new const tchar*[4];
@@ -4519,7 +4502,6 @@ void CKSPlugIn::NonModalDialog_Push(const tchar* pszHeader, const tchar* pszLong
 	mlistpNonModalDialogInfo.push_back(pInfo);
 } // NonModalDialog_Push
 
-
 tbool CKSPlugIn::NonModalDialog_Pop(SNonModalDialogInfo** ppInfo)
 {
 	CAutoLock lock(mMutex_NonModalDialog);
@@ -4535,7 +4517,6 @@ tbool CKSPlugIn::NonModalDialog_Pop(SNonModalDialogInfo** ppInfo)
 	return false;
 } // NonModalDialog_Pop
 
-
 void CKSPlugIn::NonModalDialogs_ZapList()
 {
 	CAutoLock lock(mMutex_NonModalDialog);
@@ -4546,7 +4527,6 @@ void CKSPlugIn::NonModalDialogs_ZapList()
 		mlistpNonModalDialogInfo.pop_front();
 	}
 } // NonModalDialogs_ZapList
-
 
 tbool CKSPlugIn::DoProgressTasks()
 {
@@ -4592,7 +4572,6 @@ tbool CKSPlugIn::DoProgressTasks()
 	}
 	return bWorkSuccess;
 } // DoProgressTasks
-
 
 void CKSPlugIn::AddClipToList(CImportAudioTask* pImportInfo)
 {
@@ -4666,13 +4645,11 @@ void CKSPlugIn::AddClipToList(CImportAudioTask* pImportInfo)
 	UpdateGUIFileList();
 } // AddClipToList
 
-
 tbool CKSPlugIn::OnAudioFileImport()
 {
 	MenuFileImportAudio();
 	return true;
 } // OnAudioFileImport
-
 
 void CKSPlugIn::VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar* pszWavePathR, tbool bForceRewrite)
 {
@@ -4997,7 +4974,6 @@ void CKSPlugIn::VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar* ps
 	}
 } // VerifyCreatePeakFiles
 
-
 void CKSPlugIn::UpdateGUIFileList()
 {
 	// Send a message to all panes
@@ -5007,13 +4983,6 @@ void CKSPlugIn::UpdateGUIFileList()
 		(*it)->GetPane()->SendMsg(&Msg);
 	}
 } // UpdateGUIFileList
-
-//void CKSPlugIn::DoWaveFileLoad(tint32 iTrack, const std::string& sPathName)
-//{
-//	// Inform DSP
-//	CAutoLock Lock(mMutex);
-//	dynamic_cast<CKSDSP*>(GetDSPEngine())->SetTrackInputFile(iTrack, sPathName);
-//} // DoWaveFileLoad
 
 void CKSPlugIn::PrepareMovePlayhead()
 {
@@ -5032,6 +5001,7 @@ void CKSPlugIn::MovePlayhead(tuint64 uiSamplePos)
 	muiMoveToPos = uiSamplePos;
 	miSongPos	= uiSamplePos;
 }
+
 void CKSPlugIn::EndMovePlayhead()
 {
 	PlaybackGoToPos(muiMoveToPos);
@@ -5060,7 +5030,6 @@ void CKSPlugIn::PlaybackStart()
 	}
 } // PlaybackStart
 
-
 void CKSPlugIn::PlaybackStop()
 {
 	CAutoLock Lock(mMutex);
@@ -5068,7 +5037,6 @@ void CKSPlugIn::PlaybackStop()
 
 	PlaybackStop_NoLock();
 } // PlaybackStop
-
 
 void CKSPlugIn::PlaybackStop_NoLock()
 {
@@ -5086,7 +5054,6 @@ void CKSPlugIn::PlaybackStop_NoLock()
 		}
 	}
 } // PlaybackStop_NoLock
-
 
 void CKSPlugIn::PlaybackFF()
 {
@@ -5108,7 +5075,6 @@ void CKSPlugIn::PlaybackFF()
 	*/
 	gpDSPEngine->SetSongPosition_AndResetEffectsTails(miSongPos);
 } // PlaybackFF
-
 
 void CKSPlugIn::PlaybackRewind()
 {
@@ -5135,7 +5101,6 @@ void CKSPlugIn::PlaybackRewind()
 	gpDSPEngine->SetSongPosition_AndResetEffectsTails(miSongPos);
 } // PlaybackRewind
 
-
 void CKSPlugIn::PlaybackGoToStart(tbool bIgnorePlayState /*= false*/)
 {
 	CAutoLock Lock(mMutex);
@@ -5153,7 +5118,6 @@ void CKSPlugIn::PlaybackGoToStart(tbool bIgnorePlayState /*= false*/)
 	*/
 	gpDSPEngine->SetSongPosition_AndResetEffectsTails(miSongPos);
 } // PlaybackGoToStart
-
 
 void CKSPlugIn::PlaybackGoToEnd()
 {
@@ -5176,7 +5140,6 @@ void CKSPlugIn::PlaybackGoToEnd()
 		gpDSPEngine->SetSongPosition_AndResetEffectsTails(miSongPos);
 } // PlaybackGoToEnd
 
-
 void CKSPlugIn::PlaybackGoToPos(tint64 iSample)
 {
 	CAutoLock Lock(mMutex);
@@ -5195,13 +5158,11 @@ void CKSPlugIn::PlaybackGoToPos(tint64 iSample)
 		gpDSPEngine->SetSongPosition_AndResetEffectsTails(miSongPos);
 } // PlaybackGoToPos
 
-
 void CKSPlugIn::Playback_InProgressTask(tint64 iNewPos /*= -1*/)
 {
 	StartProgressTasks_NoLock(geStateInProgressTask, iNewPos);
 	gpDSPEngine->LimitDataFromStreams(false, 0, -1);
 } // Playback_InProgressTask
-
 
 void CKSPlugIn::Playback_ExportTrack(tint32 iTrack, tint64 iFirstSample, tint64 iFinalSample)
 {
@@ -5211,13 +5172,11 @@ void CKSPlugIn::Playback_ExportTrack(tint32 iTrack, tint64 iFirstSample, tint64 
 	}
 } // Playback_ExportTrack
 
-
 void CKSPlugIn::Playback_ExportOutMix(tint64 iPosToStart)
 {
 	StartProgressTasks_NoLock(geStateExportingOutMix, iPosToStart);
 	gpDSPEngine->LimitDataFromStreams(false, 0, -1);
 } // Playback_ExportOutMix
-
 
 void CKSPlugIn::Zoom(tint32 iCmd, tint32 iVal)
 {
@@ -5228,7 +5187,6 @@ void CKSPlugIn::Zoom(tint32 iCmd, tint32 iVal)
 	}
 
 } // Zoom
-
 
 tbool CKSPlugIn::OnKeyDown(ge::EKey Key)
 {
@@ -5251,7 +5209,6 @@ tbool CKSPlugIn::OnKeyDown(ge::EKey Key)
 	return false;
 } // OnKeyDown
 
-
 void CKSPlugIn::SelectTrack(tint32 iID)
 {
 	miSelected_Track = iID;
@@ -5265,7 +5222,6 @@ void CKSPlugIn::SelectTrack(tint32 iID)
 		(*it)->GetPane()->SendMsgFromTop(&Msg);
 	}
 } // SelectTrack
-
 
 tint32 CKSPlugIn::Get_Number_Of_Tracks()
 {
@@ -5399,7 +5355,6 @@ tint32 CKSPlugIn::Find_Track_Pos(tint32 iTrack)
 	return -1;
 }
 
-
 void CKSPlugIn::Set_All_Meters(void* pvoidMeters_All)
 {
 	// Don't do this during create
@@ -5425,7 +5380,6 @@ void CKSPlugIn::Set_All_Meters(void* pvoidMeters_All)
 		}
 	}
 }
-
 
 void CKSPlugIn::Stack_Tracks()
 {
@@ -5511,14 +5465,11 @@ void CKSPlugIn::Set_Track_Visible(tuint iID, tbool bVisible)
 }
 
 
-
 void CKSPlugIn::Set_Track_To_Default(tuint iID)
 {
 
 }
 	
-
-
 void CKSPlugIn::SetChannelName(tint32 iChannel, const std::string& sName)
 {
 	mpsChannelName[iChannel] = sName;
@@ -5529,7 +5480,6 @@ void CKSPlugIn::SetChannelName(tint32 iChannel, const std::string& sName)
 		dynamic_cast<CKSBaseGUI*>(pGUI)->UpdateChannelName(iChannel, sName);
 	}
 }
-
 
 std::string CKSPlugIn::GetProjDir_Audio() const
 {
@@ -5545,7 +5495,6 @@ std::string CKSPlugIn::GetProjDir_ClipsDecomp() const
 {
 	return GetProjDir_Clips() + "Decompressed:";
 }
-
 
 std::string CKSPlugIn::GetFromWaveName_ClipWave(const tchar* pszWaveName) const
 {
@@ -5614,7 +5563,6 @@ CKSPlugIn::SFileInfo* CKSPlugIn::GetFromListName_ClipEntry(const tchar* pszListN
 	return NULL;
 } // GetFromListName_ClipEntry
 
-
 tint32 CKSPlugIn::GetFromListName_ClipWavePathNames(const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed /*= NULL*/) const
 {
 	SFileInfo* pInfo = GetFromListName_ClipEntry(pszListName);
@@ -5660,7 +5608,6 @@ tint32 CKSPlugIn::GetFromListName_ClipWavePathNames(const tchar* pszListName, st
 	rsWavePathNameR = "";
 	return 0;
 } // GetFromListName_ClipWavePathNames
-
 
 void CKSPlugIn::ClearAllMeters()
 {
@@ -5730,11 +5677,6 @@ tuint64 CKSPlugIn::SnapToGrid(tuint64 uiSamplePos)
 	}
 	return uiSamplePos;
 }
-
-
-
-
-
 
 tuint64 CKSPlugIn::SnapToGridStart(tuint64 uiSamplePos)
 {
@@ -6074,392 +6016,3 @@ void CKSPlugIn::ProcessNonInPlace_NoLock(tfloat** ppfSamplesOut, const tfloat** 
 		}
 	}
 } // ProcessNonInPlace_NoLock
-
-/*
-
-void CKSPlugIn::ReadOnlineXML()
-{
-	
-	tchar* pszBuff = NULL;
-	tint32 iOutLen = 0;
-	ine::IINetUtil::GetWebFile(NULL, "koblo.com", "/projects/16/branches/21.xml", &iOutLen, &pszBuff);
-	if ((pszBuff) && (iOutLen > 0)) {
-
-		TiXmlDocument doc("koblo_studio project");
-		doc.Parse(pszBuff);
-		dump_to_stdout( &doc );
-		ine::IINetUtil::ReleaseBuffer(&pszBuff);
-	}
-	
-}
-
-
-
-
-
-// ----------------------------------------------------------------------
-// STDOUT dump and indenting utility functions
-// ----------------------------------------------------------------------
-const unsigned int NUM_INDENTS_PER_SPACE=2;
-
-
-void CKSPlugIn::dump_to_stdout( TiXmlNode* pParent, unsigned int indent )
-{
-	if ( !pParent ) return;
-	
-	TiXmlNode* pChild;
-	int t = pParent->Type();
-
-
-	switch ( t )
-	{
-		case TiXmlNode::DOCUMENT:
-			printf( "Document" );
-			break;
-			
-		case TiXmlNode::ELEMENT:
-			HandleEllement(pParent);
-			break;
-			
-		case TiXmlNode::COMMENT:
-		//	printf( "Comment: [%s]", pParent->Value());
-			break;
-			
-		case TiXmlNode::UNKNOWN:
-		//	printf( "Unknown" );
-			break;
-			
-		case TiXmlNode::TEXT:
-		//	pText = pParent->ToText();
-		//	printf( "Text: [%s]", pText->Value() );
-			break;
-			
-		case TiXmlNode::DECLARATION:
-		//	printf( "Declaration" );
-			break;
-		default:
-			break;
-	}
-	//printf( "\n" );
-	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
-	{
-		dump_to_stdout( pChild, indent+1 );
-	}
-}
-
-
-void CKSPlugIn::HandleEllement(TiXmlNode* pParent)
-{
-	
-//	printf( "Element [%s]", pParent->Value() );
-	
-	if (stricmp("project", pParent->Value()) == 0) {
-		printf("===============================================================");
-		printf( "\nPROJECT" );
-		printf( "\n" );
-		Set_Project(pParent->ToElement());
-	}
-	else if (stricmp("branch", pParent->Value()) == 0) {
-		printf("===============================================================");
-		printf( "\nBRANCH" );
-		printf( "\n" );
-		Set_Branch(pParent->ToElement());
-	}
-	else if (stricmp("settings", pParent->Value()) == 0) {
-		printf("===============================================================");
-		printf( "\nSETTINGS" );
-		printf( "\n" );
-		Set_Settings(pParent->ToElement());
-	}
-	else if (stricmp("editing", pParent->Value()) == 0) {
-		printf("===============================================================");
-		printf( "\nEDDITING" );
-		printf( "\n" );
-		Set_Edditing(pParent->ToElement());
-	}
-	else if (stricmp("sample", pParent->Value()) == 0) {
-		printf("===============================================================");
-		printf( "\nSAMPLE" );
-		printf( "\n" );
-		Set_Edditing(pParent->ToElement());
-	}
-}
-
-void CKSPlugIn::Set_Project(TiXmlElement* pElement)
-{
-	if ( !pElement ) return ;
-	
-	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
-	tint32 ival;
-	
-	// project ID
-	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "project id =  %d", ival);
-	printf( "\n" );
-	// scema
-	if(pAttrib=pAttrib->Next())
-		printf( "%s: %s", pAttrib->Name(), pAttrib->Value());
-	printf( "\n" );
-	// schema Location 
-	if(pAttrib=pAttrib->Next())
-		printf( "%s: %s", pAttrib->Name(), pAttrib->Value());
-	printf( "\n" );
-	
-	
-}
-
-void CKSPlugIn::Set_Branch(TiXmlElement* pElement)
-{
-	if ( !pElement ) return ;
-	
-	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
-	tint32 ival;
-	
-	// project ID
-	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "branch id =  %d", ival);
-	printf( "\n" );
-	
-	TiXmlNode* pChild;
-	
-	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
-		
-		if(pChild->Type() == TiXmlNode::ELEMENT){
-			
-			if (stricmp("name", pChild->Value()) == 0) {
-				printf( "branch name:  ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
-			}
-			
-			else if (stricmp("description", pChild->Value()) == 0) {
-				printf( "branch description:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
-				printf( "\n" );
-			}
-			
-			else if (stricmp("revision", pChild->Value()) == 0){
-				printf( "branch revision:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
-				printf( "\n" );
-			}
-		}
-	}
-}
-
-
-
-
-
-void CKSPlugIn::Set_Settings(TiXmlElement* pElement)
-{
-	if ( !pElement ) return ;
-	
-	
-	TiXmlNode* pChild;
-	
-	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
-		
-		if(pChild->Type() == TiXmlNode::ELEMENT){
-			
-			if (stricmp("name", pChild->Value()) == 0) {
-				printf( "project name:  ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
-			}
-			
-			else if (stricmp("description", pChild->Value()) == 0) {
-				printf( "project description:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("image", pChild->Value()) == 0){
-				printf( "image link:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("samplerate", pChild->Value()) == 0){
-				printf( "samplerate:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("tempo", pChild->Value()) == 0){
-				printf( "tempo:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("signature", pChild->Value()) == 0){
-				printf( "signature:  ");
-				Set_Signature(pChild->ToElement());
-				printf( "\n" );
-				
-			}
-		}
-	}
-}
-
-
-
-
-void CKSPlugIn::Set_Signature(TiXmlElement* pElement)
-{
-	if ( !pElement ) return ;
-	
-	
-	TiXmlNode* pChild;
-	
-	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
-		
-		if(pChild->Type() == TiXmlNode::ELEMENT){
-			
-			if (stricmp("numerator", pChild->Value()) == 0) {
-				Set_Param(pChild, giTinyXml_Type_Int, 0, 0);
-				printf( ":" );
-			}
-			if (stricmp("denominator", pChild->Value()) == 0) {
-				Set_Param(pChild, giTinyXml_Type_Int, 0, 0);
-			}
-			
-			
-		}
-	}
-}
-
-
-
-
-
-void CKSPlugIn::Set_Edditing(TiXmlElement* pElement)
-{
-	if ( !pElement ) return ;
-	
-	
-	TiXmlNode* pChild;
-	
-	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
-		
-		if(pChild->Type() == TiXmlNode::ELEMENT){
-			
-			if (stricmp("record", pChild->Value()) == 0) {
-				printf( "record:  ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
-			}
-			
-			else if (stricmp("tool", pChild->Value()) == 0) {
-				printf( "tool:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("zoom", pChild->Value()) == 0){
-				printf( "zoom:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("grid", pChild->Value()) == 0){
-				printf( "grid:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("snap", pChild->Value()) == 0){
-				printf( "snap:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
-				printf( "\n" );
-				
-			}
-			else if (stricmp("waves", pChild->Value()) == 0){
-				printf( "waves:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
-				printf( "\n" );
-				
-			}
-			else if (stricmp("fades", pChild->Value()) == 0){
-				printf( "fades:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
-				printf( "\n" );
-				
-			}
-			else if (stricmp("loop", pChild->Value()) == 0){
-				printf( "loop:  ");
-				Set_Loop(pChild->ToElement());
-				printf( "\n" );
-				
-			}
-			else if (stricmp("position", pChild->Value()) == 0){
-				printf( "position:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
-				printf( "\n" );
-			}
-		}
-	}
-}
-
-void CKSPlugIn::Set_Loop(TiXmlElement* pElement)
-{
-	if ( !pElement ) return ;
-	
-	
-	TiXmlNode* pChild;
-	
-	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
-		
-		if(pChild->Type() == TiXmlNode::ELEMENT){
-			
-			if (stricmp("active", pChild->Value()) == 0) {
-				//printf( "active:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("start", pChild->Value()) == 0) {
-				printf( "start:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("end", pChild->Value()) == 0) {
-				printf( "end:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
-				printf( "\n" );
-			}
-			
-			
-		}
-	}
-}
-
-
-void CKSPlugIn::Set_Param( TiXmlNode* pParent, tuint uiType,tuint32 uiID, tuint uiSection )
-{
-	if ( !pParent ) return;
-	
-	TiXmlNode* pChild;
-	TiXmlText* pText;
-	
-	if (  pParent->Type() == TiXmlNode::TEXT )
-	{
-		switch(uiType){
-			case giTinyXml_Type_String:
-				pText = pParent->ToText();
-				printf( "%s", pText->Value() );
-				break;
-				
-			case giTinyXml_Type_Int:{
-				
-				pText = pParent->ToText();
-				std::string s = pText->Value();
-				int number = atoi(s.c_str());
-				printf( "%d", number );
-				break;
-			
-			}
-			default : break;
-		}
-	}
-	
-	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
-	{
-		Set_Param( pChild, uiType, 0, 0);
-	}
-	
-}
-
-*/

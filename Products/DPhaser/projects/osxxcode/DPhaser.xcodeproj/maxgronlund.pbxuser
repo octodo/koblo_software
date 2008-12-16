@@ -72,8 +72,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 247699606;
-			PBXWorkspaceStateSaveDate = 247699606;
+			PBXPerProjectTemplateStateSaveDate = 251028339;
+			PBXWorkspaceStateSaveDate = 251028339;
+		};
+		perUserProjectItems = {
+			FCB371500EF6637B00491C0A /* PBXTextBookmark */ = FCB371500EF6637B00491C0A /* PBXTextBookmark */;
+			FCB54E330EF64C0700209434 /* PBXTextBookmark */ = FCB54E330EF64C0700209434 /* PBXTextBookmark */;
 		};
 		sourceControlManager = FC9472AD0E10ED700094E01C /* Source Control */;
 		userBuildSettings = {
@@ -135,6 +139,13 @@
 			sepNavVisRange = "{0, 51}";
 		};
 	};
+	E3E668D00E0A6C2B00215EC0 /* CBasePlugIn.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {444, 17234}}";
+			sepNavSelRange = "{23289, 4}";
+			sepNavVisRange = "{0, 0}";
+		};
+	};
 	FC0D09180E12E15700B02B0A /* DPhaser_Prefix.pch */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {474, 924}}";
@@ -176,9 +187,9 @@
 	};
 	FC0D09780E12E7D900B02B0A /* DPhaser.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1000, 852}}";
+			sepNavIntBoundsRect = "{{0, 0}, {444, 1022}}";
 			sepNavSelRange = "{144, 0}";
-			sepNavVisRange = "{0, 829}";
+			sepNavVisRange = "{0, 0}";
 			sepNavWindowFrame = "{{19, 193}, {1059, 980}}";
 		};
 	};
@@ -200,10 +211,10 @@
 	};
 	FC0D097B0E12E7D900B02B0A /* ParmIDs.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {312, 266}}";
-			sepNavSelRange = "{178, 13}";
-			sepNavVisRange = "{0, 219}";
-			sepNavWindowFrame = "{{1344, 579}, {371, 391}}";
+			sepNavIntBoundsRect = "{{0, 0}, {893, 945}}";
+			sepNavSelRange = "{863, 14}";
+			sepNavVisRange = "{0, 977}";
+			sepNavWindowFrame = "{{81, 61}, {952, 1073}}";
 		};
 	};
 	FC0D097C0E12E7D900B02B0A /* CDPhaserDSP.h */ = {
@@ -346,5 +357,25 @@
 			sepNavVisRange = "{0, 1013}";
 			sepNavWindowFrame = "{{268, -69}, {765, 992}}";
 		};
+	};
+	FCB371500EF6637B00491C0A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0D09780E12E7D900B02B0A /* DPhaser.h */;
+		name = "DPhaser.h: 5";
+		rLen = 0;
+		rLoc = 144;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	FCB54E330EF64C0700209434 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = FC0D09780E12E7D900B02B0A /* DPhaser.h */;
+		name = "DPhaser.h: 5";
+		rLen = 0;
+		rLoc = 144;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
 	};
 }

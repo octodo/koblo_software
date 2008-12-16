@@ -946,9 +946,11 @@ static void HandleNew_Menu()
 	//-----------------------------------
 	// Settings menu
 	ge::IContext::SMenuItemList MenuItemsSetup;
-	MenuItemsSetup.uiItemCount = 2;
+	MenuItemsSetup.uiItemCount = 4;
 	MenuItemsSetup.pItems[0] = ge::IContext::SMenuItem("About Koblo Studio");
 	MenuItemsSetup.pItems[1] = ge::IContext::SMenuItem("Audio Setup");
+	MenuItemsSetup.pItems[2] = ge::IContext::SMenuItem("-");
+	MenuItemsSetup.pItems[3] = ge::IContext::SMenuItem("ColLaboration");
 
 	//-----------------------------------
 	// File menu
@@ -963,6 +965,7 @@ static void HandleNew_Menu()
 	MenuItemsFile.pItems[6] = ge::IContext::SMenuItem("-");
 	MenuItemsFile.pItems[7] = ge::IContext::SMenuItem("Export");
 	MenuItemsFile.pItems[8] = ge::IContext::SMenuItem("Export for Web");
+	
 	//-----------------------------------
 	// Edit menu
 	ge::IContext::SMenuItemList MenuItemsTrack;

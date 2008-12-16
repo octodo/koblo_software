@@ -17,7 +17,8 @@
 
 // XML File parser
 #include "tinyxml.h"
-#include "CKSXML.h"
+#include "CKSXML_Read.h"
+#include "CKSXML_Write.h"
 
 // Base Utilities
 #include "bu.h"
