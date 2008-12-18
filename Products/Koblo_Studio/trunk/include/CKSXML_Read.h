@@ -22,7 +22,7 @@
  \param iCount [in]: Number of samples to fill in buffer
  */
 
-/*! \class CKSXML
+/*! \class CKSXML_Read
  * \brief class that parse the XML data in to the internal KS DataEngine
  based on TinyXml www.sourceforge.net/projects/tinyxml
  */
@@ -30,18 +30,18 @@
 class CKSPlugIn;
 
 
-class CKSXML //:  public virtual CBasePlugIn, public virtual IBaseDezipperCallback, public virtual ITimerCallback_CanStop
+class CKSXML_Read //:  public virtual CBasePlugIn, public virtual IBaseDezipperCallback, public virtual ITimerCallback_CanStop
 {
 	
 private:
 	CKSPlugIn* mpKSPlugIn;
 public:
 	
-	CKSXML(CKSPlugIn * pKSPlugIn);
-	~CKSXML();
+	CKSXML_Read(CKSPlugIn * pKSPlugIn);
+	~CKSXML_Read();
 	
 	//! read the XML file from Koblo.com
-	void ReadOnlineXML();
+	void ReadOnlineXML(std::string str);
 
 	//! itterate true the XML file from the root level
 	void Parse_Root( TiXmlNode* pParent );
@@ -78,8 +78,29 @@ public:
 	void Set_Window_Size(TiXmlNode* pChild, tint32 iId);
 	void Set_Dialogs(TiXmlElement* pElement);
 	void Set_Export_Dialog(TiXmlElement* pElement);
+	void Set_Insert(TiXmlElement* pElement);
+	void Set_Insert_Settings(TiXmlElement* pElement);
+	void Set_Insert_Parameter(TiXmlElement* pElement);
+	void Set_Track(TiXmlElement* pElement);
+	void Set_Track_In(TiXmlElement* pElement);
+	void Set_Track_Out(TiXmlElement* pElement);
+	void Set_Track_Aux(TiXmlElement* pElement);
+	void Set_Track_Insert(TiXmlElement* pElement);
+	void Set_Track_Region(TiXmlElement* pElement);
+	void Set_Track_Region_Fade(TiXmlElement* pElement);
 	
-	void Set_Param( TiXmlNode* pParent,tuint uiType, tuint32 uiID, tuint32 Section );
+	void Set_Bus(TiXmlElement* pElement);
+	void Set_Bus_Out(TiXmlElement* pElement);
+	void Set_Bus_Aux(TiXmlElement* pElement);
+	void Set_Bus_Insert(TiXmlElement* pElement);
+	
+	void Set_Master(TiXmlElement* pElement);
+	void Set_Master_Out(TiXmlElement* pElement);
+	void Set_Master_Insert(TiXmlElement* pElement);
+	void Set_Master_Aux_Return(TiXmlElement* pElement);
+
+	
+	void Set_Param( TiXmlNode* pParent,tuint uiType, tuint32 uiID, tuint32 Section, tuint32 uiDecimals = 0 );
 	
 	
 };

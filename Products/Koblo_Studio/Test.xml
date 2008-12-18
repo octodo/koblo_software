@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Koblo Studio music project XML format -->
+<!-- most ids are originally returned from the website, and are globally unique (between different projects) -->
+<!-- ids are always specified as attibutes -->
+<!-- all times and track positions are specified in sample points -->
+
+
+<project id="4823" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://koblo.com/schemas/koblo_project.xsd">
+
+
+	
+	<!-- information about the branch -->
+	<branch id="8207">
+		<name>Resonance Chamber Edition</name>
+		<description>A branch with extra hih levels of resonance</description>
+		<revision>67</revision>
+	</branch>
+	
+	
+	<!-- overall project settings -->
+	<settings>
+		<name>Crystal Cave</name>
+		<description>This project uses samples from underground crystal caves in Mexico.</description>	
+		<image>http://assets.koblo.com/images/1919/12b58b43af93920df134505715f1d8b8.jpg</image>
+		<samplerate>44100</samplerate>
+		<tempo>124</tempo>
+		<signature>
+			<numerator>4</numerator>
+			<denominator>4</denominator>
+		</signature>
+		<license>cc-ndsa</license>
+	</settings>
+	
+	
+	<!-- editing settings. these are things that would typically not be moved/merged between branches -->
+	<editing>
+		<record>on</record>
+		<tool>trim</tool>
+		<zoom>33344</zoom>
+		<grid>5000</grid>
+		<snap>on</snap>
+		<waves>on</waves>
+		<fades>on</fades>
+		<loop>
+			<active>on</active>
+			<start>2000</start>
+			<end>4000</end>
+		</loop>
+		<position>0</position>
+		<windows> 			<!-- remember the arrangement of windows -->
+			<edit>
+				<show>on</show>
+				<layer>3</layer>
+				<position>
+					<x>34</x>
+					<y>34</y>
+				</position>
+				<size>
+					<x>400</x>
+					<y>200</y>
+				</size>
+				<track slot="1" id="78"> 		<!-- the order of tracks is considered an editing setting, and is specified here -->
+					<selected>on</selected>
+					<height>200</height>
+				</track>
+			</edit>
+			<mix>
+				<show>on</show>
+				<layer>2</layer>
+				<position>
+					<x>100</x>
+					<y>100</y>
+				</position>
+				<size>
+					<x>500</x>
+					<y>200</y>
+				</size>				
+			</mix>
+			<rack>
+				<show>on</show>
+				<layer>1</layer>
+			</rack>
+		</windows>
+		<dialogs> 			<!-- remember values in dialogs -->
+			<export>
+				<type>wave</type>
+				<compression>256</compression>
+				<tail>10000</tail>
+				<normalize>on</normalize>
+			</export>
+		</dialogs>
+	</editing>
+	
+	
+	<!-- samples and their takes. only used takes are listed. a sample can be included that's not used on any track. -->
+	<sample id="67">
+		<name>Blue Emerald</name>
+		<take id="234">
+			<description>First take</description>
+			<url>http://assets.koblo.com/mp3s/7/short1.mp3</url>
+		</take>
+	</sample>
+	
+	<sample id="68">
+		<name>Blue Emerald</name>
+		<take id="123">
+			<description>Another take</description>
+			<url>http://assets.koblo.com/mp3s/7/short2.mp3</url>
+		</take>
+	</sample>
+	
+	<sample id="12345">
+		<name>Blue Emerald</name>
+		<take id="456">
+			<description>Mothers Cake</description>
+			<url>http://assets.koblo.com/mp3s/7/short3.mp3</url>
+		</take>
+		<take id="1024">
+			<description>Mothers Cake2</description>
+			<url>http://assets.koblo.com/mp3s/7/short5.mp3</url>
+		</take>
+		<take id="123456">
+			<description>Mothers Cake3</description>
+			<url>http://assets.koblo.com/mp3s/7/short123.mp3</url>
+		</take>
+	</sample>
+	
+	
+	<!-- all inserts on all tracks, busses and masters. each instance can only be used on a single tracks - no sharing of inserts -->
+	<insert id="1">
+		<vendor>koblo.com</vendor>
+		<product>phaser</product>
+		<url>http://koblo.com/effects/koblo/phaser</url>
+		<bypass>on</bypass>
+		<settings>
+			<parameter>
+				<name>freq</name>
+				<default>0.4</default>
+				<value>0.9523</value>
+			</parameter>
+			<parameter>
+				<name>range</name>
+				<default>0.26</default>
+				<value>0.33</value>
+			</parameter>
+			<parameter>
+				<name>rate</name>
+				<default>0.56</default>
+				<value>0.001</value>
+			</parameter>
+			<parameter>
+				<name>feedback</name>
+				<default>0.012</default>
+				<value>0.66</value>
+			</parameter>
+			<parameter>
+				<name>mix</name>
+				<default>0.712</default>
+				<value>0.88</value>
+			</parameter>
+			<chunk>http://koblo.com/effects/koblo/insert.dat</chunk>
+		</settings>
+	</insert>
+	
+	
+	<!-- tracks -->
+	<track id="78">
+		<name>Overtones</name>
+		<description>Crispy vibes</description>
+		<in>
+			<input>1</input>
+			<mode>stereo</mode>
+			<gain>5.44</gain>
+		</in>
+		<out>
+			<out>bus 1</out>
+			<mode>stereo</mode>
+			<volume>0.3</volume>
+			<pan>-0.456</pan>	
+			<solo>on</solo>
+			<mute>off</mute>
+			<arm>off</arm>
+		</out>
+		<aux id="1">
+			<send>0.3</send>
+		</aux>
+		<insert slot="3" id="9"></insert>
+		<region id="632" take="343">
+			<position>128294823</position>
+			<start>34000</start>
+			<end>36000</end>
+			<volume>0.9</volume>
+			<fade>
+				<in>500</in>
+				<out>400</out>
+			</fade>
+		</region>
+	</track>
+	
+	
+	<!-- busses. no input section, and a simplified output section. but they have aux returns -->
+	<bus id="45">
+		<out>
+			<out>master 1</out>
+			<volume>0.3</volume>
+			<pan>-0.456</pan>	
+			<solo>on</solo>
+			<mute>on</mute>
+		</out>
+		<aux id="1">
+			<send>0.3</send>
+		</aux>
+		<insert slot="3" id="9"></insert>
+	</bus>
+	
+	
+	<!-- master. no input section or aux sends, and a simplified output section. have aux returns -->
+	<master>
+		<out>
+			<volume>0.3</volume>
+			<pan>-0.456</pan>	
+		</out>
+		<aux_return id="1">
+			<volume>0.343</volume>
+			<pan>0.343</pan>
+		</aux_return>
+		<insert slot="1" id="9"></insert>
+		
+	</master>	
+
+
+	<!-- effects in the rack -->
+	<aux slot="1" id="1">
+		<vendor id = 0>koblo.com</vendor>
+		<product id = 45>phaser</product>
+		<url>http://koblo.com/effects/koblo/phaser</url>
+		<bypass>on</bypass>
+		<settings>
+			<!-- effect-specific xml tags go here -->
+		</settings>
+	</aux>
+
+	
+</project>
