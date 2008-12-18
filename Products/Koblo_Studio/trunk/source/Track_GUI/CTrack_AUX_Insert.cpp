@@ -104,7 +104,7 @@ void CTrack_AUX_Insert::ConnectControls()
 void CTrack_AUX_Insert::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 {
 	GetParmMan()->ControlUpdate(miPaneID, pControl->GetID(), iValueNew);
-	tbool iTest;
+	//tbool iTest;
 	if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit1) {
 	//	iTest = mpKSPlugIn->GetGlobalParm(giParam_Ch_Insert1GUIOpen, miSection);
 	//	GetParmMan()->Set(true, !iTest, giParam_Ch_Insert1GUIOpen, de::IParameterManager::TypeGlobal, miSection);

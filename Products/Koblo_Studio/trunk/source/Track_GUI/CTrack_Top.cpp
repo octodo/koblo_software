@@ -374,7 +374,7 @@ void CTrack_Top::Update_Time_Display(tint64 iSample_Point)
 	if (miSecond != iSec) {
 		miSecond = iSec;
 		
-		tint32 iScreenSec	=	iSecsTotal % 60;
+		tint32 iScreenSec	=	(tint32)(iSecsTotal % 60);
 		sprintf(psz, "%02u", iScreenSec);
 		mpTextSecond->SetText(psz);
 

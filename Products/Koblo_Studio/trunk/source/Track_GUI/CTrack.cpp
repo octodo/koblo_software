@@ -108,7 +108,7 @@ tbool CTrack::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 		else if(MouseMsg == ge::MouseMove){
 			
 
-			tint64 iSample = (Pos.iX - gTrack_Side.iCX) *mpKSPlugIn->GetSamplesPrPixel();
+			tint64 iSample = (tint64)((Pos.iX - gTrack_Side.iCX) *mpKSPlugIn->GetSamplesPrPixel());
 			if(iSample < 0) iSample = 0;
 			mpTrack_Top->SetCursorInSamples(iSample);
 			
@@ -126,7 +126,7 @@ tbool CTrack::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 		mpControl->GetPos(PosThis);
 		tint64 uiSamplesScrolled = PosThis.iX;
 
-		tint64 iSample = (Pos.iX - uiSamplesScrolled) *fSamplesPrPixel;
+		tint64 iSample = (tint64)((Pos.iX - uiSamplesScrolled) *fSamplesPrPixel);
 			
 			
 		if(iSample < 0) iSample = 0;

@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..;..\..\include\solomute;..\..\include\Track_GUI;..\..\include\Mix_GUI;..\..\include\Import_GUI;..\..\include\Setup_GUI;..\..\include\Track_GUI\Progress"
+				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..;..\..\include\solomute;..\..\include\Track_GUI;..\..\include\Mix_GUI;..\..\include\Import_GUI;..\..\include\Setup_GUI;..\..\include\Track_GUI\Progress;..\..\..\..\..\SDK\tinyxml\"
 				PreprocessorDefinitions="KSPI_IMPORTS;WIN32;_WINDOWS;_DEBUG;_RESOURCE_FILE_HARDLINKED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -122,7 +122,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..;..\..\include\solomute;..\..\include\Track_GUI;..\..\include\Mix_GUI;..\..\include\Import_GUI;..\..\include\Setup_GUI;..\..\include\Track_GUI\Progress"
+				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..;..\..\include\solomute;..\..\include\Track_GUI;..\..\include\Mix_GUI;..\..\include\Import_GUI;..\..\include\Setup_GUI;..\..\include\Track_GUI\Progress;..\..\..\..\..\SDK\tinyxml\"
 				PreprocessorDefinitions="KSPI_IMPORTS;WIN32;_WINDOWS;NDEBUG;_RESOURCE_FILE_HARDLINKED"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
@@ -513,6 +513,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="xmlparser"
+				>
+				<File
+					RelativePath="..\..\source\CKSXML_Read.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\CKSXML_Write.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -862,6 +874,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="xmlparser"
+				>
+				<File
+					RelativePath="..\..\include\CKSXML_Read.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\CKSXML_Write.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -889,11 +913,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\resources\KobloStudio.ico"
+				RelativePath=".\KobloStudio.ico"
 				>
 			</File>
 			<File
-				RelativePath=".\KobloStudio.ico"
+				RelativePath="..\..\resources\KobloStudio.ico"
 				>
 			</File>
 			<File
