@@ -1224,6 +1224,12 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 				MenuSetupAudio();
 			}
 			break;
+
+		case ID_SETUP_COLLABORATION:
+			{
+				MenuCollaboration();
+			}
+			break;
 			
 		case ID_APP_EXIT:
 		case IDM_EXIT:

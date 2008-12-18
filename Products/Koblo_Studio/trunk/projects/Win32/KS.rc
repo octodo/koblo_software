@@ -179,6 +179,8 @@ BEGIN
     POPUP "&Setup",                         65535,MFT_STRING,MFS_ENABLED
     BEGIN
         MENUITEM "&Audio Setup",                ID_SETUP_AUDIOSETUP,MFT_STRING,MFS_ENABLED
+        MENUITEM MFT_SEPARATOR
+        MENUITEM "&Collaboration",              ID_SETUP_COLLABORATION,MFT_STRING,MFS_ENABLED
     END
     POPUP "&Help",                          65535,MFT_STRING | MFT_RIGHTJUSTIFY,MFS_ENABLED
     BEGIN
