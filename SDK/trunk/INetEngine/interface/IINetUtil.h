@@ -2,6 +2,11 @@
 #define CONNECT_TIMEOUT 30 //in seconds
 #define MAX_PAGE_SIZE 200000 //Max no of bytes in web page
 
+/*! \class IINetUtil
+ * \brief Interface to access a web address
+ *
+ * Supplies simple methods for accessing web-data
+*/
 class IINetUtil
 {
 public:
@@ -22,6 +27,16 @@ public:
 		\param OutputBuffer [out]: Handle to a bytebuffer which is allocated and contains the web file
 	*/
 	static void GetWebFile(const tchar* PostParameters, const tchar* pszServer, const tchar* pszFileName, tint32* OutputLength, tchar** OutputBuffer);
+
+	//! Assembles a URL-encoded post (a.k.a. input) parameter string for use in the GetWebFile(..) method
+	/*!
+		\param pszParamName [in]: Name of the parameter
+		\param pszParamRawData [in]: Raw data of the parameter (*not* URL-encoded)
+		\param iParamRawDataLen [in]: Length of the raw data. Set to -1 if the data is a zero terminated string => strlen(..) will be used.
+		\param ppszPostParameters [out]: Recieves a pointer to an assembled post-parameter string. If *ppszPostParameters is previosly NULL (as it <b>must</b> be upon first call!) the new string starts with '?', else the previous contents is appended a '&' and the newly generated contents. Buffer will be reallocated upon every call.<br/><b>Note!</b> Remember to <b>delete</b> it after use!
+		\return tbool: True upon success
+	*/
+	static tbool PreparePostParameters(const tchar* pszParamName, const tchar* pszParamRawData, tint32 iParamRawDataLen, tchar** ppszPostParameters);
 
 	//! Find the value element of a string (<value>xxx</value>), allocate the buffer and copy the value (xxx) to it
 	//! If no value element is found OutputLength is 0 and OutputBuffer is empty string
@@ -90,6 +105,33 @@ public:
 	//!returns the middle string between matching start and end and advances the buffer
 	//! (lasse) Note! May not be relevant for Koblo Studio ???
 	static bool GetMiddleStr(tchar **s, const char *sStart, const char *sEnd, char *sMiddle);
+
+	//! Runs through the data and finds out how long a URL-encoded version would be
+	/*!
+		\param pszRawData [in]: The string or raw data to encode
+		\param iRawDataLen [in]: Length of the raw data. If -1 strlen(pszRawData) is used
+		\return tint32: Calculated length of the URL-encoded result string. This does <b>not</b> count a trailing zero-char!
+	*/
+	static tint32 CalcURLEncodedLen(const tchar* pszRawData, tint32 iRawDataLen);
+
+	//! URL-encodes the data (prepares for sending it to a web-server)
+	/*!
+		\param pszRawData [in]: The string or raw data to encode
+		\param iRawDataLen [in]: Length of the raw data. If -1 strlen(pszRawData) is used
+		\param pszURLEncoded [out]: Receives the URL-encoded result string. This <b>must</b> be allocated with enough space to hold string including a trailing zero-char!
+		\return tint32: The length of the URL-encoded output
+	*/
+	static tint32 URLEncode(const tchar* pszRawData, tint32 iRawDataLen, tchar* pszURLEncoded);
+
+	// URL-decodes the data (data was returned from a web-server)<br/><b>Note!</b> It is safe to do character replacing in-place (by submitting same pointer for input and output) as raw data is always shorter than or same length as encoded data
+	/*!
+		\param pszInData [in]: The encoded data input
+		\param iInDataLen [in]: Length of the encoded data input. If -1 strlen(pszData_InOut) is used
+		\param pszOutData [out]: Will receive the raw data output (no trailing zero-char will be applied!)
+		\param piOutDataLen: Receives length of the raw data output
+		\return tbool: True upon success, False if some error in the URL-encoding was found. If False the string in pszData_InOut may be half converted and should be discarded
+	*/
+	static tbool URLDecode(tchar* pszInData, tint32 iInDataLen, tchar* pszOutData, tint32* piOutDataLen);
 
 protected:
 
