@@ -61,7 +61,7 @@ class CProgressTask; // Forward declaration
 class CProgressTaskList; // Forward declaration
 
 
-class CKSPlugIn : public virtual CBasePlugIn, public virtual IBaseDezipperCallback, public virtual ITimerCallback_CanStop, public virtual CKSXML
+class CKSPlugIn : public virtual CBasePlugIn, public virtual IBaseDezipperCallback, public virtual ITimerCallback_CanStop, public virtual CKSXML_Read, public virtual CKSXML_Write
 {
 public:
 	CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex);
@@ -170,7 +170,9 @@ public:
 	virtual tbool MenuFileSaveProject(tbool bOverwriteIcons = false);
 	virtual void MenuFileDistributeMix(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize);
 	virtual void MenuSetupAudio();
+	virtual void MenuCollaboration();
 	virtual void MenuFileImportAudio();
+	
 
 	virtual void VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar* pszWavePathR, tbool bForceRewrite);
 

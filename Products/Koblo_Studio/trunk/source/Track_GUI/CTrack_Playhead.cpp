@@ -112,7 +112,7 @@ tbool CTrack_Playhead::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 			if(sPosNew.iX < 0) sPosNew.iX =	0;
 			// Move playhead
 			SetPos(ge::SPos(sPosNew.iX - 8,sPosNew.iY) );
-			tint64 iSamplePos	=	(tfloat32)(sPosNew.iX) * mpKSPlugIn->GetSamplesPrPixel();
+			tint64 iSamplePos	=	(tint64)((tfloat32)(sPosNew.iX) * mpKSPlugIn->GetSamplesPrPixel());
 			mpKSPlugIn->MovePlayhead(iSamplePos);
 			// Redraw parrent pane
 			mpCTrack_Time_Pos->Redraw_Pane_Rect();	

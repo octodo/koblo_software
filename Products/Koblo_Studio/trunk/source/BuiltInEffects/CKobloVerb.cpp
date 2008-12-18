@@ -84,8 +84,8 @@ revmodel::revmodel()
 
 	// defaults
 	revquality=10; // always best quality
-	mfSampleRatekHz = 44.1;
-	pre=10 * mfSampleRatekHz;
+	mfSampleRatekHz = 44.1f;
+	pre=(unsigned short)(10 * mfSampleRatekHz);
 	poi=0;
 	revcolor=0.5f;
 	revcolor2=0.5f;
@@ -181,7 +181,7 @@ void revmodel::processReplace(float **inputs, float **outputs, long numsamples)
 
 	if(mbReverb_On){
 
-		 float absmL;
+		 //float absmL;
 		 register float mL,mR;
 
 		 unsigned short p_pre=pre;
@@ -355,7 +355,7 @@ void revmodel::setRoomSize(float value)
 
 void revmodel::setPredelay(float value)
 {
-    pre = value * mfSampleRatekHz;
+    pre = (unsigned short)(value * mfSampleRatekHz);
 }
 
 void revmodel::setDamp(float value)
@@ -397,7 +397,7 @@ void revmodel::setSampleRate(tuint32 uiFreqHz)
 		{
 			// pre
 			tfloat64 f64PreValue = (tfloat64)pre / mfSampleRatekHz;
-			pre = (tfloat32)(f64PreValue * fSampleRatekHz);
+			pre = (unsigned short)((tfloat32)(f64PreValue * fSampleRatekHz));
 		}
 
 		// Set new frequency
