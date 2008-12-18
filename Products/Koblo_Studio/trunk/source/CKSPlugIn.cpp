@@ -1534,7 +1534,7 @@ void CKSPlugIn::MenuCollaboration()
 	CleanProject(0);
 	
 	
-//	ReadOnlineXML("/projects/13/branches/1.xml");
+	ReadOnlineXML("/projects/13/branches/1.xml");
 	
 //	static int iNr =	0;
 	
