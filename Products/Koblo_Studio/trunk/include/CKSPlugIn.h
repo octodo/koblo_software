@@ -531,22 +531,7 @@ protected:
 	tuint64 muiMoveToPos;
 	
 	
-	
-	
-	
-	
-/*
-	virtual void ReadOnlineXML();
-	void dump_to_stdout( TiXmlNode* pParent, unsigned int indent = 0 );
-	void HandleEllement(TiXmlNode* pParent);
-	void Set_Project(TiXmlElement* pElement);
-	void Set_Branch(TiXmlElement* pElement);
-	void Set_Settings(TiXmlElement* pElement);
-	void Set_Signature(TiXmlElement* pElement);
-	void Set_Edditing(TiXmlElement* pElement);
-	void Set_Loop(TiXmlElement* pElement);
-	void Set_Param( TiXmlNode* pParent,tuint uiType, tuint32 uiID, tuint32 Section );
- */
+
 	
 	
 };

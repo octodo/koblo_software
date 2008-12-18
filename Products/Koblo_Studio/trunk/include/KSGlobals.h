@@ -379,6 +379,17 @@ enum EPositionPopup
 	
 };
 */
+// CC Licences
+enum EGUI_License_Types
+{
+	giCC_By = 0,
+	giCC_By_Sa,
+	giCC_By_Nd,
+	giCC_By_Nc,
+	giCC_By_Nc_Sa,
+	giCC_By_Nc_Nd,
+	
+};
 enum EMasterOutputs
 {
 	giMasterOut12 = 0,

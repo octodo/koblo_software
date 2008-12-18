@@ -950,7 +950,7 @@ static void HandleNew_Menu()
 	MenuItemsSetup.pItems[0] = ge::IContext::SMenuItem("About Koblo Studio");
 	MenuItemsSetup.pItems[1] = ge::IContext::SMenuItem("Audio Setup");
 	MenuItemsSetup.pItems[2] = ge::IContext::SMenuItem("-");
-	MenuItemsSetup.pItems[3] = ge::IContext::SMenuItem("ColLaboration");
+	MenuItemsSetup.pItems[3] = ge::IContext::SMenuItem("Collaboration");
 
 	//-----------------------------------
 	// File menu

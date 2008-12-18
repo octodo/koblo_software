@@ -35,18 +35,39 @@ class CKSXML_Write //:  public virtual CBasePlugIn, public virtual IBaseDezipper
 	
 private:
 	CKSPlugIn* mpKSPlugIn;
-	TiXmlDocument mpDoc;
+//	TiXmlDocument mpDoc;
+//	TiXmlElement mpProject;
 	
-	void Add_Comment(std::string str);
+	void Add_Comment(TiXmlDocument* doc, std::string str);
+	void Add_Comment(TiXmlElement* pParent,std::string str);
+	
+	
+	
+	void Write_Project(TiXmlDocument* doc);
+	void Write_Branch(TiXmlElement* pParent);
+	void Write_Settings(TiXmlElement* pParent);
+	void Write_Signature(TiXmlElement* pParent);
+	void Write_License(TiXmlElement* pParent);
+	
+	void Write_Editing(TiXmlElement* pParent);
+	void Write_Tool(TiXmlElement* pParent);
+	void Write_Loop(TiXmlElement* pParent);
+	void Write_Windows(TiXmlElement* pParent);
+	void Write_Window_Edit(TiXmlElement* pParent);
+	void Write_Window_Mix(TiXmlElement* pParent);
+	void Write_Window_Rack(TiXmlElement* pParent);
+	void Write_Window_Position(TiXmlElement* pParent, tuint uiPosX, tuint uiPosY);
+	void Write_Window_Size(TiXmlElement* pParent, tuint uiSizeX, tuint uiSizeY);
+	
 	
 public:
 	
 	CKSXML_Write(CKSPlugIn * pKSPlugIn);
 	~CKSXML_Write();
 	
-	//! read the XML file from Koblo.com
-	void Write_XML(std::string str);
 	
+	//! write the XML file to Koblo.com
+	void Write_XML(std::string str);
 	
 };
 

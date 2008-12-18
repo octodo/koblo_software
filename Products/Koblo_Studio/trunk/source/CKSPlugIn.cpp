@@ -1261,7 +1261,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 		MenuSetupAudio();
 	}
 	
-	else if (s.compare("Setup@ColLaboration") == 0) {
+	else if (s.compare("Setup@Collaboration") == 0) {
 		MenuCollaboration();
 	}
 	
@@ -5065,8 +5065,8 @@ void CKSPlugIn::PlaybackFF()
 		return;
 	}
 
-	tfloat32 fSampleRate	= (GetSampleRate() * 1.0f);
-	tint32 iTempo			= Float2Int(fSampleRate/4.41f);
+//	tfloat32 fSampleRate	= GetSampleRate();
+	tint32 iTempo			= Float2Int(GetSampleRate()/4.41f);
 
 	miSongPos += iTempo;
 

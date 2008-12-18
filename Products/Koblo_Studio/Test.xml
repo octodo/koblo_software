@@ -13,7 +13,7 @@
 	<!-- information about the branch -->
 	<branch id="8207">
 		<name>Resonance Chamber Edition</name>
-		<description>A branch with extra hih levels of resonance</description>
+		<description>A branch with extra high levels of resonance</description>
 		<revision>67</revision>
 	</branch>
 	
@@ -35,7 +35,6 @@
 	
 	<!-- editing settings. these are things that would typically not be moved/merged between branches -->
 	<editing>
-		<record>on</record>
 		<tool>trim</tool>
 		<zoom>33344</zoom>
 		<grid>5000</grid>
@@ -48,7 +47,8 @@
 			<end>4000</end>
 		</loop>
 		<position>0</position>
-		<windows> 			<!-- remember the arrangement of windows -->
+		<!-- remember the arrangement of windows -->
+		<windows> 			
 			<edit>
 				<show>on</show>
 				<layer>3</layer>
@@ -60,7 +60,8 @@
 					<x>400</x>
 					<y>200</y>
 				</size>
-				<track slot="1" id="78"> 		<!-- the order of tracks is considered an editing setting, and is specified here -->
+				<!-- the order of tracks is considered an editing setting, and is specified here -->
+				<track slot="1" id="78"> 		
 					<selected>on</selected>
 					<height>200</height>
 				</track>
