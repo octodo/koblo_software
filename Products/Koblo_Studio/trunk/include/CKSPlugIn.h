@@ -396,8 +396,6 @@ public:
 
 	tbool IsRecording() const {return mbRecord;}
 	
-	tuint GetTrackID(tuint32 uiTrackNr) { return msStack.iTrack[uiTrackNr];)
-	
 	
 
 protected:
