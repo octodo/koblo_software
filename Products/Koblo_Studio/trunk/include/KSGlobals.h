@@ -414,7 +414,8 @@ enum ETinyXmlTypes
 	
 	giTinyXml_Type_String = 0,
 	giTinyXml_Type_Int,
-	giTinyXml_Type_Float
+	giTinyXml_Type_Float,
+	giTinyXml_Type_Take
 	
 };
 
