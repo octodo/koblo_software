@@ -40,9 +40,7 @@ namespace k2s {
 namespace ine {
 
 #include "IINetUtil.h"
-#ifdef _WIN32
 #include "IDownloader.h"
-#endif // _WIN32
 
 }	// namespace ine
 
