@@ -180,6 +180,10 @@
 			Name="Interface"
 			>
 			<File
+				RelativePath="..\..\interface\IDownloader.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\interface\IINetUtil.h"
 				>
 			</File>
@@ -191,6 +195,10 @@
 		<Filter
 			Name="include"
 			>
+			<File
+				RelativePath="..\..\include\CDownloader.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\include\CINetUtil.h"
 				>
@@ -207,6 +215,10 @@
 		<Filter
 			Name="source"
 			>
+			<File
+				RelativePath="..\..\source\CDownloader.cpp"
+				>
+			</File>
 			<File
 				RelativePath="..\..\source\CINetUtil.cpp"
 				>

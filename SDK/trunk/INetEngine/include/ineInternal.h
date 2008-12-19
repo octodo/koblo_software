@@ -27,6 +27,10 @@ namespace ine {
 #endif	// _Mac
 
 #include "CINetUtil.h"
+#ifdef _WIN32
+#include "CDownloader.h"
+#endif // _WIN32
+
 
 
 }	// namespace ine
