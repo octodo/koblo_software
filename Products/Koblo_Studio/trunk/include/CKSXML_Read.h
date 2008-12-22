@@ -87,7 +87,7 @@ public:
 	void Set_Track_In(TiXmlElement* pElement);
 	void Set_Track_Out(TiXmlElement* pElement);
 	void Set_Track_Aux(TiXmlElement* pElement);
-	void Set_Track_Insert(TiXmlElement* pElement);
+	void Set_Track_Insert(TiXmlElement* pElement, tint32 uTrack);
 	void Set_Track_Region(TiXmlElement* pElement);
 	void Set_Track_Region_Fade(TiXmlElement* pElement);
 	

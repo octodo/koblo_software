@@ -51,7 +51,9 @@ void CMix_Buss_AUX_Insert::Init()
 	piIDs[ge::IPopupMenu::BitmapCenter]			= IDB_POPUP_BODY;
 	piIDs[ge::IPopupMenu::BitmapCenterInv]		= IDB_POPUP_BODY_INVERTED;
 	piIDs[ge::IPopupMenu::BitmapBottom]			= IDB_PopupBorder;
-
+	
+	
+//!!! Make global list used by channel and buses
 	CPlugInManager* pPlugManager = mpKSPlugIn->GetPlugInManager();
 	tint32 iPlugInCount = pPlugManager->GetNrOfPlugIns();
 	ge::IPopupMenu::SMenuItemList List;

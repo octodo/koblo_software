@@ -81,6 +81,9 @@ public:
 	tint32 GetNrOfPlugIns() const {return (tint32)mPlugIns.size();}
 
 	SPlugInInfo* GetPlugInInfo(tint32 iIndex) {std::list<SPlugInInfo*>::const_iterator it = mPlugIns.begin(); for (; iIndex; iIndex--) {it++;} return *it;}
+	
+	std::string GetPlugInVendor(tuint32 iId);
+	std::string GetPlugInName(tuint32 iId);
 
 	//! A plug-in handle uniquely identifies a plug-in instance
 	typedef tint32 PlugInHandle;

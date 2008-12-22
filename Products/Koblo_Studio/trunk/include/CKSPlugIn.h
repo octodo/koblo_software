@@ -316,6 +316,8 @@ public:
 	std::list<SFileInfo*>::const_iterator GetFileInfos() const {return mFileInfos.begin();}
 	tbool IsClipNameInUse(const tchar* pszClipName, const tchar* pszWaveNameL, const tchar* pszWaveNameR, std::string* psDescription);
 	void AddClipToList(CImportAudioTask* pImportInfo);
+	
+	std::list<SFileInfo*> GetFileInfo(){return mFileInfos;}
 
 	std::string GetProjDir() const {return msProjectFolder;}
 	std::string GetProjDir_Contents() const {return GetProjDir() + "Contents:";}
@@ -396,6 +398,8 @@ public:
 
 	tbool IsRecording() const {return mbRecord;}
 	
+	tuint32 Get_Track_Id(tuint32 uiTrack){ return msStack.iTrack[uiTrack];}
+	
 	
 
 protected:
@@ -460,7 +464,7 @@ protected:
 	
 	std::string mpsChannelName[giNumber_Of_Tracks];
 
-	std::string mpsStreamNames[giNumber_Of_Tracks]; //!!! Max is this enough?
+	std::string mpsStreamNames[giNumber_Of_Tracks]; //!!! Max asks is this enough?
 
 //	void DoWaveFileLoad(tint32 iTrack, const std::string& sPathName);
 
@@ -503,6 +507,8 @@ protected:
 	
 	// Struct to pass on to the GUI
 	STrack_Stack msStack;
+	
+	
 	
 	virtual void Maintain_Number_Of_Tracks(tint32 iNr_Tracks);
 

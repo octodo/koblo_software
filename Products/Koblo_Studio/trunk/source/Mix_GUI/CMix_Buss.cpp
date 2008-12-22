@@ -35,7 +35,7 @@ void CMix_Buss::Init()
 	ge::IText* pText = CreateDisplay(	giCtr_Mix_Buss_Text+ miCtrl_Offset, 
 												ge::SPos(8, 24),  
 												ge::SSize(48, 12), 
-												CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(204, 204, 204)));
+												CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(204, 204, 204)), true);
 
 	pText->SetHorzAlignment(ge::IText::HorzAlignLeft);
 	pText->SetClicksOutsideAsSuccess();
@@ -85,7 +85,7 @@ void CMix_Buss::Init()
 	//mpPan->SetDirectMouseXlat();
 	
 	// Panner 
-	ge::IPanner* pPanner = CreatePanner(
+	CreatePanner(
 		giCtr_Mix_Buss_Pan  + miCtrl_Offset, ge::IControl::giNoID,
 		NULL, IDB_Button_Pan_Handle,
 		ge::SPos(3, 188), 
@@ -158,6 +158,16 @@ void CMix_Buss::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 
 void CMix_Buss::EventGeneric(ge::IControl* pControl, void* pEventData)
 {
+	/*
+	tint32 iID = pControl->GetID() - miCtrl_Offset;
+	
+	switch(iID) {
+		case giCtr_Mix_Buss_Text:
+			std::string sText = std::string((const tchar*)pEventData);
+			dynamic_cast<CKSPlugIn*>(mpGUI->GetPlugIn())->SetChannelName(miID + giNumber_Of_Tracks, sText);
+			break;
+	}
+	 */
 }
 
 

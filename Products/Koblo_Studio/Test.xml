@@ -128,41 +128,7 @@
 	</sample>
 	
 	
-	<!-- all inserts on all tracks, busses and masters. each instance can only be used on a single tracks - no sharing of inserts -->
-	<insert id="1">
-		<vendor>koblo.com</vendor>
-		<product>phaser</product>
-		<url>http://koblo.com/effects/koblo/phaser</url>
-		<bypass>on</bypass>
-		<settings>
-			<parameter>
-				<name>freq</name>
-				<default>0.4</default>
-				<value>0.9523</value>
-			</parameter>
-			<parameter>
-				<name>range</name>
-				<default>0.26</default>
-				<value>0.33</value>
-			</parameter>
-			<parameter>
-				<name>rate</name>
-				<default>0.56</default>
-				<value>0.001</value>
-			</parameter>
-			<parameter>
-				<name>feedback</name>
-				<default>0.012</default>
-				<value>0.66</value>
-			</parameter>
-			<parameter>
-				<name>mix</name>
-				<default>0.712</default>
-				<value>0.88</value>
-			</parameter>
-			<chunk>http://koblo.com/effects/koblo/insert.dat</chunk>
-		</settings>
-	</insert>
+	
 	
 	
 	<!-- tracks -->
@@ -175,7 +141,69 @@
 			<gain>5.44</gain>
 		</in>
 		<out>
-			<out>bus 1</out>
+		<insert slot="1" id="0">
+			
+			<vendor>koblo.com</vendor>
+			<product>phaser</product>
+			<url>http://koblo.com/effects/koblo/phaser</url>
+			<bypass>on</bypass>
+			<settings>
+				<parameter>
+					<name>freq</name>
+					<default>0.4</default>
+					<value>0.9523</value>
+				</parameter>
+				<parameter>
+					<name>range</name>
+					<default>0.26</default>
+					<value>0.33</value>
+				</parameter>
+				<parameter>
+					<name>rate</name>
+					<default>0.56</default>
+					<value>0.001</value>
+				</parameter>
+				<parameter>
+					<name>feedback</name>
+					<default>0.012</default>
+					<value>0.66</value>
+				</parameter>
+				<parameter>
+					<name>mix</name>
+					<default>0.712</default>
+					<value>0.88</value>
+				</parameter>
+				<chunk>http://koblo.com/effects/koblo/insert.dat</chunk>
+			</settings>
+		</insert>
+
+
+		<aux id="1">
+			<send>0.3</send>
+		</aux>
+		<insert slot="3" id="9"></insert>
+		<region id="632" take="343">
+			<position>128294823</position>
+			<start>34000</start>
+			<end>36000</end>
+			<volume>0.9</volume>
+			<fade>
+				<in>500</in>
+				<out>400</out>
+			</fade>
+		</region>
+	</track>
+
+	<track id="2">
+		<name>Undertones</name>
+		<description>Crispy vibes</description>
+		<in>
+			<input>1</input>
+			<mode>stereo</mode>
+			<gain>5.44</gain>
+		</in>
+		<out>
+			<output>bus 1</output>
 			<mode>stereo</mode>
 			<volume>0.3</volume>
 			<pan>-0.456</pan>	
@@ -198,6 +226,7 @@
 			</fade>
 		</region>
 	</track>
+
 	
 	
 	<!-- busses. no input section, and a simplified output section. but they have aux returns -->

@@ -1537,10 +1537,10 @@ void CKSPlugIn::MenuSetupAudio()
 
 void CKSPlugIn::MenuCollaboration()
 {
-	CleanProject(0);
+//	CleanProject(0);
 	
 	
-	ReadOnlineXML("/projects/13/branches/1.xml");
+//	ReadOnlineXML("/projects/13/branches/1.xml");
 	
 //	static int iNr =	0;
 	
@@ -4185,9 +4185,9 @@ tbool CKSPlugIn::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 			tint32 iChannel = 0;
 			for (iChannel = 0; iChannel < iChannels; iChannel++) {
 				CChannel* pChannel = dynamic_cast<CKSDSP*>(GetDSPEngine())->GetChannel(iChannel);
-				tint32 iInserts = 4;
-				tint32 iInsert;
-				for (iInsert = 0; iInsert < iInserts; iInsert++) {
+				//tint32 iInserts = 4;
+				//tint32 iInsert;
+				for (tint32 iInsert = 0; iInsert < giNumber_Of_Inserts; iInsert++) {
 					kspi::IPlugIn* pPlugIn = pChannel->GetInsert(iInsert);
 					if (pPlugIn) {
 						CAutoDelete<IChunk> pChunk(IChunk::Create(NULL, 0, 'INSR'));

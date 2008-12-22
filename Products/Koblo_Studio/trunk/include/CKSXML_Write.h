@@ -65,7 +65,24 @@ private:
 	void Write_Window_Rack(TiXmlElement* pParent);
 	void Write_Window_Position(TiXmlElement* pParent, tuint uiPosX, tuint uiPosY);
 	void Write_Window_Size(TiXmlElement* pParent, tuint uiSizeX, tuint uiSizeY);
-	//! Tracks
+	//! write samples
+	void Write_Samples(TiXmlElement* pParent);
+	void Write_Sample(TiXmlElement* pParent);
+	//! tracks
+	void Write_Tracks(TiXmlElement* pParent);
+	void Write_Track(TiXmlElement* pParent, tuint uiTrack);
+	void Write_Track_In(TiXmlElement* pParent, tuint uiTrack);
+	void Write_Track_Out(TiXmlElement* pParent, tuint uiTrack);
+	void Write_Inserts(TiXmlElement* pParent, tuint uiTrack);
+	void Write_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert);
+	//! AUX
+	void Write_AUXs(TiXmlElement* pParent, tuint uiTrack);
+	void Write_AUX(TiXmlElement* pParent, tuint uiTrack, tuint iAux); 
+	//! bus
+	void Write_Busses(TiXmlElement* pParent);
+	void Write_Bus(TiXmlElement* pParent, tuint uiID);
+	void Write_Bus_Out(TiXmlElement* pParent, tuint uiID);
+	
 	
 	
 public:

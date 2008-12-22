@@ -53,6 +53,9 @@ void CKSXML_Write::Write_Project(TiXmlDocument* pDoc)
 	Write_Branch( pProject);
 	Write_Settings( pProject);
 	Write_Editing( pProject);
+	Write_Samples(pProject);
+	Write_Tracks(pProject);
+	Write_Busses(pProject);
 	
 }
 
@@ -87,6 +90,10 @@ void CKSXML_Write::Write_Branch(TiXmlElement* pParent)
 	
 	
 }
+
+//----------------------------------------------------------------
+// settings
+//----------------------------------------------------------------
 
 void CKSXML_Write::Write_Settings(TiXmlElement* pParent)
 {
@@ -232,6 +239,10 @@ void CKSXML_Write::Write_License(TiXmlElement* pParent)
 	pParent->LinkEndChild( pLicenseTxt );
 
 }
+
+//----------------------------------------------------------------
+// editing
+//----------------------------------------------------------------
 
 void CKSXML_Write::Write_Editing(TiXmlElement* pParent)
 {
@@ -471,15 +482,403 @@ void CKSXML_Write::Write_Window_Size(TiXmlElement* pParent, tuint uiSizeX, tuint
 	
 }
 
+//----------------------------------------------------------------
+// samples
+//----------------------------------------------------------------
+void CKSXML_Write::Write_Samples(TiXmlElement* pParent)
+{
+	Add_Comment(pParent, "samples and their takes. only used takes are listed. a sample can be included that's not used on any track");
+	
+		
+	std::list<CKSPlugIn::SFileInfo*> sFileInfos = mpKSPlugIn->GetFileInfo();
+	
+	
 
+	std::list<CKSPlugIn::SFileInfo*>::iterator  itFileList = sFileInfos.begin();
+	for (; itFileList != sFileInfos.end(); itFileList++) {
+		
+		TiXmlElement* pName = new TiXmlElement( "sample" );
+		
+		
+		CKSPlugIn::SFileInfo* pInfo = *itFileList;
+	//	pInfo->sOriginalName.c_str();
+		
+		
+		TiXmlText* pSampleTxt = new TiXmlText(pInfo->sOriginalName.c_str());
+		
+		pName->LinkEndChild( pSampleTxt );
+		pParent->LinkEndChild( pName );
+		
+		
+		
+		
+		
+	}
+	
+}
 
+void CKSXML_Write::Write_Sample(TiXmlElement* pParent)
+{
+	
+	
+	
+	printf(".");
+	
+}
 
+//----------------------------------------------------------------
+// tracks bus and master
+//----------------------------------------------------------------
 
+void CKSXML_Write::Write_Tracks(TiXmlElement* pParent)
+{
+	tint32 iNrTracks = mpKSPlugIn->Get_Number_Of_Tracks();//mpKSPlugIn->msStack.iNr_Of_Tracks;
+	
+	for(tint32 i = 0; i<iNrTracks; i++){
+		
+		// ID
+		tuint uiTrack = mpKSPlugIn->Get_Track_Id(i);
+		// track
+		TiXmlElement* pTrack = new TiXmlElement( "track" );
+		pTrack->SetAttribute("id",uiTrack);
+		pParent->LinkEndChild( pTrack );
+		// write track data
+		Write_Track(pTrack, uiTrack);	
+		
+	}
+}
 
+void CKSXML_Write::Write_Track(TiXmlElement* pParent, tuint uiTrack)
+{
+	// name
+	std::string str  = mpKSPlugIn->GetChannelName(uiTrack);
+	TiXmlElement* pName = new TiXmlElement( "name" );
+	TiXmlText* pNameTxt = new TiXmlText(str.c_str());
+	pName->LinkEndChild( pNameTxt );
+	pParent->LinkEndChild( pName );
+	 
+	// description
+	TiXmlElement* pDescription = new TiXmlElement( "description" );
+	TiXmlText* pDescriptionTxt = new TiXmlText("NA");
+	pDescription->LinkEndChild( pDescriptionTxt );
+	pParent->LinkEndChild( pDescription );
+	
+	// in
+	TiXmlElement* pIn = new TiXmlElement( "in" );
+	pParent->LinkEndChild( pIn );
+	Write_Track_In(pIn, uiTrack);
+	
+	// out
+	TiXmlElement* pOut = new TiXmlElement( "out" );
+	pParent->LinkEndChild( pOut );
+	Write_Track_Out(pOut, uiTrack);
+	
+	// inserts
+	Write_Inserts(pParent, uiTrack);
+	
+	// AUXs
+	Write_AUXs(pParent, uiTrack);
+	
+	
+}
 
+void CKSXML_Write::Write_Track_In(TiXmlElement* pParent, tuint uiID)
+{
+	
+	// input
+	char pszBuff [64];
+	tint32 iVal = mpKSPlugIn->GetGlobalParm(giParam_ChIn, giSection_First_Track + uiID);
+	sprintf(pszBuff, "%d", iVal);
+	TiXmlElement* pIn = new TiXmlElement( "input" );
+	TiXmlText* pInTxt = new TiXmlText(pszBuff);
+	pIn->LinkEndChild( pInTxt );
+	pParent->LinkEndChild( pIn );
+	
+	// mode
+	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChInMode, giSection_First_Track + uiID);
+	iVal ? sprintf(pszBuff, "mono") : sprintf(pszBuff, "stereo");
+	TiXmlElement* pMode = new TiXmlElement( "in" );
+	TiXmlText* pModeTxt = new TiXmlText(pszBuff);
+	pMode->LinkEndChild( pModeTxt );
+	pParent->LinkEndChild( pMode );
+	
+	// gain
+	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChInGain, giSection_First_Track + uiID);
+	tfloat fGain	=	(tfloat)iVal * 0.0001f;
+	sprintf(pszBuff, "%f", fGain);
+	TiXmlElement* pGain = new TiXmlElement( "gain" );
+	TiXmlText* pGainTxt = new TiXmlText(pszBuff);
+	pGain->LinkEndChild( pGainTxt );
+	pParent->LinkEndChild( pGain );
+	
+}
 
+void CKSXML_Write::Write_Track_Out(TiXmlElement* pParent, tuint uiTrack)
+{
+	
+	// output
+	char pszBuff [64];
+	tint32 iVal = mpKSPlugIn->GetGlobalParm(giParam_ChOut, giSection_First_Track + uiTrack);
+	
+	if(iVal < ParmIOOffsetBus) {
+		sprintf(pszBuff, "mix", iVal);
+	}
+	else{
+		sprintf(pszBuff, "bus %d", iVal-ParmIOOffsetBus);
+	}
+	/*
+	TiXmlElement* pOut = new TiXmlElement( "out" );
+	TiXmlText* pOutTxt = new TiXmlText(pszBuff);
+	pOut->LinkEndChild( pOutTxt );
+	pParent->LinkEndChild( pOut );
+	*/
+	// gain
+	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChVol, giSection_First_Track + uiTrack);
+	tfloat fVolume	=	(tfloat)iVal * 0.0001f;
+	sprintf(pszBuff, "%f", fVolume);
+	TiXmlElement* pVolume = new TiXmlElement( "volume" );
+	TiXmlText* pVolumeTxt = new TiXmlText(pszBuff);
+	pVolume->LinkEndChild( pVolumeTxt );
+	pParent->LinkEndChild( pVolume );
+	
+	// pan
+	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChPannerLeftRight, giSection_First_Track + uiTrack);
+	tfloat fPan	=	(tfloat)iVal * 0.0001f;
+	sprintf(pszBuff, "%f", fPan);
+	TiXmlElement* pPan = new TiXmlElement( "pan" );
+	TiXmlText* pPanTxt = new TiXmlText(pszBuff);
+	pPan->LinkEndChild( pPanTxt );
+	pParent->LinkEndChild( pPan );
+	
+	// solo
+	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChSolo, giSection_First_Track + uiTrack);
+	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
+	TiXmlElement* pSolo = new TiXmlElement( "solo" );
+	TiXmlText* pSoloTxt = new TiXmlText(pszBuff);
+	pSolo->LinkEndChild( pSoloTxt );
+	pParent->LinkEndChild( pSolo );
+	
+	// mute
+	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChMute, giSection_First_Track + uiTrack);
+	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
+	TiXmlElement* pMute = new TiXmlElement( "mute" );
+	TiXmlText* pMuteTxt = new TiXmlText(pszBuff);
+	pMute->LinkEndChild( pMuteTxt );
+	pParent->LinkEndChild( pMute );
+	
+	// arm
+	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChArm, giSection_First_Track + uiTrack);
+	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
+	TiXmlElement* pArm = new TiXmlElement( "arm" );
+	TiXmlText* pArmTxt = new TiXmlText(pszBuff);
+	pArm->LinkEndChild( pArmTxt );
+	pParent->LinkEndChild( pArm );
+}
 
+void CKSXML_Write::Write_Inserts(TiXmlElement* pParent, tuint uiTrack)
+{
+	
+	for(tuint uiInsert=0; uiInsert<giNumber_Of_Inserts; uiInsert++)
+	{
+		Write_Insert( pParent, uiTrack, uiInsert);
+	}
+}
 
+void CKSXML_Write::Write_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert)
+{
+	
+	// output
+//	char pszBuff [64];
+	tint32 iInsertId = mpKSPlugIn->GetGlobalParm(giParam_ChInsert1 + uiInsert, giSection_First_Track + uiTrack);
+	
+	if(iInsertId){
+		
+		
+		// in
+		TiXmlElement* pInsert = new TiXmlElement( "insert" );
+		pParent->LinkEndChild( pInsert );
+		pInsert->SetAttribute("slot",uiInsert);
+		pInsert->SetAttribute("id", iInsertId);
+		
+		CPlugInManager* pPlugManager = mpKSPlugIn->GetPlugInManager();
+		//CPlugInManager::SPlugInInfo* pInfo = pPlugManager->GetPlugInInfo(0);
+		
+		std::string s = pPlugManager->GetPlugInVendor(iInsertId);
+		std::string u = pPlugManager->GetPlugInName(iInsertId);
+		
+		// vendor
+		TiXmlElement* pVendor = new TiXmlElement( "vendor" );
+		TiXmlText* pVendorTxt = new TiXmlText(s.c_str());
+		pVendor->LinkEndChild( pVendorTxt );
+		pInsert->LinkEndChild( pVendor );
+		
+		// product
+		TiXmlElement* pProduct = new TiXmlElement( "product" );
+		TiXmlText* pProductTxt = new TiXmlText(u.c_str());
+		pProduct->LinkEndChild( pProductTxt );
+		pInsert->LinkEndChild( pProduct );
+		
+		/*
+		// Get number of parameters here
+		// tint iParameters = pPlugManager->GetPlugInInfo(iInsertId);
+		CChannel* pChannel = dynamic_cast<CKSDSP*>(mpKSPlugIn->GetDSPEngine())->GetChannel(uiTrack);
+		kspi::IPlugIn* pPlugIn = pChannel->GetInsert(uiInsert);
+		
+		tint32 iSize = pPlugIn->GetChunkSize();
+		tchar* p = new tchar[iSize];
+		//tint* p = new tint[iSize];
+		pPlugIn->GetChunk(p);
+		
+		for(tuint i =0; i<iSize; i++){
+			printf("%d,", p[i]);
+		}
+		delete[] p;
+		printf("\n");			
+		*/	
+		
+		
+		
+		
+
+	}
+}
+
+void CKSXML_Write::Write_AUXs(TiXmlElement* pParent, tuint uiTrack)
+{
+	// prepared for more than two AUX sends
+	for(tuint iAUX=0; iAUX<giNumber_Of_AUXes; iAUX++)
+	{
+		Write_AUX( pParent, uiTrack, iAUX);
+	}
+}
+
+void CKSXML_Write::Write_AUX(TiXmlElement* pParent, tuint uiTrack, tuint iAux)
+{
+		
+	tint32 iSend = mpKSPlugIn->GetGlobalParm(giParam_ChAUX1 + iAux, giSection_First_Track + uiTrack);
+	
+	if(iSend){
+		
+		char pszBuff [64];
+		// aux
+		TiXmlElement* pAux = new TiXmlElement( "aux" );
+		pParent->LinkEndChild( pAux );
+		pAux->SetAttribute("id",iAux);
+		
+		// send
+		tfloat fVolume	=	(tfloat)iSend * 0.0001f;
+		sprintf(pszBuff, "%f", fVolume);
+		TiXmlText* pAUXTxt = new TiXmlText(pszBuff);
+		pAux->LinkEndChild( pAUXTxt );
+
+				
+	}
+/*	
+	// output
+	char pszBuff [64];
+	tint32 iSend = mpKSPlugIn->GetGlobalParm(giParam_ChAUX1 + iAux, giSection_First_Track + uiTrack);
+	
+	if(iSend){
+		
+		TiXmlElement* pAux = new TiXmlElement( "aux" );
+		pAux->LinkEndChild( pParent );
+		pAux->SetAttribute("id",iAux);
+		
+		// gain
+		tfloat fVolume	=	(tfloat)iSend * 0.0001f;
+		sprintf(pszBuff, "%f", fVolume);
+		TiXmlElement* pSend = new TiXmlElement( "send" );
+		TiXmlText* pSendTxt = new TiXmlText(pszBuff);
+		pSend->LinkEndChild( pSendTxt );
+		pAux->LinkEndChild( pSend );
+		
+	}
+ */
+}
+
+void CKSXML_Write::Write_Busses(TiXmlElement* pParent)
+{
+//	tint32 iNrTracks = mpKSPlugIn->Get_Number_Of_Tracks();//mpKSPlugIn->msStack.iNr_Of_Tracks;
+	
+	for(tint32 i = 0; i<giNumber_Of_Busses; i++){
+		
+		// ID
+	//	tuint uiID = mpKSPlugIn->Get_Track_Id(i);
+		// track
+		TiXmlElement* pBus = new TiXmlElement( "bus" );
+		pBus->SetAttribute("id",i);
+		pParent->LinkEndChild( pBus );
+		// write track data
+		Write_Bus(pBus, i);	
+		
+	}
+}
+
+void CKSXML_Write::Write_Bus(TiXmlElement* pParent, tuint uiID)
+{
+	// out
+	TiXmlElement* pOut = new TiXmlElement( "out" );
+	pParent->LinkEndChild( pOut );
+	Write_Bus_Out(pOut, uiID);
+	
+}
+
+void CKSXML_Write::Write_Bus_Out(TiXmlElement* pParent, tuint uiID)
+{
+	
+	// output
+	char pszBuff [64];
+	tint32 iVal = mpKSPlugIn->GetGlobalParm(giParam_Buss_Out, giSection_First_Buss + uiID);
+	
+	if(iVal < ParmIOOffsetBus) {
+		sprintf(pszBuff, "mix", iVal);
+	}
+	else{
+		sprintf(pszBuff, "bus %d", iVal-ParmIOOffsetBus);
+	}
+	TiXmlElement* pOut = new TiXmlElement( "out" );
+	TiXmlText* pOutTxt = new TiXmlText(pszBuff);
+	pOut->LinkEndChild( pOutTxt );
+	pParent->LinkEndChild( pOut );
+	
+	// gain
+	iVal = mpKSPlugIn->GetGlobalParm(giParam_Buss_Vol, giSection_First_Buss + uiID);
+	tfloat fVolume	=	(tfloat)iVal * 0.0001f;
+	sprintf(pszBuff, "%f", fVolume);
+	TiXmlElement* pVolume = new TiXmlElement( "volume" );
+	TiXmlText* pVolumeTxt = new TiXmlText(pszBuff);
+	pVolume->LinkEndChild( pVolumeTxt );
+	pParent->LinkEndChild( pVolume );
+	
+	// pan
+	iVal = mpKSPlugIn->GetGlobalParm(giParam_Buss_PannerLeftRight, giSection_First_Buss + uiID);
+	tfloat fPan	=	(tfloat)iVal * 0.0001f;
+	sprintf(pszBuff, "%f", fPan);
+	TiXmlElement* pPan = new TiXmlElement( "pan" );
+	TiXmlText* pPanTxt = new TiXmlText(pszBuff);
+	pPan->LinkEndChild( pPanTxt );
+	pParent->LinkEndChild( pPan );
+	
+	// solo
+	iVal = mpKSPlugIn->GetGlobalParm(giParam_Buss_Solo, giSection_First_Buss + uiID);
+	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
+	TiXmlElement* pSolo = new TiXmlElement( "solo" );
+	TiXmlText* pSoloTxt = new TiXmlText(pszBuff);
+	pSolo->LinkEndChild( pSoloTxt );
+	pParent->LinkEndChild( pSolo );
+	
+	// mute
+	iVal = mpKSPlugIn->GetGlobalParm(giParam_Buss_Mute, giSection_First_Buss + uiID);
+	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
+	TiXmlElement* pMute = new TiXmlElement( "mute" );
+	TiXmlText* pMuteTxt = new TiXmlText(pszBuff);
+	pMute->LinkEndChild( pMuteTxt );
+	pParent->LinkEndChild( pMute );
+	
+}
+//----------------------------------------------------------------
+// comments
+//----------------------------------------------------------------
 void CKSXML_Write::Add_Comment(TiXmlDocument* pDoc, std::string str)
 {
 	

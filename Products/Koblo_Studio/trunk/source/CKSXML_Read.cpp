@@ -94,10 +94,12 @@ void CKSXML_Read::Parse_Project_Childs(TiXmlNode* pParent)
 		printf("--------------------------  SAMPLE ----------------------------\n");
 		Set_Sample(pParent->ToElement());
 	}
+	/*
 	else if (stricmp("insert", pParent->Value()) == 0) {
 		printf("--------------------------  INSERT ----------------------------\n");
 		Set_Insert(pParent->ToElement());
 	}
+	 */
 	else if (stricmp("track", pParent->Value()) == 0) {
 		printf("-------------------------  TRACK ------------------------------\n");
 		Set_Track(pParent->ToElement());
@@ -620,113 +622,17 @@ void CKSXML_Read::Set_Sample_Take(TiXmlElement* pElement)
 	}
 }
 
-void CKSXML_Read::Set_Insert(TiXmlElement* pElement)
-{
-	if ( !pElement ) return ;
-	
-	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
-	tint32 ival;
-	
-	// sample id
-	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "insert id =  %d \n", ival);
-	
-	TiXmlNode* pChild;
-	
-	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
-		
-		if(pChild->Type() == TiXmlNode::ELEMENT){
-			
-			if (stricmp("vendor", pChild->Value()) == 0) {
-				printf( "vendor:  ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("product", pChild->Value()) == 0) {
-				printf( "product:  ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("url", pChild->Value()) == 0) {
-				printf( "url:  ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("bypass", pChild->Value()) == 0) {
-				printf( "bypass:  ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("settings", pChild->Value()) == 0) {
-				Set_Insert_Settings(pChild->ToElement());
-				printf( "\n" );
-			}
-		}
-	}
-}
-
-void CKSXML_Read::Set_Insert_Settings(TiXmlElement* pElement)
-{
-	if ( !pElement ) return ;
-	
-	TiXmlNode* pChild;
-	
-	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
-		
-		if(pChild->Type() == TiXmlNode::ELEMENT){
-			
-			if (stricmp("parameter", pChild->Value()) == 0) {
-				Set_Insert_Parameter(pChild->ToElement());
-				printf( "\n" );
-			}
-			else if (stricmp("chunk", pChild->Value()) == 0) {
-				printf( "chunk url:  ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
-			}
-		}
-	}
-}
-
-void CKSXML_Read::Set_Insert_Parameter(TiXmlElement* pElement)
-{
-	if ( !pElement ) return ;
-	
-	
-	TiXmlNode* pChild;
-	
-	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
-		
-		if(pChild->Type() == TiXmlNode::ELEMENT){
-			
-			if (stricmp("name", pChild->Value()) == 0) {
-				printf( "parameter name:  ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( ", " );
-			}
-			else if (stricmp("default", pChild->Value()) == 0) {
-				printf( "default:  ");
-				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
-				printf( ", " );
-			}
-			else if (stricmp("value", pChild->Value()) == 0) {
-				printf( "value:  ");
-				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
-			}
-		}
-	}
-}
-
 void CKSXML_Read::Set_Track(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
-	tint32 ival;
+	tint32 iTrackID;
 	
-	// sample id
-	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "track id =  %d \n", ival);
+	// track id
+	if (pAttrib->QueryIntValue(&iTrackID)==TIXML_SUCCESS)   
+		printf( "track id =  %d \n", iTrackID);
+		
 	
 	TiXmlNode* pChild;
 	
@@ -734,12 +640,6 @@ void CKSXML_Read::Set_Track(TiXmlElement* pElement)
 		
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
-			/*if (stricmp("name", pChild->Value()) == 0) {
-				printf( "sample name:  ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
-			}
-			 */
 			if (stricmp("in", pChild->Value()) == 0) {
 				Set_Track_In(pChild->ToElement());
 				printf( "\n" );
@@ -752,8 +652,8 @@ void CKSXML_Read::Set_Track(TiXmlElement* pElement)
 				Set_Track_Aux(pChild->ToElement());
 				
 			}
-			else if (stricmp("insert", pChild->Value()) == 0) {
-				Set_Track_Insert(pChild->ToElement());
+			else if (stricmp("insert", pChild->Value() ) == 0) {
+				Set_Track_Insert(pChild->ToElement(), iTrackID);
 				
 			}
 			else if (stricmp("region", pChild->Value()) == 0) {
@@ -870,23 +770,152 @@ void CKSXML_Read::Set_Track_Aux(TiXmlElement* pElement)
 	}
 }
 
-void CKSXML_Read::Set_Track_Insert(TiXmlElement* pElement)
+void CKSXML_Read::Set_Track_Insert(TiXmlElement* pElement, tint32 uTrack)
 {
+	if ( !pElement ) return ;
+	
+	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
+	tint32 iSlot, iPluginId;
+	TiXmlNode* pChild;
+	
+	// slot id
+	if (pAttrib->QueryIntValue(&iSlot)==TIXML_SUCCESS) {
+		printf( "insert:%d,  ", iSlot);
+		// plug-in id
+		if (pAttrib->QueryIntValue(&iPluginId)==TIXML_SUCCESS) {
+			printf( "plug-in id:%d,  ", iPluginId);
+			mpKSPlugIn->SetGlobalParm(giParam_ChInsert1 + iSlot, iPluginId, giSection_First_Track + uTrack);
+		}
+	}
+	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
+		
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			
+			if (stricmp("vendor", pChild->Value()) == 0) {
+				printf( "vendor:  ");
+				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("product", pChild->Value()) == 0) {
+				printf( "product:  ");
+				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("url", pChild->Value()) == 0) {
+				printf( "url:  ");
+				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("bypass", pChild->Value()) == 0) {
+				printf( "bypass:  ");
+				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("settings", pChild->Value()) == 0) {
+				Set_Insert_Settings(pChild->ToElement());
+				printf( "\n" );
+			}
+		}
+	}
+}
+
+void CKSXML_Read::Set_Insert(TiXmlElement* pElement)
+{
+	/*
 	if ( !pElement ) return ;
 	
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
 	tint32 ival;
 	
-	// aux id
+	// sample id
 	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "insert slot;%d,  ", ival);
+		printf( "insert id =  %d \n", ival);
 	
-	if(pAttrib=pAttrib->Next())
+	TiXmlNode* pChild;
+	
+	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
 		
-	// aux id
-	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "id:%d \n", ival);
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			
+			if (stricmp("vendor", pChild->Value()) == 0) {
+				printf( "vendor:  ");
+				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("product", pChild->Value()) == 0) {
+				printf( "product:  ");
+				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("url", pChild->Value()) == 0) {
+				printf( "url:  ");
+				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("bypass", pChild->Value()) == 0) {
+				printf( "bypass:  ");
+				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				printf( "\n" );
+			}
+			else if (stricmp("settings", pChild->Value()) == 0) {
+				Set_Insert_Settings(pChild->ToElement());
+				printf( "\n" );
+			}
+		}
+	}
+	 */
+}
+
+void CKSXML_Read::Set_Insert_Settings(TiXmlElement* pElement)
+{
+	if ( !pElement ) return ;
 	
+	TiXmlNode* pChild;
+	
+	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
+		
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			
+			if (stricmp("parameter", pChild->Value()) == 0) {
+				Set_Insert_Parameter(pChild->ToElement());
+				printf( "\n" );
+			}
+			else if (stricmp("chunk", pChild->Value()) == 0) {
+				printf( "chunk url:  ");
+				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				printf( "\n" );
+			}
+		}
+	}
+}
+
+void CKSXML_Read::Set_Insert_Parameter(TiXmlElement* pElement)
+{
+	if ( !pElement ) return ;
+	
+	
+	TiXmlNode* pChild;
+	
+	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
+		
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			
+			if (stricmp("name", pChild->Value()) == 0) {
+				printf( "parameter name:  ");
+				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				printf( ", " );
+			}
+			else if (stricmp("default", pChild->Value()) == 0) {
+				printf( "default:  ");
+				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
+				printf( ", " );
+			}
+			else if (stricmp("value", pChild->Value()) == 0) {
+				printf( "value:  ");
+				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
+			}
+		}
+	}
 }
 
 void CKSXML_Read::Set_Track_Region(TiXmlElement* pElement)
@@ -992,11 +1021,12 @@ void CKSXML_Read::Set_Bus(TiXmlElement* pElement)
 				Set_Track_Aux(pChild->ToElement());
 				
 			}
+			/*
 			else if (stricmp("insert", pChild->Value()) == 0) {
 				Set_Track_Insert(pChild->ToElement());
 				
 			}
-			
+			 */
 		}
 	}
 }

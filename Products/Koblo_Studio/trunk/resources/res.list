@@ -59,6 +59,7 @@ Back_Track_Side.tga IDB_Back_Track_Side
 Back_Track_TimeDisplay.tga IDB_Back_Track_TimeDisplay
 Back_Track_Top_Zoom.tga IDB_Back_Track_Top_Zoom
 Back_Track_Top.tga IDB_Back_Track_Top
+Back_VST_Setup.tga IDB_Back_VST_Setup
 
 
 Button_A.tga IDB_Button_A
@@ -70,6 +71,7 @@ Button_Arm_Vertical.tga IDB_Button_Arm_Vertical
 Button_AUX_Insert.tga IDB_Button_AUX_Insert
 Button_B.tga IDB_Button_B
 Button_BA.tga IDB_Button_BA
+Button_Browse.tga IDB_Button_Browse
 Button_Cancel.tga IDB_Button_Cancel
 Button_Check_100_16.tga IDB_Button_Check_100_16
 Button_Close.tga IDB_Button_Close
@@ -85,6 +87,7 @@ Button_Mute_Horizontal.tga IDB_Button_Mute_Horizontal
 Button_Mute_Vertical.tga IDB_Button_Mute_Vertical
 Button_Next_Preset.tga IDB_Button_Next_Preset
 Button_Normalize.tga IDB_Button_Normalize
+Button_OK.tga IDB_Button_OK
 Button_Pan_Handle.tga IDB_Button_Pan_Handle
 Button_Play.tga IDB_Button_Play
 Button_Popup.tga IDB_Button_Popup

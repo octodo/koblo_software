@@ -197,6 +197,8 @@ struct SLoop_Drawing_Info
 	
 };
 
+
+
 //! Pane messasges
 enum EExportMsg
 {
