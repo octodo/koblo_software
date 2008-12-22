@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		320343FC0EFC07C700CC630E /* CDownloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 320343FB0EFC07C600CC630E /* CDownloader.cpp */; };
+		320343FE0EFC07DC00CC630E /* CDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 320343FD0EFC07DC00CC630E /* CDownloader.h */; };
+		320344000EFC07F200CC630E /* IDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 320343FF0EFC07F200CC630E /* IDownloader.h */; };
+		320344040EFC0AA100CC630E /* CDownloaderOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 320344030EFC0AA100CC630E /* CDownloaderOSX.cpp */; };
 		3237EA350EEE756D00E21895 /* IINetUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 3237EA340EEE756D00E21895 /* IINetUtil.h */; };
 		D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
 		E3E010650A4FE70F00857352 /* CINetUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */; };
@@ -37,6 +41,10 @@
 /* Begin PBXFileReference section */
 		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };
+		320343FB0EFC07C600CC630E /* CDownloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDownloader.cpp; path = ../../source/CDownloader.cpp; sourceTree = SOURCE_ROOT; };
+		320343FD0EFC07DC00CC630E /* CDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDownloader.h; path = ../../include/CDownloader.h; sourceTree = SOURCE_ROOT; };
+		320343FF0EFC07F200CC630E /* IDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDownloader.h; path = ../../interface/IDownloader.h; sourceTree = SOURCE_ROOT; };
+		320344030EFC0AA100CC630E /* CDownloaderOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDownloaderOSX.cpp; path = ../../source/CDownloaderOSX.cpp; sourceTree = SOURCE_ROOT; };
 		3237EA340EEE756D00E21895 /* IINetUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IINetUtil.h; path = ../../interface/IINetUtil.h; sourceTree = SOURCE_ROOT; };
 		D2AAC06F0554671400DB518D /* libINetEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libINetEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CINetUtil.cpp; path = ../../source/CINetUtil.cpp; sourceTree = SOURCE_ROOT; };
@@ -99,6 +107,7 @@
 		0B77317608A634BB004B30F3 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				320343FF0EFC07F200CC630E /* IDownloader.h */,
 				3237EA340EEE756D00E21895 /* IINetUtil.h */,
 				E3E010780A4FE72C00857352 /* ine.h */,
 			);
@@ -108,6 +117,7 @@
 		0B77318108A634CF004B30F3 /* Include */ = {
 			isa = PBXGroup;
 			children = (
+				320343FD0EFC07DC00CC630E /* CDownloader.h */,
 				E3E0106B0A4FE71F00857352 /* CINetUtil.h */,
 				E3E0106E0A4FE71F00857352 /* ineInternal.h */,
 				E3E0106F0A4FE71F00857352 /* ineInternalOS.h */,
@@ -118,6 +128,8 @@
 		0B77318208A634D6004B30F3 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				320344030EFC0AA100CC630E /* CDownloaderOSX.cpp */,
+				320343FB0EFC07C600CC630E /* CDownloader.cpp */,
 				E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */,
 				E3E010600A4FE70F00857352 /* CINetUtilMac.cpp */,
 			);
@@ -144,6 +156,8 @@
 				E3E010760A4FE71F00857352 /* ineInternalOS.h in Headers */,
 				E3E0107A0A4FE72C00857352 /* ine.h in Headers */,
 				3237EA350EEE756D00E21895 /* IINetUtil.h in Headers */,
+				320343FE0EFC07DC00CC630E /* CDownloader.h in Headers */,
+				320344000EFC07F200CC630E /* IDownloader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +223,8 @@
 			files = (
 				E3E010650A4FE70F00857352 /* CINetUtil.cpp in Sources */,
 				E3E010660A4FE70F00857352 /* CINetUtilMac.cpp in Sources */,
+				320343FC0EFC07C700CC630E /* CDownloader.cpp in Sources */,
+				320344040EFC0AA100CC630E /* CDownloaderOSX.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

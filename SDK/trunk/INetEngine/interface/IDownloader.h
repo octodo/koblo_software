@@ -15,37 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
-/*!	\file ine.h
-	\author Michael Olsen
-	\date 23/May/2005
-	\date 23/May/2005
-*/
+#ifndef _ine_i_downloader
+#define _ine_i_downloader
 
-#ifndef _INE_INCLUDED
-#define _INE_INCLUDED
-
-
-
-// BaseUtilities
-#include "bu.h"
-
-
-namespace k2s {
-
-/*! \namespace
- * \brief Namespace for INet engine
+/*! \class IDownloader
+ * \brief Interface to download a large file from a web address
  *
- * This namespace is for accessing a database residing on another server (using tcp/ip)
+ * Supplies more complex and buffered method for accessing web-data
 */
-namespace ine {
+class IDownloader : public virtual IDestructable
+{
+public:
+	static IDownloader* Create();
 
-#include "IINetUtil.h"
-#include "IDownloader.h"
+};
 
-}	// namespace ine
-
-}	// namespace k2s
-
-#endif	// _INE_INCLUDED
-
-
+#endif // _ine_i_downloader
