@@ -76,7 +76,7 @@ public:
 		\param pParent [in]: System specific. Windows: Parent HWND
 		\param pRect [in]: Client rectangle.
 	*/
-	virtual void MakeWindow(void* pParent, const SRect* pRect) = 0;
+	virtual void MakeWindow(void* pParent, const SRect* pRectF, tbool bInstallEventHandler = true) = 0;
 
 	virtual void PrepareBuffer(const SRect* pRect) = 0;
 

@@ -42,7 +42,13 @@ public:
 
 	virtual void UpdateAll() {}
 
+	virtual void CreateResourceManager() {}
+
+	void KSPI_CALL MakeWindow(void* p);
+
 protected:
+	AEffect* mpVSTEffect;
+
 	//! Top pane
 	CBaseTopPane* mpTopPane;
 

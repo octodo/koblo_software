@@ -54,6 +54,10 @@ void CWindowWinGDI::GetDrawPointer(void** pp)
 
 void CWindowWinGDI::OnPaint()
 {
+	if (mpPane == NULL) {
+		return;
+	}
+
 	POINT pnt;
 	pnt.x = 0;
 	pnt.y = 0;

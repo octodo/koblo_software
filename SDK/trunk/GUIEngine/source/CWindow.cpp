@@ -113,6 +113,10 @@ void CWindow::GetInvalidatedRect(tint32& riX, tint32& riY, tint32& riCX, tint32&
 
 tbool CWindow::OnMouse(EMouseMsg MouseMsg, const SPos& Pos)
 {
+	if (mpPane == NULL) {
+		return false;
+	}
+
 	mbResendMouseEvent = false;
 
 	bool bRet = false;

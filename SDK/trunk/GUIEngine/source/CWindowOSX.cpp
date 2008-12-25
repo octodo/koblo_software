@@ -148,7 +148,7 @@ OSStatus WindowHandlerProc(EventHandlerCallRef inHandlerCallRef, EventRef inEven
 
 OSErr DragAndDropProc(WindowRef theWindow, void * handlerRefCon, DragRef theDrag);
 
-void CWindowOSX::MakeWindow(void* pParent, const SRect* pRect)
+void CWindowOSX::MakeWindow(void* pParent, const SRect* pRect, tbool bInstallEventHandler)
 {
 	mSize = (SSize)(*pRect);
 
@@ -217,6 +217,10 @@ void CWindowOSX::MakeWindow(void* pParent, const SRect* pRect)
 		mWindowRefParent = mWindowRef;
 		mWindowRef = WndRefSub;
 	}*/
+
+	if (bInstallEventHandler == false) {
+		return;
+	}
 
 	// Acquire mouse hook
 	OSStatus err;

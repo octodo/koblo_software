@@ -81,6 +81,8 @@ public:
 
 	void SetDemoExpiredDialog(tbool bNew) {mbShowDemoExpiredDialog = bNew;}
 
+	AEffect* GetEffect() {return mpVSTEffect;}
+
 protected:
 	std::string msEffectPathName;
 

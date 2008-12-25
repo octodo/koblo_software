@@ -602,6 +602,38 @@ void CPopupMenu::GetText(tint32 iValue, tchar* psz)
 	}
 }
 
+void* CPopupMenu::GetData(tint32 iValue)
+{
+	void* pRet = NULL;
+
+	tint iItem;
+	for (iItem = 0; iItem < mItems.iItemCount; iItem++) {
+		// Lasse, modified 2007-12-10 - flexibility
+		/*
+		 if (mItems.pItems[iItem].pSubItemList) {
+		 */
+		if (mppPopupMenus[iItem]) {
+			// .. Lasse
+			// Has a sub-menu
+			pRet = mppPopupMenus[iItem]->GetData(iValue);
+			// Did we find it?
+			if (pRet != 0) {
+				// Yes, we found it
+				break;
+			}
+		}
+		else {
+			// Has no sub-menu
+			if (mItems.pItems[iItem].iValue == iValue) {
+				// Found it
+				pRet = mItems.pItems[iItem].pData;
+			}
+		}
+	}
+
+	return pRet;
+}
+
 void CPopupMenu::OnDraw(const SRect &rUpdate)
 {
 	if( !IsVisible() )

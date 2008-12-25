@@ -82,7 +82,7 @@
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		0BBA14EB08B4DAE40001EB6F /* IOKit */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = IOKit; path = /System/Library/Frameworks/IOKit.framework/Versions/A/IOKit; sourceTree = "<absolute>"; };
-		8D01CCD10486CAD60068D4B7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D01CCD10486CAD60068D4B7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D01CCD20486CAD60068D4B7 /* VST2KSPI.kspi */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VST2KSPI.kspi; sourceTree = BUILT_PRODUCTS_DIR; };
 		E338DAAE0BD494AD009ABE91 /* CParmGlobal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CParmGlobal.h; path = ../../Include/CParmGlobal.h; sourceTree = SOURCE_ROOT; };
 		E338DAB80BD494BB009ABE91 /* CParmGlobal.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CParmGlobal.cpp; path = ../../Source/CParmGlobal.cpp; sourceTree = SOURCE_ROOT; };
@@ -132,7 +132,7 @@
 		E3CC10A90D2CD42100A41EE8 /* SParameterInfo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SParameterInfo.h; path = ../../../../SDK/trunk/KSPI/Interface/SParameterInfo.h; sourceTree = SOURCE_ROOT; };
 		E3CC10AA0D2CD43100A41EE8 /* kspiC.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = kspiC.cpp; path = ../../../../SDK/trunk/KSPI/source/kspiC.cpp; sourceTree = SOURCE_ROOT; };
 		E3CC11EA0D2CF2C400A41EE8 /* kspiCHost.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = kspiCHost.cpp; path = ../../../../SDK/trunk/KSPI/source/kspiCHost.cpp; sourceTree = SOURCE_ROOT; };
-		E3CC843A0BD49CF6005C7AEB /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
+		E3CC843A0BD49CF6005C7AEB /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
 		E3E019100D49EA3F003F459F /* VST2KSPI.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VST2KSPI.h; path = ../../Include/VST2KSPI.h; sourceTree = SOURCE_ROOT; };
 		E3E0196F0D49EBC1003F459F /* CVST2KSPI.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CVST2KSPI.cpp; path = ../../Source/CVST2KSPI.cpp; sourceTree = SOURCE_ROOT; };
 		E3F389580BD4A20A00101957 /* CVST2KSPIGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CVST2KSPIGUI.cpp; path = ../../Source/CVST2KSPIGUI.cpp; sourceTree = SOURCE_ROOT; };

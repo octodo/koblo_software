@@ -27,7 +27,8 @@ extern "C" {
 //------------------------------------------------------------------------
 /** Prototype of the export function main */
 //------------------------------------------------------------------------
-/*VST_EXPORT AEffect* VSTPluginMain (audioMasterCallback audioMaster)
+#ifdef WIN32
+VST_EXPORT AEffect* VSTPluginMain (audioMasterCallback audioMaster)
 {
 	// Get VST Version of the Host
 	if (!audioMaster (0, audioMasterVersion, 0, 0, 0, 0))
@@ -40,7 +41,8 @@ extern "C" {
 
 	// Return the VST AEffect structur
 	return effect->getAeffect ();
-}*/
+}
+#endif	// WIN32
 
 // support for old hosts not looking for VSTPluginMain
 #if (TARGET_API_MAC_CARBON && __ppc__)

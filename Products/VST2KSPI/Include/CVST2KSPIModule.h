@@ -28,4 +28,6 @@ public:
 protected:
 	//! List of effects found
 	std::list<std::string> msEffectPathNames;
+
+	void DoScanDirectory(const std::string& sPathName);
 };

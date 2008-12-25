@@ -76,9 +76,15 @@ void CTrack_AUX_Insert::Init()
 		s += pInfo->sProductName;
 		*/
 		std::string s = pInfo->sProductName;
-		List.pItems[iPlugIn + 1] = ge::IPopupMenu::SMenuItem(s.c_str(), (pInfo->uiCompanyID << 8) | pInfo->uiProductID, NULL);
+		tint32* pi = new tint32[2];
+		pi[0] = pInfo->uiCompanyID;
+		pi[1] = pInfo->uiProductID;
+		List.pItems[iPlugIn + 1] = ge::IPopupMenu::SMenuItem(s.c_str(), iPlugIn + 1, NULL, NULL, -1, 0, (void*)pi);
 	}
-	List.pItems[0] = ge::IPopupMenu::SMenuItem("None", 0, NULL);
+	tint32* pi = new tint32[2];
+	pi[0] = 0;
+	pi[1] = 0;
+	List.pItems[0] = ge::IPopupMenu::SMenuItem("None", 0, NULL, NULL, -1, 0, (void*)pi);
 
 	CreatePop(giCtrl_InsertPop1 + miCtrl_Offset, IDB_Invisible_Button_16_64, List, ge::SPos(2 + 64, 48), ge::SSize(61, 15), ge::SRGB(204,204,204));
 	CreatePop(giCtrl_InsertPop2 + miCtrl_Offset, IDB_Invisible_Button_16_64, List, ge::SPos(2 + 64, 48+ 16), ge::SSize(61, 15), ge::SRGB(204,204,204));
@@ -104,7 +110,7 @@ void CTrack_AUX_Insert::ConnectControls()
 void CTrack_AUX_Insert::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 {
 	GetParmMan()->ControlUpdate(miPaneID, pControl->GetID(), iValueNew);
-	//tbool iTest;
+	tbool iTest;
 	if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit1) {
 	//	iTest = mpKSPlugIn->GetGlobalParm(giParam_Ch_Insert1GUIOpen, miSection);
 	//	GetParmMan()->Set(true, !iTest, giParam_Ch_Insert1GUIOpen, de::IParameterManager::TypeGlobal, miSection);

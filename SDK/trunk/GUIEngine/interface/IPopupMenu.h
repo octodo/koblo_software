@@ -35,6 +35,8 @@ public:
 		tchar pszText[64];
 		//! Items value. Ignored for items with submenus
 		tint32 iValue;
+		//! Extra data
+		void* pData;
 		//! If non-NULL points to list of sub items, and thus tells us this is a popup item
 		SMenuItemList* pSubItemList;
 		//! Bitmap to place next to text
@@ -44,17 +46,16 @@ public:
 		//! How many frames total in bitmap
 		tint32 iNrOfBitmapFrames;
 
-
 		//! Constructor
-		SMenuItem(const tchar* pText,tint32 iValue, SMenuItemList* pList, IBitmapResource* pBitmap = NULL, tint32 iBitmapFrame = -1, tint32 iNrOfBitmapFrames = 0) {
+		SMenuItem(const tchar* pText,tint32 iValue, SMenuItemList* pList, IBitmapResource* pBitmap = NULL, tint32 iBitmapFrame = -1, tint32 iNrOfBitmapFrames = 0, void* pData = NULL) {
 			strcpy((char*)pszText, (const char*)pText);
 			this->iValue = iValue;
 			pSubItemList = pList;
 			this->pBitmap = pBitmap;
 			this->iBitmapFrame = iBitmapFrame;
 			this->iNrOfBitmapFrames = iNrOfBitmapFrames;
-			
-			
+			this->pData = pData;
+
 			// Lasse, added 2007-12-03 - more flexibility
 			// Allow for correct ressource handling when bitmaps differ between items
 			if (pBitmap) {
@@ -242,5 +243,6 @@ public:
 	virtual void SetValueUpdatesParentToo(tbool bWillSetParent = true, tbool bApplyRecursively = true) = 0;
 	
 	// .. Lasse
-	
+
+	virtual void* GetData(tint32 iIndex) = 0;
 };

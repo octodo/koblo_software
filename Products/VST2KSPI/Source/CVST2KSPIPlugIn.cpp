@@ -23,6 +23,8 @@ VstIntPtr VSTCALLBACK audioMasterCallbackPlugIn(AEffect* effect, VstInt32 opcode
 	return 0;
 }
 
+void ModifyPathName(std::string& rsPathName);
+
 CVST2KSPIPlugIn::CVST2KSPIPlugIn(CVST2KSPIModule* pModule, const std::string& sEffectPathName)
 	: CBasePlugIn(dynamic_cast<CBaseModule*>(pModule), giAudioMaxBufferSize, dynamic_cast<CBaseDSPEngine*>(new CEcho()), 0, COMPANY_NAME, PRODUCT_NAME),
 	mbUpdateGUISettings(true),
@@ -42,6 +44,33 @@ CVST2KSPIPlugIn::CVST2KSPIPlugIn(CVST2KSPIModule* pModule, const std::string& sE
 
 	miRandom = 0x123456;
 
+#ifdef WIN32
+	{
+		HMODULE hDLL;
+
+		// Load plug-in
+		std::string s2 = msEffectPathName;
+		ModifyPathName(s2);
+		hDLL = LoadLibrary(s2.c_str());
+		if (hDLL == NULL) {
+		}
+			
+		VSTMainFunc mainFunc = (VSTMainFunc)(void*)GetProcAddress(hDLL, "VSTPluginMain");
+		if (mainFunc == NULL) {
+		}
+
+		try {
+			mpVSTEffect = mainFunc(audioMasterCallbackPlugIn);
+			mpVSTEffect->dispatcher(mpVSTEffect, effOpen, 0, 0, 0, 0.0);
+			mpVSTEffect->dispatcher(mpVSTEffect, effSetSampleRate, 0, 0, 0, 44100.0f);
+			mpVSTEffect->dispatcher(mpVSTEffect, effSetBlockSize, 0, 32, 0, 0.0);
+		}
+		catch(...) {
+			// Plug-in crashed
+			mpVSTEffect = NULL;
+		}
+	}
+#else	// WIN32
 	{
 		CFBundleRef BundleRef;
 
@@ -88,6 +117,7 @@ CVST2KSPIPlugIn::CVST2KSPIPlugIn(CVST2KSPIModule* pModule, const std::string& sE
 			mpVSTEffect = NULL;
 		}
 	}
+#endif	// WIN32 / else
 }
 
 CVST2KSPIPlugIn::~CVST2KSPIPlugIn()
@@ -115,6 +145,9 @@ kspi::IGUI* CVST2KSPIPlugIn::CreateGUI(tint32 /*iIndex*/)
 tint32 CVST2KSPIPlugIn::GetProductID()
 {
 	return mpVSTEffect->uniqueID;
+//	tint32 iID = mpVSTEffect->uniqueID;
+//	iID = iID & 0xffffff;
+//	return iID;
 }
 
 void CVST2KSPIPlugIn::GetProductName(tchar* pszName)
@@ -282,71 +315,9 @@ void CVST2KSPIPlugIn::UpdateAllGUI()
 
 void CVST2KSPIPlugIn::ProcessNonInPlace(tfloat** ppfSamplesOut, const tfloat** ppfSamplesIn, tuint32 iNrOfSamples)
 {
-	if (mbCanProcess) {
-#ifdef _DEMO_
-			tuint32 uiTimeNow = ITime::GetTimeMS();
+	CAutoLock Lock(mMutex);
 
-			const tuint32 uiTimeForDemoMinutes = 15;
-			const tuint32 uiTimeForDemoSeconds = uiTimeForDemoMinutes * 60;
-			const tuint32 uiTimeForDemoMS = uiTimeForDemoSeconds * 1000;
-			if (muiTimeWhenStarted + uiTimeForDemoMS <= uiTimeNow) {
-				// Demo time expired
-				mbCanProcess = false;
-				mbShowDemoExpiredDialog = true;
-			}
-#endif	// _DEMO_
-
-		CBasePlugIn::ProcessNonInPlace(ppfSamplesOut, ppfSamplesIn, iNrOfSamples);
-
-		if (mbRegistered == false) {
-			miNoiseCounterMax0 = (tint)GetSampleRate() * 10;
-			miNoiseCounterMax1 = (tint)GetSampleRate() * 2;
-
-			tfloat32* pfOut0 = ppfSamplesOut[0];
-			tfloat32* pfOut1 = ppfSamplesOut[1];
-
-			tint iSample;
-			for (iSample = 0; iSample < (tint)iNrOfSamples; iSample++) {
-				if (miNoiseMode == 1) {
-					tuint32 uiNew;
-					uiNew = ((miRandom >> 17) & 1)
-						^ ((miRandom >> 4) & 1)
-						^ ((miRandom >> 1) & 1)
-						^ (miRandom & 1);
-					miRandom = miRandom << 1;
-					miRandom = miRandom & 0x7fffff;
-					miRandom = miRandom | uiNew;
-
-					if (miRandom == 0) {
-						miRandom = 1;
-					}
-
-					tint32 iTmp = miRandom;
-					iTmp = iTmp << 8;
-					tfloat32 fRandom = (tfloat32)(iTmp / (tfloat64)0x7fffffff);
-					fRandom = (fRandom - 0.5f) * 2;
-
-					pfOut0[iSample] = (tfloat32)(pfOut0[iSample] * 0.7 + fRandom * 0.007);
-					pfOut1[iSample] = (tfloat32)(pfOut1[iSample] * 0.7 + fRandom * 0.007);
-				}
-
-				miNoiseCounter++;
-				tint iNoiseMax = ((miNoiseMode == 0) ? miNoiseCounterMax0 : miNoiseCounterMax1);
-				if (miNoiseCounter >= iNoiseMax) {
-					miNoiseCounter = 0;
-
-					miNoiseMode = (miNoiseMode ? 0 : 1);
-				}
-			}
-		}
-	}
-	else {
-		tint iChannels = 2;
-		for (tint iChannel = 0; iChannel < iChannels; iChannel++) {
-			tfloat* pfOut = ppfSamplesOut[iChannel];
-			memset(pfOut, 0, iNrOfSamples * sizeof(tfloat));
-		}
-	}
+	mpVSTEffect->processReplacing(mpVSTEffect, (float**)ppfSamplesIn, (float**)ppfSamplesOut, iNrOfSamples);
 }
 
 

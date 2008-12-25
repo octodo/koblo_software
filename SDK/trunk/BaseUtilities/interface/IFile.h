@@ -156,7 +156,11 @@ public:
 		//! OSX: The 'Music' folder inside the users private folder. Win32: The 'My Music' folder inside the users Documents folder
 		SystemDirMyMusic,
 		//! OSX: "Chewable" folder that gets cleaned upon boot. Win32: Temporary folder (same as TEMP env-variable).
-		SystemDirScratch
+		SystemDirScratch,
+		//! OSX: /Library/. Win32: Not implemented
+		SystemDirLibrary,
+		//! OSX: User dir. Win32: Not implemented
+		SystemDirUser
 	};
 
 	//! Static call to get system directory

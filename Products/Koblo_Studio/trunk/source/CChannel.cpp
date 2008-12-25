@@ -121,14 +121,14 @@ void CChannel::SetSongPosition(tuint64 uiPosNew)
 	}
 }
 
-void CChannel::AddInsert(tint32 iInsert, tuint32 uiCompanyID, tuint32 uiProductID)
+void CChannel::AddInsert(tint32 iInsert, tuint32 uiCompanyID, tuint32 uiProductID, tuint32 uiProductID2)
 {
 	CPlugInManager* pPlugManager = dynamic_cast<CKSPlugIn*>(mpDSP->GetPlugIn())->GetPlugInManager();
-
+	
 	if (mppInsert[iInsert]) {
 		pPlugManager->UnloadPlugIn(mhInserts[iInsert], miChannelNumber, iInsert);
 	}
-
+	
 	if (uiCompanyID == 0 && uiProductID == 0) {
 		mppInsert[iInsert] = NULL;
 	}
@@ -136,7 +136,10 @@ void CChannel::AddInsert(tint32 iInsert, tuint32 uiCompanyID, tuint32 uiProductI
 		// Stop updating of meters
 		mpDSP->GetPlugIn()->All_Plugins_Created(false);
 		mhInserts[iInsert] = pPlugManager->LoadPlugIn(uiCompanyID, uiProductID, miChannelNumber, iInsert);
-
+		
+		if (mhInserts[iInsert] == CPlugInManager::mInvalidHandleValue) {
+			mhInserts[iInsert] = pPlugManager->LoadPlugIn(2, uiProductID2, miChannelNumber, iInsert);
+		}
 		if (mhInserts[iInsert] == CPlugInManager::mInvalidHandleValue) {
 			mppInsert[iInsert] = NULL;
 		}

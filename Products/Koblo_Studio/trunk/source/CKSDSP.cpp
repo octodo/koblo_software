@@ -765,7 +765,7 @@ void CKSDSP::UpdateBussData(tint32 iID, tint32 iValue, tint32 iBus)
 		case giParam_Buss_Insert4:
 			{
 				tint32 iInsert = iID - giParam_Buss_Insert1;
-				mppBusses[iBus]->AddInsert(iInsert, iValue >> 8, iValue & 0xff);
+				mppBusses[iBus]->AddInsert(iInsert, iValue >> 8, iValue & 0xff, iValue);
 			}
 			break;
 
@@ -790,7 +790,7 @@ void CKSDSP::UpdateMasterData(tint32 iID, tint32 iValue)
 		case giParam_Master_Insert4:
 			{
 				tint32 iInsert = iID - giParam_Master_Insert1;
-				mpMaster->AddInsert(iInsert, iValue >> 8, iValue & 0xff);
+				mpMaster->AddInsert(iInsert, iValue >> 8, iValue & 0xff, iValue);
 			}
 			break;
 
@@ -876,7 +876,7 @@ void CKSDSP::UpdateChannelData(tint32 iID, tint32 iValue, tint32 iChannel)
 		case giParam_ChInsert4:
 			{
 				tint32 iInsert = iID - giParam_ChInsert1;
-				mppChannels[iChannel]->AddInsert(iInsert, iValue >> 8, iValue & 0xff);
+				mppChannels[iChannel]->AddInsert(iInsert, iValue >> 8, iValue & 0xff, iValue);
 			}
 			break;
 

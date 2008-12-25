@@ -51,9 +51,7 @@ void CMix_Buss_AUX_Insert::Init()
 	piIDs[ge::IPopupMenu::BitmapCenter]			= IDB_POPUP_BODY;
 	piIDs[ge::IPopupMenu::BitmapCenterInv]		= IDB_POPUP_BODY_INVERTED;
 	piIDs[ge::IPopupMenu::BitmapBottom]			= IDB_PopupBorder;
-	
-	
-//!!! Make global list used by channel and buses
+
 	CPlugInManager* pPlugManager = mpKSPlugIn->GetPlugInManager();
 	tint32 iPlugInCount = pPlugManager->GetNrOfPlugIns();
 	ge::IPopupMenu::SMenuItemList List;
@@ -67,11 +65,16 @@ void CMix_Buss_AUX_Insert::Init()
 		s += pInfo->sProductName;
 	*/
 		std::string s = pInfo->sProductName;
-		
-		List.pItems[iPlugIn + 1] = ge::IPopupMenu::SMenuItem(s.c_str(), (pInfo->uiCompanyID << 8) | pInfo->uiProductID, NULL);
+		tint32* pi = new tint32[2];
+		pi[0] = pInfo->uiCompanyID;
+		pi[1] = pInfo->uiProductID;
+		List.pItems[iPlugIn + 1] = ge::IPopupMenu::SMenuItem(s.c_str(), iPlugIn + 1, NULL, NULL, -1, 0, (void*)pi);
 	}
-	List.pItems[0] = ge::IPopupMenu::SMenuItem("None", 0, NULL);
-
+	tint32* pi = new tint32[2];
+	pi[0] = 0;
+	pi[1] = 0;
+	List.pItems[0] = ge::IPopupMenu::SMenuItem("None", 0, NULL, NULL, -1, 0, (void*)pi);
+	
 	CreatePop(giCtrl_InsertPop1 + miCtrl_Offset, IDB_Invisible_Button_16_64, List, ge::SPos(64, 48), ge::SSize(61, 15),ge::SRGB(204,204,204));
 	CreatePop(giCtrl_InsertPop2 + miCtrl_Offset, IDB_Invisible_Button_16_64, List, ge::SPos(64, 48 + 16), ge::SSize(61, 15),ge::SRGB(204,204,204));
 	CreatePop(giCtrl_InsertPop3 + miCtrl_Offset, IDB_Invisible_Button_16_64, List, ge::SPos(64, 48 + 16 * 2), ge::SSize(61, 15),ge::SRGB(204,204,204));

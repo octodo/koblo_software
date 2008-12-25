@@ -16,7 +16,7 @@ public:
 	virtual ~CWindowOSX();
 
 	//! IWindow override
-	virtual void MakeWindow(void* pParent, const SRect* pRect);
+	virtual void MakeWindow(void* pParent, const SRect* pRect, tbool bInstallEventHandler = true);
 	//! IWindow override
 	virtual void PrepareBuffer(const SRect* pRect);
 	//! IWindow override

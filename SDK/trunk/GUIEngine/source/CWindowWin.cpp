@@ -139,7 +139,7 @@ HWND CWindowWin::GetHwndParent() const
 	return mhWndParent;
 }
 
-void CWindowWin::MakeWindow(void* pParent, const SRect* pRect)
+void CWindowWin::MakeWindow(void* pParent, const SRect* pRect, tbool bInstallEventHandler)
 {
 	mhWndParent = (HWND)pParent;
 
@@ -391,7 +391,7 @@ LRESULT CWindowWin::WndProc(HWND hwnd, UINT uiMsg, WPARAM wParam, LPARAM lParam,
 
 				mpInvalidater->Reset();
 
-				rbProcessed = true;
+				rbProcessed = false;
 				rcode = 0;
 				break;
 			}
