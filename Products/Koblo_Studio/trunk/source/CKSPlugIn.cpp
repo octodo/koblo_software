@@ -1537,6 +1537,8 @@ void CKSPlugIn::MenuSetupAudio()
 
 void CKSPlugIn::MenuCollaboration()
 {
+	
+	
 //	CleanProject(0);
 	
 	
