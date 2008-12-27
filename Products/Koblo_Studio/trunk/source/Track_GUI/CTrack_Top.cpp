@@ -279,7 +279,7 @@ void CTrack_Top::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 			if (iValueNew == 0) {
 				// Show/ hide Mix Window
 				tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Show_AUX_Window, giSectionGUI) != 0);
-				tbool bReallyVisible = GetPlugIn()->GetModule()->GetHost()->IsWindowVisible(2) == 0 ? false : true;
+				tbool bReallyVisible = GetPlugIn()->GetModule()->GetHost()->IsWindowVisible(giRack_Window) == 0 ? false : true;
 				if (bTest != bReallyVisible) {
 					GetPlugIn()->SetGlobalParm(giParamID_Show_AUX_Window, !bTest, giSectionGUI);
 				}

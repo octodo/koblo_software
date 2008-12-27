@@ -30,13 +30,11 @@
 class CKSPlugIn;
 
 
-class CKSXML_Write //:  public virtual CBasePlugIn, public virtual IBaseDezipperCallback, public virtual ITimerCallback_CanStop
+class CKSXML_Write
 {
 	
 private:
 	CKSPlugIn* mpKSPlugIn;
-//	TiXmlDocument mpDoc;
-//	TiXmlElement mpProject;
 	
 	void Add_Comment(TiXmlDocument* doc, std::string str);
 	void Add_Comment(TiXmlElement* pParent,std::string str);
@@ -85,6 +83,8 @@ private:
 	
 	
 	
+	
+	
 public:
 	
 	CKSXML_Write(CKSPlugIn * pKSPlugIn);
@@ -92,7 +92,7 @@ public:
 	
 	
 	//! write the XML file to Koblo.com
-	void Write_XML(std::string str);
+	void Write_XML( tint32 iProjectID);
 	
 };
 

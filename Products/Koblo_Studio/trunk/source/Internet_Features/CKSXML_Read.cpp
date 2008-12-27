@@ -24,7 +24,7 @@ void CKSXML_Read::ReadOnlineXML( std::string str)
 
 		// create TinyXml document
 		TiXmlDocument doc("koblo_studio project");
-		// parse XML file in tp TinyXml object tree
+		// parse XML file in to TinyXml object tree
 		doc.Parse(pszBuff);
 		// parse values from project tree in to KS data system
 		Parse_Root( &doc );

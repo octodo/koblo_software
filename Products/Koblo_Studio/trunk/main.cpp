@@ -277,6 +277,7 @@ void* gWndExport;
 void* gWndExportForWeb;
 void* gWndImport;
 void* gWndSetup;
+void* gWndProjectID;
 
 
 //tbool gbShowZoom;
@@ -291,6 +292,7 @@ CKSExportGUI* gpGUIExport;
 CKSExportForWebGUI* gpGUIExportForWeb;
 CKSImportGUI* gpGUIImport;
 CKSSetupGUI* gpGUISetup;
+CKSProject_ID_GUI* gpGUIProjectID;
 
 #ifdef WIN32
 #include "afxres.h"
@@ -342,7 +344,7 @@ tbool CAppCallback::OnInit(tint32 iRunIndex)
 	switch(iRunIndex) {
 		case 0:
 			gpSplashGUI->SetText("Creating Tracks Window...");
-			gpHost->ActivateWindow(7);
+			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
 		case 1:
@@ -369,7 +371,7 @@ tbool CAppCallback::OnInit(tint32 iRunIndex)
 
 		case 2:
 			gpSplashGUI->SetText("Creating Mix Window...");
-			gpHost->ActivateWindow(7);
+			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
 		case 3:
@@ -381,8 +383,8 @@ tbool CAppCallback::OnInit(tint32 iRunIndex)
 			break;
 
 		case 4:
-			gpSplashGUI->SetText("Creating AUX Window...");
-			gpHost->ActivateWindow(7);
+			gpSplashGUI->SetText("Creating Audio Export Dialog...");
+			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
 		case 5:
@@ -394,8 +396,8 @@ tbool CAppCallback::OnInit(tint32 iRunIndex)
 			break;
 
 		case 6:
-			gpSplashGUI->SetText("Creating Export Window...");
-			gpHost->ActivateWindow(7);
+			gpSplashGUI->SetText("Creating Licens Setup Dialog...");
+			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
 		case 7:
@@ -406,8 +408,8 @@ tbool CAppCallback::OnInit(tint32 iRunIndex)
 			}
 			break;
 		case 8:
-			gpSplashGUI->SetText("Creating Import Dialog...");
-			gpHost->ActivateWindow(7);
+			gpSplashGUI->SetText("Creating Import Audio Dialog...");
+			gpHost->ActivateWindow(giSplash_Window);
 			break;
 		case 9:
 			{
@@ -417,8 +419,8 @@ tbool CAppCallback::OnInit(tint32 iRunIndex)
 			}
 			break;
 		case 10:
-			gpSplashGUI->SetText("Creating Setup Dialog...");
-			gpHost->ActivateWindow(7);
+			gpSplashGUI->SetText("Creating Audio Setup Dialog...");
+			gpHost->ActivateWindow(giSplash_Window);
 			break;
 		case 11:
 			{
@@ -428,12 +430,22 @@ tbool CAppCallback::OnInit(tint32 iRunIndex)
 			}
 			break;
 
+		
+			
 		case 12:
-			gpSplashGUI->SetText("Export AUX Window...");
-			gpHost->ActivateWindow(7);
+		{
+			gpGUIProjectID->MakeWindow(gWndProjectID);
+			gpGUIProjectID->Paint();
+			pContext->SetClosingBehaviour(gWndProjectID, ge::IContext::giClosingOnlyHides);
+		}
+			break;
+			
+		case 13:
+			gpSplashGUI->SetText("Init Rack Window...");
+			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
-		case 13:
+		case 14:
 			{
 				gpGUIAUX->MakeWindow(gWndAUX);
 				gpGUIAUX->Paint();
@@ -441,68 +453,67 @@ tbool CAppCallback::OnInit(tint32 iRunIndex)
 			}
 			break;
 
-		case 14:
-			gpSplashGUI->SetText("Init Audio...");
-			gpHost->ActivateWindow(7);
+		case 15:
+			gpSplashGUI->SetText("Init Audio Setup Dialog...");
+			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
-		case 15:
+		case 16:
 			{
 				HandleNew_Audio();
 			}
 			break;
 
-		case 16:
+		case 17:
 			gpSplashGUI->SetText("Init MIDI...");
-			gpHost->ActivateWindow(7);
+			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
-		case 17:
+		case 18:
 			{
 				HandleNew_MIDI();
 			}
 			break;
 
-		case 18:
+		case 19:
 			gpSplashGUI->SetText("Init Menu...");
-			gpHost->ActivateWindow(7);
+			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
-		case 19:
+		case 20:
 			{
 				HandleNew_Menu();
 			}
 			break;
 		
-		case 20:
+		case 21:
 			gpSplashGUI->SetText("Start Audio...");
-			gpHost->ActivateWindow(7);
+			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
-		case 21:
+		case 22:
 			{
 				gpDSP->StartAudioDevices();
 			}
 			break;
 
-		case 22:
+		case 23:
 			gpSplashGUI->SetText("Done");
-			gpHost->ActivateWindow(7);
+			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
-		case 23:
+		case 24:
 			{
 				pContext->ShowWindow(gWndMain);
 			}
 			break;
 
-		case 24:
+		case 25:
 			{
-				//pContext->ShowWindow(gWndMixer, false);
-				//pContext->ShowWindow(gWndAUX, false);
 				pContext->ShowWindow(gWndSplash, false);
 			}
 			break;
+		
 
 		default:
 			// Allow for stack-tracks again
@@ -578,9 +589,9 @@ int main(int argc, char* argv[])
 #endif
 	pContext->ShowWindow(gWndSplash);
 
-	gpGUITrackEdit = dynamic_cast<CKS_TrackEditor*>(gpPlugIn->CreateGUI(0));
+	gpGUITrackEdit = dynamic_cast<CKS_TrackEditor*>(gpPlugIn->CreateGUI(giMain_Window));
 
-	gpSplashGUI = dynamic_cast<CKSSplashScreen*>(gpPlugIn->CreateGUI(1));
+	gpSplashGUI = dynamic_cast<CKSSplashScreen*>(gpPlugIn->CreateGUI(giSplash_Window));
 	gpSplashGUI->MakeWindow(gWndSplash);
 	gpSplashGUI->Paint();
 /*	InstallWindowEventHandler( gWndSplash, GetWindowEventHandlerUPP(),
@@ -598,7 +609,7 @@ int main(int argc, char* argv[])
 #ifdef WIN32
 	gWndMixer = pContext->CreateExtraWindow((void*)"Koblo Studio Mixer", ge::SSize(1000, 382));
 #endif
-	gpGUIMixer = dynamic_cast<CKSMixerGUI*>(gpPlugIn->CreateGUI(2));
+	gpGUIMixer = dynamic_cast<CKSMixerGUI*>(gpPlugIn->CreateGUI(giMix_Window));
 	pContext->ShowWindow(gWndMixer, false);
 //------------------------	
 #ifdef _Mac
@@ -607,7 +618,7 @@ int main(int argc, char* argv[])
 #ifdef WIN32
 	gWndAUX = pContext->CreateExtraWindow((void*)"Koblo Studio AUX Rack", ge::SSize(578, 700));
 #endif
-	gpGUIAUX = dynamic_cast<CKSAUXGUI*>(gpPlugIn->CreateGUI(3));
+	gpGUIAUX = dynamic_cast<CKSAUXGUI*>(gpPlugIn->CreateGUI(giRack_Window));
 	pContext->ShowWindow(gWndAUX, false);
 //------------------------	
 #ifdef _Mac
@@ -617,7 +628,7 @@ int main(int argc, char* argv[])
 	gWndExport = pContext->CreateExtraWindow((void*)"Koblo Studio Export", ge::SSize(386, 242));
 #endif
 
-	gpGUIExport = dynamic_cast<CKSExportGUI*>(gpPlugIn->CreateGUI(5));
+	gpGUIExport = dynamic_cast<CKSExportGUI*>(gpPlugIn->CreateGUI(giExport_Audio_Window));
 	pContext->ShowWindow(gWndExport, false);
 //------------------------
 #ifdef _Mac
@@ -627,7 +638,7 @@ int main(int argc, char* argv[])
 	gWndExportForWeb = pContext->CreateExtraWindow((void*)"Koblo Studio Export For Web", ge::SSize(541, 582));
 #endif
 	
-	gpGUIExportForWeb = dynamic_cast<CKSExportForWebGUI*>(gpPlugIn->CreateGUI(6));
+	gpGUIExportForWeb = dynamic_cast<CKSExportForWebGUI*>(gpPlugIn->CreateGUI(giExport_For_Web_Window));
 	pContext->ShowWindow(gWndExportForWeb, false);
 //------------------------
 #ifdef _Mac
@@ -637,7 +648,7 @@ int main(int argc, char* argv[])
 	gWndImport = pContext->CreateExtraWindow((void*)"Koblo Studio Import", ge::SSize(423, 424));
 #endif
 	
-	gpGUIImport = dynamic_cast<CKSImportGUI*>(gpPlugIn->CreateGUI(7));
+	gpGUIImport = dynamic_cast<CKSImportGUI*>(gpPlugIn->CreateGUI(giImport_Audio_Window));
 	pContext->ShowWindow(gWndImport, false);
 	
 //------------------------
@@ -648,8 +659,22 @@ int main(int argc, char* argv[])
 	gWndSetup = pContext->CreateExtraWindow((void*)"Koblo Studio Setup", ge::SSize(320, 218));
 #endif
 	
-	gpGUISetup = dynamic_cast<CKSSetupGUI*>(gpPlugIn->CreateGUI(8));
+	gpGUISetup = dynamic_cast<CKSSetupGUI*>(gpPlugIn->CreateGUI(giAudio_Setup_Window));
 	pContext->ShowWindow(gWndSetup, false);
+	
+	
+
+	//------------------------
+#ifdef _Mac
+	gWndProjectID = pContext->CreateExtraWindow((void*)CFSTR("ProjectIDWnd"), ge::SSize(244, 102));
+#endif
+#ifdef WIN32
+	gWndProjectID = pContext->CreateExtraWindow((void*)"Koblo Studio Setup", ge::SSize(245, 103));
+#endif
+	
+	gpGUIProjectID = dynamic_cast<CKSProject_ID_GUI*>(gpPlugIn->CreateGUI(giProject_ID_Window));
+	pContext->ShowWindow(gWndProjectID, false);
+
 
 
 	// Notefy PlugIn that the gui is created
@@ -723,29 +748,32 @@ tint32 CAppHost::DoesWindowHaveToolbar(tint32 iIndex)
 tint32 CAppHost::IsWindowVisible(tint32 iIndex)
 {
 	switch(iIndex) {
-		case 0:
+		case giMain_Window:
 			return pContext->IsWindowVisible(gWndMain) == true ? 1 : 0;
 			
-		case 1:
+		case giMix_Window:
 			return pContext->IsWindowVisible(gWndMixer) == true ? 1 : 0;
 
-		case 2:
+		case giRack_Window:
 			return pContext->IsWindowVisible(gWndAUX) == true ? 1 : 0;
 
-		case 7:
+		case giSplash_Window:
 			return pContext->IsWindowVisible(gWndSplash) == true ? 1 : 0;
 			
-			
-		case 8:
+		case giExport_Audio_Window:
 			return pContext->IsWindowVisible(gWndExport) == true ? 1 : 0;
 			
-		case 9:
+		case giExport_For_Web_Window:
 			return pContext->IsWindowVisible(gWndExportForWeb) == true ? 1 : 0;
 			
-		case 10:
+		case giImport_Audio_Window:
 			return pContext->IsWindowVisible(gWndImport) == true ? 1 : 0;
-		case 11:
+			
+		case giAudio_Setup_Window:
 			return pContext->IsWindowVisible(gWndSetup) == true ? 1 : 0;
+			
+		case giProject_ID_Window:
+			return pContext->IsWindowVisible(gWndProjectID) == true ? 1 : 0;
 			
 	}
 
@@ -755,42 +783,46 @@ tint32 CAppHost::IsWindowVisible(tint32 iIndex)
 void CAppHost::ActivateWindow(tint32 iIndex)
 {
 	switch(iIndex) {
-		case 0:
+		case giMain_Window:
 			pContext->ShowWindow(gWndMain);
 			pContext->SelectWindow(gWndMain);
 			break;
 			
-		case 1:
+		case giMix_Window:
 			pContext->ShowWindow(gWndMixer);
 			pContext->SelectWindow(gWndMixer);
 			break;
 
-		case 2:
+		case giRack_Window:
 			pContext->ShowWindow(gWndAUX);
 			pContext->SelectWindow(gWndAUX);
 			break;
 
-		case 7:
+		case giSplash_Window:
 			pContext->ShowWindow(gWndSplash);
 			pContext->SelectWindow(gWndSplash);
 //			gbShowZoom = true;
 			break;
 			
-		case 8:
+		case giExport_Audio_Window:
 			pContext->ShowWindow(gWndExport);
 			pContext->SelectWindow(gWndExport);
 			break;
-		case 9:
+		case giExport_For_Web_Window:
 			pContext->ShowWindow(gWndExportForWeb);
 			pContext->SelectWindow(gWndExportForWeb);
 			break;
-		case 10:
+		case giImport_Audio_Window:
 			pContext->ShowWindow(gWndImport);
 			pContext->SelectWindow(gWndImport);
 			break;
-		case 11:
+		case giAudio_Setup_Window:
 			pContext->ShowWindow(gWndSetup);
 			pContext->SelectWindow(gWndSetup);
+			break;
+		case giProject_ID_Window:
+			pContext->ShowWindow(gWndProjectID);
+			pContext->SelectWindow(gWndProjectID);
 			break;
 	}
 }
@@ -798,31 +830,34 @@ void CAppHost::ActivateWindow(tint32 iIndex)
 void CAppHost::HideWindow(tint32 iIndex)
 {
 	switch(iIndex) {
-		case 0:
+		case giMain_Window:
 			pContext->ShowWindow(gWndMain,false);
 			break;
 			
-		case 1:
+		case giMix_Window:
 			pContext->ShowWindow(gWndMixer, false);
 			break;
 
-		case 2:
+		case giRack_Window:
 			pContext->ShowWindow(gWndAUX, false);
 			break;
-		case 7:
+		case giSplash_Window:
 			pContext->ShowWindow(gWndSplash, false);
 			break;
-		case 8:
+		case giExport_Audio_Window:
 			pContext->ShowWindow(gWndExport, false);
 			break;
-		case 9:
+		case giExport_For_Web_Window:
 			pContext->ShowWindow(gWndExportForWeb, false);
 			break;
-		case 10:
+		case giImport_Audio_Window:
 			pContext->ShowWindow(gWndImport, false);
 			break;
-		case 11:
+		case giAudio_Setup_Window:
 			pContext->ShowWindow(gWndSetup, false);
+			break;
+		case giProject_ID_Window:
+			pContext->ShowWindow(gWndProjectID, false);
 			break;
 	}
 }
@@ -955,16 +990,20 @@ static void HandleNew_Menu()
 	//-----------------------------------
 	// File menu
 	ge::IContext::SMenuItemList MenuItemsFile;
-	MenuItemsFile.uiItemCount = 9;
+	MenuItemsFile.uiItemCount = 12;
 	MenuItemsFile.pItems[0] = ge::IContext::SMenuItem("New Project");
 	MenuItemsFile.pItems[1] = ge::IContext::SMenuItem("Load Project");
 	MenuItemsFile.pItems[2] = ge::IContext::SMenuItem("Save Project");
 	MenuItemsFile.pItems[3] = ge::IContext::SMenuItem("Save Project As");
 	MenuItemsFile.pItems[4] = ge::IContext::SMenuItem("-");
 	MenuItemsFile.pItems[5] = ge::IContext::SMenuItem("Import Audio");
-	MenuItemsFile.pItems[6] = ge::IContext::SMenuItem("-");
-	MenuItemsFile.pItems[7] = ge::IContext::SMenuItem("Export");
-	MenuItemsFile.pItems[8] = ge::IContext::SMenuItem("Export for Web");
+	MenuItemsFile.pItems[6] = ge::IContext::SMenuItem("Export Audio");
+	MenuItemsFile.pItems[7] = ge::IContext::SMenuItem("-");
+	MenuItemsFile.pItems[8] = ge::IContext::SMenuItem("Download Project");
+	MenuItemsFile.pItems[9] = ge::IContext::SMenuItem("Update Project");
+	MenuItemsFile.pItems[10] = ge::IContext::SMenuItem("Upload Project");
+	MenuItemsFile.pItems[11] = ge::IContext::SMenuItem("Commit Changes");
+	
 	
 	//-----------------------------------
 	// Edit menu

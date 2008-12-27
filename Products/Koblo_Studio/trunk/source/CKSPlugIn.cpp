@@ -32,14 +32,16 @@ struct SSample24
 
 
 CKSPlugIn::CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex)
-: CBasePlugIn(dynamic_cast<CBaseModule*>(pModule), giAudioMaxBufferSize, dynamic_cast<CBaseDSPEngine*>(new CKSDSP(this)), uiProcessIndex, COMPANY_NAME, PRODUCT_NAME),
+: CBasePlugIn(dynamic_cast<CBaseModule*>(pModule), 
+	giAudioMaxBufferSize, dynamic_cast<CBaseDSPEngine*>(new CKSDSP(this)), uiProcessIndex, COMPANY_NAME, PRODUCT_NAME),
 	mbUpdateGUISettings(true),
 	mbBypass(false), miSongPos(0), mePlaybackState(geStateStopped),
 	mpPlugInManager(NULL),
 	mbAreGUIsReady(false),
 	mbRecord(false),
 	CKSXML_Read(this),
-	CKSXML_Write(this)
+	CKSXML_Write(this),
+	CKSInternet_Features(this)
 {
 	gpDSPEngine = dynamic_cast<CKSDSP*>(mpDSPEngine);
 
@@ -156,39 +158,44 @@ kspi::IGUI* CKSPlugIn::CreateGUI(tint32 iIndex)
 {
 	CBaseGUI* pGUI;
 	switch(iIndex) {
-		case 0:
+		case giMain_Window:
 			pGUI = dynamic_cast<CBaseGUI*>(new CKS_TrackEditor(this, mpParmMan));
 			break;		
 
-		case 1:
+		case giSplash_Window:
 			pGUI = dynamic_cast<CBaseGUI*>(new CKSSplashScreen(this, mpParmMan));
 			break;
 
-		case 2:
+		case giMix_Window:
 			pGUI = dynamic_cast<CBaseGUI*>(new CKSMixerGUI(this, mpParmMan));
 			break;
 		
-		case 3:
+		case giRack_Window:
 			pGUI = dynamic_cast<CBaseGUI*>(new CKSAUXGUI(this, mpParmMan));
 			break;
 		
-		case 4:
+		case giPlug_In_Window:
 			pGUI = dynamic_cast<CBaseGUI*>(new CKSPlugInGUI(this, mpParmMan));
 			break;
 			
-		case 5:
+		case giExport_Audio_Window:
 			pGUI = dynamic_cast<CBaseGUI*>(new CKSExportGUI(this, mpParmMan));
 			break;
 			
-		case 6:
+		case giExport_For_Web_Window:
 			pGUI = dynamic_cast<CBaseGUI*>(new CKSExportForWebGUI(this, mpParmMan));
 			break;
 			
-		case 7:
+		case giImport_Audio_Window:
 			pGUI = dynamic_cast<CBaseGUI*>(new CKSImportGUI(this, mpParmMan));
+			
 			break;
-		case 8:
+		case giAudio_Setup_Window:
 			pGUI = dynamic_cast<CBaseGUI*>(new CKSSetupGUI(this, mpParmMan));
+			break;
+			
+		case giProject_ID_Window:
+			pGUI = dynamic_cast<CBaseGUI*>(new CKSProject_ID_GUI(this, mpParmMan));
 			break;
 		
 		default: {
@@ -243,6 +250,7 @@ void CKSPlugIn::AddParameters()
 	AddGlobalParm(giSectionGlobal, giParamID_Loop_Start, 0, 0x7FFFFFFF, 44100);
 	AddGlobalParm(giSectionGlobal, giParamID_Loop_End, 0, 0x7FFFFFFF, 44100*5);
 	AddGlobalParm(giSectionGlobal, giParamID_KS_Snap_To, 0, 32, 4);
+	AddGlobalParm(giSectionGlobal, giParamID_Project_ID, -1, 0x7FFFFFFF, -1);
 	
 
 	//------------------------------------------------
@@ -268,6 +276,7 @@ void CKSPlugIn::AddParameters()
 	AddGlobalParm(giSectionGUI, giParamID_Show_Fade, 0, 1, 1);
 	AddGlobalParm(giSectionGUI, giParamID_Audio_Setup_Window, 0, 1, 0);
 	AddGlobalParm(giSectionGUI, giParamID_Normalize_On_Export, 0, 1, 1);
+	AddGlobalParm(giSectionGUI, giParamID_Show_Projec_ID_Window, 0, 1, 0);
 
 	
 
@@ -1092,7 +1101,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 					SetGlobalParm(giParamID_Show_Export_Window,true, giSectionGUI);
 				}
 				else
-					GetModule()->GetHost()->ActivateWindow(8);
+					GetModule()->GetHost()->ActivateWindow(giExport_Audio_Window);
 			}
 			break;
 
@@ -1103,7 +1112,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 					SetGlobalParm(giParamID_Show_Export_For_Web_Window,true, giSectionGUI);
 				}
 				else
-					GetModule()->GetHost()->ActivateWindow(9);
+					GetModule()->GetHost()->ActivateWindow(giExport_For_Web_Window);
 			}
 			break;
 
@@ -1179,7 +1188,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 					SetGlobalParm(giParamID_Show_Mix_Window,true, giSectionGUI);
 				}
 				else
-					GetModule()->GetHost()->ActivateWindow(1);
+					GetModule()->GetHost()->ActivateWindow(giMix_Window);
 			}
 			break;
 
@@ -1194,7 +1203,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 					SetGlobalParm(giParamID_Show_AUX_Window,true, giSectionGUI);
 				}
 				else
-					GetModule()->GetHost()->ActivateWindow(2);
+					GetModule()->GetHost()->ActivateWindow(giRack_Window);
 			}
 			break;
 
@@ -1260,7 +1269,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 	std::string s(pszString);
 	 if(s.compare("Setup@About Koblo Studio") == 0) {
 		
-		GetModule()->GetHost()->ActivateWindow(7);
+		GetModule()->GetHost()->ActivateWindow(giSplash_Window);
 		
 	}
 	else if (s.compare("Setup@Audio Setup") == 0) {
@@ -1285,7 +1294,6 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 		if (!MenuFileLoadProject()) {
 			LoadSaveErrDlg("Error loading project");
 		}
-		//	GetModule()->GetHost()->ActivateWindow(0);
 	}
 	else if (s.compare("File@Save Project") == 0) {
 		// Save
@@ -1311,7 +1319,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 			LoadSaveErrDlg(pEx->GetFullDescription());
 		}
 	}
-	else if (s.compare("File@Export") == 0) {
+	else if (s.compare("File@Export Audio") == 0) {
 	
 		tbool bTest = GetGlobalParm(giParamID_Show_Export_Window, giSectionGUI) ;
 		if(!bTest){
@@ -1319,7 +1327,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 		}
 		else
 	
-			GetModule()->GetHost()->ActivateWindow(8);
+			GetModule()->GetHost()->ActivateWindow(giExport_Audio_Window);
 		
 		
 		
@@ -1331,7 +1339,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 			SetGlobalParm(giParamID_Show_Export_For_Web_Window,true, giSectionGUI);
 		}
 		else{
-			GetModule()->GetHost()->ActivateWindow(9);
+			GetModule()->GetHost()->ActivateWindow(giExport_For_Web_Window);
 		}
 			
 			
@@ -1355,6 +1363,27 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 	else if (s.compare("File@Import Audio") == 0) {
 		MenuFileImportAudio();
 	}
+	
+	else if (s.compare("File@Download Project") == 0) {
+
+		MenuFileDownloadProject();
+	}
+	
+	else if (s.compare("File@Upload Project") == 0) {
+		
+		// MenuFileImportAudio();
+	}
+	
+	else if (s.compare("File@Commit Changes") == 0) {
+		
+		// MenuFileImportAudio();
+	}
+	
+	else if (s.compare("File@Update Project") == 0) {
+		
+		//MenuFileImportAudio();
+	}
+	
 	
 
 	
@@ -1432,12 +1461,12 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 			SetGlobalParm(giParamID_Show_Mix_Window,true, giSectionGUI);
 		}
 		else
-			GetModule()->GetHost()->ActivateWindow(1);
+			GetModule()->GetHost()->ActivateWindow(giMix_Window);
 	}
 	// Track Editor
 	else if (s.compare("View@Track Editor") == 0) {
 	
-		GetModule()->GetHost()->ActivateWindow(0);
+		GetModule()->GetHost()->ActivateWindow(giMain_Window);
 	}
 	// Aux window
 	else if (s.compare("View@AUX Rack") == 0) {
@@ -1446,7 +1475,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 			SetGlobalParm(giParamID_Show_AUX_Window,true, giSectionGUI);
 		}
 		else
-			GetModule()->GetHost()->ActivateWindow(2);
+			GetModule()->GetHost()->ActivateWindow(giRack_Window);
 	}
 	
 	// View Waveforms
@@ -1511,8 +1540,29 @@ void CKSPlugIn::MenuFileImportAudio()
 		SetGlobalParm(giParamID_Show_Import_Window,true, giSectionGUI);
 	}
 	else
-		GetModule()->GetHost()->ActivateWindow(10);
+		GetModule()->GetHost()->ActivateWindow(giImport_Audio_Window);
 } // MenuFileImportAudio
+
+void CKSPlugIn::MenuFileDownloadProject()
+{
+	tbool bNoProjectID = (GetGlobalParm(giParamID_Project_ID, giSectionGlobal) == -1);
+	
+	if(bNoProjectID){
+	
+		tbool bTest = (GetGlobalParm(giParamID_Show_Projec_ID_Window, giSectionGUI) != 0);
+		if(!bTest){
+			SetGlobalParm(giParamID_Show_Projec_ID_Window,true, giSectionGUI);
+		}
+		else
+			GetModule()->GetHost()->ActivateWindow(giProject_ID_Window);
+	}
+	else{
+		LoadSaveErrDlg("Project ID already set");
+		
+	}
+	 
+	
+} 
 
 
 void CKSPlugIn::MenuSetupAudio()
@@ -1546,7 +1596,7 @@ void CKSPlugIn::MenuCollaboration()
 	
 //	static int iNr =	0;
 	
-	Write_XML("funky beats.xml");
+//	Write_XML("funky beats.xml");
 }
 
 
@@ -3125,7 +3175,7 @@ tbool CKSPlugIn::MenuFileLoadProject()
 		}
 
 		SetGUIsReady(true);
-		GetModule()->GetHost()->ActivateWindow(0);
+		GetModule()->GetHost()->ActivateWindow(giMain_Window);
 
 		// Queue load of audio clips
 		std::list<CImportAudioTask*> listImportTasks;
@@ -3178,7 +3228,7 @@ tbool CKSPlugIn::MenuFileLoadProject()
 		}
 
 		SetGUIsReady(true);
-		GetModule()->GetHost()->ActivateWindow(0);
+		GetModule()->GetHost()->ActivateWindow(giMain_Window);
 		Stack_Tracks();
 		Update_Zoom();
 

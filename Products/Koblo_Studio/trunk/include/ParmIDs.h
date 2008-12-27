@@ -56,6 +56,7 @@ enum EGlobal_ParmID
 	giParamID_Loop_Start,
 	giParamID_Loop_End,
 	giParamID_KS_Snap_To,
+	giParamID_Project_ID,
 	
 
 
@@ -85,6 +86,7 @@ enum EGUI_ParmID
 	giParamID_Show_Fade,
 	giParamID_Audio_Setup_Window,
 	giParamID_Normalize_On_Export,
+	giParamID_Show_Projec_ID_Window,
 	
 
 	giNr_Of_GUI_Parms

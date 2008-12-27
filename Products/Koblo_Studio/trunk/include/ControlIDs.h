@@ -268,6 +268,10 @@ enum E_System_Ctrls
 	giControlSampleRate,
 	giControlChannels,
 	
+	giCtrl_Project_ID_Cancel,
+	giCtrl_Project_ID_OK,
+	giCtrl_Project_ID_Display,
+	
 	giNr_Of_System_Ctls
 };
 

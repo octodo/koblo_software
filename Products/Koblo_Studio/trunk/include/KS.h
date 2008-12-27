@@ -27,6 +27,7 @@
 
 // XML File parser
 #include "tinyxml.h"
+#include  "CKSInternet_Features.h"
 #include "CKSXML_Read.h"
 #include "CKSXML_Write.h"
 
@@ -128,6 +129,12 @@ class CPlugInManager;
 #include  "CKSExportForWebGUIPane.h"
 #include  "CKSSetupGUIPane.h"
 #include  "CKSSetupGUI.h"
+
+
+#include  "CKSProject_ID_GUI_Pane.h"
+#include  "CKSProject_ID_GUI.h"
+
+
 #include  "CTrack_Top.h"
 #include  "CTrack_Playhead.h"
 #include  "CTrack_Side.h"

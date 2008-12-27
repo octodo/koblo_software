@@ -274,44 +274,51 @@ void CKS_TrackEditorPane::UpdateGUIData(tint32 iID, tint32 iValue)
 	switch(iID){
 		case giParamID_Show_Mix_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(1);
+				GetPlugIn()->GetModule()->GetHost()->HideWindow(giMix_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(1);
+				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giMix_Window);
 			break;
 		}
 		case giParamID_Show_AUX_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(2);
+				GetPlugIn()->GetModule()->GetHost()->HideWindow(giRack_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(2);
+				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giRack_Window);
 			break;
 		}
 		case giParamID_Show_Export_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(8);
+				GetPlugIn()->GetModule()->GetHost()->HideWindow(giExport_Audio_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(8);
+				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giExport_Audio_Window);
 			break;
 		}
 		case giParamID_Show_Export_For_Web_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(9);
+				GetPlugIn()->GetModule()->GetHost()->HideWindow(giExport_For_Web_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(9);
+				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giExport_For_Web_Window);
 			break;
 		}
 		case giParamID_Show_Import_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(10);
+				GetPlugIn()->GetModule()->GetHost()->HideWindow(giImport_Audio_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(10);
+				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giImport_Audio_Window);
+			break;
+		}
+		case giParamID_Show_Projec_ID_Window:{
+			if(iValue == 0 )
+				GetPlugIn()->GetModule()->GetHost()->HideWindow(giProject_ID_Window);
+			else
+				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giProject_ID_Window);
 			break;
 		}
 		case giParamID_Audio_Setup_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(11);
+				GetPlugIn()->GetModule()->GetHost()->HideWindow(giAudio_Setup_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(11);
+				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giAudio_Setup_Window);
 			break;
 		}
 		case giParamID_Zoom:{
@@ -873,7 +880,7 @@ tbool CKS_TrackEditorPane::DoKeyDown(ge::EKey Key)
 			
 			// Show/hide Mix Window
 			tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Show_Mix_Window, giSectionGUI) != 0);
-			tbool bReallyVisible = GetPlugIn()->GetModule()->GetHost()->IsWindowVisible(1) == 0 ? false : true;
+			tbool bReallyVisible = GetPlugIn()->GetModule()->GetHost()->IsWindowVisible(giMix_Window) == 0 ? false : true;
 			if (bTest != bReallyVisible) {
 				//GetPlugIn()->SetGlobalParm(giParamID_Show_Mix_Window, !bTest, giSectionGUI);
 				mpKSPlugIn->GetParmMan()->Set(true, !bTest, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
@@ -891,23 +898,15 @@ tbool CKS_TrackEditorPane::DoKeyDown(ge::EKey Key)
 		*/
 		case ge::KeySlash:{
 		
-		
-		
 		// Show/hide AUX Window
 			tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Show_AUX_Window, giSectionGUI) != 0);
-			tbool bReallyVisible = (GetPlugIn()->GetModule()->GetHost()->IsWindowVisible(2) != 0);
+			tbool bReallyVisible = (GetPlugIn()->GetModule()->GetHost()->IsWindowVisible(giRack_Window) != 0);
 			if (bTest != bReallyVisible) {
-				//GetPlugIn()->SetGlobalParm(giParamID_Show_AUX_Window, !bTest, giSectionGUI);
 				mpKSPlugIn->GetParmMan()->Set(true, !bTest, giParamID_Show_AUX_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 			}
 			mpKSPlugIn->GetParmMan()->Set(true, !bReallyVisible, giParamID_Show_AUX_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
-			//GetPlugIn()->SetGlobalParm(giParamID_Show_AUX_Window, !bReallyVisible, giSectionGUI);
 			return true;
 			
-			
-			
-			//GetPlugIn()->SetGlobalParm(giParamID_Show_AUX_Window, true, giSectionGUI);
-			//return true;
 		}
 		case ge::KeyBackSpace:
 		case ge::KeyDelete:{

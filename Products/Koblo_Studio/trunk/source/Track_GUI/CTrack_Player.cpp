@@ -66,23 +66,7 @@ void CTrack_Player::ConnectControls()
 void CTrack_Player::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 {
 	GetParmMan()->ControlUpdate(miPaneID, pControl->GetID(), iValueNew);
-	/*
-	switch(pControl->GetID()) {
-		case giChC_Track_ShowMix:{
-			GetPlugIn()->GetModule()->GetHost()->ActivateWindow(0);
-			break;
-			}
-		case giChC_Track_ShowRack:
-			GetPlugIn()->GetModule()->GetHost()->ActivateWindow(5);
-			break;
-		case giChC_Track_ShowShare:
-			GetPlugIn()->GetModule()->GetHost()->ActivateWindow(2);
-			break;
-		case giChC_Track_ShowTransporter:
-			GetPlugIn()->GetModule()->GetHost()->ActivateWindow(4);
-			break;
-	}
-	*/
+	
 }
 
 void CTrack_Player::EventGeneric(ge::IControl* pControl, void* pEventData)

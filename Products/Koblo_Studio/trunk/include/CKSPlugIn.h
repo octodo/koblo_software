@@ -61,8 +61,15 @@ class CProgressTask; // Forward declaration
 class CProgressTaskList; // Forward declaration
 
 
-class CKSPlugIn : public virtual CBasePlugIn, public virtual IBaseDezipperCallback, public virtual ITimerCallback_CanStop, public virtual CKSXML_Read, public virtual CKSXML_Write
+class CKSPlugIn : 
+public virtual CBasePlugIn, 
+public virtual IBaseDezipperCallback, 
+public virtual ITimerCallback_CanStop, 
+public virtual CKSXML_Read, 
+public virtual CKSXML_Write,
+public virtual CKSInternet_Features
 {
+
 public:
 	CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex);
 
@@ -172,6 +179,7 @@ public:
 	virtual void MenuSetupAudio();
 	virtual void MenuCollaboration();
 	virtual void MenuFileImportAudio();
+	virtual void MenuFileDownloadProject();
 	
 
 	virtual void VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar* pszWavePathR, tbool bForceRewrite);

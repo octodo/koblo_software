@@ -193,7 +193,24 @@ struct SLoop_Drawing_Info
 	//! Loop start sample
 	tuint64 uiLoop_End;
 	//! Loop start sample
-//	tuint64 uiLoop_Midt;
+	//	tuint64 uiLoop_Midt;
+	
+};
+
+//! SRegion_Drawing_Info holds info about a region used for drawing
+/*! All informations is in samples */
+enum EWindowIDs
+{
+	giMain_Window,
+	giMix_Window,
+	giRack_Window,
+	giSplash_Window,
+	giExport_Audio_Window,
+	giImport_Audio_Window,
+	giExport_For_Web_Window,
+	giAudio_Setup_Window,
+	giProject_ID_Window,
+	giPlug_In_Window
 	
 };
 

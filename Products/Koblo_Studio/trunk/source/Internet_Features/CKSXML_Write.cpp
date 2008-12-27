@@ -13,7 +13,7 @@ CKSXML_Write::~CKSXML_Write()
 {
 	
 }
-void CKSXML_Write::Write_XML(std::string str)
+void CKSXML_Write::Write_XML( tint32 iProjectID)
 {
 	TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
 	
@@ -27,10 +27,27 @@ void CKSXML_Write::Write_XML(std::string str)
 	Add_Comment(pDoc, "all times and track positions are specified in sample points");
 	
 	Write_Project(pDoc);
+	
+	// convert pDoc to a std::string
+	TiXmlPrinter printer;
+	pDoc->Accept(&printer);
+	std::string xmlstr =  printer.CStr();
+	printf(xmlstr.c_str());
+	
+	//Get Project ID
+	tint32 iProject_ID = mpKSPlugIn->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
+	char psz[128];
+	sprintf(psz, "branches/%d/revisions", iProject_ID);
+	std::string str = psz;
 
-	pDoc->SaveFile( str.c_str() );
 	
 	
+	//
+	tchar* pszBuff = NULL;
+	tint32 iOutLen = 0;
+	
+	ine::IINetUtil::GetWebFile("userid=name.com&password=pswrd", "koblo.com", str.c_str(), &iOutLen, &pszBuff);
+
 
 
 	

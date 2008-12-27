@@ -30,7 +30,7 @@
 class CKSPlugIn;
 
 
-class CKSXML_Read //:  public virtual CBasePlugIn, public virtual IBaseDezipperCallback, public virtual ITimerCallback_CanStop
+class CKSXML_Read 
 {
 	
 private:

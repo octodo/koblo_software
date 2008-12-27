@@ -145,6 +145,7 @@ void CKSImportGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew
 			PreviewStop();
 			break;
 		}
+		
 
 		case giCtrl_Browser_Popup:
 		{
