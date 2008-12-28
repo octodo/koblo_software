@@ -15,12 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
-/* (lasse) - this won't work here
-// XML File parser
-#include "tinyxml.h"
-#include "CKSXML_Read.h"
-#include "CKSXML_Write.h"
-*/
+
 
 // Base Utilities
 #include "bu.h"
@@ -28,8 +23,8 @@
 // XML File parser
 #include "tinyxml.h"
 #include  "CKSInternet_Features.h"
-#include "CKSXML_Read.h"
-#include "CKSXML_Write.h"
+#include "CKSXML_Read_Project.h"
+#include "CKSXML_Write_Project.h"
 
 #include "aioe.h"
 #include "mioe.h"

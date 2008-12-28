@@ -22,7 +22,7 @@
  \param iCount [in]: Number of samples to fill in buffer
  */
 
-/*! \class CKSXML_Read
+/*! \class CKSXML_Read_Project
  * \brief class that parse the XML data in to the internal KS DataEngine
  based on TinyXml www.sourceforge.net/projects/tinyxml
  */
@@ -30,22 +30,24 @@
 class CKSPlugIn;
 
 
-class CKSXML_Read 
+class CKSXML_Read_Project 
 {
 	
 private:
 	CKSPlugIn* mpKSPlugIn;
+	
+	tint32 miTrack_ID;
 
 public:
 	
-	CKSXML_Read(CKSPlugIn * pKSPlugIn);
-	~CKSXML_Read();
+	CKSXML_Read_Project(CKSPlugIn * pKSPlugIn);
+	~CKSXML_Read_Project();
 	
-	//! read the XML file from Koblo.com
-	void ReadOnlineXML(std::string str);
+	//! read a project XML file from Koblo.com
+	void Read_Project_XML(tint32 iProjectID);
 
-	//! itterate true the XML file from the root level
-	void Parse_Root( TiXmlNode* pParent );
+	//! itterate true the project XML file from the root level
+	void Parse_Project( TiXmlNode* pParent );
 	
 	//! handle unknown tags
 	void Ignore_Tag(TiXmlNode* pParent);
@@ -84,12 +86,19 @@ public:
 	void Set_Insert_Settings(TiXmlElement* pElement);
 	void Set_Insert_Parameter(TiXmlElement* pElement);
 	void Set_Track(TiXmlElement* pElement);
-	void Set_Track_In(TiXmlElement* pElement);
-	void Set_Track_Out(TiXmlElement* pElement);
-	void Set_Track_Aux(TiXmlElement* pElement);
-	void Set_Track_Insert(TiXmlElement* pElement, tint32 uTrack);
-	void Set_Track_Region(TiXmlElement* pElement);
-	void Set_Track_Region_Fade(TiXmlElement* pElement);
+	void Set_Track_Name(TiXmlElement* pElement, tint32 iTrackID);
+	void Set_Track_In(TiXmlElement* pElement, tint32 iTrackID);
+	void Set_Track_Out(TiXmlElement* pElement, tint32 iTrackID);
+	
+	void Set_Track_Solo(TiXmlNode* pParent, tint32 iTrackID);
+	void Set_Track_Mute(TiXmlNode* pParent, tint32 iTrackID);
+	void Set_Track_Arm(TiXmlNode* pParent, tint32 iTrackID);
+//	void Set_Track_Aux(TiXmlNode* pParent, tint32 iTrackID, tint32 iAux);
+	
+	//void Set_Track_Aux(TiXmlElement* pElement, tint32 iTrackID);
+	void Set_Track_Insert(TiXmlElement* pElement, tint32 iTrackID);
+	void Set_Track_Region(TiXmlElement* pElement, tint32 iTrackID);
+	void Set_Track_Region_Fade(TiXmlElement* pElement, tint32 iTrackID);
 	
 	void Set_Bus(TiXmlElement* pElement);
 	void Set_Bus_Out(TiXmlElement* pElement);

@@ -93,8 +93,8 @@
 		FCB9FF8C0DBD0ED80097699A /* CTrack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCB9FF8B0DBD0ED80097699A /* CTrack.cpp */; };
 		FCBBC1CF0F064A10003201E4 /* CKSProject_ID_GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC1CD0F064A10003201E4 /* CKSProject_ID_GUI.cpp */; };
 		FCBBC1D00F064A10003201E4 /* CKSProject_ID_GUI_Pane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC1CE0F064A10003201E4 /* CKSProject_ID_GUI_Pane.cpp */; };
-		FCBBC4DA0F06842C003201E4 /* CKSXML_Read.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC4D80F06842C003201E4 /* CKSXML_Read.cpp */; };
-		FCBBC4DB0F06842C003201E4 /* CKSXML_Write.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC4D90F06842C003201E4 /* CKSXML_Write.cpp */; };
+		FCBBC4DA0F06842C003201E4 /* CKSXML_Read_Project.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC4D80F06842C003201E4 /* CKSXML_Read_Project.cpp */; };
+		FCBBC4DB0F06842C003201E4 /* CKSXML_Write_Project.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC4D90F06842C003201E4 /* CKSXML_Write_Project.cpp */; };
 		FCBBC54E0F06899C003201E4 /* CKSInternet_Features.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC54D0F06899C003201E4 /* CKSInternet_Features.cpp */; };
 		FCBFD35E0DB5E81200A2EB23 /* CTrack_AUX_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBFD35D0DB5E81200A2EB23 /* CTrack_AUX_Insert.cpp */; };
 		FCBFD3600DB5E81900A2EB23 /* CTrack_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBFD35F0DB5E81900A2EB23 /* CTrack_Insert.cpp */; };
@@ -408,10 +408,10 @@
 		FCBBC1CE0F064A10003201E4 /* CKSProject_ID_GUI_Pane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSProject_ID_GUI_Pane.cpp; sourceTree = "<group>"; };
 		FCBBC1DC0F064ADA003201E4 /* CKSProject_ID_GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSProject_ID_GUI.h; sourceTree = "<group>"; };
 		FCBBC1DD0F064ADA003201E4 /* CKSProject_ID_GUI_Pane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSProject_ID_GUI_Pane.h; sourceTree = "<group>"; };
-		FCBBC4D10F0683E6003201E4 /* CKSXML_Read.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Read.h; sourceTree = "<group>"; };
-		FCBBC4D20F0683E6003201E4 /* CKSXML_Write.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Write.h; sourceTree = "<group>"; };
-		FCBBC4D80F06842C003201E4 /* CKSXML_Read.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSXML_Read.cpp; sourceTree = "<group>"; };
-		FCBBC4D90F06842C003201E4 /* CKSXML_Write.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSXML_Write.cpp; sourceTree = "<group>"; };
+		FCBBC4D10F0683E6003201E4 /* CKSXML_Read_Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Read_Project.h; sourceTree = "<group>"; };
+		FCBBC4D20F0683E6003201E4 /* CKSXML_Write_Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Write_Project.h; sourceTree = "<group>"; };
+		FCBBC4D80F06842C003201E4 /* CKSXML_Read_Project.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSXML_Read_Project.cpp; sourceTree = "<group>"; };
+		FCBBC4D90F06842C003201E4 /* CKSXML_Write_Project.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSXML_Write_Project.cpp; sourceTree = "<group>"; };
 		FCBBC54D0F06899C003201E4 /* CKSInternet_Features.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSInternet_Features.cpp; sourceTree = "<group>"; };
 		FCBBC54F0F0689B3003201E4 /* CKSInternet_Features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSInternet_Features.h; sourceTree = "<group>"; };
 		FCBFD35B0DB5E7F400A2EB23 /* CTrack_AUX_Insert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_AUX_Insert.h; path = include/Track_GUI/CTrack_AUX_Insert.h; sourceTree = "<group>"; };
@@ -928,8 +928,8 @@
 			isa = PBXGroup;
 			children = (
 				FCBBC54F0F0689B3003201E4 /* CKSInternet_Features.h */,
-				FCBBC4D10F0683E6003201E4 /* CKSXML_Read.h */,
-				FCBBC4D20F0683E6003201E4 /* CKSXML_Write.h */,
+				FCBBC4D10F0683E6003201E4 /* CKSXML_Read_Project.h */,
+				FCBBC4D20F0683E6003201E4 /* CKSXML_Write_Project.h */,
 			);
 			name = Internet_Features;
 			path = include/Internet_Features;
@@ -939,8 +939,8 @@
 			isa = PBXGroup;
 			children = (
 				FCBBC54D0F06899C003201E4 /* CKSInternet_Features.cpp */,
-				FCBBC4D80F06842C003201E4 /* CKSXML_Read.cpp */,
-				FCBBC4D90F06842C003201E4 /* CKSXML_Write.cpp */,
+				FCBBC4D80F06842C003201E4 /* CKSXML_Read_Project.cpp */,
+				FCBBC4D90F06842C003201E4 /* CKSXML_Write_Project.cpp */,
 			);
 			name = Internet_Features;
 			path = source/Internet_Features;
@@ -1240,8 +1240,8 @@
 				FC31AC9C0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp in Sources */,
 				FCBBC1CF0F064A10003201E4 /* CKSProject_ID_GUI.cpp in Sources */,
 				FCBBC1D00F064A10003201E4 /* CKSProject_ID_GUI_Pane.cpp in Sources */,
-				FCBBC4DA0F06842C003201E4 /* CKSXML_Read.cpp in Sources */,
-				FCBBC4DB0F06842C003201E4 /* CKSXML_Write.cpp in Sources */,
+				FCBBC4DA0F06842C003201E4 /* CKSXML_Read_Project.cpp in Sources */,
+				FCBBC4DB0F06842C003201E4 /* CKSXML_Write_Project.cpp in Sources */,
 				FCBBC54E0F06899C003201E4 /* CKSInternet_Features.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

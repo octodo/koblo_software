@@ -22,7 +22,7 @@
  \param iCount [in]: Number of samples to fill in buffer
  */
 
-/*! \class CKSXML_Write
+/*! \class CKSXML_Write_Project
  * \brief class that parse the XML data in to the internal KS DataEngine
  based on TinyXml www.sourceforge.net/projects/tinyxml
  */
@@ -30,7 +30,7 @@
 class CKSPlugIn;
 
 
-class CKSXML_Write
+class CKSXML_Write_Project
 {
 	
 private:
@@ -65,7 +65,7 @@ private:
 	void Write_Window_Size(TiXmlElement* pParent, tuint uiSizeX, tuint uiSizeY);
 	//! write samples
 	void Write_Samples(TiXmlElement* pParent);
-	void Write_Sample(TiXmlElement* pParent);
+	void Write_Sample(TiXmlElement* pParent, std::string str);
 	//! tracks
 	void Write_Tracks(TiXmlElement* pParent);
 	void Write_Track(TiXmlElement* pParent, tuint uiTrack);
@@ -87,8 +87,8 @@ private:
 	
 public:
 	
-	CKSXML_Write(CKSPlugIn * pKSPlugIn);
-	~CKSXML_Write();
+	CKSXML_Write_Project(CKSPlugIn * pKSPlugIn);
+	~CKSXML_Write_Project();
 	
 	
 	//! write the XML file to Koblo.com

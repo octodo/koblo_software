@@ -39,8 +39,8 @@ CKSPlugIn::CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex)
 	mpPlugInManager(NULL),
 	mbAreGUIsReady(false),
 	mbRecord(false),
-	CKSXML_Read(this),
-	CKSXML_Write(this),
+	CKSXML_Read_Project(this),
+	CKSXML_Write_Project(this),
 	CKSInternet_Features(this)
 {
 	gpDSPEngine = dynamic_cast<CKSDSP*>(mpDSPEngine);
@@ -1366,22 +1366,22 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 	
 	else if (s.compare("File@Download Project") == 0) {
 
-		MenuFileDownloadProject();
+		On_Menu_Download_Project();
 	}
 	
 	else if (s.compare("File@Upload Project") == 0) {
 		
-		// MenuFileImportAudio();
+		On_Menu_Upload_Project();
 	}
 	
 	else if (s.compare("File@Commit Changes") == 0) {
 		
-		// MenuFileImportAudio();
+		On_Menu_Commit_Project();
 	}
 	
 	else if (s.compare("File@Update Project") == 0) {
 		
-		//MenuFileImportAudio();
+		On_Menu_Update_Project();
 	}
 	
 	
@@ -1542,27 +1542,6 @@ void CKSPlugIn::MenuFileImportAudio()
 	else
 		GetModule()->GetHost()->ActivateWindow(giImport_Audio_Window);
 } // MenuFileImportAudio
-
-void CKSPlugIn::MenuFileDownloadProject()
-{
-	tbool bNoProjectID = (GetGlobalParm(giParamID_Project_ID, giSectionGlobal) == -1);
-	
-	if(bNoProjectID){
-	
-		tbool bTest = (GetGlobalParm(giParamID_Show_Projec_ID_Window, giSectionGUI) != 0);
-		if(!bTest){
-			SetGlobalParm(giParamID_Show_Projec_ID_Window,true, giSectionGUI);
-		}
-		else
-			GetModule()->GetHost()->ActivateWindow(giProject_ID_Window);
-	}
-	else{
-		LoadSaveErrDlg("Project ID already set");
-		
-	}
-	 
-	
-} 
 
 
 void CKSPlugIn::MenuSetupAudio()
@@ -3711,7 +3690,7 @@ tbool CKSPlugIn::ExportTracksOrMix(EPlaybackState eExportState, std::list<tint32
 
 	tint64 iFirstSample = 0, iFinalSample = -1;
 	if (bSelectionOnly) {
-		tint32 iBlueTrack = GetSelectedTrack();
+		tint32 iBlueTrack = Get_Selected_Track();
 		if (iBlueTrack >= 0) {
 			STrackSelectionInfo sSel = gpDSPEngine->GetTrackSelection(iBlueTrack);
 			iFirstSample = sSel.uiSelection_Pos;
@@ -5304,12 +5283,12 @@ tint32 CKSPlugIn::Get_Free_Track()
 	return -1;
 }
 
-void CKSPlugIn::AddTrack()
+tint32 CKSPlugIn::AddTrack()
 {	
 	// Find a free track to add
 	tint32 iTrack_To_Add	=	Get_Free_Track();
 	
-	if(iTrack_To_Add == -1) return;
+	if(iTrack_To_Add == -1) return -1;
 
 	// Number of tracks
 	tint32 iNr_Tracks = Get_Number_Of_Tracks();
@@ -5352,6 +5331,8 @@ void CKSPlugIn::AddTrack()
 	SetChannelName(iTrack_To_Add, psz);
 
 	Stack_Tracks();
+	
+	return iTrack_To_Add;
 }
 
 void CKSPlugIn::DeleteTrack()

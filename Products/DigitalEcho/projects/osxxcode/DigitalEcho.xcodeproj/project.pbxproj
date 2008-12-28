@@ -102,7 +102,7 @@
 		7CB5A3070A07FDCC00954A7E /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../../include/Resources.h; sourceTree = SOURCE_ROOT; };
 		7CB5A3300A07FF9400954A7E /* CParmGlobal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CParmGlobal.h; path = ../../include/CParmGlobal.h; sourceTree = SOURCE_ROOT; };
 		8D01CCD10486CAD60068D4B7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8D01CCD20486CAD60068D4B7 /* RhythmComposer.kspi */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RhythmComposer.kspi; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D01CCD20486CAD60068D4B7 /* DEcho.kspi */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DEcho.kspi; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3E668B20E0A6BEB00215EC0 /* IHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IHost.h; path = ../../../../SDK/trunk/KSPI/Interface/IHost.h; sourceTree = SOURCE_ROOT; };
 		E3E668B30E0A6BEB00215EC0 /* IModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IModule.h; path = ../../../../SDK/trunk/KSPI/Interface/IModule.h; sourceTree = SOURCE_ROOT; };
 		E3E668B40E0A6BEB00215EC0 /* IPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPlugIn.h; path = ../../../../SDK/trunk/KSPI/Interface/IPlugIn.h; sourceTree = SOURCE_ROOT; };
@@ -312,7 +312,7 @@
 		19C28FB4FE9D528D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D01CCD20486CAD60068D4B7 /* RhythmComposer.kspi */,
+				8D01CCD20486CAD60068D4B7 /* DEcho.kspi */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -352,9 +352,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D01CCC60486CAD60068D4B7 /* RhythmComposer */ = {
+		8D01CCC60486CAD60068D4B7 /* DEcho */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0B77338408A63E2A004B30F3 /* Build configuration list for PBXNativeTarget "RhythmComposer" */;
+			buildConfigurationList = 0B77338408A63E2A004B30F3 /* Build configuration list for PBXNativeTarget "DEcho" */;
 			buildPhases = (
 				8D01CCC90486CAD60068D4B7 /* Resources */,
 				8D01CCCB0486CAD60068D4B7 /* Sources */,
@@ -367,10 +367,10 @@
 				E34903B30E0ABB0C00DA145C /* PBXTargetDependency */,
 				E34903B50E0ABB0F00DA145C /* PBXTargetDependency */,
 			);
-			name = RhythmComposer;
+			name = DEcho;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = INetSynth;
-			productReference = 8D01CCD20486CAD60068D4B7 /* RhythmComposer.kspi */;
+			productReference = 8D01CCD20486CAD60068D4B7 /* DEcho.kspi */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -403,7 +403,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				8D01CCC60486CAD60068D4B7 /* RhythmComposer */,
+				8D01CCC60486CAD60068D4B7 /* DEcho */,
 			);
 		};
 /* End PBXProject section */
@@ -543,7 +543,7 @@
 				);
 				PREBINDING = YES;
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders /usr/local/include";
-				PRODUCT_NAME = RhythmComposer;
+				PRODUCT_NAME = DEcho;
 				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers /usr/local/include";
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				WRAPPER_EXTENSION = kspi;
@@ -594,7 +594,7 @@
 				);
 				PREBINDING = YES;
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders /usr/local/include";
-				PRODUCT_NAME = RhythmComposer;
+				PRODUCT_NAME = DEcho;
 				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers /usr/local/include";
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				WRAPPER_EXTENSION = kspi;
@@ -647,7 +647,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0B77338408A63E2A004B30F3 /* Build configuration list for PBXNativeTarget "RhythmComposer" */ = {
+		0B77338408A63E2A004B30F3 /* Build configuration list for PBXNativeTarget "DEcho" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0B77338508A63E2A004B30F3 /* Debug */,

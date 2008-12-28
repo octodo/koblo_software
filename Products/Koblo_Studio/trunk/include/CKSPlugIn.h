@@ -65,8 +65,8 @@ class CKSPlugIn :
 public virtual CBasePlugIn, 
 public virtual IBaseDezipperCallback, 
 public virtual ITimerCallback_CanStop, 
-public virtual CKSXML_Read, 
-public virtual CKSXML_Write,
+public virtual CKSXML_Read_Project, 
+public virtual CKSXML_Write_Project,
 public virtual CKSInternet_Features
 {
 
@@ -179,7 +179,6 @@ public:
 	virtual void MenuSetupAudio();
 	virtual void MenuCollaboration();
 	virtual void MenuFileImportAudio();
-	virtual void MenuFileDownloadProject();
 	
 
 	virtual void VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar* pszWavePathR, tbool bForceRewrite);
@@ -272,10 +271,10 @@ public:
 
 	CPlugInManager* GetPlugInManager() {return mpPlugInManager;}
 	
-	virtual void AddTrack();
+	tint32  AddTrack();
 	virtual void DeleteTrack();
 	virtual void SelectTrack(tint32 iID);
-	virtual const tint32 GetSelectedTrack() { return miSelected_Track; };
+//	virtual const tint32 GetSelectedTrack() { return miSelected_Track; };
 	
 
 	virtual void Set_Track_Visible(tuint iID, tbool bVisible);

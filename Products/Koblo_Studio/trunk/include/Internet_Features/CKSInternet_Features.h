@@ -32,18 +32,29 @@ class CKSPlugIn;
 class CKSInternet_Features
 {
 		
-	private:
-		CKSPlugIn* mpKSPlugIn;
+private:
+	CKSPlugIn* mpKSPlugIn;
 		
 		
 	
-	public:
+public:
 		
-		CKSInternet_Features(CKSPlugIn * pKSPlugIn);
-		~CKSInternet_Features();
+	CKSInternet_Features(CKSPlugIn * pKSPlugIn);
+	~CKSInternet_Features();
+	
+	//! called from the menu and opens the project id dialog 
+	virtual void On_Menu_Download_Project();
+	//! called from the file menu
+	virtual void On_Menu_Update_Project();
+	//! called from the file menu
+	virtual void On_Menu_Upload_Project();
+	//! called from the file menu
+	virtual void On_Menu_Commit_Project();
 
-	void Download_Project();
-	void Update_Project();
+	//! clean project and read it from koblo.com
+	void Download_Project(tint32 iProjectID);
+	//! read project from koblo.com
+	void Update_Project(tint32 iProjectID);
 	void Upload_Project();
 	void Commit_Project();
 	

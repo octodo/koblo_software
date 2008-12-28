@@ -73,7 +73,6 @@ void CKSProject_ID_GUI_Pane::EventValueChange(ge::IControl* pControl, tint32 iVa
 	GetParmMan()->ControlUpdate(miPaneID, pControl->GetID(), iValueNew);
 	
 	
-	
 	switch (pControl->GetID()) {
 
 		case giCtrl_Project_ID_Cancel:{
@@ -85,7 +84,8 @@ void CKSProject_ID_GUI_Pane::EventValueChange(ge::IControl* pControl, tint32 iVa
 		case giCtrl_Project_ID_OK:{
 			
 			GetPlugIn()->SetGlobalParm(giParamID_Show_Projec_ID_Window, 0, giSectionGUI);
-			mpKSPlugIn->Download_Project();
+			tint32 iProject_ID = GetPlugIn()->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
+			mpKSPlugIn->Download_Project(iProject_ID);
 			break;
 		}
 

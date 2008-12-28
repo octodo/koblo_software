@@ -2,18 +2,18 @@
 #include "KSOS.h"
 
 
-CKSXML_Write::CKSXML_Write(CKSPlugIn * pKSPlugIn)
+CKSXML_Write_Project::CKSXML_Write_Project(CKSPlugIn * pKSPlugIn)
 {
 	
 	mpKSPlugIn = pKSPlugIn;
 	
 }
 
-CKSXML_Write::~CKSXML_Write()
+CKSXML_Write_Project::~CKSXML_Write_Project()
 {
 	
 }
-void CKSXML_Write::Write_XML( tint32 iProjectID)
+void CKSXML_Write_Project::Write_XML( tint32 iProjectID)
 {
 	TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
 	
@@ -28,32 +28,36 @@ void CKSXML_Write::Write_XML( tint32 iProjectID)
 	
 	Write_Project(pDoc);
 	
+	pDoc->SaveFile("xml_doc.xml");
+	
 	// convert pDoc to a std::string
 	TiXmlPrinter printer;
 	pDoc->Accept(&printer);
-	std::string xmlstr =  printer.CStr();
-	printf(xmlstr.c_str());
+	std::string xml_str =  printer.CStr();
+	
+	// print to console
+	printf(xml_str.c_str());
 	
 	//Get Project ID
 	tint32 iProject_ID = mpKSPlugIn->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
+	
 	char psz[128];
 	sprintf(psz, "branches/%d/revisions", iProject_ID);
 	std::string str = psz;
 
 	
 	
-	//
+/*
 	tchar* pszBuff = NULL;
 	tint32 iOutLen = 0;
-	
 	ine::IINetUtil::GetWebFile("userid=name.com&password=pswrd", "koblo.com", str.c_str(), &iOutLen, &pszBuff);
-
+*/
 
 
 	
 }
 
-void CKSXML_Write::Write_Project(TiXmlDocument* pDoc)
+void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 {
 	
 	TiXmlElement* pProject = new TiXmlElement( "project" );
@@ -76,7 +80,7 @@ void CKSXML_Write::Write_Project(TiXmlDocument* pDoc)
 	
 }
 
-void CKSXML_Write::Write_Branch(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Branch(TiXmlElement* pParent)
 {
 	
 	Add_Comment(pParent, "information about the branch");
@@ -112,7 +116,7 @@ void CKSXML_Write::Write_Branch(TiXmlElement* pParent)
 // settings
 //----------------------------------------------------------------
 
-void CKSXML_Write::Write_Settings(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Settings(TiXmlElement* pParent)
 {
 	Add_Comment(pParent, "overall project settings");
 	
@@ -160,7 +164,7 @@ void CKSXML_Write::Write_Settings(TiXmlElement* pParent)
 	
 }
 
-void CKSXML_Write::Write_Signature(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Signature(TiXmlElement* pParent)
 {
 	tuint32 uiSignatur = mpKSPlugIn->GetGlobalParm(giParamID_KS_Time_Signature, giSectionGlobal);
 	tuint uiNumerator;
@@ -219,7 +223,7 @@ void CKSXML_Write::Write_Signature(TiXmlElement* pParent)
 	
 }
 
-void CKSXML_Write::Write_License(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_License(TiXmlElement* pParent)
 {
 	char pszBuff [64];
 	tuint uiTest	=	 mpKSPlugIn->GetGlobalParm(giParamID_CC_License_Type, giSectionGUI);
@@ -261,7 +265,7 @@ void CKSXML_Write::Write_License(TiXmlElement* pParent)
 // editing
 //----------------------------------------------------------------
 
-void CKSXML_Write::Write_Editing(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Editing(TiXmlElement* pParent)
 {
 	Add_Comment(pParent, "editing settings. these are things that would typically not be moved/merged between branches");
 	char pszBuff [64];
@@ -335,7 +339,7 @@ void CKSXML_Write::Write_Editing(TiXmlElement* pParent)
 	
 }
 
-void CKSXML_Write::Write_Tool(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Tool(TiXmlElement* pParent)
 {
 	char pszBuff [64];
 	tuint uiTest	=	 mpKSPlugIn->GetGlobalParm(giParamID_Tool_Selected, giSectionGUI);
@@ -366,7 +370,7 @@ void CKSXML_Write::Write_Tool(TiXmlElement* pParent)
 	pParent->LinkEndChild( pToolTxt );
 }
 
-void CKSXML_Write::Write_Loop(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Loop(TiXmlElement* pParent)
 {
 	char pszBuff [64];
 
@@ -397,7 +401,7 @@ void CKSXML_Write::Write_Loop(TiXmlElement* pParent)
 	
 }
 
-void CKSXML_Write::Write_Windows(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Windows(TiXmlElement* pParent)
 {
 	// edit
 	TiXmlElement* pEdit = new TiXmlElement( "edit" );;
@@ -415,7 +419,7 @@ void CKSXML_Write::Write_Windows(TiXmlElement* pParent)
 	Write_Window_Rack(pRack);
 }
 
-void CKSXML_Write::Write_Window_Edit(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Window_Edit(TiXmlElement* pParent)
 {
 	
 //	sprintf(pszBuff, "%d", iVal);
@@ -449,17 +453,17 @@ void CKSXML_Write::Write_Window_Edit(TiXmlElement* pParent)
 	
 }
 
-void CKSXML_Write::Write_Window_Mix(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Window_Mix(TiXmlElement* pParent)
 {
 	
 }
 
-void CKSXML_Write::Write_Window_Rack(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Window_Rack(TiXmlElement* pParent)
 {
 	
 }
 
-void CKSXML_Write::Write_Window_Position(TiXmlElement* pParent, tuint uiPosX, tuint uiPosY)
+void CKSXML_Write_Project::Write_Window_Position(TiXmlElement* pParent, tuint uiPosX, tuint uiPosY)
 {
 	char pszBuff [64];
 	
@@ -479,7 +483,7 @@ void CKSXML_Write::Write_Window_Position(TiXmlElement* pParent, tuint uiPosX, tu
 	
 }
 	
-void CKSXML_Write::Write_Window_Size(TiXmlElement* pParent, tuint uiSizeX, tuint uiSizeY)
+void CKSXML_Write_Project::Write_Window_Size(TiXmlElement* pParent, tuint uiSizeX, tuint uiSizeY)
 {
 	char pszBuff [64];
 	
@@ -502,7 +506,7 @@ void CKSXML_Write::Write_Window_Size(TiXmlElement* pParent, tuint uiSizeX, tuint
 //----------------------------------------------------------------
 // samples
 //----------------------------------------------------------------
-void CKSXML_Write::Write_Samples(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 {
 	Add_Comment(pParent, "samples and their takes. only used takes are listed. a sample can be included that's not used on any track");
 	
@@ -514,6 +518,17 @@ void CKSXML_Write::Write_Samples(TiXmlElement* pParent)
 	std::list<CKSPlugIn::SFileInfo*>::iterator  itFileList = sFileInfos.begin();
 	for (; itFileList != sFileInfos.end(); itFileList++) {
 		
+		TiXmlElement* pSample = new TiXmlElement( "sample" );
+		// ID
+		tint32 uiID = -1;
+		// track
+		pSample->SetAttribute("id",uiID);
+		pParent->LinkEndChild( pSample );
+		
+		CKSPlugIn::SFileInfo* pInfo = *itFileList;
+		Write_Sample(pSample, pInfo->sOriginalName.c_str());
+		
+		/*
 		TiXmlElement* pName = new TiXmlElement( "sample" );
 		
 		
@@ -526,7 +541,7 @@ void CKSXML_Write::Write_Samples(TiXmlElement* pParent)
 		pName->LinkEndChild( pSampleTxt );
 		pParent->LinkEndChild( pName );
 		
-		
+		*/
 		
 		
 		
@@ -534,12 +549,18 @@ void CKSXML_Write::Write_Samples(TiXmlElement* pParent)
 	
 }
 
-void CKSXML_Write::Write_Sample(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Sample(TiXmlElement* pParent, std::string str)
 {
+	// name
+	TiXmlElement* pName = new TiXmlElement( "name" );
+	TiXmlText* pNameTxt = new TiXmlText(str.c_str());
+	pName->LinkEndChild( pNameTxt );
+	pParent->LinkEndChild( pName );
+	
+	// takes
 	
 	
 	
-	printf(".");
 	
 }
 
@@ -547,7 +568,7 @@ void CKSXML_Write::Write_Sample(TiXmlElement* pParent)
 // tracks bus and master
 //----------------------------------------------------------------
 
-void CKSXML_Write::Write_Tracks(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Tracks(TiXmlElement* pParent)
 {
 	tint32 iNrTracks = mpKSPlugIn->Get_Number_Of_Tracks();//mpKSPlugIn->msStack.iNr_Of_Tracks;
 	
@@ -565,8 +586,10 @@ void CKSXML_Write::Write_Tracks(TiXmlElement* pParent)
 	}
 }
 
-void CKSXML_Write::Write_Track(TiXmlElement* pParent, tuint uiTrack)
+void CKSXML_Write_Project::Write_Track(TiXmlElement* pParent, tuint uiTrack)
 {
+	char pszBuff [64];
+	
 	// name
 	std::string str  = mpKSPlugIn->GetChannelName(uiTrack);
 	TiXmlElement* pName = new TiXmlElement( "name" );
@@ -579,6 +602,15 @@ void CKSXML_Write::Write_Track(TiXmlElement* pParent, tuint uiTrack)
 	TiXmlText* pDescriptionTxt = new TiXmlText("NA");
 	pDescription->LinkEndChild( pDescriptionTxt );
 	pParent->LinkEndChild( pDescription );
+	
+	
+	// Size
+	TiXmlElement* pSize = new TiXmlElement( "size" );
+	tint32 iVal = mpKSPlugIn->GetGlobalParm(giParam_Track_Info_SizeY, giSection_First_Track + uiTrack);
+	sprintf(pszBuff, "%d", iVal);
+	TiXmlText* pSizeTxt = new TiXmlText(pszBuff);
+	pSize->LinkEndChild( pSizeTxt );
+	pParent->LinkEndChild( pSize );
 	
 	// in
 	TiXmlElement* pIn = new TiXmlElement( "in" );
@@ -599,7 +631,7 @@ void CKSXML_Write::Write_Track(TiXmlElement* pParent, tuint uiTrack)
 	
 }
 
-void CKSXML_Write::Write_Track_In(TiXmlElement* pParent, tuint uiID)
+void CKSXML_Write_Project::Write_Track_In(TiXmlElement* pParent, tuint uiID)
 {
 	
 	// input
@@ -630,7 +662,7 @@ void CKSXML_Write::Write_Track_In(TiXmlElement* pParent, tuint uiID)
 	
 }
 
-void CKSXML_Write::Write_Track_Out(TiXmlElement* pParent, tuint uiTrack)
+void CKSXML_Write_Project::Write_Track_Out(TiXmlElement* pParent, tuint uiTrack)
 {
 	
 	// output
@@ -692,7 +724,7 @@ void CKSXML_Write::Write_Track_Out(TiXmlElement* pParent, tuint uiTrack)
 	pParent->LinkEndChild( pArm );
 }
 
-void CKSXML_Write::Write_Inserts(TiXmlElement* pParent, tuint uiTrack)
+void CKSXML_Write_Project::Write_Inserts(TiXmlElement* pParent, tuint uiTrack)
 {
 	
 	for(tuint uiInsert=0; uiInsert<giNumber_Of_Inserts; uiInsert++)
@@ -701,7 +733,7 @@ void CKSXML_Write::Write_Inserts(TiXmlElement* pParent, tuint uiTrack)
 	}
 }
 
-void CKSXML_Write::Write_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert)
+void CKSXML_Write_Project::Write_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert)
 {
 	
 	// output
@@ -760,7 +792,7 @@ void CKSXML_Write::Write_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiIn
 	}
 }
 
-void CKSXML_Write::Write_AUXs(TiXmlElement* pParent, tuint uiTrack)
+void CKSXML_Write_Project::Write_AUXs(TiXmlElement* pParent, tuint uiTrack)
 {
 	// prepared for more than two AUX sends
 	for(tuint iAUX=0; iAUX<giNumber_Of_AUXes; iAUX++)
@@ -769,7 +801,7 @@ void CKSXML_Write::Write_AUXs(TiXmlElement* pParent, tuint uiTrack)
 	}
 }
 
-void CKSXML_Write::Write_AUX(TiXmlElement* pParent, tuint uiTrack, tuint iAux)
+void CKSXML_Write_Project::Write_AUX(TiXmlElement* pParent, tuint uiTrack, tuint iAux)
 {
 		
 	tint32 iSend = mpKSPlugIn->GetGlobalParm(giParam_ChAUX1 + iAux, giSection_First_Track + uiTrack);
@@ -813,7 +845,7 @@ void CKSXML_Write::Write_AUX(TiXmlElement* pParent, tuint uiTrack, tuint iAux)
  */
 }
 
-void CKSXML_Write::Write_Busses(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Busses(TiXmlElement* pParent)
 {
 //	tint32 iNrTracks = mpKSPlugIn->Get_Number_Of_Tracks();//mpKSPlugIn->msStack.iNr_Of_Tracks;
 	
@@ -831,7 +863,7 @@ void CKSXML_Write::Write_Busses(TiXmlElement* pParent)
 	}
 }
 
-void CKSXML_Write::Write_Bus(TiXmlElement* pParent, tuint uiID)
+void CKSXML_Write_Project::Write_Bus(TiXmlElement* pParent, tuint uiID)
 {
 	// out
 	TiXmlElement* pOut = new TiXmlElement( "out" );
@@ -840,7 +872,7 @@ void CKSXML_Write::Write_Bus(TiXmlElement* pParent, tuint uiID)
 	
 }
 
-void CKSXML_Write::Write_Bus_Out(TiXmlElement* pParent, tuint uiID)
+void CKSXML_Write_Project::Write_Bus_Out(TiXmlElement* pParent, tuint uiID)
 {
 	
 	// output
@@ -896,7 +928,7 @@ void CKSXML_Write::Write_Bus_Out(TiXmlElement* pParent, tuint uiID)
 //----------------------------------------------------------------
 // comments
 //----------------------------------------------------------------
-void CKSXML_Write::Add_Comment(TiXmlDocument* pDoc, std::string str)
+void CKSXML_Write_Project::Add_Comment(TiXmlDocument* pDoc, std::string str)
 {
 	
 	//	TiXmlDeclaration* decl = new TiXmlDeclaration( s.c_str() );
@@ -905,7 +937,7 @@ void CKSXML_Write::Add_Comment(TiXmlDocument* pDoc, std::string str)
 	
 }
 
-void CKSXML_Write::Add_Comment( TiXmlElement* pParent, std::string str)
+void CKSXML_Write_Project::Add_Comment( TiXmlElement* pParent, std::string str)
 {
 	
 	//	TiXmlDeclaration* decl = new TiXmlDeclaration( s.c_str() );

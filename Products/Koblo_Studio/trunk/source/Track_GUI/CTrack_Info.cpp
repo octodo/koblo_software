@@ -87,7 +87,7 @@ void CTrack_Info::EventGeneric(ge::IControl* pControl, void* pEventData)
 			
 			if (pEvent->iMsg == ge::LeftButtonDown) {
 				CKSPlugIn* pPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
-				tint32 iBlueTrack = pPlugIn->GetSelectedTrack();
+				tint32 iBlueTrack = pPlugIn->Get_Selected_Track();
 				if ((!ge::IWindow::ShiftPressed()) || (iBlueTrack == -1)) {
 					// No shift key - or no previous selection
 					// When no shift key is held we clear all selections on track ...

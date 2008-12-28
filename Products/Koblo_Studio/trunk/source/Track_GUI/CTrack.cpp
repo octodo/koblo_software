@@ -284,7 +284,7 @@ void CTrack::Set_Selection_Size_And_Pos()
 	if ((sInfo.uiSelection_Type == giSelect_Off) || (sInfo.uiSelection_Duration == 0)) {
 		Hide_Selection();
 		// Maybe update "blue track"
-		tint32 iBlueTrack = mpKSPlugIn->GetSelectedTrack();
+		tint32 iBlueTrack = mpKSPlugIn->Get_Selected_Track();
 		if (iBlueTrack == miTrackID) {
 			// We must change blue track
 			iBlueTrack = -1;
@@ -334,7 +334,7 @@ void CTrack::Set_Selection_Size_And_Pos()
 		Show_Selection();
 
 		// If no previous "blue track" then let it be this one
-		tint32 iPrevBlueTrack = mpKSPlugIn->GetSelectedTrack();
+		tint32 iPrevBlueTrack = mpKSPlugIn->Get_Selected_Track();
 		if (iPrevBlueTrack < 0) {
 			mpKSPlugIn->SelectTrack(miTrackID);
 		}
