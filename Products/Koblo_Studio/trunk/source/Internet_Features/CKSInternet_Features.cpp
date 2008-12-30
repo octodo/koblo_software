@@ -51,7 +51,8 @@ void CKSInternet_Features::On_Menu_Update_Project()
 
 void CKSInternet_Features::On_Menu_Upload_Project()
 {
-	Upload_Project();
+	if(mpKSPlugIn->Create_Project_On_Koblo())
+		Commit_Project();
 }
 
 void CKSInternet_Features::On_Menu_Commit_Project()
@@ -78,27 +79,38 @@ void CKSInternet_Features::Download_Project(tint32 iProjectID)
 void CKSInternet_Features::Update_Project(tint32 iProjectID)
 {
 	
-	// clean the project			// Temp Code
+	// clean the project		
 	mpKSPlugIn->CleanProject(0);
-	
-	
-	
-	
+	 
+	// read the project from koblo.com
 	mpKSPlugIn->Read_Project_XML(iProjectID);
-	
-	//	printf(str.c_str());
 	
 }
 
-void CKSInternet_Features::Upload_Project()
-{
-	
-	Commit_Project();
-	
-}
+
 
 void CKSInternet_Features::Commit_Project()
 {
 	tint32 iProject_ID = mpKSPlugIn->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);	
-	mpKSPlugIn->Write_XML( iProject_ID);
+	mpKSPlugIn->Upload_Project_As_XML_File_To_Koblo( iProject_ID);
 }
+
+void CKSInternet_Features::Open_Project_Edit_Page_On_Koblo()
+{
+	tint32 iProjectID = mpKSPlugIn->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
+		
+	char psz[128];
+	sprintf(psz, "/http://koblo.com/projects/%d/edit", iProjectID);
+	OpenBrowser(psz);
+	
+	
+}
+
+
+
+
+
+
+
+
+

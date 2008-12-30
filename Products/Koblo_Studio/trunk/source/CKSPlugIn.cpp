@@ -41,7 +41,9 @@ CKSPlugIn::CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex)
 	mbRecord(false),
 	CKSXML_Read_Project(this),
 	CKSXML_Write_Project(this),
-	CKSInternet_Features(this)
+	CKSInternet_Features(this),
+	CKSXML_Create_Project(this),
+	CKSXML_Create_Sample(this)
 {
 	gpDSPEngine = dynamic_cast<CKSDSP*>(mpDSPEngine);
 
@@ -251,6 +253,8 @@ void CKSPlugIn::AddParameters()
 	AddGlobalParm(giSectionGlobal, giParamID_Loop_End, 0, 0x7FFFFFFF, 44100*5);
 	AddGlobalParm(giSectionGlobal, giParamID_KS_Snap_To, 0, 32, 4);
 	AddGlobalParm(giSectionGlobal, giParamID_Project_ID, -1, 0x7FFFFFFF, -1);
+	AddGlobalParm(giSectionGlobal, giParamID_Branch_ID, -1, 0x7FFFFFFF, -1);
+	AddGlobalParm(giSectionGlobal, giParamID_Revision_Nr, -1, 0x7FFFFFFF, -1);
 	
 
 	//------------------------------------------------
@@ -270,7 +274,7 @@ void CKSPlugIn::AddParameters()
 	AddGlobalParm(giSectionGUI, giParamID_Export_Compression, 0, 16, 4);
 	AddGlobalParm(giSectionGUI, giParamID_Export_Tail, 0, 60000, 200);//1000);
 	AddGlobalParm(giSectionGUI, giParamID_Show_Export_For_Web_Window, 0, 1, 0);
-	AddGlobalParm(giSectionGUI, giParamID_CC_License_Type, 0, 5, 0);
+	AddGlobalParm(giSectionGUI, giParamID_CC_License_Type, giCC_By, giCC_By_Nc_Sa, giCC_By);
 	AddGlobalParm(giSectionGUI, giParamID_Show_Import_Window, 0, 1, 0);
 	AddGlobalParm(giSectionGUI, giParamID_Show_Waveform, 0, 1, 1);
 	AddGlobalParm(giSectionGUI, giParamID_Show_Fade, 0, 1, 1);
@@ -1319,19 +1323,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 			LoadSaveErrDlg(pEx->GetFullDescription());
 		}
 	}
-	else if (s.compare("File@Export Audio") == 0) {
 	
-		tbool bTest = GetGlobalParm(giParamID_Show_Export_Window, giSectionGUI) ;
-		if(!bTest){
-			SetGlobalParm(giParamID_Show_Export_Window,true, giSectionGUI);
-		}
-		else
-	
-			GetModule()->GetHost()->ActivateWindow(giExport_Audio_Window);
-		
-		
-		
-	}
 	else if (s.compare("File@Export for Web") == 0) {
 	
 		tbool bTest = GetGlobalParm(giParamID_Show_Export_For_Web_Window, giSectionGUI) ;
@@ -1357,8 +1349,17 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 		}
 		*/
 	}
-	
-	
+	else if (s.compare("File@Export Audio") == 0) {
+		
+		tbool bTest = GetGlobalParm(giParamID_Show_Export_Window, giSectionGUI) ;
+		if(!bTest){
+			SetGlobalParm(giParamID_Show_Export_Window,true, giSectionGUI);
+		}
+		else
+			
+			GetModule()->GetHost()->ActivateWindow(giExport_Audio_Window);
+
+	}
 	
 	else if (s.compare("File@Import Audio") == 0) {
 		MenuFileImportAudio();
@@ -5512,13 +5513,14 @@ void CKSPlugIn::Set_Track_To_Default(tuint iID)
 void CKSPlugIn::SetChannelName(tint32 iChannel, const std::string& sName)
 {
 	mpsChannelName[iChannel] = sName;
-
+	
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
 	for (; it != mGUIs.end(); it++) {
 		CBaseGUI* pGUI = *it;
 		dynamic_cast<CKSBaseGUI*>(pGUI)->UpdateChannelName(iChannel, sName);
 	}
 }
+
 
 std::string CKSPlugIn::GetProjDir_Audio() const
 {

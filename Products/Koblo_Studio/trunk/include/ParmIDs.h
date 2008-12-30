@@ -57,6 +57,8 @@ enum EGlobal_ParmID
 	giParamID_Loop_End,
 	giParamID_KS_Snap_To,
 	giParamID_Project_ID,
+	giParamID_Branch_ID,
+	giParamID_Revision_Nr,
 	
 
 

@@ -13,10 +13,11 @@ CKSXML_Write_Project::~CKSXML_Write_Project()
 {
 	
 }
-void CKSXML_Write_Project::Write_XML( tint32 iProjectID)
+
+
+void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 {
 	TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
-	
 	TiXmlDocument *pDoc		=	new TiXmlDocument("koblo_doc");
 	pDoc->LinkEndChild( decl );
 	
@@ -28,15 +29,54 @@ void CKSXML_Write_Project::Write_XML( tint32 iProjectID)
 	
 	Write_Project(pDoc);
 	
-	pDoc->SaveFile("xml_doc.xml");
+	// convert pDoc to a std::string
+	TiXmlPrinter printer;
+	pDoc->Accept(&printer);
+	std::string xml_str =  printer.CStr();
+	
+	// print xml_str to console
+//	printf(xml_str.c_str());
+	
+	//------------------ MISSING CODE ----------------------------
+/*
+	// missing code 
+	std::string sFileName = mpKSPlugIn->GetProjectName() + ".xml";
+	
+	//!!! path is missing write file to disk
+	pDoc->SaveFile(sFileName.c_str());
+*/	
+	
+	
+}
+
+void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID)
+{
+	TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
+	TiXmlDocument *pDoc		=	new TiXmlDocument("koblo_doc");
+	pDoc->LinkEndChild( decl );
+	
+	
+	Add_Comment(pDoc, "Koblo Studio music project XML format");
+	Add_Comment(pDoc, "most ids are originally returned from the website, and are globally unique (between different projects)");
+	Add_Comment(pDoc, "ids are always specified as attributes");
+	Add_Comment(pDoc, "all times and track positions are specified in sample points");
+	
+	Write_Project(pDoc);
 	
 	// convert pDoc to a std::string
 	TiXmlPrinter printer;
 	pDoc->Accept(&printer);
 	std::string xml_str =  printer.CStr();
 	
+	//------------------- DUMMY CODE ----------------------
+	
 	// print to console
 	printf(xml_str.c_str());
+	
+	// write file to disk
+	pDoc->SaveFile("xml_doc.xml");
+	
+	//------------------- REAL CODE INCOMPLETE ----------------------
 	
 	//Get Project ID
 	tint32 iProject_ID = mpKSPlugIn->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
@@ -44,17 +84,18 @@ void CKSXML_Write_Project::Write_XML( tint32 iProjectID)
 	char psz[128];
 	sprintf(psz, "branches/%d/revisions", iProject_ID);
 	std::string str = psz;
-
-	
-	
+	/*
+	 curl -u "user@koblo.com:password" \
+	 -F "commit[description]= Track names added" \
+	 -F "commit[markup]=</Users/maxgronlund/Documents/Koblo_Software/Products/Koblo_Studio/trunk/build/Debug/xml_doc.xml" \
+	 http://koblo.com/branches/1/revisions.xml
+	 */
 /*
 	tchar* pszBuff = NULL;
 	tint32 iOutLen = 0;
 	ine::IINetUtil::GetWebFile("userid=name.com&password=pswrd", "koblo.com", str.c_str(), &iOutLen, &pszBuff);
 */
 
-
-	
 }
 
 void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
@@ -86,26 +127,28 @@ void CKSXML_Write_Project::Write_Branch(TiXmlElement* pParent)
 	Add_Comment(pParent, "information about the branch");
 	
 	TiXmlElement* pBranch = new TiXmlElement( "branch" );
-	// ID
-	pBranch->SetAttribute("id",123);
+	// Branch ID
+	tint32 iBranch_ID = mpKSPlugIn->GetGlobalParm(giParamID_Branch_ID, giSectionGlobal);
+	pBranch->SetAttribute("id",iBranch_ID);
 	pParent->LinkEndChild( pBranch );
-	
 	
 	// name
 	TiXmlElement* pName = new TiXmlElement( "name" );
-	TiXmlText* pNameTxt = new TiXmlText("Resonance Chamber Edition");
+	TiXmlText* pNameTxt = new TiXmlText(Get_Branch_Name().c_str());
 	pName->LinkEndChild( pNameTxt );
 	pBranch->LinkEndChild( pName );
 	
 	// description
 	TiXmlElement* pDescription = new TiXmlElement( "description" );
-	TiXmlText* pDescriptionTxt = new TiXmlText("A branch with extra high levels of resonance");
+	TiXmlText* pDescriptionTxt = new TiXmlText(Get_Branch_Description().c_str());
 	pDescription->LinkEndChild( pDescriptionTxt );
 	pBranch->LinkEndChild( pDescription );
 	
 	// revision
+	char pszBuff [64];
+	sprintf(pszBuff, "%d", mpKSPlugIn->GetGlobalParm(giParamID_Revision_Nr, giSectionGlobal));
 	TiXmlElement* pRevision = new TiXmlElement( "revision" );
-	TiXmlText* pRevisionTxt = new TiXmlText("67");
+	TiXmlText* pRevisionTxt = new TiXmlText(pszBuff);
 	pRevision->LinkEndChild( pRevisionTxt );
 	pBranch->LinkEndChild( pRevision );
 	
@@ -123,15 +166,15 @@ void CKSXML_Write_Project::Write_Settings(TiXmlElement* pParent)
 	TiXmlElement* pSettings = new TiXmlElement( "settings" );
 	pParent->LinkEndChild( pSettings );
 	
-	// name
+	// project name
 	TiXmlElement* pName = new TiXmlElement( "name" );
-	TiXmlText* pNameTxt = new TiXmlText("Crystal Cave");
+	TiXmlText* pNameTxt = new TiXmlText( GetProjectName().c_str());
 	pName->LinkEndChild( pNameTxt );
 	pSettings->LinkEndChild( pName );
 	
 	// description
 	TiXmlElement* pDescription = new TiXmlElement( "description" );
-	TiXmlText* pDescriptionTxt = new TiXmlText("This project uses samples from underground crystal caves in Mexico.");
+	TiXmlText* pDescriptionTxt = new TiXmlText(Get_Project_Description().c_str());
 	pDescription->LinkEndChild( pDescriptionTxt );
 	pSettings->LinkEndChild( pDescription );
 	
@@ -225,6 +268,17 @@ void CKSXML_Write_Project::Write_Signature(TiXmlElement* pParent)
 
 void CKSXML_Write_Project::Write_License(TiXmlElement* pParent)
 {
+	
+	std::string s = Create_License_String();
+	TiXmlText* pLicenseTxt = new TiXmlText(s.c_str());
+	pParent->LinkEndChild( pLicenseTxt );
+	
+	
+	
+}
+
+std::string CKSXML_Write_Project::Create_License_String()
+{
 	char pszBuff [64];
 	tuint uiTest	=	 mpKSPlugIn->GetGlobalParm(giParamID_CC_License_Type, giSectionGUI);
 	
@@ -256,9 +310,10 @@ void CKSXML_Write_Project::Write_License(TiXmlElement* pParent)
 			break;
 		}
 	}
-	TiXmlText* pLicenseTxt = new TiXmlText(pszBuff);
-	pParent->LinkEndChild( pLicenseTxt );
-
+	
+	
+	return "pszBuff";
+	
 }
 
 //----------------------------------------------------------------

@@ -67,7 +67,9 @@ public virtual IBaseDezipperCallback,
 public virtual ITimerCallback_CanStop, 
 public virtual CKSXML_Read_Project, 
 public virtual CKSXML_Write_Project,
-public virtual CKSInternet_Features
+public virtual CKSInternet_Features,
+public virtual CKSXML_Create_Project,
+public virtual CKSXML_Create_Sample
 {
 
 public:
@@ -407,6 +409,22 @@ public:
 	
 	tuint32 Get_Track_Id(tuint32 uiTrack){ return msStack.iTrack[uiTrack];}
 	
+/*	void SetProjectName( const std::string& sName){ msProjectName = sName;}
+	
+	std::string GetProjectName(){ return msProjectName;}
+	
+	void SetProjectDescription( const std::string& sDescription){ msProjectDescription = sDescription;}
+	
+	std::string Get_Project_Description(){ return msBranchDescription;}
+	
+	void Set_Branch_Name( const std::string& sName){ msBranchName = sName;}
+	
+	std::string Get_Branch_Name(){ return msBranchName;}
+	
+	void Set_Branch_Description( const std::string& sName){ msBranchDescription = sName;}
+	
+	std::string Get_Branch_Description(){ return msBranchDescription;}
+*/	
 	
 
 protected:
@@ -452,7 +470,21 @@ protected:
 	}
 	
 	CMIDISong mSong;
-
+/*
+	//! project name
+	std::string msProjectName;
+	
+	//! project description
+	std::string msProjectDescription;
+	
+	//! branch name
+	std::string msBranchName;
+	
+	//! branch description
+	std::string msBranchDescription;
+	
+*/	
+	
 	std::string msProjectPathName;
 
 	std::string msProjectFolder;

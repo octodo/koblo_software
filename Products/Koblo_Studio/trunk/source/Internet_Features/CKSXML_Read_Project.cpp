@@ -19,7 +19,8 @@ void CKSXML_Read_Project::Read_Project_XML(tint32 iProjectID )
 	mpKSPlugIn->Set_Selected_Track(-1);
 	
 	
-	std::string str = "";
+	// read latst revision
+	std::string str;
 	char psz[128];
 	sprintf(psz, "/branches/%d/revisions/latest.xml", iProjectID);
 	str = psz;
@@ -27,7 +28,6 @@ void CKSXML_Read_Project::Read_Project_XML(tint32 iProjectID )
 	
 	tchar* pszBuff = NULL;
 	tint32 iOutLen = 0;
-//	ine::IINetUtil::GetWebFile(NULL, "koblo.com", "/projects/13/branches/1/revisions/61", &iOutLen, &pszBuff);
 	ine::IINetUtil::GetWebFile(NULL, "koblo.com", str.c_str(), &iOutLen, &pszBuff);
 	
 	if ((pszBuff) && (iOutLen > 0)) {

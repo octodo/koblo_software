@@ -22,69 +22,34 @@
  \param iCount [in]: Number of samples to fill in buffer
  */
 
-/*! \class CKSInternet_Features
- * \brief class that handles all Internet features
-*/
+/*! \class CKSXML_Create_Sample
+ * \brief class that parse the XML data in to the internal KS DataEngine
+ based on TinyXml www.sourceforge.net/projects/tinyxml
+ */
 
 class CKSPlugIn;
 
 
-class CKSInternet_Features
+class CKSXML_Create_Sample
 {
-		
+	
 private:
 	CKSPlugIn* mpKSPlugIn;
 	
-	virtual void Open_Project_Edit_Page_On_Koblo();
-		
-		
+
 	
 public:
-		
-	CKSInternet_Features(CKSPlugIn * pKSPlugIn);
-	~CKSInternet_Features();
 	
-	//! called from the menu and opens the project id dialog 
-	virtual void On_Menu_Download_Project();
+	CKSXML_Create_Sample(CKSPlugIn * pKSPlugIn);
+	~CKSXML_Create_Sample();
 	
-	
-	
-	//! called from the file menu
-	virtual void On_Menu_Update_Project();
-	
-	//! called from the file menu
-	virtual void On_Menu_Upload_Project();
+	//! create a project on koblo.com
+	/*! 
+	 \ use user id and password
+	 \ return XML and pass it on to the XML passer
+	 */ 
+	virtual void Create_Sample_On_Koblo();
 	
 	
-	
-	
-	
-	
-	//! called from the file menu
-	virtual void On_Menu_Commit_Project();
-
-	//! clean project and read it from koblo.com
-	void Download_Project(tint32 iProjectID);
-	//! read project from koblo.com
-	void Update_Project(tint32 iProjectID);
-	//! upload project to koblo.com
-	void Commit_Project();
-	
-	
-	
-	
-	
-	
-	
-	void Compress_Wave_File(std::string sSample);
-	void Upload_Sample(std::string sSample);
-	void Download_Take();
-	
-	//! upload compressed audio file and mp3 preview.
-	void Upload_OGG_And_MP3_File();
-	
-		
-		
-		
 };
 

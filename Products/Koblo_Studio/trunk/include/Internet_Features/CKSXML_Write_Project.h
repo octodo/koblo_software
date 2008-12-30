@@ -36,6 +36,19 @@ class CKSXML_Write_Project
 private:
 	CKSPlugIn* mpKSPlugIn;
 	
+	//! project name
+	std::string msProjectName;
+	
+	//! project description
+	std::string msProjectDescription;
+	
+	//! branch name
+	std::string msBranchName;
+	
+	//! branch description
+	std::string msBranchDescription;
+	
+	
 	void Add_Comment(TiXmlDocument* doc, std::string str);
 	void Add_Comment(TiXmlElement* pParent,std::string str);
 	
@@ -92,7 +105,29 @@ public:
 	
 	
 	//! write the XML file to Koblo.com
-	void Write_XML( tint32 iProjectID);
+	void Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID);
+	
+	std::string Create_License_String();
+	
+	void Save_Project_As_XML_File_To_Disk();
+	
+	
+	
+	void SetProjectName( const std::string& sName){ msProjectName = sName;}
+	
+	std::string GetProjectName(){ return msProjectName;}
+	
+	void SetProjectDescription( const std::string& sDescription){ msProjectDescription = sDescription;}
+	
+	std::string Get_Project_Description(){ return msBranchDescription;}
+	
+	void Set_Branch_Name( const std::string& sName){ msBranchName = sName;}
+	
+	std::string Get_Branch_Name(){ return msBranchName;}
+	
+	void Set_Branch_Description( const std::string& sName){ msBranchDescription = sName;}
+	
+	std::string Get_Branch_Description(){ return msBranchDescription;}
 	
 };
 

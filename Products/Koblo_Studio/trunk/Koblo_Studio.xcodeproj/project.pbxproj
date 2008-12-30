@@ -83,6 +83,8 @@
 		FCA8CB1C0F08F0250007514D /* CPlugin_Toolbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CB180F08F0250007514D /* CPlugin_Toolbar.cpp */; };
 		FCA8CB1E0F08F1C30007514D /* CKSPlugInEffectPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CB1D0F08F1C30007514D /* CKSPlugInEffectPane.cpp */; };
 		FCA8CB270F08F21A0007514D /* CPlugInManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CB260F08F21A0007514D /* CPlugInManager.cpp */; };
+		FCA8CBCE0F0906170007514D /* CKSXML_Create_Project.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CBCD0F0906170007514D /* CKSXML_Create_Project.cpp */; };
+		FCA8CCDD0F091D6F0007514D /* CKSXML_Create_Sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CCDC0F091D6F0007514D /* CKSXML_Create_Sample.cpp */; };
 		FCAA23080DA6B42100284AE1 /* CTrack_Side.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCAA23070DA6B42100284AE1 /* CTrack_Side.cpp */; };
 		FCAA23410DA6B7EA00284AE1 /* CTrack_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCAA23400DA6B7EA00284AE1 /* CTrack_Player.cpp */; };
 		FCAA23A80DA6C22B00284AE1 /* CTrack_File_Browser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCAA23A70DA6C22B00284AE1 /* CTrack_File_Browser.cpp */; };
@@ -393,6 +395,10 @@
 		FCA8CB5D0F08F42E0007514D /* CKSSetupGUIPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSSetupGUIPane.h; sourceTree = "<group>"; };
 		FCA8CB5F0F08F43C0007514D /* CKSSign_In_GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSSign_In_GUI.h; sourceTree = "<group>"; };
 		FCA8CB600F08F43C0007514D /* CKSSign_In_GUI_Pane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSSign_In_GUI_Pane.h; sourceTree = "<group>"; };
+		FCA8CBCD0F0906170007514D /* CKSXML_Create_Project.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSXML_Create_Project.cpp; sourceTree = "<group>"; };
+		FCA8CBD00F09064F0007514D /* CKSXML_Create_Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Create_Project.h; sourceTree = "<group>"; };
+		FCA8CCDB0F091D440007514D /* CKSXML_Create_Sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Create_Sample.h; sourceTree = "<group>"; };
+		FCA8CCDC0F091D6F0007514D /* CKSXML_Create_Sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSXML_Create_Sample.cpp; sourceTree = "<group>"; };
 		FCAA23070DA6B42100284AE1 /* CTrack_Side.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Side.cpp; path = source/Track_GUI/CTrack_Side.cpp; sourceTree = "<group>"; };
 		FCAA23090DA6B42D00284AE1 /* CTrack_Side.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Side.h; path = include/Track_GUI/CTrack_Side.h; sourceTree = "<group>"; };
 		FCAA23400DA6B7EA00284AE1 /* CTrack_Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Player.cpp; path = source/Track_GUI/CTrack_Player.cpp; sourceTree = "<group>"; };
@@ -992,6 +998,8 @@
 				FCA8CB400F08F3F60007514D /* CKSExportForWebGUIPane.h */,
 				FCA8CB410F08F3F60007514D /* CKSExportForWebGUI.h */,
 				FCBBC54F0F0689B3003201E4 /* CKSInternet_Features.h */,
+				FCA8CBD00F09064F0007514D /* CKSXML_Create_Project.h */,
+				FCA8CCDB0F091D440007514D /* CKSXML_Create_Sample.h */,
 				FCBBC4D10F0683E6003201E4 /* CKSXML_Read_Project.h */,
 				FCBBC4D20F0683E6003201E4 /* CKSXML_Write_Project.h */,
 			);
@@ -1005,6 +1013,8 @@
 				FCA8CACF0F08EE9E0007514D /* CKSExportForWebGUI.cpp */,
 				FCA8CAD00F08EE9E0007514D /* CKSExportForWebGUIPane.cpp */,
 				FCBBC54D0F06899C003201E4 /* CKSInternet_Features.cpp */,
+				FCA8CBCD0F0906170007514D /* CKSXML_Create_Project.cpp */,
+				FCA8CCDC0F091D6F0007514D /* CKSXML_Create_Sample.cpp */,
 				FCBBC4D80F06842C003201E4 /* CKSXML_Read_Project.cpp */,
 				FCBBC4D90F06842C003201E4 /* CKSXML_Write_Project.cpp */,
 			);
@@ -1309,6 +1319,8 @@
 				FCA8CB1C0F08F0250007514D /* CPlugin_Toolbar.cpp in Sources */,
 				FCA8CB1E0F08F1C30007514D /* CKSPlugInEffectPane.cpp in Sources */,
 				FCA8CB270F08F21A0007514D /* CPlugInManager.cpp in Sources */,
+				FCA8CBCE0F0906170007514D /* CKSXML_Create_Project.cpp in Sources */,
+				FCA8CCDD0F091D6F0007514D /* CKSXML_Create_Sample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

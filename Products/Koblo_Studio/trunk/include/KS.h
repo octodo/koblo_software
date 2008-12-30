@@ -25,6 +25,8 @@
 #include  "CKSInternet_Features.h"
 #include "CKSXML_Read_Project.h"
 #include "CKSXML_Write_Project.h"
+#include "CKSXML_Create_Project.h"
+#include "CKSXML_Create_Sample.h"
 
 #include "aioe.h"
 #include "mioe.h"
@@ -104,7 +106,7 @@ class CPlugInManager;
 #include "CPlugInManager.h"
 
 // Built-in effects
-#include "BuiltInEffects/CKobloVerb.h"
+#include "CKobloVerb.h"
 
 // GUI
 #include  "CEffectControl.h"
