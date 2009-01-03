@@ -2,10 +2,11 @@
 #include "KSOS.h"
 
 
-CKSXML_Create_Project::CKSXML_Create_Project(CKSPlugIn * pKSPlugIn)
+CKSXML_Create_Project::CKSXML_Create_Project(CKSPlugIn* pKSPlugIn):
+mpKSPlugIn(pKSPlugIn)
 {
 	
-	mpKSPlugIn = pKSPlugIn;
+
 	
 }
 
@@ -14,17 +15,9 @@ CKSXML_Create_Project::~CKSXML_Create_Project()
 	
 }
 
-tbool CKSXML_Create_Project::Create_Project_On_Koblo()
+tbool CKSXML_Create_Project::Create_Project_Handshake()
 {
-	// shell script to create new project on koblo.com
-	/*
-	 curl http://koblo.com/projects.xml -u \
-	 "usere@mail.com:password" \
-	 -F "project[name]=Gazzell blond dear" \
-	 -F "project[description]=a animal tribute" \
-	 -F "project[license]=by-sa" \
-	 -i
-	 */
+	
 	
 //-------------- DUMMY CODE HERE --------------------
 	// Read dummy XML file from HD here
@@ -49,12 +42,23 @@ tbool CKSXML_Create_Project::Create_Project_On_Koblo()
 	}
 	else
 	{
-		printf("Failed to load xml file");
+		printf("Failed to load return code xml file");
 		return false;
 	}
 	
+	// shell script to create new project on koblo.com
+	/*
+	 curl http://koblo.com/projects.xml -u \
+	 "usere@mail.com:password" \
+	 -F "project[name]=Gazzell blond dear" \
+	 -F "project[description]=a animal tribute" \
+	 -F "project[license]=by-sa" \
+	 -i
+	 */
+	
 	
 //-------------- REAL CODE HERE --------------------
+	
 /*	
 	
 	tbool bReturnValue = false;

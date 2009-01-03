@@ -278,6 +278,7 @@ void* gWndExportForWeb;
 void* gWndImport;
 void* gWndSetup;
 void* gWndProjectID;
+void* gWndSignIn;
 
 
 //tbool gbShowZoom;
@@ -293,6 +294,7 @@ CKSExportForWebGUI* gpGUIExportForWeb;
 CKSImportGUI* gpGUIImport;
 CKSSetupGUI* gpGUISetup;
 CKSProject_ID_GUI* gpGUIProjectID;
+CKSSign_In_GUI* gpGUISignIn;
 
 #ifdef WIN32
 #include "afxres.h"
@@ -423,29 +425,39 @@ tbool CAppCallback::OnInit(tint32 iRunIndex)
 			gpHost->ActivateWindow(giSplash_Window);
 			break;
 		case 11:
-			{
-				gpGUISetup->MakeWindow(gWndSetup);
-				gpGUISetup->Paint();
-				pContext->SetClosingBehaviour(gWndSetup, ge::IContext::giClosingOnlyHides);
-			}
+		{
+			gpGUISetup->MakeWindow(gWndSetup);
+			gpGUISetup->Paint();
+			pContext->SetClosingBehaviour(gWndSetup, ge::IContext::giClosingOnlyHides);
 			break;
-
+		}
 		
-			
 		case 12:
 		{
 			gpGUIProjectID->MakeWindow(gWndProjectID);
 			gpGUIProjectID->Paint();
 			pContext->SetClosingBehaviour(gWndProjectID, ge::IContext::giClosingOnlyHides);
+			break;
 		}
+		case 13:
+			gpSplashGUI->SetText("Init Sign In Dialog...");
+			gpHost->ActivateWindow(giSplash_Window);
 			break;
 			
-		case 13:
+		case 14:
+		{
+			gpGUISignIn->MakeWindow(gWndSignIn);
+			gpGUISignIn->Paint();
+			pContext->SetClosingBehaviour(gWndSignIn, ge::IContext::giClosingOnlyHides);
+			break;
+		}
+
+		case 15:
 			gpSplashGUI->SetText("Init Rack Window...");
 			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
-		case 14:
+		case 16:
 			{
 				gpGUIAUX->MakeWindow(gWndAUX);
 				gpGUIAUX->Paint();
@@ -453,62 +465,62 @@ tbool CAppCallback::OnInit(tint32 iRunIndex)
 			}
 			break;
 
-		case 15:
-			gpSplashGUI->SetText("Init Audio Setup Dialog...");
-			gpHost->ActivateWindow(giSplash_Window);
-			break;
-
-		case 16:
-			{
-				HandleNew_Audio();
-			}
-			break;
-
 		case 17:
-			gpSplashGUI->SetText("Init MIDI...");
+			gpSplashGUI->SetText("Init Audio Setup Dialog...");
 			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
 		case 18:
 			{
-				HandleNew_MIDI();
+				HandleNew_Audio();
 			}
 			break;
 
 		case 19:
-			gpSplashGUI->SetText("Init Menu...");
+			gpSplashGUI->SetText("Init MIDI...");
 			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
 		case 20:
 			{
-				HandleNew_Menu();
+				HandleNew_MIDI();
 			}
 			break;
-		
+
 		case 21:
-			gpSplashGUI->SetText("Start Audio...");
+			gpSplashGUI->SetText("Init Menu...");
 			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
 		case 22:
 			{
-				gpDSP->StartAudioDevices();
+				HandleNew_Menu();
 			}
 			break;
-
+		
 		case 23:
-			gpSplashGUI->SetText("Done");
+			gpSplashGUI->SetText("Start Audio...");
 			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
 		case 24:
 			{
-				pContext->ShowWindow(gWndMain);
+				gpDSP->StartAudioDevices();
 			}
 			break;
 
 		case 25:
+			gpSplashGUI->SetText("Done");
+			gpHost->ActivateWindow(giSplash_Window);
+			break;
+
+		case 26:
+			{
+				pContext->ShowWindow(gWndMain);
+			}
+			break;
+
+		case 27:
 			{
 				pContext->ShowWindow(gWndSplash, false);
 			}
@@ -662,8 +674,6 @@ int main(int argc, char* argv[])
 	gpGUISetup = dynamic_cast<CKSSetupGUI*>(gpPlugIn->CreateGUI(giAudio_Setup_Window));
 	pContext->ShowWindow(gWndSetup, false);
 	
-	
-
 	//------------------------
 #ifdef _Mac
 	gWndProjectID = pContext->CreateExtraWindow((void*)CFSTR("ProjectIDWnd"), ge::SSize(244, 102));
@@ -674,6 +684,18 @@ int main(int argc, char* argv[])
 	
 	gpGUIProjectID = dynamic_cast<CKSProject_ID_GUI*>(gpPlugIn->CreateGUI(giProject_ID_Window));
 	pContext->ShowWindow(gWndProjectID, false);
+	
+	
+	//------------------------
+#ifdef _Mac
+	gWndSignIn = pContext->CreateExtraWindow((void*)CFSTR("SignInWnd"), ge::SSize(244, 182));
+#endif
+#ifdef WIN32
+	gWndSignIn = pContext->CreateExtraWindow((void*)"Sign In", ge::SSize(245, 182));
+#endif
+	
+	gpGUISignIn = dynamic_cast<CKSSign_In_GUI*>(gpPlugIn->CreateGUI(giSign_In_Window));
+	pContext->ShowWindow(gWndSignIn, false);
 
 
 
@@ -775,6 +797,9 @@ tint32 CAppHost::IsWindowVisible(tint32 iIndex)
 		case giProject_ID_Window:
 			return pContext->IsWindowVisible(gWndProjectID) == true ? 1 : 0;
 			
+		case giSign_In_Window:
+			return pContext->IsWindowVisible(gWndSignIn) == true ? 1 : 0;
+			
 	}
 
 	return 0;
@@ -824,6 +849,10 @@ void CAppHost::ActivateWindow(tint32 iIndex)
 			pContext->ShowWindow(gWndProjectID);
 			pContext->SelectWindow(gWndProjectID);
 			break;
+		case giSign_In_Window:
+			pContext->ShowWindow(gWndSignIn);
+			pContext->SelectWindow(gWndSignIn);
+			break;
 	}
 }
 
@@ -833,11 +862,9 @@ void CAppHost::HideWindow(tint32 iIndex)
 		case giMain_Window:
 			pContext->ShowWindow(gWndMain,false);
 			break;
-			
 		case giMix_Window:
 			pContext->ShowWindow(gWndMixer, false);
 			break;
-
 		case giRack_Window:
 			pContext->ShowWindow(gWndAUX, false);
 			break;
@@ -859,57 +886,14 @@ void CAppHost::HideWindow(tint32 iIndex)
 		case giProject_ID_Window:
 			pContext->ShowWindow(gWndProjectID, false);
 			break;
+		case giSign_In_Window:
+			pContext->ShowWindow(gWndSignIn, false);
+			break;
 	}
 }
 
 void OnMenuWindows(int iPopupIndex)
 {
-//!!!
-/*	tint32 iIndex = iPopupIndex - 1;
-	switch(iIndex) {
-		case 0:
-			::ShowWindow(gWndMain);
-			::SelectWindow(gWndMain);
-			break;
-
-		case 1:{
-
-			::ShowWindow(gWndTrack);
-			::SelectWindow(gWndTrack);
-			break;
-			}
-
-		case 2:
-			::ShowWindow(gWndCollaboration);
-			::SelectWindow(gWndCollaboration);
-			break;
-
-		case 3:
-			::ShowWindow(gWndFileExchange);
-			::SelectWindow(gWndFileExchange);
-			break;
-			
-		case 4:
-			::ShowWindow(gWndTransport);
-			::SelectWindow(gWndTransport);
-			break;
-			
-		case 5:
-			::ShowWindow(gWndRack);
-			::SelectWindow(gWndRack);
-			break;
-			
-		case 6:
-			::ShowWindow(gWndZoom);
-			::SelectWindow(gWndZoom);
-			gbShowZoom = true;
-			break;
-		case 7:{
-			::ShowWindow(gWndSplash);
-			::SelectWindow(gWndSplash);
-			break;
-			}
-	}*/
 }
 
 
@@ -981,11 +965,13 @@ static void HandleNew_Menu()
 	//-----------------------------------
 	// Settings menu
 	ge::IContext::SMenuItemList MenuItemsSetup;
-	MenuItemsSetup.uiItemCount = 4;
+	MenuItemsSetup.uiItemCount = 6;
 	MenuItemsSetup.pItems[0] = ge::IContext::SMenuItem("About Koblo Studio");
 	MenuItemsSetup.pItems[1] = ge::IContext::SMenuItem("Audio Setup");
 	MenuItemsSetup.pItems[2] = ge::IContext::SMenuItem("-");
 	MenuItemsSetup.pItems[3] = ge::IContext::SMenuItem("Collaboration");
+	MenuItemsSetup.pItems[4] = ge::IContext::SMenuItem("Sign In");
+	MenuItemsSetup.pItems[5] = ge::IContext::SMenuItem("Sign Out");
 
 	//-----------------------------------
 	// File menu

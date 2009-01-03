@@ -29,7 +29,7 @@ void CKSSign_In_GUI::Initialize()
 {
 	mpWindow->SetFineAdjustModifier(ge::IWindow::ModifierControl);
 
-	CBasePane* pPane = new CKSSign_In_GUIPane(NULL, dynamic_cast<CBaseGUI*>(this));
+	CBasePane* pPane = new CKSSign_In_GUI_Pane(NULL, dynamic_cast<CBaseGUI*>(this));
 	pPane->Init();
 	SetPane(pPane);
 	// This is the top pane, so set it in window
@@ -47,7 +47,7 @@ void CKSSign_In_GUI::Initialize()
 
 void CKSSign_In_GUI::ConnectControls()
 {
-	dynamic_cast <CKSSign_In_GUIPane*>( GetPane())->ConnectControls();
+	dynamic_cast <CKSSign_In_GUI_Pane*>( GetPane())->ConnectControls();
 
 }
 

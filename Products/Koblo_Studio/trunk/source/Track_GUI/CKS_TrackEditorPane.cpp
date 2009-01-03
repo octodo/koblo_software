@@ -314,6 +314,13 @@ void CKS_TrackEditorPane::UpdateGUIData(tint32 iID, tint32 iValue)
 				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giProject_ID_Window);
 			break;
 		}
+		case giParamID_Show_Sign_In_Window:{
+			if(iValue == 0 )
+				GetPlugIn()->GetModule()->GetHost()->HideWindow(giSign_In_Window);
+			else
+				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giSign_In_Window);
+			break;
+		}
 		case giParamID_Audio_Setup_Window:{
 			if(iValue == 0 )
 				GetPlugIn()->GetModule()->GetHost()->HideWindow(giAudio_Setup_Window);

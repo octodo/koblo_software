@@ -16,6 +16,9 @@
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
 
+//!!! To Do: turn mpHost in to a global pointer
+
+
 /*! \class CBaseModule
  * \brief Implementation of kspi::IModule
 */

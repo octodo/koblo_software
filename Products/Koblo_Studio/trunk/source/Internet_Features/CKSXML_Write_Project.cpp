@@ -2,10 +2,10 @@
 #include "KSOS.h"
 
 
-CKSXML_Write_Project::CKSXML_Write_Project(CKSPlugIn * pKSPlugIn)
+CKSXML_Write_Project::CKSXML_Write_Project(CKSPlugIn* pKSPlugIn):
+mpKSPlugIn(pKSPlugIn)
 {
 	
-	mpKSPlugIn = pKSPlugIn;
 	
 }
 
@@ -134,13 +134,13 @@ void CKSXML_Write_Project::Write_Branch(TiXmlElement* pParent)
 	
 	// name
 	TiXmlElement* pName = new TiXmlElement( "name" );
-	TiXmlText* pNameTxt = new TiXmlText(Get_Branch_Name().c_str());
+	TiXmlText* pNameTxt = new TiXmlText(mpKSPlugIn->Get_Branch_Name().c_str());
 	pName->LinkEndChild( pNameTxt );
 	pBranch->LinkEndChild( pName );
 	
 	// description
 	TiXmlElement* pDescription = new TiXmlElement( "description" );
-	TiXmlText* pDescriptionTxt = new TiXmlText(Get_Branch_Description().c_str());
+	TiXmlText* pDescriptionTxt = new TiXmlText(mpKSPlugIn->Get_Branch_Description().c_str());
 	pDescription->LinkEndChild( pDescriptionTxt );
 	pBranch->LinkEndChild( pDescription );
 	
@@ -168,13 +168,13 @@ void CKSXML_Write_Project::Write_Settings(TiXmlElement* pParent)
 	
 	// project name
 	TiXmlElement* pName = new TiXmlElement( "name" );
-	TiXmlText* pNameTxt = new TiXmlText( GetProjectName().c_str());
+	TiXmlText* pNameTxt = new TiXmlText( mpKSPlugIn->GetProjectName().c_str());
 	pName->LinkEndChild( pNameTxt );
 	pSettings->LinkEndChild( pName );
 	
 	// description
 	TiXmlElement* pDescription = new TiXmlElement( "description" );
-	TiXmlText* pDescriptionTxt = new TiXmlText(Get_Project_Description().c_str());
+	TiXmlText* pDescriptionTxt = new TiXmlText(mpKSPlugIn->Get_Project_Description().c_str());
 	pDescription->LinkEndChild( pDescriptionTxt );
 	pSettings->LinkEndChild( pDescription );
 	

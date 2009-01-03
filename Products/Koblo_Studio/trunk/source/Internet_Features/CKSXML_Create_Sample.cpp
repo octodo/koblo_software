@@ -4,7 +4,6 @@
 
 CKSXML_Create_Sample::CKSXML_Create_Sample(CKSPlugIn * pKSPlugIn)
 {
-	
 	mpKSPlugIn = pKSPlugIn;
 	
 }

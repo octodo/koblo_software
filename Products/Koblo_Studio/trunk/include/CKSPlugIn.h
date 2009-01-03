@@ -65,11 +65,13 @@ class CKSPlugIn :
 public virtual CBasePlugIn, 
 public virtual IBaseDezipperCallback, 
 public virtual ITimerCallback_CanStop, 
-public virtual CKSXML_Read_Project, 
-public virtual CKSXML_Write_Project,
 public virtual CKSInternet_Features,
-public virtual CKSXML_Create_Project,
+
+//public virtual CKSXML_Read_Project, 
+//public virtual CKSXML_Write_Project,
+//public virtual CKSXML_Create_Project,
 public virtual CKSXML_Create_Sample
+//public virtual CKSXML_Sign_In
 {
 
 public:
@@ -180,6 +182,7 @@ public:
 	virtual void MenuFileDistributeMix(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize);
 	virtual void MenuSetupAudio();
 	virtual void MenuCollaboration();
+//	virtual void MenuSignIn();
 	virtual void MenuFileImportAudio();
 	
 
@@ -409,22 +412,8 @@ public:
 	
 	tuint32 Get_Track_Id(tuint32 uiTrack){ return msStack.iTrack[uiTrack];}
 	
-/*	void SetProjectName( const std::string& sName){ msProjectName = sName;}
+	virtual void Send_Msg_To_All_Panes(CBasePane::SMsg* pMsg);
 	
-	std::string GetProjectName(){ return msProjectName;}
-	
-	void SetProjectDescription( const std::string& sDescription){ msProjectDescription = sDescription;}
-	
-	std::string Get_Project_Description(){ return msBranchDescription;}
-	
-	void Set_Branch_Name( const std::string& sName){ msBranchName = sName;}
-	
-	std::string Get_Branch_Name(){ return msBranchName;}
-	
-	void Set_Branch_Description( const std::string& sName){ msBranchDescription = sName;}
-	
-	std::string Get_Branch_Description(){ return msBranchDescription;}
-*/	
 	
 
 protected:

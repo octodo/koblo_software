@@ -31,19 +31,26 @@ struct SSample24
 #endif	// WIN32
 
 
-CKSPlugIn::CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex)
-: CBasePlugIn(dynamic_cast<CBaseModule*>(pModule), 
-	giAudioMaxBufferSize, dynamic_cast<CBaseDSPEngine*>(new CKSDSP(this)), uiProcessIndex, COMPANY_NAME, PRODUCT_NAME),
-	mbUpdateGUISettings(true),
-	mbBypass(false), miSongPos(0), mePlaybackState(geStateStopped),
-	mpPlugInManager(NULL),
-	mbAreGUIsReady(false),
-	mbRecord(false),
-	CKSXML_Read_Project(this),
-	CKSXML_Write_Project(this),
-	CKSInternet_Features(this),
-	CKSXML_Create_Project(this),
-	CKSXML_Create_Sample(this)
+CKSPlugIn::CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex) 
+: CBasePlugIn(dynamic_cast<CBaseModule*>(pModule),giAudioMaxBufferSize, dynamic_cast<CBaseDSPEngine*>(new CKSDSP(this)), uiProcessIndex, COMPANY_NAME, PRODUCT_NAME),
+mbUpdateGUISettings(true),
+mbBypass(false), 
+miSongPos(0), 
+mePlaybackState(geStateStopped),
+mpPlugInManager(NULL),
+mbAreGUIsReady(false),
+mbRecord(false),
+
+CKSXML_Create_Project(this),
+CKSXML_Read_Project(this),
+CKSXML_Write_Project(this),
+CKSXML_Sign_In(this),
+
+
+CKSInternet_Features(this),
+
+CKSXML_Create_Sample(this)
+
 {
 	gpDSPEngine = dynamic_cast<CKSDSP*>(mpDSPEngine);
 
@@ -199,6 +206,10 @@ kspi::IGUI* CKSPlugIn::CreateGUI(tint32 iIndex)
 		case giProject_ID_Window:
 			pGUI = dynamic_cast<CBaseGUI*>(new CKSProject_ID_GUI(this, mpParmMan));
 			break;
+			
+		case giSign_In_Window:
+			pGUI = dynamic_cast<CBaseGUI*>(new CKSSign_In_GUI(this, mpParmMan));
+			break;
 		
 		default: {
 			break;
@@ -281,6 +292,8 @@ void CKSPlugIn::AddParameters()
 	AddGlobalParm(giSectionGUI, giParamID_Audio_Setup_Window, 0, 1, 0);
 	AddGlobalParm(giSectionGUI, giParamID_Normalize_On_Export, 0, 1, 1);
 	AddGlobalParm(giSectionGUI, giParamID_Show_Projec_ID_Window, 0, 1, 0);
+	AddGlobalParm(giSectionGUI, giParamID_Show_Sign_In_Window, 0, 1, 0);
+//	AddGlobalParm(giSectionGUI, giParamID_Remember_Username_and_Password, 0, 1, 0);
 
 	
 
@@ -612,12 +625,7 @@ void CKSPlugIn::UpdateGUIData(tint32 iID, tint32 iValue)
 		CBasePane::SMsg Msg;
 		Msg = MsgGUIData;
 		Msg.pDataIn	= (void*)&sData;
-		
-		// Send a message to all panes
-		std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
-		for (; it != mGUIs.end(); it++) {
-			(*it)->GetPane()->SendMsgFromTop(&Msg);
-		}
+		Send_Msg_To_All_Panes(&Msg);
 		
 	}
 } // UpdateGUIData
@@ -1139,12 +1147,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 				CBasePane::SMsg Msg;
 				Msg = MsgGUIData;
 				Msg.pDataIn	= (void*)&sData;
-				
-				// Send a message to all panes
-				std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
-				for (; it != mGUIs.end(); it++) {
-					(*it)->GetPane()->SendMsgFromTop(&Msg);
-				}
+				Send_Msg_To_All_Panes(&Msg);
 			}
 			break;
 */
@@ -1174,14 +1177,8 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 		case ID_EDIT_LOOPSELECTION:
 			{
 				gpDSPEngine->LoopSelection();
-				
 				CBasePane::SMsg Msg(Msg_Draw_Loop);
-			
-				// Send a message to all panes
-				std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
-				for (; it != mGUIs.end(); it++) {
-					(*it)->GetPane()->SendMsgFromTop(&Msg);
-				}
+				Send_Msg_To_All_Panes(&Msg);
 			}
 			break;
 
@@ -1282,6 +1279,13 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 	
 	else if (s.compare("Setup@Collaboration") == 0) {
 		MenuCollaboration();
+	}
+	
+	else if (s.compare("Setup@Sign In") == 0) {
+		Open_Sign_In_Dialog();
+	}
+	else if (s.compare("Setup@Sign Out") == 0) {
+		On_Menu_Sign_Out();
 	}
 	
 	
@@ -1444,12 +1448,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 		gpDSPEngine->LoopSelection();
 		
 		CBasePane::SMsg Msg(Msg_Draw_Loop);
-	
-		// Send a message to all panes
-		std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
-		for (; it != mGUIs.end(); it++) {
-		(*it)->GetPane()->SendMsgFromTop(&Msg);
-		}
+		Send_Msg_To_All_Panes(&Msg);
 		
 	}
 	
@@ -1557,28 +1556,37 @@ void CKSPlugIn::MenuSetupAudio()
 	CBasePane::SMsg Msg;
 	Msg = MsgGUIData;
 	Msg.pDataIn	= (void*)&sData;
-			
-		// Send a message to all panes
-	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
-	for (; it != mGUIs.end(); it++) {
-	(*it)->GetPane()->SendMsgFromTop(&Msg);
-	}		
+	Send_Msg_To_All_Panes(&Msg);		
 } // MenuSetupAudio
 
 void CKSPlugIn::MenuCollaboration()
 {
 	
 	
-//	CleanProject(0);
+	//	CleanProject(0);
 	
 	
-//	ReadOnlineXML("/projects/13/branches/1.xml");
+	//	ReadOnlineXML("/projects/13/branches/1.xml");
 	
-//	static int iNr =	0;
+	//	static int iNr =	0;
 	
-//	Write_XML("funky beats.xml");
+	//	Write_XML("funky beats.xml");
 }
+/*
+void CKSPlugIn::MenuSignIn()
+{
+	
+	tbool bTest = (GetGlobalParm(giSign_In_Window, giSectionGUI) != 0);
+	if(!bTest){
+		
+		SetGlobalParm(giParamID_Show_Sign_In_Window,true, giSectionGUI);
+	}
+	else
+		GetModule()->GetHost()->ActivateWindow(giSign_In_Window);
+	
 
+}
+*/
 
 void CKSPlugIn::Export(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
 {
@@ -3052,12 +3060,8 @@ tbool CKSPlugIn::MenuFileLoadProject()
 								msExportForWeb.sUserName = pszAuthor;
 								msExportForWeb.sUserUrl = pszUrl;
 								msExportForWeb.sUserStatus = pszStatus;
-								// Send a message to all panes
-								CBasePane::SMsg msg(Msg_Init_ExportForWeb);
-								std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
-								for (; it != mGUIs.end(); it++) {
-									(*it)->GetPane()->SendMsgFromTop(&msg);
-								}
+								CBasePane::SMsg Msg(Msg_Init_ExportForWeb);
+								Send_Msg_To_All_Panes(&Msg);
 							}
 						}
 					}
@@ -5250,15 +5254,10 @@ tbool CKSPlugIn::OnKeyDown(ge::EKey Key)
 void CKSPlugIn::SelectTrack(tint32 iID)
 {
 	miSelected_Track = iID;
-	
 	STrackData sData;
 	sData.iTrack		= iID;
 	CBasePane::SMsg Msg(Msg_Select_Track, &sData);
-	
-	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
-	for (; it != mGUIs.end(); it++) {
-		(*it)->GetPane()->SendMsgFromTop(&Msg);
-	}
+	Send_Msg_To_All_Panes(&Msg);
 } // SelectTrack
 
 tint32 CKSPlugIn::Get_Number_Of_Tracks()
@@ -5411,13 +5410,8 @@ void CKSPlugIn::Set_All_Meters(void* pvoidMeters_All)
 		CAutoLock Lock(mMutexMeter);
 
 		CBasePane::SMsg Msg(Msg_Set_All_Meters, pvoidMeters_All);
+		Send_Msg_To_All_Panes(&Msg);
 		
-		// Send a message to all panes
-		std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
-		for (; it != mGUIs.end(); it++) {
-		//!!! Lasse fix this is called when a plug-in GUI is created before it's readdy! Crashes 5% of the time
-		(*it)->GetPane()->SendMsgFromTop(&Msg);
-		}
 	}
 }
 
@@ -5430,12 +5424,17 @@ void CKSPlugIn::Stack_Tracks()
 	CBasePane::SMsg Msg;
 	Msg = Msg_Stack_Tracks;
 	Msg.pDataIn	= (void*)&msStack;
-	
+	Send_Msg_To_All_Panes(&Msg);
+}
+
+void CKSPlugIn::Send_Msg_To_All_Panes(CBasePane::SMsg* pMsg)
+{
 	// Send a message to all panes
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
 	for (; it != mGUIs.end(); it++) {
-		(*it)->GetPane()->SendMsgFromTop(&Msg);
+		(*it)->GetPane()->SendMsgFromTop(pMsg);
 	}
+	
 }
 
 void CKSPlugIn::Update_Zoom()
@@ -5449,22 +5448,12 @@ void CKSPlugIn::Update_Zoom()
 	CBasePane::SMsg Msg;
 	Msg = MsgGUIData;
 	Msg.pDataIn	= (void*)&sData;
-
-	// Send a message to all panes
-	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
-	for (; it != mGUIs.end(); it++) {
-		(*it)->GetPane()->SendMsgFromTop(&Msg);
-	}
+	Send_Msg_To_All_Panes(&Msg);
 	
-	// Hide all selections
+	// deselect all all selections
 	Msg = Msg_Deselect_All;
 	Msg.pDataIn	= (void*)&sData;
-
-	// Send a message to all panes
-	it = mGUIs.begin();
-	for (; it != mGUIs.end(); it++) {
-		(*it)->GetPane()->SendMsgFromTop(&Msg);
-	}
+	Send_Msg_To_All_Panes(&Msg);
 	
 	gpDSPEngine->Deselect_All_Tracks();
 
@@ -5476,14 +5465,11 @@ void CKSPlugIn::DeleteAllRegionsForTrack(tint32 iTrack)
 {
 	STrackData sData;
 	sData.iTrack = iTrack;
-	CBasePane::SMsg msg = Msg_Delete_All_Regions;
-	msg.pDataIn = (void*)&sData;
+	CBasePane::SMsg Msg = Msg_Delete_All_Regions;
+	Msg.pDataIn = (void*)&sData;
 	
 	// Send a message to all panes
-	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
-	for (; it != mGUIs.end(); it++) {
-		(*it)->GetPane()->SendMsgFromTop(&msg);
-	}
+	Send_Msg_To_All_Panes(&Msg);
 }
 
 
@@ -5497,10 +5483,8 @@ void CKSPlugIn::Set_Track_Visible(tuint iID, tbool bVisible)
 	Msg = Msg_Set_Track_Visible;
 	Msg.pDataIn	= (void*)&sData;
 
-	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
-	for (; it != mGUIs.end(); it++) {
-		(*it)->GetPane()->SendMsgFromTop(&Msg);
-	}
+	// Send a message to all panes
+	Send_Msg_To_All_Panes(&Msg);
 */
 }
 
@@ -5774,13 +5758,7 @@ void CKSPlugIn::Set_Progress(tbool bOn, tfloat32 fProgress, const tchar* pszText
 	CBasePane::SMsg Msg;
 	Msg = Msg_Progress;
 	Msg.pDataIn	= (void*)&sData;
-	//SendMsg(&Msg);
-			
-	// Send a message to all panes
-	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
-	for (; it != mGUIs.end(); it++) {
-		(*it)->GetPane()->SendMsgFromTop(&Msg);
-	}
+	Send_Msg_To_All_Panes(&Msg);
 } // Set_Progress
 
 void CKSPlugIn::ShowProgress(tuint64 uiIx, tuint64 uiMax, const tchar* pszText, ge::IContext* pContext, tbool* pbAbort)

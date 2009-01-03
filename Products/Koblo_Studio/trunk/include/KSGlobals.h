@@ -210,6 +210,7 @@ enum EWindowIDs
 	giExport_For_Web_Window,
 	giAudio_Setup_Window,
 	giProject_ID_Window,
+	giSign_In_Window,
 	giPlug_In_Window
 	
 };
@@ -276,8 +277,8 @@ enum EPaneMsg
 	Msg_Init_ExportForWeb,
 	Msg_Show_NormalizeAndTail,
 	Msg_Set_Grid,
-
 	MsgUpdateAudioGUI,
+	MsgSign_Out,
 };
 
 // Track Editor

@@ -195,7 +195,9 @@ void CKSExportForWebGUIPane::EventValueChange(ge::IControl* pControl, tint32 iVa
 				ShowSorryDialog(sViolations);
 			}
 			else*/ {
+				// Close the window
 				GetPlugIn()->SetGlobalParm(giParamID_Show_Export_For_Web_Window, 0, giSectionGUI);
+				// Set 
 				tchar pszAuthor[1024];
 				tchar pszUrl[1024];
 				tchar pszStatus[1024];

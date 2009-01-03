@@ -38,8 +38,8 @@ Back_Scroll_Bar_Right.tga IDB_Back_Scroll_Bar_Right
 Back_Scroll_Bar_Top.tga IDB_Back_Scroll_Bar_Top
 Back_Scroll_Bar_Vertical_Center.tga IDB_Back_Scroll_Bar_Vertical_Center
 Back_Scroll_Bar_Vertical_Center2.tga IDB_Back_Scroll_Bar_Vertical_Center2
+Back_Sign_In.tga IDB_Back_Sign_In
 Back_Show_Hide_Files.tga IDB_Back_Show_Hide_Files
-
 Back_Setup.tga IDB_Back_Setup
 Back_Setup_Device.tga IDB_Back_Setup_Device
 Back_Setup_Device_Asio.tga IDB_Back_Setup_Device_Asio
@@ -93,6 +93,7 @@ Button_Pan_Handle.tga IDB_Button_Pan_Handle
 Button_Play.tga IDB_Button_Play
 Button_Popup.tga IDB_Button_Popup
 Button_Power.tga IDB_Button_Power
+Button_Remember_Me.tga IDB_Button_Remember_Me 
 Button_Prev_Preset.tga IDB_Button_Prev_Preset
 Button_Radio.tga IDB_Button_Radio
 Button_Region_Fade_Handle.tga IDB_Button_Region_Fade_Handle

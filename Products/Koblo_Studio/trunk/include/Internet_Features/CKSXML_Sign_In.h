@@ -22,69 +22,47 @@
  \param iCount [in]: Number of samples to fill in buffer
  */
 
-/*! \class CKSXML_Create_Project
-  \brief class that creates an empty project on koblo.com 
- \ koblo.com returns a xml document with the project id that KS needs to upload the project.xml
+/*! \class CKSXML_Sign_In
+  \brief class that check if the computer is online and if KS holds a valid username and password 
  \ based on TinyXml www.sourceforge.net/projects/tinyxml
  */
 
-//class CKSPlugIn;
+class CKSPlugIn;
 
 
-class CKSXML_Create_Project
+class CKSXML_Sign_In
 {
 	
 private:
 	CKSPlugIn* mpKSPlugIn;
 	
-
-	//! parse the returne xml file in to KS
-	virtual void Parse_XML( TiXmlNode* pParent );
-	
-	//! parse projet info xml file returned from koblo.com 
-	/*!
-	 \param TiXmlNode [in]: TiXmlNode.
-	 */
-	void Parse_Project_Info(TiXmlNode* pParent);
-	
-	//! set projet parameters
-	/*!
-	 \param TiXmlNode [in]: TiXmlNode.
-	 */
-	void Set_Project_Info(TiXmlNode* pParent);
-	//! set project name
-	/*!
-	 \param TiXmlNode [in]: TiXmlElement.
-	 */
-	void Set_Project_Name(TiXmlElement* pElement);
-	//! set project description
-	/*!
-	 \param TiXmlNode [in]: TiXmlElement.
-	 */
-	void Set_Project_Description(TiXmlElement* pElement);
-	//! set project license
-	/*!
-	 \param TiXmlNode [in]: TiXmlElement.
-	 */
-	void Set_Project_License(TiXmlElement* pElement);
-	
-	
-	
-	
+	//! loads username and password from pref file returns false if there is no pref file with a usernames
+	virtual tbool Load_User_Name_And_Password();
 	
 	
 public:
 	
-	CKSXML_Create_Project(CKSPlugIn* pKSPlugIn);
-	~CKSXML_Create_Project();
+	CKSXML_Sign_In(CKSPlugIn* pKSPlugIn);
+	~CKSXML_Sign_In();
 	
 	//! creates a new "empty" project on koblo.com
 	/*! 
 	 \ use user id and password
 	 \ pasrses the XML handshake in to the internal data structure
 	 */ 
-	tbool Create_Project_Handshake();
+	tbool Sign_In_Handshake();
 	
+	//! called when users upload or sign in
+	virtual tbool Get_User_Name_And_Password();
+	
+	//! called when ok is pressed in the sign in dialog is "remember me" is checked
+	virtual void Save_User_Name_And_Password();
+	
+	// Called when the user select sign out from the setup menu
+	virtual void Sign_Out();
+	
+	//! remove username and password from disk
+	virtual void Remove_Username_And_Password();
 	
 };
 

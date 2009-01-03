@@ -17,9 +17,9 @@
 
 
 
-class CKSDSP;
-class CKS_Import_File_Browser;
-class CKS_Import_Files;
+//class CKSDSP;
+//class CKS_Import_File_Browser;
+//class CKS_Import_Files;
 
 class CKSSign_In_GUI_Pane : public virtual CBasePane
 {
@@ -47,46 +47,17 @@ public:
 	//! CBasePane override
 	virtual void SendMsgFromTop(SMsg* pMsg);
 	
-	//! Get auctual audio device settings fro DSP engine and put the values into the settings popups
-	virtual void InitAudioDevicePopupValues();
-
-	virtual void InitAudioDevicePopupValuesInput();
 
 protected:
-	tbool mbMenuInited;
+	CKSPlugIn* mpKSPlugIn;
+	
+	ge::IMultiStateButton* mpRemember_Me_Button;
+	
+	ge::IText* mpUser_Name_Txt;
+	
+	ge::IText* mpPassword_Txt;
 
-	// Popup used to navigate the os file system
-	ge::IPopupMenu::SMenuItemList mpFile_Browser_Popup;
-	virtual void Prepare_Popups();
-	
-//	ge::IPopupMenu::SMenuItemList mpCompression_Setup;
-	
-	ge::IBitmap* mpDimm_Bmp;
-	
-//	ge::IPopupMenu::SMenuItemList mpCompression_Setup;
-	
-	virtual ge::IDropDownListBox* CreatePop( tint32 iControlID, tint32 iBitmapID,  const ge::IPopupMenu::SMenuItemList& List, ge::SPos Pos, ge::IPane* pPane);
 
-	//! For listing / selecting audio device
-	aioe::IDeviceManager* mpAudioManager;
-
-	ge::IDropDownListBox* mpPopupMenuAudioIn;
-	ge::IDropDownListBox* mpPopupMenuAudioDevices;
-	ge::IDropDownListBox* mpPopupMenuAudioRates;
-	ge::IDropDownListBox* mpPopupMenuAudioBuffs;
-	
-	ge::IButton* mpASIO_Button;
-	volatile tint32 miBlockSetAudioDevice_volatile;
-	
-	void SetupDevice();
-	void SetupDeviceAsio();
-	void SetupIO();
-	
-
-	ge::IBitmap*  mpDevice_Asio_BMP;
-	ge::IBitmap*  mpDevice_BMP;
-
-	void ThatDidntWork();
 
 	
 };

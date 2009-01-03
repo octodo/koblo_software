@@ -2,22 +2,29 @@
 #include "KSOS.h"
 
 
-CKSXML_Read_Project::CKSXML_Read_Project(CKSPlugIn * pKSPlugIn)
+CKSXML_Read_Project::CKSXML_Read_Project(CKSPlugIn* pKSPlugIn):
+mpKSPlugIn(pKSPlugIn)
 {
 	
-	mpKSPlugIn = pKSPlugIn;
+	mpDoc = new TiXmlDocument;
 	
 }
 
 CKSXML_Read_Project::~CKSXML_Read_Project()
 {
-	
+	delete mpDoc;
 }
-void CKSXML_Read_Project::Read_Project_XML(tint32 iProjectID )
+
+void CKSXML_Read_Project::Reset_Project()
 {
 	miTrack_ID	=	0;
 	mpKSPlugIn->Set_Selected_Track(-1);
-	
+}
+
+void CKSXML_Read_Project::Read_Project_XML_To_DOM(tint32 iProjectID )
+{
+	// cleanup old tinyxml dom
+	mpDoc->Clear();
 	
 	// read latst revision
 	std::string str;
@@ -25,24 +32,25 @@ void CKSXML_Read_Project::Read_Project_XML(tint32 iProjectID )
 	sprintf(psz, "/branches/%d/revisions/latest.xml", iProjectID);
 	str = psz;
 	
-	
 	tchar* pszBuff = NULL;
 	tint32 iOutLen = 0;
 	ine::IINetUtil::GetWebFile(NULL, "koblo.com", str.c_str(), &iOutLen, &pszBuff);
 	
 	if ((pszBuff) && (iOutLen > 0)) {
 
-		// create TinyXml document
-		TiXmlDocument doc("koblo_studio project");
 		// parse XML file in to TinyXml object tree
-		doc.Parse(pszBuff);
+		mpDoc->Parse(pszBuff);
 		
-		printf(pszBuff);
-		// parse values from project tree in to KS data system
-		Parse_Project( &doc );
+		//printf(pszBuff);
 	}
 	ine::IINetUtil::ReleaseBuffer(&pszBuff);
 	
+}
+
+void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
+{
+	// parse values from project tree in to KS data system
+	Parse_Project( mpDoc );
 }
 
 void CKSXML_Read_Project::Parse_Project( TiXmlNode* pParent )
@@ -1360,5 +1368,99 @@ void CKSXML_Read_Project::Set_Param( TiXmlNode* pParent, tuint uiType, tuint32 i
 		Set_Param( pChild, uiType, iParamID, fFactor);
 	}
 	 */
+	
+}
+
+
+
+
+
+
+tbool CKSXML_Read_Project::Check_For_Newer_Revision(tint32 iProject_ID)
+{
+	mbNew_Revision = false;
+	// Check DOM downloaded to see if there is a newer one
+	Check_Project( mpDoc );
+	// return resoult
+	return mbNew_Revision;
+}
+
+
+void CKSXML_Read_Project::Check_Project( TiXmlNode* pParent )
+{
+	// if file is empty return
+	if ( !pParent ) return;
+	
+	TiXmlNode* pChild;
+	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
+	{
+		if(pChild->Type() == TiXmlNode::ELEMENT)
+			Check_Project_Childs(pChild);
+	}	
+}
+
+void CKSXML_Read_Project::Check_Project_Childs(TiXmlNode* pParent)
+{
+	if ( !pParent ) return ;
+	/*
+	printf("--------------------------  PROJECT ----------------------------\n");
+	TiXmlAttribute* pAttrib	=	pParent->ToElement()->FirstAttribute();
+	tint32 ival;
+	
+	// project ID
+	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
+		printf( "project id =  %d", ival);
+	printf( "\n" );
+	// scema
+	if(pAttrib=pAttrib->Next())
+		printf( "%s: %s", pAttrib->Name(), pAttrib->Value());
+	printf( "\n" );
+	// schema Location 
+	if(pAttrib=pAttrib->Next())
+		printf( "%s: %s", pAttrib->Name(), pAttrib->Value());
+	printf( "\n" );
+	*/
+	// parse all childs
+	TiXmlNode* pChild;
+	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
+	{
+		if(pChild->Type() == TiXmlNode::ELEMENT)
+			Check_Branch(pChild);
+	}}
+
+void CKSXML_Read_Project::Check_Branch(TiXmlNode* pParent)
+{
+	if (stricmp("branch", pParent->Value()) == 0) {
+		Check_Revision(pParent->ToElement());
+	}	
+}
+
+void CKSXML_Read_Project::Check_Revision(TiXmlElement* pElement)
+{
+	if ( !pElement ) return ;
+		
+	TiXmlNode* pChild;
+	
+	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
+		
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			
+			 if (stricmp("revision", pChild->Value()) == 0){
+				 
+				 TiXmlNode* pContent = pChild->FirstChild();
+				 
+				 if ( !pContent ) return;
+				 if (  pContent->Type() == TiXmlNode::TEXT )
+				 {
+					TiXmlText* pText;
+					pText = pContent->ToText();
+					std::string s = pText->Value();
+					tint32 iNew_Revision = atoi(s.c_str());
+					 if(iNew_Revision > mpKSPlugIn->GetGlobalParm(giParamID_Revision_Nr, giSectionGlobal))
+						 mbNew_Revision = true;
+				 }
+			 }
+		}
+	}
 	
 }

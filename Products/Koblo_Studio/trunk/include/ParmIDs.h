@@ -89,6 +89,9 @@ enum EGUI_ParmID
 	giParamID_Audio_Setup_Window,
 	giParamID_Normalize_On_Export,
 	giParamID_Show_Projec_ID_Window,
+	giParamID_Show_Sign_In_Window,
+//	giParamID_Remember_Username_and_Password,
+
 	
 
 	giNr_Of_GUI_Parms

@@ -28,6 +28,7 @@
  */
 
 class CKSPlugIn;
+//class TiXmlDocument;
 
 
 class CKSXML_Read_Project 
@@ -37,14 +38,26 @@ private:
 	CKSPlugIn* mpKSPlugIn;
 	
 	tint32 miTrack_ID;
+	
+	// create TinyXml document
+	TiXmlDocument* mpDoc;
+	
+	tbool mbNew_Revision;
+
 
 public:
 	
-	CKSXML_Read_Project(CKSPlugIn * pKSPlugIn);
+	CKSXML_Read_Project(CKSPlugIn* pKSPlugIn);
 	~CKSXML_Read_Project();
 	
-	//! read a project XML file from Koblo.com
-	void Read_Project_XML(tint32 iProjectID);
+	//! reset project
+	void Reset_Project();
+	
+	//! read a project XML file from Koblo.comin to the tiny xml DOM
+	void Read_Project_XML_To_DOM(tint32 iProjectID);
+	
+	//! pass the DOM in to the KS data structure
+	void CKSXML_Parse_DOM_To_Preset();
 
 	//! itterate true the project XML file from the root level
 	void Parse_Project( TiXmlNode* pParent );
@@ -112,6 +125,16 @@ public:
 
 	
 	void Set_Param( TiXmlNode* pParent, tuint uiType, tuint32 uiID, tint32 Section, tfloat fFactor = 1.0f );
+	
+	tbool Check_For_Newer_Revision(tint32 iProject_ID);
+	//! itterate true the project XML file from the root level
+	void Check_Project( TiXmlNode* pParent );
+	
+	void Check_Project_Childs(TiXmlNode* pParent);
+	
+	void Check_Branch(TiXmlNode* pParent);
+	
+	void Check_Revision(TiXmlElement* pElement);
 
 	
 	
