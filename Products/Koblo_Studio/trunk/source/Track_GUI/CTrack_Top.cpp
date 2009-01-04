@@ -43,23 +43,23 @@ void CTrack_Top::Init()
 	tint32	iPosX	=	8;
 	tint32	iPosY	=	6;
 	
-	CreateButton(giControlID_Go_To_Start, IDB_Track_Button_GoToStart, ge::SPos(iPosX, iPosY), false); iPosX		+= 28;
+	CreateButton(giControlID_Go_To_Start, IDB_Button_GoToStart, ge::SPos(iPosX, iPosY), false); iPosX		+= 28;
 	// FF
-	ge::IButton* pButton = CreateButton(giControlID_Fast_Back, IDB_Track_Button_FastBack, ge::SPos(iPosX, iPosY), false); iPosX		+= 27;
+	ge::IButton* pButton = CreateButton(giControlID_Fast_Back, IDB_Button_FastBack, ge::SPos(iPosX, iPosY), false); iPosX		+= 27;
 	pButton->SetEventMouseUpDown();
 	// FF
-	pButton = CreateButton(giControlID_Forward, IDB_Track_Button_FastForward, ge::SPos(iPosX, iPosY), false);iPosX		+= 27; 
+	pButton = CreateButton(giControlID_Forward, IDB_Button_Fast_Forward, ge::SPos(iPosX, iPosY), false);iPosX		+= 27; 
 	pButton->SetEventMouseUpDown();
 	
-	CreateButton(giControlID_Go_To_End, IDB_Track_Button_GoToEnd, ge::SPos(iPosX, iPosY), false); iPosX			+= 27;
+	CreateButton(giControlID_Go_To_End, IDB_Button_GoToEnd, ge::SPos(iPosX, iPosY), false); iPosX			+= 27;
 	
 	iPosX			=	8;
 	iPosY			=	33;
-	Create2StateButton(giControlID_Record, IDB_Track_Button_Record, ge::SPos(iPosX, iPosY), true); iPosX		+= 28;
-	Create2StateButton(giControlID_Play, IDB_Track_Button_Play, ge::SPos(iPosX, iPosY), true); iPosX			+= 27;
+	Create2StateButton(giControlID_Record, IDB_Button_Record, ge::SPos(iPosX, iPosY), true); iPosX		+= 28;
+	Create2StateButton(giControlID_Play, IDB_Button_Play, ge::SPos(iPosX, iPosY), true); iPosX			+= 27;
 	
-	CreateButton(giControlID_Stop, IDB_Track_Button_Stop, ge::SPos(iPosX, iPosY), false); iPosX					+= 27;
-	Create2StateButton(giControlID_Loop, IDB_Track_Button_Loop, ge::SPos(iPosX, iPosY), true); 
+	CreateButton(giControlID_Stop, IDB_Button_Stop, ge::SPos(iPosX, iPosY), false); iPosX					+= 27;
+	Create2StateButton(giControlID_Loop, IDB_Button_Loop, ge::SPos(iPosX, iPosY), true); 
 	
 	//-------------------------------
 	iPosX			= 130;
@@ -98,21 +98,21 @@ void CTrack_Top::Init()
 	// Sample Start
 	iPosX += 94;
 	iPosY = 12;
-	mpText_Sample_Start = CreateDisplay( giControlID_Sample_Start_Display, ge::SPos(iPosX, iPosY),  ge::SSize(82, 10), CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(0, 255, 0)));
+	mpText_Sample_Start = CreateDisplay( giControlID_Sample_Start_Display, ge::SPos(iPosX, iPosY),  ge::SSize(82, 10), CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(0, 255, 0)));
 	mpText_Sample_Start->SetHorzAlignment(ge::IText::HorzAlignLeft);
 	mpText_Sample_Start->SetVertAlignment(ge::IText::VertAlignBottom);
 	mpText_Sample_Start->EnableTextLimiting(false);
 	mpText_Sample_Start->SpeedOptimize_RedrawUsingFirstNonZeroSize();
 	iPosY += 14;
 	// Sample End
-	mpText_Sample_End = CreateDisplay( giControlID_Sample_Start_Display, ge::SPos(iPosX, iPosY),  ge::SSize(82, 10), CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(0, 255, 0)));
+	mpText_Sample_End = CreateDisplay( giControlID_Sample_Start_Display, ge::SPos(iPosX, iPosY),  ge::SSize(82, 10), CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(0, 255, 0)));
 	mpText_Sample_End->SetHorzAlignment(ge::IText::HorzAlignLeft);
 	mpText_Sample_End->SetVertAlignment(ge::IText::VertAlignBottom);
 	mpText_Sample_End->EnableTextLimiting(false);
 	mpText_Sample_End->SpeedOptimize_RedrawUsingFirstNonZeroSize();
 	iPosY += 14;
 	// Sample Cursor
-	mpText_Sample_Cursor = CreateDisplay( giControlID_Sample_Start_Display, ge::SPos(iPosX, iPosY),  ge::SSize(82, 10), CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(0, 255, 0)));
+	mpText_Sample_Cursor = CreateDisplay( giControlID_Sample_Start_Display, ge::SPos(iPosX, iPosY),  ge::SSize(82, 10), CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(0, 255, 0)));
 	mpText_Sample_Cursor->SetHorzAlignment(ge::IText::HorzAlignLeft);
 	mpText_Sample_Cursor->SetVertAlignment(ge::IText::VertAlignBottom);
 	mpText_Sample_Cursor->EnableTextLimiting(false);
@@ -123,16 +123,16 @@ void CTrack_Top::Init()
 	iPosX	+=	74;
 	iPosY	=	6;
 	ge::IRadioButtons* pToolRadioButton = CreateRadioButtonsGroup(giCtrl_ToolSelection, ge::SPos(0, 0));
-	CreateRadioButton(ge::IControl::giNoID, IDB_Track_Button_Hand, ge::SPos(iPosX, iPosY), pToolRadioButton, true);   iPosX += 30;
-	CreateRadioButton(ge::IControl::giNoID, IDB_Track_Button_Trim, ge::SPos(iPosX, iPosY), pToolRadioButton, true);   iPosX += 29;
-	CreateRadioButton(ge::IControl::giNoID, IDB_Track_Button_Select, ge::SPos(iPosX, iPosY), pToolRadioButton, true); iPosX += 29;
-	CreateRadioButton(ge::IControl::giNoID, IDB_Track_Button_Cut, ge::SPos(iPosX, iPosY), pToolRadioButton, true); iPosX	+= 40;
+	CreateRadioButton(ge::IControl::giNoID, IDB_Button_Hand, ge::SPos(iPosX, iPosY), pToolRadioButton, true);   iPosX += 30;
+	CreateRadioButton(ge::IControl::giNoID, IDB_Button_Trim, ge::SPos(iPosX, iPosY), pToolRadioButton, true);   iPosX += 29;
+	CreateRadioButton(ge::IControl::giNoID, IDB_Button_Select, ge::SPos(iPosX, iPosY), pToolRadioButton, true); iPosX += 29;
+	CreateRadioButton(ge::IControl::giNoID, IDB_Button_Cut, ge::SPos(iPosX, iPosY), pToolRadioButton, true); iPosX	+= 40;
 	// Fade buttons
 	Create2StateButton(giCtrl_Show_Fade, IDB_Button_Fade, ge::SPos(iPosX, 6), true);iPosX	+= 30;
 	// Show Waveform
 	Create2StateButton(giCtrl_Show_Waveform, IDB_Button_Waveform, ge::SPos(iPosX, 6), true);iPosX	+= 29;
 	// Grid button
-	Create2StateButton(giCtrl_Grid, IDB_Track_Button_Grid, ge::SPos(iPosX, 6), true);
+	Create2StateButton(giCtrl_Grid, IDB_Button_Grid, ge::SPos(iPosX, 6), true);
 	//-------------------------------
 	
 	
@@ -140,14 +140,14 @@ void CTrack_Top::Init()
 	pBmp = CreateBitmap(ge::IControl::giNoID, IDB_Back_BPM_Mesure_Grid, ge::SPos(442, 39));
 	
 	// Tempo display
-	ge::IText* pText =  CreateDisplay( giChC_Tempo_Display, ge::SPos(464, 41),  ge::SSize(42, 14), CreateFont(Generic128, IDF_Fuxley_712, ge::SRGB(0, 255, 0)),true);
+	ge::IText* pText =  CreateDisplay( giChC_Tempo_Display, ge::SPos(464, 41),  ge::SSize(42, 14), CreateFont(Generic128, IDF_Font_Fuxley_712, ge::SRGB(0, 255, 0)),true);
 	pText->SetClicksOutsideAsSuccess();
 
 	// Time signature selection popup
 	PreparePopups();
-	CreatePop(giControlID_Timesignatur_Popup, IDB_Invisible_Button_16_64, mpTime_Signature_Menu, ge::SPos(544, 40));
+	CreatePop(giControlID_Timesignatur_Popup, IDB_Button_Invisible_16_64, mpTime_Signature_Menu, ge::SPos(544, 40));
 	// Snap to grid popup
-	CreatePop(giControlID_Snap_To_Popup, IDB_Invisible_Button_16_64, mpSnapTo_Menu, ge::SPos(610, 40));
+	CreatePop(giControlID_Snap_To_Popup, IDB_Button_Invisible_16_64, mpSnapTo_Menu, ge::SPos(610, 40));
 
 
 	// AUX button
@@ -157,7 +157,7 @@ void CTrack_Top::Init()
 	
 
 	// Mix button
-	p2Button = CreateButton(giControlID_Open_Mix_Button, IDB_Track_Button_Mix, ge::SPos(117+46+45, 12), false);
+	p2Button = CreateButton(giControlID_Open_Mix_Button, IDB_Button_Mix, ge::SPos(117+46+45, 12), false);
 	p2Button->StickTo(ge::IControl::PosTopRight, ge::SPos(-16-45, 12));
 //	p2Button->SetEventMouseUp();
 	
@@ -171,7 +171,7 @@ void CTrack_Top::Init()
 	mpProgress_Text = CreateText(
 		ge::IControl::giNoID,
 		ge::SPos(144, 28), ge::SSize(270, 12),
-		CreateFont(Generic128, IDF_Fuxley_712, ge::SRGB(0, 255, 0)),
+		CreateFont(Generic128, IDF_Font_Fuxley_712, ge::SRGB(0, 255, 0)),
 		"Please wait",
 		ge::IText::HorzAlignLeft,
 		ge::IText::VertAlignCenter);
@@ -263,7 +263,7 @@ void CTrack_Top::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 
 			break;
 		}
-		case IDB_Track_Button_GoToEnd:{
+		case giControlID_Go_To_End:{
 			mpKSPlugIn->PlaybackGoToEnd();
 			break;
 		}
@@ -464,7 +464,7 @@ ge::IDropDownListBox* CTrack_Top::CreatePop( tint32 iControlID, tint32 iBitmapID
 	ge::IDropDownListBox* pListBox = CreateDropDownListBox( iControlID, 
 															piIDs, 
 															Generic128, 
-															IDF_Fuxley_712, 
+															IDF_Font_Fuxley_712, 
 															iBitmapID, 
 															List, Pos, 
 															ge::SPos(0,0),

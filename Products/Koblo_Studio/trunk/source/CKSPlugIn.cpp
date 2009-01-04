@@ -1277,10 +1277,10 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 		MenuSetupAudio();
 	}
 	
-	else if (s.compare("Setup@Collaboration") == 0) {
+/*	else if (s.compare("Setup@Collaboration") == 0) {
 		MenuCollaboration();
 	}
-	
+*/	
 	else if (s.compare("Setup@Sign In") == 0) {
 		Open_Sign_In_Dialog();
 	}
@@ -1558,7 +1558,7 @@ void CKSPlugIn::MenuSetupAudio()
 	Msg.pDataIn	= (void*)&sData;
 	Send_Msg_To_All_Panes(&Msg);		
 } // MenuSetupAudio
-
+/*
 void CKSPlugIn::MenuCollaboration()
 {
 	
@@ -1572,6 +1572,7 @@ void CKSPlugIn::MenuCollaboration()
 	
 	//	Write_XML("funky beats.xml");
 }
+ */
 /*
 void CKSPlugIn::MenuSignIn()
 {

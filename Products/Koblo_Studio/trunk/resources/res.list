@@ -1,14 +1,13 @@
-ArialRegular10.fnt IDF_ARIAL10
-ArialRegular10New.tga IDF_ARIAL10_NEW
-AxelTight.tga IDB_AxelTight
+Back_Audio_Setup.tga IDB_Back_Audio_Setup
 Back_AUX.tga IDB_Back_AUX
 Back_BPM_Mesure_Grid.tga IDB_Back_BPM_Mesure_Grid
 Back_Chanel_Info_Lable.tga IDB_Back_Chanel_Info_Lable
 Back_Dimm.tga IDB_Back_Dimm
+Back_Export_Audio.tga IDB_Back_Export_Audio
 Back_File_Buttom.tga IDB_Back_File_Buttom
 Back_Info_Top.tga IDB_Back_Info_Top
 Back_Loop_Selection.tga IDB_Back_Loop_Selection
-Back_Export_For_Web.tga IDB_Back_Export_For_Web
+Back_License.tga IDB_Back_License
 Back_Import.tga IDB_Back_Import
 Back_Mix_AUX_Insert.tga IDB_Back_Mix_AUX_Insert
 Back_Mix_Bottom.tga IDB_Back_Mix_Bottom
@@ -40,7 +39,6 @@ Back_Scroll_Bar_Vertical_Center.tga IDB_Back_Scroll_Bar_Vertical_Center
 Back_Scroll_Bar_Vertical_Center2.tga IDB_Back_Scroll_Bar_Vertical_Center2
 Back_Sign_In.tga IDB_Back_Sign_In
 Back_Show_Hide_Files.tga IDB_Back_Show_Hide_Files
-Back_Setup.tga IDB_Back_Setup
 Back_Setup_Device.tga IDB_Back_Setup_Device
 Back_Setup_Device_Asio.tga IDB_Back_Setup_Device_Asio
 Back_Side_Buttom.tga IDB_Back_Side_Buttom
@@ -70,29 +68,43 @@ Button_Add_Track.tga IDB_Button_Add_Track
 Button_Arm_Horizontal.tga IDB_Button_Arm_Horizontal
 Button_Arm_Vertical.tga IDB_Button_Arm_Vertical
 Button_AUX_Insert.tga IDB_Button_AUX_Insert
+Button_AUX.tga IDB_Track_Button_AUX
 Button_B.tga IDB_Button_B
 Button_BA.tga IDB_Button_BA
 Button_Browse.tga IDB_Button_Browse
 Button_Cancel.tga IDB_Button_Cancel
 Button_Check_100_16.tga IDB_Button_Check_100_16
 Button_Close.tga IDB_Button_Close
+Button_Cut.tga IDB_Button_Cut
 Button_Delete_Track.tga IDB_Button_Delete_Track
 Button_Edit_Plugin.tga IDB_Button_Edit_Plugin
+Button_Expand.tga IDB_Button_Expand
 Button_Export.tga IDB_Button_Export
 Button_Fade.tga IDB_Button_Fade
+Button_Fast_Back.tga IDB_Button_FastBack
+Button_Fast_Forward.tga IDB_Button_Fast_Forward
 Button_File_Import.tga IDB_Button_File_Import
 Button_File.tga IDB_Button_File
+Button_GoToEnd.tga IDB_Button_GoToEnd
+Button_GoToStart.tga IDB_Button_GoToStart
+Button_Grid.tga IDB_Button_Grid
+Button_Hand.tga IDB_Button_Hand
 Button_Import.tga IDB_Button_Import
+Button_Loop.tga IDB_Button_Loop
 Button_Master_Popup.tga IDB_Button_Master_Popup
+Button_Mix.tga IDB_Button_Mix
 Button_Mute_Horizontal.tga IDB_Button_Mute_Horizontal
 Button_Mute_Vertical.tga IDB_Button_Mute_Vertical
 Button_Next_Preset.tga IDB_Button_Next_Preset
 Button_Normalize.tga IDB_Button_Normalize
+Button_Info.tga IDB_Button_Info
+Button_Invisible_16_64.tga IDB_Button_Invisible_16_64
 Button_OK.tga IDB_Button_OK
 Button_Pan_Handle.tga IDB_Button_Pan_Handle
 Button_Play.tga IDB_Button_Play
 Button_Popup.tga IDB_Button_Popup
 Button_Power.tga IDB_Button_Power
+Button_Record.tga IDB_Button_Record
 Button_Remember_Me.tga IDB_Button_Remember_Me 
 Button_Prev_Preset.tga IDB_Button_Prev_Preset
 Button_Radio.tga IDB_Button_Radio
@@ -101,67 +113,56 @@ Button_Scroll_Up.tga IDB_Button_Scroll_Up
 Button_Scroll_Down.tga IDB_Button_Scroll_Down
 Button_Scroll_Left.tga IDB_Button_Scroll_Left
 Button_Scroll_Right.tga IDB_Button_Scroll_Right
+Button_Select.tga IDB_Button_Select
 Button_Solo_Horizontal.tga IDB_Button_Solo_Horizontal
 Button_Solo_Vertical.tga IDB_Button_Solo_Vertical
 Button_Stop.tga IDB_Button_Stop
+Button_Trim.tga IDB_Button_Trim
 Button_Waveform.tga IDB_Button_Waveform
 
-
 Dial_Aux.tga IDB_Dial_Aux
-DialMedium.tga IDB_DialMedium
-Dummy.tga IDB_Dummy
+Dial_Medium.tga IDB_Dial_Medium
 
-ExportAudioWindow.tga IDB_ExportAudioWindow
-
-Fuxley_712.fnt IDF_Fuxley_712
-E.tga IDB_E
-
-Invisible_Button_16_64.tga IDB_Invisible_Button_16_64
+Font_Arial_Regular_10.tga IDF_Font_Arial_10
+Font_Arial_Regular_10_New.tga IDF_Font_Arial_10_NEW
+Font_Axel_Tight.tga IDB_Font_Axel_Tight
+Font_Fuxley_712.tga IDF_Font_Fuxley_712
+Font_Minx_Tight.tga IDB_Font_Minix_Tight
+Font_Scripto_Tight.tga IDF_Font_Scripto_Tight
 
 License.tga IDB_License
 
-Meter_Off_Bottom.tga IDB_Meter_Off_Bottom
+
 KS.icns IDI_APP_OSX
 KobloStudio.ico IDI_APP_WIN
+
 Meter_Off_Left.tga IDB_Meter_Off_Left
 Meter_Off_Left_AUX.tga IDB_Meter_Off_Left_AUX
 Meter_Off_Right.tga IDB_Meter_Off_Right
 Meter_Off_Right_AUX.tga IDB_Meter_Off_Right_AUX
 Meter_Off_Top.tga IDB_Meter_Off_Top
-Minx_Tight.tga IDB_Minix_Tight
+Meter_Off_Bottom.tga IDB_Meter_Off_Bottom
+
+
 PopupBoddy.tga IDB_POPUP_BODY
 Popup_Boddy_Big.tga IDB_Popup_Boddy_Big
 PopupBoddyInverted.tga IDB_POPUP_BODY_INVERTED
 PopupBoddyInverted_Big.tga IDB_PopupBoddyInverted_Big
 PopupBorder.tga IDB_PopupBorder
 PopupBorder_Big.tga IDB_PopupBorder_Big
+
 Scroll_Bar_Handle_Vertical_Top.tga IDB_Scroll_Bar_Handle_Vertical_Top
-Slider_Handle_Volume.tga IDB_Slider_Handle_Volume
-Slider_Handle_Zoom.tga IDB_Slider_Handle_Zoom
-Scripto_Tight.tga IDF_Scripto_Tight
 Scroll_Bar_Handle_Vertical_Center.tga IDB_Scroll_Bar_Handle_Vertical_Center
 Scroll_Bar_Handle_Vertical_Bottom.tga IDB_Scroll_Bar_Handle_Vertical_Bottom
 Scroll_Bar_Handle_Horizontal_Left.tga IDB_Scroll_Bar_Handle_Horizontal_Left
 Scroll_Bar_Handle_Horizontal_Center.tga IDB_Scroll_Bar_Handle_Horizontal_Center
 Scroll_Bar_Handle_Horizontal_Right.tga IDB_Scroll_Bar_Handle_Horizontal_Right
+
+Slider_Handle_Volume.tga IDB_Slider_Handle_Volume
+Slider_Handle_Zoom.tga IDB_Slider_Handle_Zoom
+
 Time_Display_Numbers.tga IDB_Time_Display_Numbers
-Track_Button_AUX.tga IDB_Track_Button_AUX
-Track_Button_Cut.tga IDB_Track_Button_Cut
-Track_Button_Expand.tga IDB_Track_Button_Expand
-Track_Button_FastBack.tga IDB_Track_Button_FastBack
-Track_Button_FastForward.tga IDB_Track_Button_FastForward
-Track_Button_GoToEnd.tga IDB_Track_Button_GoToEnd
-Track_Button_GoToStart.tga IDB_Track_Button_GoToStart
-Track_Button_Grid.tga IDB_Track_Button_Grid
-Track_Button_Hand.tga IDB_Track_Button_Hand
-Track_Button_Mix.tga IDB_Track_Button_Mix
-Track_Button_Info.tga IDB_Track_Button_Info
-Track_Button_Loop.tga IDB_Track_Button_Loop
-Track_Button_Play.tga IDB_Track_Button_Play
-Track_Button_Record.tga IDB_Track_Button_Record
-Track_Button_Select.tga IDB_Track_Button_Select
-Track_Button_Stop.tga IDB_Track_Button_Stop
-Track_Button_Trim.tga IDB_Track_Button_Trim
+
 
 
 

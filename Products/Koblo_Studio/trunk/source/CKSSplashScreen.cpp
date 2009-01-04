@@ -31,7 +31,7 @@ void CKSSplashScreenPane::Init()
 	pText = CreateText(		giControlIDSplashText, 
 							ge::SPos(200, 311), 
 							ge::SSize(220, 16), 
-							CreateFont(Generic128, IDF_Fuxley_712, ge::SRGB(230, 230, 230)), 
+							CreateFont(Generic128, IDF_Font_Fuxley_712, ge::SRGB(230, 230, 230)), 
 							"Setting Up Windows...", 
 							ge::IText::HorzAlignCenter, 
 							ge::IText::VertAlignCenter);

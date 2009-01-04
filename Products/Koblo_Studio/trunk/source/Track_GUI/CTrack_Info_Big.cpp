@@ -41,18 +41,18 @@ void CTrack_Info_Big::Init()
 	mpSelected_Back_Drop->SetVisible(false);
 
 	// Expand button
-	ge::IMultiStateButton*  pButton = Create2StateButton(giTrack_Info_Big_Colaps_Button		+ miCtrl_Offset,	IDB_Track_Button_Expand, ge::SPos(2, 4), true);
+	ge::IMultiStateButton*  pButton = Create2StateButton(giTrack_Info_Big_Colaps_Button		+ miCtrl_Offset,	IDB_Button_Expand, ge::SPos(2, 4), true);
 	pButton->SetEventMouseUp();
 
 	// Show insert button
 	Create2StateButton(giTrack_Info_Big_Show_Insert_Button	+ miCtrl_Offset,	IDB_Button_AUX_Insert,	ge::SPos(36, 0), true);
 
 	PreparePopups();
-	CreatePop(giTrack_Info_Big_Output_Popup+ miCtrl_Offset, IDB_Invisible_Button_16_64, mpOutput_Menu, ge::SPos(3+64, 71));
+	CreatePop(giTrack_Info_Big_Output_Popup+ miCtrl_Offset, IDB_Button_Invisible_16_64, mpOutput_Menu, ge::SPos(3+64, 71));
 	
 	// Volume slider & display
 	CreateSlider(giTrack_Info_Big_Volume_Slider				+ miCtrl_Offset, ge::SPos(88, 21),ge::SSize(16,110), IDB_Slider_Handle_Volume);
-	CreateDisplay( giTrack_Info_Big_Volume_Slider_Display	+ miCtrl_Offset, ge::SPos(68, 350-184),  ge::SSize(56, 12), CreateFont(Generic128, IDB_AxelTight, ge::SRGB(0, 255, 0)));
+	CreateDisplay( giTrack_Info_Big_Volume_Slider_Display	+ miCtrl_Offset, ge::SPos(68, 350-184),  ge::SSize(56, 12), CreateFont(Generic128, IDB_Font_Axel_Tight, ge::SRGB(0, 255, 0)));
 	
 	Create2StateButton(giTrack_Info_Big_Arm_Button + miCtrl_Offset, IDB_Button_Arm_Vertical, ge::SPos(67, 102), true);
 	Create2StateButton(giTrack_Info_Big_Mute_Button + miCtrl_Offset, IDB_Button_Mute_Vertical, ge::SPos(67,102+16), true);
@@ -63,7 +63,7 @@ void CTrack_Info_Big::Init()
 	ge::IText* pText = CreateDisplay(	giTrack_Info_Big_Channel_Text+ miCtrl_Offset, 
 												ge::SPos(8, 24),  
 												ge::SSize(48, 12), 
-												CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(204, 204, 204)),
+												CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(204, 204, 204)),
 												true);
 
 	pText->SetHorzAlignment(ge::IText::HorzAlignLeft);
@@ -227,7 +227,7 @@ ge::IDropDownListBox* CTrack_Info_Big::CreatePop( tint32 iControlID, tint32 iBit
 	ge::IDropDownListBox* pListBox = CreateDropDownListBox( iControlID, 
 															piIDs, 
 															Generic128, 
-															IDF_Fuxley_712, 
+															IDF_Font_Fuxley_712, 
 															iBitmapID, 
 															List, Pos, 
 															ge::SPos(0,0),

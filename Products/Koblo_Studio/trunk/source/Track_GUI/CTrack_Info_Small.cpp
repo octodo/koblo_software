@@ -36,14 +36,14 @@ void CTrack_Info_Small::Init()
 	ge::IText* pText = CreateDisplay(	giTrack_Info_Small_Channel_Text+ miCtrl_Offset, 
 												ge::SPos(5, 24),  
 												ge::SSize(118, 10), 
-												CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(204, 204, 204)),
+												CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(204, 204, 204)),
 												true);
 
 	pText->SetHorzAlignment(ge::IText::HorzAlignLeft);
 	pText->SetClicksOutsideAsSuccess();
 	
 	// Expand button
-	ge::IMultiStateButton*  pButton = Create2StateButton(giTrack_Info_Small_Expand_Button	+ miCtrl_Offset, IDB_Track_Button_Expand, ge::SPos(2, 4), true);
+	ge::IMultiStateButton*  pButton = Create2StateButton(giTrack_Info_Small_Expand_Button	+ miCtrl_Offset, IDB_Button_Expand, ge::SPos(2, 4), true);
 	pButton->SetEventMouseUp();
 	// Arm button
 	Create2StateButton(giTrack_Info_Small_Arm_Button	+ miCtrl_Offset, IDB_Button_Arm_Horizontal, ge::SPos(68, 4), true);

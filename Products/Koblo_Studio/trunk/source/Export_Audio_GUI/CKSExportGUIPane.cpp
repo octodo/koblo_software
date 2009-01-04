@@ -33,7 +33,7 @@ void CKSExportGUIPane::Init()
 	
 	//-------------------------------
 	// Backdrop for Export
-	CreateBitmap(ge::IControl::giNoID, IDB_ExportAudioWindow, ge::SPos(0, 0));
+	CreateBitmap(ge::IControl::giNoID, IDB_Back_Export_Audio, ge::SPos(0, 0));
 	
 	
 //	Create2StateButton(giCtrl_Delay_Power, IDB_Button_Power, ge::SPos(25, 36), true);
@@ -73,7 +73,7 @@ void CKSExportGUIPane::Init()
 
 	//--------------------------------------------
 	// Tail
-	ge::IText* pText =  CreateDisplay( giCtrl_Export_Tail, ge::SPos(172, 168),  ge::SSize(106, 14), CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(0, 0, 0)),true);
+	ge::IText* pText =  CreateDisplay( giCtrl_Export_Tail, ge::SPos(172, 168),  ge::SSize(106, 14), CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(0, 0, 0)),true);
 	pText->SetClicksOutsideAsSuccess();
 	
 												
@@ -322,7 +322,7 @@ ge::IDropDownListBox* CKSExportGUIPane::CreatePop( tint32 iControlID, tint32 iBi
 	ge::IDropDownListBox* pListBox = CreateDropDownListBox( iControlID, 
 															piIDs, 
 															Generic128, 
-															IDF_Fuxley_712, 
+															IDF_Font_Fuxley_712, 
 															iBitmapID, 
 															List, Pos, 
 															ge::SPos(-20,-2),

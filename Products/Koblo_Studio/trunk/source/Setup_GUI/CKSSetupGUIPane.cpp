@@ -32,7 +32,7 @@ void CKSSetupGUIPane::Init()
 	mpPane->SetSize(ge::SSize(320,245));
 	
 	tint32 iPosY = 0;
-	CreateBitmap(ge::IControl::giNoID, IDB_Back_Setup, ge::SPos(0, 0)); iPosY += 60;
+	CreateBitmap(ge::IControl::giNoID, IDB_Back_Audio_Setup, ge::SPos(0, 0)); iPosY += 60;
 	
 	mpDevice_BMP				= CreateBitmap(ge::IControl::giNoID, IDB_Back_Setup_Device, ge::SPos(0, 54));
 	mpDevice_Asio_BMP			= CreateBitmap(ge::IControl::giNoID, IDB_Back_Setup_Device_Asio, ge::SPos(0, 54)); 
@@ -265,7 +265,7 @@ ge::IDropDownListBox* CKSSetupGUIPane::CreatePop( tint32 iControlID, tint32 iBit
 	ge::IDropDownListBox* pListBox = CreateDropDownListBox( iControlID, 
 															piIDs, 
 															Generic128, 
-															IDF_Fuxley_712, 
+															IDF_Font_Fuxley_712, 
 															iBitmapID, 
 															List, Pos, 
 															ge::SPos(-20,-2),

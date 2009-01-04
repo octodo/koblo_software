@@ -92,7 +92,7 @@ void CRegion_GUI::Init()
 	mpText = CreateDisplay(	ge::IControl::giNoID, 
 							ge::SPos(2, 0),  
 							ge::SSize(118, 10), 
-							CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(32, 32, 32)), false);
+							CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(32, 32, 32)), false);
 							
 	mpText->SetHorzAlignment(ge::IText::HorzAlignLeft);
 	mpText->SetText(mPsz);

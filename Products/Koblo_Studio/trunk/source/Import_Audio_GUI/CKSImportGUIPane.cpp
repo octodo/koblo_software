@@ -78,13 +78,13 @@ void CKSImportGUIPane::Init()
 
 	dynamic_cast<CKSPlugIn*>(GetGUI()->GetPlugIn())->SetPreviewCallback(dynamic_cast<CPreviewCallback*>(this));
 
-	ge::IText* pText = CreateDisplay(giControlType, ge::SPos(96, 333+22), ge::SSize(100, 12), CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(10, 10, 10)), false);
+	ge::IText* pText = CreateDisplay(giControlType, ge::SPos(96, 333+22), ge::SSize(100, 12), CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(10, 10, 10)), false);
 	pText->SetHorzAlignment(ge::IText::HorzAlignLeft);
-	pText = CreateDisplay(giControlBitDepth, ge::SPos(96, 347+22), ge::SSize(100, 12), CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(10, 10, 10)), false);
+	pText = CreateDisplay(giControlBitDepth, ge::SPos(96, 347+22), ge::SSize(100, 12), CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(10, 10, 10)), false);
 	pText->SetHorzAlignment(ge::IText::HorzAlignLeft);
-	pText = CreateDisplay(giControlSampleRate, ge::SPos(96, 361+22), ge::SSize(100, 12), CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(10, 10, 10)), false);
+	pText = CreateDisplay(giControlSampleRate, ge::SPos(96, 361+22), ge::SSize(100, 12), CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(10, 10, 10)), false);
 	pText->SetHorzAlignment(ge::IText::HorzAlignLeft);
-	pText = CreateDisplay(giControlChannels, ge::SPos(96, 375+22), ge::SSize(100, 12), CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(10, 10, 10)), false);
+	pText = CreateDisplay(giControlChannels, ge::SPos(96, 375+22), ge::SSize(100, 12), CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(10, 10, 10)), false);
 	pText->SetHorzAlignment(ge::IText::HorzAlignLeft);
 } // Init
 
@@ -248,7 +248,7 @@ ge::IDropDownListBox* CKSImportGUIPane::CreatePop( tint32 iControlID, tint32 iBi
 	ge::IDropDownListBox* pListBox = CreateDropDownListBox( iControlID, 
 															piIDs, 
 															Generic128, 
-															IDF_Fuxley_712, 
+															IDF_Font_Fuxley_712, 
 															iBitmapID, 
 															List, Pos, 
 															ge::SPos(-20,-2),

@@ -37,7 +37,7 @@ void CTrack_Player2::Init()
 	mpScrollPane->Init(ge::IControl::giNoID, giTimerID_Player2_ScrollPane);
 	mpPane = dynamic_cast<ge::IPane*>(mpScrollPane);
 	mpPane->SetSize(gTrack_Scroll_Editor);
-	mpPane->SetBackgroundColour(ge::SRGB(239,239,239));
+	mpPane->SetBackgroundColour(ge::SRGB(230,230,230));
 	
 
 	msLineColor[giColor_1] = ge::SRGB(83,124,214);

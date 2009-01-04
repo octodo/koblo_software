@@ -461,7 +461,7 @@ void CTrack_Time_Pos::Draw_Bar_Beat_Text( tint32 iText_ID, char* psz, ge::SPos p
 		mppBar_Beat_Text[iText_ID] = CreateText(	ge::IControl::giNoID, 
 												pos, 
 												ge::SSize(76, 15), 
-												CreateFont(Generic128, IDB_AxelTight,color), 
+												CreateFont(Generic128, IDB_Font_Axel_Tight,color), 
 												psz, 
 												ge::IText::HorzAlignLeft, 
 												ge::IText::VertAlignCenter);
@@ -482,7 +482,7 @@ void CTrack_Time_Pos::Draw_Min_Sec_Text( tint32 iText_ID, char* psz, ge::SPos po
 		mppMin_Sec_Text[iText_ID] = CreateText(	ge::IControl::giNoID, 
 												pos, 
 												ge::SSize(76, 15), 
-												CreateFont(Generic128, IDB_AxelTight,color), 
+												CreateFont(Generic128, IDB_Font_Axel_Tight,color), 
 												psz, 
 												ge::IText::HorzAlignLeft, 
 												ge::IText::VertAlignCenter);

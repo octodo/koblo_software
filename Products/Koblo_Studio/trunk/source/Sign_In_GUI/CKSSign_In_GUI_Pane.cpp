@@ -33,7 +33,7 @@ void CKSSign_In_GUI_Pane::Init()
 	mpUser_Name_Txt = CreateDisplay(giCtrl_Sign_In_User_Name_Display, 
 									ge::SPos(23, 32),  
 									ge::SSize(197, 16), 
-									CreateFont(Generic128, IDF_Fuxley_712, ge::SRGB(10, 10, 10)),
+									CreateFont(Generic128, IDF_Font_Fuxley_712, ge::SRGB(10, 10, 10)),
 									true);
 	
 	mpUser_Name_Txt->SetHorzAlignment(ge::IText::HorzAlignLeft);
@@ -44,7 +44,7 @@ void CKSSign_In_GUI_Pane::Init()
 	mpPassword_Txt = CreateDisplay(giCtrl_Sign_In_Password_Display, 
 									ge::SPos(23, 32+42),  
 									ge::SSize(197, 16), 
-									CreateFont(Generic128, IDF_Fuxley_712, ge::SRGB(10, 10, 10)),
+									CreateFont(Generic128, IDF_Font_Fuxley_712, ge::SRGB(10, 10, 10)),
 									true);
 	
 	mpPassword_Txt->SetHorzAlignment(ge::IText::HorzAlignLeft);

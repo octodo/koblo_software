@@ -35,7 +35,7 @@ void CMix_Master::Init()
 	ge::IText* pText = CreateDisplay(	giCtr_Mix_Master_Text, 
 												ge::SPos(8, 24),  
 												ge::SSize(48, 12), 
-												CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(204, 204, 204)));
+												CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(204, 204, 204)));
 
 	pText->SetHorzAlignment(ge::IText::HorzAlignLeft);
 	pText->SetClicksOutsideAsSuccess();
@@ -67,7 +67,7 @@ void CMix_Master::Init()
 																		
 	// Volume slider & display
 	CreateSlider(giCtr_Mix_Master_Volume_Slider, ge::SPos(88-64 , 21+184),ge::SSize(16,110), IDB_Slider_Handle_Volume);
-	CreateDisplay( giCtr_Mix_Master_Volume_Slider_Display, ge::SPos(4, 350),  ge::SSize(56, 12), CreateFont(Generic128, IDB_AxelTight, ge::SRGB(0, 255, 0)));
+	CreateDisplay( giCtr_Mix_Master_Volume_Slider_Display, ge::SPos(4, 350),  ge::SSize(56, 12), CreateFont(Generic128, IDB_Font_Axel_Tight, ge::SRGB(0, 255, 0)));
 	
 	// Output meter, Left
 	mpMeterOutL = CreatePeakMeter(ge::IControl::giNoID, ge::SPos(46, 215), 120, ge::IPeakMeter::Up);
@@ -148,7 +148,7 @@ ge::IDropDownListBox* CMix_Master::CreatePop( tint32 iControlID, tint32 iBitmapI
 	ge::IDropDownListBox* pListBox = CreateDropDownListBox( iControlID, 
 															piIDs, 
 															Generic128, 
-															IDF_Fuxley_712, 
+															IDF_Font_Fuxley_712, 
 															iBitmapID, 
 															List, 
 															Pos,

@@ -22,7 +22,7 @@ void CTrack_Player::Init()
 	mpScrollPane->Init(ge::IControl::giNoID, giTimerID_Player1_ScrollPane);
 	mpPane = dynamic_cast<ge::IPane*>(mpScrollPane);
 //	mpPane->SetSize(ge::SSize(gTrack_Scroll_Editor.iCX, gTrack_Scroll_Editor.iCY ));
-	mpPane->SetBackgroundColour(ge::SRGB(0,255,0));//ge::SRGB(242,0,242));
+//	mpPane->SetBackgroundColour(ge::SRGB(0,255,0));//ge::SRGB(242,0,242));
 	
 	//--------------------------------------------
 	// Track_Player2

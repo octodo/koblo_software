@@ -50,7 +50,7 @@ void CMix_AUX_Insert::Init()
 	//-----------------------------------------
 	// Channel In
 	PreparePopups();
-	CreatePop(giChannel_Input_Popup+ miCtrl_Offset, IDB_Invisible_Button_16_64, mpInput_Menu, ge::SPos(68, 16), ge::SSize(18, 12), ge::SRGB(0,204,0));
+	CreatePop(giChannel_Input_Popup+ miCtrl_Offset, IDB_Button_Invisible_16_64, mpInput_Menu, ge::SPos(68, 16), ge::SSize(18, 12), ge::SRGB(0,204,0));
 
 	
 	CreateButton(miCtrl_Offset + giCtrlOpenPlugEdit1, IDB_Button_Edit_Plugin, ge::SPos(116, 48));
@@ -81,10 +81,10 @@ void CMix_AUX_Insert::Init()
 	}
 	List.pItems[0] = ge::IPopupMenu::SMenuItem("None", 0, NULL);
 
-	CreatePop(giCtrl_InsertPop1 + miCtrl_Offset, IDB_Invisible_Button_16_64, List, ge::SPos(64, 48), ge::SSize(61, 15), ge::SRGB(204,204,204));
-	CreatePop(giCtrl_InsertPop2 + miCtrl_Offset, IDB_Invisible_Button_16_64, List, ge::SPos(64, 48 + 16), ge::SSize(61, 15), ge::SRGB(204,204,204));
-	CreatePop(giCtrl_InsertPop3 + miCtrl_Offset, IDB_Invisible_Button_16_64, List, ge::SPos(64, 48 + 16 * 2), ge::SSize(61, 15), ge::SRGB(204,204,204));
-	CreatePop(giCtrl_InsertPop4 + miCtrl_Offset, IDB_Invisible_Button_16_64, List, ge::SPos(64, 48 + 16 * 3), ge::SSize(61, 15), ge::SRGB(204,204,204));
+	CreatePop(giCtrl_InsertPop1 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48), ge::SSize(61, 15), ge::SRGB(204,204,204));
+	CreatePop(giCtrl_InsertPop2 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16), ge::SSize(61, 15), ge::SRGB(204,204,204));
+	CreatePop(giCtrl_InsertPop3 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16 * 2), ge::SSize(61, 15), ge::SRGB(204,204,204));
+	CreatePop(giCtrl_InsertPop4 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16 * 3), ge::SSize(61, 15), ge::SRGB(204,204,204));
 }
 
 
@@ -216,7 +216,7 @@ void CMix_AUX_Insert::PreparePopups()
 	}
 
 	if (mpInput == NULL) {
-		mpInput = CreatePop(giChannel_Input_Popup + miCtrl_Offset, IDB_Invisible_Button_16_64, *pMenu, ge::SPos(68, 16), ge::SSize(18, 12), ge::SRGB(0,204,0));
+		mpInput = CreatePop(giChannel_Input_Popup + miCtrl_Offset, IDB_Button_Invisible_16_64, *pMenu, ge::SPos(68, 16), ge::SSize(18, 12), ge::SRGB(0,204,0));
 	}
 	else {
 		mpInput->GetPopup()->DestroyItems();
@@ -262,7 +262,7 @@ ge::IDropDownListBox* CMix_AUX_Insert::CreatePop( tint32 iControlID,
 	ge::IDropDownListBox* pListBox = CreateDropDownListBox( iControlID, 
 														   piIDs, 
 														   Generic128, 
-														   IDB_Minix_Tight, 
+														   IDB_Font_Minix_Tight, 
 														   iBitmapID, 
 														   List, 
 														   Pos, 

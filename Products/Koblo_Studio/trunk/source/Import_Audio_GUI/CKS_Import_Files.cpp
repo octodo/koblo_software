@@ -33,7 +33,7 @@ void CKS_Import_Files::Init()
 	mpListBox = CreateListBox(giCtrl_File_List2,
 		ge::SPos(4, 0), ge::SSize(SizeThis.iCX-4, SizeThis.iCY),
 		CreateFont(Generic128, 
-		IDB_Minix_Tight, 
+		IDB_Font_Minix_Tight, 
 		ge::SRGB(10, 10, 10)));
 }
 

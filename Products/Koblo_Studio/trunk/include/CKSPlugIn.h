@@ -181,7 +181,7 @@ public:
 	virtual tbool MenuFileSaveProject(tbool bOverwriteIcons = false);
 	virtual void MenuFileDistributeMix(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize);
 	virtual void MenuSetupAudio();
-	virtual void MenuCollaboration();
+//	virtual void MenuCollaboration();
 //	virtual void MenuSignIn();
 	virtual void MenuFileImportAudio();
 	

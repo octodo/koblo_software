@@ -32,3 +32,5 @@ Builds
 DoesntMatter.k2s
 *.APS
 .svn
+*.tm_build_errors
+

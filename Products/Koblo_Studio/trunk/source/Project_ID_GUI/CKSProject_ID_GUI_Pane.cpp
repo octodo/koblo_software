@@ -24,7 +24,7 @@ void CKSProject_ID_GUI_Pane::Init()
 	CreateBitmap(ge::IControl::giNoID, IDB_Back_Project_ID, ge::SPos(0, 0));
 	
 	// Project ID
-	ge::IText* pText = CreateDisplay( giCtrl_Project_ID_Display, ge::SPos(25, 35),  ge::SSize(200, 16), CreateFont(Generic128, IDB_AxelTight, ge::SRGB(64, 64, 64)), true);
+	ge::IText* pText = CreateDisplay( giCtrl_Project_ID_Display, ge::SPos(25, 35),  ge::SSize(200, 16), CreateFont(Generic128, IDB_Font_Axel_Tight, ge::SRGB(64, 64, 64)), true);
 	pText->SetHorzAlignment(ge::IText::HorzAlignLeft);
 	pText->SetClicksOutsideAsSuccess();
 

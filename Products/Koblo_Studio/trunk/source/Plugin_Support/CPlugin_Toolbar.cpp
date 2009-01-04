@@ -72,7 +72,7 @@ void CPlugin_Toolbar::Init()
 	//
 
 	mpText = CreateText(ge::IControl::giNoID, ge::SPos(78, 9), ge::SSize(200, 12),
-		CreateFont(Generic128, IDB_AxelTight, ge::SRGB(0, 255, 0)),
+		CreateFont(Generic128, IDB_Font_Axel_Tight, ge::SRGB(0, 255, 0)),
 		"");
 	
 	

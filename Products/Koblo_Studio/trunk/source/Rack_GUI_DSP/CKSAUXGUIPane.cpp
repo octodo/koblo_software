@@ -41,20 +41,20 @@ void CKSAUXGUIPane::Init()
 	tint32 iY		=	75;
 	
 	// Delay time 
-	CreateKnob(giCtrl_Delay_Time, IDB_DialMedium, ge::SPos(iX, iY), 65);		iX += 64;
-	CreateDisplay( giCtrl_Delay_Time_Display, ge::SPos(184, 65),  ge::SSize(56, 12), CreateFont(Generic128, IDB_AxelTight, ge::SRGB(0, 180, 0)));
+	CreateKnob(giCtrl_Delay_Time, IDB_Dial_Medium, ge::SPos(iX, iY), 65);		iX += 64;
+	CreateDisplay( giCtrl_Delay_Time_Display, ge::SPos(184, 65),  ge::SSize(56, 12), CreateFont(Generic128, IDB_Font_Axel_Tight, ge::SRGB(0, 180, 0)));
 	
 	// Predlay
-	CreateKnob(giCtrl_Delay_Feedback, IDB_DialMedium, ge::SPos(iX, iY), 65);	iX += 64;
-	CreateDisplay( giCtrl_Delay_Feedback_Display, ge::SPos(184, 77),  ge::SSize(56, 12), CreateFont(Generic128, IDB_AxelTight, ge::SRGB(0, 180, 0)));
+	CreateKnob(giCtrl_Delay_Feedback, IDB_Dial_Medium, ge::SPos(iX, iY), 65);	iX += 64;
+	CreateDisplay( giCtrl_Delay_Feedback_Display, ge::SPos(184, 77),  ge::SSize(56, 12), CreateFont(Generic128, IDB_Font_Axel_Tight, ge::SRGB(0, 180, 0)));
 	
 	// Lo Filt
-	CreateKnob(giCtrl_Delay_LP_Dampning, IDB_DialMedium, ge::SPos(iX, iY), 65);	iX += 64;
-	CreateDisplay( giCtrl_Delay_LP_Dampning_Display, ge::SPos(184, 89),  ge::SSize(56, 12), CreateFont(Generic128, IDB_AxelTight, ge::SRGB(0, 180, 0)));
+	CreateKnob(giCtrl_Delay_LP_Dampning, IDB_Dial_Medium, ge::SPos(iX, iY), 65);	iX += 64;
+	CreateDisplay( giCtrl_Delay_LP_Dampning_Display, ge::SPos(184, 89),  ge::SSize(56, 12), CreateFont(Generic128, IDB_Font_Axel_Tight, ge::SRGB(0, 180, 0)));
 	
 	// High Filt
-	CreateKnob(giCtrl_Delay_HP_Dampning, IDB_DialMedium, ge::SPos(iX, iY), 65);	iX += 64;
-	CreateDisplay( giCtrl_Delay_HP_Dampning_Display, ge::SPos(184, 101),  ge::SSize(56, 12), CreateFont(Generic128, IDB_AxelTight, ge::SRGB(0, 180, 0)));
+	CreateKnob(giCtrl_Delay_HP_Dampning, IDB_Dial_Medium, ge::SPos(iX, iY), 65);	iX += 64;
+	CreateDisplay( giCtrl_Delay_HP_Dampning_Display, ge::SPos(184, 101),  ge::SSize(56, 12), CreateFont(Generic128, IDB_Font_Axel_Tight, ge::SRGB(0, 180, 0)));
 	
 	
 	// Output meter, Left
@@ -70,17 +70,17 @@ void CKSAUXGUIPane::Init()
 	iX		=	152;
 	iY		=	165;
 	// Reverb Size
-	CreateKnob(giCtrl_Reverb_Size, IDB_DialMedium, ge::SPos(iX, iY), 65);		iX += 64;
+	CreateKnob(giCtrl_Reverb_Size, IDB_Dial_Medium, ge::SPos(iX, iY), 65);		iX += 64;
 	// Predlay
-	CreateKnob(giCtrl_Reverb_PDelay, IDB_DialMedium, ge::SPos(iX, iY), 65);		iX += 64;
+	CreateKnob(giCtrl_Reverb_PDelay, IDB_Dial_Medium, ge::SPos(iX, iY), 65);		iX += 64;
 	// Damping
-	CreateKnob(giCtrl_Reverb_Damp, IDB_DialMedium, ge::SPos(iX, iY), 65);		iX += 64;
+	CreateKnob(giCtrl_Reverb_Damp, IDB_Dial_Medium, ge::SPos(iX, iY), 65);		iX += 64;
 	// Reverb
-	CreateKnob(giCtrl_Reverb_Panorama, IDB_DialMedium, ge::SPos(iX, iY), 65);	iX += 64;
+	CreateKnob(giCtrl_Reverb_Panorama, IDB_Dial_Medium, ge::SPos(iX, iY), 65);	iX += 64;
 	// Reverb
-	CreateKnob(giCtrl_Reverb_Color1, IDB_DialMedium, ge::SPos(iX, iY), 65);		iX += 64;
+	CreateKnob(giCtrl_Reverb_Color1, IDB_Dial_Medium, ge::SPos(iX, iY), 65);		iX += 64;
 	// Reverb
-	CreateKnob(giCtrl_Reverb_Color2, IDB_DialMedium, ge::SPos(iX, iY), 65);		iX += 64;
+	CreateKnob(giCtrl_Reverb_Color2, IDB_Dial_Medium, ge::SPos(iX, iY), 65);		iX += 64;
 	
 	// Output meter, Left
 	mpReverb_MeterOutL = CreatePeakMeter(ge::IControl::giNoID, ge::SPos(534, 153), 47, ge::IPeakMeter::Up);

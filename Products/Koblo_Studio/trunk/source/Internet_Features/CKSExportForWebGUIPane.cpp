@@ -27,7 +27,7 @@ void CKSExportForWebGUIPane::Init()
 	
 	//-------------------------------
 	// Backdrop for Export
-	CreateBitmap(ge::IControl::giNoID, IDB_Back_Export_For_Web, ge::SPos(0, 0));
+	CreateBitmap(ge::IControl::giNoID, IDB_Back_License, ge::SPos(0, 0));
 	
 	
 	ge::SPos pos(160,30);
@@ -37,7 +37,7 @@ void CKSExportForWebGUIPane::Init()
 	mpTextUrl = CreateDisplay(	giCtrl_CC_License_URL_Txt, 
 												pos,  
 												ge::SSize(344, 12), 
-												CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(10, 10, 10)),
+												CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(10, 10, 10)),
 												true);
 	 
 	mpTextUrl->SetHorzAlignment(ge::IText::HorzAlignLeft);
@@ -48,7 +48,7 @@ void CKSExportForWebGUIPane::Init()
 	mpTextAuthor = CreateDisplay(	giCtrl_CC_License_Author_Txt, 
 												pos,  
 												ge::SSize(344, 12), 
-												CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(10, 10, 10)),
+												CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(10, 10, 10)),
 												true);
 
 	mpTextAuthor->SetHorzAlignment(ge::IText::HorzAlignLeft);
@@ -59,7 +59,7 @@ void CKSExportForWebGUIPane::Init()
 	mpTextStatus = CreateDisplay(	giCtrl_CC_License_Status_Txt, 
 												pos,  
 												ge::SSize(344, 12), 
-												CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(10, 10, 10)),
+												CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(10, 10, 10)),
 												true);
 
 	mpTextStatus->SetHorzAlignment(ge::IText::HorzAlignLeft);
@@ -317,7 +317,7 @@ ge::IDropDownListBox* CKSExportForWebGUIPane::CreatePop( tint32 iControlID, tint
 	ge::IDropDownListBox* pListBox = CreateDropDownListBox( iControlID, 
 															piIDs, 
 															Generic128, 
-															IDF_Fuxley_712, 
+															IDF_Font_Fuxley_712, 
 															iBitmapID, 
 															List, Pos, 
 															ge::SPos(-20,-2),

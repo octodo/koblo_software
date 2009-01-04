@@ -35,7 +35,7 @@ void CMix_Buss::Init()
 	ge::IText* pText = CreateDisplay(	giCtr_Mix_Buss_Text+ miCtrl_Offset, 
 												ge::SPos(8, 24),  
 												ge::SSize(48, 12), 
-												CreateFont(Generic128, IDB_Minix_Tight, ge::SRGB(204, 204, 204)), true);
+												CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(204, 204, 204)), true);
 
 	pText->SetHorzAlignment(ge::IText::HorzAlignLeft);
 	pText->SetClicksOutsideAsSuccess();
@@ -63,11 +63,11 @@ void CMix_Buss::Init()
 	Create2StateButton(giCtr_Mix_Buss_Show_Insert_Button	+ miCtrl_Offset,	IDB_Button_AUX_Insert,	ge::SPos(36, 0), true);
 
 	PreparePopups();
-	CreatePop(giCtr_Mix_Buss_Output_Popup+ miCtrl_Offset, IDB_Invisible_Button_16_64, mpOutput_Menu, ge::SPos(3, 255));
+	CreatePop(giCtr_Mix_Buss_Output_Popup+ miCtrl_Offset, IDB_Button_Invisible_16_64, mpOutput_Menu, ge::SPos(3, 255));
 	
 	// Volume slider & display
 	CreateSlider(giCtr_Mix_Buss_Volume_Slider				+ miCtrl_Offset, ge::SPos(88-64 , 21+184),ge::SSize(16,110), IDB_Slider_Handle_Volume);
-	CreateDisplay( giCtr_Mix_Buss_Volume_Slider_Display		+ miCtrl_Offset, ge::SPos(4, 350),  ge::SSize(56, 12), CreateFont(Generic128, IDB_AxelTight, ge::SRGB(0, 255, 0)));
+	CreateDisplay( giCtr_Mix_Buss_Volume_Slider_Display		+ miCtrl_Offset, ge::SPos(4, 350),  ge::SSize(56, 12), CreateFont(Generic128, IDB_Font_Axel_Tight, ge::SRGB(0, 255, 0)));
 	
 	
 	Create2StateButton(giCtr_Mix_Buss_Arm_Button			+ miCtrl_Offset, IDB_Button_Arm_Vertical, ge::SPos(3, 102+184), true);
@@ -234,7 +234,7 @@ ge::IDropDownListBox* CMix_Buss::CreatePop( tint32 iControlID, tint32 iBitmapID,
 	ge::IDropDownListBox* pListBox = CreateDropDownListBox( iControlID, 
 															piIDs, 
 															Generic128, 
-															IDF_Fuxley_712, 
+															IDF_Font_Fuxley_712, 
 															iBitmapID, 
 															List, Pos, 
 															ge::SPos(0,0),

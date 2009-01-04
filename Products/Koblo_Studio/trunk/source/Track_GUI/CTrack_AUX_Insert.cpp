@@ -37,7 +37,7 @@ void CTrack_AUX_Insert::Init()
 	
 	// Channel In
 	PreparePopups();
-	CreatePop(giTrack_Info_Big_Input_Popup+ miCtrl_Offset, IDB_Invisible_Button_16_64, mpInput_Menu, ge::SPos(68, 16),ge::SSize(18, 12), ge::SRGB(0,255,0));
+	CreatePop(giTrack_Info_Big_Input_Popup+ miCtrl_Offset, IDB_Button_Invisible_16_64, mpInput_Menu, ge::SPos(68, 16),ge::SSize(18, 12), ge::SRGB(0,255,0));
 
 	//-----------------------------------------
 	// Echo and Reverb send
@@ -86,10 +86,10 @@ void CTrack_AUX_Insert::Init()
 	pi[1] = 0;
 	List.pItems[0] = ge::IPopupMenu::SMenuItem("None", 0, NULL, NULL, -1, 0, (void*)pi);
 
-	CreatePop(giCtrl_InsertPop1 + miCtrl_Offset, IDB_Invisible_Button_16_64, List, ge::SPos(2 + 64, 48), ge::SSize(61, 15), ge::SRGB(204,204,204));
-	CreatePop(giCtrl_InsertPop2 + miCtrl_Offset, IDB_Invisible_Button_16_64, List, ge::SPos(2 + 64, 48+ 16), ge::SSize(61, 15), ge::SRGB(204,204,204));
-	CreatePop(giCtrl_InsertPop3 + miCtrl_Offset, IDB_Invisible_Button_16_64, List, ge::SPos(2 + 64, 48 + 16 * 2), ge::SSize(61, 15), ge::SRGB(204,204,204));
-	CreatePop(giCtrl_InsertPop4 + miCtrl_Offset, IDB_Invisible_Button_16_64, List, ge::SPos(2 + 64, 48 + 16 * 3), ge::SSize(61, 15), ge::SRGB(204,204,204));
+	CreatePop(giCtrl_InsertPop1 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(2 + 64, 48), ge::SSize(61, 15), ge::SRGB(204,204,204));
+	CreatePop(giCtrl_InsertPop2 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(2 + 64, 48+ 16), ge::SSize(61, 15), ge::SRGB(204,204,204));
+	CreatePop(giCtrl_InsertPop3 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(2 + 64, 48 + 16 * 2), ge::SSize(61, 15), ge::SRGB(204,204,204));
+	CreatePop(giCtrl_InsertPop4 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(2 + 64, 48 + 16 * 3), ge::SSize(61, 15), ge::SRGB(204,204,204));
 }
 
 
@@ -220,7 +220,7 @@ ge::IDropDownListBox* CTrack_AUX_Insert::CreatePop( tint32 iControlID, tint32 iB
 	ge::IDropDownListBox* pListBox = CreateDropDownListBox( iControlID, 
 															piIDs, 
 															Generic128, 
-															IDB_Minix_Tight, 
+															IDB_Font_Minix_Tight, 
 															iBitmapID, 
 															List, 
 															Pos, 
