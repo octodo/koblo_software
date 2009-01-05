@@ -76,9 +76,9 @@ protected:
 	ge::IRadioButtons* mpSetup_Radio_Button;
 	tint32 miLicenseNb;
 	ac::EQuality meQuality;
-	ge::IText* mpTextAuthor;
-	ge::IText* mpTextUrl;
-	ge::IText* mpTextStatus;
+//	ge::IText* mpTextAuthor;
+//	ge::IText* mpTextUrl;
+//	ge::IText* mpTextStatus;
 
 	tbool mbHasPreviousLicense;
 	tbool mbMayBeCommercial;

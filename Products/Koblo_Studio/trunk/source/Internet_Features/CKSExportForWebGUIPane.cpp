@@ -199,7 +199,7 @@ void CKSExportForWebGUIPane::EventValueChange(ge::IControl* pControl, tint32 iVa
 				// Close the window
 				GetPlugIn()->SetGlobalParm(giParamID_Show_Export_For_Web_Window, 0, giSectionGUI);
 				// Set 
-				tchar pszAuthor[1024];
+		/*		tchar pszAuthor[1024];
 				tchar pszUrl[1024];
 				tchar pszStatus[1024];
 				mpTextAuthor->GetText(pszAuthor);
@@ -207,6 +207,8 @@ void CKSExportForWebGUIPane::EventValueChange(ge::IControl* pControl, tint32 iVa
 				mpTextStatus->GetText(pszStatus);
 				
 				dynamic_cast<CKSPlugIn*>(GetPlugIn())->Export_For_Web(meQuality, miLicenseNb, pszAuthor, pszUrl, pszStatus);
+		 
+		 */
 			}
 			break;
 		}
@@ -240,6 +242,7 @@ void CKSExportForWebGUIPane::Resize(ge::SSize SizeNew)
 
 void CKSExportForWebGUIPane::HandleMsg(SMsg* pMsg)
 {
+	/*
 	if (pMsg->iOpcode == Msg_Init_ExportForWeb) {
 		mpTextAuthor->SetText(mpPlugIn->msExportForWeb.sUserName.c_str());
 		mpTextUrl->SetText(mpPlugIn->msExportForWeb.sUserUrl.c_str());
@@ -256,6 +259,7 @@ void CKSExportForWebGUIPane::HandleMsg(SMsg* pMsg)
 		mpTextUrl->MakeEditable(!mbHasPreviousLicense);
 		mpTextStatus->MakeEditable(!mbHasPreviousLicense);
 	}
+	 */
 } // HandleMsg
 
 
