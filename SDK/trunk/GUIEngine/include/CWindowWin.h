@@ -16,7 +16,7 @@ public:
 	virtual ~CWindowWin();
 
 	//! IWindow override
-	virtual void MakeWindow(void* pParent, const SRect* pRect);
+	virtual void MakeWindow(void* pParent, const SRect* pRect, tbool bInstallEventHandler = true);
 	//! IWindow override
 	virtual void ShowWindow();
 	//! IWindow override
