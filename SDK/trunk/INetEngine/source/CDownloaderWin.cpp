@@ -1,4 +1,4 @@
-// CDownloader OS X only code
+// CDownloader MS-Windows only code
 
 #include "ineInternalOS.h"
 

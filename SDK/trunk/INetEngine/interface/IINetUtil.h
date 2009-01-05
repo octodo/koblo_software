@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo INetEngine. If not, see <http://www.gnu.org/licenses/>.
 
 /*! \class IINetUtil
  * \brief Interface to access a web address
@@ -131,7 +131,7 @@ public:
 	/*!
 		\param pszRawData [in]: The string or raw data to encode
 		\param iRawDataLen [in]: Length of the raw data. If -1 strlen(pszRawData) is used
-		\param pszURLEncoded [out]: Receives the URL-encoded result string. This <b>must</b> be allocated with enough space to hold string including a trailing zero-char!
+		\param pszURLEncoded [out]: Receives the URL-encoded result string. This <b>must</b> be pre-allocated with enough space to hold string including a trailing zero-char!
 		\return tint32: The length of the URL-encoded output
 	*/
 	static tint32 URLEncode(const tchar* pszRawData, tint32 iRawDataLen, tchar* pszURLEncoded);
