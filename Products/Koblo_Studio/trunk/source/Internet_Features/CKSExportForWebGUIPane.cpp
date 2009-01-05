@@ -32,7 +32,7 @@ void CKSExportForWebGUIPane::Init()
 	
 	ge::SPos pos(160,30);
 	
-	
+/*	
 	// URL
 	mpTextUrl = CreateDisplay(	giCtrl_CC_License_URL_Txt, 
 												pos,  
@@ -53,6 +53,7 @@ void CKSExportForWebGUIPane::Init()
 
 	mpTextAuthor->SetHorzAlignment(ge::IText::HorzAlignLeft);
 	mpTextAuthor->SetClicksOutsideAsSuccess();
+ 
 	
 	// Status
 	pos.iY += 20;
@@ -68,21 +69,21 @@ void CKSExportForWebGUIPane::Init()
 	
 //	Create2StateButton(giCtrl_Delay_Power, IDB_Button_Power, ge::SPos(25, 36), true);
 
-
+*/
 	pos.iX = 32;
-	pos.iY = 132; 
+	pos.iY = 132-74; 
 
 	mpSetup_Radio_Button = CreateRadioButtonsGroup(giCtrl_CC_License_Radio_Button, ge::SPos(0,0) );
 	// Account button			
 	CreateRadioButton(ge::IControl::giNoID, IDB_Button_Radio, pos, mpSetup_Radio_Button, true); pos.iY += 84;
 	CreateRadioButton(ge::IControl::giNoID, IDB_Button_Radio, pos, mpSetup_Radio_Button, true); pos.iY += 84;
-	CreateRadioButton(ge::IControl::giNoID, IDB_Button_Radio, pos, mpSetup_Radio_Button, true); pos.iY = 132; pos.iX = 226;
+	CreateRadioButton(ge::IControl::giNoID, IDB_Button_Radio, pos, mpSetup_Radio_Button, true); pos.iY = 132-74; pos.iX = 226;
 	CreateRadioButton(ge::IControl::giNoID, IDB_Button_Radio, pos, mpSetup_Radio_Button, true); pos.iY += 84;
-	CreateRadioButton(ge::IControl::giNoID, IDB_Button_Radio, pos, mpSetup_Radio_Button, true); pos.iY += 84;
+//	CreateRadioButton(ge::IControl::giNoID, IDB_Button_Radio, pos, mpSetup_Radio_Button, true); pos.iY += 84;
 	CreateRadioButton(ge::IControl::giNoID, IDB_Button_Radio, pos, mpSetup_Radio_Button, true);
 	
 
-	pos.iY = 162; pos.iX = 60;
+	pos.iY = 162-74; pos.iX = 60;
 	ge::SSize UrlSize(200, 18);
 	// BY
 	mpBY_URL	=	ge::IURL::Create();
@@ -105,7 +106,7 @@ void CKSExportForWebGUIPane::Init()
 	mpPane->AddControl(dynamic_cast<ge::IControl*>(mpBY_SA_URL), pos);
 	
 	
-	pos.iY = 162; pos.iX = 250;
+	pos.iY = 162-74; pos.iX = 250;
 	
 	// BY NC
 	mpBY_URL	=	ge::IURL::Create();
@@ -127,7 +128,7 @@ void CKSExportForWebGUIPane::Init()
 	mpBY_SA_URL->SetSize(UrlSize);
 	mpPane->AddControl(dynamic_cast<ge::IControl*>(mpBY_SA_URL), pos);
 	
-	pos.iY = 563; pos.iX = 45;
+	pos.iY = 563-74; pos.iX = 45;
 	//Creative Commons
 	mpBY_SA_URL	=	ge::IURL::Create();	
 	mpBY_SA_URL->Init(ge::IControl::giNoID,(tchar*)"http://creativecommons.org/");
@@ -138,14 +139,14 @@ void CKSExportForWebGUIPane::Init()
 	Prepare_Popups();
 	
 	// Compression
-	ge::IDropDownListBox* pPop = CreatePop( giCtrl_Export_Compression_Popup, IDB_Button_Popup,  mpCompression_Popup, ge::SPos(364, 521), mpPane);
+	ge::IDropDownListBox* pPop = CreatePop( giCtrl_Export_Compression_Popup, IDB_Button_Popup,  mpCompression_Popup, ge::SPos(364, 521-74), mpPane);
 	pPop->SetValue(meQuality);
 												
 	// Cancel / Export
-	CreateButton(giCtrl_Cancel_ExportForWeb, IDB_Button_Cancel, ge::SPos(402, 550), false);
-	CreateButton(giCtrl_ExportForWeb, IDB_Button_Export, ge::SPos(402+68, 550), false);
+	CreateButton(giCtrl_Cancel_ExportForWeb, IDB_Button_Cancel, ge::SPos(402, 550-74), false);
+	CreateButton(giCtrl_ExportForWeb, IDB_Button_Export, ge::SPos(402+68, 550-74), false);
 	
-	mpLicense =CreateBitmapVU(ge::IControl::giNoID, IDB_License, ge::SPos(27, 368), 6);
+	mpLicense =CreateBitmapVU(ge::IControl::giNoID, IDB_License, ge::SPos(27, 368-74), 6);
 	mpLicense->SetFrame(0);
 } // Init
 
@@ -220,11 +221,12 @@ void CKSExportForWebGUIPane::EventValueChange(ge::IControl* pControl, tint32 iVa
 			mpLicense->SetFrame(iValueNew);
 			break;
 		}
-		case giCtrl_Export_Compression_Popup:
-			{
-				meQuality = (ac::EQuality)iValueNew;
-			}
+		case giCtrl_Export_Compression_Popup:{
+				
+			meQuality = (ac::EQuality)iValueNew;
 			break;
+		}
+			
 	}
 	
 	GetParmMan()->ControlUpdate(miPaneID, pControl->GetID(), iValueNew);

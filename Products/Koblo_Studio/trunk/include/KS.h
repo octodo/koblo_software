@@ -22,12 +22,13 @@
 
 // XML File parser
 #include "tinyxml.h"
-#include "CKSXML_Sign_In.h"
 #include "CKSXML_Read_Project.h"
 #include "CKSXML_Write_Project.h"
 #include "CKSXML_Create_Project.h"
 #include "CKSXML_Create_Sample.h"
-#include  "CKSInternet_Features.h"
+
+#include "CKSUsername_And_Password_Model.h"
+#include "CKSInternet_Features.h"
 
 #include "aioe.h"
 #include "mioe.h"
@@ -128,8 +129,9 @@ class CPlugInManager;
 #include  "CKSSetupGUIPane.h"
 #include  "CKSSetupGUI.h"
 
-#include  "CKSSign_In_GUI_Pane.h"
-#include  "CKSSign_In_GUI.h"
+// Username and Password
+#include  "CKSUsername_And_Password_Pane.h"
+#include  "CKSUsername_And_Password_View.h"
 
 
 #include  "CKSProject_ID_GUI_Pane.h"

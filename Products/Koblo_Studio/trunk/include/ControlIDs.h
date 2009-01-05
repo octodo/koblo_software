@@ -273,11 +273,11 @@ enum E_System_Ctrls
 	giCtrl_Project_ID_Display,
 	
 	
-	giCtrl_Sign_In_Cancel,
-	giCtrl_Sign_In_OK,
-	giCtrl_Sign_In_Remember_Me,
-	giCtrl_Sign_In_User_Name_Display,
-	giCtrl_Sign_In_Password_Display,
+	giCtrl_Username_And_Password_Cancel,
+	giCtrl_Username_And_Password_OK,
+	giCtrl_Remember_Me,
+	giCtrl_User_Name_Display,
+	giCtrl_Password_Display,
 	
 	giNr_Of_System_Ctls
 };

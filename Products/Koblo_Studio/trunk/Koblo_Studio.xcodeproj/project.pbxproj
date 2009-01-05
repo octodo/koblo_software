@@ -41,7 +41,7 @@
 		E3ED2A170C68573700D125D1 /* CBaseMIDICCEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A100C68573700D125D1 /* CBaseMIDICCEvent.cpp */; };
 		E3ED2A190C68573700D125D1 /* CBasePlugIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A120C68573700D125D1 /* CBasePlugIn.cpp */; };
 		E3ED2A1A0C68573700D125D1 /* CBaseTopPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A130C68573700D125D1 /* CBaseTopPane.cpp */; };
-		FC17A2A50F0E19B70083A614 /* CKSXML_Sign_In.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC17A2A40F0E19B70083A614 /* CKSXML_Sign_In.cpp */; };
+		FC17A2A50F0E19B70083A614 /* CKSUsername_And_Password_Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC17A2A40F0E19B70083A614 /* CKSUsername_And_Password_Model.cpp */; };
 		FC2D347B0EEE8691004DFC3D /* libINetEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2D347A0EEE868D004DFC3D /* libINetEngine.a */; };
 		FC31AC950EEFE9D400B3D3B7 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC940EEFE9D400B3D3B7 /* tinystr.cpp */; };
 		FC31AC970EEFE9DE00B3D3B7 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC960EEFE9DE00B3D3B7 /* tinyxml.cpp */; };
@@ -106,8 +106,6 @@
 		FCC44A980E80CF0200F5310F /* CKSSetupGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC44A960E80CF0200F5310F /* CKSSetupGUI.cpp */; };
 		FCC44A990E80CF0200F5310F /* CKSSetupGUIPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC44A970E80CF0200F5310F /* CKSSetupGUIPane.cpp */; };
 		FCC6C5F70E652EE100F5E952 /* CTrack_Playhead.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC6C5F60E652EE100F5E952 /* CTrack_Playhead.cpp */; };
-		FCEEF62C0F0CDA80005F314B /* CKSSign_In_GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEEF62A0F0CDA80005F314B /* CKSSign_In_GUI.cpp */; };
-		FCEEF62D0F0CDA80005F314B /* CKSSign_In_GUI_Pane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEEF62B0F0CDA80005F314B /* CKSSign_In_GUI_Pane.cpp */; };
 		FCEF56D80DC086F2000AD4FE /* CMix_AUX_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEF56D50DC086F2000AD4FE /* CMix_AUX_Insert.cpp */; };
 		FCEF56D90DC086F2000AD4FE /* CMix_Scroll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEF56D60DC086F2000AD4FE /* CMix_Scroll.cpp */; };
 		FCEF56DA0DC086F2000AD4FE /* CMix_Channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEF56D70DC086F2000AD4FE /* CMix_Channel.cpp */; };
@@ -116,6 +114,8 @@
 		FCF2B8500DB4C75C006E037C /* CRegion_GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF2B84F0DB4C75C006E037C /* CRegion_GUI.cpp */; };
 		FCF2B9000DB4E48B006E037C /* CTrack_Info_Small.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF2B8FE0DB4E48B006E037C /* CTrack_Info_Small.cpp */; };
 		FCF2B9010DB4E48B006E037C /* CTrack_Info_Big.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF2B8FF0DB4E48B006E037C /* CTrack_Info_Big.cpp */; };
+		FCF336D90F12160700AC1BBA /* CKSUsername_And_Password_Pane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF336D70F12160700AC1BBA /* CKSUsername_And_Password_Pane.cpp */; };
+		FCF336DA0F12160700AC1BBA /* CKSUsername_And_Password_View.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF336D80F12160700AC1BBA /* CKSUsername_And_Password_View.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -319,8 +319,8 @@
 		E3ED2A120C68573700D125D1 /* CBasePlugIn.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBasePlugIn.cpp; path = ../../../SDK/trunk/BaseClasses/Source/CBasePlugIn.cpp; sourceTree = SOURCE_ROOT; };
 		E3ED2A130C68573700D125D1 /* CBaseTopPane.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseTopPane.cpp; path = ../../../SDK/trunk/BaseClasses/Source/CBaseTopPane.cpp; sourceTree = SOURCE_ROOT; };
 		E3F83F350C7D42CF00D2E408 /* main.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
-		FC17A2A40F0E19B70083A614 /* CKSXML_Sign_In.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSXML_Sign_In.cpp; sourceTree = "<group>"; };
-		FC17A2B40F0E1A040083A614 /* CKSXML_Sign_In.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Sign_In.h; sourceTree = "<group>"; };
+		FC17A2A40F0E19B70083A614 /* CKSUsername_And_Password_Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSUsername_And_Password_Model.cpp; sourceTree = "<group>"; };
+		FC17A2B40F0E1A040083A614 /* CKSUsername_And_Password_Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSUsername_And_Password_Model.h; sourceTree = "<group>"; };
 		FC202A880DB0C711005DC5E1 /* CTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack.h; path = include/Track_GUI/CTrack.h; sourceTree = "<group>"; };
 		FC2D34710EEE868D004DFC3D /* INetEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = INetEngine.xcodeproj; path = ../../../SDK/trunk/INetEngine/projects/osxxcode/INetEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
 		FC31AC930EEFE9D400B3D3B7 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinystr.h; path = ../../../SDK/tinyxml/tinystr.h; sourceTree = SOURCE_ROOT; };
@@ -398,8 +398,6 @@
 		FCA8CB5A0F08F41F0007514D /* CKSAUXGUIPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSAUXGUIPane.h; sourceTree = "<group>"; };
 		FCA8CB5C0F08F42E0007514D /* CKSSetupGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSSetupGUI.h; sourceTree = "<group>"; };
 		FCA8CB5D0F08F42E0007514D /* CKSSetupGUIPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSSetupGUIPane.h; sourceTree = "<group>"; };
-		FCA8CB5F0F08F43C0007514D /* CKSSign_In_GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSSign_In_GUI.h; sourceTree = "<group>"; };
-		FCA8CB600F08F43C0007514D /* CKSSign_In_GUI_Pane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSSign_In_GUI_Pane.h; sourceTree = "<group>"; };
 		FCA8CBCD0F0906170007514D /* CKSXML_Create_Project.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSXML_Create_Project.cpp; sourceTree = "<group>"; };
 		FCA8CBD00F09064F0007514D /* CKSXML_Create_Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Create_Project.h; sourceTree = "<group>"; };
 		FCA8CCDB0F091D440007514D /* CKSXML_Create_Sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Create_Sample.h; sourceTree = "<group>"; };
@@ -443,8 +441,6 @@
 		FCC44A9C0E80CF4600F5310F /* CKSSetupGUIPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSSetupGUIPane.h; sourceTree = "<group>"; };
 		FCC6C5F60E652EE100F5E952 /* CTrack_Playhead.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Playhead.cpp; path = source/Track_GUI/CTrack_Playhead.cpp; sourceTree = "<group>"; };
 		FCC6C5FA0E652EF600F5E952 /* CTrack_Playhead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Playhead.h; path = include/Track_GUI/CTrack_Playhead.h; sourceTree = "<group>"; };
-		FCEEF62A0F0CDA80005F314B /* CKSSign_In_GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSSign_In_GUI.cpp; sourceTree = "<group>"; };
-		FCEEF62B0F0CDA80005F314B /* CKSSign_In_GUI_Pane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSSign_In_GUI_Pane.cpp; sourceTree = "<group>"; };
 		FCEF56CC0DC0866E000AD4FE /* CMix_AUX_Insert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_AUX_Insert.h; path = include/Mix_GUI/CMix_AUX_Insert.h; sourceTree = "<group>"; };
 		FCEF56CD0DC0866E000AD4FE /* CMix_Scroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_Scroll.h; path = include/Mix_GUI/CMix_Scroll.h; sourceTree = "<group>"; };
 		FCEF56CE0DC0866E000AD4FE /* CMix_Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_Channel.h; path = include/Mix_GUI/CMix_Channel.h; sourceTree = "<group>"; };
@@ -461,6 +457,10 @@
 		FCF2B8FF0DB4E48B006E037C /* CTrack_Info_Big.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Info_Big.cpp; path = source/Track_GUI/CTrack_Info_Big.cpp; sourceTree = "<group>"; };
 		FCF2B9020DB4E497006E037C /* CTrack_Info_Big.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Info_Big.h; path = include/Track_GUI/CTrack_Info_Big.h; sourceTree = "<group>"; };
 		FCF2B9030DB4E497006E037C /* CTrack_Info_Small.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Info_Small.h; path = include/Track_GUI/CTrack_Info_Small.h; sourceTree = "<group>"; };
+		FCF336D40F1215D200AC1BBA /* CKSUsername_And_Password_Pane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSUsername_And_Password_Pane.h; sourceTree = "<group>"; };
+		FCF336D50F1215D200AC1BBA /* CKSUsername_And_Password_View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSUsername_And_Password_View.h; sourceTree = "<group>"; };
+		FCF336D70F12160700AC1BBA /* CKSUsername_And_Password_Pane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSUsername_And_Password_Pane.cpp; sourceTree = "<group>"; };
+		FCF336D80F12160700AC1BBA /* CKSUsername_And_Password_View.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSUsername_And_Password_View.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -691,9 +691,9 @@
 				FCBBC1DB0F064ADA003201E4 /* Project_ID */,
 				FCA8CB560F08F41F0007514D /* Rack_GUI_DSP */,
 				FCA8CB5B0F08F42E0007514D /* Setup_GUI */,
-				FCA8CB5E0F08F43C0007514D /* Sign_In_GUI */,
 				7C771DB60CAA4EC200A78C4E /* SoloMute */,
 				7C52F0520CA010B10088316D /* Track_GUI */,
+				FCF336D30F1215D200AC1BBA /* Username_And_Password_View */,
 				320072BF0ED1900F0035E5A8 /* CKSPreferences.h */,
 				FC6117960DA4D70500334DDF /* CKSPlugIn.h */,
 				E358B3A30DDAF8A200A6863F /* IRegionCallback.h */,
@@ -724,9 +724,9 @@
 				FCBBC1CC0F064A10003201E4 /* Project_ID_GUI */,
 				FCA8CAE80F08EF290007514D /* Rack_GUI_DSP */,
 				FCC44A950E80CF0200F5310F /* Setup_GUI */,
-				FCEEF6290F0CDA80005F314B /* Sign_In_GUI */,
 				7C771DB10CAA4E9A00A78C4E /* SoloMute */,
 				7C52F0510CA010840088316D /* Track_GUI */,
+				FCF336D60F12160700AC1BBA /* Username_And_Password_View */,
 				320072BB0ED18FC30035E5A8 /* CKSPreferences.cpp */,
 				84A3ED520E82544700860BC6 /* ResourcesInc.cpp */,
 				FC61178D0DA4D68300334DDF /* CKSPlugIn.cpp */,
@@ -970,16 +970,6 @@
 			path = include/Setup_GUI;
 			sourceTree = "<group>";
 		};
-		FCA8CB5E0F08F43C0007514D /* Sign_In_GUI */ = {
-			isa = PBXGroup;
-			children = (
-				FCA8CB5F0F08F43C0007514D /* CKSSign_In_GUI.h */,
-				FCA8CB600F08F43C0007514D /* CKSSign_In_GUI_Pane.h */,
-			);
-			name = Sign_In_GUI;
-			path = include/Sign_In_GUI;
-			sourceTree = "<group>";
-		};
 		FCBBC1CC0F064A10003201E4 /* Project_ID_GUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1009,7 +999,7 @@
 				FCA8CBD00F09064F0007514D /* CKSXML_Create_Project.h */,
 				FCA8CCDB0F091D440007514D /* CKSXML_Create_Sample.h */,
 				FCBBC4D10F0683E6003201E4 /* CKSXML_Read_Project.h */,
-				FC17A2B40F0E1A040083A614 /* CKSXML_Sign_In.h */,
+				FC17A2B40F0E1A040083A614 /* CKSUsername_And_Password_Model.h */,
 				FCBBC4D20F0683E6003201E4 /* CKSXML_Write_Project.h */,
 			);
 			name = Internet_Features;
@@ -1025,7 +1015,7 @@
 				FCA8CBCD0F0906170007514D /* CKSXML_Create_Project.cpp */,
 				FCA8CCDC0F091D6F0007514D /* CKSXML_Create_Sample.cpp */,
 				FCBBC4D80F06842C003201E4 /* CKSXML_Read_Project.cpp */,
-				FC17A2A40F0E19B70083A614 /* CKSXML_Sign_In.cpp */,
+				FC17A2A40F0E19B70083A614 /* CKSUsername_And_Password_Model.cpp */,
 				FCBBC4D90F06842C003201E4 /* CKSXML_Write_Project.cpp */,
 			);
 			name = Internet_Features;
@@ -1050,16 +1040,6 @@
 			);
 			name = Setup_GUI;
 			path = include/Setup_GUI;
-			sourceTree = "<group>";
-		};
-		FCEEF6290F0CDA80005F314B /* Sign_In_GUI */ = {
-			isa = PBXGroup;
-			children = (
-				FCEEF62A0F0CDA80005F314B /* CKSSign_In_GUI.cpp */,
-				FCEEF62B0F0CDA80005F314B /* CKSSign_In_GUI_Pane.cpp */,
-			);
-			name = Sign_In_GUI;
-			path = source/Sign_In_GUI;
 			sourceTree = "<group>";
 		};
 		FCEF56B10DC07B31000AD4FE /* Mix_GUI */ = {
@@ -1092,6 +1072,26 @@
 				FCAD39980DC138F50075A553 /* CMix_Master_AUX_Insert.cpp */,
 			);
 			name = Mix_GUI;
+			sourceTree = "<group>";
+		};
+		FCF336D30F1215D200AC1BBA /* Username_And_Password_View */ = {
+			isa = PBXGroup;
+			children = (
+				FCF336D40F1215D200AC1BBA /* CKSUsername_And_Password_Pane.h */,
+				FCF336D50F1215D200AC1BBA /* CKSUsername_And_Password_View.h */,
+			);
+			name = Username_And_Password_View;
+			path = include/Username_And_Password_View;
+			sourceTree = "<group>";
+		};
+		FCF336D60F12160700AC1BBA /* Username_And_Password_View */ = {
+			isa = PBXGroup;
+			children = (
+				FCF336D70F12160700AC1BBA /* CKSUsername_And_Password_Pane.cpp */,
+				FCF336D80F12160700AC1BBA /* CKSUsername_And_Password_View.cpp */,
+			);
+			name = Username_And_Password_View;
+			path = source/Username_And_Password_View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1341,9 +1341,9 @@
 				FCA8CB270F08F21A0007514D /* CPlugInManager.cpp in Sources */,
 				FCA8CBCE0F0906170007514D /* CKSXML_Create_Project.cpp in Sources */,
 				FCA8CCDD0F091D6F0007514D /* CKSXML_Create_Sample.cpp in Sources */,
-				FCEEF62C0F0CDA80005F314B /* CKSSign_In_GUI.cpp in Sources */,
-				FCEEF62D0F0CDA80005F314B /* CKSSign_In_GUI_Pane.cpp in Sources */,
-				FC17A2A50F0E19B70083A614 /* CKSXML_Sign_In.cpp in Sources */,
+				FC17A2A50F0E19B70083A614 /* CKSUsername_And_Password_Model.cpp in Sources */,
+				FCF336D90F12160700AC1BBA /* CKSUsername_And_Password_Pane.cpp in Sources */,
+				FCF336DA0F12160700AC1BBA /* CKSUsername_And_Password_View.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1409,6 +1409,7 @@
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH)";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -1456,6 +1457,7 @@
 					i386,
 					ppc,
 				);
+				DEAD_CODE_STRIPPING = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

@@ -294,7 +294,7 @@ CKSExportForWebGUI* gpGUIExportForWeb;
 CKSImportGUI* gpGUIImport;
 CKSSetupGUI* gpGUISetup;
 CKSProject_ID_GUI* gpGUIProjectID;
-CKSSign_In_GUI* gpGUISignIn;
+CKSUsername_And_Password_View* gpGUISignIn;
 
 #ifdef WIN32
 #include "afxres.h"
@@ -694,7 +694,7 @@ int main(int argc, char* argv[])
 	gWndSignIn = pContext->CreateExtraWindow((void*)"Sign In", ge::SSize(245, 182));
 #endif
 	
-	gpGUISignIn = dynamic_cast<CKSSign_In_GUI*>(gpPlugIn->CreateGUI(giSign_In_Window));
+	gpGUISignIn = dynamic_cast<CKSUsername_And_Password_View*>(gpPlugIn->CreateGUI(giSign_In_Window));
 	pContext->ShowWindow(gWndSignIn, false);
 
 
@@ -965,13 +965,14 @@ static void HandleNew_Menu()
 	//-----------------------------------
 	// Settings menu
 	ge::IContext::SMenuItemList MenuItemsSetup;
-	MenuItemsSetup.uiItemCount = 6;
+	MenuItemsSetup.uiItemCount = 7;
 	MenuItemsSetup.pItems[0] = ge::IContext::SMenuItem("About Koblo Studio");
 	MenuItemsSetup.pItems[1] = ge::IContext::SMenuItem("Audio Setup");
 	MenuItemsSetup.pItems[2] = ge::IContext::SMenuItem("-");
-//	MenuItemsSetup.pItems[3] = ge::IContext::SMenuItem("Collaboration");
-	MenuItemsSetup.pItems[3] = ge::IContext::SMenuItem("Sign In");
-	MenuItemsSetup.pItems[4] = ge::IContext::SMenuItem("Sign Out");
+	MenuItemsSetup.pItems[3] = ge::IContext::SMenuItem("Set Username and Password");
+	MenuItemsSetup.pItems[4] = ge::IContext::SMenuItem("Clear Username and Password");
+	MenuItemsSetup.pItems[5] = ge::IContext::SMenuItem("-");
+	MenuItemsSetup.pItems[6] = ge::IContext::SMenuItem("Project License");
 
 	//-----------------------------------
 	// File menu

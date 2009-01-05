@@ -178,7 +178,7 @@ void CKSXML_Create_Project::Set_Project_License(TiXmlElement* pElement)
 	if ( !pElement ) return ;
 	
 	if (stricmp("by-sa", pElement->Value()) == 0) {
-		//!ignore this we passed just get is back
+		//!ignore this we already got it
 	}
 }
 

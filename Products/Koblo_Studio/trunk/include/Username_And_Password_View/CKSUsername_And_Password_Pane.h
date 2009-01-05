@@ -21,12 +21,12 @@
 //class CKS_Import_File_Browser;
 //class CKS_Import_Files;
 
-class CKSSign_In_GUI_Pane : public virtual CBasePane
+class CKSUsername_And_Password_Pane : public virtual CBasePane
 {
 public:
-	CKSSign_In_GUI_Pane(CBasePane* pPaneParent, CBaseGUI* pGUI);
+	CKSUsername_And_Password_Pane(CBasePane* pPaneParent, CBaseGUI* pGUI);
 
-	virtual ~CKSSign_In_GUI_Pane();
+	virtual ~CKSUsername_And_Password_Pane();
 
 	virtual void Init();
 

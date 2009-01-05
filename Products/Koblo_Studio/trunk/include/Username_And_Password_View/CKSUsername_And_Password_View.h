@@ -16,12 +16,12 @@
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
 
-class CKSSign_In_GUI : public virtual CKSBaseGUI, public virtual ge::IEventReceiver, public virtual ITimerCallback
+class CKSUsername_And_Password_View : public virtual CKSBaseGUI, public virtual ge::IEventReceiver, public virtual ITimerCallback
 {
 public:
-	CKSSign_In_GUI(CKSPlugIn* pPlugIn, de::IParameterManager* pParmMan);
+	CKSUsername_And_Password_View(CKSPlugIn* pPlugIn, de::IParameterManager* pParmMan);
 
-	virtual ~CKSSign_In_GUI();
+	virtual ~CKSUsername_And_Password_View();
 
 	//! CBaseGUI override
 	virtual void KSPI_CALL OnTimer();
