@@ -2,8 +2,7 @@
 #include "KSOS.h"
 
 
-CKSXML_Create_Project::CKSXML_Create_Project(CKSPlugIn* pKSPlugIn):
-mpKSPlugIn(pKSPlugIn)
+CKSXML_Create_Project::CKSXML_Create_Project()
 {
 	
 
@@ -63,7 +62,7 @@ tbool CKSXML_Create_Project::Create_Project_Handshake()
 	
 	tbool bReturnValue = false;
  
-	std::string sLicense = mpKSPlugIn->Create_License_String();
+	std::string sLicense = gpApplication->Create_License_String();
  
  
 	 std::string str;
@@ -124,7 +123,7 @@ void CKSXML_Create_Project::Parse_Project_Info(TiXmlNode* pParent)
 	// set project ID
 	if (pAttrib && pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)  {
 		
-		mpKSPlugIn->SetGlobalParm(giParamID_Project_ID, ival, giSectionGlobal);
+		gpApplication->SetGlobalParm(giParamID_Project_ID, ival, giSectionGlobal);
 		
 	}
 		
@@ -161,7 +160,7 @@ void CKSXML_Create_Project::Set_Project_Name(TiXmlElement* pElement)
 	if ( !pElement ) return ;
 	
 	TiXmlNode* pChild = pElement->FirstChild();
-	mpKSPlugIn->SetProjectName( pChild->Value());
+	gpApplication->SetProjectName( pChild->Value());
 }
 
 void CKSXML_Create_Project::Set_Project_Description(TiXmlElement* pElement)
@@ -169,7 +168,7 @@ void CKSXML_Create_Project::Set_Project_Description(TiXmlElement* pElement)
 	if ( !pElement ) return ;
 	
 	TiXmlNode* pChild = pElement->FirstChild();
-	mpKSPlugIn->SetProjectDescription( pChild->Value());
+	gpApplication->SetProjectDescription( pChild->Value());
 }
 
 

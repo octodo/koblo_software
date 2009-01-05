@@ -2,9 +2,9 @@
 #include "KSOS.h"
 
 
-CKSXML_Create_Sample::CKSXML_Create_Sample(CKSPlugIn * pKSPlugIn)
+CKSXML_Create_Sample::CKSXML_Create_Sample()
 {
-	mpKSPlugIn = pKSPlugIn;
+
 	
 }
 

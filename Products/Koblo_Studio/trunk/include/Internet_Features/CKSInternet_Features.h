@@ -39,41 +39,10 @@ public virtual CKSUsername_And_Password_Model
 
 //public virtual CKSXML_Create_Sample
 {
-		
-private:
-	CKSPlugIn* mpKSPlugIn;
-	
-	virtual void Open_Project_Edit_Page_On_Koblo();
-	
-	//! project name
-	std::string msProjectName;
-	
-	//! project description
-	std::string msProjectDescription;
-	
-	//! branch name
-	std::string msBranchName;
-	
-	//! branch description
-	std::string msBranchDescription;
-	
-	//! if true the users sign in informations is stored in the pref file
-	tbool mbRemember_Me;
-	
-	//! user name
-	std::string msUser_Name;
-	
-	//! password description
-	std::string msPassword;
-	
-	
-	
-		
-		
-	
+
 public:
-		
-	CKSInternet_Features(CKSPlugIn * pKSPlugIn);
+	
+	CKSInternet_Features();
 	~CKSInternet_Features();
 	
 	//! called from the menu and opens the project id dialog 
@@ -89,7 +58,7 @@ public:
 	
 	//! called from the file menu
 	virtual void On_Menu_Commit_Project();
-
+	
 	//! clean project and read it from koblo.com
 	void Download_Project(tint32 iProjectID);
 	//! read project from koblo.com
@@ -138,6 +107,39 @@ public:
 	tbool Get_Remember_Me(){ return mbRemember_Me;}
 	
 	tbool mbUpload_Project;
+
+	
+private:
+	CKSPlugIn* mpKSPlugIn;
+	
+	virtual void Open_Project_Edit_Page_On_Koblo();
+	
+	//! project name
+	std::string msProjectName;
+	
+	//! project description
+	std::string msProjectDescription;
+	
+	//! branch name
+	std::string msBranchName;
+	
+	//! branch description
+	std::string msBranchDescription;
+	
+	//! if true the users sign in informations is stored in the pref file
+	tbool mbRemember_Me;
+	
+	//! user name
+	std::string msUser_Name;
+	
+	//! password description
+	std::string msPassword;
+	
+	
+	
+		
+		
+	
 		
 };
 

@@ -2,8 +2,7 @@
 #include "KSOS.h"
 
 
-CKSXML_Write_Project::CKSXML_Write_Project(CKSPlugIn* pKSPlugIn):
-mpKSPlugIn(pKSPlugIn)
+CKSXML_Write_Project::CKSXML_Write_Project()
 {
 	
 	
@@ -40,7 +39,7 @@ void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	//------------------ MISSING CODE ----------------------------
 /*
 	// missing code 
-	std::string sFileName = mpKSPlugIn->GetProjectName() + ".xml";
+	std::string sFileName = gpApplication->GetProjectName() + ".xml";
 	
 	//!!! path is missing write file to disk
 	pDoc->SaveFile(sFileName.c_str());
@@ -79,7 +78,7 @@ void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectI
 	//------------------- REAL CODE INCOMPLETE ----------------------
 	
 	//Get Project ID
-	tint32 iProject_ID = mpKSPlugIn->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
+	tint32 iProject_ID = gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
 	
 	char psz[128];
 	sprintf(psz, "branches/%d/revisions", iProject_ID);
@@ -128,25 +127,25 @@ void CKSXML_Write_Project::Write_Branch(TiXmlElement* pParent)
 	
 	TiXmlElement* pBranch = new TiXmlElement( "branch" );
 	// Branch ID
-	tint32 iBranch_ID = mpKSPlugIn->GetGlobalParm(giParamID_Branch_ID, giSectionGlobal);
+	tint32 iBranch_ID = gpApplication->GetGlobalParm(giParamID_Branch_ID, giSectionGlobal);
 	pBranch->SetAttribute("id",iBranch_ID);
 	pParent->LinkEndChild( pBranch );
 	
 	// name
 	TiXmlElement* pName = new TiXmlElement( "name" );
-	TiXmlText* pNameTxt = new TiXmlText(mpKSPlugIn->Get_Branch_Name().c_str());
+	TiXmlText* pNameTxt = new TiXmlText(gpApplication->Get_Branch_Name().c_str());
 	pName->LinkEndChild( pNameTxt );
 	pBranch->LinkEndChild( pName );
 	
 	// description
 	TiXmlElement* pDescription = new TiXmlElement( "description" );
-	TiXmlText* pDescriptionTxt = new TiXmlText(mpKSPlugIn->Get_Branch_Description().c_str());
+	TiXmlText* pDescriptionTxt = new TiXmlText(gpApplication->Get_Branch_Description().c_str());
 	pDescription->LinkEndChild( pDescriptionTxt );
 	pBranch->LinkEndChild( pDescription );
 	
 	// revision
 	char pszBuff [64];
-	sprintf(pszBuff, "%d", mpKSPlugIn->GetGlobalParm(giParamID_Revision_Nr, giSectionGlobal));
+	sprintf(pszBuff, "%d", gpApplication->GetGlobalParm(giParamID_Revision_Nr, giSectionGlobal));
 	TiXmlElement* pRevision = new TiXmlElement( "revision" );
 	TiXmlText* pRevisionTxt = new TiXmlText(pszBuff);
 	pRevision->LinkEndChild( pRevisionTxt );
@@ -168,13 +167,13 @@ void CKSXML_Write_Project::Write_Settings(TiXmlElement* pParent)
 	
 	// project name
 	TiXmlElement* pName = new TiXmlElement( "name" );
-	TiXmlText* pNameTxt = new TiXmlText( mpKSPlugIn->GetProjectName().c_str());
+	TiXmlText* pNameTxt = new TiXmlText( gpApplication->GetProjectName().c_str());
 	pName->LinkEndChild( pNameTxt );
 	pSettings->LinkEndChild( pName );
 	
 	// description
 	TiXmlElement* pDescription = new TiXmlElement( "description" );
-	TiXmlText* pDescriptionTxt = new TiXmlText(mpKSPlugIn->Get_Project_Description().c_str());
+	TiXmlText* pDescriptionTxt = new TiXmlText(gpApplication->Get_Project_Description().c_str());
 	pDescription->LinkEndChild( pDescriptionTxt );
 	pSettings->LinkEndChild( pDescription );
 	
@@ -182,14 +181,14 @@ void CKSXML_Write_Project::Write_Settings(TiXmlElement* pParent)
 	char pszBuff [64];
 	
 	// Samplerate
-	sprintf(pszBuff, "%d", mpKSPlugIn->GetSampleRate());
+	sprintf(pszBuff, "%d", gpApplication->GetSampleRate());
 	TiXmlElement* pSampleRate = new TiXmlElement( "samplerate" );
 	TiXmlText* pSampleRateTxt = new TiXmlText(pszBuff);
 	pSampleRate->LinkEndChild( pSampleRateTxt );
 	pSettings->LinkEndChild( pSampleRate );
 	
 	//Tempo
-	tfloat32 fTempo = (tfloat32)mpKSPlugIn->GetGlobalParm(giParamID_KS_Tempo, giSectionGlobal) / 10.0f;
+	tfloat32 fTempo = (tfloat32)gpApplication->GetGlobalParm(giParamID_KS_Tempo, giSectionGlobal) / 10.0f;
 	sprintf(pszBuff, "%f", fTempo);
 	TiXmlElement* pTempo = new TiXmlElement( "tempo" );
 	TiXmlText* pTempoTxt = new TiXmlText(pszBuff);
@@ -209,7 +208,7 @@ void CKSXML_Write_Project::Write_Settings(TiXmlElement* pParent)
 
 void CKSXML_Write_Project::Write_Signature(TiXmlElement* pParent)
 {
-	tuint32 uiSignatur = mpKSPlugIn->GetGlobalParm(giParamID_KS_Time_Signature, giSectionGlobal);
+	tuint32 uiSignatur = gpApplication->GetGlobalParm(giParamID_KS_Time_Signature, giSectionGlobal);
 	tuint uiNumerator;
 	tuint uiDenominator;
 	
@@ -280,7 +279,7 @@ void CKSXML_Write_Project::Write_License(TiXmlElement* pParent)
 std::string CKSXML_Write_Project::Create_License_String()
 {
 	char pszBuff [64];
-	tuint uiTest	=	 mpKSPlugIn->GetGlobalParm(giParamID_CC_License_Type, giSectionGUI);
+	tuint uiTest	=	 gpApplication->GetGlobalParm(giParamID_CC_License_Type, giSectionGUI);
 	
 	switch(uiTest){
 			
@@ -334,7 +333,7 @@ void CKSXML_Write_Project::Write_Editing(TiXmlElement* pParent)
 	Write_Tool(pTool);
 	
 	// zoom
-	tint iVal = mpKSPlugIn->GetGlobalParm(giParamID_Zoom, giSectionGUI);
+	tint iVal = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI);
 	sprintf(pszBuff, "%d", iVal);
 	TiXmlElement* pZoom = new TiXmlElement( "zoom" );
 	TiXmlText* pZoomTxt = new TiXmlText(pszBuff);
@@ -342,7 +341,7 @@ void CKSXML_Write_Project::Write_Editing(TiXmlElement* pParent)
 	pEditing->LinkEndChild( pZoom );
 	
 	// grid
-	iVal = mpKSPlugIn->GetGlobalParm(giParamID_Grid, giSectionGUI);
+	iVal = gpApplication->GetGlobalParm(giParamID_Grid, giSectionGUI);
 	TiXmlElement* pGrid = new TiXmlElement( "grid" );
 	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
 	TiXmlText* pGridTxt = new TiXmlText(pszBuff);
@@ -350,7 +349,7 @@ void CKSXML_Write_Project::Write_Editing(TiXmlElement* pParent)
 	pEditing->LinkEndChild( pGrid );
 	
 	// snap
-	iVal = mpKSPlugIn->GetGlobalParm(giParamID_KS_Snap_To, giSectionGlobal);
+	iVal = gpApplication->GetGlobalParm(giParamID_KS_Snap_To, giSectionGlobal);
 	TiXmlElement* pSnap = new TiXmlElement( "snap" );
 	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
 	TiXmlText* pSnapTxt = new TiXmlText(pszBuff);
@@ -358,7 +357,7 @@ void CKSXML_Write_Project::Write_Editing(TiXmlElement* pParent)
 	pEditing->LinkEndChild( pSnap );
 	
 	// waves
-	iVal = mpKSPlugIn->GetGlobalParm(giParamID_Show_Waveform, giSectionGUI);
+	iVal = gpApplication->GetGlobalParm(giParamID_Show_Waveform, giSectionGUI);
 	TiXmlElement* pWaves = new TiXmlElement( "waves" );
 	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
 	TiXmlText* pWavesTxt = new TiXmlText(pszBuff);
@@ -366,7 +365,7 @@ void CKSXML_Write_Project::Write_Editing(TiXmlElement* pParent)
 	pEditing->LinkEndChild( pWaves );
 	
 	// fades
-	iVal = mpKSPlugIn->GetGlobalParm(giParamID_Show_Fade, giSectionGUI);
+	iVal = gpApplication->GetGlobalParm(giParamID_Show_Fade, giSectionGUI);
 	TiXmlElement* pFades = new TiXmlElement( "fades" );
 	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
 	TiXmlText* pFadesTxt = new TiXmlText(pszBuff);
@@ -379,7 +378,7 @@ void CKSXML_Write_Project::Write_Editing(TiXmlElement* pParent)
 	Write_Loop(pLoop);
 	
 /*	// position
-	iVal = mpKSPlugIn->GetGlobalParm(giParamID_Loop_End, giSectionGlobal);
+	iVal = gpApplication->GetGlobalParm(giParamID_Loop_End, giSectionGlobal);
 	sprintf(pszBuff, "%d", iVal);
 	TiXmlElement* pEnd = new TiXmlElement( "end" );
 	TiXmlText* pEndTxt = new TiXmlText(pszBuff);
@@ -397,7 +396,7 @@ void CKSXML_Write_Project::Write_Editing(TiXmlElement* pParent)
 void CKSXML_Write_Project::Write_Tool(TiXmlElement* pParent)
 {
 	char pszBuff [64];
-	tuint uiTest	=	 mpKSPlugIn->GetGlobalParm(giParamID_Tool_Selected, giSectionGUI);
+	tuint uiTest	=	 gpApplication->GetGlobalParm(giParamID_Tool_Selected, giSectionGUI);
 	
 	
 	switch(uiTest){
@@ -430,7 +429,7 @@ void CKSXML_Write_Project::Write_Loop(TiXmlElement* pParent)
 	char pszBuff [64];
 
 	// on
-	tint32 iVal = mpKSPlugIn->GetGlobalParm(giParamID_Loop_On, giSectionGlobal);
+	tint32 iVal = gpApplication->GetGlobalParm(giParamID_Loop_On, giSectionGlobal);
 	TiXmlElement* pActive = new TiXmlElement( "active" );
 	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
 	TiXmlText* pActiveTxt = new TiXmlText(pszBuff);
@@ -438,7 +437,7 @@ void CKSXML_Write_Project::Write_Loop(TiXmlElement* pParent)
 	pParent->LinkEndChild( pActive );
 	
 	// start
-	iVal = mpKSPlugIn->GetGlobalParm(giParamID_Loop_Start, giSectionGlobal);
+	iVal = gpApplication->GetGlobalParm(giParamID_Loop_Start, giSectionGlobal);
 	sprintf(pszBuff, "%d", iVal);
 	TiXmlElement* pStart = new TiXmlElement( "start" );
 	TiXmlText* pStartTxt = new TiXmlText(pszBuff);
@@ -446,7 +445,7 @@ void CKSXML_Write_Project::Write_Loop(TiXmlElement* pParent)
 	pParent->LinkEndChild( pStart );
 	
 	// end
-	iVal = mpKSPlugIn->GetGlobalParm(giParamID_Loop_End, giSectionGlobal);
+	iVal = gpApplication->GetGlobalParm(giParamID_Loop_End, giSectionGlobal);
 	sprintf(pszBuff, "%d", iVal);
 	TiXmlElement* pEnd = new TiXmlElement( "end" );
 	TiXmlText* pEndTxt = new TiXmlText(pszBuff);
@@ -488,7 +487,7 @@ void CKSXML_Write_Project::Write_Window_Edit(TiXmlElement* pParent)
 	
 	// layer
 	char pszBuff [64];
-	tint32 iVal = 1;//mpKSPlugIn->GetGlobalParm(giParamID_Loop_On, giSectionGlobal);
+	tint32 iVal = 1;//gpApplication->GetGlobalParm(giParamID_Loop_On, giSectionGlobal);
 	sprintf(pszBuff, "%d", iVal);
 	TiXmlElement* pLayer = new TiXmlElement( "layer" );
 	TiXmlText* pLayerTxt = new TiXmlText(pszBuff);
@@ -566,7 +565,7 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 	Add_Comment(pParent, "samples and their takes. only used takes are listed. a sample can be included that's not used on any track");
 	
 		
-	std::list<CKSPlugIn::SFileInfo*> sFileInfos = mpKSPlugIn->GetFileInfo();
+	std::list<CKSPlugIn::SFileInfo*> sFileInfos = gpApplication->GetFileInfo();
 	
 	
 
@@ -625,12 +624,12 @@ void CKSXML_Write_Project::Write_Sample(TiXmlElement* pParent, std::string str)
 
 void CKSXML_Write_Project::Write_Tracks(TiXmlElement* pParent)
 {
-	tint32 iNrTracks = mpKSPlugIn->Get_Number_Of_Tracks();//mpKSPlugIn->msStack.iNr_Of_Tracks;
+	tint32 iNrTracks = gpApplication->Get_Number_Of_Tracks();//gpApplication->msStack.iNr_Of_Tracks;
 	
 	for(tint32 i = 0; i<iNrTracks; i++){
 		
 		// ID
-		tuint uiTrack = mpKSPlugIn->Get_Track_Id(i);
+		tuint uiTrack = gpApplication->Get_Track_Id(i);
 		// track
 		TiXmlElement* pTrack = new TiXmlElement( "track" );
 		pTrack->SetAttribute("id",uiTrack);
@@ -646,7 +645,7 @@ void CKSXML_Write_Project::Write_Track(TiXmlElement* pParent, tuint uiTrack)
 	char pszBuff [64];
 	
 	// name
-	std::string str  = mpKSPlugIn->GetChannelName(uiTrack);
+	std::string str  = gpApplication->GetChannelName(uiTrack);
 	TiXmlElement* pName = new TiXmlElement( "name" );
 	TiXmlText* pNameTxt = new TiXmlText(str.c_str());
 	pName->LinkEndChild( pNameTxt );
@@ -661,7 +660,7 @@ void CKSXML_Write_Project::Write_Track(TiXmlElement* pParent, tuint uiTrack)
 	
 	// Size
 	TiXmlElement* pSize = new TiXmlElement( "size" );
-	tint32 iVal = mpKSPlugIn->GetGlobalParm(giParam_Track_Info_SizeY, giSection_First_Track + uiTrack);
+	tint32 iVal = gpApplication->GetGlobalParm(giParam_Track_Info_SizeY, giSection_First_Track + uiTrack);
 	sprintf(pszBuff, "%d", iVal);
 	TiXmlText* pSizeTxt = new TiXmlText(pszBuff);
 	pSize->LinkEndChild( pSizeTxt );
@@ -691,7 +690,7 @@ void CKSXML_Write_Project::Write_Track_In(TiXmlElement* pParent, tuint uiID)
 	
 	// input
 	char pszBuff [64];
-	tint32 iVal = mpKSPlugIn->GetGlobalParm(giParam_ChIn, giSection_First_Track + uiID);
+	tint32 iVal = gpApplication->GetGlobalParm(giParam_ChIn, giSection_First_Track + uiID);
 	sprintf(pszBuff, "%d", iVal);
 	TiXmlElement* pIn = new TiXmlElement( "input" );
 	TiXmlText* pInTxt = new TiXmlText(pszBuff);
@@ -699,7 +698,7 @@ void CKSXML_Write_Project::Write_Track_In(TiXmlElement* pParent, tuint uiID)
 	pParent->LinkEndChild( pIn );
 	
 	// mode
-	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChInMode, giSection_First_Track + uiID);
+	iVal = gpApplication->GetGlobalParm(giParam_ChInMode, giSection_First_Track + uiID);
 	iVal ? sprintf(pszBuff, "mono") : sprintf(pszBuff, "stereo");
 	TiXmlElement* pMode = new TiXmlElement( "in" );
 	TiXmlText* pModeTxt = new TiXmlText(pszBuff);
@@ -707,7 +706,7 @@ void CKSXML_Write_Project::Write_Track_In(TiXmlElement* pParent, tuint uiID)
 	pParent->LinkEndChild( pMode );
 	
 	// gain
-	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChInGain, giSection_First_Track + uiID);
+	iVal = gpApplication->GetGlobalParm(giParam_ChInGain, giSection_First_Track + uiID);
 	tfloat fGain	=	(tfloat)iVal * 0.0001f;
 	sprintf(pszBuff, "%f", fGain);
 	TiXmlElement* pGain = new TiXmlElement( "gain" );
@@ -722,7 +721,7 @@ void CKSXML_Write_Project::Write_Track_Out(TiXmlElement* pParent, tuint uiTrack)
 	
 	// output
 	char pszBuff [64];
-	tint32 iVal = mpKSPlugIn->GetGlobalParm(giParam_ChOut, giSection_First_Track + uiTrack);
+	tint32 iVal = gpApplication->GetGlobalParm(giParam_ChOut, giSection_First_Track + uiTrack);
 	
 	if(iVal < ParmIOOffsetBus) {
 		sprintf(pszBuff, "mix", iVal);
@@ -737,7 +736,7 @@ void CKSXML_Write_Project::Write_Track_Out(TiXmlElement* pParent, tuint uiTrack)
 	pParent->LinkEndChild( pOut );
 	*/
 	// gain
-	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChVol, giSection_First_Track + uiTrack);
+	iVal = gpApplication->GetGlobalParm(giParam_ChVol, giSection_First_Track + uiTrack);
 	tfloat fVolume	=	(tfloat)iVal * 0.0001f;
 	sprintf(pszBuff, "%f", fVolume);
 	TiXmlElement* pVolume = new TiXmlElement( "volume" );
@@ -746,7 +745,7 @@ void CKSXML_Write_Project::Write_Track_Out(TiXmlElement* pParent, tuint uiTrack)
 	pParent->LinkEndChild( pVolume );
 	
 	// pan
-	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChPannerLeftRight, giSection_First_Track + uiTrack);
+	iVal = gpApplication->GetGlobalParm(giParam_ChPannerLeftRight, giSection_First_Track + uiTrack);
 	tfloat fPan	=	(tfloat)iVal * 0.0001f;
 	sprintf(pszBuff, "%f", fPan);
 	TiXmlElement* pPan = new TiXmlElement( "pan" );
@@ -755,7 +754,7 @@ void CKSXML_Write_Project::Write_Track_Out(TiXmlElement* pParent, tuint uiTrack)
 	pParent->LinkEndChild( pPan );
 	
 	// solo
-	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChSolo, giSection_First_Track + uiTrack);
+	iVal = gpApplication->GetGlobalParm(giParam_ChSolo, giSection_First_Track + uiTrack);
 	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
 	TiXmlElement* pSolo = new TiXmlElement( "solo" );
 	TiXmlText* pSoloTxt = new TiXmlText(pszBuff);
@@ -763,7 +762,7 @@ void CKSXML_Write_Project::Write_Track_Out(TiXmlElement* pParent, tuint uiTrack)
 	pParent->LinkEndChild( pSolo );
 	
 	// mute
-	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChMute, giSection_First_Track + uiTrack);
+	iVal = gpApplication->GetGlobalParm(giParam_ChMute, giSection_First_Track + uiTrack);
 	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
 	TiXmlElement* pMute = new TiXmlElement( "mute" );
 	TiXmlText* pMuteTxt = new TiXmlText(pszBuff);
@@ -771,7 +770,7 @@ void CKSXML_Write_Project::Write_Track_Out(TiXmlElement* pParent, tuint uiTrack)
 	pParent->LinkEndChild( pMute );
 	
 	// arm
-	iVal = mpKSPlugIn->GetGlobalParm(giParam_ChArm, giSection_First_Track + uiTrack);
+	iVal = gpApplication->GetGlobalParm(giParam_ChArm, giSection_First_Track + uiTrack);
 	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
 	TiXmlElement* pArm = new TiXmlElement( "arm" );
 	TiXmlText* pArmTxt = new TiXmlText(pszBuff);
@@ -793,7 +792,7 @@ void CKSXML_Write_Project::Write_Insert(TiXmlElement* pParent, tuint uiTrack, tu
 	
 	// output
 //	char pszBuff [64];
-	tint32 iInsertId = mpKSPlugIn->GetGlobalParm(giParam_ChInsert1 + uiInsert, giSection_First_Track + uiTrack);
+	tint32 iInsertId = gpApplication->GetGlobalParm(giParam_ChInsert1 + uiInsert, giSection_First_Track + uiTrack);
 	
 	if(iInsertId){
 		
@@ -804,7 +803,7 @@ void CKSXML_Write_Project::Write_Insert(TiXmlElement* pParent, tuint uiTrack, tu
 		pInsert->SetAttribute("slot",uiInsert);
 		pInsert->SetAttribute("id", iInsertId);
 		
-		CPlugInManager* pPlugManager = mpKSPlugIn->GetPlugInManager();
+		CPlugInManager* pPlugManager = gpApplication->GetPlugInManager();
 		//CPlugInManager::SPlugInInfo* pInfo = pPlugManager->GetPlugInInfo(0);
 		
 		std::string s = pPlugManager->GetPlugInVendor(iInsertId);
@@ -825,7 +824,7 @@ void CKSXML_Write_Project::Write_Insert(TiXmlElement* pParent, tuint uiTrack, tu
 		/*
 		// Get number of parameters here
 		// tint iParameters = pPlugManager->GetPlugInInfo(iInsertId);
-		CChannel* pChannel = dynamic_cast<CKSDSP*>(mpKSPlugIn->GetDSPEngine())->GetChannel(uiTrack);
+		CChannel* pChannel = dynamic_cast<CKSDSP*>(gpApplication->GetDSPEngine())->GetChannel(uiTrack);
 		kspi::IPlugIn* pPlugIn = pChannel->GetInsert(uiInsert);
 		
 		tint32 iSize = pPlugIn->GetChunkSize();
@@ -859,7 +858,7 @@ void CKSXML_Write_Project::Write_AUXs(TiXmlElement* pParent, tuint uiTrack)
 void CKSXML_Write_Project::Write_AUX(TiXmlElement* pParent, tuint uiTrack, tuint iAux)
 {
 		
-	tint32 iSend = mpKSPlugIn->GetGlobalParm(giParam_ChAUX1 + iAux, giSection_First_Track + uiTrack);
+	tint32 iSend = gpApplication->GetGlobalParm(giParam_ChAUX1 + iAux, giSection_First_Track + uiTrack);
 	
 	if(iSend){
 		
@@ -880,7 +879,7 @@ void CKSXML_Write_Project::Write_AUX(TiXmlElement* pParent, tuint uiTrack, tuint
 /*	
 	// output
 	char pszBuff [64];
-	tint32 iSend = mpKSPlugIn->GetGlobalParm(giParam_ChAUX1 + iAux, giSection_First_Track + uiTrack);
+	tint32 iSend = gpApplication->GetGlobalParm(giParam_ChAUX1 + iAux, giSection_First_Track + uiTrack);
 	
 	if(iSend){
 		
@@ -902,12 +901,12 @@ void CKSXML_Write_Project::Write_AUX(TiXmlElement* pParent, tuint uiTrack, tuint
 
 void CKSXML_Write_Project::Write_Busses(TiXmlElement* pParent)
 {
-//	tint32 iNrTracks = mpKSPlugIn->Get_Number_Of_Tracks();//mpKSPlugIn->msStack.iNr_Of_Tracks;
+//	tint32 iNrTracks = gpApplication->Get_Number_Of_Tracks();//gpApplication->msStack.iNr_Of_Tracks;
 	
 	for(tint32 i = 0; i<giNumber_Of_Busses; i++){
 		
 		// ID
-	//	tuint uiID = mpKSPlugIn->Get_Track_Id(i);
+	//	tuint uiID = gpApplication->Get_Track_Id(i);
 		// track
 		TiXmlElement* pBus = new TiXmlElement( "bus" );
 		pBus->SetAttribute("id",i);
@@ -932,7 +931,7 @@ void CKSXML_Write_Project::Write_Bus_Out(TiXmlElement* pParent, tuint uiID)
 	
 	// output
 	char pszBuff [64];
-	tint32 iVal = mpKSPlugIn->GetGlobalParm(giParam_Buss_Out, giSection_First_Buss + uiID);
+	tint32 iVal = gpApplication->GetGlobalParm(giParam_Buss_Out, giSection_First_Buss + uiID);
 	
 	if(iVal < ParmIOOffsetBus) {
 		sprintf(pszBuff, "mix", iVal);
@@ -946,7 +945,7 @@ void CKSXML_Write_Project::Write_Bus_Out(TiXmlElement* pParent, tuint uiID)
 	pParent->LinkEndChild( pOut );
 	
 	// gain
-	iVal = mpKSPlugIn->GetGlobalParm(giParam_Buss_Vol, giSection_First_Buss + uiID);
+	iVal = gpApplication->GetGlobalParm(giParam_Buss_Vol, giSection_First_Buss + uiID);
 	tfloat fVolume	=	(tfloat)iVal * 0.0001f;
 	sprintf(pszBuff, "%f", fVolume);
 	TiXmlElement* pVolume = new TiXmlElement( "volume" );
@@ -955,7 +954,7 @@ void CKSXML_Write_Project::Write_Bus_Out(TiXmlElement* pParent, tuint uiID)
 	pParent->LinkEndChild( pVolume );
 	
 	// pan
-	iVal = mpKSPlugIn->GetGlobalParm(giParam_Buss_PannerLeftRight, giSection_First_Buss + uiID);
+	iVal = gpApplication->GetGlobalParm(giParam_Buss_PannerLeftRight, giSection_First_Buss + uiID);
 	tfloat fPan	=	(tfloat)iVal * 0.0001f;
 	sprintf(pszBuff, "%f", fPan);
 	TiXmlElement* pPan = new TiXmlElement( "pan" );
@@ -964,7 +963,7 @@ void CKSXML_Write_Project::Write_Bus_Out(TiXmlElement* pParent, tuint uiID)
 	pParent->LinkEndChild( pPan );
 	
 	// solo
-	iVal = mpKSPlugIn->GetGlobalParm(giParam_Buss_Solo, giSection_First_Buss + uiID);
+	iVal = gpApplication->GetGlobalParm(giParam_Buss_Solo, giSection_First_Buss + uiID);
 	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
 	TiXmlElement* pSolo = new TiXmlElement( "solo" );
 	TiXmlText* pSoloTxt = new TiXmlText(pszBuff);
@@ -972,7 +971,7 @@ void CKSXML_Write_Project::Write_Bus_Out(TiXmlElement* pParent, tuint uiID)
 	pParent->LinkEndChild( pSolo );
 	
 	// mute
-	iVal = mpKSPlugIn->GetGlobalParm(giParam_Buss_Mute, giSection_First_Buss + uiID);
+	iVal = gpApplication->GetGlobalParm(giParam_Buss_Mute, giSection_First_Buss + uiID);
 	iVal ? sprintf(pszBuff, "on") : sprintf(pszBuff, "off");
 	TiXmlElement* pMute = new TiXmlElement( "mute" );
 	TiXmlText* pMuteTxt = new TiXmlText(pszBuff);

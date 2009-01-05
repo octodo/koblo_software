@@ -27,7 +27,7 @@
  based on TinyXml www.sourceforge.net/projects/tinyxml
  */
 
-class CKSPlugIn;
+
 
 
 class CKSXML_Write_Project
@@ -35,7 +35,7 @@ class CKSXML_Write_Project
 	
 public:
 	
-	CKSXML_Write_Project(CKSPlugIn* pKSPlugIn);
+	CKSXML_Write_Project();
 	~CKSXML_Write_Project();
 	
 	
@@ -47,7 +47,6 @@ public:
 	void Save_Project_As_XML_File_To_Disk();
 	
 private:
-	CKSPlugIn* mpKSPlugIn;
 
 	
 	void Add_Comment(TiXmlDocument* doc, std::string str);

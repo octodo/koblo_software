@@ -27,20 +27,18 @@
  based on TinyXml www.sourceforge.net/projects/tinyxml
  */
 
-class CKSPlugIn;
-
 
 class CKSXML_Create_Sample
 {
 	
-private:
-	CKSPlugIn* mpKSPlugIn;
+
+
 	
 
 	
 public:
 	
-	CKSXML_Create_Sample(CKSPlugIn * pKSPlugIn);
+	CKSXML_Create_Sample();
 	~CKSXML_Create_Sample();
 	
 	//! create a project on koblo.com
@@ -50,6 +48,7 @@ public:
 	 */ 
 	virtual void Create_Sample_On_Koblo();
 	
+private:	
 	
 };
 

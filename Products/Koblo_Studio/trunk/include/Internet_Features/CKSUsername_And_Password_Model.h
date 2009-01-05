@@ -33,13 +33,10 @@ class CKSPlugIn;
 class CKSUsername_And_Password_Model
 {
 	
-private:
-	CKSPlugIn* mpKSPlugIn;
-	
 	
 public:
 	
-	CKSUsername_And_Password_Model(CKSPlugIn* pKSPlugIn);
+	CKSUsername_And_Password_Model();
 	~CKSUsername_And_Password_Model();
 	
 	//! check it the computer is online
@@ -65,6 +62,8 @@ public:
 	
 	//! called when the user presses "Ok" in the sign in dialog
 	void On_Username_And_Password_OK();
+	
+	private:
 	
 };
 

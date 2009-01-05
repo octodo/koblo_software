@@ -34,20 +34,12 @@ class CKSPlugIn;
 class CKSXML_Read_Project 
 {
 	
-private:
-	CKSPlugIn* mpKSPlugIn;
-	
-	tint32 miTrack_ID;
-	
-	// create TinyXml document
-	TiXmlDocument* mpDoc;
-	
-	tbool mbNew_Revision;
+
 
 
 public:
 	
-	CKSXML_Read_Project(CKSPlugIn* pKSPlugIn);
+	CKSXML_Read_Project();
 	~CKSXML_Read_Project();
 	
 	//! reset project
@@ -136,7 +128,15 @@ public:
 	
 	void Check_Revision(TiXmlElement* pElement);
 
+private:
 	
+	
+	tint32 miTrack_ID;
+	
+	// create TinyXml document
+	TiXmlDocument* mpDoc;
+	
+	tbool mbNew_Revision;
 	
 };
 

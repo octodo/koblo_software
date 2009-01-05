@@ -42,15 +42,12 @@ mpPlugInManager(NULL),
 mbAreGUIsReady(false),
 mbRecord(false),
 
-CKSXML_Create_Project(this),
-CKSXML_Read_Project(this),
-CKSXML_Write_Project(this),
-CKSUsername_And_Password_Model(this),
-
-
-CKSInternet_Features(this),
-
-CKSXML_Create_Sample(this)
+CKSXML_Create_Project(),
+CKSXML_Read_Project(),
+CKSXML_Write_Project(),
+CKSUsername_And_Password_Model(),
+CKSInternet_Features(),
+CKSXML_Create_Sample()
 
 {
 	gpDSPEngine = dynamic_cast<CKSDSP*>(mpDSPEngine);

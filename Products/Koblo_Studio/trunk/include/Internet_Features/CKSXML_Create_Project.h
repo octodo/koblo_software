@@ -31,14 +31,27 @@
  \ based on TinyXml www.sourceforge.net/projects/tinyxml
  */
 
-//class CKSPlugIn;
+
 
 
 class CKSXML_Create_Project
 {
+
+	
+public:
+	
+	CKSXML_Create_Project();
+	~CKSXML_Create_Project();
+	
+	//! creates a new "empty" project on koblo.com
+	/*! 
+	 \ use user id and password
+	 \ pasrses the XML handshake in to the internal data structure
+	 */ 
+	tbool Create_Project_Handshake();
 	
 private:
-	CKSPlugIn* mpKSPlugIn;
+
 	
 
 	//! parse the returne xml file in to KS
@@ -75,18 +88,7 @@ private:
 	
 	
 	
-	
-public:
-	
-	CKSXML_Create_Project(CKSPlugIn* pKSPlugIn);
-	~CKSXML_Create_Project();
-	
-	//! creates a new "empty" project on koblo.com
-	/*! 
-	 \ use user id and password
-	 \ pasrses the XML handshake in to the internal data structure
-	 */ 
-	tbool Create_Project_Handshake();
+
 	
 	
 };

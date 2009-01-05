@@ -2,8 +2,7 @@
 #include "KSOS.h"
 
 
-CKSXML_Read_Project::CKSXML_Read_Project(CKSPlugIn* pKSPlugIn):
-mpKSPlugIn(pKSPlugIn)
+CKSXML_Read_Project::CKSXML_Read_Project()
 {
 	
 	mpDoc = new TiXmlDocument;
@@ -18,7 +17,7 @@ CKSXML_Read_Project::~CKSXML_Read_Project()
 void CKSXML_Read_Project::Reset_Project()
 {
 	miTrack_ID	=	0;
-	mpKSPlugIn->Set_Selected_Track(-1);
+	gpApplication->Set_Selected_Track(-1);
 }
 
 void CKSXML_Read_Project::Read_Project_XML_To_DOM(tint32 iProjectID )
@@ -304,7 +303,7 @@ void CKSXML_Read_Project::Update_Signature(TiXmlElement* pParent)
 					
 					
 		}
-		mpKSPlugIn->SetGlobalParm(giParamID_KS_Time_Signature, iSignature, giSectionGlobal);
+		gpApplication->SetGlobalParm(giParamID_KS_Time_Signature, iSignature, giSectionGlobal);
 		
 	}
 
@@ -657,7 +656,7 @@ void CKSXML_Read_Project::Set_Track(TiXmlElement* pElement)
 	
 	
 	// owerwrite
-	iTrackID = mpKSPlugIn->AddTrack();
+	iTrackID = gpApplication->AddTrack();
 	
 	if(iTrackID == -1) return;
 		
@@ -718,7 +717,7 @@ void CKSXML_Read_Project::Set_Track_Name(TiXmlElement* pElement, tint32 iTrackID
 	if ( !pElement ) return ;
 	
 	TiXmlNode* pChild = pElement->FirstChild();
-	mpKSPlugIn->SetChannelName(iTrackID, pChild->Value());
+	gpApplication->SetChannelName(iTrackID, pChild->Value());
 }
 void CKSXML_Read_Project::Set_Track_In(TiXmlElement* pElement, tint32 iTrackID)
 {
@@ -797,10 +796,10 @@ void CKSXML_Read_Project::Set_Track_Solo(TiXmlNode* pParent, tint32 iTrackID)
 	if ( !pChild ) return;
 	
 	if(stricmp("on", pChild->Value()) == 0)
-		mpKSPlugIn->SetGlobalParm(giParam_ChSolo, 1, giSection_First_Track+ iTrackID);
+		gpApplication->SetGlobalParm(giParam_ChSolo, 1, giSection_First_Track+ iTrackID);
 	
 	else if(stricmp("off", pChild->Value()) == 0)
-		mpKSPlugIn->SetGlobalParm(giParam_ChSolo, 0, giSection_First_Track+ iTrackID);
+		gpApplication->SetGlobalParm(giParam_ChSolo, 0, giSection_First_Track+ iTrackID);
 	
 }
 
@@ -811,10 +810,10 @@ void CKSXML_Read_Project::Set_Track_Mute(TiXmlNode* pParent, tint32 iTrackID)
 	if ( !pChild ) return;
 	
 	if(stricmp("on", pChild->Value()) == 0)
-		mpKSPlugIn->SetGlobalParm(giParam_ChMute, 1, giSection_First_Track+ iTrackID);
+		gpApplication->SetGlobalParm(giParam_ChMute, 1, giSection_First_Track+ iTrackID);
 	
 	else if(stricmp("off", pChild->Value()) == 0)
-		mpKSPlugIn->SetGlobalParm(giParam_ChMute, 0, giSection_First_Track+ iTrackID);
+		gpApplication->SetGlobalParm(giParam_ChMute, 0, giSection_First_Track+ iTrackID);
 }
 
 void CKSXML_Read_Project::Set_Track_Arm(TiXmlNode* pParent, tint32 iTrackID)
@@ -824,10 +823,10 @@ void CKSXML_Read_Project::Set_Track_Arm(TiXmlNode* pParent, tint32 iTrackID)
 	if ( !pChild ) return;
 	
 	if(stricmp("on", pChild->Value()) == 0)
-		mpKSPlugIn->SetGlobalParm(giParam_ChArm, 1, giSection_First_Track+ iTrackID);
+		gpApplication->SetGlobalParm(giParam_ChArm, 1, giSection_First_Track+ iTrackID);
 	
 	else if(stricmp("off", pChild->Value()) == 0)
-		mpKSPlugIn->SetGlobalParm(giParam_ChArm, 0, giSection_First_Track+ iTrackID);
+		gpApplication->SetGlobalParm(giParam_ChArm, 0, giSection_First_Track+ iTrackID);
 }
 /*
 
@@ -862,7 +861,7 @@ void CKSXML_Read_Project::Set_Track_Insert(TiXmlElement* pElement, tint32 uTrack
 		// plug-in id
 		if (pAttrib->QueryIntValue(&iPluginId)==TIXML_SUCCESS) {
 			printf( "plug-in id:%d,  ", iPluginId);
-			mpKSPlugIn->SetGlobalParm(giParam_ChInsert1 + iSlot, iPluginId, giSection_First_Track + uTrack);
+			gpApplication->SetGlobalParm(giParam_ChInsert1 + iSlot, iPluginId, giSection_First_Track + uTrack);
 		}
 	}
 	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
@@ -1336,7 +1335,7 @@ void CKSXML_Read_Project::Set_Param( TiXmlNode* pParent, tuint uiType, tuint32 i
 				printf( "%f", fValue );
 				
 				if(iSection == -1) return;
-					mpKSPlugIn->SetGlobalParm(iParamID, fValue*fFactor, iSection);
+					gpApplication->SetGlobalParm(iParamID, fValue*fFactor, iSection);
 				
 				
 				break;
@@ -1349,7 +1348,7 @@ void CKSXML_Read_Project::Set_Param( TiXmlNode* pParent, tuint uiType, tuint32 i
 			//	 printf( "%lf", fValue );
 				 
 				 if(iSection == -1) return;
-					mpKSPlugIn->SetGlobalParm(iParamID, tint32(fValue*fFactor), iSection);
+					gpApplication->SetGlobalParm(iParamID, tint32(fValue*fFactor), iSection);
 				 break;
 
 			 }
@@ -1456,7 +1455,7 @@ void CKSXML_Read_Project::Check_Revision(TiXmlElement* pElement)
 					pText = pContent->ToText();
 					std::string s = pText->Value();
 					tint32 iNew_Revision = atoi(s.c_str());
-					 if(iNew_Revision > mpKSPlugIn->GetGlobalParm(giParamID_Revision_Nr, giSectionGlobal))
+					 if(iNew_Revision > gpApplication->GetGlobalParm(giParamID_Revision_Nr, giSectionGlobal))
 						 mbNew_Revision = true;
 				 }
 			 }
