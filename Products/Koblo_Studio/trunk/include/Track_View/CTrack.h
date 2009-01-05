@@ -16,7 +16,7 @@
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
 
-class CRegion_GUI;
+class CRegion_Pane;
 class CTrack_Player2;
 
 class CTrack : public virtual CBasePane, public virtual ge::ICustomControlCallback
@@ -54,7 +54,7 @@ public:
 	//! IEventReceiver override
 	virtual void EventGeneric(ge::IControl* pControl, void* pEventData);
 
-	//! Connects all relevant GUI controls of the slider pane to ParamIDs
+	//! Connect pane to ParamIDs
 	virtual void ConnectControls();
 
 	virtual void HandleMsg(SMsg* pMsg);
@@ -127,7 +127,7 @@ protected:
 	ge::SSize mTrackSize;
 //	ge::IInvert* mpInvert;
 	
-	std::vector<CRegion_GUI*> mppRegion_GUI;
+	std::vector<CRegion_Pane*> mppRegion_GUI;
 	
 	tint32 miLastRegion_GUI;
 	tbool mbClicked;
@@ -145,7 +145,7 @@ protected:
 	
 	CTrack_Player2* mpTrack_Player2;
 	
-	std::list<CRegion_GUI*> mppRegions;
+	std::list<CRegion_Pane*> mppRegions;
 	
 	ge::ILine*	mpTrack_Buttom_Line;
 

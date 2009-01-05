@@ -15,7 +15,7 @@ CTrack_Fade_Handle::~CTrack_Fade_Handle()
 	
 }
 
-void CTrack_Fade_Handle::SetInfo(CRegion_GUI* pRegion_GUI, tuint uiHandle_Type)
+void CTrack_Fade_Handle::SetInfo(CRegion_Pane* pRegion_GUI, tuint uiHandle_Type)
 {
 	muiHandle_Type			=	uiHandle_Type;
 	mpRegion_GUI			=	pRegion_GUI;

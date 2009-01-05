@@ -167,7 +167,7 @@ kspi::IGUI* CKSPlugIn::CreateGUI(tint32 iIndex)
 	CBaseGUI* pGUI;
 	switch(iIndex) {
 		case giMain_Window:
-			pGUI = dynamic_cast<CBaseGUI*>(new CKS_TrackEditor(this, mpParmMan));
+			pGUI = dynamic_cast<CBaseGUI*>(new CTrack_Editor_View(this, mpParmMan));
 			break;		
 
 		case giSplash_Window:

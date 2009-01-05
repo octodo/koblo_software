@@ -1,6 +1,6 @@
 #include "KSOS.h"
 
-CRegion_GUI::CRegion_GUI(CBasePane* pParent, CBaseGUI* pGUI)
+CRegion_Pane::CRegion_Pane(CBasePane* pParent, CBaseGUI* pGUI)
 	: CBasePane(pParent, pGUI)
 	
 {
@@ -13,7 +13,7 @@ CRegion_GUI::CRegion_GUI(CBasePane* pParent, CBaseGUI* pGUI)
 	mpTrack_Player2 = NULL;
 }
 
-CRegion_GUI::~CRegion_GUI()
+CRegion_Pane::~CRegion_Pane()
 {
 	if (mppfPeak[0]) {
 		delete[] mppfPeak[0];
@@ -27,7 +27,7 @@ CRegion_GUI::~CRegion_GUI()
 	mpDrawPrimitives->Destroy();
 }
 
-void CRegion_GUI::SetInfo(	tuint32 uiRegionID,
+void CRegion_Pane::SetInfo(	tuint32 uiRegionID,
 							tuint64	uiSample_Pos,
 							tuint64	uiSample_Start, 
 							tuint64 uiSample_Duration, 
@@ -44,7 +44,7 @@ void CRegion_GUI::SetInfo(	tuint32 uiRegionID,
 	mfSample_Start			=	uiSample_Start;
 	muiSample_Duration		=	uiSample_Duration;
 	miColor					=	iColor;
-	miSize_Y				=	iSize_Y;
+	miPixel_Size_Y			=	iSize_Y ? giTrack_Size_Big: giTrack_Size_Small;
 	mpTrack_Player2			=	pTrack_Player2;
 	mpTrack					=	pTrack;
 	mpLine_Start			=	NULL;
@@ -64,11 +64,11 @@ void CRegion_GUI::SetInfo(	tuint32 uiRegionID,
 	Set_Pos_X();
 }
 
-void CRegion_GUI::Init()
+void CRegion_Pane::Init()
 {
 	// Create the main pane
 	mpPane = ge::IPane::Create();
-	ge::SSize Size(miSize_X, miSize_Y ? giTrack_Size_Big-1: giTrack_Size_Small-1);
+	ge::SSize Size(miSize_X, miPixel_Size_Y-1);
 	mpPane->SetSize(Size);
 	mpPane->SetAutomaticResize(true, ge::IControl::ResizeAbsoluteY );
 
@@ -139,22 +139,22 @@ void CRegion_GUI::Init()
 }
 
 
-void CRegion_GUI::ConnectControls()
+void CRegion_Pane::ConnectControls()
 {
 }
 
-void CRegion_GUI::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
+void CRegion_Pane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 {
 	GetParmMan()->ControlUpdate(miPaneID, pControl->GetID(), iValueNew);
 }
 
-void CRegion_GUI::EventGeneric(ge::IControl* pControl, void* pEventData)
+void CRegion_Pane::EventGeneric(ge::IControl* pControl, void* pEventData)
 {
 	
 	
 }
 
-void CRegion_GUI::Set_Size_X()
+void CRegion_Pane::Set_Size_X()
 {
 
 	miSize_X = Float2Int(muiSample_Duration * mpKSPlugIn->GetPixelPrSample());
@@ -165,46 +165,54 @@ void CRegion_GUI::Set_Size_X()
 		
 }
 
-void CRegion_GUI::Set_Track_SizeY(tint32 iSize_Y)
+void CRegion_Pane::Set_Track_SizeY(tint32 iSize_Y)
 {
-	miSize_Y	= iSize_Y;
-	Update_Size();
-	Draw_Fade_In();
-	Draw_Fade_Out();
-	Draw_Region_Volume();
-	Redraw_Pane_Rect();
+	miPixel_Size_Y	= iSize_Y ? giTrack_Size_Big: giTrack_Size_Small;
+	Update_Graphic();
 }
 
-void CRegion_GUI::Set_Pos_X()
+void CRegion_Pane::Set_Pos_X()
 {
 	miPos_X	=	(tfloat64)(muiTrack_Pos * mpKSPlugIn->GetPixelPrSample());
 }
 
-void CRegion_GUI::Update_Size()
+void CRegion_Pane::Update_Size()
 {
-	//---------------------
-	// Start and End Lines
-	tint32 iSize_Y	= miSize_Y ? giTrack_Size_Big: giTrack_Size_Small;
-	ge::SSize size(miSize_X ,iSize_Y );
+	
+	ge::SSize size(miSize_X ,miPixel_Size_Y );
+	// update the size of the control
 	mpControl->SetSize(size);
 	
+	// Start and End Lines draw only if region is wide enough
 	if(miSize_X <= 2){
 		mpLine_Start->SetVisible(false);
 		mpLine_End->SetVisible(false);
+		
 	}
 	else{
 		mpLine_Start->SetVisible(true);
+		mpLine_Start->SetLinePos(ge::SPos(0, 0 ),ge::SPos(0, miPixel_Size_Y-1 ));
+		
 		mpLine_End->SetVisible(true);
+		mpLine_End->SetLinePos(ge::SPos(miSize_X, 0 ),ge::SPos(miSize_X, miPixel_Size_Y-1 ));
 	}
-	mpLine_Start->SetLinePos(ge::SPos(0, 0 ),ge::SPos(0, iSize_Y-1 ));
-	mpLine_End->SetLinePos(ge::SPos(miSize_X, 0 ),ge::SPos(miSize_X, iSize_Y-1 ));
+	
+	
 	//---------------------
-	// Backdrop
-	mpRegion_Back_Small->SetVisible(miSize_Y ? false: true);
-	mpRegion_Back_Big->SetVisible(miSize_Y ? true : false);
-	
-	
-	
+	// select big/ small backdrop
+	switch (miPixel_Size_Y) {
+		case 40:
+			mpRegion_Back_Small->SetVisible( true);
+			mpRegion_Back_Big->SetVisible(false);
+			break;
+		case 184:
+			mpRegion_Back_Small->SetVisible( false);
+			mpRegion_Back_Big->SetVisible(true);
+			break;
+		default:
+			break;
+	}
+	// If the region is wide enough draw fade and volume
 	if(mbDrawFade && miSize_X >= 32){
 		mpFade_In_Handle->GetPane()->SetVisible(true);
 		mpLine_Fade_In->SetVisible(true);
@@ -227,19 +235,19 @@ void CRegion_GUI::Update_Size()
 
 }
 
-tint32 CRegion_GUI::Find_Tool()
+tint32 CRegion_Pane::Find_Tool()
 {
 	return	GetPlugIn()->GetGlobalParm(giParamID_Tool_Selected, giSectionGUI);	
 }
 
-void CRegion_GUI::Handel_Select_All_Tool()
+void CRegion_Pane::Handel_Select_All_Tool()
 {
 	//Select region
 	STrackSelectionInfo sInfo = gpDSPEngine->SelectRegion(muiRegionID);
 	mpTrack->Set_Selection_Size_And_Pos();
 }
 
-void CRegion_GUI::Handle_Cut_Tool(tuint32 uiPos)
+void CRegion_Pane::Handle_Cut_Tool(tuint32 uiPos)
 {
 	tuint64 uiSamplePos = (tfloat64)uiPos * mpKSPlugIn->GetSamplesPrPixel();
 	uiSamplePos			=	mpKSPlugIn->SnapToGrid(uiSamplePos);
@@ -247,7 +255,7 @@ void CRegion_GUI::Handle_Cut_Tool(tuint32 uiPos)
 	gpDSPEngine->CutRegion( mpTrack->Get_TrackID(), muiRegionID, uiSamplePos+1);
 }
 
-void CRegion_GUI::Handle_Trim_Tool(tint32 uiPos)
+void CRegion_Pane::Handle_Trim_Tool(tint32 uiPos)
 {
 
 	tfloat64 SamplesPrPixel =	mpKSPlugIn->GetSamplesPrPixel();
@@ -257,7 +265,7 @@ void CRegion_GUI::Handle_Trim_Tool(tint32 uiPos)
 		
 }
 
-void CRegion_GUI::SetSelection( tint64 uiSample_Selection_Start, tint64 uiSample_Selection_Duration){
+void CRegion_Pane::SetSelection( tint64 uiSample_Selection_Start, tint64 uiSample_Selection_Duration){
 	
 	muiSample_Selection_Start		=	uiSample_Selection_Start;
 	muiSample_Selection_Duration	=	uiSample_Selection_Duration;
@@ -267,17 +275,17 @@ void CRegion_GUI::SetSelection( tint64 uiSample_Selection_Start, tint64 uiSample
 }
 
 
-void CRegion_GUI::Update_Graphic()
+void CRegion_Pane::Update_Graphic()
 {	
 	
 	Set_Size_X();
 	Set_Pos_X();
 	Update_Size();
 	
-	mpPane->SetSize(ge::SSize(miSize_X, miSize_Y ? giTrack_Size_Big-1: giTrack_Size_Small-1));
+	mpPane->SetSize(ge::SSize(miSize_X, miPixel_Size_Y-1));
 	mpPane->SetPos(ge::SPos(miPos_X, 0));
 	
-	tfloat32 fSizeY			= miSize_Y ? giTrack_Size_Big - 6 : giTrack_Size_Small - 6;
+	tfloat32 fSizeY			= miPixel_Size_Y - 6;
 	muiRegion_Volume_Pixel	= Float2Int( fSizeY - (mfRegion_Volume * fSizeY));
 	
 	
@@ -286,7 +294,7 @@ void CRegion_GUI::Update_Graphic()
 	Draw_Region_Volume();
 }
 
-void CRegion_GUI::OnDraw(const ge::SRect &rUpdate)
+void CRegion_Pane::OnDraw(const ge::SRect &rUpdate)
 {
 	if (mppfPeak[0] == NULL) {
 		tint32 iChannel;
@@ -323,6 +331,8 @@ void CRegion_GUI::OnDraw(const ge::SRect &rUpdate)
 
 		ge::SSize SizeThis;
 		mpControl->GetSize(SizeThis);
+		
+		SizeThis.iCY = miPixel_Size_Y-2;
 
 
 		tuint64 uiPixelOffset	=	Float2Int(mfSample_Start * mpKSPlugIn->GetPixelPrSample());
@@ -339,7 +349,7 @@ void CRegion_GUI::OnDraw(const ge::SRect &rUpdate)
 			iDrawEndX = rUpdate.iX + rUpdate.iCX - PosThis.iX;
 		}
 
-		const tint32 iSpaceMid = 5;
+		const tint32 iSpaceMid =  5;
 
 		if (iChannels == 1) {
 			tfloat32* pfPeak = mppfPeak[0];
@@ -412,12 +422,10 @@ void CRegion_GUI::OnDraw(const ge::SRect &rUpdate)
 				tint32 iPeakHigh = iPeakLow + 1;
 				tfloat32 fAlpha = fPeakIndex - iPeakLow;
 				tfloat32 fPeak = pfPeakL[iPeakLow] * (1 - fAlpha) + pfPeakL[iPeakHigh] * fAlpha;
-
 				tint32 iPeakL = (tint32)(fPeak * (SizeThis.iCY - iSpaceMid) / 4);
 
 				// Linear interpolate
 				fPeak = pfPeakR[iPeakLow] * (1 - fAlpha) + pfPeakR[iPeakHigh] * fAlpha;
-
 				tint32 iPeakR = (tint32)(fPeak * (SizeThis.iCY - iSpaceMid) / 4);
 
 				mpDrawPrimitives->DrawLine(rUpdate,
@@ -434,17 +442,11 @@ void CRegion_GUI::OnDraw(const ge::SRect &rUpdate)
 	}
 }
 
-tbool CRegion_GUI::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
+tbool CRegion_Pane::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 {
 	if(!mbMouseCaptured && MouseMsg != ge::LeftButtonDown) 
 		return false;
 	else if (!mpControl->IsVisible())  return false;
-	
-//!!!	if (miEdit_State == giEdit_Dragging)
-//		mpControl->GetParentWindow()->SetMouseCursor(ge::IWindow::CursorHand);
-	
-
-	
 
 	switch(MouseMsg){
 		//----------------------------------------
@@ -473,7 +475,7 @@ tbool CRegion_GUI::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 	}
 	return false;
 }
-tbool CRegion_GUI::Handle_LeftButtonDown( const ge::SPos& Pos)
+tbool CRegion_Pane::Handle_LeftButtonDown( const ge::SPos& Pos)
 {
 	ge::SPos PosThis;
 	ge::SSize SizeThis;
@@ -537,7 +539,7 @@ tbool CRegion_GUI::Handle_LeftButtonDown( const ge::SPos& Pos)
 	
 }
 
-tbool CRegion_GUI::Handle_LeftButtonUp( const ge::SPos& Pos)
+tbool CRegion_Pane::Handle_LeftButtonUp( const ge::SPos& Pos)
 {
 	if(mbMouseCaptured){
 		mpPane->GetParentWindow()->ReleaseMouseFocus();
@@ -585,7 +587,7 @@ tbool CRegion_GUI::Handle_LeftButtonUp( const ge::SPos& Pos)
 	return true;
 }
 
-tbool CRegion_GUI::Handle_MouseMove( const ge::SPos& Pos)
+tbool CRegion_Pane::Handle_MouseMove( const ge::SPos& Pos)
 {
 	ge::SPos PosThis;
 	ge::SSize SizeThis;
@@ -647,28 +649,28 @@ tbool CRegion_GUI::Handle_MouseMove( const ge::SPos& Pos)
 	return true;
 }
 
-tbool CRegion_GUI::OnKeyDown(ge::EKey Key)
+tbool CRegion_Pane::OnKeyDown(ge::EKey Key)
 {
 	return false;
 }
 
-void CRegion_GUI::OnTimer()
+void CRegion_Pane::OnTimer()
 {
 }
 
-void CRegion_GUI::OnValueChange()
+void CRegion_Pane::OnValueChange()
 {
 }
 
-void CRegion_GUI::SetSize(const ge::SSize& Size)
+void CRegion_Pane::SetSize(const ge::SSize& Size)
 {
 }
 
-void CRegion_GUI::SetPos(const ge::SPos& Pos)
+void CRegion_Pane::SetPos(const ge::SPos& Pos)
 {
 }
 
-void CRegion_GUI::Refresh_Region_GUI()
+void CRegion_Pane::Refresh_Region_GUI()
 {
 
 	SRegion_Drawing_Info info	=	gpDSPEngine->Get_Region_Drawing_Info(muiRegionID);
@@ -687,7 +689,7 @@ void CRegion_GUI::Refresh_Region_GUI()
 
 }
 
-void CRegion_GUI::Update_Fade_In(tuint32 uiFade_In_Pixel)
+void CRegion_Pane::Update_Fade_In(tuint32 uiFade_In_Pixel)
 {
 	tfloat64 fSamplesPrPixel		=	mpKSPlugIn->GetSamplesPrPixel();
 	muiSample_Fade_In				=	(tfloat64)uiFade_In_Pixel * fSamplesPrPixel;
@@ -695,12 +697,10 @@ void CRegion_GUI::Update_Fade_In(tuint32 uiFade_In_Pixel)
 	muiSample_Fade_In = gpDSPEngine->Fade_In(muiRegionID, muiSample_Fade_In);
 	
 	Refresh_Region_GUI();
-	//Draw_Fade_In();
-	//Redraw_Pane_Rect();
 
 }
 
-void CRegion_GUI::Draw_Fade_In()
+void CRegion_Pane::Draw_Fade_In()
 {
 	tfloat64 fPixelPrSample		=	mpKSPlugIn->GetPixelPrSample();
 	muiFade_In_Pixel			=	(tfloat64)muiSample_Fade_In * fPixelPrSample;
@@ -709,11 +709,11 @@ void CRegion_GUI::Draw_Fade_In()
 	if(muiFade_In_Pixel > miSize_X-11)
 		muiFade_In_Pixel	=	miSize_X-11;
 	
-	mpLine_Fade_In->SetLinePos(ge::SPos(0, miSize_Y ? giTrack_Size_Big-1: giTrack_Size_Small-1 ),ge::SPos(muiFade_In_Pixel, muiRegion_Volume_Pixel ));
+	mpLine_Fade_In->SetLinePos(ge::SPos(0, miPixel_Size_Y-1 ),ge::SPos(muiFade_In_Pixel, muiRegion_Volume_Pixel ));
 	mpFade_In_Handle->SetPos(ge::SPos(muiFade_In_Pixel,muiRegion_Volume_Pixel));
 }
 
-void CRegion_GUI::Update_Fade_Out(tuint32 uiFade_Out_Pixel)
+void CRegion_Pane::Update_Fade_Out(tuint32 uiFade_Out_Pixel)
 {
 	uiFade_Out_Pixel += 6;
 	if(uiFade_Out_Pixel > miSize_X+6) 
@@ -734,7 +734,7 @@ void CRegion_GUI::Update_Fade_Out(tuint32 uiFade_Out_Pixel)
 	
 }
 
-void CRegion_GUI::Draw_Fade_Out()
+void CRegion_Pane::Draw_Fade_Out()
 {
 	
 	tfloat64 fPixelPrSample		=	mpKSPlugIn->GetPixelPrSample();
@@ -744,20 +744,18 @@ void CRegion_GUI::Draw_Fade_Out()
 	if(muiFade_Out_Pixel < 11)
 		muiFade_Out_Pixel	=	11;
 	
-	mpLine_Fade_Out->SetLinePos(ge::SPos(miSize_X-1, miSize_Y ? giTrack_Size_Big-1: giTrack_Size_Small-1 ),ge::SPos(muiFade_Out_Pixel, muiRegion_Volume_Pixel ));
+	mpLine_Fade_Out->SetLinePos(ge::SPos(miSize_X-1, miPixel_Size_Y-1 ),ge::SPos(muiFade_Out_Pixel, muiRegion_Volume_Pixel ));
 	mpFade_Out_Handle->SetPos(ge::SPos(muiFade_Out_Pixel-6,muiRegion_Volume_Pixel));
 	
 }
 
-void CRegion_GUI::Update_Region_Volume(tint32 uiRegion_Volume_Pixel)
+void CRegion_Pane::Update_Region_Volume(tint32 uiRegion_Volume_Pixel)
 {
-	tint32 iSize_Y	= miSize_Y ? giTrack_Size_Big: giTrack_Size_Small;
-	
-//	if( muiRegion_Volume_Pixel > uiRegion_Volume_Pixel )
-//		uiRegion_Volume_Pixel = muiRegion_Volume_Pixel;
+
+	// called when the user drags in the volume handel
 	
 	
-	tfloat32 fVolume = 1.0f - ( (tfloat32)uiRegion_Volume_Pixel / (tfloat32)iSize_Y);
+	tfloat32 fVolume = 1.0f - ( (tfloat32)uiRegion_Volume_Pixel / (tfloat32)miPixel_Size_Y);
 	
 	if(fVolume < 0.0f) 
 		fVolume = 0.0f;
@@ -773,7 +771,7 @@ void CRegion_GUI::Update_Region_Volume(tint32 uiRegion_Volume_Pixel)
 	
 }
 
-void CRegion_GUI::Draw_Region_Volume()
+void CRegion_Pane::Draw_Region_Volume()
 {		
 	mpLine_Region_Volume->SetLinePos(ge::SPos(muiFade_In_Pixel, muiRegion_Volume_Pixel ),ge::SPos(muiFade_Out_Pixel, muiRegion_Volume_Pixel ));
 	

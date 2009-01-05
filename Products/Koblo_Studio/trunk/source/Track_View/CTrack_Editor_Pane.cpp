@@ -1,7 +1,7 @@
 
 #include "KSOS.h"
 
-CKS_TrackEditorPane::CKS_TrackEditorPane(CBasePane* pPaneParent, CBaseGUI* pGUI)
+CTrack_Editor_Pane::CTrack_Editor_Pane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	: CBasePane(pPaneParent, pGUI), mbInited(false)
 {
 	CBaseDSPEngine* pD = GetPlugIn()->GetDSPEngine();
@@ -23,7 +23,7 @@ CKS_TrackEditorPane::CKS_TrackEditorPane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	mbDisplayStutterWarning_Armed = true;
 }
 
-CKS_TrackEditorPane::~CKS_TrackEditorPane()
+CTrack_Editor_Pane::~CTrack_Editor_Pane()
 {
 	if (mpMouseTrap) {
 		delete mpMouseTrap;
@@ -34,7 +34,7 @@ CKS_TrackEditorPane::~CKS_TrackEditorPane()
 	delete ((CKSDSP::SMeters_All*)mpvoid_sMeters_All);
 }
 
-void CKS_TrackEditorPane::Init()
+void CTrack_Editor_Pane::Init()
 {
 	//!!!Max added some git test code here
 	
@@ -143,7 +143,7 @@ void CKS_TrackEditorPane::Init()
 	
 }
 
-void CKS_TrackEditorPane::ConnectControls()
+void CTrack_Editor_Pane::ConnectControls()
 {
 	mpTrack_Top->ConnectControls();
 	mpTrack_Side->ConnectControls();
@@ -154,7 +154,7 @@ void CKS_TrackEditorPane::ConnectControls()
 	mbInited = true;
 }
 
-void CKS_TrackEditorPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
+void CTrack_Editor_Pane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 {
 /*	switch(pControl->GetID()) {
 		case giControlID_Play:
@@ -166,12 +166,12 @@ void CKS_TrackEditorPane::EventValueChange(ge::IControl* pControl, tint32 iValue
 } // EventValueChange
 
 
-void CKS_TrackEditorPane::EventGeneric(ge::IControl* pControl, void* pEventData)
+void CTrack_Editor_Pane::EventGeneric(ge::IControl* pControl, void* pEventData)
 {
 }
 
 	
-void CKS_TrackEditorPane::UpdateGlobalData( tint32 iType,tint32  iExtra, tint32  iID, tint32 iValue)
+void CTrack_Editor_Pane::UpdateGlobalData( tint32 iType,tint32  iExtra, tint32  iID, tint32 iValue)
 {
 	
 	switch(iType){
@@ -225,7 +225,7 @@ void CKS_TrackEditorPane::UpdateGlobalData( tint32 iType,tint32  iExtra, tint32 
 	}
 }
 
-void CKS_TrackEditorPane::UpdateTrackData(tint32 iID, tint32 iValue, tint32 iChannel)
+void CTrack_Editor_Pane::UpdateTrackData(tint32 iID, tint32 iValue, tint32 iChannel)
 {
 
 /*
@@ -264,7 +264,7 @@ void CKS_TrackEditorPane::UpdateTrackData(tint32 iID, tint32 iValue, tint32 iCha
 	}			
 }
 
-void CKS_TrackEditorPane::UpdateGUIData(tint32 iID, tint32 iValue)
+void CTrack_Editor_Pane::UpdateGUIData(tint32 iID, tint32 iValue)
 {
 	SGUIData sData;
 	sData.iID	= iID;
@@ -350,13 +350,13 @@ void CKS_TrackEditorPane::UpdateGUIData(tint32 iID, tint32 iValue)
 	}	
 }
 
-void CKS_TrackEditorPane::UpdateCommandData(tint32 iID, tint32 iValue)
+void CTrack_Editor_Pane::UpdateCommandData(tint32 iID, tint32 iValue)
 {
 
 	
 }
 
-void CKS_TrackEditorPane::UpdateBussData(tint32 iID, tint32 iValue, tint32 iBuss)
+void CTrack_Editor_Pane::UpdateBussData(tint32 iID, tint32 iValue, tint32 iBuss)
 {
 	switch(iID) {
 		default: break;
@@ -370,17 +370,17 @@ void CKS_TrackEditorPane::UpdateBussData(tint32 iID, tint32 iValue, tint32 iBuss
 	}	
 }
 
-void CKS_TrackEditorPane::UpdateMasterData(tint32 iID, tint32 iValue)
+void CTrack_Editor_Pane::UpdateMasterData(tint32 iID, tint32 iValue)
 {
 }
 /*
-void CKS_TrackEditorPane::UpdateAuxMonitorData(tint32 iID, tint32 iValue)
+void CTrack_Editor_Pane::UpdateAuxMonitorData(tint32 iID, tint32 iValue)
 {
 //	mpAuxMonitor_GUI->UpdateData( iID,  iValue);
 }
 
 */
-void CKS_TrackEditorPane::OnTimer(tint32 iTimerID)
+void CTrack_Editor_Pane::OnTimer(tint32 iTimerID)
 {
 
 	if (mbInited == false) {
@@ -453,7 +453,7 @@ void CKS_TrackEditorPane::OnTimer(tint32 iTimerID)
 } // OnTimer
 
 
-void CKS_TrackEditorPane::Resize(ge::SSize SizeNew)
+void CTrack_Editor_Pane::Resize(ge::SSize SizeNew)
 {
 	CBasePane::Resize(SizeNew);
 
@@ -461,13 +461,13 @@ void CKS_TrackEditorPane::Resize(ge::SSize SizeNew)
 	SendMsg(&Msg);
 }
 
-void CKS_TrackEditorPane::UpdateChannelName(tint32 iTrack, const std::string& sName)
+void CTrack_Editor_Pane::UpdateChannelName(tint32 iTrack, const std::string& sName)
 {
 	mpTrack_Side->UpdateChannelName( iTrack, sName);
 }
 
 
-void CKS_TrackEditorPane::Create_Track_Player_ScrollBar_Vertical()
+void CTrack_Editor_Pane::Create_Track_Player_ScrollBar_Vertical()
 {
 	//--------------------------------------------
 	// Track_Player Scrollbar and backdrop for vertical scrolling
@@ -566,7 +566,7 @@ void CKS_TrackEditorPane::Create_Track_Player_ScrollBar_Vertical()
 	// .. Lasse
 }
 
-void CKS_TrackEditorPane::SetScrollPosHorizontal(tuint64 uiSample)
+void CTrack_Editor_Pane::SetScrollPosHorizontal(tuint64 uiSample)
 {
 
 	tfloat32 fPixelPrSample		=	(tfloat32)mpKSPlugIn->GetPixelPrSample();
@@ -605,7 +605,7 @@ void CKS_TrackEditorPane::SetScrollPosHorizontal(tuint64 uiSample)
 
 }
 
-void CKS_TrackEditorPane::SetScrollPosToPlayHead()
+void CTrack_Editor_Pane::SetScrollPosToPlayHead()
 {
 	tint32 iPlayHead_Pos	=	(tint32)(mpKSPlugIn->GetPixelPrSample() * mpKSPlugIn->GetSongPos());
 
@@ -621,7 +621,7 @@ void CKS_TrackEditorPane::SetScrollPosToPlayHead()
 	mpScrollBarHorizontal->SetScrollPos(scrollposBar);
 
 }
-void CKS_TrackEditorPane::SetScrollPosToLoopStart()
+void CTrack_Editor_Pane::SetScrollPosToLoopStart()
 {
 	
 	SLoop_Drawing_Info sInfo =	gpDSPEngine->Get_Loop_Drawing_Info();
@@ -648,7 +648,7 @@ void CKS_TrackEditorPane::SetScrollPosToLoopStart()
 
 }
 
-void CKS_TrackEditorPane::SetScrollPosHorizontalToStart()
+void CTrack_Editor_Pane::SetScrollPosHorizontalToStart()
 {
 	ge::SScrollPos scrollposBar;
 	mpScrollBarHorizontal->GetScrollPos(scrollposBar);
@@ -656,7 +656,7 @@ void CKS_TrackEditorPane::SetScrollPosHorizontalToStart()
 	mpScrollBarHorizontal->SetScrollPos(scrollposBar);
 }
 
-void CKS_TrackEditorPane::Create_Track_Player_ScrollBar_Horizontal()
+void CTrack_Editor_Pane::Create_Track_Player_ScrollBar_Horizontal()
 {
 	//--------------------------------------------
 	// Track_Player Scrollbar and backdrop for horizontal scrolling
@@ -727,7 +727,7 @@ void CKS_TrackEditorPane::Create_Track_Player_ScrollBar_Horizontal()
 	
 }
 
-void CKS_TrackEditorPane::SendMsgFromTop(SMsg* pMsg)
+void CTrack_Editor_Pane::SendMsgFromTop(SMsg* pMsg)
 {
 	
 	switch(pMsg->iOpcode) 
@@ -776,7 +776,6 @@ void CKS_TrackEditorPane::SendMsgFromTop(SMsg* pMsg)
 		case Msg_Track_MouseClick_Inside: {
 			miSelectedTrack = (tint32)(pMsg->pDataIn);
 			SendMsg(pMsg);
-			//UpdateGUI();
 			break;			
 		}
 		
@@ -785,7 +784,6 @@ void CKS_TrackEditorPane::SendMsgFromTop(SMsg* pMsg)
 			if (iOld == miSelectedTrack) {
 				miSelectedTrack = -1;
 				SendMsg(pMsg);
-				//UpdateGUI();
 			}
 			break;			
 		}
@@ -829,7 +827,7 @@ void CKS_TrackEditorPane::SendMsgFromTop(SMsg* pMsg)
 
 
 
-void CKS_TrackEditorPane::AddTrack(tbool bRedraw /*= true*/)
+void CTrack_Editor_Pane::AddTrack(tbool bRedraw /*= true*/)
 {
 
 	return;
@@ -857,12 +855,12 @@ void CKS_TrackEditorPane::AddTrack(tbool bRedraw /*= true*/)
 	
 }
 
-void CKS_TrackEditorPane::DeleteTrack(tbool bRedraw /*= true*/)
+void CTrack_Editor_Pane::DeleteTrack(tbool bRedraw /*= true*/)
 {
 
 }
 
-tbool CKS_TrackEditorPane::DoKeyDown(ge::EKey Key)
+tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 {
 
 	switch(Key){
@@ -1032,7 +1030,7 @@ tbool CKS_TrackEditorPane::DoKeyDown(ge::EKey Key)
 	return false;
 }
 
-void CKS_TrackEditorPane::Do_Delete()
+void CTrack_Editor_Pane::Do_Delete()
 {
 //	tint32 iTool = GetPlugIn()->GetGlobalParm(giParamID_Tool_Selected, giSectionGUI);
 	
@@ -1040,7 +1038,7 @@ void CKS_TrackEditorPane::Do_Delete()
 	
 }
 
-tbool CKS_TrackEditorPane::DoKeyUp(ge::EKey Key)
+tbool CTrack_Editor_Pane::DoKeyUp(ge::EKey Key)
 {
 	switch(Key){
 		

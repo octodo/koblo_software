@@ -15,16 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+
+/*! \brief the region  pane displays waveforms 
+ *	users can cut, trim, fade in, fade out, and set the volume
+ */
+
+
+
+
+
 class CTrack_Player2;
 class CTrack;
 class CTrack_Fade_Handle;
 
-class CRegion_GUI : public virtual CBasePane, public virtual ge::ICustomControlCallback
+class CRegion_Pane : public virtual CBasePane, public virtual ge::ICustomControlCallback
 {
 public:
-	CRegion_GUI(CBasePane* pParent, CBaseGUI* pGUI);
+	CRegion_Pane(CBasePane* pParent, CBaseGUI* pGUI);
 
-	virtual ~CRegion_GUI();
+	virtual ~CRegion_Pane();
 
 	virtual void Init();
 
@@ -70,6 +81,7 @@ public:
 	// Handel messages
 //	virtual void HandleMsg(SMsg* pMsg);
 	
+	//! called when the Y size of a track is changed
 	virtual void Set_Track_SizeY(tint32 iSize_Y);
 	
 //	virtual void Deselect();
@@ -126,7 +138,8 @@ protected:
 	
 
 	tint32			miSize_X;
-	tint32			miSize_Y;
+	//! miSize_Y holds two values 0 = small and 1 = big
+	tint32			miPixel_Size_Y;
 	tint32			miPos_X;
 	tint32			miColor;
 	tbool			mbMouseCaptured;
@@ -152,6 +165,7 @@ protected:
 	CTrack_Player2* mpTrack_Player2;
 	CTrack*			mpTrack;
 	
+	//! the region pane receives mouse events so it holds a ICustomControl
 	ge::ICustomControl* mpControl;
 
 	ge::IDrawPrimitives* mpDrawPrimitives;

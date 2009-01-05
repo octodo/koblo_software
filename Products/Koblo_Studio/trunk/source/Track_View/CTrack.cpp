@@ -519,10 +519,10 @@ void CTrack::HandleMsg(SMsg* pMsg)
 
 void CTrack::Update_Region_Graphic()
 {
-	std::list<CRegion_GUI*>::const_iterator it = mppRegions.begin();
+	std::list<CRegion_Pane*>::const_iterator it = mppRegions.begin();
 	
 	for (; it != mppRegions.end(); it++) {
-		CRegion_GUI*  pRegion = *it;
+		CRegion_Pane*  pRegion = *it;
 		pRegion->Refresh_Region_GUI();
 
 	}
@@ -533,10 +533,10 @@ void CTrack::Refresh_Region_GUI(tuint32 uiRegionID)
 {
 //	SRegion_Drawing_Info info = gpDSPEngine->Get_Region_Drawing_Info(uiRegionID);	
 
-	std::list<CRegion_GUI*>::const_iterator it = mppRegions.begin();
+	std::list<CRegion_Pane*>::const_iterator it = mppRegions.begin();
 	
 	for (; it != mppRegions.end(); it++) {
-		CRegion_GUI*  pRegion = *it;
+		CRegion_Pane*  pRegion = *it;
 		if(pRegion->GetID() == uiRegionID){
 			pRegion->Refresh_Region_GUI();
 			//pRegion->Draw_Region_GUI();
@@ -556,9 +556,9 @@ void CTrack::Set_Track_SizeY(tint32 iSize)
 	mpControl->SetSize(mTrackSize);
 //!!!	mpMouseTrap->SetSize(mTrackSize);
 
-	std::list<CRegion_GUI*>::const_iterator it = mppRegions.begin();
+	std::list<CRegion_Pane*>::const_iterator it = mppRegions.begin();
 	for (; it != mppRegions.end(); it++) {
-		CRegion_GUI* mpRegions = *it;
+		CRegion_Pane* mpRegions = *it;
 		mpRegions->Set_Track_SizeY(iSize);
 	}
 	//Move line
@@ -617,8 +617,8 @@ void CTrack::InsertRegion(tuint32 uiRegionID, tuint64 uiSample_Pos, tuint64 uiSa
 	tint32 iColor	=	miTrackID % 10;
 
 	
-	CRegion_GUI* region;
-	region = new CRegion_GUI(this, GetGUI());
+	CRegion_Pane* region;
+	region = new CRegion_Pane(this, GetGUI());
 	region->SetInfo(uiRegionID, uiSample_Pos, uiSample_Start ,uiSample_Duration , iColor, miTrack_Size_Y, mpTrack_Player2,this, sName );
 	region->Init();
 	mpPane->AddControl(region->GetPane(), ge::SPos(0, 0));
@@ -640,10 +640,10 @@ void CTrack::InsertRegion(tuint32 uiRegionID, tuint64 uiSample_Pos, tuint64 uiSa
 
 void CTrack::DeleteRegion(tuint32 uiID)
 {
-	std::list<CRegion_GUI*>::const_iterator it = mppRegions.begin();
+	std::list<CRegion_Pane*>::const_iterator it = mppRegions.begin();
 	
 	for (; it != mppRegions.end(); it++) {
-		CRegion_GUI*  pRegion = *it;
+		CRegion_Pane*  pRegion = *it;
 		if(pRegion->GetID() == uiID){
 			ge::IPane* pPaneRegion = pRegion->GetPane();
 			if (pPaneRegion->GetParentWindow()->HasMouseFocus(pPaneRegion)) {
@@ -673,7 +673,7 @@ void CTrack::Delete_All_Regions()
 	
 	
 	// Find regions to delete
-	std::list<CRegion_GUI*>::const_iterator it = mppRegions.begin();
+	std::list<CRegion_Pane*>::const_iterator it = mppRegions.begin();
 	for (; it != mppRegions.end(); it++) {
 
 //		CRegion_GUI*  pRegion = *it;

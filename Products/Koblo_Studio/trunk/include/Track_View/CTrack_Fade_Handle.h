@@ -27,7 +27,7 @@ public:
 		\param iCtrlIDOfs [in]: Control ID - used as offset for controls
 		\param iBackResID [in]: Background bitmap
 	*/
-	virtual void SetInfo(CRegion_GUI* pRegion_GUI, tuint uiHandle_Type);
+	virtual void SetInfo(CRegion_Pane* pRegion_GUI, tuint uiHandle_Type);
 
 	virtual ~CTrack_Fade_Handle();
 
@@ -70,7 +70,7 @@ protected:
 	// Correctly typecasted pointer to plug-in class
 //	CKSPlugIn* mpKSPlugIn;
 	
-	CRegion_GUI* mpRegion_GUI;
+	CRegion_Pane* mpRegion_GUI;
 
 	tbool			mbMouseCaptured;
 	tuint32			muiMouseDowPos;

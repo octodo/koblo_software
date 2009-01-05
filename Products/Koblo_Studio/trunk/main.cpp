@@ -285,7 +285,7 @@ void* gWndSignIn;
 //tbool gbTrackEditInFront;
 
 
-CKS_TrackEditor* gpGUITrackEdit;
+CTrack_Editor_View* gpGUITrackEdit;
 CKSSplashScreen* gpSplashGUI;
 CKSMixerGUI* gpGUIMixer;
 CKSAUXGUI* gpGUIAUX;
@@ -601,7 +601,7 @@ int main(int argc, char* argv[])
 #endif
 	pContext->ShowWindow(gWndSplash);
 
-	gpGUITrackEdit = dynamic_cast<CKS_TrackEditor*>(gpPlugIn->CreateGUI(giMain_Window));
+	gpGUITrackEdit = dynamic_cast<CTrack_Editor_View*>(gpPlugIn->CreateGUI(giMain_Window));
 
 	gpSplashGUI = dynamic_cast<CKSSplashScreen*>(gpPlugIn->CreateGUI(giSplash_Window));
 	gpSplashGUI->MakeWindow(gWndSplash);

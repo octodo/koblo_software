@@ -10,16 +10,9 @@
 		0BC5BDE609A0E4C200B2F4C2 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BC5BDE509A0E4C200B2F4C2 /* CoreMIDI.framework */; };
 		0BC71087099CBF520076AEE9 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BC71086099CBF520076AEE9 /* CoreAudio.framework */; };
 		320072BC0ED18FC30035E5A8 /* CKSPreferences.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 320072BB0ED18FC30035E5A8 /* CKSPreferences.cpp */; };
-		320072BE0ED18FF00035E5A8 /* CAfterImportTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 320072BD0ED18FF00035E5A8 /* CAfterImportTask.cpp */; };
 		324DA49D0DB5F64B00268686 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9504C8FFE6A3BC11CA0CBA /* ApplicationServices.framework */; };
 		324DA49F0DB5F65500268686 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9504CAFFE6A41611CA0CBA /* CoreServices.framework */; };
 		327FB57C0DEED5BC004ACD89 /* CKSMixerGUIPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327FB57B0DEED5BC004ACD89 /* CKSMixerGUIPane.cpp */; };
-		327FB57E0DEED5BC004ACD89 /* CKS_TrackEditorPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327FB57D0DEED5BC004ACD89 /* CKS_TrackEditorPane.cpp */; };
-		329BD8B70EB89A020084EC13 /* CExportClipTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 329BD8B20EB89A020084EC13 /* CExportClipTask.cpp */; };
-		329BD8B80EB89A020084EC13 /* CExportDSPTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 329BD8B30EB89A020084EC13 /* CExportDSPTask.cpp */; };
-		329BD8B90EB89A020084EC13 /* CImportAudioTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 329BD8B40EB89A020084EC13 /* CImportAudioTask.cpp */; };
-		329BD8BA0EB89A020084EC13 /* CProgressTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 329BD8B50EB89A020084EC13 /* CProgressTask.cpp */; };
-		329BD8BB0EB89A020084EC13 /* CProgressTaskList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 329BD8B60EB89A020084EC13 /* CProgressTaskList.cpp */; };
 		32AB3E1A0D6D90E000DE1FCD /* CBaseDezipper2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32AB3E190D6D90E000DE1FCD /* CBaseDezipper2.cpp */; };
 		32E09DCB0E14C38500FF980B /* libAudioCompress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E09DC20E14BED500FF980B /* libAudioCompress.a */; };
 		7C771DB40CAA4E9A00A78C4E /* CSoloMuteContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C771DB20CAA4E9A00A78C4E /* CSoloMuteContainer.cpp */; };
@@ -47,15 +40,12 @@
 		FC31AC970EEFE9DE00B3D3B7 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC960EEFE9DE00B3D3B7 /* tinyxml.cpp */; };
 		FC31AC9B0EEFE9ED00B3D3B7 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC990EEFE9ED00B3D3B7 /* tinyxmlparser.cpp */; };
 		FC31AC9C0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC9A0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp */; };
-		FC3B74240DB1176600A1E7DD /* CTrack_Player2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC3B74230DB1176600A1E7DD /* CTrack_Player2.cpp */; };
 		FC45162A0DC200F900ADDE81 /* CMix_Buss_AUX_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC4516290DC200F900ADDE81 /* CMix_Buss_AUX_Insert.cpp */; };
 		FC6117820DA4D61B00334DDF /* CKSSplashScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC6117810DA4D61B00334DDF /* CKSSplashScreen.cpp */; };
 		FC6117840DA4D62A00334DDF /* CKSBaseGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC6117830DA4D62A00334DDF /* CKSBaseGUI.cpp */; };
-		FC6117880DA4D64700334DDF /* CKS_TrackEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC6117870DA4D64700334DDF /* CKS_TrackEditor.cpp */; };
 		FC61178C0DA4D66F00334DDF /* CKSModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC61178B0DA4D66F00334DDF /* CKSModule.cpp */; };
 		FC61178E0DA4D68300334DDF /* CKSPlugIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC61178D0DA4D68300334DDF /* CKSPlugIn.cpp */; };
 		FC6117AB0DA4D80900334DDF /* KS.icns in Resources */ = {isa = PBXBuildFile; fileRef = FC6117AA0DA4D80900334DDF /* KS.icns */; };
-		FC6119320DA6675C00334DDF /* CTrack_Top.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC6119310DA6675C00334DDF /* CTrack_Top.cpp */; };
 		FC9D47810CB1462A006CEDB6 /* libGUIEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9D46A60CB13D44006CEDB6 /* libGUIEngine.a */; };
 		FC9D47820CB1462D006CEDB6 /* libDataEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9D469A0CB13D30006CEDB6 /* libDataEngine.a */; };
 		FC9D47830CB14630006CEDB6 /* libSTools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9D46880CB13CF4006CEDB6 /* libSTools.a */; };
@@ -86,36 +76,46 @@
 		FCA8CB270F08F21A0007514D /* CPlugInManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CB260F08F21A0007514D /* CPlugInManager.cpp */; };
 		FCA8CBCE0F0906170007514D /* CKSXML_Create_Project.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CBCD0F0906170007514D /* CKSXML_Create_Project.cpp */; };
 		FCA8CCDD0F091D6F0007514D /* CKSXML_Create_Sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CCDC0F091D6F0007514D /* CKSXML_Create_Sample.cpp */; };
-		FCAA23080DA6B42100284AE1 /* CTrack_Side.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCAA23070DA6B42100284AE1 /* CTrack_Side.cpp */; };
-		FCAA23410DA6B7EA00284AE1 /* CTrack_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCAA23400DA6B7EA00284AE1 /* CTrack_Player.cpp */; };
-		FCAA23A80DA6C22B00284AE1 /* CTrack_File_Browser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCAA23A70DA6C22B00284AE1 /* CTrack_File_Browser.cpp */; };
-		FCAA24160DA6DD6E00284AE1 /* CTrack_Setup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCAA24150DA6DD6E00284AE1 /* CTrack_Setup.cpp */; };
 		FCAD39990DC138F50075A553 /* CMix_Master_AUX_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCAD39980DC138F50075A553 /* CMix_Master_AUX_Insert.cpp */; };
-		FCB04AEF0DACF9D1007FD3A0 /* CTrack_Files.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCB04AEE0DACF9D1007FD3A0 /* CTrack_Files.cpp */; };
-		FCB04B3F0DAD09B7007FD3A0 /* CTrack_Time_Pos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCB04B3E0DAD09B7007FD3A0 /* CTrack_Time_Pos.cpp */; };
-		FCB943CC0DB34C7800CE6D72 /* CTrack_Info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCB943CB0DB34C7800CE6D72 /* CTrack_Info.cpp */; };
-		FCB9984B0E7B9E2700C00BA3 /* CTrack_Fade_Handle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCB9984A0E7B9E2700C00BA3 /* CTrack_Fade_Handle.cpp */; };
-		FCB9FF8C0DBD0ED80097699A /* CTrack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCB9FF8B0DBD0ED80097699A /* CTrack.cpp */; };
 		FCBBC1CF0F064A10003201E4 /* CKSProject_ID_GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC1CD0F064A10003201E4 /* CKSProject_ID_GUI.cpp */; };
 		FCBBC1D00F064A10003201E4 /* CKSProject_ID_GUI_Pane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC1CE0F064A10003201E4 /* CKSProject_ID_GUI_Pane.cpp */; };
 		FCBBC4DA0F06842C003201E4 /* CKSXML_Read_Project.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC4D80F06842C003201E4 /* CKSXML_Read_Project.cpp */; };
 		FCBBC4DB0F06842C003201E4 /* CKSXML_Write_Project.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC4D90F06842C003201E4 /* CKSXML_Write_Project.cpp */; };
 		FCBBC54E0F06899C003201E4 /* CKSInternet_Features.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC54D0F06899C003201E4 /* CKSInternet_Features.cpp */; };
-		FCBFD35E0DB5E81200A2EB23 /* CTrack_AUX_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBFD35D0DB5E81200A2EB23 /* CTrack_AUX_Insert.cpp */; };
-		FCBFD3600DB5E81900A2EB23 /* CTrack_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBFD35F0DB5E81900A2EB23 /* CTrack_Insert.cpp */; };
 		FCC44A980E80CF0200F5310F /* CKSSetupGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC44A960E80CF0200F5310F /* CKSSetupGUI.cpp */; };
 		FCC44A990E80CF0200F5310F /* CKSSetupGUIPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC44A970E80CF0200F5310F /* CKSSetupGUIPane.cpp */; };
-		FCC6C5F70E652EE100F5E952 /* CTrack_Playhead.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCC6C5F60E652EE100F5E952 /* CTrack_Playhead.cpp */; };
 		FCEF56D80DC086F2000AD4FE /* CMix_AUX_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEF56D50DC086F2000AD4FE /* CMix_AUX_Insert.cpp */; };
 		FCEF56D90DC086F2000AD4FE /* CMix_Scroll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEF56D60DC086F2000AD4FE /* CMix_Scroll.cpp */; };
 		FCEF56DA0DC086F2000AD4FE /* CMix_Channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEF56D70DC086F2000AD4FE /* CMix_Channel.cpp */; };
 		FCEF5A5E0DC0BFC7000AD4FE /* CMix_Buss.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEF5A5D0DC0BFC7000AD4FE /* CMix_Buss.cpp */; };
 		FCEF5A600DC0BFCD000AD4FE /* CMix_Master.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEF5A5F0DC0BFCD000AD4FE /* CMix_Master.cpp */; };
-		FCF2B8500DB4C75C006E037C /* CRegion_GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF2B84F0DB4C75C006E037C /* CRegion_GUI.cpp */; };
-		FCF2B9000DB4E48B006E037C /* CTrack_Info_Small.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF2B8FE0DB4E48B006E037C /* CTrack_Info_Small.cpp */; };
-		FCF2B9010DB4E48B006E037C /* CTrack_Info_Big.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF2B8FF0DB4E48B006E037C /* CTrack_Info_Big.cpp */; };
 		FCF336D90F12160700AC1BBA /* CKSUsername_And_Password_Pane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF336D70F12160700AC1BBA /* CKSUsername_And_Password_Pane.cpp */; };
 		FCF336DA0F12160700AC1BBA /* CKSUsername_And_Password_View.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF336D80F12160700AC1BBA /* CKSUsername_And_Password_View.cpp */; };
+		FCF954350F125849005147D1 /* CTrack_Editor_View.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954190F125849005147D1 /* CTrack_Editor_View.cpp */; };
+		FCF954360F125849005147D1 /* CTrack_Editor_Pane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9541A0F125849005147D1 /* CTrack_Editor_Pane.cpp */; };
+		FCF954370F125849005147D1 /* CRegion_Pane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9541B0F125849005147D1 /* CRegion_Pane.cpp */; };
+		FCF954380F125849005147D1 /* CTrack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9541C0F125849005147D1 /* CTrack.cpp */; };
+		FCF954390F125849005147D1 /* CTrack_AUX_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9541D0F125849005147D1 /* CTrack_AUX_Insert.cpp */; };
+		FCF9543B0F125849005147D1 /* CTrack_Fade_Handle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9541F0F125849005147D1 /* CTrack_Fade_Handle.cpp */; };
+		FCF9543C0F125849005147D1 /* CTrack_File_Browser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954200F125849005147D1 /* CTrack_File_Browser.cpp */; };
+		FCF9543D0F125849005147D1 /* CTrack_Files.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954210F125849005147D1 /* CTrack_Files.cpp */; };
+		FCF9543E0F125849005147D1 /* CTrack_Info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954220F125849005147D1 /* CTrack_Info.cpp */; };
+		FCF9543F0F125849005147D1 /* CTrack_Info_Big.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954230F125849005147D1 /* CTrack_Info_Big.cpp */; };
+		FCF954400F125849005147D1 /* CTrack_Info_Small.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954240F125849005147D1 /* CTrack_Info_Small.cpp */; };
+		FCF954410F125849005147D1 /* CTrack_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954250F125849005147D1 /* CTrack_Insert.cpp */; };
+		FCF954420F125849005147D1 /* CTrack_Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954260F125849005147D1 /* CTrack_Player.cpp */; };
+		FCF954430F125849005147D1 /* CTrack_Player2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954270F125849005147D1 /* CTrack_Player2.cpp */; };
+		FCF954440F125849005147D1 /* CTrack_Playhead.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954280F125849005147D1 /* CTrack_Playhead.cpp */; };
+		FCF954460F125849005147D1 /* CTrack_Setup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9542A0F125849005147D1 /* CTrack_Setup.cpp */; };
+		FCF954470F125849005147D1 /* CTrack_Side.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9542B0F125849005147D1 /* CTrack_Side.cpp */; };
+		FCF954480F125849005147D1 /* CTrack_Time_Pos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9542C0F125849005147D1 /* CTrack_Time_Pos.cpp */; };
+		FCF954490F125849005147D1 /* CTrack_Top.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9542D0F125849005147D1 /* CTrack_Top.cpp */; };
+		FCF9544A0F125849005147D1 /* CAfterImportTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9542F0F125849005147D1 /* CAfterImportTask.cpp */; };
+		FCF9544B0F125849005147D1 /* CExportClipTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954300F125849005147D1 /* CExportClipTask.cpp */; };
+		FCF9544C0F125849005147D1 /* CExportDSPTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954310F125849005147D1 /* CExportDSPTask.cpp */; };
+		FCF9544D0F125849005147D1 /* CImportAudioTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954320F125849005147D1 /* CImportAudioTask.cpp */; };
+		FCF9544E0F125849005147D1 /* CProgressTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954330F125849005147D1 /* CProgressTask.cpp */; };
+		FCF9544F0F125849005147D1 /* CProgressTaskList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954340F125849005147D1 /* CProgressTaskList.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -240,23 +240,9 @@
 		20286C2BFDCF999611CA2CEA /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		20286C33FDCF999611CA2CEA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		320072BB0ED18FC30035E5A8 /* CKSPreferences.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSPreferences.cpp; path = source/CKSPreferences.cpp; sourceTree = "<group>"; };
-		320072BD0ED18FF00035E5A8 /* CAfterImportTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAfterImportTask.cpp; path = source/Track_GUI/Progress/CAfterImportTask.cpp; sourceTree = "<group>"; };
 		320072BF0ED1900F0035E5A8 /* CKSPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSPreferences.h; path = include/CKSPreferences.h; sourceTree = "<group>"; };
-		320072C00ED1903A0035E5A8 /* CAfterImportTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAfterImportTask.h; path = include/Track_GUI/Progress/CAfterImportTask.h; sourceTree = "<group>"; };
 		327FB57B0DEED5BC004ACD89 /* CKSMixerGUIPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSMixerGUIPane.cpp; path = source/Mix_GUI/CKSMixerGUIPane.cpp; sourceTree = "<group>"; };
-		327FB57D0DEED5BC004ACD89 /* CKS_TrackEditorPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKS_TrackEditorPane.cpp; path = source/Track_GUI/CKS_TrackEditorPane.cpp; sourceTree = "<group>"; };
 		327FB57F0DEED5BC004ACD89 /* CKSMixerGUIPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSMixerGUIPane.h; path = include/Mix_GUI/CKSMixerGUIPane.h; sourceTree = "<group>"; };
-		327FB5800DEED5BC004ACD89 /* CKS_TrackEditorPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKS_TrackEditorPane.h; path = include/Track_GUI/CKS_TrackEditorPane.h; sourceTree = "<group>"; };
-		329BD8AC0EB899D50084EC13 /* CExportClipTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CExportClipTask.h; path = include/Track_GUI/Progress/CExportClipTask.h; sourceTree = "<group>"; };
-		329BD8AD0EB899D50084EC13 /* CExportDSPTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CExportDSPTask.h; path = include/Track_GUI/Progress/CExportDSPTask.h; sourceTree = "<group>"; };
-		329BD8AE0EB899D50084EC13 /* CImportAudioTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CImportAudioTask.h; path = include/Track_GUI/Progress/CImportAudioTask.h; sourceTree = "<group>"; };
-		329BD8AF0EB899D50084EC13 /* CProgressTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CProgressTask.h; path = include/Track_GUI/Progress/CProgressTask.h; sourceTree = "<group>"; };
-		329BD8B00EB899D50084EC13 /* CProgressTaskList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CProgressTaskList.h; path = include/Track_GUI/Progress/CProgressTaskList.h; sourceTree = "<group>"; };
-		329BD8B20EB89A020084EC13 /* CExportClipTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CExportClipTask.cpp; path = source/Track_GUI/Progress/CExportClipTask.cpp; sourceTree = "<group>"; };
-		329BD8B30EB89A020084EC13 /* CExportDSPTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CExportDSPTask.cpp; path = source/Track_GUI/Progress/CExportDSPTask.cpp; sourceTree = "<group>"; };
-		329BD8B40EB89A020084EC13 /* CImportAudioTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CImportAudioTask.cpp; path = source/Track_GUI/Progress/CImportAudioTask.cpp; sourceTree = "<group>"; };
-		329BD8B50EB89A020084EC13 /* CProgressTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CProgressTask.cpp; path = source/Track_GUI/Progress/CProgressTask.cpp; sourceTree = "<group>"; };
-		329BD8B60EB89A020084EC13 /* CProgressTaskList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CProgressTaskList.cpp; path = source/Track_GUI/Progress/CProgressTaskList.cpp; sourceTree = "<group>"; };
 		32AB3E180D6D90CB00DE1FCD /* CBaseDezipper2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBaseDezipper2.h; path = ../../../SDK/trunk/BaseClasses/Include/CBaseDezipper2.h; sourceTree = SOURCE_ROOT; };
 		32AB3E190D6D90E000DE1FCD /* CBaseDezipper2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseDezipper2.cpp; path = ../../../SDK/trunk/BaseClasses/Source/CBaseDezipper2.cpp; sourceTree = SOURCE_ROOT; };
 		32E09DAD0E14BED500FF980B /* AudioCompress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AudioCompress.xcodeproj; path = ../../../SDK/trunk/AudioCompress/projects/OSXXCode/AudioCompress.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -321,7 +307,6 @@
 		E3F83F350C7D42CF00D2E408 /* main.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FC17A2A40F0E19B70083A614 /* CKSUsername_And_Password_Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSUsername_And_Password_Model.cpp; sourceTree = "<group>"; };
 		FC17A2B40F0E1A040083A614 /* CKSUsername_And_Password_Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSUsername_And_Password_Model.h; sourceTree = "<group>"; };
-		FC202A880DB0C711005DC5E1 /* CTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack.h; path = include/Track_GUI/CTrack.h; sourceTree = "<group>"; };
 		FC2D34710EEE868D004DFC3D /* INetEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = INetEngine.xcodeproj; path = ../../../SDK/trunk/INetEngine/projects/osxxcode/INetEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
 		FC31AC930EEFE9D400B3D3B7 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinystr.h; path = ../../../SDK/tinyxml/tinystr.h; sourceTree = SOURCE_ROOT; };
 		FC31AC940EEFE9D400B3D3B7 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinystr.cpp; path = ../../../SDK/tinyxml/tinystr.cpp; sourceTree = SOURCE_ROOT; };
@@ -329,13 +314,10 @@
 		FC31AC980EEFE9E500B3D3B7 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinyxml.h; path = ../../../SDK/tinyxml/tinyxml.h; sourceTree = SOURCE_ROOT; };
 		FC31AC990EEFE9ED00B3D3B7 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlparser.cpp; path = ../../../SDK/tinyxml/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
 		FC31AC9A0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlerror.cpp; path = ../../../SDK/tinyxml/tinyxmlerror.cpp; sourceTree = SOURCE_ROOT; };
-		FC3B741B0DB1175300A1E7DD /* CTrack_Player2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Player2.h; path = include/Track_GUI/CTrack_Player2.h; sourceTree = "<group>"; };
-		FC3B74230DB1176600A1E7DD /* CTrack_Player2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Player2.cpp; path = source/Track_GUI/CTrack_Player2.cpp; sourceTree = "<group>"; };
 		FC4516290DC200F900ADDE81 /* CMix_Buss_AUX_Insert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CMix_Buss_AUX_Insert.cpp; path = source/Mix_GUI/CMix_Buss_AUX_Insert.cpp; sourceTree = "<group>"; };
 		FC4516380DC2016900ADDE81 /* CMix_Buss_AUX_Insert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_Buss_AUX_Insert.h; path = include/Mix_GUI/CMix_Buss_AUX_Insert.h; sourceTree = "<group>"; };
 		FC6117810DA4D61B00334DDF /* CKSSplashScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSSplashScreen.cpp; path = source/CKSSplashScreen.cpp; sourceTree = "<group>"; };
 		FC6117830DA4D62A00334DDF /* CKSBaseGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSBaseGUI.cpp; path = source/CKSBaseGUI.cpp; sourceTree = "<group>"; };
-		FC6117870DA4D64700334DDF /* CKS_TrackEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKS_TrackEditor.cpp; path = source/Track_GUI/CKS_TrackEditor.cpp; sourceTree = "<group>"; };
 		FC61178B0DA4D66F00334DDF /* CKSModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSModule.cpp; path = source/CKSModule.cpp; sourceTree = "<group>"; };
 		FC61178D0DA4D68300334DDF /* CKSPlugIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSPlugIn.cpp; path = source/CKSPlugIn.cpp; sourceTree = "<group>"; };
 		FC61178F0DA4D69600334DDF /* CKSSplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSSplashScreen.h; path = include/CKSSplashScreen.h; sourceTree = "<group>"; };
@@ -347,10 +329,6 @@
 		FC6117970DA4D71A00334DDF /* KSOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSOS.h; path = include/KSOS.h; sourceTree = "<group>"; };
 		FC6117A90DA4D7FE00334DDF /* KS_OSX_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS_OSX_Prefix.pch; sourceTree = "<group>"; };
 		FC6117AA0DA4D80900334DDF /* KS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = KS.icns; path = resources/KS.icns; sourceTree = "<group>"; };
-		FC6119310DA6675C00334DDF /* CTrack_Top.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Top.cpp; path = source/Track_GUI/CTrack_Top.cpp; sourceTree = "<group>"; };
-		FC6119340DA667E000334DDF /* CTrack_Top.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Top.h; path = include/Track_GUI/CTrack_Top.h; sourceTree = "<group>"; };
-		FC6119AD0DA66F2100334DDF /* CKS_TrackEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKS_TrackEditor.h; path = include/Track_GUI/CKS_TrackEditor.h; sourceTree = "<group>"; };
-		FC8A6F7E0DB1F3F6002839EB /* Grid_Patterns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Grid_Patterns.h; path = include/Track_GUI/Grid_Patterns.h; sourceTree = "<group>"; };
 		FCA8CACF0F08EE9E0007514D /* CKSExportForWebGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSExportForWebGUI.cpp; sourceTree = "<group>"; };
 		FCA8CAD00F08EE9E0007514D /* CKSExportForWebGUIPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSExportForWebGUIPane.cpp; sourceTree = "<group>"; };
 		FCA8CAD40F08EEF90007514D /* CKSExportGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSExportGUI.cpp; sourceTree = "<group>"; };
@@ -402,25 +380,8 @@
 		FCA8CBD00F09064F0007514D /* CKSXML_Create_Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Create_Project.h; sourceTree = "<group>"; };
 		FCA8CCDB0F091D440007514D /* CKSXML_Create_Sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Create_Sample.h; sourceTree = "<group>"; };
 		FCA8CCDC0F091D6F0007514D /* CKSXML_Create_Sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSXML_Create_Sample.cpp; sourceTree = "<group>"; };
-		FCAA23070DA6B42100284AE1 /* CTrack_Side.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Side.cpp; path = source/Track_GUI/CTrack_Side.cpp; sourceTree = "<group>"; };
-		FCAA23090DA6B42D00284AE1 /* CTrack_Side.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Side.h; path = include/Track_GUI/CTrack_Side.h; sourceTree = "<group>"; };
-		FCAA23400DA6B7EA00284AE1 /* CTrack_Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Player.cpp; path = source/Track_GUI/CTrack_Player.cpp; sourceTree = "<group>"; };
-		FCAA23420DA6B7F100284AE1 /* CTrack_Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Player.h; path = include/Track_GUI/CTrack_Player.h; sourceTree = "<group>"; };
-		FCAA23A70DA6C22B00284AE1 /* CTrack_File_Browser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_File_Browser.cpp; path = source/Track_GUI/CTrack_File_Browser.cpp; sourceTree = "<group>"; };
-		FCAA23A90DA6C23B00284AE1 /* CTrack_File_Browser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_File_Browser.h; path = include/Track_GUI/CTrack_File_Browser.h; sourceTree = "<group>"; };
-		FCAA24140DA6DD5F00284AE1 /* CTrack_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Setup.h; path = include/Track_GUI/CTrack_Setup.h; sourceTree = "<group>"; };
-		FCAA24150DA6DD6E00284AE1 /* CTrack_Setup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Setup.cpp; path = source/Track_GUI/CTrack_Setup.cpp; sourceTree = "<group>"; };
 		FCAD39980DC138F50075A553 /* CMix_Master_AUX_Insert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CMix_Master_AUX_Insert.cpp; path = source/Mix_GUI/CMix_Master_AUX_Insert.cpp; sourceTree = "<group>"; };
 		FCAD39A90DC139260075A553 /* CMix_Master_AUX_Insert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_Master_AUX_Insert.h; path = include/Mix_GUI/CMix_Master_AUX_Insert.h; sourceTree = "<group>"; };
-		FCB04AEE0DACF9D1007FD3A0 /* CTrack_Files.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Files.cpp; path = source/Track_GUI/CTrack_Files.cpp; sourceTree = "<group>"; };
-		FCB04AF40DACFAD8007FD3A0 /* CTrack_Files.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Files.h; path = include/Track_GUI/CTrack_Files.h; sourceTree = "<group>"; };
-		FCB04B3E0DAD09B7007FD3A0 /* CTrack_Time_Pos.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Time_Pos.cpp; path = source/Track_GUI/CTrack_Time_Pos.cpp; sourceTree = "<group>"; };
-		FCB04B460DAD0A5D007FD3A0 /* CTrack_Time_Pos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Time_Pos.h; path = include/Track_GUI/CTrack_Time_Pos.h; sourceTree = "<group>"; };
-		FCB943CB0DB34C7800CE6D72 /* CTrack_Info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Info.cpp; path = source/Track_GUI/CTrack_Info.cpp; sourceTree = "<group>"; };
-		FCB943CD0DB34C8600CE6D72 /* CTrack_Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Info.h; path = include/Track_GUI/CTrack_Info.h; sourceTree = "<group>"; };
-		FCB9984A0E7B9E2700C00BA3 /* CTrack_Fade_Handle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Fade_Handle.cpp; path = source/Track_GUI/CTrack_Fade_Handle.cpp; sourceTree = "<group>"; };
-		FCB998590E7B9E4400C00BA3 /* CTrack_Fade_Handle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Fade_Handle.h; path = include/Track_GUI/CTrack_Fade_Handle.h; sourceTree = "<group>"; };
-		FCB9FF8B0DBD0ED80097699A /* CTrack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack.cpp; path = source/Track_GUI/CTrack.cpp; sourceTree = "<group>"; };
 		FCBBC1CD0F064A10003201E4 /* CKSProject_ID_GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSProject_ID_GUI.cpp; sourceTree = "<group>"; };
 		FCBBC1CE0F064A10003201E4 /* CKSProject_ID_GUI_Pane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSProject_ID_GUI_Pane.cpp; sourceTree = "<group>"; };
 		FCBBC1DC0F064ADA003201E4 /* CKSProject_ID_GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSProject_ID_GUI.h; sourceTree = "<group>"; };
@@ -431,16 +392,10 @@
 		FCBBC4D90F06842C003201E4 /* CKSXML_Write_Project.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSXML_Write_Project.cpp; sourceTree = "<group>"; };
 		FCBBC54D0F06899C003201E4 /* CKSInternet_Features.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSInternet_Features.cpp; sourceTree = "<group>"; };
 		FCBBC54F0F0689B3003201E4 /* CKSInternet_Features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSInternet_Features.h; sourceTree = "<group>"; };
-		FCBFD35B0DB5E7F400A2EB23 /* CTrack_AUX_Insert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_AUX_Insert.h; path = include/Track_GUI/CTrack_AUX_Insert.h; sourceTree = "<group>"; };
-		FCBFD35D0DB5E81200A2EB23 /* CTrack_AUX_Insert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_AUX_Insert.cpp; path = source/Track_GUI/CTrack_AUX_Insert.cpp; sourceTree = "<group>"; };
-		FCBFD35F0DB5E81900A2EB23 /* CTrack_Insert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Insert.cpp; path = source/Track_GUI/CTrack_Insert.cpp; sourceTree = "<group>"; };
-		FCBFD3970DB5EE4700A2EB23 /* CTrack_Insert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Insert.h; path = include/Track_GUI/CTrack_Insert.h; sourceTree = "<group>"; };
 		FCC44A960E80CF0200F5310F /* CKSSetupGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSSetupGUI.cpp; sourceTree = "<group>"; };
 		FCC44A970E80CF0200F5310F /* CKSSetupGUIPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSSetupGUIPane.cpp; sourceTree = "<group>"; };
 		FCC44A9B0E80CF4600F5310F /* CKSSetupGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSSetupGUI.h; sourceTree = "<group>"; };
 		FCC44A9C0E80CF4600F5310F /* CKSSetupGUIPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSSetupGUIPane.h; sourceTree = "<group>"; };
-		FCC6C5F60E652EE100F5E952 /* CTrack_Playhead.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Playhead.cpp; path = source/Track_GUI/CTrack_Playhead.cpp; sourceTree = "<group>"; };
-		FCC6C5FA0E652EF600F5E952 /* CTrack_Playhead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Playhead.h; path = include/Track_GUI/CTrack_Playhead.h; sourceTree = "<group>"; };
 		FCEF56CC0DC0866E000AD4FE /* CMix_AUX_Insert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_AUX_Insert.h; path = include/Mix_GUI/CMix_AUX_Insert.h; sourceTree = "<group>"; };
 		FCEF56CD0DC0866E000AD4FE /* CMix_Scroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_Scroll.h; path = include/Mix_GUI/CMix_Scroll.h; sourceTree = "<group>"; };
 		FCEF56CE0DC0866E000AD4FE /* CMix_Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_Channel.h; path = include/Mix_GUI/CMix_Channel.h; sourceTree = "<group>"; };
@@ -451,16 +406,63 @@
 		FCEF5A5B0DC0BF93000AD4FE /* CMix_Buss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_Buss.h; path = include/Mix_GUI/CMix_Buss.h; sourceTree = "<group>"; };
 		FCEF5A5D0DC0BFC7000AD4FE /* CMix_Buss.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CMix_Buss.cpp; path = source/Mix_GUI/CMix_Buss.cpp; sourceTree = "<group>"; };
 		FCEF5A5F0DC0BFCD000AD4FE /* CMix_Master.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CMix_Master.cpp; path = source/Mix_GUI/CMix_Master.cpp; sourceTree = "<group>"; };
-		FCF2B84F0DB4C75C006E037C /* CRegion_GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CRegion_GUI.cpp; path = source/Track_GUI/CRegion_GUI.cpp; sourceTree = "<group>"; };
-		FCF2B8510DB4C76E006E037C /* CRegion_GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRegion_GUI.h; path = include/Track_GUI/CRegion_GUI.h; sourceTree = "<group>"; };
-		FCF2B8FE0DB4E48B006E037C /* CTrack_Info_Small.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Info_Small.cpp; path = source/Track_GUI/CTrack_Info_Small.cpp; sourceTree = "<group>"; };
-		FCF2B8FF0DB4E48B006E037C /* CTrack_Info_Big.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrack_Info_Big.cpp; path = source/Track_GUI/CTrack_Info_Big.cpp; sourceTree = "<group>"; };
-		FCF2B9020DB4E497006E037C /* CTrack_Info_Big.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Info_Big.h; path = include/Track_GUI/CTrack_Info_Big.h; sourceTree = "<group>"; };
-		FCF2B9030DB4E497006E037C /* CTrack_Info_Small.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTrack_Info_Small.h; path = include/Track_GUI/CTrack_Info_Small.h; sourceTree = "<group>"; };
 		FCF336D40F1215D200AC1BBA /* CKSUsername_And_Password_Pane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSUsername_And_Password_Pane.h; sourceTree = "<group>"; };
 		FCF336D50F1215D200AC1BBA /* CKSUsername_And_Password_View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSUsername_And_Password_View.h; sourceTree = "<group>"; };
 		FCF336D70F12160700AC1BBA /* CKSUsername_And_Password_Pane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSUsername_And_Password_Pane.cpp; sourceTree = "<group>"; };
 		FCF336D80F12160700AC1BBA /* CKSUsername_And_Password_View.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSUsername_And_Password_View.cpp; sourceTree = "<group>"; };
+		FCF954190F125849005147D1 /* CTrack_Editor_View.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Editor_View.cpp; sourceTree = "<group>"; };
+		FCF9541A0F125849005147D1 /* CTrack_Editor_Pane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Editor_Pane.cpp; sourceTree = "<group>"; };
+		FCF9541B0F125849005147D1 /* CRegion_Pane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRegion_Pane.cpp; sourceTree = "<group>"; };
+		FCF9541C0F125849005147D1 /* CTrack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack.cpp; sourceTree = "<group>"; };
+		FCF9541D0F125849005147D1 /* CTrack_AUX_Insert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_AUX_Insert.cpp; sourceTree = "<group>"; };
+		FCF9541F0F125849005147D1 /* CTrack_Fade_Handle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Fade_Handle.cpp; sourceTree = "<group>"; };
+		FCF954200F125849005147D1 /* CTrack_File_Browser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_File_Browser.cpp; sourceTree = "<group>"; };
+		FCF954210F125849005147D1 /* CTrack_Files.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Files.cpp; sourceTree = "<group>"; };
+		FCF954220F125849005147D1 /* CTrack_Info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Info.cpp; sourceTree = "<group>"; };
+		FCF954230F125849005147D1 /* CTrack_Info_Big.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Info_Big.cpp; sourceTree = "<group>"; };
+		FCF954240F125849005147D1 /* CTrack_Info_Small.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Info_Small.cpp; sourceTree = "<group>"; };
+		FCF954250F125849005147D1 /* CTrack_Insert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Insert.cpp; sourceTree = "<group>"; };
+		FCF954260F125849005147D1 /* CTrack_Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Player.cpp; sourceTree = "<group>"; };
+		FCF954270F125849005147D1 /* CTrack_Player2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Player2.cpp; sourceTree = "<group>"; };
+		FCF954280F125849005147D1 /* CTrack_Playhead.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Playhead.cpp; sourceTree = "<group>"; };
+		FCF9542A0F125849005147D1 /* CTrack_Setup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Setup.cpp; sourceTree = "<group>"; };
+		FCF9542B0F125849005147D1 /* CTrack_Side.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Side.cpp; sourceTree = "<group>"; };
+		FCF9542C0F125849005147D1 /* CTrack_Time_Pos.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Time_Pos.cpp; sourceTree = "<group>"; };
+		FCF9542D0F125849005147D1 /* CTrack_Top.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Top.cpp; sourceTree = "<group>"; };
+		FCF9542F0F125849005147D1 /* CAfterImportTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAfterImportTask.cpp; sourceTree = "<group>"; };
+		FCF954300F125849005147D1 /* CExportClipTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CExportClipTask.cpp; sourceTree = "<group>"; };
+		FCF954310F125849005147D1 /* CExportDSPTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CExportDSPTask.cpp; sourceTree = "<group>"; };
+		FCF954320F125849005147D1 /* CImportAudioTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CImportAudioTask.cpp; sourceTree = "<group>"; };
+		FCF954330F125849005147D1 /* CProgressTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CProgressTask.cpp; sourceTree = "<group>"; };
+		FCF954340F125849005147D1 /* CProgressTaskList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CProgressTaskList.cpp; sourceTree = "<group>"; };
+		FCF9545E0F12590F005147D1 /* CTrack_Editor_View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Editor_View.h; sourceTree = "<group>"; };
+		FCF9545F0F12590F005147D1 /* CTrack_Editor_Pane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Editor_Pane.h; sourceTree = "<group>"; };
+		FCF954600F12590F005147D1 /* CRegion_Pane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRegion_Pane.h; sourceTree = "<group>"; };
+		FCF954610F12590F005147D1 /* CTime_Pos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTime_Pos.h; sourceTree = "<group>"; };
+		FCF954620F12590F005147D1 /* CTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack.h; sourceTree = "<group>"; };
+		FCF954630F12590F005147D1 /* CTrack_AUX_Insert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_AUX_Insert.h; sourceTree = "<group>"; };
+		FCF954640F12590F005147D1 /* CTrack_Fade_Handle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Fade_Handle.h; sourceTree = "<group>"; };
+		FCF954650F12590F005147D1 /* CTrack_File_Browser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_File_Browser.h; sourceTree = "<group>"; };
+		FCF954660F12590F005147D1 /* CTrack_Files.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Files.h; sourceTree = "<group>"; };
+		FCF954670F12590F005147D1 /* CTrack_Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Info.h; sourceTree = "<group>"; };
+		FCF954680F12590F005147D1 /* CTrack_Info_Big.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Info_Big.h; sourceTree = "<group>"; };
+		FCF954690F12590F005147D1 /* CTrack_Info_Small.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Info_Small.h; sourceTree = "<group>"; };
+		FCF9546A0F12590F005147D1 /* CTrack_Insert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Insert.h; sourceTree = "<group>"; };
+		FCF9546B0F12590F005147D1 /* CTrack_Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Player.h; sourceTree = "<group>"; };
+		FCF9546C0F12590F005147D1 /* CTrack_Player2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Player2.h; sourceTree = "<group>"; };
+		FCF9546D0F12590F005147D1 /* CTrack_Playhead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Playhead.h; sourceTree = "<group>"; };
+		FCF9546E0F12590F005147D1 /* CTrack_Regions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Regions.h; sourceTree = "<group>"; };
+		FCF9546F0F12590F005147D1 /* CTrack_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Setup.h; sourceTree = "<group>"; };
+		FCF954700F12590F005147D1 /* CTrack_Side.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Side.h; sourceTree = "<group>"; };
+		FCF954710F12590F005147D1 /* CTrack_Time_Pos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Time_Pos.h; sourceTree = "<group>"; };
+		FCF954720F12590F005147D1 /* CTrack_Top.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Top.h; sourceTree = "<group>"; };
+		FCF954730F12590F005147D1 /* Grid_Patterns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid_Patterns.h; sourceTree = "<group>"; };
+		FCF954750F12590F005147D1 /* CAfterImportTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAfterImportTask.h; sourceTree = "<group>"; };
+		FCF954760F12590F005147D1 /* CExportClipTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CExportClipTask.h; sourceTree = "<group>"; };
+		FCF954770F12590F005147D1 /* CExportDSPTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CExportDSPTask.h; sourceTree = "<group>"; };
+		FCF954780F12590F005147D1 /* CImportAudioTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CImportAudioTask.h; sourceTree = "<group>"; };
+		FCF954790F12590F005147D1 /* CProgressTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CProgressTask.h; sourceTree = "<group>"; };
+		FCF9547A0F12590F005147D1 /* CProgressTaskList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CProgressTaskList.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -569,93 +571,12 @@
 			name = "External Frameworks and Libraries";
 			sourceTree = "<group>";
 		};
-		329BD8AB0EB899AE0084EC13 /* Progress */ = {
-			isa = PBXGroup;
-			children = (
-				320072C00ED1903A0035E5A8 /* CAfterImportTask.h */,
-				329BD8AC0EB899D50084EC13 /* CExportClipTask.h */,
-				329BD8AD0EB899D50084EC13 /* CExportDSPTask.h */,
-				329BD8AE0EB899D50084EC13 /* CImportAudioTask.h */,
-				329BD8AF0EB899D50084EC13 /* CProgressTask.h */,
-				329BD8B00EB899D50084EC13 /* CProgressTaskList.h */,
-			);
-			name = Progress;
-			sourceTree = "<group>";
-		};
-		329BD8B10EB899E40084EC13 /* Progress */ = {
-			isa = PBXGroup;
-			children = (
-				320072BD0ED18FF00035E5A8 /* CAfterImportTask.cpp */,
-				329BD8B20EB89A020084EC13 /* CExportClipTask.cpp */,
-				329BD8B30EB89A020084EC13 /* CExportDSPTask.cpp */,
-				329BD8B40EB89A020084EC13 /* CImportAudioTask.cpp */,
-				329BD8B50EB89A020084EC13 /* CProgressTask.cpp */,
-				329BD8B60EB89A020084EC13 /* CProgressTaskList.cpp */,
-			);
-			name = Progress;
-			sourceTree = "<group>";
-		};
 		32E09DAE0E14BED500FF980B /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				32E09DC20E14BED500FF980B /* libAudioCompress.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		7C52F0510CA010840088316D /* Track_GUI */ = {
-			isa = PBXGroup;
-			children = (
-				329BD8B10EB899E40084EC13 /* Progress */,
-				327FB57D0DEED5BC004ACD89 /* CKS_TrackEditorPane.cpp */,
-				FC6117870DA4D64700334DDF /* CKS_TrackEditor.cpp */,
-				FC6119310DA6675C00334DDF /* CTrack_Top.cpp */,
-				FCAA23070DA6B42100284AE1 /* CTrack_Side.cpp */,
-				FCAA24150DA6DD6E00284AE1 /* CTrack_Setup.cpp */,
-				FCB943CB0DB34C7800CE6D72 /* CTrack_Info.cpp */,
-				FCF2B8FE0DB4E48B006E037C /* CTrack_Info_Small.cpp */,
-				FCF2B8FF0DB4E48B006E037C /* CTrack_Info_Big.cpp */,
-				FCBFD35D0DB5E81200A2EB23 /* CTrack_AUX_Insert.cpp */,
-				FCBFD35F0DB5E81900A2EB23 /* CTrack_Insert.cpp */,
-				FCB04B3E0DAD09B7007FD3A0 /* CTrack_Time_Pos.cpp */,
-				FCC6C5F60E652EE100F5E952 /* CTrack_Playhead.cpp */,
-				FCAA23400DA6B7EA00284AE1 /* CTrack_Player.cpp */,
-				FC3B74230DB1176600A1E7DD /* CTrack_Player2.cpp */,
-				FCB9FF8B0DBD0ED80097699A /* CTrack.cpp */,
-				FCF2B84F0DB4C75C006E037C /* CRegion_GUI.cpp */,
-				FCB9984A0E7B9E2700C00BA3 /* CTrack_Fade_Handle.cpp */,
-				FCAA23A70DA6C22B00284AE1 /* CTrack_File_Browser.cpp */,
-				FCB04AEE0DACF9D1007FD3A0 /* CTrack_Files.cpp */,
-			);
-			name = Track_GUI;
-			sourceTree = "<group>";
-		};
-		7C52F0520CA010B10088316D /* Track_GUI */ = {
-			isa = PBXGroup;
-			children = (
-				329BD8AB0EB899AE0084EC13 /* Progress */,
-				327FB5800DEED5BC004ACD89 /* CKS_TrackEditorPane.h */,
-				FC6119AD0DA66F2100334DDF /* CKS_TrackEditor.h */,
-				FC6119340DA667E000334DDF /* CTrack_Top.h */,
-				FCAA23090DA6B42D00284AE1 /* CTrack_Side.h */,
-				FCAA24140DA6DD5F00284AE1 /* CTrack_Setup.h */,
-				FCB943CD0DB34C8600CE6D72 /* CTrack_Info.h */,
-				FCF2B9020DB4E497006E037C /* CTrack_Info_Big.h */,
-				FCBFD35B0DB5E7F400A2EB23 /* CTrack_AUX_Insert.h */,
-				FCBFD3970DB5EE4700A2EB23 /* CTrack_Insert.h */,
-				FCF2B9030DB4E497006E037C /* CTrack_Info_Small.h */,
-				FCB04B460DAD0A5D007FD3A0 /* CTrack_Time_Pos.h */,
-				FCC6C5FA0E652EF600F5E952 /* CTrack_Playhead.h */,
-				FCAA23420DA6B7F100284AE1 /* CTrack_Player.h */,
-				FC3B741B0DB1175300A1E7DD /* CTrack_Player2.h */,
-				FC202A880DB0C711005DC5E1 /* CTrack.h */,
-				FCF2B8510DB4C76E006E037C /* CRegion_GUI.h */,
-				FCB998590E7B9E4400C00BA3 /* CTrack_Fade_Handle.h */,
-				FCAA23A90DA6C23B00284AE1 /* CTrack_File_Browser.h */,
-				FCB04AF40DACFAD8007FD3A0 /* CTrack_Files.h */,
-				FC8A6F7E0DB1F3F6002839EB /* Grid_Patterns.h */,
-			);
-			name = Track_GUI;
 			sourceTree = "<group>";
 		};
 		7C771DB10CAA4E9A00A78C4E /* SoloMute */ = {
@@ -692,7 +613,7 @@
 				FCA8CB560F08F41F0007514D /* Rack_GUI_DSP */,
 				FCA8CB5B0F08F42E0007514D /* Setup_GUI */,
 				7C771DB60CAA4EC200A78C4E /* SoloMute */,
-				7C52F0520CA010B10088316D /* Track_GUI */,
+				FCF9545D0F12590F005147D1 /* Track_View */,
 				FCF336D30F1215D200AC1BBA /* Username_And_Password_View */,
 				320072BF0ED1900F0035E5A8 /* CKSPreferences.h */,
 				FC6117960DA4D70500334DDF /* CKSPlugIn.h */,
@@ -725,7 +646,7 @@
 				FCA8CAE80F08EF290007514D /* Rack_GUI_DSP */,
 				FCC44A950E80CF0200F5310F /* Setup_GUI */,
 				7C771DB10CAA4E9A00A78C4E /* SoloMute */,
-				7C52F0510CA010840088316D /* Track_GUI */,
+				FCF954180F125849005147D1 /* Track_View */,
 				FCF336D60F12160700AC1BBA /* Username_And_Password_View */,
 				320072BB0ED18FC30035E5A8 /* CKSPreferences.cpp */,
 				84A3ED520E82544700860BC6 /* ResourcesInc.cpp */,
@@ -1094,6 +1015,91 @@
 			path = source/Username_And_Password_View;
 			sourceTree = "<group>";
 		};
+		FCF954180F125849005147D1 /* Track_View */ = {
+			isa = PBXGroup;
+			children = (
+				FCF954190F125849005147D1 /* CTrack_Editor_View.cpp */,
+				FCF9541A0F125849005147D1 /* CTrack_Editor_Pane.cpp */,
+				FCF9541B0F125849005147D1 /* CRegion_Pane.cpp */,
+				FCF9541C0F125849005147D1 /* CTrack.cpp */,
+				FCF9541D0F125849005147D1 /* CTrack_AUX_Insert.cpp */,
+				FCF9541F0F125849005147D1 /* CTrack_Fade_Handle.cpp */,
+				FCF954200F125849005147D1 /* CTrack_File_Browser.cpp */,
+				FCF954210F125849005147D1 /* CTrack_Files.cpp */,
+				FCF954220F125849005147D1 /* CTrack_Info.cpp */,
+				FCF954230F125849005147D1 /* CTrack_Info_Big.cpp */,
+				FCF954240F125849005147D1 /* CTrack_Info_Small.cpp */,
+				FCF954250F125849005147D1 /* CTrack_Insert.cpp */,
+				FCF954260F125849005147D1 /* CTrack_Player.cpp */,
+				FCF954270F125849005147D1 /* CTrack_Player2.cpp */,
+				FCF954280F125849005147D1 /* CTrack_Playhead.cpp */,
+				FCF9542A0F125849005147D1 /* CTrack_Setup.cpp */,
+				FCF9542B0F125849005147D1 /* CTrack_Side.cpp */,
+				FCF9542C0F125849005147D1 /* CTrack_Time_Pos.cpp */,
+				FCF9542D0F125849005147D1 /* CTrack_Top.cpp */,
+				FCF9542E0F125849005147D1 /* Progress */,
+			);
+			name = Track_View;
+			path = source/Track_View;
+			sourceTree = "<group>";
+		};
+		FCF9542E0F125849005147D1 /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				FCF9542F0F125849005147D1 /* CAfterImportTask.cpp */,
+				FCF954300F125849005147D1 /* CExportClipTask.cpp */,
+				FCF954310F125849005147D1 /* CExportDSPTask.cpp */,
+				FCF954320F125849005147D1 /* CImportAudioTask.cpp */,
+				FCF954330F125849005147D1 /* CProgressTask.cpp */,
+				FCF954340F125849005147D1 /* CProgressTaskList.cpp */,
+			);
+			path = Progress;
+			sourceTree = "<group>";
+		};
+		FCF9545D0F12590F005147D1 /* Track_View */ = {
+			isa = PBXGroup;
+			children = (
+				FCF9545E0F12590F005147D1 /* CTrack_Editor_View.h */,
+				FCF9545F0F12590F005147D1 /* CTrack_Editor_Pane.h */,
+				FCF954600F12590F005147D1 /* CRegion_Pane.h */,
+				FCF954610F12590F005147D1 /* CTime_Pos.h */,
+				FCF954620F12590F005147D1 /* CTrack.h */,
+				FCF954630F12590F005147D1 /* CTrack_AUX_Insert.h */,
+				FCF954640F12590F005147D1 /* CTrack_Fade_Handle.h */,
+				FCF954650F12590F005147D1 /* CTrack_File_Browser.h */,
+				FCF954660F12590F005147D1 /* CTrack_Files.h */,
+				FCF954670F12590F005147D1 /* CTrack_Info.h */,
+				FCF954680F12590F005147D1 /* CTrack_Info_Big.h */,
+				FCF954690F12590F005147D1 /* CTrack_Info_Small.h */,
+				FCF9546A0F12590F005147D1 /* CTrack_Insert.h */,
+				FCF9546B0F12590F005147D1 /* CTrack_Player.h */,
+				FCF9546C0F12590F005147D1 /* CTrack_Player2.h */,
+				FCF9546D0F12590F005147D1 /* CTrack_Playhead.h */,
+				FCF9546E0F12590F005147D1 /* CTrack_Regions.h */,
+				FCF9546F0F12590F005147D1 /* CTrack_Setup.h */,
+				FCF954700F12590F005147D1 /* CTrack_Side.h */,
+				FCF954710F12590F005147D1 /* CTrack_Time_Pos.h */,
+				FCF954720F12590F005147D1 /* CTrack_Top.h */,
+				FCF954730F12590F005147D1 /* Grid_Patterns.h */,
+				FCF954740F12590F005147D1 /* Progress */,
+			);
+			name = Track_View;
+			path = include/Track_View;
+			sourceTree = "<group>";
+		};
+		FCF954740F12590F005147D1 /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				FCF954750F12590F005147D1 /* CAfterImportTask.h */,
+				FCF954760F12590F005147D1 /* CExportClipTask.h */,
+				FCF954770F12590F005147D1 /* CExportDSPTask.h */,
+				FCF954780F12590F005147D1 /* CImportAudioTask.h */,
+				FCF954790F12590F005147D1 /* CProgressTask.h */,
+				FCF9547A0F12590F005147D1 /* CProgressTaskList.h */,
+			);
+			path = Progress;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1269,25 +1275,9 @@
 				32AB3E1A0D6D90E000DE1FCD /* CBaseDezipper2.cpp in Sources */,
 				FC6117820DA4D61B00334DDF /* CKSSplashScreen.cpp in Sources */,
 				FC6117840DA4D62A00334DDF /* CKSBaseGUI.cpp in Sources */,
-				FC6117880DA4D64700334DDF /* CKS_TrackEditor.cpp in Sources */,
 				FC61178C0DA4D66F00334DDF /* CKSModule.cpp in Sources */,
 				FC61178E0DA4D68300334DDF /* CKSPlugIn.cpp in Sources */,
-				FC6119320DA6675C00334DDF /* CTrack_Top.cpp in Sources */,
-				FCAA23080DA6B42100284AE1 /* CTrack_Side.cpp in Sources */,
-				FCAA23410DA6B7EA00284AE1 /* CTrack_Player.cpp in Sources */,
-				FCAA23A80DA6C22B00284AE1 /* CTrack_File_Browser.cpp in Sources */,
-				FCAA24160DA6DD6E00284AE1 /* CTrack_Setup.cpp in Sources */,
-				FCB04AEF0DACF9D1007FD3A0 /* CTrack_Files.cpp in Sources */,
-				FCB04B3F0DAD09B7007FD3A0 /* CTrack_Time_Pos.cpp in Sources */,
-				FC3B74240DB1176600A1E7DD /* CTrack_Player2.cpp in Sources */,
-				FCB943CC0DB34C7800CE6D72 /* CTrack_Info.cpp in Sources */,
-				FCF2B8500DB4C75C006E037C /* CRegion_GUI.cpp in Sources */,
-				FCF2B9000DB4E48B006E037C /* CTrack_Info_Small.cpp in Sources */,
-				FCF2B9010DB4E48B006E037C /* CTrack_Info_Big.cpp in Sources */,
-				FCBFD35E0DB5E81200A2EB23 /* CTrack_AUX_Insert.cpp in Sources */,
-				FCBFD3600DB5E81900A2EB23 /* CTrack_Insert.cpp in Sources */,
 				E3AC49700DB7984900D70347 /* CKSMixerGUI.cpp in Sources */,
-				FCB9FF8C0DBD0ED80097699A /* CTrack.cpp in Sources */,
 				FCEF56D80DC086F2000AD4FE /* CMix_AUX_Insert.cpp in Sources */,
 				FCEF56D90DC086F2000AD4FE /* CMix_Scroll.cpp in Sources */,
 				FCEF56DA0DC086F2000AD4FE /* CMix_Channel.cpp in Sources */,
@@ -1296,18 +1286,9 @@
 				FCAD39990DC138F50075A553 /* CMix_Master_AUX_Insert.cpp in Sources */,
 				FC45162A0DC200F900ADDE81 /* CMix_Buss_AUX_Insert.cpp in Sources */,
 				327FB57C0DEED5BC004ACD89 /* CKSMixerGUIPane.cpp in Sources */,
-				327FB57E0DEED5BC004ACD89 /* CKS_TrackEditorPane.cpp in Sources */,
-				FCC6C5F70E652EE100F5E952 /* CTrack_Playhead.cpp in Sources */,
-				FCB9984B0E7B9E2700C00BA3 /* CTrack_Fade_Handle.cpp in Sources */,
 				FCC44A980E80CF0200F5310F /* CKSSetupGUI.cpp in Sources */,
 				FCC44A990E80CF0200F5310F /* CKSSetupGUIPane.cpp in Sources */,
-				329BD8B70EB89A020084EC13 /* CExportClipTask.cpp in Sources */,
-				329BD8B80EB89A020084EC13 /* CExportDSPTask.cpp in Sources */,
-				329BD8B90EB89A020084EC13 /* CImportAudioTask.cpp in Sources */,
-				329BD8BA0EB89A020084EC13 /* CProgressTask.cpp in Sources */,
-				329BD8BB0EB89A020084EC13 /* CProgressTaskList.cpp in Sources */,
 				320072BC0ED18FC30035E5A8 /* CKSPreferences.cpp in Sources */,
-				320072BE0ED18FF00035E5A8 /* CAfterImportTask.cpp in Sources */,
 				FC31AC950EEFE9D400B3D3B7 /* tinystr.cpp in Sources */,
 				FC31AC970EEFE9DE00B3D3B7 /* tinyxml.cpp in Sources */,
 				FC31AC9B0EEFE9ED00B3D3B7 /* tinyxmlparser.cpp in Sources */,
@@ -1344,6 +1325,31 @@
 				FC17A2A50F0E19B70083A614 /* CKSUsername_And_Password_Model.cpp in Sources */,
 				FCF336D90F12160700AC1BBA /* CKSUsername_And_Password_Pane.cpp in Sources */,
 				FCF336DA0F12160700AC1BBA /* CKSUsername_And_Password_View.cpp in Sources */,
+				FCF954350F125849005147D1 /* CTrack_Editor_View.cpp in Sources */,
+				FCF954360F125849005147D1 /* CTrack_Editor_Pane.cpp in Sources */,
+				FCF954370F125849005147D1 /* CRegion_Pane.cpp in Sources */,
+				FCF954380F125849005147D1 /* CTrack.cpp in Sources */,
+				FCF954390F125849005147D1 /* CTrack_AUX_Insert.cpp in Sources */,
+				FCF9543B0F125849005147D1 /* CTrack_Fade_Handle.cpp in Sources */,
+				FCF9543C0F125849005147D1 /* CTrack_File_Browser.cpp in Sources */,
+				FCF9543D0F125849005147D1 /* CTrack_Files.cpp in Sources */,
+				FCF9543E0F125849005147D1 /* CTrack_Info.cpp in Sources */,
+				FCF9543F0F125849005147D1 /* CTrack_Info_Big.cpp in Sources */,
+				FCF954400F125849005147D1 /* CTrack_Info_Small.cpp in Sources */,
+				FCF954410F125849005147D1 /* CTrack_Insert.cpp in Sources */,
+				FCF954420F125849005147D1 /* CTrack_Player.cpp in Sources */,
+				FCF954430F125849005147D1 /* CTrack_Player2.cpp in Sources */,
+				FCF954440F125849005147D1 /* CTrack_Playhead.cpp in Sources */,
+				FCF954460F125849005147D1 /* CTrack_Setup.cpp in Sources */,
+				FCF954470F125849005147D1 /* CTrack_Side.cpp in Sources */,
+				FCF954480F125849005147D1 /* CTrack_Time_Pos.cpp in Sources */,
+				FCF954490F125849005147D1 /* CTrack_Top.cpp in Sources */,
+				FCF9544A0F125849005147D1 /* CAfterImportTask.cpp in Sources */,
+				FCF9544B0F125849005147D1 /* CExportClipTask.cpp in Sources */,
+				FCF9544C0F125849005147D1 /* CExportDSPTask.cpp in Sources */,
+				FCF9544D0F125849005147D1 /* CImportAudioTask.cpp in Sources */,
+				FCF9544E0F125849005147D1 /* CProgressTask.cpp in Sources */,
+				FCF9544F0F125849005147D1 /* CProgressTaskList.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

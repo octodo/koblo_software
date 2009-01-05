@@ -116,8 +116,8 @@ class CPlugInManager;
 #include  "CKSBaseGUI.h"
 //-----------------------
 // Track editor
-#include  "CKS_TrackEditorPane.h"
-#include  "CKS_TrackEditor.h"
+#include  "CTrack_Editor_Pane.h"
+#include  "CTrack_Editor_View.h"
 #include  "CKSExportGUI.h"
 #include  "CKSExportGUIPane.h"
 #include  "CKSImportGUI.h"
@@ -148,7 +148,7 @@ class CPlugInManager;
 #include  "CTrack_File_Browser.h"
 #include  "CTrack_Files.h"
 #include  "CTrack.h"
-#include  "CRegion_GUI.h"
+#include  "CRegion_Pane.h"
 #include  "CTrack_Info.h"
 #include  "CTrack_Info_Small.h"
 #include  "CTrack_Info_Big.h"

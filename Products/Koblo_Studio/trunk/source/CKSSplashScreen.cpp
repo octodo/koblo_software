@@ -63,7 +63,7 @@ void CKSSplashScreen::Destroy()
 {
 	GetPlugIn()->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
 
-	delete dynamic_cast<CKS_TrackEditor*>(this);
+	delete dynamic_cast<CTrack_Editor_View*>(this);
 }
 
 void CKSSplashScreen::GetSize(tuint32* piSizeX, tuint32* piSizeY)

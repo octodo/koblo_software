@@ -16,24 +16,29 @@
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
 
-class CTrack_Top;
-class CTrack_Side;
-//class CTrack_Time_Pos;
-class CTrack_Player;
-class CTrack_File_Browser;
-class CTrack_System_Info;
+/*! \brief the track editor is the main window on windows
+ *	from this window the user does all the audio edditing
+ *	the window is organized in five panes
+ */
+
+
+//class CTrack_Top;
+//class CTrack_Side;
+//class CTrack_Player;
+//class CTrack_File_Browser;
+//class CTrack_System_Info;
 
 class CSoloMuteContainer;
 
 class CKSDSP;
 
 
-class CKS_TrackEditor : public virtual CKSBaseGUI, public virtual ge::IEventReceiver, public virtual ITimerCallback
+class CTrack_Editor_View : public virtual CKSBaseGUI, public virtual ge::IEventReceiver, public virtual ITimerCallback
 {
 public:
-	CKS_TrackEditor(CKSPlugIn* pPlugIn, de::IParameterManager* pParmMan);
+	CTrack_Editor_View(CKSPlugIn* pPlugIn, de::IParameterManager* pParmMan);
 
-	virtual ~CKS_TrackEditor();
+	virtual ~CTrack_Editor_View();
 
 	//! CBaseGUI override
 	virtual void KSPI_CALL OnTimer();
@@ -77,13 +82,11 @@ public:
 
 	virtual void UpdateChannelName(tint32 iChannel, const std::string& sName);
 	
-//	virtual void AddTrack();
-//	virtual void DeleteTrack();
-//	virtual void SelectTrack(tint32 iID);
 
-	virtual tbool DoKeyDown(ge::EKey Key)  {return dynamic_cast<CKS_TrackEditorPane*>(mpPane)->DoKeyDown(Key);}
+
+	virtual tbool DoKeyDown(ge::EKey Key)  {return dynamic_cast<CTrack_Editor_Pane*>(mpPane)->DoKeyDown(Key);}
 	
-	virtual tbool DoKeyUp(ge::EKey Key)  {return dynamic_cast<CKS_TrackEditorPane*>(mpPane)->DoKeyUp(Key);}
+	virtual tbool DoKeyUp(ge::EKey Key)  {return dynamic_cast<CTrack_Editor_Pane*>(mpPane)->DoKeyUp(Key);}
 
 	virtual tbool WindowClosed(void* pWnd);
 
@@ -95,10 +98,6 @@ protected:
 
 	//! Parameter/controls linking
 	virtual void ConnectControls();
-	
-	
-	
-	
 
 	
 	// Lasse, added 2007-10-02
