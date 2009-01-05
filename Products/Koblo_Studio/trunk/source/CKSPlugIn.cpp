@@ -7,6 +7,7 @@
 
 
 extern CKSDSP* gpDSPEngine = NULL;
+extern CKSPlugIn* gpApplication = NULL;
 
 
 const tint giPolyphony = 4;
@@ -44,7 +45,7 @@ mbRecord(false),
 CKSXML_Create_Project(this),
 CKSXML_Read_Project(this),
 CKSXML_Write_Project(this),
-CKSXML_Sign_In(this),
+CKSUsername_And_Password_Model(this),
 
 
 CKSInternet_Features(this),
@@ -53,8 +54,9 @@ CKSXML_Create_Sample(this)
 
 {
 	gpDSPEngine = dynamic_cast<CKSDSP*>(mpDSPEngine);
+	gpApplication = this;
 
-	dynamic_cast<CKSDSP*>(mpDSPEngine)->SetChannels(2);
+	gpDSPEngine->SetChannels(2);
 	
 		
 	mpDezipper->SetCallback(dynamic_cast<IBaseDezipperCallback*>(this));
@@ -208,7 +210,7 @@ kspi::IGUI* CKSPlugIn::CreateGUI(tint32 iIndex)
 			break;
 			
 		case giSign_In_Window:
-			pGUI = dynamic_cast<CBaseGUI*>(new CKSSign_In_GUI(this, mpParmMan));
+			pGUI = dynamic_cast<CBaseGUI*>(new CKSUsername_And_Password_View(this, mpParmMan));
 			break;
 		
 		default: {
@@ -1237,7 +1239,7 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 
 		case ID_SETUP_COLLABORATION:
 			{
-				MenuCollaboration();
+				Set_Project_License();
 			}
 			break;
 			
@@ -1281,11 +1283,14 @@ void CKSPlugIn::OnMenuEvent(const tchar* pszString)
 		MenuCollaboration();
 	}
 */	
-	else if (s.compare("Setup@Sign In") == 0) {
-		Open_Sign_In_Dialog();
+	else if (s.compare("Setup@Set Username and Password") == 0) {
+		Open_Username_And_Password_Dialog();
 	}
-	else if (s.compare("Setup@Sign Out") == 0) {
-		On_Menu_Sign_Out();
+	else if (s.compare("Setup@Clear Username and Password") == 0) {
+		Clear_Username_And_Password();
+	}
+	else if (s.compare("Setup@Project License") == 0) {
+		Set_Project_License();
 	}
 	
 	
@@ -1558,36 +1563,7 @@ void CKSPlugIn::MenuSetupAudio()
 	Msg.pDataIn	= (void*)&sData;
 	Send_Msg_To_All_Panes(&Msg);		
 } // MenuSetupAudio
-/*
-void CKSPlugIn::MenuCollaboration()
-{
-	
-	
-	//	CleanProject(0);
-	
-	
-	//	ReadOnlineXML("/projects/13/branches/1.xml");
-	
-	//	static int iNr =	0;
-	
-	//	Write_XML("funky beats.xml");
-}
- */
-/*
-void CKSPlugIn::MenuSignIn()
-{
-	
-	tbool bTest = (GetGlobalParm(giSign_In_Window, giSectionGUI) != 0);
-	if(!bTest){
-		
-		SetGlobalParm(giParamID_Show_Sign_In_Window,true, giSectionGUI);
-	}
-	else
-		GetModule()->GetHost()->ActivateWindow(giSign_In_Window);
-	
 
-}
-*/
 
 void CKSPlugIn::Export(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
 {
@@ -6036,3 +6012,10 @@ void CKSPlugIn::ProcessNonInPlace_NoLock(tfloat** ppfSamplesOut, const tfloat** 
 		}
 	}
 } // ProcessNonInPlace_NoLock
+
+void CKSPlugIn::Set_Project_License()
+{
+	SetGlobalParm(giParamID_Show_Export_For_Web_Window, true, giSectionGUI);
+	
+	
+}

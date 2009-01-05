@@ -1,4 +1,4 @@
-// Copyright 2004, 2005,2006,2007,2008 Koblo http://koblo.com
+// Copyright 2004, 2005,2006,2007,2008, 2009 Koblo http://koblo.com
 //
 // This file is part of the Koblo SDK.
 //
@@ -15,12 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
-//! Called when a buffer of samples needs to be filled
-/*!
- \param iID [in]: ID of callback as when SetCallback was called.
- \param pfOut [out]: Buffer to be filled
- \param iCount [in]: Number of samples to fill in buffer
- */
+
+
+
+
+
+
+
+
+
 
 /*! \class CKSXML_Create_Project
   \brief class that creates an empty project on koblo.com 

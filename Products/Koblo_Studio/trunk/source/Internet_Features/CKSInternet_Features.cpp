@@ -8,7 +8,7 @@ mpKSPlugIn(pKSPlugIn),
 CKSXML_Create_Project(pKSPlugIn),
 CKSXML_Write_Project(pKSPlugIn),
 CKSXML_Read_Project(pKSPlugIn),
-CKSXML_Sign_In(pKSPlugIn),
+CKSUsername_And_Password_Model(pKSPlugIn),
 mbUpload_Project(false)
 {
 	
@@ -19,36 +19,8 @@ CKSInternet_Features::~CKSInternet_Features()
 	
 }
 
-void CKSInternet_Features::Open_Sign_In_Dialog()
-{
-	Get_User_Name_And_Password();
-	
-	
-	tbool bTest = (mpKSPlugIn->GetGlobalParm(giSign_In_Window, giSectionGUI) != 0);
-	if(!bTest){
-		
-		mpKSPlugIn->SetGlobalParm(giParamID_Show_Sign_In_Window,true, giSectionGUI);
-	}
-	else
-		mpKSPlugIn->GetModule()->GetHost()->ActivateWindow(giSign_In_Window);
-	
-} 
 
-void CKSInternet_Features::On_Menu_Sign_Out()
-{
-	Sign_Out();
-}
 
-void CKSInternet_Features::Sign_In()
-{
-	// Called when the user presses "Ok" in the sign in dialog
-	// if we called because the user wanted to upload a project and wasent signed in
-	if(mbUpload_Project && mpKSPlugIn->Create_Project_Handshake()){
-		mbUpload_Project = false;
-		Commit_Project();
-	}
-		
-}
 
 
 void CKSInternet_Features::On_Menu_Download_Project()
@@ -95,13 +67,13 @@ void CKSInternet_Features::On_Menu_Upload_Project()
 		
 	}
 	else{
-	   Open_Sign_In_Dialog();
+	   Open_Username_And_Password_Dialog();
 	}
 }
 
 void CKSInternet_Features::On_Menu_Commit_Project()
 {
-	Commit_Project();
+	Upload_Project();
 }
 
 
@@ -148,7 +120,7 @@ void CKSInternet_Features::Load_Project(tint32 iProjectID)
 
 
 
-void CKSInternet_Features::Commit_Project()
+void CKSInternet_Features::Upload_Project()
 {
 	tint32 iProject_ID = mpKSPlugIn->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);	
 	mpKSPlugIn->Upload_Project_As_XML_File_To_Koblo( iProject_ID);

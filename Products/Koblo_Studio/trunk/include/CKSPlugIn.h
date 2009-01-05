@@ -27,6 +27,7 @@ class CKSDSP;
 const tint32 giAudioMaxBufferSize = 32;
 
 extern CKSDSP* gpDSPEngine;
+extern CKSPlugIn* gpApplication;
 
 class CMIDIEvent
 {
@@ -181,8 +182,6 @@ public:
 	virtual tbool MenuFileSaveProject(tbool bOverwriteIcons = false);
 	virtual void MenuFileDistributeMix(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize);
 	virtual void MenuSetupAudio();
-//	virtual void MenuCollaboration();
-//	virtual void MenuSignIn();
 	virtual void MenuFileImportAudio();
 	
 
@@ -563,6 +562,9 @@ protected:
 	
 	tbool mbWasPlayingWhenMovePlayheadWasStarted;
 	tuint64 muiMoveToPos;
+	
+	
+	void Set_Project_License();
 	
 	
 

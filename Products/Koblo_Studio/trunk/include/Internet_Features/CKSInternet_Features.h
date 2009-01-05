@@ -35,8 +35,7 @@ class CKSInternet_Features
 public virtual CKSXML_Create_Project,
 public virtual CKSXML_Write_Project,
 public virtual CKSXML_Read_Project,
-
-public virtual CKSXML_Sign_In
+public virtual CKSUsername_And_Password_Model
 
 //public virtual CKSXML_Create_Sample
 {
@@ -67,7 +66,7 @@ private:
 	//! password description
 	std::string msPassword;
 	
-	tbool mbUpload_Project;
+	
 	
 		
 		
@@ -88,17 +87,9 @@ public:
 	//! called from the file menu
 	virtual void On_Menu_Upload_Project();
 	
-	//! called from the file menu opens the sign in dialog
-	virtual void Open_Sign_In_Dialog();
-	
-	//! called from the file menu deletes username and password 
-	virtual void On_Menu_Sign_Out();
-	
 	//! called from the file menu
 	virtual void On_Menu_Commit_Project();
 
-	//! Called when the user presses "Ok" in the sign in dialog
-	void Sign_In();
 	//! clean project and read it from koblo.com
 	void Download_Project(tint32 iProjectID);
 	//! read project from koblo.com
@@ -106,7 +97,7 @@ public:
 	// Load project
 	void Load_Project(tint32 iProjectID);
 	//! upload project to koblo.com
-	void Commit_Project();
+	void Upload_Project();
 	
 	//! prepare wave files for upload
 	void Compress_Wave_File(std::string sSample);
@@ -146,7 +137,7 @@ public:
 	
 	tbool Get_Remember_Me(){ return mbRemember_Me;}
 	
-	
+	tbool mbUpload_Project;
 		
 };
 

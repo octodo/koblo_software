@@ -2,7 +2,7 @@
 #include "KSOS.h"
 
 
-CKSSign_In_GUI_Pane::CKSSign_In_GUI_Pane(CBasePane* pPaneParent, CBaseGUI* pGUI)
+CKSUsername_And_Password_Pane::CKSUsername_And_Password_Pane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	: CBasePane(pPaneParent, pGUI)
 {
 //	CBaseDSPEngine* pD = GetPlugIn()->GetDSPEngine();
@@ -10,12 +10,12 @@ CKSSign_In_GUI_Pane::CKSSign_In_GUI_Pane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	
 }
 
-CKSSign_In_GUI_Pane::~CKSSign_In_GUI_Pane()
+CKSUsername_And_Password_Pane::~CKSUsername_And_Password_Pane()
 {
 	
 }
 
-void CKSSign_In_GUI_Pane::Init()
+void CKSUsername_And_Password_Pane::Init()
 {
 	mpKSPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
 	
@@ -30,7 +30,7 @@ void CKSSign_In_GUI_Pane::Init()
 	
 	
 	// user name
-	mpUser_Name_Txt = CreateDisplay(giCtrl_Sign_In_User_Name_Display, 
+	mpUser_Name_Txt = CreateDisplay(giCtrl_User_Name_Display, 
 									ge::SPos(23, 32),  
 									ge::SSize(197, 16), 
 									CreateFont(Generic128, IDF_Font_Fuxley_712, ge::SRGB(10, 10, 10)),
@@ -41,7 +41,7 @@ void CKSSign_In_GUI_Pane::Init()
 	
 	
 	// password
-	mpPassword_Txt = CreateDisplay(giCtrl_Sign_In_Password_Display, 
+	mpPassword_Txt = CreateDisplay(giCtrl_Password_Display, 
 									ge::SPos(23, 32+42),  
 									ge::SSize(197, 16), 
 									CreateFont(Generic128, IDF_Font_Fuxley_712, ge::SRGB(10, 10, 10)),
@@ -59,20 +59,20 @@ void CKSSign_In_GUI_Pane::Init()
 	
 	
 	// remember username and password
-	mpRemember_Me_Button = Create2StateButton(giCtrl_Sign_In_Remember_Me, IDB_Button_Remember_Me, ge::SPos(23, 105), false);
+	mpRemember_Me_Button = Create2StateButton(giCtrl_Remember_Me, IDB_Button_Remember_Me, ge::SPos(23, 105), false);
 	
 	// cancel button
-	CreateButton(giCtrl_Sign_In_Cancel, IDB_Button_Cancel, ge::SPos(119, 149), false);
+	CreateButton(giCtrl_Username_And_Password_Cancel, IDB_Button_Cancel, ge::SPos(119, 149), false);
 	
 	// ok button
-	CreateButton(giCtrl_Sign_In_OK, IDB_Button_OK, ge::SPos(180, 149), false);
+	CreateButton(giCtrl_Username_And_Password_OK, IDB_Button_OK, ge::SPos(180, 149), false);
 	
 	
 	
 	
 }
 
-void CKSSign_In_GUI_Pane::ConnectControls()
+void CKSUsername_And_Password_Pane::ConnectControls()
 {
 //	RegisterGlobalControl(giSectionGUI, giCtrl_Export_Selection,   giParamID_Export_Type);
 	
@@ -82,16 +82,16 @@ void CKSSign_In_GUI_Pane::ConnectControls()
 	
 }
 
-void CKSSign_In_GUI_Pane::UpdateGUIData(tint32 iID, tint32 iValue)
+void CKSUsername_And_Password_Pane::UpdateGUIData(tint32 iID, tint32 iValue)
 {
 }
 
-void CKSSign_In_GUI_Pane::OnTimer(tint32 iTimerID)
+void CKSUsername_And_Password_Pane::OnTimer(tint32 iTimerID)
 {
 }
 
 
-void CKSSign_In_GUI_Pane::SendMsgFromTop(SMsg* pMsg)
+void CKSUsername_And_Password_Pane::SendMsgFromTop(SMsg* pMsg)
 {
 	switch(pMsg->iOpcode) 
 	{
@@ -106,7 +106,7 @@ void CKSSign_In_GUI_Pane::SendMsgFromTop(SMsg* pMsg)
 }
 
 
-void CKSSign_In_GUI_Pane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
+void CKSUsername_And_Password_Pane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 {
 
 	GetParmMan()->ControlUpdate(miPaneID, pControl->GetID(), iValueNew);
@@ -114,7 +114,7 @@ void CKSSign_In_GUI_Pane::EventValueChange(ge::IControl* pControl, tint32 iValue
 	
 	switch (pControl->GetID()) {
 		// cancel	
-		case giCtrl_Sign_In_Cancel:{
+		case giCtrl_Username_And_Password_Cancel:{
 			// close sign in window
 			GetPlugIn()->SetGlobalParm(giParamID_Show_Sign_In_Window, 0, giSectionGUI);
 			// restore remember me
@@ -130,7 +130,7 @@ void CKSSign_In_GUI_Pane::EventValueChange(ge::IControl* pControl, tint32 iValue
 			break;
 		}
 		// ok	
-		case giCtrl_Sign_In_OK:{
+		case giCtrl_Username_And_Password_OK:{
 			// close sign in window
 			GetPlugIn()->SetGlobalParm(giParamID_Show_Sign_In_Window, 0, giSectionGUI);
 			// set remember me
@@ -142,10 +142,8 @@ void CKSSign_In_GUI_Pane::EventValueChange(ge::IControl* pControl, tint32 iValue
 			// password
 			mpPassword_Txt->GetText(pszTxt);
 			mpKSPlugIn->Set_Password(pszTxt);
-			// sign in
-			mpKSPlugIn->Sign_In();
-			// save sign in info
-			mpKSPlugIn->Save_User_Name_And_Password();
+			// save sign in info, commit project if needed
+			mpKSPlugIn->On_Username_And_Password_OK();
 			
 			break;
 		}
