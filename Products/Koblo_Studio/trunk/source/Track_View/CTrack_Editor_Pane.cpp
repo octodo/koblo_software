@@ -270,58 +270,58 @@ void CTrack_Editor_Pane::UpdateGUIData(tint32 iID, tint32 iValue)
 	switch(iID){
 		case giParamID_Show_Mix_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(giMix_Window);
+				gpApplication->GetModule()->GetHost()->HideWindow(giMix_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giMix_Window);
+				gpApplication->GetModule()->GetHost()->ActivateWindow(giMix_Window);
 			break;
 		}
 		case giParamID_Show_AUX_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(giRack_Window);
+				gpApplication->GetModule()->GetHost()->HideWindow(giRack_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giRack_Window);
+				gpApplication->GetModule()->GetHost()->ActivateWindow(giRack_Window);
 			break;
 		}
 		case giParamID_Show_Export_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(giExport_Audio_Window);
+				gpApplication->GetModule()->GetHost()->HideWindow(giExport_Audio_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giExport_Audio_Window);
+				gpApplication->GetModule()->GetHost()->ActivateWindow(giExport_Audio_Window);
 			break;
 		}
 		case giParamID_Show_Export_For_Web_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(giExport_For_Web_Window);
+				gpApplication->GetModule()->GetHost()->HideWindow(giExport_For_Web_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giExport_For_Web_Window);
+				gpApplication->GetModule()->GetHost()->ActivateWindow(giExport_For_Web_Window);
 			break;
 		}
 		case giParamID_Show_Import_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(giImport_Audio_Window);
+				gpApplication->GetModule()->GetHost()->HideWindow(giImport_Audio_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giImport_Audio_Window);
+				gpApplication->GetModule()->GetHost()->ActivateWindow(giImport_Audio_Window);
 			break;
 		}
 		case giParamID_Show_Projec_ID_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(giProject_ID_Window);
+				gpApplication->GetModule()->GetHost()->HideWindow(giProject_ID_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giProject_ID_Window);
+				gpApplication->GetModule()->GetHost()->ActivateWindow(giProject_ID_Window);
 			break;
 		}
 		case giParamID_Show_Sign_In_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(giSign_In_Window);
+				gpApplication->GetModule()->GetHost()->HideWindow(giSign_In_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giSign_In_Window);
+				gpApplication->GetModule()->GetHost()->ActivateWindow(giSign_In_Window);
 			break;
 		}
 		case giParamID_Audio_Setup_Window:{
 			if(iValue == 0 )
-				GetPlugIn()->GetModule()->GetHost()->HideWindow(giAudio_Setup_Window);
+				gpApplication->GetModule()->GetHost()->HideWindow(giAudio_Setup_Window);
 			else
-				GetPlugIn()->GetModule()->GetHost()->ActivateWindow(giAudio_Setup_Window);
+				gpApplication->GetModule()->GetHost()->ActivateWindow(giAudio_Setup_Window);
 			break;
 		}
 		case giParamID_Zoom:{
@@ -880,14 +880,14 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 		case ge::KeyEqual:{
 			
 			// Show/hide Mix Window
-			tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Show_Mix_Window, giSectionGUI) != 0);
-			tbool bReallyVisible = GetPlugIn()->GetModule()->GetHost()->IsWindowVisible(giMix_Window) == 0 ? false : true;
+			tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Mix_Window, giSectionGUI) != 0);
+			tbool bReallyVisible = gpApplication->GetModule()->GetHost()->IsWindowVisible(giMix_Window) == 0 ? false : true;
 			if (bTest != bReallyVisible) {
-				//GetPlugIn()->SetGlobalParm(giParamID_Show_Mix_Window, !bTest, giSectionGUI);
+				//gpApplication->SetGlobalParm(giParamID_Show_Mix_Window, !bTest, giSectionGUI);
 				gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 			}
 			gpApplication->GetParmMan()->Set(true, !bReallyVisible, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
-			//GetPlugIn()->SetGlobalParm(giParamID_Show_Mix_Window, !bReallyVisible, giSectionGUI);
+			//gpApplication->SetGlobalParm(giParamID_Show_Mix_Window, !bReallyVisible, giSectionGUI);
 			return true;
 		}
 		/*
@@ -900,8 +900,8 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 		case ge::KeySlash:{
 		
 		// Show/hide AUX Window
-			tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Show_AUX_Window, giSectionGUI) != 0);
-			tbool bReallyVisible = (GetPlugIn()->GetModule()->GetHost()->IsWindowVisible(giRack_Window) != 0);
+			tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_AUX_Window, giSectionGUI) != 0);
+			tbool bReallyVisible = (gpApplication->GetModule()->GetHost()->IsWindowVisible(giRack_Window) != 0);
 			if (bTest != bReallyVisible) {
 				gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Show_AUX_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 			}
@@ -916,21 +916,21 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			break;
 		}
 		case ge::Key1: {
-			GetPlugIn()->SetGlobalParm(giParamID_Tool_Selected,giTool_Hand, giSectionGUI);
+			gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Hand, giSectionGUI);
 			break;
 		}
 		
 		case ge::Key2: {
-			GetPlugIn()->SetGlobalParm(giParamID_Tool_Selected,giTool_Trim, giSectionGUI);
+			gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Trim, giSectionGUI);
 			break;
 		}
 		
 		case ge::Key3: {
-			GetPlugIn()->SetGlobalParm(giParamID_Tool_Selected,giTool_Select, giSectionGUI);
+			gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Select, giSectionGUI);
 			break;
 		}
 		case ge::Key4: {
-			GetPlugIn()->SetGlobalParm(giParamID_Tool_Selected,giTool_Cut, giSectionGUI);
+			gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Cut, giSectionGUI);
 			break;
 		}
 		case ge::Keyd: {
@@ -938,15 +938,15 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			break;
 		}
 		case ge::Keyf: {
-			tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Show_Fade, giSectionGUI) != 0);
+			tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Fade, giSectionGUI) != 0);
 			gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Show_Fade, de::IParameterManager::TypeGlobal, giSectionGUI);
-			//GetPlugIn()->SetGlobalParm(giParamID_Show_Fade,!bTest, giSectionGUI);
+			//gpApplication->SetGlobalParm(giParamID_Show_Fade,!bTest, giSectionGUI);
 			break;
 		}
 		case ge::Keyg: {
-			tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Grid, giSectionGUI) != 0);
+			tbool bTest = (gpApplication->GetGlobalParm(giParamID_Grid, giSectionGUI) != 0);
 			gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Grid, de::IParameterManager::TypeGlobal, giSectionGUI);
-			//GetPlugIn()->SetGlobalParm(giParamID_Grid,!bTest, giSectionGUI);
+			//gpApplication->SetGlobalParm(giParamID_Grid,!bTest, giSectionGUI);
 			break;
 		}
 		case ge::Keyk: {
@@ -955,16 +955,16 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			break;
 		}
 		case ge::Keyl: {
-			tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Loop_On, giSectionGlobal) != 0);
+			tbool bTest = (gpApplication->GetGlobalParm(giParamID_Loop_On, giSectionGlobal) != 0);
 			gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Loop_On, de::IParameterManager::TypeGlobal, giSectionGlobal);
-			//GetPlugIn()->SetGlobalParm(giParamID_Loop_On,!bTest, giSectionGlobal);
+			//gpApplication->SetGlobalParm(giParamID_Loop_On,!bTest, giSectionGlobal);
 			break;
 		}
 		case ge::Keyo: {
 			
 			mbZoomFlipFlop = !mbZoomFlipFlop;
 			if(mbZoomFlipFlop){
-				miStoredZoom = GetPlugIn()->GetGlobalParm(giParamID_Zoom, giSectionGUI);
+				miStoredZoom = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI);
 				gpApplication->GetParmMan()->Set(true, giZoom_Levels - 10, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
 			}
 			else{
@@ -979,9 +979,9 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			break;
 		}
 		case ge::Keyw: {
-			tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Show_Waveform, giSectionGUI) != 0);
+			tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Waveform, giSectionGUI) != 0);
 			gpApplication->GetParmMan()->Set(true, bTest, giParamID_Show_Waveform, de::IParameterManager::TypeGlobal, giSectionGUI);
-			//GetPlugIn()->SetGlobalParm(giParamID_Show_Waveform,!bTest, giSectionGUI);
+			//gpApplication->SetGlobalParm(giParamID_Show_Waveform,!bTest, giSectionGUI);
 			break;
 		}
 		/*
@@ -991,19 +991,19 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			static tint32 iTest = 0;
 			iTest += 10;
 			if(iTest > 100) iTest = 0;
-			CKSPlugIn* pPlugIn	=	dynamic_cast<CKSPlugIn*>(GetPlugIn());
+			CKSPlugIn* pPlugIn	=	dynamic_cast<CKSPlugIn*>(gpApplication);
 			pPlugIn->Set_Progress(iTest != 0, iTest);
 
 			break;
 		}
 		*/
 		case ge::KeyMinus: {
-			tint32 iTest = GetPlugIn()->GetGlobalParm(giParamID_Zoom, giSectionGUI) -1;
+			tint32 iTest = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI) -1;
 			gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
 			break;
 		}
 		case ge::KeyPlus: {
-			tint32 iTest = GetPlugIn()->GetGlobalParm(giParamID_Zoom, giSectionGUI) +1;
+			tint32 iTest = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI) +1;
 			gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
 			break;
 		}
@@ -1028,7 +1028,7 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 
 void CTrack_Editor_Pane::Do_Delete()
 {
-//	tint32 iTool = GetPlugIn()->GetGlobalParm(giParamID_Tool_Selected, giSectionGUI);
+//	tint32 iTool = gpApplication->GetGlobalParm(giParamID_Tool_Selected, giSectionGUI);
 	
 	gpDSPEngine->Delete_Selection();
 	

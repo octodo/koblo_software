@@ -187,14 +187,14 @@ void CKSExportGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew
 	switch(pControl->GetID()) {
 		case giCtrl_Export:{
 			
-			GetPlugIn()->SetGlobalParm(giParamID_Show_Export_Window, 0, giSectionGUI);
+			gpApplication->SetGlobalParm(giParamID_Show_Export_Window, 0, giSectionGUI);
 			
-			dynamic_cast<CKSPlugIn*>(GetPlugIn())->Export(meAudioCodec, miAudioCodecQuality, miChannels, miTailMS, mbNormalize);
+			gpApplication->Export(meAudioCodec, miAudioCodecQuality, miChannels, miTailMS, mbNormalize);
 			break;
 		}
 		case giCtrl_Cancel_Export:{
 			
-			GetPlugIn()->SetGlobalParm(giParamID_Show_Export_Window, 0, giSectionGUI);
+			gpApplication->SetGlobalParm(giParamID_Show_Export_Window, 0, giSectionGUI);
 			
 			break;
 		}

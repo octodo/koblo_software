@@ -190,7 +190,7 @@ void CMix_AUX_Insert::PreparePopups()
 		bUpdate = true;*/
 	}
 	
-	tint32 iInputChannels = dynamic_cast<CKSPlugIn*>(GetGUI()->GetPlugIn())->GetNrOfInputChannels();
+	tint32 iInputChannels = gpApplication->GetNrOfInputChannels();
 
 	ge::IPopupMenu::SMenuItemList* pMenuMono = new ge::IPopupMenu::SMenuItemList();
 	ge::IPopupMenu::SMenuItemList* pMenuStereo = new ge::IPopupMenu::SMenuItemList();

@@ -165,7 +165,7 @@ void CMix_Channel::EventGeneric(ge::IControl* pControl, void* pEventData)
 	switch(iID) {
 		case giCtr_Mix_Channel_Text:
 			std::string sText = std::string((const tchar*)pEventData);
-			dynamic_cast<CKSPlugIn*>(mpGUI->GetPlugIn())->SetChannelName(miID, sText);
+			gpApplication->SetChannelName(miID, sText);
 			break;
 	}
 	
@@ -176,7 +176,7 @@ void CMix_Channel::EventGeneric(ge::IControl* pControl, void* pEventData)
 		if (pEvent->bInsideControlRect) {
 			
 			if (pEvent->iMsg == ge::LeftButtonDown) {
-					dynamic_cast<CKSPlugIn*>(GetPlugIn())->SelectTrack(miID);
+					gpApplication->SelectTrack(miID);
 
 			}
 		}

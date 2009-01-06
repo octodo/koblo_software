@@ -115,7 +115,7 @@ void CKSUsername_And_Password_Pane::EventValueChange(ge::IControl* pControl, tin
 		// cancel	
 		case giCtrl_Username_And_Password_Cancel:{
 			// close sign in window
-			GetPlugIn()->SetGlobalParm(giParamID_Show_Sign_In_Window, 0, giSectionGUI);
+			gpApplication->SetGlobalParm(giParamID_Show_Sign_In_Window, 0, giSectionGUI);
 			// restore remember me
 			mpRemember_Me_Button->SetValue(gpApplication->Get_Remember_Me());
 			// restore username text
@@ -131,7 +131,7 @@ void CKSUsername_And_Password_Pane::EventValueChange(ge::IControl* pControl, tin
 		// ok	
 		case giCtrl_Username_And_Password_OK:{
 			// close sign in window
-			GetPlugIn()->SetGlobalParm(giParamID_Show_Sign_In_Window, 0, giSectionGUI);
+			gpApplication->SetGlobalParm(giParamID_Show_Sign_In_Window, 0, giSectionGUI);
 			// set remember me
 			gpApplication->Set_Remember_Me( mpRemember_Me_Button->GetValue());
 			// user name

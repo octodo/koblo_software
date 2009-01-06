@@ -12,7 +12,7 @@ CKSBaseGUI::CKSBaseGUI(CBasePlugIn* pPlugIn, de::IParameterManager* pParmMan)
 
 tbool CKSBaseGUI::OnKeyDown(ge::EKey Key)
 {
-	return dynamic_cast<CKSPlugIn*>(GetPlugIn())->OnKeyDown(Key);
+	return dynamic_cast<CKSPlugIn*>(gpApplication)->OnKeyDown(Key);
 }
 
 

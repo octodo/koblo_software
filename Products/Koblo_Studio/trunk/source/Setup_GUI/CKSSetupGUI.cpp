@@ -14,7 +14,7 @@ CKSSetupGUI::~CKSSetupGUI()
 
 void CKSSetupGUI::Destroy()
 {
-	GetPlugIn()->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
+	gpApplication->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
 
 	delete dynamic_cast<CKSSetupGUI*>(this);
 }
@@ -65,7 +65,7 @@ void CKSSetupGUI::EventGeneric(ge::IControl* pControl, void *pEventData)
 
 void CKSSetupGUI::GetName(tchar* psz)
 {
-	strcpy((char*)psz, GetPlugIn()->GetProductName().c_str());
+	strcpy((char*)psz, gpApplication->GetProductName().c_str());
 }
 
 void CKSSetupGUI::OnTimer()

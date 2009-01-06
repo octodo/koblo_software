@@ -13,7 +13,7 @@ CKSPlugInGUI::~CKSPlugInGUI()
 
 void CKSPlugInGUI::Destroy()
 {
-	GetPlugIn()->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
+	gpApplication->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
 
 	delete dynamic_cast<CKSPlugInGUI*>(this);
 }
@@ -62,7 +62,7 @@ void CKSPlugInGUI::EventGeneric(ge::IControl* pControl, void *pEventData)
 
 void CKSPlugInGUI::GetName(tchar* psz)
 {
-	strcpy((char*)psz, GetPlugIn()->GetProductName().c_str());
+	strcpy((char*)psz, gpApplication->GetProductName().c_str());
 }
 
 void CKSPlugInGUI::OnTimer()
@@ -91,7 +91,7 @@ tbool CKSPlugInGUI::WindowClosed(void* pWnd)
 
 void CKSPlugInGUI::CloseWindow()
 {
-	GetPlugIn()->CloseWindow(mhWndParent);
+	gpApplication->CloseWindow(mhWndParent);
 }
 
 void CKSPlugInGUI::UpdateChannelData(tint32 iID, tint32 iValue, tint32 iChannel)

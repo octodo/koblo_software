@@ -16,7 +16,7 @@ CTrack_Editor_View::~CTrack_Editor_View()
 void CTrack_Editor_View::Destroy()
 {
 
-	GetPlugIn()->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
+	gpApplication->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
 
 	delete dynamic_cast<CTrack_Editor_View*>(this);
 }
@@ -120,7 +120,7 @@ void CTrack_Editor_View::EventGeneric(ge::IControl* pControl, void *pEventData)
 		switch(iID) {
 			case giChC_Txt:
 				std::string sText = std::string((const tchar*)pEventData);
-				dynamic_cast<CKSPlugIn*>(GetPlugIn())->SetChannelName(iChannel, sText);
+				dynamic_cast<CKSPlugIn*>(gpApplication)->SetChannelName(iChannel, sText);
 				break;
 		}
 	}
@@ -129,7 +129,7 @@ void CTrack_Editor_View::EventGeneric(ge::IControl* pControl, void *pEventData)
 
 void CTrack_Editor_View::GetName(tchar* psz)
 {
-	strcpy((char*)psz, GetPlugIn()->GetProductName().c_str());
+	strcpy((char*)psz, gpApplication->GetProductName().c_str());
 }
 
 void CTrack_Editor_View::OnTimer()

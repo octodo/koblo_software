@@ -14,7 +14,7 @@ CKSProject_ID_GUI::~CKSProject_ID_GUI()
 
 void CKSProject_ID_GUI::Destroy()
 {
-	GetPlugIn()->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
+	gpApplication->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
 
 	delete dynamic_cast<CKSProject_ID_GUI*>(this);
 }
@@ -66,7 +66,7 @@ void CKSProject_ID_GUI::EventGeneric(ge::IControl* pControl, void *pEventData)
 
 void CKSProject_ID_GUI::GetName(tchar* psz)
 {
-	strcpy((char*)psz, GetPlugIn()->GetProductName().c_str());
+	strcpy((char*)psz, gpApplication->GetProductName().c_str());
 }
 
 void CKSProject_ID_GUI::OnTimer()

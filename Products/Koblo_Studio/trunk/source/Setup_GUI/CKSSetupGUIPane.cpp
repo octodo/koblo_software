@@ -155,7 +155,7 @@ void CKSSetupGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 					miBlockSetAudioDevice_volatile--;
 				}
 				else {
-					CDSP* pDSP = dynamic_cast<CDSP*>(GetPlugIn()->GetDSPEngine());
+					CDSP* pDSP = dynamic_cast<CDSP*>(gpApplication->GetDSPEngine());
 					tbool bSuccess = pDSP->OpenAudioDevice_FromMenu_Output(iValueNew, -1, -1);
 					// Fill popup with valid frequencies and buffer sizes
 					InitAudioDevicePopupValues();
@@ -176,7 +176,7 @@ void CKSSetupGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 					miBlockSetAudioDevice_volatile--;
 				}
 				else {
-					CDSP* pDSP = dynamic_cast<CDSP*>(GetPlugIn()->GetDSPEngine());
+					CDSP* pDSP = dynamic_cast<CDSP*>(gpApplication->GetDSPEngine());
 					tbool bSuccess = pDSP->OpenAudioDevice_FromMenu_Input(iValueNew, /*-1,*/ -1);
 					// Fill popup with valid frequencies and buffer sizes
 					InitAudioDevicePopupValuesInput();
@@ -198,7 +198,7 @@ void CKSSetupGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 					miBlockSetAudioDevice_volatile--;
 				}
 				else {
-					CDSP* pDSP = dynamic_cast<CDSP*>(GetPlugIn()->GetDSPEngine());
+					CDSP* pDSP = dynamic_cast<CDSP*>(gpApplication->GetDSPEngine());
 					tint32 iMgr = pDSP->mPrefs_1.iAudioManagerIx;
 					tint32 iDev = pDSP->mPrefs_1.iAudioDeviceIx;
 					tchar* pszDev = pDSP->mPrefs_1.pszAudioDevName;
@@ -223,7 +223,7 @@ void CKSSetupGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 					miBlockSetAudioDevice_volatile--;
 				}
 				else {
-					CDSP* pDSP = dynamic_cast<CDSP*>(GetPlugIn()->GetDSPEngine());
+					CDSP* pDSP = dynamic_cast<CDSP*>(gpApplication->GetDSPEngine());
 					tint32 iMgr = pDSP->mPrefs_1.iAudioManagerIx;
 					tint32 iDev = pDSP->mPrefs_1.iAudioDeviceIx;
 					tchar* pszDev = pDSP->mPrefs_1.pszAudioDevName;
@@ -240,9 +240,9 @@ void CKSSetupGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 			break;
 		case giCtrl_Close_Audio_Setup:
 		{
-			//tbool bTest = GetPlugIn()->GetGlobalParm(giParamID_Audio_Setup_Window, giSectionGUI) ;
+			//tbool bTest = gpApplication->GetGlobalParm(giParamID_Audio_Setup_Window, giSectionGUI) ;
 
-			GetPlugIn()->SetGlobalParm(giParamID_Audio_Setup_Window,false, giSectionGUI);
+			gpApplication->SetGlobalParm(giParamID_Audio_Setup_Window,false, giSectionGUI);
 			
 		}
 	}
@@ -295,7 +295,7 @@ void CKSSetupGUIPane::InitAudioDevicePopupValues()
 
 	ge::IPopupMenu::SMenuItemList list;
 	tint32 iSelectedValue;
-//	CDSP* pDSP = dynamic_cast<CDSP*>(GetPlugIn()->GetDSPEngine());
+//	CDSP* pDSP = dynamic_cast<CDSP*>(gpApplication->GetDSPEngine());
 
 	// Devices
 	if (bScanDevices) {

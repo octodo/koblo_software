@@ -71,12 +71,12 @@ void CKSImportGUIPane::Init()
 	CreateButton(giCtrl_Import, IDB_Button_Import, ge::SPos(292 + 64, 400), false);
 
 	tchar psz[1024];
-	CKSPlugIn* pPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
+//	CKSPlugIn* pPlugIn = gpApplication;
 	//IFile::GetSystemDirectory(IFile::SystemDirDesktop, psz);
-	pPlugIn->GetDefaultProjectFolder(psz);
+	gpApplication->GetDefaultProjectFolder(psz);
 	BrowseToDir(std::string(psz));
 
-	dynamic_cast<CKSPlugIn*>(GetGUI()->GetPlugIn())->SetPreviewCallback(dynamic_cast<CPreviewCallback*>(this));
+	gpApplication->SetPreviewCallback(dynamic_cast<CPreviewCallback*>(this));
 
 	ge::IText* pText = CreateDisplay(giControlType, ge::SPos(96, 333+22), ge::SSize(100, 12), CreateFont(Generic128, IDB_Font_Minix_Tight, ge::SRGB(10, 10, 10)), false);
 	pText->SetHorzAlignment(ge::IText::HorzAlignLeft);
@@ -133,7 +133,7 @@ void CKSImportGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew
 			}
 			else {
 				mpImport_Files->ImportFiles();
-				GetPlugIn()->SetGlobalParm(giParamID_Show_Import_Window, 0, giSectionGUI);
+				gpApplication->SetGlobalParm(giParamID_Show_Import_Window, 0, giSectionGUI);
 				PreviewStop();
 			}
 			break;
@@ -141,7 +141,7 @@ void CKSImportGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew
 
 		case giCtrl_Cancel_Import:{
 			mpImport_Files->ClearFiles();
-			GetPlugIn()->SetGlobalParm(giParamID_Show_Import_Window, 0, giSectionGUI);
+			gpApplication->SetGlobalParm(giParamID_Show_Import_Window, 0, giSectionGUI);
 			PreviewStop();
 			break;
 		}

@@ -131,7 +131,7 @@ void CTrack_Setup::Stack_Tracks(STrack_Stack sData)
 	
 		tint iTrack	= sData.iTrack[iPos];
 		
-		tint32 iSize = GetPlugIn()->GetGlobalParm(giParam_Track_Info_SizeY, iTrack+giSection_First_Track);
+		tint32 iSize = gpApplication->GetGlobalParm(giParam_Track_Info_SizeY, iTrack+giSection_First_Track);
 		mppTrack_Info[iTrack]->Set_Track_Size( iSize);
 		
 		mppTrack_Info[iTrack]->SetPos( iTrackPosY);

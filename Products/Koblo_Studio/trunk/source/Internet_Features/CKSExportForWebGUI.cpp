@@ -14,7 +14,7 @@ CKSExportForWebGUI::~CKSExportForWebGUI()
 
 void CKSExportForWebGUI::Destroy()
 {
-	GetPlugIn()->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
+	gpApplication->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
 
 	delete dynamic_cast<CKSExportForWebGUI*>(this);
 }
@@ -65,7 +65,7 @@ void CKSExportForWebGUI::EventGeneric(ge::IControl* pControl, void *pEventData)
 
 void CKSExportForWebGUI::GetName(tchar* psz)
 {
-	strcpy((char*)psz, GetPlugIn()->GetProductName().c_str());
+	strcpy((char*)psz, gpApplication->GetProductName().c_str());
 }
 
 void CKSExportForWebGUI::OnTimer()

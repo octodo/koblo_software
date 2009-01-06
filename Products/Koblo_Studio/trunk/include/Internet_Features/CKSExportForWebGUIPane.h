@@ -48,8 +48,8 @@ public:
 	virtual void HandleMsg(SMsg* pMsg);
 
 protected:
-	CDSP* mpDSP;
-	CKSPlugIn* mpPlugIn;
+//	CDSP* mpDSP;
+//	CKSPlugIn* mpPlugIn;
 	
 	tbool mbIsVisible;
 	

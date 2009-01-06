@@ -86,7 +86,7 @@ void CTrack_Info::EventGeneric(ge::IControl* pControl, void* pEventData)
 		if (pEvent->bInsideControlRect) {
 			
 			if (pEvent->iMsg == ge::LeftButtonDown) {
-				CKSPlugIn* pPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
+				CKSPlugIn* pPlugIn = dynamic_cast<CKSPlugIn*>(gpApplication);
 				tint32 iBlueTrack = pPlugIn->Get_Selected_Track();
 				if ((!ge::IWindow::ShiftPressed()) || (iBlueTrack == -1)) {
 					// No shift key - or no previous selection
@@ -184,10 +184,6 @@ void CTrack_Info::Set_Track_Size( tint32 iSize)
 		mpTrack_Info_Big->GetPane()->SetVisible(true);
 		mpTrack_Info_Small->GetPane()->SetVisible(false);
 	}
-	
-	
-	
-//	GetPlugIn()->Stack_Tracks();
 }
 
 

@@ -267,7 +267,7 @@ int giNrOfAudioDevices = 0;
 int giNrOfMIDIDevices = 0;
 int giNrOfBufferSizes = 0;
 
-CApplication* gpApp = NULL;
+CMainApplication* gpMainApplication = NULL;
 
 void* gWndMain;
 void* gWndSplash;
@@ -566,7 +566,7 @@ int main(int argc, char* argv[])
 
 	gpHost = new CAppHost();
 
-	gpApp = new CApplication();
+	gpMainApplication = new CMainApplication();
 	
 
 	//tint32 i1 = ITime::GetTimeMS();
@@ -1068,7 +1068,7 @@ void timerCallbackGUI(CFRunLoopTimerRef timer, void *info)
 }
 #endif	// _Mac
 
-CBaseGUI* CApplication::CreateExtraWindow(tint32 iGUIIndex, void* pszResName, tbool bAlwaysOnTop)
+CBaseGUI* CMainApplication::CreateExtraWindow(tint32 iGUIIndex, void* pszResName, tbool bAlwaysOnTop)
 {
 	void* Wnd = pContext->CreateExtraWindow(pszResName, ge::SSize(0, 0), bAlwaysOnTop);
 	CBaseGUI* pGUI = dynamic_cast<CBaseGUI*>(gpPlugIn->CreateGUI(iGUIIndex));
@@ -1080,12 +1080,12 @@ CBaseGUI* CApplication::CreateExtraWindow(tint32 iGUIIndex, void* pszResName, tb
 	return pGUI;
 }
 
-void CApplication::CloseWindow(void* mhWnd)
+void CMainApplication::CloseWindow(void* mhWnd)
 {
 	pContext->CloseWindow(mhWnd);
 }
 
-/*void CApplication::ShowZoomTool()
+/*void CMainApplication::ShowZoomTool()
 {
 	::ShowWindow(gWndZoom);
 	::SelectWindow(gWndZoom);

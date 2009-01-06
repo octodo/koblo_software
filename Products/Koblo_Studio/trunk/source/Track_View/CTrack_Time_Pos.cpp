@@ -374,7 +374,7 @@ void CTrack_Time_Pos::Update_Zoom()
 	
 	//---------------------------------------------------------------
 	// Minuts and seconds on top of pane
-	tfloat fSamples_Pr_Second		=	GetPlugIn()->GetSampleRate();
+	tfloat fSamples_Pr_Second		=	gpApplication->GetSampleRate();
 	fMin_Sample_Dist				=	50.0f * fSamplesPrPixel;
 	mfSamples_Per_Line				=	fSamples_Pr_Second;
 	miSec_Pr_line					=	1;
@@ -614,7 +614,7 @@ tbool CTrack_Time_Pos::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 	mpControl->GetSize(SizeThis);
 	ge::SRect RectThis(PosThis, SizeThis);
 	
-	tint32 iMinSamples		= GetPlugIn()->GetSampleRate() / 10 ;
+	tint32 iMinSamples		= gpApplication->GetSampleRate() / 10 ;
 
 
 	switch(MouseMsg){
@@ -841,7 +841,7 @@ void CTrack_Time_Pos::Update_Loop(tint32 iSampleStart, tint32 iSampleEnd)
 	iSampleEnd		=	gpApplication->SnapToGrid(iSampleEnd);
 
 				
-	GetPlugIn()->SetGlobalParm(giParamID_Loop_Start,iSampleStart, giSectionGlobal);
-	GetPlugIn()->SetGlobalParm(giParamID_Loop_End,iSampleEnd, giSectionGlobal);
+	gpApplication->SetGlobalParm(giParamID_Loop_Start,iSampleStart, giSectionGlobal);
+	gpApplication->SetGlobalParm(giParamID_Loop_End,iSampleEnd, giSectionGlobal);
 
 }

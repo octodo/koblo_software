@@ -136,7 +136,7 @@ protected:
 	// Parrent pointer, not needed there is a global one
 	CDSP* mpDSP;
 
-	CKSPlugIn* mpPlugIn;
+//	CKSPlugIn* mpPlugIn;
 
 	st::IDSPTools* mpDSPTools;
 

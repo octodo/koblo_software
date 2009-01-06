@@ -270,7 +270,7 @@ void CTrack_Top::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 		case giControlID_Open_Mix_Button:{
 			if (iValueNew == 0) {
 				// Show/ hide Mix Window
-				tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Show_Mix_Window, giSectionGUI) != 0);
+				tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Mix_Window, giSectionGUI) != 0);
 				gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 			}
 			break;
@@ -278,10 +278,10 @@ void CTrack_Top::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 		case giControlID_View_AUX_Button:{
 			if (iValueNew == 0) {
 				// Show/ hide Mix Window
-				tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Show_AUX_Window, giSectionGUI) != 0);
-				tbool bReallyVisible = GetPlugIn()->GetModule()->GetHost()->IsWindowVisible(giRack_Window) == 0 ? false : true;
+				tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_AUX_Window, giSectionGUI) != 0);
+				tbool bReallyVisible = gpApplication->GetModule()->GetHost()->IsWindowVisible(giRack_Window) == 0 ? false : true;
 				if (bTest != bReallyVisible) {
-					GetPlugIn()->SetGlobalParm(giParamID_Show_AUX_Window, !bTest, giSectionGUI);
+					gpApplication->SetGlobalParm(giParamID_Show_AUX_Window, !bTest, giSectionGUI);
 				}
 				gpApplication->GetParmMan()->Set(true, !bReallyVisible, giParamID_Show_AUX_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 			}
@@ -349,7 +349,7 @@ void CTrack_Top::Update_Zoom()
 void CTrack_Top::Pixel_To_Sample(tint32 iPixel)
 {
 	//!!! Max Fix this
-	tint64 iTest = (tint64)((tfloat64)GetPlugIn()->GetSampleRate() * mfSec_Per_Pixel * iPixel);
+	tint64 iTest = (tint64)((tfloat64)gpApplication->GetSampleRate() * mfSec_Per_Pixel * iPixel);
 	Update_Time_Display(iTest);
 
 }

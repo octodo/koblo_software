@@ -1,7 +1,7 @@
 
 
 
-class CApplication
+class CMainApplication
 {
 public:
 	virtual CBaseGUI* CreateExtraWindow(tint32 iGUIIndex, /*CFStringRef*/void* pszResName, tbool bAlwaysOnTop = false);
@@ -14,4 +14,4 @@ protected:
 
 };
 
-extern CApplication* gpApp;
+extern CMainApplication* gpMainApplication;

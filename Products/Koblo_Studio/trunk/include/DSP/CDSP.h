@@ -164,7 +164,7 @@ public:
 	virtual void SetDestinationForChannelOrBus(tint32 iChOrBus, tint32 iDestination, tint32 iDestNumberOfChannels);
 	virtual tbool UpdateDestinationForChannelOrBus_ButOnlyIfItMatches(tint32 iChOrBus, tint32 iDestination, tint32 iDestNumberOfChannels);
 	
-	CKSPlugIn* GetPlugIn() {return mpPlugIn;}
+//	CKSPlugIn* GetPlugIn() {return mpPlugIn;}
 
 	// Creates a region, and returns its unique ID. If uiSamplePosEnd == -1 all of sound is used.
 	tint32 CreateRegion(const std::string& sSoundListItemName, 

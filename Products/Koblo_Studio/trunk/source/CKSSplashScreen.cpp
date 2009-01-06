@@ -61,7 +61,7 @@ CKSSplashScreen::~CKSSplashScreen()
 
 void CKSSplashScreen::Destroy()
 {
-	GetPlugIn()->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
+	gpApplication->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
 
 	delete dynamic_cast<CTrack_Editor_View*>(this);
 }
@@ -139,7 +139,7 @@ void CKSSplashScreen::EventGeneric(ge::IControl* pControl, void *pEventData)
 
 void CKSSplashScreen::GetName(tchar* psz)
 {
-	strcpy((char*)psz, GetPlugIn()->GetProductName().c_str());
+	strcpy((char*)psz, gpApplication->GetProductName().c_str());
 }
 
 void CKSSplashScreen::OnTimer()

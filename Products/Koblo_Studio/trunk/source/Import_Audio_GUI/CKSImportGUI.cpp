@@ -14,7 +14,7 @@ CKSImportGUI::~CKSImportGUI()
 
 void CKSImportGUI::Destroy()
 {
-	GetPlugIn()->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
+	gpApplication->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
 
 	delete dynamic_cast<CKSImportGUI*>(this);
 }
@@ -65,7 +65,7 @@ void CKSImportGUI::EventGeneric(ge::IControl* pControl, void *pEventData)
 
 void CKSImportGUI::GetName(tchar* psz)
 {
-	strcpy((char*)psz, GetPlugIn()->GetProductName().c_str());
+	strcpy((char*)psz, gpApplication->GetProductName().c_str());
 }
 
 void CKSImportGUI::OnTimer()

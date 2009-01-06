@@ -301,7 +301,7 @@ void CBaseTopPane::ActionLoad()
 	
 	// Get product name
 	tchar pszProductName[128];
-	mpGUI->GetPlugIn()->GetProductName(pszProductName);
+	gpApplication->GetProductName(pszProductName);
 
 	// Create the dialog
 	CAutoDelete<ge::IOpenDialog> pDialog(ge::IOpenDialog::Create());
@@ -356,7 +356,7 @@ void CBaseTopPane::ActionSaveAs()
 
 	// Get product name
 	tchar pszProductName[128];
-	mpGUI->GetPlugIn()->GetProductName(pszProductName);
+	gpApplication->GetProductName(pszProductName);
 	
 	// Create the dialog
 	CAutoDelete<ge::ISaveAsDialog> pDialog(ge::ISaveAsDialog::Create());
@@ -518,7 +518,7 @@ void CBaseTopPane::MIDIReset()
 	MIDILearnOrUnlearnAbort();
 
 	// Reset all MIDI
-	mpGUI->GetPlugIn()->MIDICCReset();
+	gpApplication->MIDICCReset();
 }
 
 

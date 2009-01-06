@@ -2013,7 +2013,7 @@ tbool CDSP::OpenAudioDevice_Input(tint32 iMgrIx, tint32 iDevIx, tchar* pszDevNam
 							mpAudio_Input = NULL;
 						}
 					}
-					GetPlugIn()->UpdateAudioGUI();
+					gpApplication->UpdateAudioGUI();
 					
 					// Remember that we didn't crash
 					mPrefs_2.cbInputDevice_LastOpenCrashed = (tchar)false;
@@ -3002,12 +3002,12 @@ void CDSP::Set_Loop_To_Selection()
 
 	tuint64	uiTemp	=	uiPos/32;
 	uiTemp			*=	32;
-	GetPlugIn()->SetGlobalParm(giParamID_Loop_Start,uiTemp, giSectionGlobal);
+	gpApplication->SetGlobalParm(giParamID_Loop_Start,uiTemp, giSectionGlobal);
 	
 
 	uiTemp	=	uiEnd/32;
 	uiTemp			*=	32;
-	GetPlugIn()->SetGlobalParm(giParamID_Loop_End,uiTemp, giSectionGlobal);
+	gpApplication->SetGlobalParm(giParamID_Loop_End,uiTemp, giSectionGlobal);
 
 	
 }

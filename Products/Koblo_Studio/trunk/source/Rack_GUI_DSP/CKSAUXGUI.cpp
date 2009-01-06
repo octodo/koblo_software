@@ -27,7 +27,7 @@ CKSAUXGUI::~CKSAUXGUI()
 
 void CKSAUXGUI::Destroy()
 {
-	GetPlugIn()->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
+	gpApplication->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
 
 	delete dynamic_cast<CKSAUXGUI*>(this);
 }
@@ -86,7 +86,7 @@ void CKSAUXGUI::EventGeneric(ge::IControl* pControl, void *pEventData)
 
 void CKSAUXGUI::GetName(tchar* psz)
 {
-	strcpy((char*)psz, GetPlugIn()->GetProductName().c_str());
+	strcpy((char*)psz, gpApplication->GetProductName().c_str());
 }
 
 void CKSAUXGUI::OnTimer()

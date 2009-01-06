@@ -5,8 +5,8 @@
 CKSMixerGUIPane::CKSMixerGUIPane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	: CBasePane(pPaneParent, pGUI)
 {
-	CBaseDSPEngine* pD = GetPlugIn()->GetDSPEngine();
-	mpDSP = dynamic_cast<CDSP*>(pD);
+//	CBaseDSPEngine* pD = gpApplication->GetDSPEngine();
+//	mpDSP = dynamic_cast<CDSP*>(pD);
 
 	
 	mbFirstMeterSet = true;

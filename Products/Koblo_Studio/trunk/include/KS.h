@@ -102,7 +102,7 @@ class CKSPlugIn;
 
 // PlugIn
 class CPlugInManager;
-#include "CKSPlugIn.h"
+#include "CApplication.h"
 
 // Plug-Ins
 #include "CPlugInManager.h"

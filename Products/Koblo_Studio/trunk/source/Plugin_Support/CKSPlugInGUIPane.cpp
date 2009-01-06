@@ -82,7 +82,7 @@ void CKSPlugInGUIPane::OnCloseGUI()
 {
 	mpEffectPane->OnCloseGUI();
 
-	dynamic_cast<CKSPlugIn*>(GetPlugIn())->GetPlugInManager()->WindowClosed(miSectionID, miInsertIndex);
+	gpApplication->GetPlugInManager()->WindowClosed(miSectionID, miInsertIndex);
 }
 
 void CKSPlugInGUIPane::UpdateChannelData(tint32 iID, tint32 iValue, tint32 iChannel)
@@ -91,7 +91,7 @@ void CKSPlugInGUIPane::UpdateChannelData(tint32 iID, tint32 iValue, tint32 iChan
 		switch(iID) {
 			case giParam_Ch_Insert1GUIOpen:
 			{
-				//GetPlugIn()->GetPlugInManager()->OpenGUI(iChannel, iValue);
+				//gpApplication->GetPlugInManager()->OpenGUI(iChannel, iValue);
 				break;
 			}
 			case giParam_Ch_Insert2GUIOpen:

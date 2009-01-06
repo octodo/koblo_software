@@ -351,7 +351,7 @@ void CBaseGUI::OnMouseLeftButtonDown(tint32 iPosX, tint32 iPosY)
 		ge::SRect Rect(iX, iY, iCX, iCY);
 		if (iCX != 0 && iCY != 0) {
 			// The rect has a size, so it is valid
-			GetPlugIn()->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
+			gpApplication->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
 		}
 	}
 }
@@ -367,7 +367,7 @@ void CBaseGUI::OnMouseLeftButtonUp(tint32 iPosX, tint32 iPosY)
 		ge::SRect Rect(iX, iY, iCX, iCY);
 		if (iCX != 0 && iCY != 0) {
 			// The rect has a size, so it is valid
-			GetPlugIn()->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
+			gpApplication->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
 		}
 	}
 }
@@ -383,7 +383,7 @@ void CBaseGUI::OnMouseMove(tint32 iPosX, tint32 iPosY)
 		ge::SRect Rect(iX, iY, iCX, iCY);
 		if (iCX != 0 && iCY != 0) {
 			// The rect has a size, so it is valid
-			GetPlugIn()->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
+			gpApplication->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
 		}
 	}
 }
@@ -399,7 +399,7 @@ void CBaseGUI::OnMouseRightButtonDown(tint32 iPosX, tint32 iPosY)
 		ge::SRect Rect(iX, iY, iCX, iCY);
 		if (iCX != 0 && iCY != 0) {
 			// The rect has a size, so it is valid
-			GetPlugIn()->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
+			gpApplication->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
 		}
 	}
 }
@@ -415,7 +415,7 @@ void CBaseGUI::OnMouseRightButtonUp(tint32 iPosX, tint32 iPosY)
 		ge::SRect Rect(iX, iY, iCX, iCY);
 		if (iCX != 0 && iCY != 0) {
 			// The rect has a size, so it is valid
-			GetPlugIn()->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
+			gpApplication->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
 		}
 	}
 }
@@ -431,7 +431,7 @@ void CBaseGUI::OnMouseLeftButtonDoubleClick(tint32 iPosX, tint32 iPosY)
 		ge::SRect Rect(iX, iY, iCX, iCY);
 		if (iCX != 0 && iCY != 0) {
 			// The rect has a size, so it is valid
-			GetPlugIn()->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
+			gpApplication->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
 		}
 	}
 }
@@ -452,7 +452,7 @@ void CBaseGUI::OnTimer()
 			ge::SRect Rect(iX, iY, iCX, iCY);
 			if (iCX != 0 && iCY != 0) {
 				// The rect has a size, so it is valid
-				GetPlugIn()->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
+				gpApplication->GetModule()->GetHost()->RedrawWindow(dynamic_cast<IGUI*>(this), iX, iY, iCX, iCY);
 			}
 		}
 		else {
@@ -572,10 +572,10 @@ void CBaseGUI::MIDICCLearn(tint32 iCtrlID)
 
 		if (mbMIDILearn)
 			// Update mpPlugIn->mTempMIDICCInfo
-			GetPlugIn()->MIDICCMapLearn(iParamId, iMinVal, iMaxVal, iStrength, CurveType);
+			gpApplication->MIDICCMapLearn(iParamId, iMinVal, iMaxVal, iStrength, CurveType);
 		else {
 			if (mbMIDIUnLearn) {
-				GetPlugIn()->MIDICCMapUnlearn(iParamId);
+				gpApplication->MIDICCMapUnlearn(iParamId);
 			}
 		}
 

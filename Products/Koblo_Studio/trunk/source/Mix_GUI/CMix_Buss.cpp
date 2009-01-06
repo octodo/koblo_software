@@ -164,7 +164,7 @@ void CMix_Buss::EventGeneric(ge::IControl* pControl, void* pEventData)
 	switch(iID) {
 		case giCtr_Mix_Buss_Text:
 			std::string sText = std::string((const tchar*)pEventData);
-			dynamic_cast<CKSPlugIn*>(mpGUI->GetPlugIn())->SetChannelName(miID + giNumber_Of_Tracks, sText);
+			gpApplication->SetChannelName(miID + giNumber_Of_Tracks, sText);
 			break;
 	}
 	 */

@@ -18,7 +18,7 @@ CKSExportForWebGUIPane::~CKSExportForWebGUIPane()
 
 void CKSExportForWebGUIPane::Init()
 {
-	mpPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
+//	mpPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
 
 	mpPane = ge::IPane::Create();
 	mpPane->SetSize(ge::SSize(541,582));
@@ -85,7 +85,7 @@ void CKSExportForWebGUIPane::Init()
 	ge::SSize UrlSize(200, 18);
 	// BY
 	mpBY_URL	=	ge::IURL::Create();
-	mpBY_URL->Init(ge::IControl::giNoID, mpPlugIn->mapszLicenseUrls[0]);
+	mpBY_URL->Init(ge::IControl::giNoID, gpApplication->mapszLicenseUrls[0]);
 	
 	mpBY_URL->SetSize(UrlSize);
 //	mpBY_URL->ActivateHandCursor();
@@ -93,13 +93,13 @@ void CKSExportForWebGUIPane::Init()
 	
 	//BY SA
 	mpBY_SA_URL	=	ge::IURL::Create();
-	mpBY_SA_URL->Init(ge::IControl::giNoID, mpPlugIn->mapszLicenseUrls[1]);
+	mpBY_SA_URL->Init(ge::IControl::giNoID, gpApplication->mapszLicenseUrls[1]);
 	mpBY_SA_URL->SetSize(UrlSize);
 	mpPane->AddControl(dynamic_cast<ge::IControl*>(mpBY_SA_URL), pos); pos.iY += 84;
 	
 	//BY ND
 	mpBY_SA_URL	=	ge::IURL::Create();
-	mpBY_SA_URL->Init(ge::IControl::giNoID, mpPlugIn->mapszLicenseUrls[2]);
+	mpBY_SA_URL->Init(ge::IControl::giNoID, gpApplication->mapszLicenseUrls[2]);
 	mpBY_SA_URL->SetSize(UrlSize);
 	mpPane->AddControl(dynamic_cast<ge::IControl*>(mpBY_SA_URL), pos);
 	
@@ -108,7 +108,7 @@ void CKSExportForWebGUIPane::Init()
 	
 	// BY NC
 	mpBY_URL	=	ge::IURL::Create();
-	mpBY_URL->Init(ge::IControl::giNoID, mpPlugIn->mapszLicenseUrls[3]);
+	mpBY_URL->Init(ge::IControl::giNoID, gpApplication->mapszLicenseUrls[3]);
 	
 	mpBY_URL->SetSize(UrlSize);
 //	mpBY_URL->ActivateHandCursor();
@@ -116,13 +116,13 @@ void CKSExportForWebGUIPane::Init()
 	
 	//BY NC SA
 	mpBY_SA_URL	=	ge::IURL::Create();
-	mpBY_SA_URL->Init(ge::IControl::giNoID, mpPlugIn->mapszLicenseUrls[4]);
+	mpBY_SA_URL->Init(ge::IControl::giNoID, gpApplication->mapszLicenseUrls[4]);
 	mpBY_SA_URL->SetSize(UrlSize);
 	mpPane->AddControl(dynamic_cast<ge::IControl*>(mpBY_SA_URL), pos); pos.iY += 84;
 	
 	//BY NC ND
 	mpBY_SA_URL	=	ge::IURL::Create();
-	mpBY_SA_URL->Init(ge::IControl::giNoID, mpPlugIn->mapszLicenseUrls[5]);
+	mpBY_SA_URL->Init(ge::IControl::giNoID, gpApplication->mapszLicenseUrls[5]);
 	mpBY_SA_URL->SetSize(UrlSize);
 	mpPane->AddControl(dynamic_cast<ge::IControl*>(mpBY_SA_URL), pos);
 	
@@ -195,7 +195,7 @@ void CKSExportForWebGUIPane::EventValueChange(ge::IControl* pControl, tint32 iVa
 			}
 			else*/ {
 				// Close the window
-				GetPlugIn()->SetGlobalParm(giParamID_Show_Export_For_Web_Window, 0, giSectionGUI);
+				gpApplication->SetGlobalParm(giParamID_Show_Export_For_Web_Window, 0, giSectionGUI);
 				// Set 
 		/*		tchar pszAuthor[1024];
 				tchar pszUrl[1024];
@@ -204,7 +204,7 @@ void CKSExportForWebGUIPane::EventValueChange(ge::IControl* pControl, tint32 iVa
 				mpTextUrl->GetText(pszUrl);
 				mpTextStatus->GetText(pszStatus);
 				
-				dynamic_cast<CKSPlugIn*>(GetPlugIn())->Export_For_Web(meQuality, miLicenseNb, pszAuthor, pszUrl, pszStatus);
+				gpApplication->Export_For_Web(meQuality, miLicenseNb, pszAuthor, pszUrl, pszStatus);
 		 
 		 */
 			}
@@ -212,7 +212,7 @@ void CKSExportForWebGUIPane::EventValueChange(ge::IControl* pControl, tint32 iVa
 		}
 		case giCtrl_Cancel_ExportForWeb:{
 			
-			GetPlugIn()->SetGlobalParm(giParamID_Show_Export_For_Web_Window, 0, giSectionGUI);
+			gpApplication->SetGlobalParm(giParamID_Show_Export_For_Web_Window, 0, giSectionGUI);
 			
 			break;
 		}

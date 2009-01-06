@@ -705,7 +705,7 @@ void CTrack::Delete_All_Regions()
 
 tint32 CTrack::Find_Tool()
 {
-	return	GetPlugIn()->GetGlobalParm(giParamID_Tool_Selected, giSectionGUI);	
+	return	gpApplication->GetGlobalParm(giParamID_Tool_Selected, giSectionGUI);	
 }
 
 void CTrack::SelectRegion(tuint32 uiRegionID)

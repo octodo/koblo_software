@@ -236,7 +236,7 @@ void CRegion_Pane::Update_Size()
 
 tint32 CRegion_Pane::Find_Tool()
 {
-	return	GetPlugIn()->GetGlobalParm(giParamID_Tool_Selected, giSectionGUI);	
+	return	gpApplication->GetGlobalParm(giParamID_Tool_Selected, giSectionGUI);	
 }
 
 void CRegion_Pane::Handel_Select_All_Tool()
@@ -680,7 +680,7 @@ void CRegion_Pane::Refresh_Region_GUI()
 	muiSample_Fade_Out			=	info.uiFade_Out;
 	mfRegion_Volume				=	info.fRegion_Volume;
 	muiSample_End				=	muiSample_Duration - mfSample_Start + 1;	
-	mbDrawFade					=	GetPlugIn()->GetGlobalParm(giParamID_Show_Fade, giSectionGUI);
+	mbDrawFade					=	gpApplication->GetGlobalParm(giParamID_Show_Fade, giSectionGUI);
 
 	Set_Size_X();
 	Set_Pos_X();

@@ -41,7 +41,7 @@ void CSoloMuteState::Solo(tbool bSolo)
 	mbLock = true;
 
 	mbSolo = bSolo;
-	mpPane->GetPlugIn()->SetGlobalParm(miSoloParamID, bSolo, miSection);
+	gpApplication->SetGlobalParm(miSoloParamID, bSolo, miSection);
 
 	mbLock = false;
 	
@@ -53,7 +53,7 @@ void CSoloMuteState::SoftMute()
 	mbLock = true;
 	
 	mbSoftMute		= true;
-	mpPane->GetPlugIn()->SetGlobalParm(miMuteParamID, true, miSection);
+	gpApplication->SetGlobalParm(miMuteParamID, true, miSection);
 	
 	mbLock = false;
 }
@@ -64,7 +64,7 @@ void CSoloMuteState::SoftUnMute()
 	mbLock = true;
 
 	mbSoftMute		= false;
-	mpPane->GetPlugIn()->SetGlobalParm(miMuteParamID, false, miSection);	
+	gpApplication->SetGlobalParm(miMuteParamID, false, miSection);	
 	
 	mbLock = false;
 	
@@ -77,7 +77,7 @@ void CSoloMuteState::SoftReMute()
 	
 	mbWasMuted		= false;
 	mbMute			= true;
-	mpPane->GetPlugIn()->SetGlobalParm(miMuteParamID, true, miSection);
+	gpApplication->SetGlobalParm(miMuteParamID, true, miSection);
 	
 	mbLock = false;
 	

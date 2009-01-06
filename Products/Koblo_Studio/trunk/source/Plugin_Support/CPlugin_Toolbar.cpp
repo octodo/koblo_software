@@ -23,7 +23,7 @@ void CPlugin_Toolbar::SetInfo(tint32 iChannel, tint32 iInsert)
 		
 		// Verifyed by Max
 		if (iChannel < 1024) {
-			std::string sTrackName = dynamic_cast<CKSPlugIn*>(GetPlugIn())->GetChannelName(miChannel);
+			std::string sTrackName = gpApplication->GetChannelName(miChannel);
 			tchar psz[128];
 			if (sTrackName.size() == 0) {
 				sprintf(psz, "Track %d, insert: %d", miChannel + 1, miInsert + 1);

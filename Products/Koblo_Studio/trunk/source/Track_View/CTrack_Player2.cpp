@@ -240,7 +240,7 @@ void CTrack_Player2::Set_Track_Size(tint32 iTrack, tint32  iValue)
 
 void CTrack_Player2::Draw_Grid()
 {
-	GetPlugIn()->GetGlobalParm(giParamID_Grid, giSectionGUI) ? Show_Grid():Hide_Grid();
+	gpApplication->GetGlobalParm(giParamID_Grid, giSectionGUI) ? Show_Grid():Hide_Grid();
 }
 
 void CTrack_Player2::Hide_Grid()
@@ -404,7 +404,7 @@ void CTrack_Player2::Update_Zoom()
 	mfSamples_Pr_32						=	gpApplication->GetSamples_Pr_32();
 	tfloat64 iMin_Samples_Pr_Gridline	=	giMin_Pix_Pr_Gridline * gpApplication->GetSamplesPrPixel();
 	
-	tint32 iGrid = GetPlugIn()->GetGlobalParm(giParamID_KS_Snap_To, giSectionGlobal);
+	tint32 iGrid = gpApplication->GetGlobalParm(giParamID_KS_Snap_To, giSectionGlobal);
 	
 	
 	/*
@@ -483,7 +483,7 @@ void CTrack_Player2::Stack_Tracks(STrack_Stack sData)
 		tint iTrack	= sData.iTrack[iPos];
 		mppTrack[iTrack]->SetPos( iTrackPosY);
 		mppTrack[iTrack]->GetPane()->SetVisible(true);
-		tbool bBig = (GetPlugIn()->GetGlobalParm(giParam_Track_Info_SizeY, iTrack+giSection_First_Track) != 0);
+		tbool bBig = (gpApplication->GetGlobalParm(giParam_Track_Info_SizeY, iTrack+giSection_First_Track) != 0);
 		tint32 iCY = (bBig) ? giTrack_Size_Big : giTrack_Size_Small;
 		iTrackPosY += iCY;
 

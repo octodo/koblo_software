@@ -135,15 +135,15 @@ void CKS_Import_Files::RemoveFile()
 
 void CKS_Import_Files::ImportFiles()
 {
-	if (dynamic_cast<CKSPlugIn*>(GetGUI()->GetPlugIn())->GetProjDir().length() == 0) {
-		mpGUI->GetWindow()->ShowMessageBox("You must create or load a project before importing audio", "Sorry");
+	if (gpApplication->GetProjDir().length() == 0) {
+		gpApplication->ShowMessageBox("You must create or load a project before importing audio", "Sorry");
 		return;
 	}
 
 	std::list<SItemInfo>::iterator it = mItems.begin();
 	for (; it != mItems.end(); it++) {
 		SItemInfo Info = *it;
-		dynamic_cast<CKSPlugIn*>(GetGUI()->GetPlugIn())->QueueAudioFileImport(Info.sPathName.c_str(), false);
+		gpApplication->QueueAudioFileImport(Info.sPathName.c_str(), false);
 	}
 
 	ClearFiles();

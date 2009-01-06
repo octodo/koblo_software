@@ -95,7 +95,7 @@ void CTrack_Info_Small::EventGeneric(ge::IControl* pControl, void* pEventData)
 	switch(iID) {
 		case giTrack_Info_Small_Channel_Text:
 			std::string sText = std::string((const tchar*)pEventData);
-			dynamic_cast<CKSPlugIn*>(mpGUI->GetPlugIn())->SetChannelName(miID, sText);
+			gpApplication->SetChannelName(miID, sText);
 			return;
 	}
 	

@@ -16,7 +16,7 @@ CTrack_DSP::CTrack_DSP(CDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTr
 
 	mpBuffer = new CBuffer();
 	
-	mpPlugIn = dynamic_cast<CKSPlugIn*>(mpDSP->GetPlugIn());
+//	mpPlugIn = dynamic_cast<CKSPlugIn*>(mpDSP->GetPlugIn());
 
 	mbLimitDataFromStream = false;
 
@@ -121,7 +121,7 @@ void CTrack_DSP::SetSongPosition(tuint64 uiPosNew)
 
 void CTrack_DSP::AddInsert(tint32 iInsert, tuint32 uiCompanyID, tuint32 uiProductID, tuint32 uiProductID2)
 {
-	CPlugInManager* pPlugManager = dynamic_cast<CKSPlugIn*>(mpDSP->GetPlugIn())->GetPlugInManager();
+	CPlugInManager* pPlugManager = gpApplication->GetPlugInManager();
 	
 	if (mppInsert[iInsert]) {
 		pPlugManager->UnloadPlugIn(mhInserts[iInsert], miChannelNumber, iInsert);
@@ -132,7 +132,7 @@ void CTrack_DSP::AddInsert(tint32 iInsert, tuint32 uiCompanyID, tuint32 uiProduc
 	}
 	else {
 		// Stop updating of meters
-		mpDSP->GetPlugIn()->All_Plugins_Created(false);
+		gpApplication->All_Plugins_Created(false);
 		mhInserts[iInsert] = pPlugManager->LoadPlugIn(uiCompanyID, uiProductID, miChannelNumber, iInsert);
 		
 		if (mhInserts[iInsert] == CPlugInManager::mInvalidHandleValue) {
@@ -145,7 +145,7 @@ void CTrack_DSP::AddInsert(tint32 iInsert, tuint32 uiCompanyID, tuint32 uiProduc
 			mppInsert[iInsert] = pPlugManager->GetPlugInFromHandle(mhInserts[iInsert]);
 		}
 		// Restart meter updat
-		mpDSP->GetPlugIn()->All_Plugins_Created(true);
+		gpApplication->All_Plugins_Created(true);
 	}
 }
 
@@ -506,21 +506,21 @@ void CTrack_DSP::Start()
 
 	ASSERT(mpFileRecording == NULL);
 
-	if (mbArmed && mpPlugIn->IsRecording()) {
-		std::string sChannelName = mpPlugIn->GetChannelName(miChannelNumber);
+	if (mbArmed && gpApplication->IsRecording()) {
+		std::string sChannelName = gpApplication->GetChannelName(miChannelNumber);
 		if (sChannelName.size() == 0) {
 			tchar psz[32];
 			sprintf(psz, "Track %d", miChannelNumber + 1);
 			sChannelName = std::string(psz);
 		}
 
-		std::string sPathNameDest = mpPlugIn->GetProjDir_Audio();
+		std::string sPathNameDest = gpApplication->GetProjDir_Audio();
 		sPathNameDest += "Clips:";
 		sPathNameDest += "Recording_";
 		sPathNameDest += sChannelName;
 		sPathNameDest += "_";
 
-		std::string sPathName = mpPlugIn->GetProjDir_Audio();
+		std::string sPathName = gpApplication->GetProjDir_Audio();
 		sPathName += "Recording_";
 		sPathName += sChannelName;
 		sPathName += "_";
@@ -562,7 +562,7 @@ void CTrack_DSP::Start()
 		miRecordingChannels = 2;//-1;
 		// .. (lasse)
 
-		miRecordingSongPos = mpPlugIn->GetSongPos();
+		miRecordingSongPos = gpApplication->GetSongPos();
 	}
 } // Start
 
@@ -664,7 +664,7 @@ void CTrack_DSP::Stop()
 					}
 
 					if (bSuccess && !bAbortOperation) {
-						tint64 iSkipExtraLatencySamples = mpPlugIn->AudioInput_IntermediateBuffer_CalcExtraLatency();
+						tint64 iSkipExtraLatencySamples = gpApplication->AudioInput_IntermediateBuffer_CalcExtraLatency();
 						pEncoder->SetNormalizationFactor((bDownMix) ? fNormalizationFactorMono : fNormalizationFactor);
 
 						if (miRecordingChannels == 1) {
@@ -749,10 +749,10 @@ void CTrack_DSP::Stop()
 		IFile::DeleteFile((msRecordingName + std::string(".tmp")).c_str());
 
 		if (!bSuccess) {
-			mpPlugIn->ShowMessageBox_NonModal(pszErrMsg, "Error recording");
+			gpApplication->ShowMessageBox_NonModal(pszErrMsg, "Error recording");
 		}
 		else if (!bAbortOperation) {
-			mpPlugIn->QueueAudioFileImport(msRecordingName.c_str(), true, miChannelNumber, miRecordingSongPos);
+			gpApplication->QueueAudioFileImport(msRecordingName.c_str(), true, miChannelNumber, miRecordingSongPos);
 		}
 
 		/* must wait for queued operation to complete before doing these operations
@@ -779,7 +779,7 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 {
 	std::string sWavePathNameL;
 	std::string sWavePathNameR;
-	tint32 iWaveFiles = mpPlugIn->GetFromListName_ClipWavePathNames(sSoundListItemName.c_str(), sWavePathNameL, sWavePathNameR);
+	tint32 iWaveFiles = gpApplication->GetFromListName_ClipWavePathNames(sSoundListItemName.c_str(), sWavePathNameL, sWavePathNameR);
 	if (iWaveFiles <= 0) {
 		// Internal error / missing waves: Exit gracefully instead of crashing
 		return NULL;
@@ -810,7 +810,7 @@ tint64 CTrack_DSP::GetRegionSize(tint32 iUniqueID, const std::string& sSoundList
 {
 	std::string sWavePathNameL;
 	std::string sWavePathNameR_NeverMind;
-	tint32 iWaveFiles = mpPlugIn->GetFromListName_ClipWavePathNames(sSoundListItemName.c_str(), sWavePathNameL, sWavePathNameR_NeverMind);
+	tint32 iWaveFiles = gpApplication->GetFromListName_ClipWavePathNames(sSoundListItemName.c_str(), sWavePathNameL, sWavePathNameR_NeverMind);
 	// If iWaveFiles == 2 then sWavePathR will be valid - but that doesn't matter for length calculations
 
 	if (iWaveFiles == 0) {
@@ -1430,7 +1430,7 @@ void CAUXEcho::Set_Sync_To_Tempo(tbool bSync)
 
 void CAUXEcho::Set_Delay_in_Samples()
 {
-	tint32 iSampleRate = mpDSP->GetPlugIn()->GetSampleRate();
+	tint32 iSampleRate = gpApplication->GetSampleRate();
 	miDelayTime = miMSec * iSampleRate / 1000;
 }
 

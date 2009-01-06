@@ -14,7 +14,7 @@ CKSUsername_And_Password_View::~CKSUsername_And_Password_View()
 
 void CKSUsername_And_Password_View::Destroy()
 {
-	GetPlugIn()->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
+	gpApplication->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
 
 	delete dynamic_cast<CKSUsername_And_Password_View*>(this);
 }
@@ -65,7 +65,7 @@ void CKSUsername_And_Password_View::EventGeneric(ge::IControl* pControl, void *p
 
 void CKSUsername_And_Password_View::GetName(tchar* psz)
 {
-	strcpy((char*)psz, GetPlugIn()->GetProductName().c_str());
+	strcpy((char*)psz, gpApplication->GetProductName().c_str());
 }
 
 void CKSUsername_And_Password_View::OnTimer()

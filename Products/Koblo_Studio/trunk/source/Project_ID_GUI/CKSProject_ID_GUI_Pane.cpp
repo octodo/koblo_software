@@ -76,14 +76,14 @@ void CKSProject_ID_GUI_Pane::EventValueChange(ge::IControl* pControl, tint32 iVa
 
 		case giCtrl_Project_ID_Cancel:{
 			
-			GetPlugIn()->SetGlobalParm(giParamID_Show_Projec_ID_Window, 0, giSectionGUI);
+			gpApplication->SetGlobalParm(giParamID_Show_Projec_ID_Window, 0, giSectionGUI);
 			break;
 		}
 			
 		case giCtrl_Project_ID_OK:{
 			
-			GetPlugIn()->SetGlobalParm(giParamID_Show_Projec_ID_Window, 0, giSectionGUI);
-			tint32 iProject_ID = GetPlugIn()->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
+			gpApplication->SetGlobalParm(giParamID_Show_Projec_ID_Window, 0, giSectionGUI);
+			tint32 iProject_ID = gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
 			gpApplication->Download_Project(iProject_ID);
 			break;
 		}

@@ -14,7 +14,7 @@ CKSExportGUI::~CKSExportGUI()
 
 void CKSExportGUI::Destroy()
 {
-	GetPlugIn()->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
+	gpApplication->GUIDestroyed(dynamic_cast<CBaseGUI*>(this));
 
 	delete dynamic_cast<CKSExportGUI*>(this);
 }
@@ -65,7 +65,7 @@ void CKSExportGUI::EventGeneric(ge::IControl* pControl, void *pEventData)
 
 void CKSExportGUI::GetName(tchar* psz)
 {
-	strcpy((char*)psz, GetPlugIn()->GetProductName().c_str());
+	strcpy((char*)psz, gpApplication->GetProductName().c_str());
 }
 
 void CKSExportGUI::OnTimer()
