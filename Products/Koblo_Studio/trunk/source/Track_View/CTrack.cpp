@@ -32,7 +32,7 @@ void CTrack::SetInfo(tint32 iTrackID, tint32 iTrack_SizeY,CTrack_Player2* pTrack
 	mTrackSize			=	ge::SSize(gTrack_Scroll_Editor.iCX ,iTrack_SizeY);
 	mpTrack_Player2		=	pTrack_Player2;
 	miDrag_Region_Size	=	-1;	
-	mpKSPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
+	
 }
 
 void CTrack::Init()
@@ -108,7 +108,7 @@ tbool CTrack::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 		else if(MouseMsg == ge::MouseMove){
 			
 
-			tint64 iSample = (tint64)((Pos.iX - gTrack_Side.iCX) *mpKSPlugIn->GetSamplesPrPixel());
+			tint64 iSample = (tint64)((Pos.iX - gTrack_Side.iCX) *gpApplication->GetSamplesPrPixel());
 			if(iSample < 0) iSample = 0;
 			mpTrack_Top->SetCursorInSamples(iSample);
 			
@@ -120,7 +120,7 @@ tbool CTrack::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 	}
 	else if(MouseMsg == ge::MouseMove){
 
-		tfloat64 fSamplesPrPixel	=	mpKSPlugIn->GetSamplesPrPixel();
+		tfloat64 fSamplesPrPixel	=	gpApplication->GetSamplesPrPixel();
 			
 		ge::SPos PosThis;
 		mpControl->GetPos(PosThis);
@@ -215,7 +215,7 @@ void CTrack::SetPos(const ge::SPos& Pos)
 void CTrack::SetTrackSelection( const ge::SPos& Pos, tint32 iRegionID, tint32 iSelection_Type  )
 {
 	// Set selection in samples
-	tfloat64 fSamples_Pr_Pixel	=	mpKSPlugIn->GetSamplesPrPixel();
+	tfloat64 fSamples_Pr_Pixel	=	gpApplication->GetSamplesPrPixel();
 	tuint64 uiStart_Sample;
 	tuint64 uiDuration;
 	tuint64 uiSampleEnd;
@@ -246,8 +246,8 @@ void CTrack::SetTrackSelection( const ge::SPos& Pos, tint32 iRegionID, tint32 iS
 		uiSampleEnd			=	uiStart_Sample + uiDuration - 1;
 
 	}
-	uiStart_Sample		=	mpKSPlugIn->SnapToGridStart(uiStart_Sample);
-	uiSampleEnd			=	mpKSPlugIn->SnapToGridEnd(uiSampleEnd);
+	uiStart_Sample		=	gpApplication->SnapToGridStart(uiStart_Sample);
+	uiSampleEnd			=	gpApplication->SnapToGridEnd(uiSampleEnd);
 	uiDuration			=	uiSampleEnd - uiStart_Sample + 1 ;
 	
 	// Store selection data in DSP engine
@@ -258,7 +258,7 @@ void CTrack::SetTrackSelection( const ge::SPos& Pos, tint32 iRegionID, tint32 iS
 
 
 	// Extending selection on this track
-	mpKSPlugIn->SelectTrack(miTrackID);
+	gpApplication->SelectTrack(miTrackID);
 
 	// Make sure all other track with selections reflect this one
 	STrackSelectionInfo sBlueSel = gpDSPEngine->GetTrackSelection(miTrackID);
@@ -284,7 +284,7 @@ void CTrack::Set_Selection_Size_And_Pos()
 	if ((sInfo.uiSelection_Type == giSelect_Off) || (sInfo.uiSelection_Duration == 0)) {
 		Hide_Selection();
 		// Maybe update "blue track"
-		tint32 iBlueTrack = mpKSPlugIn->Get_Selected_Track();
+		tint32 iBlueTrack = gpApplication->Get_Selected_Track();
 		if (iBlueTrack == miTrackID) {
 			// We must change blue track
 			iBlueTrack = -1;
@@ -296,12 +296,12 @@ void CTrack::Set_Selection_Size_And_Pos()
 				}
 			}
 			// Set new (or none) blue track
-			mpKSPlugIn->SelectTrack(iBlueTrack);
+			gpApplication->SelectTrack(iBlueTrack);
 		}
 	}
 	else{
 
-		tfloat64 fPixel_Pr_Sample	=	mpKSPlugIn->GetPixelPrSample();
+		tfloat64 fPixel_Pr_Sample	=	gpApplication->GetPixelPrSample();
 		
 		tuint64 uiStart_Sample			=	sInfo.uiSelection_Pos;
 		tuint64 uiSelection_Duration	=	sInfo.uiSelection_Duration;
@@ -334,9 +334,9 @@ void CTrack::Set_Selection_Size_And_Pos()
 		Show_Selection();
 
 		// If no previous "blue track" then let it be this one
-		tint32 iPrevBlueTrack = mpKSPlugIn->Get_Selected_Track();
+		tint32 iPrevBlueTrack = gpApplication->Get_Selected_Track();
 		if (iPrevBlueTrack < 0) {
-			mpKSPlugIn->SelectTrack(miTrackID);
+			gpApplication->SelectTrack(miTrackID);
 		}
 	}
 }
@@ -363,7 +363,7 @@ void CTrack::Hide_Selection()
 
 void CTrack::Handle_Drag_Region(ge::SPos Pos)
 {
-	tfloat64 fPixel_Pr_Sample	=	mpKSPlugIn->GetPixelPrSample();
+	tfloat64 fPixel_Pr_Sample	=	gpApplication->GetPixelPrSample();
 	
 		
 	if(miDrag_Region_Size == -1){
@@ -403,17 +403,17 @@ void CTrack::Handle_Drag_Region(ge::SPos Pos)
 	Pos.iX = Pos.iX - panePos.iX;
 	Pos.iY	=	0;
 
-	tuint64 uiSamplePos = (tfloat32)Pos.iX * mpKSPlugIn->GetSamplesPrPixel();
+	tuint64 uiSamplePos = (tfloat32)Pos.iX * gpApplication->GetSamplesPrPixel();
 	
 	
-	tfloat64 fStart = (tfloat64)mpKSPlugIn->SnapToGrid(uiSamplePos);
+	tfloat64 fStart = (tfloat64)gpApplication->SnapToGrid(uiSamplePos);
 	Pos.iX			=	fStart * fPixel_Pr_Sample;
 	
 	miTrack_Size_Y ? pmBmp_Select_Big->SetPos(Pos): pmBmp_Select_Small->SetPos(Pos);
 	Redraw_Pane_Rect();
 	
 	/*
-	Pos.iX		=	(tfloat32)mpKSPlugIn->SnapToGrid(uiSamplePos) * fPixel_Pr_Sample;
+	Pos.iX		=	(tfloat32)gpApplication->SnapToGrid(uiSamplePos) * fPixel_Pr_Sample;
 
 	miTrack_Size_Y ? pmBmp_Select_Big->SetPos(Pos): pmBmp_Select_Small->SetPos(Pos);
 	Redraw_Pane_Rect();
@@ -422,7 +422,7 @@ void CTrack::Handle_Drag_Region(ge::SPos Pos)
 	tfloat64 fStart = Pos.iX / fPixel_Pr_Sample;
 	*/
 	
-	//fStart	=	mpKSPlugIn->SnapToGrid(fStart);
+	//fStart	=	gpApplication->SnapToGrid(fStart);
 	mpTrack_Top->SetStartSamples(fStart);
 	mpTrack_Top->SetEndSamples(miDrag_Region_Size + fStart);
 	mpTrack_Top->SetCursorInSamples(fStart);
@@ -443,8 +443,8 @@ void CTrack::Handle_Mouse_Drop(ge::SPos Pos)
 	tint32 iPixel_Pos = Pos.iX - panePos.iX;
 	
 
-	tfloat64 fSamples_Pr_Pixel	=	mpKSPlugIn->GetSamplesPrPixel();
-	tuint64 uiSamplePos			=	mpKSPlugIn->SnapToGrid(iPixel_Pos * fSamples_Pr_Pixel);
+	tfloat64 fSamples_Pr_Pixel	=	gpApplication->GetSamplesPrPixel();
+	tuint64 uiSamplePos			=	gpApplication->SnapToGrid(iPixel_Pos * fSamples_Pr_Pixel);
 
 	if (Info.pOrigin->GetID() == giCtrl_File_List) {
 		// Drag and drop operation from file list. Add region

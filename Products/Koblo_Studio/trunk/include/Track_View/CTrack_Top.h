@@ -106,6 +106,6 @@ protected:
 	virtual void PreparePopups();
 	ge::IDropDownListBox* CreatePop( tint32 iControlID, tint32 iBitmapID,  const ge::IPopupMenu::SMenuItemList& List, ge::SPos Pos);
 	
-	CKSPlugIn* mpKSPlugIn;
+	
 
 };

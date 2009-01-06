@@ -135,7 +135,7 @@ tbool CExportClipTask::DoEncode_FirstTimeHere()
 				}
 
 				// Go to position 0 (and kill effect tail)
-				mpKSPlugIn->Playback_InProgressTask(0);
+				gpApplication->Playback_InProgressTask(0);
 			}
 		}
 	}
@@ -260,7 +260,7 @@ tbool CExportClipTask::DoCopy()
 	IFile::DeleteFile((sDestFolder + sDestNameAndExt).c_str());
 	if (!IFile::CopyFile(
 		sDestFolder.c_str(),
-		mpKSPlugIn->GetProjDir_Clips().c_str(),
+		gpApplication->GetProjDir_Clips().c_str(),
 		sDestNameAndExt.c_str())
 	) {
 		msExtendedError = std::string("Unable to copy compressed file for clip: ") + sClipName;

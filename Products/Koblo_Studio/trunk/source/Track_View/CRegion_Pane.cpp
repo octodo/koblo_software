@@ -37,7 +37,6 @@ void CRegion_Pane::SetInfo(	tuint32 uiRegionID,
 							CTrack* pTrack,
 							const std::string& sName)
 {
-	mpKSPlugIn				=	dynamic_cast<CKSPlugIn*>(GetPlugIn());
 
 	muiRegionID				=	uiRegionID;
 	muiTrack_Pos			=	uiSample_Pos;
@@ -157,7 +156,7 @@ void CRegion_Pane::EventGeneric(ge::IControl* pControl, void* pEventData)
 void CRegion_Pane::Set_Size_X()
 {
 
-	miSize_X = Float2Int(muiSample_Duration * mpKSPlugIn->GetPixelPrSample());
+	miSize_X = Float2Int(muiSample_Duration * gpApplication->GetPixelPrSample());
 	
 	if(mpText)
 		mpText->SetVisible(miSize_X > 118);
@@ -173,7 +172,7 @@ void CRegion_Pane::Set_Track_SizeY(tint32 iSize_Y)
 
 void CRegion_Pane::Set_Pos_X()
 {
-	miPos_X	=	(tfloat64)(muiTrack_Pos * mpKSPlugIn->GetPixelPrSample());
+	miPos_X	=	(tfloat64)(muiTrack_Pos * gpApplication->GetPixelPrSample());
 }
 
 void CRegion_Pane::Update_Size()
@@ -249,8 +248,8 @@ void CRegion_Pane::Handel_Select_All_Tool()
 
 void CRegion_Pane::Handle_Cut_Tool(tuint32 uiPos)
 {
-	tuint64 uiSamplePos = (tfloat64)uiPos * mpKSPlugIn->GetSamplesPrPixel();
-	uiSamplePos			=	mpKSPlugIn->SnapToGrid(uiSamplePos);
+	tuint64 uiSamplePos = (tfloat64)uiPos * gpApplication->GetSamplesPrPixel();
+	uiSamplePos			=	gpApplication->SnapToGrid(uiSamplePos);
 	
 	gpDSPEngine->CutRegion( mpTrack->Get_TrackID(), muiRegionID, uiSamplePos+1);
 }
@@ -258,7 +257,7 @@ void CRegion_Pane::Handle_Cut_Tool(tuint32 uiPos)
 void CRegion_Pane::Handle_Trim_Tool(tint32 uiPos)
 {
 
-	tfloat64 SamplesPrPixel =	mpKSPlugIn->GetSamplesPrPixel();
+	tfloat64 SamplesPrPixel =	gpApplication->GetSamplesPrPixel();
 	tint64 iSamplePos	= (tfloat64)uiPos * SamplesPrPixel;
 
 	gpDSPEngine->TrimRegion( mpTrack->Get_TrackID(), muiRegionID, miEdit_State != giEdit_Trim_End, iSamplePos);
@@ -318,7 +317,7 @@ void CRegion_Pane::OnDraw(const ge::SRect &rUpdate)
 			}
 		}
 	}
-	tbool bDraw_Waveform	= mpKSPlugIn->GetGlobalParm(giParamID_Show_Waveform, giSectionGUI);	
+	tbool bDraw_Waveform	= gpApplication->GetGlobalParm(giParamID_Show_Waveform, giSectionGUI);	
 	if(bDraw_Waveform){
 
 		tint32 iChannels = 1;
@@ -335,9 +334,9 @@ void CRegion_Pane::OnDraw(const ge::SRect &rUpdate)
 		SizeThis.iCY = miPixel_Size_Y-2;
 
 
-		tuint64 uiPixelOffset	=	Float2Int(mfSample_Start * mpKSPlugIn->GetPixelPrSample());
+		tuint64 uiPixelOffset	=	Float2Int(mfSample_Start * gpApplication->GetPixelPrSample());
 
-		tfloat64 fSamplesPerPixel	= mpKSPlugIn->GetSamplesPrPixel();
+		tfloat64 fSamplesPerPixel	= gpApplication->GetSamplesPrPixel();
 		
 		tint32 iDrawStartX = 0;
 		//if (iDrawStartX < 0) {
@@ -691,7 +690,7 @@ void CRegion_Pane::Refresh_Region_GUI()
 
 void CRegion_Pane::Update_Fade_In(tuint32 uiFade_In_Pixel)
 {
-	tfloat64 fSamplesPrPixel		=	mpKSPlugIn->GetSamplesPrPixel();
+	tfloat64 fSamplesPrPixel		=	gpApplication->GetSamplesPrPixel();
 	muiSample_Fade_In				=	(tfloat64)uiFade_In_Pixel * fSamplesPrPixel;
 	
 	muiSample_Fade_In = gpDSPEngine->Fade_In(muiRegionID, muiSample_Fade_In);
@@ -702,7 +701,7 @@ void CRegion_Pane::Update_Fade_In(tuint32 uiFade_In_Pixel)
 
 void CRegion_Pane::Draw_Fade_In()
 {
-	tfloat64 fPixelPrSample		=	mpKSPlugIn->GetPixelPrSample();
+	tfloat64 fPixelPrSample		=	gpApplication->GetPixelPrSample();
 	muiFade_In_Pixel			=	(tfloat64)muiSample_Fade_In * fPixelPrSample;
 	
 	
@@ -719,7 +718,7 @@ void CRegion_Pane::Update_Fade_Out(tuint32 uiFade_Out_Pixel)
 	if(uiFade_Out_Pixel > miSize_X+6) 
 		uiFade_Out_Pixel = miSize_X+6;
 	
-	tfloat64 fSamplesPrPixel		=	mpKSPlugIn->GetSamplesPrPixel();
+	tfloat64 fSamplesPrPixel		=	gpApplication->GetSamplesPrPixel();
 	tuint64 uiSamples				=	(tfloat64)uiFade_Out_Pixel * fSamplesPrPixel;
 	
 	if(uiSamples > muiSample_Duration)
@@ -737,7 +736,7 @@ void CRegion_Pane::Update_Fade_Out(tuint32 uiFade_Out_Pixel)
 void CRegion_Pane::Draw_Fade_Out()
 {
 	
-	tfloat64 fPixelPrSample		=	mpKSPlugIn->GetPixelPrSample();
+	tfloat64 fPixelPrSample		=	gpApplication->GetPixelPrSample();
 	tuint64 uiSamples			=	muiSample_Duration - muiSample_Fade_Out;
 	muiFade_Out_Pixel			=	(tfloat64)uiSamples * fPixelPrSample;
 	

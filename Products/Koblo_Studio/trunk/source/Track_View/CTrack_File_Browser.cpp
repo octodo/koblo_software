@@ -13,7 +13,7 @@ CTrack_File_Browser::~CTrack_File_Browser()
 
 void CTrack_File_Browser::SetInfo()
 {
-	mpKSPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
+	
 }
 
 void CTrack_File_Browser::Init()
@@ -57,13 +57,13 @@ void CTrack_File_Browser::EventValueChange(ge::IControl* pControl, tint32 iValue
 		case giChC_Import_Audio:
 			{
 				/*
-				if (mpKSPlugIn->GetProjDir().length() == 0) {
+				if (gpApplication->GetProjDir().length() == 0) {
 					mpGUI->GetWindow()->ShowMessageBox("You must create or load a project before importing audio", "Sorry");
 				}
 				else*/
-				if (!mpKSPlugIn->OnAudioFileImport()) {
+				if (!gpApplication->OnAudioFileImport()) {
 					std::string sMsg = "Unable to import audio";
-					std::string sExt = mpKSPlugIn->GetExtendedError();
+					std::string sExt = gpApplication->GetExtendedError();
 					if (sExt.length() > 0)
 						sMsg += std::string("\n\n") + sExt;
 					mpGUI->GetWindow()->ShowMessageBox(sMsg.c_str(), "Sorry: Import failed");

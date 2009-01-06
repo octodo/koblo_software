@@ -27,7 +27,7 @@ enum EExportClipOrder {
 
 class CExportClipTask : public CProgressTask {
 public:
-	CKSPlugIn* mpKSPlugIn;
+
 
 	std::string sClipName;
 	tuint64 muiStartIx;
@@ -66,9 +66,9 @@ public:
 	tuint64 muiCurrEncodeIx;
 	tuint64 muiSamplesNeeded;
 
-	CExportClipTask(CKSPlugIn* pPlugIn, const tchar* pszClipName, tuint64 uiStartIx, tuint64 uiDuration)
+	CExportClipTask( const tchar* pszClipName, tuint64 uiStartIx, tuint64 uiDuration)
 	{
-		mpKSPlugIn = pPlugIn;
+		
 
 		sClipName = pszClipName;
 		muiStartIx = uiStartIx;

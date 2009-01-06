@@ -18,7 +18,7 @@ CTrack_Fade_Handle::~CTrack_Fade_Handle()
 void CTrack_Fade_Handle::SetInfo(CRegion_Pane* pRegion_GUI, tuint uiHandle_Type)
 {
 	muiHandle_Type			=	uiHandle_Type;
-	mpRegion_GUI			=	pRegion_GUI;
+	mpRegion_Pane			=	pRegion_GUI;
 	mbMouseCaptured			=	false;
 }
 
@@ -109,7 +109,7 @@ tbool CTrack_Fade_Handle::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 		//----------------------------------------
 		case ge::MouseMove: {
 			ge::SPos sPosThis;
-			mpRegion_GUI->GetPane()->GetPos(sPosThis);
+			mpRegion_Pane->GetPane()->GetPos(sPosThis);
 			ge::SPos sPosNew(Pos.iX - sPosThis.iX - muiMouseDowPos, 0);
 			if(sPosNew.iX < 0) sPosNew.iX =	0;
 			
@@ -119,13 +119,13 @@ tbool CTrack_Fade_Handle::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 			
 			switch(muiHandle_Type){
 				case giFade_Out_Handle:
-					mpRegion_GUI->Update_Fade_Out(sPosNew.iX);
+					mpRegion_Pane->Update_Fade_Out(sPosNew.iX);
 					break;
 				case giFade_In_Handle:
-					mpRegion_GUI->Update_Fade_In(sPosNew.iX);
+					mpRegion_Pane->Update_Fade_In(sPosNew.iX);
 					break;
 				case giRegion_Volume_Handle:
-					mpRegion_GUI->Update_Region_Volume(iPosY);
+					mpRegion_Pane->Update_Region_Volume(iPosY);
 					break;
 			}
 					

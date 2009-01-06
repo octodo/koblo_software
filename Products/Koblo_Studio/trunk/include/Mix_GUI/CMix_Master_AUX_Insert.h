@@ -57,6 +57,5 @@ protected:
 
 	tint32 miTimerID;
 
-	CKSPlugIn* mpKSPlugIn;
 
 };

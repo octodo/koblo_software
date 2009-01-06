@@ -17,7 +17,6 @@ void CMix_Buss_AUX_Insert::SetInfo(tint32 iID, tint32 iTimerID)
 	miTimerID		= iTimerID;
 	miCtrl_Offset	= giFirst_Buss_Ctrl + ( miID * giNr_Of_Buss_Ctls);
 	
-	mpKSPlugIn		=	dynamic_cast<CKSPlugIn*>(GetPlugIn());
 }
 
 void CMix_Buss_AUX_Insert::Init()
@@ -52,7 +51,7 @@ void CMix_Buss_AUX_Insert::Init()
 	piIDs[ge::IPopupMenu::BitmapCenterInv]		= IDB_POPUP_BODY_INVERTED;
 	piIDs[ge::IPopupMenu::BitmapBottom]			= IDB_PopupBorder;
 
-	CPlugInManager* pPlugManager = mpKSPlugIn->GetPlugInManager();
+	CPlugInManager* pPlugManager = gpApplication->GetPlugInManager();
 	tint32 iPlugInCount = pPlugManager->GetNrOfPlugIns();
 	ge::IPopupMenu::SMenuItemList List;
 	List.iItemCount = iPlugInCount + 1;
@@ -96,19 +95,19 @@ void CMix_Buss_AUX_Insert::EventValueChange(ge::IControl* pControl, tint32 iValu
 	
 	if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit1) {
 //		GetParmMan()->Set(true, 1, giParam_Ch_Insert1GUIOpen, de::IParameterManager::TypeGlobal, miSection);
-		mpKSPlugIn->GetPlugInManager()->OpenGUI(miID + 1024, 0);
+		gpApplication->GetPlugInManager()->OpenGUI(miID + 1024, 0);
 	}
 	else if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit2) {
 //		GetParmMan()->Set(true, 1, giParam_Ch_Insert2GUIOpen, de::IParameterManager::TypeGlobal, miSection);
-		mpKSPlugIn->GetPlugInManager()->OpenGUI(miID + 1024, 1);
+		gpApplication->GetPlugInManager()->OpenGUI(miID + 1024, 1);
 	}
 	else if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit3) {
 //		GetParmMan()->Set(true, 1, giParam_Ch_Insert3GUIOpen, de::IParameterManager::TypeGlobal, miSection);
-		mpKSPlugIn->GetPlugInManager()->OpenGUI(miID + 1024, 2);
+		gpApplication->GetPlugInManager()->OpenGUI(miID + 1024, 2);
 	}
 	else if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit4) {
 //		GetParmMan()->Set(true, 1, giParam_Ch_Insert4GUIOpen, de::IParameterManager::TypeGlobal, miSection);
-		mpKSPlugIn->GetPlugInManager()->OpenGUI(miID + 1024, 3);
+		gpApplication->GetPlugInManager()->OpenGUI(miID + 1024, 3);
 	}
 }
 

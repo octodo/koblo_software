@@ -25,7 +25,6 @@ CKSExportGUIPane::~CKSExportGUIPane()
 
 void CKSExportGUIPane::Init()
 {
-	mpKSPlugIn		=	dynamic_cast<CKSPlugIn*>(GetPlugIn());
 	
 	mpPane = ge::IPane::Create();
 	mpPane->SetSize(ge::SSize(386,242));

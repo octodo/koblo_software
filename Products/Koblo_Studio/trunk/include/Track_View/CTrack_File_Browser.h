@@ -54,7 +54,7 @@ protected:
 	
 	virtual void Create_Files_ScrollBar();
 	
-	CKSPlugIn* mpKSPlugIn;
+
 
 
 };

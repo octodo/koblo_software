@@ -20,7 +20,7 @@ CTrack_Time_Pos::~CTrack_Time_Pos()
 
 void CTrack_Time_Pos::SetInfo()
 {
-	mpKSPlugIn = dynamic_cast<CKSPlugIn*>(mpPlugIn);
+
 }
 
 void CTrack_Time_Pos::Init()
@@ -153,7 +153,7 @@ void CTrack_Time_Pos::Draw_Bars_Beat_Grid()
 
 
 	
-	tfloat64 fPixelPrSample =  mpKSPlugIn->GetPixelPrSample();
+	tfloat64 fPixelPrSample =  gpApplication->GetPixelPrSample();
 
 	// Suppress calls to CPane::UpdatePosition
 	GetPane()->SuppressUpdatePositions(true);
@@ -305,7 +305,7 @@ void CTrack_Time_Pos::Draw_Bars_Beat_Grid()
 void CTrack_Time_Pos::Draw_Min_Sec_Grid()
 {
 
-	tfloat64 fPixelPrSample =  mpKSPlugIn->GetPixelPrSample();
+	tfloat64 fPixelPrSample =  gpApplication->GetPixelPrSample();
 	
 	// Suppress calls to CPane::UpdatePosition
 	GetPane()->SuppressUpdatePositions(true);
@@ -355,8 +355,8 @@ void CTrack_Time_Pos::Draw_Min_Sec_Grid()
 void CTrack_Time_Pos::Update_Zoom()
 {
 
-	tfloat64 fSamplesPrPixel	=	mpKSPlugIn->GetSamplesPrPixel();
-	mfSamples_Pr_32				=	mpKSPlugIn->GetSamples_Pr_32();
+	tfloat64 fSamplesPrPixel	=	gpApplication->GetSamplesPrPixel();
+	mfSamples_Pr_32				=	gpApplication->GetSamples_Pr_32();
 	
 	tfloat32 fMin_Sample_Dist	=	 giMin_Pix_Pr_Gridline * 8;
 	fMin_Sample_Dist			*=	fSamplesPrPixel;
@@ -392,7 +392,7 @@ void CTrack_Time_Pos::Update_Zoom()
 void CTrack_Time_Pos::Update_Graphic()
 {
 
-	tfloat64 fPixelPrSample			=	mpKSPlugIn->GetPixelPrSample();
+	tfloat64 fPixelPrSample			=	gpApplication->GetPixelPrSample();
 	tfloat64  fSession_End_Sample	=	gpDSPEngine->Get_Session_End_Sample();
 	tuint32	uiEndPixel				=	fSession_End_Sample * fPixelPrSample;
 	uiEndPixel						+=  128;
@@ -544,7 +544,7 @@ void CTrack_Time_Pos::SetSignature(tint32 iSignature)
 void CTrack_Time_Pos::Set_Play_Head(tint64 iSample_Pos)
 {
 
-	tfloat64 fPixelPrSample =  mpKSPlugIn->GetPixelPrSample();
+	tfloat64 fPixelPrSample =  gpApplication->GetPixelPrSample();
 	
 	// Find position
 	tint32 iPixel_Pos	=	(tint32)(fPixelPrSample * iSample_Pos);
@@ -593,7 +593,7 @@ tbool CTrack_Time_Pos::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 		if(MouseMsg == ge::MouseMove && MouseMsg != ge::LeftButtonDown){
 			
 
-			tfloat64 fSamplesPrPixel	=	mpKSPlugIn->GetSamplesPrPixel();
+			tfloat64 fSamplesPrPixel	=	gpApplication->GetSamplesPrPixel();
 			
 			ge::SPos PosThis;
 			mpControl->GetPos(PosThis);
@@ -638,8 +638,8 @@ tbool CTrack_Time_Pos::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 					Set_Loop_Selection();
 				}
 				else{
-					tfloat32 fSampelsPrPixel	=	mpKSPlugIn->GetSamplesPrPixel();
-					mpKSPlugIn->PlaybackGoToPos(mfMouse_Down_Pos_X * fSampelsPrPixel);
+					tfloat32 fSampelsPrPixel	=	gpApplication->GetSamplesPrPixel();
+					gpApplication->PlaybackGoToPos(mfMouse_Down_Pos_X * fSampelsPrPixel);
 					//Redraw_Pane_Rect();
 					miEdit = giEdit_Loop_Off;
 				}
@@ -672,7 +672,7 @@ tbool CTrack_Time_Pos::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 			tfloat32 fPosX	=	Pos.iX - PosThis.iX;
 
 
-			tfloat32 fSamplsPrPixel	=	mpKSPlugIn->GetSamplesPrPixel();
+			tfloat32 fSamplsPrPixel	=	gpApplication->GetSamplesPrPixel();
 			tint64 iSampleCursor;
 			tint64 iSampleStart;
 			tint64 iSampleEnd;
@@ -802,7 +802,7 @@ void CTrack_Time_Pos::Get_Loop(tint32& iStart, tint32& iSize)
 	tfloat32 fStart				=	info.uiLoop_Start;
 	tfloat32 fEnd				=	info.uiLoop_End;
 		
-	tfloat32 fPixelPrSampel		=	mpKSPlugIn->GetPixelPrSample();
+	tfloat32 fPixelPrSampel		=	gpApplication->GetPixelPrSample();
 		
 	tfloat32 fSize				=	fEnd - fStart + 1.0;
 	fSize						*=	fPixelPrSampel;
@@ -837,8 +837,8 @@ void CTrack_Time_Pos::Set_Loop_Selection()
 void CTrack_Time_Pos::Update_Loop(tint32 iSampleStart, tint32 iSampleEnd)
 {
 	
-	iSampleStart	=	mpKSPlugIn->SnapToGrid(iSampleStart);
-	iSampleEnd		=	mpKSPlugIn->SnapToGrid(iSampleEnd);
+	iSampleStart	=	gpApplication->SnapToGrid(iSampleStart);
+	iSampleEnd		=	gpApplication->SnapToGrid(iSampleEnd);
 
 				
 	GetPlugIn()->SetGlobalParm(giParamID_Loop_Start,iSampleStart, giSectionGlobal);

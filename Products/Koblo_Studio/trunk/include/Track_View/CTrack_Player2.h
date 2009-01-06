@@ -95,9 +95,8 @@ public:
 	
 protected:
 
-	// Lasse, for some reason this crashes - why!??!
-	// Correctly typecasted pointer to plug-in class
-	//CKSPlugIn* mpKSPlugIn;
+	
+	
 
 	
 struct STrack_GUI
@@ -205,7 +204,6 @@ struct STrack_GUI
 	
 	CTrack_Top* mpTrack_Top;
 	
-	CKSPlugIn* mpKSPlugIn;
 	
 	// Play Head
 	ge::ILine*		mpPlay_Line;

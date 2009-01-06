@@ -44,7 +44,7 @@ public:
 	
 
 protected:
-	CKSPlugIn* mpKSPlugIn;
+
 	
 	ge::IMultiStateButton* mpRemember_Me_Button;
 	

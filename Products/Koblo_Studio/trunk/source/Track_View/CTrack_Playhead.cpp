@@ -20,12 +20,12 @@ void CTrack_Playhead::SetInfo(CTrack_Time_Pos* pTrack_Time_Pos)
 	mpCTrack_Time_Pos		=	pTrack_Time_Pos;
 	mbMouseCaptured			=	false;
 	
-	mpKSPlugIn				=	dynamic_cast<CKSPlugIn*>(GetPlugIn());
+
 }
 
 void CTrack_Playhead::Init()
 {
-	mpKSPlugIn = dynamic_cast<CKSPlugIn*>(mpPlugIn);
+	gpApplication = dynamic_cast<CKSPlugIn*>(mpPlugIn);
 
 	// Create the main pane
 	mpPane = ge::IPane::Create();
@@ -84,7 +84,7 @@ tbool CTrack_Playhead::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 				// Update mouse cursor
 				mpControl->GetParentWindow()->SetMouseCursor(ge::IWindow::CursorHand);
 				
-				mpKSPlugIn->PrepareMovePlayhead();
+				gpApplication->PrepareMovePlayhead();
 				return true;
 			}
 			
@@ -98,7 +98,7 @@ tbool CTrack_Playhead::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 			mbMouseCaptured	= false;
 			mpPane->GetParentWindow()->ReleaseMouseFocus();
 			mpCTrack_Time_Pos->Redraw_Pane_Rect();
-			mpKSPlugIn->EndMovePlayhead();
+			gpApplication->EndMovePlayhead();
 			return true;
 			break;
 		}
@@ -112,8 +112,8 @@ tbool CTrack_Playhead::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 			if(sPosNew.iX < 0) sPosNew.iX =	0;
 			// Move playhead
 			SetPos(ge::SPos(sPosNew.iX - 8,sPosNew.iY) );
-			tint64 iSamplePos	=	(tint64)((tfloat32)(sPosNew.iX) * mpKSPlugIn->GetSamplesPrPixel());
-			mpKSPlugIn->MovePlayhead(iSamplePos);
+			tint64 iSamplePos	=	(tint64)((tfloat32)(sPosNew.iX) * gpApplication->GetSamplesPrPixel());
+			gpApplication->MovePlayhead(iSamplePos);
 			// Redraw parrent pane
 			mpCTrack_Time_Pos->Redraw_Pane_Rect();	
 			return true;	

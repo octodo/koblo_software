@@ -33,7 +33,7 @@ enum EExportDSPOrder {
 
 class CExportDSPTask : public CProgressTask {
 public:
-	CKSPlugIn* mpKSPlugIn;
+
 	tuint64 muiPosSaved;
 
 	tint32 miTrack;
@@ -61,7 +61,7 @@ public:
 
 	tint32 miActionOrder;
 
-	CExportDSPTask(CKSPlugIn* pKSPlugIn,
+	CExportDSPTask(
 		tint32 iTrackNb, const tchar* pszTrackName,
 		ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS
 		);

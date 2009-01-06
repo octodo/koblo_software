@@ -65,8 +65,7 @@ protected:
 
 
 	
-	// Correctly typecasted pointer to plug-in class
-	CKSPlugIn* mpKSPlugIn;
+	
 
 
 	tbool			mbMouseCaptured;

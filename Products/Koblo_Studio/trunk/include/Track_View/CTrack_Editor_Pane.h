@@ -91,7 +91,6 @@ public:
 
 protected:
 	
-//	CKSPlugIn* mpKSPlugIn;
 
 	tbool mbInited;
 

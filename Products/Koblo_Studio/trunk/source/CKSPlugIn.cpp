@@ -1626,7 +1626,7 @@ void CKSPlugIn::ExportAllClips(ac::EAudioCodec eCodec, ac::EQuality eQuality, ti
 		for ( ; it != mFileInfos.end(); it++) {
 			SFileInfo* pFileInfo = *it;
 			const tchar* pszClipName = pFileInfo->sName.c_str();
-			CExportClipTask* pClipInfo = new CExportClipTask(this, pszClipName, 0, (tuint64)-1);
+			CExportClipTask* pClipInfo = new CExportClipTask( pszClipName, 0, (tuint64)-1);
 			listpInfo.insert(listpInfo.end(), pClipInfo);
 		}
 		bSuccess = ExportClipsList(&listpInfo, eCodec, eQuality, iChannels);
@@ -1768,7 +1768,7 @@ tbool CKSPlugIn::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iStartIx
 		}
 		else {
 			// Insert zeroes before this clip
-			CExportClipTask* pClipInfoZeroes = new CExportClipTask(this, "", 0, iZeroesBefore);
+			CExportClipTask* pClipInfoZeroes = new CExportClipTask( "", 0, iZeroesBefore);
 			//pClipInfoZeroes->bConcatenateNext = true;
 			pClipInfoZeroes->sDestName_Concatenate = pszNameUniteDefault;
 			plistpInfo->insert(plistpInfo->end(), pClipInfoZeroes);
@@ -1803,7 +1803,7 @@ tbool CKSPlugIn::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iStartIx
 				iClipDuration = iDurationLimit;
 
 			// Add clip info
-			CExportClipTask* pClipInfo = new CExportClipTask(this, pszClipName, iClipStartPos, iClipDuration);
+			CExportClipTask* pClipInfo = new CExportClipTask( pszClipName, iClipStartPos, iClipDuration);
 			//pClipInfo->bConcatenateNext = true;
 			pClipInfo->sDestName_Concatenate = pszNameUniteDefault;
 			plistpInfo->insert(plistpInfo->end(), pClipInfo);
@@ -1823,7 +1823,7 @@ tbool CKSPlugIn::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iStartIx
 	// Maybe pad with zeroes after last region
 	if (iLatestPos <= iEndPos) {
 		tint64 iZeroesAfter = iEndPos - iLatestPos + 1;
-		CExportClipTask* pClipInfoZeroes = new CExportClipTask(this, "", 0, iZeroesAfter);
+		CExportClipTask* pClipInfoZeroes = new CExportClipTask( "", 0, iZeroesAfter);
 		plistpInfo->insert(plistpInfo->end(), pClipInfoZeroes);
 
 		// Maybe link clip before to this silent bit
@@ -1842,7 +1842,7 @@ tbool CKSPlugIn::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iStartIx
 tbool CKSPlugIn::ExportRegionClip(const tchar* pszClipName, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels)
 {
 	std::list<CExportClipTask*> listpInfo;
-	CExportClipTask* pInfo = new CExportClipTask(this, pszClipName, 0, (tuint64)-1);
+	CExportClipTask* pInfo = new CExportClipTask( pszClipName, 0, (tuint64)-1);
 	listpInfo.insert(listpInfo.end(), pInfo);
 	return ExportClipsList(&listpInfo, eCodec, eQuality, iChannels);
 } // ExportRegionClip
@@ -3684,7 +3684,7 @@ tbool CKSPlugIn::ExportTracksOrMix(EPlaybackState eExportState, std::list<tint32
 	switch (eExportState) {
 		case geStateExportingOutMix:
 			{
-				CExportDSPTask* pInfo = new CExportDSPTask(this, -1, "Mix down", eCodec, eQuality, iChannels, iTailMS);
+				CExportDSPTask* pInfo = new CExportDSPTask( -1, "Mix down", eCodec, eQuality, iChannels, iTailMS);
 				if (!bNormalize) {
 					// Use altitude as it is - no peak search and normalization
 					pInfo->mfNormalizationFactor = 1.0f;
@@ -3713,7 +3713,7 @@ tbool CKSPlugIn::ExportTracksOrMix(EPlaybackState eExportState, std::list<tint32
 					for ( ; it != plistiTracks->end(); it++) {
 						tint32 iTrack = *it;
 						std::string sTrackName = GetChannelName(iTrack);
-						CExportDSPTask* pInfo = new CExportDSPTask(this, iTrack, sTrackName.c_str(), eCodec, eQuality, iChannels, iTailMS);
+						CExportDSPTask* pInfo = new CExportDSPTask( iTrack, sTrackName.c_str(), eCodec, eQuality, iChannels, iTailMS);
 						if (!bNormalize) {
 							// Use altitude as it is - no peak search and normalization
 							pInfo->mfNormalizationFactor = 1.0f;

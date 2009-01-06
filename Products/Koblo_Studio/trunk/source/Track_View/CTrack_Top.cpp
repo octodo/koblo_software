@@ -21,7 +21,7 @@ void CTrack_Top::SetInfo()
 	mbFFPressed		=	false;
 	mbRewindPressed	=	false;
 	
-	mpKSPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
+
 
 
 }
@@ -210,28 +210,28 @@ void CTrack_Top::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 	switch(pControl->GetID()) {
 	
 		case giControlID_Record:
-			mpKSPlugIn->SetRecord(iValueNew ? true : false);
+			gpApplication->SetRecord(iValueNew ? true : false);
 			break;
 		case giControlID_Play:{
 			if (iValueNew == 1) {
-				mpKSPlugIn->PlaybackStart();
+				gpApplication->PlaybackStart();
 				mbPlaying = true;
 			}
 			else {
-				mpKSPlugIn->PlaybackStop();
+				gpApplication->PlaybackStop();
 				mbPlaying = false;
 			}
 			break;
 		}
 		case giControlID_Stop:{
 			SetControlValue(GetPaneID(), giControlID_Play, 0);
-			mpKSPlugIn->PlaybackStop();
+			gpApplication->PlaybackStop();
 			mbPlaying = false;
 			break;
 		}
 		case giControlID_Forward:{
 			if (iValueNew) {
-				mpKSPlugIn->PlaybackFF();
+				gpApplication->PlaybackFF();
 				mbFFPressed = true;
 			}
 			else {
@@ -241,7 +241,7 @@ void CTrack_Top::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 		}
 		case giControlID_Fast_Back:{
 			if (iValueNew) {
-				mpKSPlugIn->PlaybackRewind();
+				gpApplication->PlaybackRewind();
 				mbRewindPressed = true;
 			}
 			else {
@@ -250,7 +250,7 @@ void CTrack_Top::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 			break;
 		}
 		case giControlID_Go_To_Start:{
-			mpKSPlugIn->PlaybackGoToStart();
+			gpApplication->PlaybackGoToStart();
 			
 			
 			SGUIData sData;
@@ -264,14 +264,14 @@ void CTrack_Top::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 			break;
 		}
 		case giControlID_Go_To_End:{
-			mpKSPlugIn->PlaybackGoToEnd();
+			gpApplication->PlaybackGoToEnd();
 			break;
 		}
 		case giControlID_Open_Mix_Button:{
 			if (iValueNew == 0) {
 				// Show/ hide Mix Window
 				tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Show_Mix_Window, giSectionGUI) != 0);
-				mpKSPlugIn->GetParmMan()->Set(true, !bTest, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
+				gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 			}
 			break;
 		}
@@ -283,7 +283,7 @@ void CTrack_Top::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 				if (bTest != bReallyVisible) {
 					GetPlugIn()->SetGlobalParm(giParamID_Show_AUX_Window, !bTest, giSectionGUI);
 				}
-				mpKSPlugIn->GetParmMan()->Set(true, !bReallyVisible, giParamID_Show_AUX_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
+				gpApplication->GetParmMan()->Set(true, !bReallyVisible, giParamID_Show_AUX_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 			}
 			break;
 		}
@@ -326,7 +326,7 @@ void CTrack_Top::HandleMsg(SMsg* pMsg)
 			break;
 		}
 		case Msg_Go_To_Mouse:{
-			mpKSPlugIn->PlaybackGoToPos(muiSamplePos);
+			gpApplication->PlaybackGoToPos(muiSamplePos);
 		
 		
 			break;
@@ -396,9 +396,9 @@ void CTrack_Top::Update_Time_Display(tint64 iSample_Point)
 	}
 	
 	if(mbRewindPressed)
-		mpKSPlugIn->PlaybackRewind();
+		gpApplication->PlaybackRewind();
 	if(mbFFPressed)
-		mpKSPlugIn->PlaybackFF();
+		gpApplication->PlaybackFF();
 		
 }
 

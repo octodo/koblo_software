@@ -75,8 +75,6 @@ protected:
 	ge::ICustomControl* mpControl;
 	
 
-	// Correctly typecasted pointer to plug-in class
-	CKSPlugIn* mpKSPlugIn;
 
 
 	std::vector<ge::ILine*>		mppBar_Beat_Line;

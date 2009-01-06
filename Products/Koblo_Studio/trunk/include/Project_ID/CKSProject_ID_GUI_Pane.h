@@ -49,10 +49,8 @@ public:
 	
 
 protected:
-	CKSPlugIn* mpKSPlugIn;
+
 	
-	//! Returns the plug-in we're connected to
-//	CKSPlugIn* GetPlugIn() {return dynamic_cast<CKSPlugIn*>(mpPlugIn);}
 
 
 

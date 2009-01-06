@@ -154,8 +154,6 @@ protected:
 	ge::IBitmap*	mpRegion_Back_Big;
 
 
-	// Correctly typecasted pointer to plug-in class
-	CKSPlugIn* mpKSPlugIn;
 	
 	
 	//! Current mouse position

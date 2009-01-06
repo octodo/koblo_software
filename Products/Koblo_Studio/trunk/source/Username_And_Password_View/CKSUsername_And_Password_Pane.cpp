@@ -16,7 +16,7 @@ CKSUsername_And_Password_Pane::~CKSUsername_And_Password_Pane()
 
 void CKSUsername_And_Password_Pane::Init()
 {
-	mpKSPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
+
 	
 	mpPane = ge::IPane::Create();
 	mpPane->SetSize(ge::SSize(320,245));
@@ -117,13 +117,13 @@ void CKSUsername_And_Password_Pane::EventValueChange(ge::IControl* pControl, tin
 			// close sign in window
 			GetPlugIn()->SetGlobalParm(giParamID_Show_Sign_In_Window, 0, giSectionGUI);
 			// restore remember me
-			mpRemember_Me_Button->SetValue(mpKSPlugIn->Get_Remember_Me());
+			mpRemember_Me_Button->SetValue(gpApplication->Get_Remember_Me());
 			// restore username text
 			tchar pszTxt[1024];
-			sprintf(pszTxt, mpKSPlugIn->Get_User_Name().c_str());
+			sprintf(pszTxt, gpApplication->Get_User_Name().c_str());
 			mpUser_Name_Txt->SetText(pszTxt);
 			// restore password text
-			sprintf(pszTxt, mpKSPlugIn->Get_Password().c_str());
+			sprintf(pszTxt, gpApplication->Get_Password().c_str());
 			mpPassword_Txt->SetText(pszTxt);
 			
 			break;
@@ -133,16 +133,16 @@ void CKSUsername_And_Password_Pane::EventValueChange(ge::IControl* pControl, tin
 			// close sign in window
 			GetPlugIn()->SetGlobalParm(giParamID_Show_Sign_In_Window, 0, giSectionGUI);
 			// set remember me
-			mpKSPlugIn->Set_Remember_Me( mpRemember_Me_Button->GetValue());
+			gpApplication->Set_Remember_Me( mpRemember_Me_Button->GetValue());
 			// user name
 			tchar pszTxt[1024];
 			mpUser_Name_Txt->GetText(pszTxt);
-			mpKSPlugIn->Set_User_Name(pszTxt);
+			gpApplication->Set_User_Name(pszTxt);
 			// password
 			mpPassword_Txt->GetText(pszTxt);
-			mpKSPlugIn->Set_Password(pszTxt);
+			gpApplication->Set_Password(pszTxt);
 			// save sign in info, commit project if needed
-			mpKSPlugIn->On_Username_And_Password_OK();
+			gpApplication->On_Username_And_Password_OK();
 			
 			break;
 		}

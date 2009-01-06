@@ -70,7 +70,6 @@ protected:
 	virtual void GenerateQualitiesDropDown();
 	virtual void UpdateQualitiesDropDown();
 	
-	CKSPlugIn* mpKSPlugIn;
 
 };
 

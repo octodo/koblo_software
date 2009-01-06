@@ -32,7 +32,6 @@ void CKSProject_ID_GUI_Pane::Init()
 	CreateButton(giCtrl_Project_ID_Cancel, IDB_Button_Cancel, ge::SPos(119, 72), false);
 	CreateButton(giCtrl_Project_ID_OK, IDB_Button_OK, ge::SPos(180, 72), false);
 	
-	mpKSPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
 	
 
 }
@@ -85,7 +84,7 @@ void CKSProject_ID_GUI_Pane::EventValueChange(ge::IControl* pControl, tint32 iVa
 			
 			GetPlugIn()->SetGlobalParm(giParamID_Show_Projec_ID_Window, 0, giSectionGUI);
 			tint32 iProject_ID = GetPlugIn()->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
-			mpKSPlugIn->Download_Project(iProject_ID);
+			gpApplication->Download_Project(iProject_ID);
 			break;
 		}
 

@@ -18,7 +18,7 @@ void CTrack_AUX_Insert::SetInfo(tint32 iID, tint32 iTimerID)
 	miCtrl_Offset	= giFirst_Track_Ctrl + ( miID * giNr_Of_Track_Ctls);
 	miSection		= iID + giSection_First_Track;
 	
-	mpKSPlugIn	=	dynamic_cast<CKSPlugIn*>(GetPlugIn());mpKSPlugIn;
+	
 
 }
 
@@ -63,7 +63,7 @@ void CTrack_AUX_Insert::Init()
 	piIDs[ge::IPopupMenu::BitmapCenterInv]		= IDB_POPUP_BODY_INVERTED;
 	piIDs[ge::IPopupMenu::BitmapBottom]			= IDB_PopupBorder;
 
-	CPlugInManager* pPlugManager = mpKSPlugIn->GetPlugInManager();
+	CPlugInManager* pPlugManager = gpApplication->GetPlugInManager();
 	tint32 iPlugInCount = pPlugManager->GetNrOfPlugIns();
 	ge::IPopupMenu::SMenuItemList List;
 	List.iItemCount = iPlugInCount + 1;
@@ -112,21 +112,21 @@ void CTrack_AUX_Insert::EventValueChange(ge::IControl* pControl, tint32 iValueNe
 	GetParmMan()->ControlUpdate(miPaneID, pControl->GetID(), iValueNew);
 	tbool iTest;
 	if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit1) {
-	//	iTest = mpKSPlugIn->GetGlobalParm(giParam_Ch_Insert1GUIOpen, miSection);
+	//	iTest = gpApplication->GetGlobalParm(giParam_Ch_Insert1GUIOpen, miSection);
 	//	GetParmMan()->Set(true, !iTest, giParam_Ch_Insert1GUIOpen, de::IParameterManager::TypeGlobal, miSection);
-		mpKSPlugIn->GetPlugInManager()->OpenGUI(miID, 0);
+		gpApplication->GetPlugInManager()->OpenGUI(miID, 0);
 	}
 	else if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit2) {
 //		GetParmMan()->Set(true, 1, giParam_Ch_Insert2GUIOpen, de::IParameterManager::TypeGlobal, miSection);
-		mpKSPlugIn->GetPlugInManager()->OpenGUI(miID, 1);
+		gpApplication->GetPlugInManager()->OpenGUI(miID, 1);
 	}
 	else if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit3) {
 //		GetParmMan()->Set(true, 1, giParam_Ch_Insert3GUIOpen, de::IParameterManager::TypeGlobal, miSection);
-		mpKSPlugIn->GetPlugInManager()->OpenGUI(miID, 2);
+		gpApplication->GetPlugInManager()->OpenGUI(miID, 2);
 	}
 	else if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit4) {
 //		GetParmMan()->Set(true, 1, giParam_Ch_Insert4GUIOpen, de::IParameterManager::TypeGlobal, miSection);
-		mpKSPlugIn->GetPlugInManager()->OpenGUI(miID, 3);
+		gpApplication->GetPlugInManager()->OpenGUI(miID, 3);
 	}
 }
 

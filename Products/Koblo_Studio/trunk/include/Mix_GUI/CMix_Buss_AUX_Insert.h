@@ -58,7 +58,6 @@ protected:
 	tint32 miTimerID;
 	tint32 miCtrl_Offset;
 
-	CKSPlugIn* mpKSPlugIn;
 	
 
 

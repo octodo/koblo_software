@@ -47,12 +47,16 @@
 
 
 
-CExportDSPTask::CExportDSPTask(CKSPlugIn* pKSPlugIn,
-	tint32 iTrackNb, const tchar* pszTrackName,
-	ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS
+CExportDSPTask::CExportDSPTask(
+	tint32 iTrackNb,
+	const tchar* pszTrackName,
+	ac::EAudioCodec eCodec,
+	ac::EQuality eQuality,
+	tint32 iChannels, 
+	tint32 iTailMS
 	)
 {
-	mpKSPlugIn = pKSPlugIn;
+	
 
 	miTrack = iTrackNb;
 	msTrackName = pszTrackName;
@@ -153,10 +157,10 @@ tbool CExportDSPTask::DoWork()
 				}
 
 				// Save position
-				muiPosSaved = mpKSPlugIn->GetSongPos();
+				muiPosSaved = gpApplication->GetSongPos();
 
 				// Find end position + tail
-				tint32 iTailFrames = Float2Int((miTailMS * mpKSPlugIn->GetSampleRate()) / 1000.0f);
+				tint32 iTailFrames = Float2Int((miTailMS * gpApplication->GetSampleRate()) / 1000.0f);
 				tint64 iLastSample = miFinalSample;
 				if (iLastSample < 0) {
 					if (IsOutMix()) {
@@ -188,11 +192,11 @@ tbool CExportDSPTask::DoWork()
 
 		case geExportDSP_Peak_Before:
 			{
-				mpKSPlugIn->Playback_InProgressTask(miFirstSample);
+				gpApplication->Playback_InProgressTask(miFirstSample);
 				if (IsOutMix())
-					mpKSPlugIn->Playback_ExportOutMix(miFirstSample);
+					gpApplication->Playback_ExportOutMix(miFirstSample);
 				else
-					mpKSPlugIn->Playback_ExportTrack(miTrack, miFirstSample, miFinalSample);
+					gpApplication->Playback_ExportTrack(miTrack, miFirstSample, miFinalSample);
 
 				msProgress = "Peak search '";
 				msProgress += msTrackName;
@@ -295,7 +299,7 @@ tbool CExportDSPTask::DoWork()
 			{
 				if (mbSkipFileOutput) {
 					// Skip encoding
-					mpKSPlugIn->Playback_InProgressTask(muiPosSaved);
+					gpApplication->Playback_InProgressTask(muiPosSaved);
 					msProgress = "";
 					muiProgressIx = muiProgressTarget = 0;
 
@@ -312,9 +316,9 @@ tbool CExportDSPTask::DoWork()
 					}
 					else {
 						if (IsOutMix())
-							mpKSPlugIn->Playback_ExportOutMix(iPosToStart);
+							gpApplication->Playback_ExportOutMix(iPosToStart);
 						else
-							mpKSPlugIn->Playback_ExportTrack(miTrack, iPosToStart, miFinalSample);
+							gpApplication->Playback_ExportTrack(miTrack, iPosToStart, miFinalSample);
 					}
 
 					msProgress = "Exporting '";
@@ -349,7 +353,7 @@ tbool CExportDSPTask::DoWork()
 
 		case geExportDSP_After:
 			{
-				mpKSPlugIn->Playback_InProgressTask(muiPosSaved);
+				gpApplication->Playback_InProgressTask(muiPosSaved);
 				msProgress = "Export done";
 				muiProgressIx = muiProgressTarget = 1;
 
@@ -400,7 +404,7 @@ tbool CExportDSPTask::DoEncode_FirstTimeHere()
 				msExtendedError = std::string("IEncoder::Init(..) failed:\n") + pszErr;
 				bError = true;
 			}
-			else if (!mpEncoder->SetRawMode(true, 2, false, 32, mpKSPlugIn->GetSampleRate())) {
+			else if (!mpEncoder->SetRawMode(true, 2, false, 32, gpApplication->GetSampleRate())) {
 				mpEncoder->GetErrMsg(pszErr, 1024, true);
 				msExtendedError = std::string("IEncoder::SetRawMode(..) failed:\n") + pszErr;
 				bError = true;
@@ -449,7 +453,7 @@ tbool CExportDSPTask::DoEncode(tbool bWrite)
 
 		if (!bWrite) {
 			// Get samples
-			mpKSPlugIn->ProcessNonInPlace(ppfOutputs, (const tfloat**)ppfInputs, (tuint32)muiPortionSize);
+			gpApplication->ProcessNonInPlace(ppfOutputs, (const tfloat**)ppfInputs, (tuint32)muiPortionSize);
 			// Find peak
 			tfloat32* pfL = (tfloat32*)pcOutputL;
 			tfloat32* pfR = (tfloat32*)pcOutputR;
@@ -492,7 +496,7 @@ tbool CExportDSPTask::DoEncode(tbool bWrite)
 			}
 			else {
 				// Get samples
-				mpKSPlugIn->ProcessNonInPlace(ppfOutputs, (const tfloat**)ppfInputs, (tuint32)muiPortionSize);
+				gpApplication->ProcessNonInPlace(ppfOutputs, (const tfloat**)ppfInputs, (tuint32)muiPortionSize);
 			}
 			// Export
 			if (!mpEncoder->ProcessRaw(pcOutputL, pcOutputR, miBytesPerPortion, &iAccumOverflows)) {
@@ -516,7 +520,7 @@ tbool CExportDSPTask::DoEncode(tbool bWrite)
 			tint32 iBytesInLastPortion = (tint32)uiLastPortionSize * sizeof(tfloat32);
 			if (!bWrite) {
 				// Get samples
-				mpKSPlugIn->ProcessNonInPlace(ppfOutputs, (const tfloat**)ppfInputs, miPortionSize);
+				gpApplication->ProcessNonInPlace(ppfOutputs, (const tfloat**)ppfInputs, miPortionSize);
 				// Find peak
 				for (tint32 i = 0; i < uiLastPortionSize; i++) {
 					tfloat32* pfL = (tfloat32*)pcOutputL;
@@ -557,7 +561,7 @@ tbool CExportDSPTask::DoEncode(tbool bWrite)
 				}
 				else {
 					// Get samples
-					mpKSPlugIn->ProcessNonInPlace(ppfOutputs, (const tfloat**)ppfInputs, miPortionSize);
+					gpApplication->ProcessNonInPlace(ppfOutputs, (const tfloat**)ppfInputs, miPortionSize);
 				}
 				// Export
 				if (!mpEncoder->ProcessRaw(pcOutputL, pcOutputR, iBytesInLastPortion, &iAccumOverflows)) {

@@ -67,10 +67,8 @@ protected:
 
 
 	
-	// Correctly typecasted pointer to plug-in class
-//	CKSPlugIn* mpKSPlugIn;
 	
-	CRegion_Pane* mpRegion_GUI;
+	CRegion_Pane* mpRegion_Pane;
 
 	tbool			mbMouseCaptured;
 	tuint32			muiMouseDowPos;

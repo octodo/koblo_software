@@ -35,9 +35,6 @@ CTrack_Editor_Pane::~CTrack_Editor_Pane()
 
 void CTrack_Editor_Pane::Init()
 {
-	//!!!Max added some git test code here
-	
-	
 	mpScrollBarHorizontal = NULL;
 	mpScrollBarVertical = NULL;
 	// Create the main pane

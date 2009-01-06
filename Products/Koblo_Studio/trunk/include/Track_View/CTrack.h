@@ -137,8 +137,7 @@ protected:
 	tint32 miSelectionExtendsInYDirection;
 
 
-	// Correctly typecasted pointer to plug-in class
-	CKSPlugIn* mpKSPlugIn;
+	
 
 	
 	ge::ICustomControl* mpControl;

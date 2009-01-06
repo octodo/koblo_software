@@ -8,7 +8,7 @@ CTrack_Player2::CTrack_Player2(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	miNbOfVisibleTracks = 0;
 	miAccumTrackHeight = 0;
 
-	//mpKSPlugIn = NULL;
+
 }
 
 CTrack_Player2::~CTrack_Player2()
@@ -23,7 +23,7 @@ void CTrack_Player2::SetInfo(CTrack_Player* CTrack_Player)
 	SetSignature(giSignature4_4);
 	miLast_Grid_Line_Allocated		=	0;
 	
-	mpKSPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
+
 	
 	gpDSPEngine->SetRegionCallback(dynamic_cast<IRegionCallback*>(this));
 	
@@ -73,8 +73,8 @@ void CTrack_Player2::Init()
 	
 	// Lasse, dynamic_cast is slow on Windows!
 	
-//	tfloat64 fPixelPrSample		= 	mpKSPlugIn->GetSamplesPrPixel();
-	tfloat64 fSamplesPrPixel	=	mpKSPlugIn->GetSamplesPrPixel();
+//	tfloat64 fPixelPrSample		= 	gpApplication->GetSamplesPrPixel();
+	tfloat64 fSamplesPrPixel	=	gpApplication->GetSamplesPrPixel();
 	
 	
 	//muiPane_Duration_In_Samples = gTrack_Scroll_Editor.iCX * fSamplesPrPixel;
@@ -121,7 +121,7 @@ void CTrack_Player2::EventGeneric(ge::IControl* pControl, void* pEventData)
 		if (pEvent->bInsideControlRect) {
 			if (pEvent->iMsg == ge::MouseMove) {
 				tint32 x = pEvent->pos.iX;
-				tfloat64 fPixel_Pr_Sample	=	mpKSPlugIn->GetPixelPrSample();
+				tfloat64 fPixel_Pr_Sample	=	gpApplication->GetPixelPrSample();
 				mpTrack_Top->SetCursorInSamples((x - gTrack_Side.iCX) * fPixel_Pr_Sample);
 
 			}
@@ -254,7 +254,7 @@ void CTrack_Player2::Hide_Grid()
 void CTrack_Player2::Show_Grid()
 {
 
-	tfloat64 fPixelPrSample =  mpKSPlugIn->GetPixelPrSample();
+	tfloat64 fPixelPrSample =  gpApplication->GetPixelPrSample();
 	
 	// Suppress calls to CPane::UpdatePosition
 	ge::IPane* pPane = GetPane();
@@ -401,8 +401,8 @@ void CTrack_Player2::Update_Zoom()
 {
 
 	
-	mfSamples_Pr_32						=	mpKSPlugIn->GetSamples_Pr_32();
-	tfloat64 iMin_Samples_Pr_Gridline	=	giMin_Pix_Pr_Gridline * mpKSPlugIn->GetSamplesPrPixel();
+	mfSamples_Pr_32						=	gpApplication->GetSamples_Pr_32();
+	tfloat64 iMin_Samples_Pr_Gridline	=	giMin_Pix_Pr_Gridline * gpApplication->GetSamplesPrPixel();
 	
 	tint32 iGrid = GetPlugIn()->GetGlobalParm(giParamID_KS_Snap_To, giSectionGlobal);
 	
@@ -461,7 +461,7 @@ void CTrack_Player2::Update_Zoom()
 	else if(mbDraw_2)	mfGrid_In_Samples =  mfSamples_Pr_32 * 16.0f;
 	else if(mbDraw_1)	mfGrid_In_Samples =  mfSamples_Pr_32 * 32.0f; 
 	
-	mpKSPlugIn->SetGridLinesInSamples(mfGrid_In_Samples);
+	gpApplication->SetGridLinesInSamples(mfGrid_In_Samples);
 }
 
 void CTrack_Player2::Stack_Tracks(STrack_Stack sData)
@@ -589,7 +589,7 @@ void CTrack_Player2::SanitizeScrollPaneAreaSize_Y()
 void CTrack_Player2::SanitizeScrollPaneAreaSize_X()
 {
 
-	tfloat64 fPixelPrSample			=	mpKSPlugIn->GetPixelPrSample();
+	tfloat64 fPixelPrSample			=	gpApplication->GetPixelPrSample();
 	tfloat64  fSession_End_Sample	=	gpDSPEngine->Get_Session_End_Sample();
 	tuint32	uiEndPixel				=	fSession_End_Sample * fPixelPrSample;
 	
@@ -694,7 +694,7 @@ void CTrack_Player2::JumpToPlayhead()
 void CTrack_Player2::Set_LinePos(tint64 iSample_Pos)
 {
 	// Lasse, dynamic_cast is slow on Windows!
-	tint32 iPixel_Pos	=	(tint32)(mpKSPlugIn->GetPixelPrSample() * iSample_Pos);
+	tint32 iPixel_Pos	=	(tint32)(gpApplication->GetPixelPrSample() * iSample_Pos);
 
 
 	if(miLast_Play_Line_Pos_X	!= iPixel_Pos){

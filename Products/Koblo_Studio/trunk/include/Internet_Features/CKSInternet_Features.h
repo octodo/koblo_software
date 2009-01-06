@@ -110,7 +110,7 @@ public:
 
 	
 private:
-	CKSPlugIn* mpKSPlugIn;
+
 	
 	virtual void Open_Project_Edit_Page_On_Koblo();
 	
