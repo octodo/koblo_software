@@ -2375,21 +2375,14 @@ void CDSP::TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 
 	
 	SRegionInfo RegionInfo;
 	GetRegionInfo( RegionInfo, uiRegionID);
-	CRegion_DSP* pRegionSoundObject	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
-	std::string sClipName				=	pRegionSoundObject->GetSoundListItemName();
+	CRegion_DSP* pRegion				=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
+	std::string sClipName				=	pRegion->GetSoundListItemName();
 	tint64 iRegionTrackPosStart			=	mppTracks[RegionInfo.uiTrack]->GetRegionPosOnTrack(uiRegionID);	
-	tint64 iDuration					=	pRegionSoundObject->GetDuration();
-	tint64 iSoundPos					=	pRegionSoundObject->GetSoundStartPos();
-	tint64 iSampleEnd					=	pRegionSoundObject->GetDuration() + iSoundPos - 1;
-	
-	
-	tint64 iSoundDuration				=	pRegionSoundObject->GetSound(0)->GetLength();
-	
-	
-	
-//	tuint64 uiFadeInLength				=	pRegionSoundObject->GetFadeInLength();
-//	tuint64 uiFadeOutLength				=	pRegionSoundObject->GetFadeOutLength();
-	
+	tint64 iDuration					=	pRegion->GetDuration();
+	tint64 iSoundPos					=	pRegion->GetSoundStartPos();
+	tint64 iSampleEnd					=	pRegion->GetDuration() + iSoundPos - 1;
+	tint64 iSoundDuration				=	pRegion->GetSound(0)->GetLength();
+
 	//--------------------------------------
 	// Trim start
 	if(bStart){
@@ -2398,7 +2391,7 @@ void CDSP::TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 
 			tint32 iCorection = iSoundPos + iSamplePos;
 			iSamplePos -= iCorection ;
 		}
-		
+
 		tint64 iClipSize	=	iSamplePos;
 		
 		if( iClipSize + iSoundPos > iSampleEnd -256)
@@ -2428,8 +2421,6 @@ void CDSP::TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 
 		mppTracks[RegionInfo.uiTrack]->TrimRegion(uiRegionID, iRegionTrackPosStart, iSoundPos, iSampleEnd);
 		mpRegionCallback->Refresh_Region_GUI(uiRegionID, uiTrack);
 	}
-
-	
 
 }
 

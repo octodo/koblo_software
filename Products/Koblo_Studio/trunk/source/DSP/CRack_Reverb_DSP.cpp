@@ -76,8 +76,21 @@ void CRack_Reverb_DSP:: Set_Reverb_Panorama(tint32 iData)
 
 void CRack_Reverb_DSP:: Set_Reverb_Color1(tint32 iData)
 {
-//	miColor1 = iData;
+	//	miColor1 = iData;
 	KobloVerb.setHP(iData / 600.0f);
+}
+
+void CRack_Reverb_DSP:: Set_Reverb_Color2(tint32 iData)
+{
+	
+	KobloVerb.setLP(iData / 600.0f);
+}
+
+void CRack_Reverb_DSP:: Set_Reverb_Mix(tint32 iData)
+{
+	miMix = iData;
+	
+	
 }
 
 

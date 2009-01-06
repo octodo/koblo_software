@@ -785,25 +785,25 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 		return NULL;
 	}
 	//! TODO: 1) If iWaveFiles == 2 it's a stereo list item; sWavePathR will be valid, and channel should run in stereo mode
-	CRegion_DSP* pRegionSoundObject	= new CRegion_DSP(iUniqueID, sWavePathNameL, sWavePathNameR, sSoundListItemName, uiSoundPosStart, ruiSoundPosEnd);
+	CRegion_DSP* pRegion	= new CRegion_DSP(iUniqueID, sWavePathNameL, sWavePathNameR, sSoundListItemName, uiSoundPosStart, ruiSoundPosEnd);
 	if(ruiSoundPosEnd == (tuint64)-1)
-		ruiSoundPosEnd = pRegionSoundObject->GetEndPos();
+		ruiSoundPosEnd = pRegion->GetEndPos();
 		
-	pRegionSoundObject->SetFadeInLength(uiFadeInLength);
-	pRegionSoundObject->SetFadeOutLength(uiFadeOutLength);
-	pRegionSoundObject->SetRegionVolume(fRegionVolume);
+	pRegion->SetFadeInLength(uiFadeInLength);
+	pRegion->SetFadeOutLength(uiFadeOutLength);
+	pRegion->SetRegionVolume(fRegionVolume);
 		
 	tuint64 uiDuration = ruiSoundPosEnd - uiSoundPosStart +1;
 	Edit_Selection(giTrim,uiTrackPosStart, uiDuration);
 	
 	SChannelRegionInfo* pRegionInfo		=	new SChannelRegionInfo();
-	pRegionInfo->pRegion			=	pRegionSoundObject;
+	pRegionInfo->pRegion				=	pRegion;
 	pRegionInfo->uiTrackPosStart		=	uiTrackPosStart;
 	pRegionInfo->uiRegionID				=	iUniqueID;
 	
 	Insert_Region_Info(pRegionInfo) ;
 	Update_Regions_For_Playback();
-	return pRegionSoundObject;
+	return pRegion;
 }
 
 tint64 CTrack_DSP::GetRegionSize(tint32 iUniqueID, const std::string& sSoundListItemName, tuint64 uiSoundPosStart, tint64 uiSoundPosEnd)
@@ -818,12 +818,12 @@ tint64 CTrack_DSP::GetRegionSize(tint32 iUniqueID, const std::string& sSoundList
 		return 0;
 	}
 
-	CRegion_DSP* pRegionSoundObject	= new CRegion_DSP(iUniqueID, sWavePathNameL, "", sSoundListItemName, uiSoundPosStart, uiSoundPosEnd);
+	CRegion_DSP* pRegion	= new CRegion_DSP(iUniqueID, sWavePathNameL, "", sSoundListItemName, uiSoundPosStart, uiSoundPosEnd);
 	if(uiSoundPosEnd == (tuint64)-1)
-		uiSoundPosEnd = pRegionSoundObject->GetEndPos();
+		uiSoundPosEnd = pRegion->GetEndPos();
 	
 	tint64 iSize = uiSoundPosEnd-uiSoundPosStart + 1;
-	delete(pRegionSoundObject);
+	delete(pRegion);
 	return iSize;
 
 	
