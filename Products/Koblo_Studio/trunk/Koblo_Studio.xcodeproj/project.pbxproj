@@ -46,6 +46,9 @@
 		FC61178C0DA4D66F00334DDF /* CKSModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC61178B0DA4D66F00334DDF /* CKSModule.cpp */; };
 		FC61178E0DA4D68300334DDF /* CApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC61178D0DA4D68300334DDF /* CApplication.cpp */; };
 		FC6117AB0DA4D80900334DDF /* KS.icns in Resources */ = {isa = PBXBuildFile; fileRef = FC6117AA0DA4D80900334DDF /* KS.icns */; };
+		FC68AFC70F13E82700EC15AF /* CRack_Echo_DSP.h in Resources */ = {isa = PBXBuildFile; fileRef = FC68AFC60F13E82700EC15AF /* CRack_Echo_DSP.h */; };
+		FC68AFE30F13E8F000EC15AF /* CRack_Echo_DSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC68AFE20F13E8F000EC15AF /* CRack_Echo_DSP.cpp */; };
+		FC68AFE50F13E90700EC15AF /* CTrack_DSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC68AFE40F13E90700EC15AF /* CTrack_DSP.cpp */; };
 		FC9D47810CB1462A006CEDB6 /* libGUIEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9D46A60CB13D44006CEDB6 /* libGUIEngine.a */; };
 		FC9D47820CB1462D006CEDB6 /* libDataEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9D469A0CB13D30006CEDB6 /* libDataEngine.a */; };
 		FC9D47830CB14630006CEDB6 /* libSTools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9D46880CB13CF4006CEDB6 /* libSTools.a */; };
@@ -64,7 +67,7 @@
 		FCA8CAEF0F08EF290007514D /* CKSAUXGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAEB0F08EF290007514D /* CKSAUXGUI.cpp */; };
 		FCA8CAF00F08EF290007514D /* CKSAUXGUIPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAEC0F08EF290007514D /* CKSAUXGUIPane.cpp */; };
 		FCA8CAFA0F08EF900007514D /* CBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF40F08EF900007514D /* CBuffer.cpp */; };
-		FCA8CAFB0F08EF900007514D /* CTrack_DSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF50F08EF900007514D /* CTrack_DSP.cpp */; };
+		FCA8CAFB0F08EF900007514D /* CRack_Reverb_DSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF50F08EF900007514D /* CRack_Reverb_DSP.cpp */; };
 		FCA8CAFD0F08EF900007514D /* CDSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF70F08EF900007514D /* CDSP.cpp */; };
 		FCA8CAFE0F08EF900007514D /* CSample_DSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF80F08EF900007514D /* CSample_DSP.cpp */; };
 		FCA8CAFF0F08EF900007514D /* CRegion_DSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF90F08EF900007514D /* CRegion_DSP.cpp */; };
@@ -269,7 +272,7 @@
 		E36358F50CC4D0CD00601597 /* SMIDIEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SMIDIEvent.h; path = ../../../SDK/trunk/KSPI/Interface/SMIDIEvent.h; sourceTree = SOURCE_ROOT; };
 		E36358F60CC4D0CD00601597 /* SParameterInfo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SParameterInfo.h; path = ../../../SDK/trunk/KSPI/Interface/SParameterInfo.h; sourceTree = SOURCE_ROOT; };
 		E39A35A00C87DB5E0035602E /* STools.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = STools.xcodeproj; path = ../../../SDK/trunk/STools/projects/osxxcode/STools.xcodeproj; sourceTree = SOURCE_ROOT; };
-		E39A35CF0C87DDC40035602E /* WaveFile.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = WaveFile.cpp; path = source/WaveFile.cpp; sourceTree = "<group>"; };
+		E39A35CF0C87DDC40035602E /* WaveFile.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = WaveFile.cpp; path = ../WaveFile.cpp; sourceTree = "<group>"; };
 		E3AC496E0DB7984000D70347 /* CKSMixerGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSMixerGUI.h; path = include/Mix_GUI/CKSMixerGUI.h; sourceTree = "<group>"; };
 		E3AC496F0DB7984900D70347 /* CKSMixerGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSMixerGUI.cpp; path = source/Mix_GUI/CKSMixerGUI.cpp; sourceTree = "<group>"; };
 		E3ADBE8D0CD71D5200ABD0DB /* CBaseDezipper.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = CBaseDezipper.h; path = ../../../SDK/trunk/BaseClasses/Include/CBaseDezipper.h; sourceTree = SOURCE_ROOT; };
@@ -329,6 +332,10 @@
 		FC6117970DA4D71A00334DDF /* KSOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSOS.h; path = include/KSOS.h; sourceTree = "<group>"; };
 		FC6117A90DA4D7FE00334DDF /* KS_OSX_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS_OSX_Prefix.pch; sourceTree = "<group>"; };
 		FC6117AA0DA4D80900334DDF /* KS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = KS.icns; path = resources/KS.icns; sourceTree = "<group>"; };
+		FC68AFC50F13E81D00EC15AF /* CTrack_DSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_DSP.h; sourceTree = "<group>"; };
+		FC68AFC60F13E82700EC15AF /* CRack_Echo_DSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRack_Echo_DSP.h; sourceTree = "<group>"; };
+		FC68AFE20F13E8F000EC15AF /* CRack_Echo_DSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRack_Echo_DSP.cpp; sourceTree = "<group>"; };
+		FC68AFE40F13E90700EC15AF /* CTrack_DSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_DSP.cpp; sourceTree = "<group>"; };
 		FCA8CACF0F08EE9E0007514D /* CKSExportForWebGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSExportForWebGUI.cpp; sourceTree = "<group>"; };
 		FCA8CAD00F08EE9E0007514D /* CKSExportForWebGUIPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSExportForWebGUIPane.cpp; sourceTree = "<group>"; };
 		FCA8CAD40F08EEF90007514D /* CKSExportGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSExportGUI.cpp; sourceTree = "<group>"; };
@@ -341,7 +348,7 @@
 		FCA8CAEB0F08EF290007514D /* CKSAUXGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSAUXGUI.cpp; sourceTree = "<group>"; };
 		FCA8CAEC0F08EF290007514D /* CKSAUXGUIPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSAUXGUIPane.cpp; sourceTree = "<group>"; };
 		FCA8CAF40F08EF900007514D /* CBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CBuffer.cpp; sourceTree = "<group>"; };
-		FCA8CAF50F08EF900007514D /* CTrack_DSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_DSP.cpp; sourceTree = "<group>"; };
+		FCA8CAF50F08EF900007514D /* CRack_Reverb_DSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRack_Reverb_DSP.cpp; sourceTree = "<group>"; };
 		FCA8CAF70F08EF900007514D /* CDSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CDSP.cpp; sourceTree = "<group>"; };
 		FCA8CAF80F08EF900007514D /* CSample_DSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSample_DSP.cpp; sourceTree = "<group>"; };
 		FCA8CAF90F08EF900007514D /* CRegion_DSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRegion_DSP.cpp; sourceTree = "<group>"; };
@@ -358,7 +365,7 @@
 		FCA8CB310F08F3A60007514D /* CKSExportGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSExportGUI.h; sourceTree = "<group>"; };
 		FCA8CB320F08F3A60007514D /* CKSExportGUIPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSExportGUIPane.h; sourceTree = "<group>"; };
 		FCA8CB340F08F3B20007514D /* CBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBuffer.h; sourceTree = "<group>"; };
-		FCA8CB350F08F3B20007514D /* CTrack_DSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_DSP.h; sourceTree = "<group>"; };
+		FCA8CB350F08F3B20007514D /* CRack_Reverb_DSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRack_Reverb_DSP.h; sourceTree = "<group>"; };
 		FCA8CB370F08F3B20007514D /* CDSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSP.h; sourceTree = "<group>"; };
 		FCA8CB380F08F3B20007514D /* CSample_DSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSample_DSP.h; sourceTree = "<group>"; };
 		FCA8CB390F08F3B20007514D /* CRegion_DSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRegion_DSP.h; sourceTree = "<group>"; };
@@ -654,7 +661,6 @@
 				FC6117830DA4D62A00334DDF /* CKSBaseGUI.cpp */,
 				FC6117810DA4D61B00334DDF /* CKSSplashScreen.cpp */,
 				E3B8EAA00CAB9E4B002CB7E4 /* CX3DisplayConverter.cpp */,
-				E39A35CF0C87DDC40035602E /* WaveFile.cpp */,
 				FC61178B0DA4D66F00334DDF /* CKSModule.cpp */,
 				E3ED29BA0C68559A00D125D1 /* CParmGlobal.cpp */,
 			);
@@ -797,10 +803,13 @@
 			isa = PBXGroup;
 			children = (
 				FCA8CAF40F08EF900007514D /* CBuffer.cpp */,
-				FCA8CAF50F08EF900007514D /* CTrack_DSP.cpp */,
 				FCA8CAF70F08EF900007514D /* CDSP.cpp */,
-				FCA8CAF80F08EF900007514D /* CSample_DSP.cpp */,
+				FC68AFE20F13E8F000EC15AF /* CRack_Echo_DSP.cpp */,
+				FCA8CAF50F08EF900007514D /* CRack_Reverb_DSP.cpp */,
 				FCA8CAF90F08EF900007514D /* CRegion_DSP.cpp */,
+				FCA8CAF80F08EF900007514D /* CSample_DSP.cpp */,
+				FC68AFE40F13E90700EC15AF /* CTrack_DSP.cpp */,
+				E39A35CF0C87DDC40035602E /* WaveFile.cpp */,
 			);
 			name = DSP;
 			path = source/DSP;
@@ -846,10 +855,12 @@
 			isa = PBXGroup;
 			children = (
 				FCA8CB340F08F3B20007514D /* CBuffer.h */,
-				FCA8CB350F08F3B20007514D /* CTrack_DSP.h */,
 				FCA8CB370F08F3B20007514D /* CDSP.h */,
 				FCA8CB380F08F3B20007514D /* CSample_DSP.h */,
+				FC68AFC60F13E82700EC15AF /* CRack_Echo_DSP.h */,
+				FCA8CB350F08F3B20007514D /* CRack_Reverb_DSP.h */,
 				FCA8CB390F08F3B20007514D /* CRegion_DSP.h */,
+				FC68AFC50F13E81D00EC15AF /* CTrack_DSP.h */,
 				FCA8CB3A0F08F3B20007514D /* WaveFile.h */,
 			);
 			name = DSP;
@@ -1246,6 +1257,7 @@
 			files = (
 				8D0C4E8E0486CD37000505A6 /* main.nib in Resources */,
 				FC6117AB0DA4D80900334DDF /* KS.icns in Resources */,
+				FC68AFC70F13E82700EC15AF /* CRack_Echo_DSP.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1310,7 +1322,7 @@
 				FCA8CAEF0F08EF290007514D /* CKSAUXGUI.cpp in Sources */,
 				FCA8CAF00F08EF290007514D /* CKSAUXGUIPane.cpp in Sources */,
 				FCA8CAFA0F08EF900007514D /* CBuffer.cpp in Sources */,
-				FCA8CAFB0F08EF900007514D /* CTrack_DSP.cpp in Sources */,
+				FCA8CAFB0F08EF900007514D /* CRack_Reverb_DSP.cpp in Sources */,
 				FCA8CAFD0F08EF900007514D /* CDSP.cpp in Sources */,
 				FCA8CAFE0F08EF900007514D /* CSample_DSP.cpp in Sources */,
 				FCA8CAFF0F08EF900007514D /* CRegion_DSP.cpp in Sources */,
@@ -1350,6 +1362,8 @@
 				FCF9544D0F125849005147D1 /* CImportAudioTask.cpp in Sources */,
 				FCF9544E0F125849005147D1 /* CProgressTask.cpp in Sources */,
 				FCF9544F0F125849005147D1 /* CProgressTaskList.cpp in Sources */,
+				FC68AFE30F13E8F000EC15AF /* CRack_Echo_DSP.cpp in Sources */,
+				FC68AFE50F13E90700EC15AF /* CTrack_DSP.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

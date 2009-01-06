@@ -99,6 +99,7 @@ protected:
 	//! Last sample to play
 	tuint64 muiEndPos;
 
+	//! Name from sample browser in left side of track editor window without path and extencions
 	std::string msSoundListItemName;
 
 	//! Fade-in length in samples (0 is no fade).

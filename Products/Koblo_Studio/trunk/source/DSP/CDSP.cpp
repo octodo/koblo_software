@@ -20,17 +20,17 @@ CDSP::CDSP()
 	}*/
 
 	mppAUXes = new CTrack_DSP*[giNumber_Of_AUXes];
-	mppAUXes[0] = new CAUXEcho(this, 0, true);
+	mppAUXes[0] = new CRack_Echo_DSP(this, 0, true);
 	mppAUXes[0]->Initialize();
-	mppAUXes[1] = new CAUXReverb(this, 1, true);
+	mppAUXes[1] = new CRack_Reverb_DSP(this, 1, true);
 	mppAUXes[1]->Initialize();
 
-	mppChannels = new CTrack_DSP*[giNumber_Of_Tracks];
+	mppTracks = new CTrack_DSP*[giNumber_Of_Tracks];
 	tint32 iChannel;
 	for (iChannel = 0; iChannel < giNumber_Of_Tracks; iChannel++) {
-		mppChannels[iChannel] = new CTrack_DSP(this, iChannel, false, mppAUXes);
-		mppChannels[iChannel]->Initialize();
-		mppChannels[iChannel]->SetSongPosition(0);
+		mppTracks[iChannel] = new CTrack_DSP(this, iChannel, false, mppAUXes);
+		mppTracks[iChannel]->Initialize();
+		mppTracks[iChannel]->SetSongPosition(0);
 
 		mpTrackSelectionInfo[iChannel].uiSelection_Type		=	giSelect_Off;
 		mpTrackSelectionInfo[iChannel].iRegionID	=	-1;
@@ -121,10 +121,10 @@ CDSP::~CDSP()
 
 	tint32 iChannel;
 	for (iChannel = 0; iChannel < giNumber_Of_Tracks; iChannel++) {
-		mppChannels[iChannel]->DeInitialize();
-		delete mppChannels[iChannel];
+		mppTracks[iChannel]->DeInitialize();
+		delete mppTracks[iChannel];
 	}
-	delete[] mppChannels;
+	delete[] mppTracks;
 
 /*	tint32 iStream;
 	for (iStream = 0; iStream < giNrOfStreams; iStream++) {
@@ -212,9 +212,9 @@ void CDSP::SetInputsForChannel(tuint32 uiChannel, tint32 iInCount, tint32 iInFir
 	if ((tuint32)(iInFirst+iInCount) > muiChannels)
 		return;
 	
-	CTrack_DSP* pChannel = mppChannels[uiChannel];
-	pChannel->SetInputChannelCount(iInCount);
-	pChannel->SetFirstInput(iInFirst);
+	CTrack_DSP* pTrack = mppTracks[uiChannel];
+	pTrack->SetInputChannelCount(iInCount);
+	pTrack->SetFirstInput(iInFirst);
 }
 
 void CDSP::SetModeForChannel(tuint32 uiChannel, tint32 iMode)
@@ -227,8 +227,8 @@ void CDSP::SetModeForChannel(tuint32 uiChannel, tint32 iMode)
 	if (uiChannel >= muiChannels)
 		return;
 	// .. Lasse
-	CTrack_DSP* pChannel = mppChannels[uiChannel];
-	pChannel->SetTrackMode(iMode);
+	CTrack_DSP* pTrack = mppTracks[uiChannel];
+	pTrack->SetTrackMode(iMode);
 }
 
 void CDSP::SetPanningLeftRightForChannel(tuint32 uiChannel, tfloat32 fLeftRight)
@@ -242,8 +242,8 @@ void CDSP::SetPanningLeftRightForChannel(tuint32 uiChannel, tfloat32 fLeftRight)
 		return;
 	// .. Lasse
 
-	CTrack_DSP* pChannel = mppChannels[uiChannel];
-	pChannel->SetPanningLeftRight(fLeftRight);
+	CTrack_DSP* pTrack = mppTracks[uiChannel];
+	pTrack->SetPanningLeftRight(fLeftRight);
 }
 
 void CDSP::SetPanningFrontBackForChannel(tuint32 uiChannel, tfloat32 fFrontBack)
@@ -257,8 +257,8 @@ void CDSP::SetPanningFrontBackForChannel(tuint32 uiChannel, tfloat32 fFrontBack)
 		return;
 	// .. Lasse
 
-	CTrack_DSP* pChannel = mppChannels[uiChannel];
-	pChannel->SetPanningFrontBack(fFrontBack);
+	CTrack_DSP* pTrack = mppTracks[uiChannel];
+	pTrack->SetPanningFrontBack(fFrontBack);
 }
 
 
@@ -289,7 +289,7 @@ void CDSP::LimitDataFromStreams(tbool bEnableLimiting, tint64 iFirstSampleIx, ti
 		}
 
 		// Enforce limits for this stem
-		CTrack_DSP* pStem = mppChannels[iStem];
+		CTrack_DSP* pStem = mppTracks[iStem];
 		pStem->LimitDataFromStream(bLimit_ThisStem, iFirstSampleIx, iFinalSampleIx);
 	}
 } // LimitDataFromStreams
@@ -337,11 +337,11 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 		// We only need to "play" one single track!
 
 		tint32 iTrack = gpApplication->GetTrackToExport();
-		if (mppChannels[iTrack]->HasRegions()) {
+		if (mppTracks[iTrack]->HasRegions()) {
 			// "Play" track
-			mppChannels[iTrack]->Process(lC);
+			mppTracks[iTrack]->Process(lC);
 
-			CBuffer* pBuffer = mppChannels[iTrack]->GetBuffer();
+			CBuffer* pBuffer = mppTracks[iTrack]->GetBuffer();
 			tfloat32* pfData0 = pBuffer->GetData(0);
 			tfloat32* pfData1 = pBuffer->GetData(1);
 
@@ -351,7 +351,7 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 		}
 		else {
 			// Channels process was not called, so update the song position
-			mppChannels[iTrack]->IncSongPos(lC);
+			mppTracks[iTrack]->IncSongPos(lC);
 
 			// Zero output
 			memset(pfOut0, '\0', lC * sizeof(tfloat32));
@@ -370,12 +370,12 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 	) {
 		tint32 iTrack;
 		for (iTrack = 0; iTrack < giNumber_Of_Tracks; iTrack++) {
-			if (mppChannels[iTrack]->HasRegions() || mppChannels[iTrack]->IsArmed()) {
-				mppChannels[iTrack]->Process(lC);
+			if (mppTracks[iTrack]->HasRegions() || mppTracks[iTrack]->IsArmed()) {
+				mppTracks[iTrack]->Process(lC);
 
-				CBuffer* pBuffer = mppChannels[iTrack]->GetBuffer();
+				CBuffer* pBuffer = mppTracks[iTrack]->GetBuffer();
 
-				tuint32 uiDestination = mppChannels[iTrack]->GetOutputDestination();
+				tuint32 uiDestination = mppTracks[iTrack]->GetOutputDestination();
 				if (uiDestination == ParmIOOffsetMix) {
 					// Mix
 //					*mpBufferMix += *pBuffer;
@@ -399,7 +399,7 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 				if (!gpApplication->IsInProgressTaskState()) {
 					// Get volumes for track (max 7.1 surround)
 					tfloat32 afAbsMeters[8] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
-					CTrack_DSP* pTrack = mppChannels[iTrack];
+					CTrack_DSP* pTrack = mppTracks[iTrack];
 					tint32 iNbOfChannels = pTrack->GetNumberOfChannelsForPanner();
 					for (tint32 iChannelIx = 0; iChannelIx < iNbOfChannels; iChannelIx++) {
 						tfloat32* pfBuff = pBuffer->GetData(iChannelIx);
@@ -416,7 +416,7 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 			}
 			else {
 				// Channels process was not called, so update the song position
-				mppChannels[iTrack]->IncSongPos(lC);
+				mppTracks[iTrack]->IncSongPos(lC);
 			}
 		}
 		muiSongPos += lC;
@@ -558,7 +558,7 @@ void CDSP::Start()
 {
 	tint32 iTrack;
 	for (iTrack = 0; iTrack < giNumber_Of_Tracks; iTrack++) {
-		mppChannels[iTrack]->Start();
+		mppTracks[iTrack]->Start();
 	}
 
 	tint32 iAUX;
@@ -574,7 +574,7 @@ void CDSP::Stop()
 {
 	tint32 iTrack;
 	for (iTrack = 0; iTrack < giNumber_Of_Tracks; iTrack++) {
-		mppChannels[iTrack]->Stop();
+		mppTracks[iTrack]->Stop();
 	}
 	
 	tint32 iAUX;
@@ -617,7 +617,7 @@ void CDSP::SetSongPosition(tuint64 uiPosNew)
 
 	tint32 iChannel;
 	for (iChannel = 0; iChannel < giNumber_Of_Tracks; iChannel++) {
-		mppChannels[iChannel]->SetSongPosition(uiPosNew);
+		mppTracks[iChannel]->SetSongPosition(uiPosNew);
 	}
 } // SetSongPosition
 
@@ -636,8 +636,8 @@ void CDSP::SetSongPosition_AndResetEffectsTails(tuint64 uiPosNew)
 
 	tint32 iChannel;
 	for (iChannel = 0; iChannel < giNumber_Of_Tracks; iChannel++) {
-		mppChannels[iChannel]->SetSongPosition(uiPosNew);
-		mppChannels[iChannel]->ResetAllEffectsTails();
+		mppTracks[iChannel]->SetSongPosition(uiPosNew);
+		mppTracks[iChannel]->ResetAllEffectsTails();
 	}
 
 	mppAUXes[0]->ResetAllEffectsTails();
@@ -669,7 +669,7 @@ void CDSP::UpdateAUXData(tint32 iID, tint32 iValue, tint32 iAUX)
 
 	switch(iID) {
 		case giParam_ChVol:
-//			if(!mppChannels[iAUX]->mbMuteFlag)
+//			if(!mppTracks[iAUX]->mbMuteFlag)
 				mppAUXes[iAUX]->SetVolume((tfloat32)(iValue / 10000.0));
 				miStored_AUX_Volume[iAUX] = iValue;
 			break;
@@ -716,7 +716,7 @@ void CDSP::UpdateBussData(tint32 iID, tint32 iValue, tint32 iBus)
 {
 	switch(iID) {
 		case giParam_ChVol:
-//			if(!mppChannels[iBus]->mbMuteFlag)
+//			if(!mppTracks[iBus]->mbMuteFlag)
 				mppBusses[iBus]->SetVolume((tfloat32)(iValue / 10000.0));
 				miStored_Buss_Volume[iBus] = iValue;
 			break;
@@ -822,7 +822,7 @@ void CDSP::UpdateChannelData(tint32 iID, tint32 iValue, tint32 iChannel)
 	switch(iID) {
 		case giParam_ChVol:{
 			if(!mbMute_Track_Flag[iChannel])
-				mppChannels[iChannel]->SetVolume((tfloat32)(iValue / 10000.0));
+				mppTracks[iChannel]->SetVolume((tfloat32)(iValue / 10000.0));
 			miStored_Track_Volume[iChannel] = iValue;
 			break;
 			}
@@ -830,25 +830,25 @@ void CDSP::UpdateChannelData(tint32 iID, tint32 iValue, tint32 iChannel)
 		case giParam_ChMute: {
 			if(iValue) {
 				mbMute_Track_Flag[iChannel] = true;
-				mppChannels[iChannel]->SetVolume((tfloat32)(0.000001f / 10000.0));
+				mppTracks[iChannel]->SetVolume((tfloat32)(0.000001f / 10000.0));
 			}
 			else {
 				mbMute_Track_Flag[iChannel] = false;
-				mppChannels[iChannel]->SetVolume((tfloat32)(miStored_Track_Volume[iChannel] / 10000.0));
+				mppTracks[iChannel]->SetVolume((tfloat32)(miStored_Track_Volume[iChannel] / 10000.0));
 			}
 			break;
 		}
 
 		case giParam_ChInMode:
-			mppChannels[iChannel]->SetInputChannelCount(iValue);
+			mppTracks[iChannel]->SetInputChannelCount(iValue);
 			break;
 
 		case giParam_ChMode:
-			mppChannels[iChannel]->SetTrackMode(iValue);
+			mppTracks[iChannel]->SetTrackMode(iValue);
 			break;
 
 		case giParam_ChOut:
-			mppChannels[iChannel]->SetOutputDestination(iValue, FindDestinationNumberOfChannels(iValue));
+			mppTracks[iChannel]->SetOutputDestination(iValue, FindDestinationNumberOfChannels(iValue));
 			break;
 			
 		case giParam_ChPannerLeftRight:{
@@ -864,10 +864,10 @@ void CDSP::UpdateChannelData(tint32 iID, tint32 iValue, tint32 iChannel)
 			break;
 
 		case giParam_ChAUX1:
-			mppChannels[iChannel]->SetAUXVolume(0, (tfloat32)(iValue / 10000.0));
+			mppTracks[iChannel]->SetAUXVolume(0, (tfloat32)(iValue / 10000.0));
 			break;
 		case giParam_ChAUX2:
-			mppChannels[iChannel]->SetAUXVolume(1, (tfloat32)(iValue / 10000.0));
+			mppTracks[iChannel]->SetAUXVolume(1, (tfloat32)(iValue / 10000.0));
 			break;
 
 		case giParam_ChInsert1:
@@ -876,7 +876,7 @@ void CDSP::UpdateChannelData(tint32 iID, tint32 iValue, tint32 iChannel)
 		case giParam_ChInsert4:
 			{
 				tint32 iInsert = iID - giParam_ChInsert1;
-				mppChannels[iChannel]->AddInsert(iInsert, iValue >> 8, iValue & 0xff, iValue);
+				mppTracks[iChannel]->AddInsert(iInsert, iValue >> 8, iValue & 0xff, iValue);
 			}
 			break;
 
@@ -886,23 +886,23 @@ void CDSP::UpdateChannelData(tint32 iID, tint32 iValue, tint32 iChannel)
 		case giParam_Ch_Insert4Bypass:
 			{
 				tint32 iInsert = iID - giParam_Ch_Insert1Bypass;
-				mppChannels[iChannel]->SetInsertBypass(iInsert, iValue ? true : false);
+				mppTracks[iChannel]->SetInsertBypass(iInsert, iValue ? true : false);
 			}
 			break;
 
 		case giParam_ChArm:
-			mppChannels[iChannel]->SetArmed(iValue ? true : false);
+			mppTracks[iChannel]->SetArmed(iValue ? true : false);
 			break;
 
 		case giParam_ChIn:
-			mppChannels[iChannel]->SetInputChannel(iValue);
+			mppTracks[iChannel]->SetInputChannel(iValue);
 			break;
 	}
 }
 
 void CDSP::UpdateAUX1Data(tint32 iID, tint32 iValue)
 {
-	CAUXEcho* pEcho = dynamic_cast<CAUXEcho*>(mppAUXes[0]);
+	CRack_Echo_DSP* pEcho = dynamic_cast<CRack_Echo_DSP*>(mppAUXes[0]);
 	
 	switch(iID) {
 		case giAUX1_Param_Delay_Power:
@@ -929,7 +929,7 @@ void CDSP::UpdateAUX1Data(tint32 iID, tint32 iValue)
 
 void CDSP::UpdateAUX2Data(tint32 iID, tint32 iValue)
 {
-	CAUXReverb* pReverb = dynamic_cast<CAUXReverb*>(mppAUXes[1]);
+	CRack_Reverb_DSP* pReverb = dynamic_cast<CRack_Reverb_DSP*>(mppAUXes[1]);
 	
 	switch(iID) {
 		case giParam_Reverb_On:
@@ -973,7 +973,7 @@ tint32 CDSP::GetNumberOfInputChannels(tint32 iChannelOrBus)
 	tint32 iChannels = 0;
 	tint32 iBusNr = iChannelOrBus - giNumber_Of_Tracks;
 	if (iBusNr < 0)
-		iChannels = mppChannels[iChannelOrBus]->GetNumberOfInputChannels();
+		iChannels = mppTracks[iChannelOrBus]->GetNumberOfInputChannels();
 	else {
 		if (iBusNr < giNumber_Of_Busses)
 			iChannels = mppBusses[iBusNr]->GetNumberOfInputChannels();
@@ -992,7 +992,7 @@ tint32 CDSP::GetNumberOfChannelsForPanner(tint32 iChannelOrBus)
 	tint32 iChannels = 0;
 	tint32 iBusNr = iChannelOrBus - giNumber_Of_Tracks;
 	if (iBusNr < 0)
-		iChannels = mppChannels[iChannelOrBus]->GetNumberOfChannelsForPanner();
+		iChannels = mppTracks[iChannelOrBus]->GetNumberOfChannelsForPanner();
 	else {
 		if (iBusNr < giNumber_Of_Busses)
 			iChannels = mppBusses[iBusNr]->GetNumberOfChannelsForPanner();
@@ -1011,7 +1011,7 @@ tint32 CDSP::GetDestinationForChannelOrBus(tint32 iChOrBus)
 	tint32 iBusNr = iChOrBus - giNumber_Of_Tracks;
 	if (iBusNr < 0) {
 		// This is a channel		
-		return mppChannels[iChOrBus]->GetOutputDestination();
+		return mppTracks[iChOrBus]->GetOutputDestination();
 	}
 	else if (iBusNr < giNumber_Of_Busses) {
 		// This is a bus
@@ -1026,7 +1026,7 @@ void CDSP::SetDestinationForChannelOrBus(tint32 iChOrBus, tint32 iDestination, t
 	tint32 iBusNr = iChOrBus - giNumber_Of_Tracks;
 	if (iBusNr < 0) {
 		// This is a channel		
-		mppChannels[iChOrBus]->SetOutputDestination(iDestination, iDestNumberOfChannels);
+		mppTracks[iChOrBus]->SetOutputDestination(iDestination, iDestNumberOfChannels);
 	}
 	else if (iBusNr < giNumber_Of_Busses) {
 		// This is a bus
@@ -1041,8 +1041,8 @@ tbool CDSP::UpdateDestinationForChannelOrBus_ButOnlyIfItMatches(tint32 iChOrBus,
 	tint32 iBusNr = iChOrBus - giNumber_Of_Tracks;
 	if (iBusNr < 0) {
 		// This is a channel
-		if (iDestination == mppChannels[iChOrBus]->GetOutputDestination()) {
-			mppChannels[iChOrBus]->SetOutputDestination(iDestination, iDestNumberOfChannels);
+		if (iDestination == mppTracks[iChOrBus]->GetOutputDestination()) {
+			mppTracks[iChOrBus]->SetOutputDestination(iDestination, iDestNumberOfChannels);
 			return true;
 		}
 	}
@@ -1061,16 +1061,16 @@ CDSP::RegionSearchHandle CDSP::GetFirstRegion(SRegionInfo& rInfo)
 {
 	tint32 uiTrack;
 	for (uiTrack = 0; uiTrack < giNumber_Of_Tracks; uiTrack++) {
-		CTrack_DSP* pChannel = mppChannels[uiTrack];
+		CTrack_DSP* pTrack = mppTracks[uiTrack];
 
-		std::list<CTrack_DSP::SChannelRegionInfo*>::const_iterator it = pChannel->GetRegionList().begin();
-		if (it != pChannel->GetRegionList().end()) {
+		std::list<CTrack_DSP::SChannelRegionInfo*>::const_iterator it = pTrack->GetRegionList().begin();
+		if (it != pTrack->GetRegionList().end()) {
 			// Track not empty, return first region
 
-			rInfo.uiRegionID = (*it)->pSoundObject->GetID();
+			rInfo.uiRegionID = (*it)->pRegion->GetID();
 			rInfo.uiTrack = uiTrack;
 			rInfo.uiStartPos = (*it)->uiTrackPosStart;
-			rInfo.uiEndPos = rInfo.uiStartPos + (*it)->pSoundObject->GetDuration() - 1;
+			rInfo.uiEndPos = rInfo.uiStartPos + (*it)->pRegion->GetDuration() - 1;
 
 			SRegionSearchInfo* pInfo = new SRegionSearchInfo();
 			pInfo->uiTrackCur = uiTrack;
@@ -1091,7 +1091,7 @@ void CDSP::GetNextRegion(CDSP::RegionSearchHandle& Handle, CDSP::SRegionInfo& rI
 
 	tuint32 uiTrack;
 	for (uiTrack = uiChannelOrg; uiTrack < giNumber_Of_Tracks; uiTrack++) {
-		CTrack_DSP* pChannel = mppChannels[uiTrack];
+		CTrack_DSP* pTrack = mppTracks[uiTrack];
 
 		std::list<CTrack_DSP::SChannelRegionInfo*>::const_iterator it;
 		if (uiTrack == uiChannelOrg) {
@@ -1099,16 +1099,16 @@ void CDSP::GetNextRegion(CDSP::RegionSearchHandle& Handle, CDSP::SRegionInfo& rI
 			it++;
 		}
 		else {
-			it = pChannel->GetRegionList().begin();
+			it = pTrack->GetRegionList().begin();
 		}
 
-		if (it != pChannel->GetRegionList().end()) {
+		if (it != pTrack->GetRegionList().end()) {
 			// Still a region on the track
 
-			rInfo.uiRegionID = (*it)->pSoundObject->GetID();
+			rInfo.uiRegionID = (*it)->pRegion->GetID();
 			rInfo.uiTrack = uiTrack;
 			rInfo.uiStartPos = (*it)->uiTrackPosStart;
-			rInfo.uiEndPos = rInfo.uiStartPos + (*it)->pSoundObject->GetDuration() - 1;
+			rInfo.uiEndPos = rInfo.uiStartPos + (*it)->pRegion->GetDuration() - 1;
 
 			pInfo->uiTrackCur = uiTrack;
 			pInfo->itCur = it;
@@ -1146,7 +1146,7 @@ void CDSP::Delete_Selection()
 			case giSelect_On_Track:{
 				tuint64 uiSelection_Pos			= mpTrackSelectionInfo[iTrack].uiSelection_Pos;
 				tuint64 uiSelection_Duration	= mpTrackSelectionInfo[iTrack].uiSelection_Duration;
-				mppChannels[iTrack]->Edit_Selection(giTrim,uiSelection_Pos, uiSelection_Duration);
+				mppTracks[iTrack]->Edit_Selection(giTrim,uiSelection_Pos, uiSelection_Duration);
 
 				break;
 			}
@@ -1176,7 +1176,7 @@ tint32 CDSP::CreateRegion(const std::string& sSoundListItemName,
 	tint32 iRegionID = iID++;
 
 	// DSP
-   	mppChannels[iChannel]->CreateRegion(iRegionID, 
+   	mppTracks[iChannel]->CreateRegion(iRegionID, 
 										sSoundListItemName, 
 										uiTrack_Pos, 
 										uiSample_Start, 
@@ -1254,7 +1254,7 @@ void CDSP::MoveRegion(tuint32 uiRegionID, tint32 iChannelNew, tuint64 uiTrackPos
 	SRegionInfo RegionInfo;
 	GetRegionInfo( RegionInfo, uiRegionID);
 	
-	CRegion_DSP* pRegionSoundObject	=	mppChannels[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
+	CRegion_DSP* pRegionSoundObject	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
 	std::string sClipName				=	pRegionSoundObject->GetSoundListItemName();
 	tuint64 uiSoundPosStart				=	pRegionSoundObject->GetSoundStartPos();
 	tuint64 uiSoundDutation				=	pRegionSoundObject->GetDuration();
@@ -1299,7 +1299,7 @@ void  CDSP::GetRegionInfo(SRegionInfo& RegionInfo, tuint32 uiRegionID)
 
 tuint64 CDSP::GetRegionSize(const std::string& sSoundPathName,tuint64 uiSamplePosStart, tint64 uiSamplePosEnd)
 {
-	tint64 iSize = mppChannels[0]->GetRegionSize(0, sSoundPathName, uiSamplePosStart, uiSamplePosEnd);
+	tint64 iSize = mppTracks[0]->GetRegionSize(0, sSoundPathName, uiSamplePosStart, uiSamplePosEnd);
 	return iSize;
 }
 
@@ -1307,7 +1307,7 @@ tuint64 CDSP::GetRegionSize(tuint32 uiID )
 {
 	SRegionInfo RegionInfo;
 	GetRegionInfo( RegionInfo, uiID);
-	CRegion_DSP* pRegionSoundObject	=	mppChannels[RegionInfo.uiTrack]->GetRegion_DSP(uiID);
+	CRegion_DSP* pRegionSoundObject	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiID);
 	return	pRegionSoundObject->GetDuration();
 }
 
@@ -1318,16 +1318,16 @@ SRegion_Drawing_Info CDSP::Get_Region_Drawing_Info(tuint iRegionID)
 	SRegionInfo RegionInfo;
 	GetRegionInfo( RegionInfo, iRegionID);
 
-	CRegion_DSP* pSoundObject	=	mppChannels[RegionInfo.uiTrack]->GetRegion_DSP(iRegionID);
+	CRegion_DSP* pRegion	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(iRegionID);
 	GetRegionInfo( RegionInfo, iRegionID);
 
-	if (pSoundObject) {
-		info.uiSound_Start		=	pSoundObject->GetSoundStartPos();
-		info.uiSound_Duration	=	pSoundObject->GetDuration();
+	if (pRegion) {
+		info.uiSound_Start		=	pRegion->GetSoundStartPos();
+		info.uiSound_Duration	=	pRegion->GetDuration();
 		info.uiTrack_Start		=	RegionInfo.uiStartPos;
-		info.uiFade_In			=	pSoundObject->GetFadeInLength();
-		info.uiFade_Out			=	pSoundObject->GetFadeOutLength();
-		info.fRegion_Volume		=	pSoundObject->GetRegionVolume();
+		info.uiFade_In			=	pRegion->GetFadeInLength();
+		info.uiFade_Out			=	pRegion->GetFadeOutLength();
+		info.fRegion_Volume		=	pRegion->GetRegionVolume();
 	}
 	else {
 		info.uiSound_Start		=	0;
@@ -1346,9 +1346,9 @@ void CDSP::GetRegionPeakFile(tuint32 uiID, IFile** ppFile, tint32 iChannel, tint
 	SRegionInfo RegionInfo;
 	GetRegionInfo(RegionInfo, uiID);
 
-	CRegion_DSP* pSoundObject = mppChannels[RegionInfo.uiTrack]->GetRegion_DSP(uiID);
-	if (pSoundObject)
-		pSoundObject->GetPeakFile(ppFile, iChannel, iSize);
+	CRegion_DSP* pRegion = mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiID);
+	if (pRegion)
+		pRegion->GetPeakFile(ppFile, iChannel, iSize);
 	else
 		*ppFile = NULL;
 }
@@ -1373,7 +1373,7 @@ void CDSP::DeleteAllRegionsForTrack(tint32 iTrack)
 	// Delete Regions on Channels and GUI and erase then from list to delete
 	while (listuiIDs.size()) {
 		tuint32 uiID = *(listuiIDs.begin());
-		mppChannels[iTrack]->DeleteRegion(uiID);
+		mppTracks[iTrack]->DeleteRegion(uiID);
 		mpRegionCallback->DeleteRegion(uiID, iTrack);
 		listuiIDs.erase(listuiIDs.begin());
 	}	
@@ -1385,7 +1385,7 @@ void CDSP::DeleteRegion(tuint32 uiTrack, tuint32 uiRegionID)
 	SRegionInfo RegionInfo;
 	GetRegionInfo( RegionInfo, uiRegionID);
 	// Delete region on channel
-	mppChannels[RegionInfo.uiTrack]->DeleteRegion(uiRegionID);
+	mppTracks[RegionInfo.uiTrack]->DeleteRegion(uiRegionID);
 	// Find new end of song
 	Sanitize_Session_End_Sample();
 	// Delete region on GUI
@@ -1402,8 +1402,8 @@ void CDSP::DeleteRegionOnGUI(tuint32 uiTrack, tuint32 uiRegionID)
 
 tbool CDSP::SaveTrackRegionDataToChunk(tint32 iTrack, IChunk* pChunk)
 {
-	CTrack_DSP* pChannel = GetChannel(iTrack);
-	std::list<CTrack_DSP::SChannelRegionInfo*>::const_iterator it = pChannel->GetRegionList().begin();
+	CTrack_DSP* pTrack = GetTrack(iTrack);
+	std::list<CTrack_DSP::SChannelRegionInfo*>::const_iterator it = pTrack->GetRegionList().begin();
 	std::string sRc = "";
 
 #ifdef _WIN32
@@ -1415,9 +1415,9 @@ tbool CDSP::SaveTrackRegionDataToChunk(tint32 iTrack, IChunk* pChunk)
 	const tint32 iSaveVersion = 2;
 	if (iSaveVersion == 1) {
 		sRc = "0001|"; // Version
-		for (; it != pChannel->GetRegionList().end(); it++) {
+		for (; it != pTrack->GetRegionList().end(); it++) {
 			CTrack_DSP::SChannelRegionInfo* pRegionInfo = *it;
-			CRegion_DSP* pObject = pRegionInfo->pSoundObject;
+			CRegion_DSP* pObject = pRegionInfo->pRegion;
 
 			tuint64 uiStart = pObject->GetSoundStartPos();
 			tuint64 uiEnd = pObject->GetDuration();
@@ -1449,9 +1449,9 @@ tbool CDSP::SaveTrackRegionDataToChunk(tint32 iTrack, IChunk* pChunk)
 	else if (iSaveVersion == 2) {
 		//sRc = "0002|4|"; // Version number and record length
 		sRc = "0002|7|"; // Version number and record length
-		for (; it != pChannel->GetRegionList().end(); it++) {
+		for (; it != pTrack->GetRegionList().end(); it++) {
 			CTrack_DSP::SChannelRegionInfo* pRegionInfo = *it;
-			CRegion_DSP* pObject = pRegionInfo->pSoundObject;
+			CRegion_DSP* pObject = pRegionInfo->pRegion;
 			const tchar* pszListItemName = pObject->GetSoundListItemName();
 			tuint64 uiStart = pObject->GetSoundStartPos();
 			tuint64 uiDurat = pObject->GetDuration();
@@ -2302,12 +2302,12 @@ STrackSelectionInfo CDSP::SelectRegion(tint32 iRegionID)
 	SRegionInfo RegionInfo;
 	GetRegionInfo( RegionInfo, uiID);
 
-	CRegion_DSP* pRegionSoundObject	=	mppChannels[RegionInfo.uiTrack]->GetRegion_DSP(uiID);
+	CRegion_DSP* pRegionSoundObject	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiID);
 	//std::string sClipName				=	pRegionSoundObject->GetSoundListItemName();
 	tint32 iChannel						=	RegionInfo.uiTrack;
 
 	// Trim selection from start
-	tuint64 uiStart_Sample				=	mppChannels[iChannel]->GetRegionPosOnTrack(uiID);	
+	tuint64 uiStart_Sample				=	mppTracks[iChannel]->GetRegionPosOnTrack(uiID);	
 	tuint64 uiDuration					=	(pRegionSoundObject ? pRegionSoundObject->GetDuration() : 0);
 	
 	tint32 iNewSelectType = giSelect_Region;
@@ -2343,9 +2343,9 @@ void CDSP::CutRegion(tuint32 uiTrack, tuint32 uiRegionID, tuint64 uiCutPos)
 	//tuint32 uiID	=	iRegionID;
 	SRegionInfo RegionInfo;
 	GetRegionInfo( RegionInfo, uiRegionID);
-	CRegion_DSP* pRegionSoundObject	=	mppChannels[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
+	CRegion_DSP* pRegionSoundObject	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
 	std::string sClipName				=	pRegionSoundObject->GetSoundListItemName();
-	tfloat64 uiRegionTrackPosStart		=	mppChannels[RegionInfo.uiTrack]->GetRegionPosOnTrack(uiRegionID);	
+	tfloat64 uiRegionTrackPosStart		=	mppTracks[RegionInfo.uiTrack]->GetRegionPosOnTrack(uiRegionID);	
 //	tfloat64 fDuration					=	pRegionSoundObject->GetDuration();
 	tuint64 uiSoundPos					=	pRegionSoundObject->GetSoundStartPos();
 	tuint64 uiSampleEnd					=	pRegionSoundObject->GetDuration() + uiSoundPos - 1;
@@ -2356,7 +2356,7 @@ void CDSP::CutRegion(tuint32 uiTrack, tuint32 uiRegionID, tuint64 uiCutPos)
 	
 	
 	// Trim end of curent region
-	mppChannels[RegionInfo.uiTrack]->TrimRegion(uiRegionID, uiRegionTrackPosStart, uiSoundPos, uiSoundPos + uiCutPos-1);
+	mppTracks[RegionInfo.uiTrack]->TrimRegion(uiRegionID, uiRegionTrackPosStart, uiSoundPos, uiSoundPos + uiCutPos-1);
 	mpRegionCallback->Refresh_Region_GUI(uiRegionID, uiTrack);
 
 	// Create new region
@@ -2372,14 +2372,12 @@ void CDSP::CutRegion(tuint32 uiTrack, tuint32 uiRegionID, tuint64 uiCutPos)
 void CDSP::TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 iSamplePos)
 { 
 
-	//--------------------------------------
-	// Trim end
-	//tuint32 uiID	=	iRegionID;
+	
 	SRegionInfo RegionInfo;
 	GetRegionInfo( RegionInfo, uiRegionID);
-	CRegion_DSP* pRegionSoundObject	=	mppChannels[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
+	CRegion_DSP* pRegionSoundObject	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
 	std::string sClipName				=	pRegionSoundObject->GetSoundListItemName();
-	tint64 iRegionTrackPosStart			=	mppChannels[RegionInfo.uiTrack]->GetRegionPosOnTrack(uiRegionID);	
+	tint64 iRegionTrackPosStart			=	mppTracks[RegionInfo.uiTrack]->GetRegionPosOnTrack(uiRegionID);	
 	tint64 iDuration					=	pRegionSoundObject->GetDuration();
 	tint64 iSoundPos					=	pRegionSoundObject->GetSoundStartPos();
 	tint64 iSampleEnd					=	pRegionSoundObject->GetDuration() + iSoundPos - 1;
@@ -2392,6 +2390,8 @@ void CDSP::TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 
 //	tuint64 uiFadeInLength				=	pRegionSoundObject->GetFadeInLength();
 //	tuint64 uiFadeOutLength				=	pRegionSoundObject->GetFadeOutLength();
 	
+	//--------------------------------------
+	// Trim start
 	if(bStart){
 	
 		if( iSoundPos + iSamplePos < 0){
@@ -2408,12 +2408,11 @@ void CDSP::TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 
 		iSoundPos				+=	iClipSize;
 		
 		
-	//	if(iSoundPos >= iSampleEnd - 32)
-	//		iSoundPos = iSampleEnd - 32;
-		
-		mppChannels[RegionInfo.uiTrack]->TrimRegion(uiRegionID, iRegionTrackPosStart, iSoundPos, iSampleEnd);
+		mppTracks[RegionInfo.uiTrack]->TrimRegion(uiRegionID, iRegionTrackPosStart, iSoundPos, iSampleEnd);
 		mpRegionCallback->Refresh_Region_GUI(uiRegionID, uiTrack);
 	}
+	//--------------------------------------
+	// Trim end
 	else{
 	
 		tint64 iClipSize	=	iDuration - iSamplePos;
@@ -2426,7 +2425,7 @@ void CDSP::TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 
 		if(iSampleEnd < iSoundPos + 256)
 			iSampleEnd = iSoundPos + 256;
 		
-		mppChannels[RegionInfo.uiTrack]->TrimRegion(uiRegionID, iRegionTrackPosStart, iSoundPos, iSampleEnd);
+		mppTracks[RegionInfo.uiTrack]->TrimRegion(uiRegionID, iRegionTrackPosStart, iSoundPos, iSampleEnd);
 		mpRegionCallback->Refresh_Region_GUI(uiRegionID, uiTrack);
 	}
 
@@ -2446,9 +2445,9 @@ void CDSP::DuplicateRegion()
 			
 			SRegionInfo RegionInfo;
 			GetRegionInfo( RegionInfo, uiRegionID);
-			CRegion_DSP* pRegionSoundObject	=	mppChannels[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
+			CRegion_DSP* pRegionSoundObject	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
 			std::string sClipName				=	pRegionSoundObject->GetSoundListItemName();
-			tfloat64 uiRegionTrackPosStart		=	mppChannels[RegionInfo.uiTrack]->GetRegionPosOnTrack(uiRegionID);	
+			tfloat64 uiRegionTrackPosStart		=	mppTracks[RegionInfo.uiTrack]->GetRegionPosOnTrack(uiRegionID);	
 			tfloat64 fDuration					=	pRegionSoundObject->GetDuration();
 			tuint64 uiSoundStartPos				=	pRegionSoundObject->GetSoundStartPos();
 			tuint64 uiSamplePosEnd				=	pRegionSoundObject->GetEndPos();
@@ -2484,7 +2483,7 @@ const tchar* CDSP::GetClipNameOfSelectedRegion()
 			
 			SRegionInfo RegionInfo;
 			GetRegionInfo( RegionInfo, uiRegionID);
-			CRegion_DSP* pRegionSoundObject	=	mppChannels[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
+			CRegion_DSP* pRegionSoundObject	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
 			return pRegionSoundObject->GetSoundListItemName();
 		}
 	}
@@ -2498,22 +2497,22 @@ tuint64 CDSP::Fade_In(tuint32 uiRegionID, tuint64 uiFadeInLength)
 
 	SRegionInfo RegionInfo;
 	GetRegionInfo( RegionInfo, uiRegionID);
-	CRegion_DSP* pRegionSoundObject	=	mppChannels[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
+	CRegion_DSP* pRegion	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
 	
 	
-	tuint64 uiSoundDuraion				=	pRegionSoundObject->GetDuration();
-	tuint64 uiFadeOutLength				=	pRegionSoundObject->GetFadeOutLength();
+	tuint64 uiSoundDuraion				=	pRegion->GetDuration();
+	tuint64 uiFadeOutLength				=	pRegion->GetFadeOutLength();
 	
 	if(uiFadeInLength > uiSoundDuraion)
 		uiFadeInLength = uiSoundDuraion;
 		
 	if( uiFadeInLength + uiFadeOutLength > uiSoundDuraion){
 		uiFadeOutLength = uiSoundDuraion - uiFadeInLength;
-		pRegionSoundObject->SetFadeOutLength(uiFadeOutLength);
+		pRegion->SetFadeOutLength(uiFadeOutLength);
 	}
 		
 	
-	pRegionSoundObject->SetFadeInLength(uiFadeInLength);
+	pRegion->SetFadeInLength(uiFadeInLength);
 	return uiFadeInLength;
 	
 }
@@ -2523,7 +2522,7 @@ tuint64 CDSP::Fade_Out(tuint32 uiRegionID, tuint64 uiFadeOutLength)
 	
 	SRegionInfo RegionInfo;
 	GetRegionInfo( RegionInfo, uiRegionID);
-	CRegion_DSP* pRegionSoundObject	=	mppChannels[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
+	CRegion_DSP* pRegionSoundObject	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
 	
 	
 	tuint64 uiSoundDuraion				=	pRegionSoundObject->GetDuration();
@@ -2548,7 +2547,7 @@ void CDSP::Region_Volume(tuint32 uiRegionID, tfloat32 fRegion_Volume)
 	
 	SRegionInfo RegionInfo;
 	GetRegionInfo( RegionInfo, uiRegionID);
-	CRegion_DSP* pRegionSoundObject	=	mppChannels[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
+	CRegion_DSP* pRegionSoundObject	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
 	
 	/*
 	tuint64 uiSoundDuraion				=	pRegionSoundObject->GetDuration();

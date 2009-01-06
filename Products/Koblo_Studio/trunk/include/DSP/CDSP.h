@@ -247,9 +247,9 @@ public:
 	tbool SaveTrackRegionDataToChunk(tint32 iTrack, IChunk* pChunk);
 	tbool CreateRegionFromChunkData(tint32 iTrack, IChunk* pChunk);
 	
-	CTrack_DSP* GetChannel(tuint32 uiIndex) {return mppChannels[uiIndex];}
+	CTrack_DSP* GetTrack(tuint32 uiIndex) {return mppTracks[uiIndex];}
 
-	const CTrack_DSP* GetChannel(tuint32 uiIndex) const {return mppChannels[uiIndex];}
+	const CTrack_DSP* GetTrack(tuint32 uiIndex) const {return mppTracks[uiIndex];}
 
 	CTrack_DSP* GetBus(tuint32 uiIndex) {return mppBusses[uiIndex];}
 
@@ -477,7 +477,7 @@ protected:
 
 	tuint muiFinalSongPosition;
 
-	CTrack_DSP** mppChannels;
+	CTrack_DSP** mppTracks;
 
 	CTrack_DSP** mppBusses;
 

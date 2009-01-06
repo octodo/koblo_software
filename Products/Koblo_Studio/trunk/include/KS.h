@@ -154,8 +154,6 @@ class CPlugInManager;
 #include  "CTrack_Info_Big.h"
 #include  "CTrack_AUX_Insert.h"
 #include  "CTrack_Insert.h"
-//#include  "CTrack_System_Info.h"
-//#include  "CTrack_System_Setup.h"
 #include  "CTrack_Fade_Handle.h"
 #include  "CMix_Scroll.h"
 #include  "CMix_Channel.h"
@@ -197,6 +195,8 @@ class CPlugInManager;
 // DSP
 #include "CBuffer.h"
 #include "CTrack_DSP.h"
+#include "CRack_Echo_DSP.h"
+#include "CRack_Reverb_DSP.h"
 #include "CDSP.h"
 
 

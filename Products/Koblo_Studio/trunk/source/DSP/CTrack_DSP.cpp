@@ -96,11 +96,11 @@ void CTrack_DSP::SetSongPosition(tuint64 uiPosNew)
 		if (uiTrackPosStart > muiSongPos) {
 			// Next region is later than position
 			// Reset next region position
-			(*mitRegionsInfo)->pSoundObject->SetPos(0);
+			(*mitRegionsInfo)->pRegion->SetPos(0);
 			break;
 		}
 
-		CRegion_DSP* pRegion = (*mitRegionsInfo)->pSoundObject;
+		CRegion_DSP* pRegion = (*mitRegionsInfo)->pRegion;
 		tint64 iLength = pRegion->GetDuration();
 		if (uiTrackPosStart + iLength - 1 < uiPosNew) {
 			// Position is beyond end of region
@@ -111,9 +111,9 @@ void CTrack_DSP::SetSongPosition(tuint64 uiPosNew)
 
 			// Calculate the sound position and set it
 			tuint64 uiTrackPosOffset = uiPosNew - uiTrackPosStart;
-			//(*mitRegions)->pSoundObject->SetSampleOffSet((tuint32)uiTrackPosOffset); SetStartPos
+			//(*mitRegions)->pRegion->SetSampleOffSet((tuint32)uiTrackPosOffset); SetStartPos
 			// Error sample offset is the clipping og the region
-			(*mitRegionsInfo)->pSoundObject->SetPos((tuint32)uiTrackPosOffset);
+			(*mitRegionsInfo)->pRegion->SetPos((tuint32)uiTrackPosOffset);
 			break;
 		}
 	}
@@ -170,7 +170,7 @@ void CTrack_DSP::Process(tint32 iSamples)
 	while (mitRegionsInfo != mRegionInfoList.end() &&
 			iSamplesLeft) {
 		// Still region(s) to play
-		CRegion_DSP* pRegion = (*mitRegionsInfo)->pSoundObject;
+		CRegion_DSP* pRegion = (*mitRegionsInfo)->pRegion;
 		tuint64 uiPosStart = (*mitRegionsInfo)->uiTrackPosStart;
 		tuint64 uiPosEnd = uiPosStart + pRegion->GetDuration() - 1;
 
@@ -264,10 +264,10 @@ void CTrack_DSP::Process(tint32 iSamples)
 				mitRegionsInfo++;
 
 				if (mitRegionsInfo != mRegionInfoList.end()) {
-					(*mitRegionsInfo)->pSoundObject->SetPos(0);
+					(*mitRegionsInfo)->pRegion->SetPos(0);
 
-					if ((*mitRegionsInfo)->pSoundObject->GetChannels() > iChannels) {
-						iChannels = (*mitRegionsInfo)->pSoundObject->GetChannels();
+					if ((*mitRegionsInfo)->pRegion->GetChannels() > iChannels) {
+						iChannels = (*mitRegionsInfo)->pRegion->GetChannels();
 					}
 				}
 			}
@@ -797,7 +797,7 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 	Edit_Selection(giTrim,uiTrackPosStart, uiDuration);
 	
 	SChannelRegionInfo* pRegionInfo		=	new SChannelRegionInfo();
-	pRegionInfo->pSoundObject			=	pRegionSoundObject;
+	pRegionInfo->pRegion			=	pRegionSoundObject;
 	pRegionInfo->uiTrackPosStart		=	uiTrackPosStart;
 	pRegionInfo->uiRegionID				=	iUniqueID;
 	
@@ -873,7 +873,7 @@ void CTrack_DSP::DeleteRegion(tint32 iID)
 {
 	std::list<SChannelRegionInfo*>::iterator it = mRegionInfoList.begin();
 	for (; it != mRegionInfoList.end(); it++) {
-		if ((*it)->pSoundObject->GetID() == iID) {
+		if ((*it)->pRegion->GetID() == iID) {
 			mRegionInfoList.erase(it);
 			SetSongPosition(muiSongPos);
 			return;
@@ -887,8 +887,8 @@ CRegion_DSP* CTrack_DSP::GetRegion_DSP(tuint32 uiID)
 {
 	std::list<SChannelRegionInfo*>::iterator it = mRegionInfoList.begin();
 	for (; it != mRegionInfoList.end(); it++) {
-		if ((*it)->pSoundObject->GetID() == uiID) {
-			return (*it)->pSoundObject;
+		if ((*it)->pRegion->GetID() == uiID) {
+			return (*it)->pRegion;
 		}
 	}
 
@@ -900,7 +900,7 @@ tuint64 CTrack_DSP::GetRegionPosOnTrack(tuint32 uiRegionID)
 {
 	std::list<SChannelRegionInfo*>::iterator it = mRegionInfoList.begin();
 	for (; it != mRegionInfoList.end(); it++) {
-		if ((*it)->pSoundObject->GetID() == uiRegionID) {
+		if ((*it)->pRegion->GetID() == uiRegionID) {
 			return (*it)->uiTrackPosStart;
 		}
 	}
@@ -912,14 +912,15 @@ tuint64 CTrack_DSP::GetRegionPosOnTrack(tuint32 uiRegionID)
 
 void CTrack_DSP::TrimRegion(tuint32 uiID, tuint64 iTrackStartPos, tuint64 iSoundStartPos, tint64 iSoundEndPos)
 {
-
+	
 	std::list<SChannelRegionInfo*>::iterator it = mRegionInfoList.begin();
 	for (; it != mRegionInfoList.end(); it++) {
-		if ((*it)->pSoundObject->GetID() == uiID) {
 		
-			tuint64 uiFadeInLength	=	(*it)->pSoundObject->GetFadeInLength();
-			tuint64 uiFadeOutLength	=	(*it)->pSoundObject->GetFadeOutLength();
-			tuint64 uiOldDuration	=	(*it)->pSoundObject->GetDuration();
+		if ((*it)->pRegion->GetID() == uiID) {
+		
+			tuint64 uiFadeInLength	=	(*it)->pRegion->GetFadeInLength();
+			tuint64 uiFadeOutLength	=	(*it)->pRegion->GetFadeOutLength();
+			tuint64 uiOldDuration	=	(*it)->pRegion->GetDuration();
 			tuint64 uiNewDuration	=	iSoundEndPos - iSoundStartPos + 1;
 			//---------------------
 			// Trim end
@@ -951,10 +952,10 @@ void CTrack_DSP::TrimRegion(tuint32 uiID, tuint64 iTrackStartPos, tuint64 iSound
 			
 			}
 		
-			(*it)->pSoundObject->SetStartPos(iSoundStartPos);
-			(*it)->pSoundObject->SetDuration(uiNewDuration);
-			(*it)->pSoundObject->SetFadeInLength(uiFadeInLength);
-			(*it)->pSoundObject->SetFadeOutLength(uiFadeOutLength);
+			(*it)->pRegion->SetStartPos(iSoundStartPos);
+			(*it)->pRegion->SetDuration(uiNewDuration);
+			(*it)->pRegion->SetFadeInLength(uiFadeInLength);
+			(*it)->pRegion->SetFadeOutLength(uiFadeOutLength);
 			(*it)->uiTrackPosStart = iTrackStartPos;
 			Update_Regions_For_Playback();
 			return;
@@ -965,6 +966,8 @@ void CTrack_DSP::TrimRegion(tuint32 uiID, tuint64 iTrackStartPos, tuint64 iSound
 	return;
 
 }
+
+
 
 void CTrack_DSP::SetVolume(tfloat32 fVolume)
 {
@@ -1168,272 +1171,6 @@ void CTrack_DSP::SetInsertBypass(tint32 iInsert, tbool bBypass)
 	mpbInsertBypass[iInsert] = bBypass;
 }
 
-void CAUXReverb::Process(tint32 iSamples)
-{
-
-	 mpBuffer->SetChannels(2);
-	 
-	 tfloat32* pfLeft = mpBuffer->GetData(0);
-	 tfloat32* pfRight = mpBuffer->GetData(1);
-	 
-	 // Reverb code goes here. pfLeft and pfRight buffers can be modified. Buffer length is in iSamples
-	 float* pfStereo[2];
-	 pfStereo[0] = pfLeft;
-	 pfStereo[1] = pfRight;
-	 
-	 KobloVerb.processReplace(pfStereo, pfStereo, iSamples);
-	 
-	 // Maybe do down or up mix for destination
-	 mpBuffer->SetChannels(miDestinationNumberOfChannels);
-	 muiSongPos += iSamples;
-	
-}
-
-void CAUXReverb::Initialize()
-{
-}
-
-void CAUXReverb::DeInitialize()
-{
-}
-
-void CAUXReverb::ResetAllEffectsTails()
-{
-	Stop();
-	Start();
-}
-
-void CAUXReverb::Start()
-{
-}
-
-void CAUXReverb::Stop()
-{
-	KobloVerb.mute();
-	KobloVerb.flush();
-}
-
-void CAUXReverb:: Set_Reverb_On(tint32 iData)
-{
-	KobloVerb.setReverbOn(iData ? true: false);
-}
-
-void CAUXReverb:: Set_Reverb_Size(tint32 iData)
-{
-	KobloVerb.setRoomSize(iData / 128.0f);
-}
-
-void CAUXReverb:: Set_Reverb_PDelay(tint32 iData)
-{
-//	miPDelay = iData;
-	KobloVerb.setPredelay(iData);
-}
-
-void CAUXReverb:: Set_Reverb_Damp(tint32 iData)
-{
-//	miDamp = iData;
-	KobloVerb.setDamp(iData / 128.0f);
-}
-
-void CAUXReverb:: Set_Reverb_Panorama(tint32 iData)
-{
-//	miPanorama = iData;
-	// notImpl
-}
-
-void CAUXReverb:: Set_Reverb_Color1(tint32 iData)
-{
-//	miColor1 = iData;
-	KobloVerb.setHP(iData / 600.0f);
-}
-
-void CAUXReverb:: Set_Reverb_Color2(tint32 iData)
-{
-
-	KobloVerb.setLP(iData / 600.0f);
-}
-
-void CAUXReverb:: Set_Reverb_Mix(tint32 iData)
-{
-	miMix = iData;
-	
-	//KobloVerb.setWet(miWet / 128.0f);
-	//KobloVerb.setDry(miDry / 128.0f);
-}
-
-
-void CAUXEcho::Process(tint32 iSamples)
-{
-	mpBuffer->SetChannelsNoConvert(2);
-	
-	if(miPower){
-
-		tfloat32* pfL = mpBuffer->GetData(0);
-		tfloat32* pfR = mpBuffer->GetData(1);
-
-		// Start of echo
-		tfloat* pfBuffer1 = mpfBuffer1;
-		tfloat* pfBuffer2 = mpfBuffer2;
-		tint32 iPos = miPos;
-
-		for (tuint uiSample = 0; (tint)uiSample < iSamples; uiSample++) {
-			// Move writing position forward
-			iPos++;
-			// Wrap (if neccasary)
-			iPos &= (EFFECT_ECHO_BUFFER_SIZE - 1);
-
-			// Find reading tap
-			tint32 iTap = iPos - miDelayTime;
-			iTap &= (EFFECT_ECHO_BUFFER_SIZE - 1);
-
-			// Read from buffer
-			tfloat f1 = pfBuffer1[iTap];
-			tfloat f2 = pfBuffer2[iTap];
-
-			// Apply feedback
-			f1 *= mfFeedback;
-			f2 *= mfFeedback;
-
-			// Apply LP
-			f1 = mpfLPHistory[0] = gfAnti_denormal + mpfLPHistory[0] + (f1 - mpfLPHistory[0]) * mfDamping;
-			f2 = mpfLPHistory[1] = gfAnti_denormal + mpfLPHistory[1] + (f2 - mpfLPHistory[1]) * mfDamping;
-
-			// Apply HP
-			mpfHPHistory[0] = gfAnti_denormal + mpfHPHistory[0] + (f1 - mpfHPHistory[0]) * mfHPDamping;
-			f1 = f1 - mpfHPHistory[0];
-			mpfHPHistory[1] = gfAnti_denormal + mpfHPHistory[1] + (f2 - mpfHPHistory[1]) * mfHPDamping;
-			f2 = f2 - mpfHPHistory[1];
-
-			// Write to circular buffer
-			pfBuffer1[iPos] = f1 + pfL[uiSample];
-			pfBuffer2[iPos] = f2 + pfR[uiSample];
-
-			// Write output
-			pfL[uiSample] = f1;
-			pfR[uiSample] = f2;
-			
-			miPos = iPos;
-			// End of echo
-			muiSongPos += iSamples;
-		}
-	}
-	else{
-		for (tuint uiSample = 0; (tint)uiSample < iSamples; uiSample++) {
-			tfloat32* pfL = mpBuffer->GetData(0);
-			tfloat32* pfR = mpBuffer->GetData(1);
-			// Write output
-			pfL[uiSample] = 0.0f;
-			pfR[uiSample] = 0.0f;
-		}
-		// End of echo
-		muiSongPos += iSamples;
-	
-	}
-
-	
-}
-
-void CAUXEcho::Initialize()
-{
- 	mpfBuffer1 = new tfloat[EFFECT_ECHO_BUFFER_SIZE];
-	mpfBuffer2 = new tfloat[EFFECT_ECHO_BUFFER_SIZE];
-	
-	miDelayTime		=	22500;
-	mfFeedback		=	0.64f;
-	
-	mfDamping		=	0.13605442177f; //!!! Change this
-	mfHPDamping		=	0.18140589569f; //!!! Change this
-	
-	Start();
-}
-
-void CAUXEcho::DeInitialize()
-{
-	delete[] mpfBuffer1;
-	mpfBuffer1 = NULL;
-
-	delete[] mpfBuffer2;
-	mpfBuffer2 = NULL;
-}
-
-void CAUXEcho::ResetAllEffectsTails()
-{
-	Stop();
-	Start();
-}
-
-void CAUXEcho::Start()
-{
-	memset(mpfBuffer1, 0, EFFECT_ECHO_BUFFER_SIZE * sizeof(tfloat));
-	memset(mpfBuffer2, 0, EFFECT_ECHO_BUFFER_SIZE * sizeof(tfloat));
-
-	miPos = 0;
-
-	mpfLPHistory[0] = mpfLPHistory[1] = 0;
-	mpfHPHistory[0] = mpfHPHistory[1] = 0;
-}
-
-void CAUXEcho::Stop()
-{
-}
-
-void CAUXEcho::Set_Delay_Time(tint32 iMSec)
-{
-	miMSec = iMSec;
-	
-	Set_Delay_in_Samples();
-	
-//	miInterFaceDelayTime = iValue * GetSampleRate() / 1000;
-//	miDelayTime = mbSyncToHost ? miHostDelayTime: miInterFaceDelayTime;
-}
-
-void CAUXEcho::Set_Delay_Power(tbool bPower)
-{
-	miPower = bPower;
-	if(!bPower){
-	// Reset buffers
-		Start();
-	}
-}
-
-void CAUXEcho:: Set_Feedback(tint32 iFeedback)
-{
-	mfFeedback = iFeedback * 0.008f;
-}
-
-void CAUXEcho::Set_LF_Damping(tint32 iLF_Damping)
-{
-	if (iLF_Damping == 16001) {
-		mfDamping = 1;
-	}
-	else {
-		mfDamping = (float)iLF_Damping / (44100 / 2);
-	}
-}
-
-void CAUXEcho::Set_HP_Damping(tint32 iHP_Damping)
-{
-	if (iHP_Damping == 31) {
-		mfHPDamping = 0;
-	}
-	else {
-		mfHPDamping = (float)iHP_Damping / (44100 / 2);
-	}
-}
-
-void CAUXEcho::Set_Sync_To_Tempo(tbool bSync)
-{
-	mbSyncToHost = bSync;
-	
-//	Set_Delay_in_Samples();
-}
-
-void CAUXEcho::Set_Delay_in_Samples()
-{
-	tint32 iSampleRate = gpApplication->GetSampleRate();
-	miDelayTime = miMSec * iSampleRate / 1000;
-}
-
 void CTrack_DSP::Edit_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 uiSelection_Duration)
 {
 
@@ -1447,12 +1184,12 @@ void CTrack_DSP::Edit_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 ui
 	std::list<SChannelRegionInfo*>::iterator it = mRegionInfoList.begin();
 	for (; it != mRegionInfoList.end(); it++) {
 		tint32 iRegionID					=	(*it)->uiRegionID;
-		tuint64 uiRegionDuration			=	(*it)->pSoundObject->GetDuration();
-		std::string sClipName				=	(*it)->pSoundObject->GetSoundListItemName();
+		tuint64 uiRegionDuration			=	(*it)->pRegion->GetDuration();
+		std::string sClipName				=	(*it)->pRegion->GetSoundListItemName();
 		tuint64 uiRegionStart				=	(*it)->uiTrackPosStart;
 		tuint64 uiRegionEnd					=	uiRegionStart + uiRegionDuration - 1;
-		tuint64 uiSoundStart				=	(*it)->pSoundObject->GetSoundStartPos();
-		tuint64 uiSoundEnd					=	(*it)->pSoundObject->GetEndPos();
+		tuint64 uiSoundStart				=	(*it)->pRegion->GetSoundStartPos();
+		tuint64 uiSoundEnd					=	(*it)->pRegion->GetEndPos();
 		tuint64 uiSelectionStart			=	uiSelection_Pos;
 		tuint64 uiSelectionEnd				=	uiSelectionStart + uiSelection_Duration;
 		
@@ -1567,7 +1304,7 @@ void CTrack_DSP::Edit_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 ui
 						uiSEnd			=	uiSStart + uiSelectionDuration - 2;
 						
 						// Create a new region
-						mpDSP->CreateRegion(	(*it)->pSoundObject->GetSoundListItemName(),
+						mpDSP->CreateRegion(	(*it)->pRegion->GetSoundListItemName(),
 												miChannelNumber, 
 												uiRStart , 
 												uiSStart, 
@@ -1624,13 +1361,7 @@ tint32 CTrack_DSP::Create_Fade_Region(	tint32 iCmd,
 	tfloat64 fDuration		=	uiSamplePosEnd - uiSample_Start + 1;
 	tfloat32 fStep_Size		=	1.0f / fDuration;
 
-/*	
-	for(tint64 i = miFade_Pos; i< uiSelection_Duration; i++)
-	{
-		
-	
-	}
-*/
+
 	//------------------------------------------------------
 	// create new fade file on disk based on function param's
 	// sSoundPathName = "Name of fade file"
