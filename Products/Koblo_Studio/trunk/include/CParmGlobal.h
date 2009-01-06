@@ -17,12 +17,12 @@
 
 
 // Forwards
-class CKSPlugIn;
+class CApplication;
 
 class CParmGlobal : public virtual de::IParameter
 {
 public:
-	CParmGlobal(CKSPlugIn* pPlugIn, tint32 iID, tint32 iMinValue, tint32 iMaxValue, tint32 iValue, tint32 iSection);
+	CParmGlobal( tint32 iID, tint32 iMinValue, tint32 iMaxValue, tint32 iValue, tint32 iSection);
 
 	virtual ~CParmGlobal();
 
@@ -44,7 +44,7 @@ public:
 	virtual void OnChange();
 
 protected:
-	CKSPlugIn* mpPlugIn;
+
 	tint32 miID;
 	tint32 miDefaultValue;
 	tint32 miValue;

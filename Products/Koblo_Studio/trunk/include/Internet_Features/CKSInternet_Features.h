@@ -26,7 +26,7 @@
  * \brief class that handles all Internet features
 */
 
-class CKSPlugIn;
+class CApplication;
 
 
 

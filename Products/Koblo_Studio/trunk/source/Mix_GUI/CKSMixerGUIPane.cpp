@@ -239,7 +239,7 @@ void CKSMixerGUIPane::OnTimer(tint32 iTimerID)
 		{
 			if (!mbIsVisible) {
 				// Just remove values
-				dynamic_cast<CKSPlugIn*>(mpPlugIn)->ClearAllMeters();
+				gpApplication->ClearAllMeters();
 			}
 			else {
 				// Calc elapsed time since previous meter set
@@ -253,7 +253,7 @@ void CKSMixerGUIPane::OnTimer(tint32 iTimerID)
 				}
 				else {
 					// Get meter values and decay factor
-					dynamic_cast<CKSPlugIn*>(mpPlugIn)->GetAllMeters_MaybeClear(mpvoid_sMeters_All, uiTimeMS_Elapsed, true);
+					gpApplication->GetAllMeters_MaybeClear(mpvoid_sMeters_All, uiTimeMS_Elapsed, true);
 					pMeters = mpvoid_sMeters_All;
 				}
 				// Send pointer to struct with all meter values to all tracks and let them decide if they need it

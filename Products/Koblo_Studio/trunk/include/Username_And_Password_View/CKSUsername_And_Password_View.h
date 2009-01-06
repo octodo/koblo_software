@@ -19,7 +19,7 @@
 class CKSUsername_And_Password_View : public virtual CKSBaseGUI, public virtual ge::IEventReceiver, public virtual ITimerCallback
 {
 public:
-	CKSUsername_And_Password_View(CKSPlugIn* pPlugIn, de::IParameterManager* pParmMan);
+	CKSUsername_And_Password_View( de::IParameterManager* pParmMan);
 
 	virtual ~CKSUsername_And_Password_View();
 
@@ -39,12 +39,6 @@ public:
 
 	//! IContextCallback override
 	virtual void GetName(tchar* psz);
-
-	//! Returns the plug-in we're connected to
-//	CKSPlugIn* GetPlugIn() {return dynamic_cast<CKSPlugIn*>(mpPlugIn);}
-
-	//! Overload
-//	const CKSPlugIn* GetPlugIn() const {return dynamic_cast<const CKSPlugIn*>(mpPlugIn);}
 
 	virtual void UpdateAll() {}
 

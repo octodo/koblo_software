@@ -2,9 +2,9 @@
 #include "KSOS.h"
 
 
-CKSExportGUI::CKSExportGUI(CKSPlugIn* pPlugIn, de::IParameterManager* pParmMan)
-	: CKSBaseGUI(dynamic_cast<CBasePlugIn*>(pPlugIn), pParmMan),
-	CBaseGUI(dynamic_cast<CBasePlugIn*>(pPlugIn), pParmMan)
+CKSExportGUI::CKSExportGUI( de::IParameterManager* pParmMan)
+	: CKSBaseGUI( pParmMan),
+	CBaseGUI(dynamic_cast<CBasePlugIn*>(gpApplication), pParmMan)
 {
 }
 

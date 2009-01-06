@@ -2,8 +2,8 @@
 #include "KSOS.h"
 
 
-CParmGlobal::CParmGlobal(CKSPlugIn* pPlugIn, tint32 iID, tint32 iMinValue, tint32 iMaxValue, tint32 iValue, tint32 iSection)
-	: mpPlugIn(pPlugIn), miID(iID), miMinValue(iMinValue), miMaxValue(iMaxValue), miDefaultValue(iValue), miValue(iValue), miSection(iSection)
+CParmGlobal::CParmGlobal( tint32 iID, tint32 iMinValue, tint32 iMaxValue, tint32 iValue, tint32 iSection)
+	:  miID(iID), miMinValue(iMinValue), miMaxValue(iMaxValue), miDefaultValue(iValue), miValue(iValue), miSection(iSection)
 {
 	// Force parameter within min/max range by calling SetValue(...)
 	SetValue(miValue, false);
@@ -66,34 +66,34 @@ void CParmGlobal::OnChange()
 	
 		
 		case giSectionGUI:
-			mpPlugIn->UpdateGUIData(miID, miValue);
+			gpApplication->UpdateGUIData(miID, miValue);
 			break;
 
 		case giSectionGlobal:
-			mpPlugIn->UpdateEngineData(miID, miValue);
+			gpApplication->UpdateEngineData(miID, miValue);
 			break;
 			
 		case giSection_Master:
-			mpPlugIn->UpdateMasterData(miID, miValue);
+			gpApplication->UpdateMasterData(miID, miValue);
 			break;
 	
 		case giSection_AUX1:
-			mpPlugIn->UpdateAUX1Data(miID, miValue);
+			gpApplication->UpdateAUX1Data(miID, miValue);
 			break;
 	
 		case giSection_AUX2:
-			mpPlugIn->UpdateAUX2Data(miID, miValue);
+			gpApplication->UpdateAUX2Data(miID, miValue);
 			break;
 			
 		default:{
 	
 			if (miSection >= giSection_First_Track && miSection <= giSection_Last_Track)
 			{
-				mpPlugIn->UpdateTrackData(miID, miValue, miSection - giSection_First_Track);
+				gpApplication->UpdateTrackData(miID, miValue, miSection - giSection_First_Track);
 			}
 			else if (miSection >= giSection_First_Buss && miSection <= giSection_Last_Buss)
 			{
-				mpPlugIn->UpdateBussData(miID, miValue, miSection - giSection_First_Buss );
+				gpApplication->UpdateBussData(miID, miValue, miSection - giSection_First_Buss );
 			}
 			break;
 		}

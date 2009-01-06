@@ -25,7 +25,6 @@ void CTrack_Playhead::SetInfo(CTrack_Time_Pos* pTrack_Time_Pos)
 
 void CTrack_Playhead::Init()
 {
-	gpApplication = dynamic_cast<CKSPlugIn*>(mpPlugIn);
 
 	// Create the main pane
 	mpPane = ge::IPane::Create();

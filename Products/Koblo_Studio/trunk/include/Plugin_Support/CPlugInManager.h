@@ -21,7 +21,7 @@ class CKSPlugInGUI;
 class CPlugInManager : public virtual kspi::IHost
 {
 public:
-	CPlugInManager(CKSPlugIn* pPlugIn);
+	CPlugInManager();
 
 	virtual ~CPlugInManager();
 
@@ -127,7 +127,7 @@ public:
 	void WindowClosed(tint32 iChannel, tint32 iInsertIndex);
 
 protected:
-	CKSPlugIn* mpPlugIn;
+
 
 	std::list<SPlugInInfo*> mPlugIns;
 

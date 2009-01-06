@@ -7,8 +7,8 @@ st::IStreamManager* gpStreamManager = NULL;
 	CDSP
 */
 
-CDSP::CDSP(CKSPlugIn* pPlugIn)
-	: muiChannels(0), mpPlugIn(pPlugIn), muiFinalSongPosition(0),
+CDSP::CDSP()
+	: muiChannels(0), muiFinalSongPosition(0),
 	mRegionSearchEnd(0)
 {
 	gpStreamManager = mpStreamManager = st::IStreamManager::Create();
@@ -332,11 +332,11 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 		pBuffer->Clear();
 	}
 
-	CKSPlugIn::EPlaybackState eState = mpPlugIn->GetPlaybackState();
-	if (eState == CKSPlugIn::geStateExportingTrack) {
+	CApplication::EPlaybackState eState = gpApplication->GetPlaybackState();
+	if (eState == CApplication::geStateExportingTrack) {
 		// We only need to "play" one single track!
 
-		tint32 iTrack = mpPlugIn->GetTrackToExport();
+		tint32 iTrack = gpApplication->GetTrackToExport();
 		if (mppChannels[iTrack]->HasRegions()) {
 			// "Play" track
 			mppChannels[iTrack]->Process(lC);
@@ -362,11 +362,11 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 		return;
 	}
 	else if (
-		(eState == CKSPlugIn::geStatePlaying)
+		(eState == CApplication::geStatePlaying)
 		||
-		(eState == CKSPlugIn::geStateRecording)
+		(eState == CApplication::geStateRecording)
 		||
-		(eState == CKSPlugIn::geStateExportingOutMix)
+		(eState == CApplication::geStateExportingOutMix)
 	) {
 		tint32 iTrack;
 		for (iTrack = 0; iTrack < giNumber_Of_Tracks; iTrack++) {
@@ -396,7 +396,7 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 				}
 
 				// Only volumes if playing (not exporting)
-				if (!mpPlugIn->IsInProgressTaskState()) {
+				if (!gpApplication->IsInProgressTaskState()) {
 					// Get volumes for track (max 7.1 surround)
 					tfloat32 afAbsMeters[8] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 					CTrack_DSP* pTrack = mppChannels[iTrack];
@@ -423,13 +423,13 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 		if(muiSongPos >= muiLoopEnd)
 		{
 		
-			mpPlugIn->PlaybackGoToPos(muiLoopStart);
+			gpApplication->PlaybackGoToPos(muiLoopStart);
 			// Set scroll pos to playhead
 			mpRegionCallback->JumpToPlayhead();
 		
 		}
 		else
-			mpPlugIn->IncSongPos(lC);
+			gpApplication->IncSongPos(lC);
 
 		for (iBus = 0; iBus < giNumber_Of_Busses; iBus++) {
 			mppBusses[iBus]->Process(lC);
@@ -442,7 +442,7 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 			*pBufferMix += *pBuffer;
 
 			// Only volumes if playing (not exporting)
-			if (mpPlugIn->IsInProgressTaskState()) {
+			if (gpApplication->IsInProgressTaskState()) {
 				// Get volumes for bus (max 7.1 surround)
 				tfloat32 afAbsMeters[8] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 				CTrack_DSP* pBus = mppBusses[iBus];
@@ -471,7 +471,7 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 			*pBufferMix += *pBuffer;
 
 			// Only volumes if playing (not exporting)
-			if (mpPlugIn->IsInProgressTaskState()) {
+			if (gpApplication->IsInProgressTaskState()) {
 				// Get volumes for AUX (max 7.1 surround)
 				tfloat32 afAbsMeters[8] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 		//		CTrack_DSP* pAUX = mppAUXes[iAUX];
@@ -501,7 +501,7 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 	tfloat32* pfData0 = pBufferMix->GetData(0);
 	tfloat32* pfData1 = pBufferMix->GetData(1);
 	// Only volumes if not exporting
-	if (mpPlugIn->IsInProgressTaskState()) {
+	if (gpApplication->IsInProgressTaskState()) {
 		// Copy to output
 		memcpy(pfOut0, pfData0, lC * sizeof(tfloat32));
 		memcpy(pfOut1, pfData1, lC * sizeof(tfloat32));
@@ -1488,7 +1488,7 @@ tbool CDSP::SaveTrackRegionDataToChunk(tint32 iTrack, IChunk* pChunk)
 
 tbool CDSP::CreateRegionFromChunkData(tint32 iTrack, IChunk* pChunk)
 {
-//	CKSPlugIn* pPlugIn = (CKSPlugIn*)GetPlugIn();
+//	CApplication* pPlugIn = (CApplication*)GetPlugIn();
 
 	tchar* pszBuff = new tchar[pChunk->GetSize() + 1];
 	pChunk->Read(pszBuff, pChunk->GetSize());

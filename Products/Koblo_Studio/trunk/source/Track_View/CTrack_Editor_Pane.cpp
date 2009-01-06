@@ -384,7 +384,7 @@ void CTrack_Editor_Pane::OnTimer(tint32 iTimerID)
 	}
 
 	if (iTimerID == giTimerID_Meters_Track) {
-		CKSPlugIn::EPlaybackState eState = gpApplication->GetPlaybackState();
+		CApplication::EPlaybackState eState = gpApplication->GetPlaybackState();
 
 		// Only do things if not exporting
 		if (!gpApplication->IsInProgressTaskState()) {
@@ -984,19 +984,7 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			//gpApplication->SetGlobalParm(giParamID_Show_Waveform,!bTest, giSectionGUI);
 			break;
 		}
-		/*
-		case ge::Keyx: {
 		
-			//!!! Lasse remove this when done
-			static tint32 iTest = 0;
-			iTest += 10;
-			if(iTest > 100) iTest = 0;
-			CKSPlugIn* pPlugIn	=	dynamic_cast<CKSPlugIn*>(gpApplication);
-			pPlugIn->Set_Progress(iTest != 0, iTest);
-
-			break;
-		}
-		*/
 		case ge::KeyMinus: {
 			tint32 iTest = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI) -1;
 			gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);

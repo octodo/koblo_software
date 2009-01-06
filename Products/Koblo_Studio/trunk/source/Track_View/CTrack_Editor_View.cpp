@@ -1,9 +1,9 @@
 
 #include "KSOS.h"
 
-CTrack_Editor_View::CTrack_Editor_View(CKSPlugIn* pPlugIn, de::IParameterManager* pParmMan)
-	: CKSBaseGUI(dynamic_cast<CBasePlugIn*>(pPlugIn), pParmMan),
-	CBaseGUI(dynamic_cast<CBasePlugIn*>(pPlugIn), pParmMan)
+CTrack_Editor_View::CTrack_Editor_View( de::IParameterManager* pParmMan)
+	: CKSBaseGUI( pParmMan),
+	CBaseGUI(dynamic_cast<CBasePlugIn*>(gpApplication), pParmMan)
 {
 		mpTimerMeters = NULL;
 		mpPlay_Head_Timer = NULL;
@@ -120,7 +120,7 @@ void CTrack_Editor_View::EventGeneric(ge::IControl* pControl, void *pEventData)
 		switch(iID) {
 			case giChC_Txt:
 				std::string sText = std::string((const tchar*)pEventData);
-				dynamic_cast<CKSPlugIn*>(gpApplication)->SetChannelName(iChannel, sText);
+				gpApplication->SetChannelName(iChannel, sText);
 				break;
 		}
 	}

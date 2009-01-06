@@ -16,7 +16,7 @@ CTrack_DSP::CTrack_DSP(CDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTr
 
 	mpBuffer = new CBuffer();
 	
-//	mpPlugIn = dynamic_cast<CKSPlugIn*>(mpDSP->GetPlugIn());
+
 
 	mbLimitDataFromStream = false;
 

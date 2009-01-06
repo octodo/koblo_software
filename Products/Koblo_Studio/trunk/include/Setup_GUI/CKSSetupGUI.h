@@ -19,7 +19,7 @@
 class CKSSetupGUI : public virtual CKSBaseGUI, public virtual ge::IEventReceiver, public virtual ITimerCallback
 {
 public:
-	CKSSetupGUI(CKSPlugIn* pPlugIn, de::IParameterManager* pParmMan);
+	CKSSetupGUI( de::IParameterManager* pParmMan);
 
 	virtual ~CKSSetupGUI();
 
@@ -39,12 +39,6 @@ public:
 
 	//! IContextCallback override
 	virtual void GetName(tchar* psz);
-
-	//! Returns the plug-in we're connected to
-//	CKSPlugIn* GetPlugIn() {return dynamic_cast<CKSPlugIn*>(mpPlugIn);}
-
-	//! Overload
-//	const CKSPlugIn* GetPlugIn() const {return dynamic_cast<const CKSPlugIn*>(mpPlugIn);}
 
 	virtual void UpdateAll() {}
 

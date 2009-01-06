@@ -19,7 +19,7 @@
 class CKSBaseGUI : public virtual CBaseGUI
 {
 public:
-	CKSBaseGUI(CBasePlugIn* pPlugIn, de::IParameterManager* pParmMan);
+	CKSBaseGUI( de::IParameterManager* pParmMan);
 
 	virtual void UpdateGUIData(tint32 iID, tint32 iValue) {}
 	

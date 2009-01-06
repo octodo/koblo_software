@@ -18,7 +18,7 @@ CKSExportForWebGUIPane::~CKSExportForWebGUIPane()
 
 void CKSExportForWebGUIPane::Init()
 {
-//	mpPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
+//	mpPlugIn = gpApplication;
 
 	mpPane = ge::IPane::Create();
 	mpPane->SetSize(ge::SSize(541,582));

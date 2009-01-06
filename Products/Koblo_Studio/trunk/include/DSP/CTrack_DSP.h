@@ -135,9 +135,7 @@ protected:
 	CBuffer* mpBuffer;
 	// Parrent pointer, not needed there is a global one
 	CDSP* mpDSP;
-
-//	CKSPlugIn* mpPlugIn;
-
+	
 	st::IDSPTools* mpDSPTools;
 
 	CTrack_DSP** mppAUXes;

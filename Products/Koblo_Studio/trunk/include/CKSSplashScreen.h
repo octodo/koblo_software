@@ -40,7 +40,7 @@ protected:
 class CKSSplashScreen : public virtual CKSBaseGUI, public virtual ge::IEventReceiver, public virtual ITimerCallback
 {
 public:
-	CKSSplashScreen(CKSPlugIn* pPlugIn, de::IParameterManager* pParmMan);
+	CKSSplashScreen( de::IParameterManager* pParmMan);
 
 	virtual ~CKSSplashScreen();
 
@@ -60,12 +60,6 @@ public:
 
 	//! IContextCallback override
 	virtual void GetName(tchar* psz);
-
-	//! Returns the plug-in we're connected to
-//	CKSPlugIn* GetPlugIn() {return dynamic_cast<CKSPlugIn*>(mpPlugIn);}
-
-	//! Overload
-//	const CKSPlugIn* GetPlugIn() const {return dynamic_cast<const CKSPlugIn*>(mpPlugIn);}
 
 	//! Called by the plug-in when a parameter has changed
 	virtual void UpdateEngineData(tint iType, tint iExtra, tint32 iID, tint32 iValue);

@@ -71,7 +71,6 @@ void CKSImportGUIPane::Init()
 	CreateButton(giCtrl_Import, IDB_Button_Import, ge::SPos(292 + 64, 400), false);
 
 	tchar psz[1024];
-//	CKSPlugIn* pPlugIn = gpApplication;
 	//IFile::GetSystemDirectory(IFile::SystemDirDesktop, psz);
 	gpApplication->GetDefaultProjectFolder(psz);
 	BrowseToDir(std::string(psz));

@@ -42,7 +42,7 @@ tbool CProgressTaskList::DoWork()
 				"You aborted %d queued task%s",
 				iNumberOfActions,
 				(iNumberOfActions > 1) ? "s" : "");
-			mpPlugIn->ShowMessageBox_NonModal(pszMsg, "Progress aborted");
+				gpApplication->ShowMessageBox_NonModal(pszMsg, "Progress aborted");
 		}
 		return true;
 	}

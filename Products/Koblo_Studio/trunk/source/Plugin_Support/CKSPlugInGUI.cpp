@@ -1,9 +1,9 @@
 
 #include "KSOS.h"
 
-CKSPlugInGUI::CKSPlugInGUI(CKSPlugIn* pPlugIn, de::IParameterManager* pParmMan)
-	: CKSBaseGUI(dynamic_cast<CBasePlugIn*>(pPlugIn), pParmMan),
-	CBaseGUI(dynamic_cast<CBasePlugIn*>(pPlugIn), pParmMan)
+CKSPlugInGUI::CKSPlugInGUI( de::IParameterManager* pParmMan)
+	: CKSBaseGUI( pParmMan),
+	CBaseGUI(dynamic_cast<CBasePlugIn*>(gpApplication), pParmMan)
 {
 }
 

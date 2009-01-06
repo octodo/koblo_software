@@ -48,9 +48,9 @@ void CKSSplashScreenPane::SetText(const std::string& sText)
 	}
 }
 
-CKSSplashScreen::CKSSplashScreen(CKSPlugIn* pPlugIn, de::IParameterManager* pParmMan)
-	: CKSBaseGUI(dynamic_cast<CBasePlugIn*>(pPlugIn), pParmMan),
-	CBaseGUI(dynamic_cast<CBasePlugIn*>(pPlugIn), pParmMan)
+CKSSplashScreen::CKSSplashScreen( de::IParameterManager* pParmMan)
+	: CKSBaseGUI( pParmMan),
+	CBaseGUI(dynamic_cast<CBasePlugIn*>(gpApplication), pParmMan)
 {
 		mpTimerMeters = NULL;
 }

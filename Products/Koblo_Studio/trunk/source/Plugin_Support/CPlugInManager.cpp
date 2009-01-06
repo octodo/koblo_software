@@ -9,8 +9,7 @@
 
 const CPlugInManager::PlugInHandle CPlugInManager::mInvalidHandleValue = -1;
 
-CPlugInManager::CPlugInManager(CKSPlugIn* pPlugIn)
-	: mpPlugIn(pPlugIn)
+CPlugInManager::CPlugInManager()
 {
 }
 
@@ -20,7 +19,7 @@ CPlugInManager::~CPlugInManager()
 
 void CPlugInManager::Init()
 {
-	CAutoLock Lock(mpPlugIn->GetMeterMutex());
+	CAutoLock Lock(gpApplication->GetMeterMutex());
 
 #ifdef _Mac
 	// Get the path to the plug-in folder
@@ -240,7 +239,7 @@ void CPlugInManager::Init()
 
 CPlugInManager::PlugInHandle CPlugInManager::LoadPlugIn(tint32 iCompanyID, tint32 iProductID, tint32 iChannel, tint32 iInsertIndex)
 {
-	CAutoLock Lock(mpPlugIn->GetMeterMutex());
+	CAutoLock Lock(gpApplication->GetMeterMutex());
 
 	tint32 iIndex = 0;
 	std::list<SPlugInInfo*>::const_iterator it = mPlugIns.begin();
@@ -274,7 +273,7 @@ kspi::IPlugIn* CPlugInManager::GetPlugInFromHandle(CPlugInManager::PlugInHandle 
 
 CPlugInManager::PlugInHandle CPlugInManager::LoadPlugIn(tint32 iIndex, tint32 iChannel, tint32 iInsertIndex)
 {
-	CAutoLock Lock(mpPlugIn->GetMeterMutex());
+	CAutoLock Lock(gpApplication->GetMeterMutex());
 
 	if (iIndex >= (tint32)mPlugIns.size()) {
 		throw IException::Create(IException::TypeCode, IException::ReasonCodeInvalidArgument, EXCEPTION_INFO, "Invalid Index / Unknown plug-in");
@@ -434,7 +433,7 @@ CPlugInManager::PlugInHandle CPlugInManager::LoadPlugIn(tint32 iIndex, tint32 iC
 
 kspi::IGUI* CPlugInManager::CreateGUI(PlugInHandle Handle, tint32 iIndex)
 {	///!!! This is newer called
-	CAutoLock Lock(mpPlugIn->GetMeterMutex());
+	CAutoLock Lock(gpApplication->GetMeterMutex());
 
 	if (Handle == mInvalidHandleValue) {
 		throw IException::Create(IException::TypeCode, IException::ReasonCodeInvalidArgument, EXCEPTION_INFO, "Invalid Handle");
@@ -444,7 +443,7 @@ kspi::IGUI* CPlugInManager::CreateGUI(PlugInHandle Handle, tint32 iIndex)
 
 void CPlugInManager::UnloadPlugIn(PlugInHandle Handle, tint32 iChannel, tint32 iInsertIndex)
 {
-	CAutoLock Lock(mpPlugIn->GetMeterMutex());
+	CAutoLock Lock(gpApplication->GetMeterMutex());
 	
 	if (Handle == mInvalidHandleValue) {
 		throw IException::Create(IException::TypeCode, IException::ReasonCodeInvalidArgument, EXCEPTION_INFO, "Invalid Handle");
@@ -483,7 +482,7 @@ void CPlugInManager::CloseGUI(tint32 iChannel, tint32 iInsertIndex)
 	
 void CPlugInManager::OpenGUI(tint32 iChannel, tint32 iInsertIndex)
 {
-	mpPlugIn->SetGUIsReady(false);
+	gpApplication->SetGUIsReady(false);
 	
 	std::map<tint32, SLoadedPlugInInfo>::iterator it = mPlugInMap.find(iChannel << 16 | iInsertIndex);
 
@@ -517,7 +516,7 @@ void CPlugInManager::OpenGUI(tint32 iChannel, tint32 iInsertIndex)
 		pInfo->pGUI = pGUI;
 	}
 	
-	mpPlugIn->SetGUIsReady(true);
+	gpApplication->SetGUIsReady(true);
 }
 
 void CPlugInManager::WindowClosed(tint32 iChannel, tint32 iInsertIndex)

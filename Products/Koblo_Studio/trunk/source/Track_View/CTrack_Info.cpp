@@ -86,8 +86,8 @@ void CTrack_Info::EventGeneric(ge::IControl* pControl, void* pEventData)
 		if (pEvent->bInsideControlRect) {
 			
 			if (pEvent->iMsg == ge::LeftButtonDown) {
-				CKSPlugIn* pPlugIn = dynamic_cast<CKSPlugIn*>(gpApplication);
-				tint32 iBlueTrack = pPlugIn->Get_Selected_Track();
+			
+				tint32 iBlueTrack = gpApplication->Get_Selected_Track();
 				if ((!ge::IWindow::ShiftPressed()) || (iBlueTrack == -1)) {
 					// No shift key - or no previous selection
 					// When no shift key is held we clear all selections on track ...
@@ -103,12 +103,12 @@ void CTrack_Info::EventGeneric(ge::IControl* pControl, void* pEventData)
 					// ... then we see what to select
 					if (iBlueTrack == miID) {
 						// Second click: deselect
-						pPlugIn->SelectTrack(-1);
+						gpApplication->SelectTrack(-1);
 					}
 					else {
 						// First click or clicked elsewhere: Select new track
 						// Select all of new track
-						pPlugIn->SelectTrack(miID);
+						gpApplication->SelectTrack(miID);
 						tint64 iFirstSample_Dummy = 0, iFinalSample = -1;
 						gpDSPEngine->CalcTrackDuration(miID, &iFirstSample_Dummy, &iFinalSample);
 						gpDSPEngine->SetTrackSelection(miID, 0, iFinalSample + 1, giSelect_On_Track);
@@ -127,11 +127,11 @@ void CTrack_Info::EventGeneric(ge::IControl* pControl, void* pEventData)
 						SendMsgFromTop(&msg);
 						// See if another track will take over the "blueishnes"
 						if (iBlueTrack == miID) {
-							pPlugIn->SelectTrack(-1);
+							gpApplication->SelectTrack(-1);
 							for (tint32 i = 0; i < giNumber_Of_Tracks; i++) {
 								sPrevSel = gpDSPEngine->GetTrackSelection(i);
 								if (sPrevSel.uiSelection_Type != giSelect_Off) {
-									pPlugIn->SelectTrack(i);
+									gpApplication->SelectTrack(i);
 									break;
 								}
 							}

@@ -27,7 +27,7 @@
  based on TinyXml www.sourceforge.net/projects/tinyxml
  */
 
-class CKSPlugIn;
+class CApplication;
 //class TiXmlDocument;
 
 

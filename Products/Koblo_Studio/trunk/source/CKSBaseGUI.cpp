@@ -4,15 +4,15 @@
 #include "KSOS.h"
 
 
-CKSBaseGUI::CKSBaseGUI(CBasePlugIn* pPlugIn, de::IParameterManager* pParmMan)
-	: CBaseGUI(pPlugIn, pParmMan)
+CKSBaseGUI::CKSBaseGUI( de::IParameterManager* pParmMan)
+	: CBaseGUI(gpApplication, pParmMan)
 {
 
 }
 
 tbool CKSBaseGUI::OnKeyDown(ge::EKey Key)
 {
-	return dynamic_cast<CKSPlugIn*>(gpApplication)->OnKeyDown(Key);
+	gpApplication->OnKeyDown(Key);
 }
 
 

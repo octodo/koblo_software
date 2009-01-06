@@ -164,7 +164,7 @@ void CKSAUXGUIPane::OnTimer(tint32 iTimerID)
 			}
 			else {
 				// Get meter values and decay factor
-				dynamic_cast<CKSPlugIn*>(mpPlugIn)->GetAllMeters_MaybeClear(mpvoid_sMeters_All, uiTimeMS_Elapsed, false);
+				gpApplication->GetAllMeters_MaybeClear(mpvoid_sMeters_All, uiTimeMS_Elapsed, false);
 				CKSDSP::SMeters_All* psMeters_All = (CKSDSP::SMeters_All*)mpvoid_sMeters_All;
 				// Send pointer to struct with all meter values to all tracks and let them decide if they need it
 				Update_AUXes_Meters(mpvoid_sMeters_All);

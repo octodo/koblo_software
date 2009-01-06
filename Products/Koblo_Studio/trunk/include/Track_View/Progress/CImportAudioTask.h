@@ -41,7 +41,7 @@ enum EAudioImportOrder {
 
 class CImportAudioTask : public CProgressTask {
 public:
-	CKSPlugIn* mpPlugIn;
+
 
 	enum EStereoBehavior { geStereoDoAsk, geStereoDoSplit, geStereoDoKeep };
 
@@ -79,7 +79,7 @@ public:
 	tint32 miAudioImportOrder;
 
 	CImportAudioTask() {
-		mpPlugIn = NULL;
+	
 
 		meCodec = ac::geAudioCodecUndefined;
 
@@ -99,7 +99,7 @@ public:
 
 	virtual void Destroy();
 
-	tbool Init(CKSPlugIn* pPlugIn, const tchar* pszSrcPath, tbool bDoesWaveAlreadyExist /*= false*/, EStereoBehavior eStereoBehavior /*= geStereoDoAsk*/, tbool bForceOriginalIsLossy /*= false*/);
+	tbool Init( const tchar* pszSrcPath, tbool bDoesWaveAlreadyExist /*= false*/, EStereoBehavior eStereoBehavior /*= geStereoDoAsk*/, tbool bForceOriginalIsLossy /*= false*/);
 	void Init_InsertAsRegionAfterImport(tint32 iTrackID, tint64 iTrackPos);
 
 	tbool IsOpened() { return (mpfDstL != NULL); };

@@ -24,10 +24,10 @@ protected:
 	volatile tbool mbAbort_DontTell;
 
 public:
-	CProgressTaskList(CKSPlugIn* pPlugIn)
+	CProgressTaskList()
 	{
 		mbAbort = false;
-		mpPlugIn = pPlugIn;
+		
 	} // constructor
 
 	virtual ~CProgressTaskList();
@@ -80,7 +80,7 @@ public:
 	}
 
 protected:
-	CKSPlugIn* mpPlugIn;
+
 
 	CMutex mMutex;
 

@@ -96,7 +96,7 @@
 #include "WaveFile.h"
 
 // Sounds
-class CKSPlugIn;
+class CApplication;
 #include "CSample_DSP.h"
 #include "CRegion_DSP.h"
 

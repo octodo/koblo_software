@@ -25,7 +25,7 @@ enum EAfterImportOrder {
 
 class CAfterImportTask : public CProgressTask {
 public:
-	CKSPlugIn* mpPlugIn;
+
 
 	std::list<IChunk*> mlistIChunkTrackNames;
 	//
@@ -36,14 +36,14 @@ public:
 	tint32 miAfterImportOrder;
 
 	CAfterImportTask() {
-		mpPlugIn = NULL;
+		
 	};
 
 	virtual ~CAfterImportTask();
 
 	virtual void Destroy();
 
-	tbool Init(CKSPlugIn* pPlugIn);
+	tbool Init();
 
 	void UpdateTrackNames();
 	void UpdateTrackRegions();

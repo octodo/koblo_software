@@ -26,9 +26,9 @@ void CAfterImportTask::Destroy()
 } // Destroy
 
 
-tbool CAfterImportTask::Init(CKSPlugIn* pPlugIn)
+tbool CAfterImportTask::Init()
 {
-	mpPlugIn = pPlugIn;
+//	mpPlugIn = pPlugIn;
 	miAfterImportOrder = 0;
 
 	return true;
@@ -52,12 +52,12 @@ tbool CAfterImportTask::DoWork()
 					CAutoDelete<ge::IWaitCursor> pWait(ge::IWaitCursor::Create());
 					
 					// Refresh display
-					mpPlugIn->Stack_Tracks();
-					mpPlugIn->Update_Zoom();
+					gpApplication->Stack_Tracks();
+					gpApplication->Update_Zoom();
 				}
 					
 				// Flush effect tails, return to position 0 (and pre-load samples)
-				mpPlugIn->PlaybackGoToStart(true);
+				gpApplication->PlaybackGoToStart(true);
 
 				miAfterImportOrder++;
 			}
@@ -94,7 +94,7 @@ void CAfterImportTask::UpdateTrackNames()
 			tchar psz[1024];
 			memset(psz, 0, 1024);
 			pChunk->Read(psz, pChunk->GetSize());
-			mpPlugIn->SetChannelName(iTrack, std::string((const char*)psz));
+			gpApplication->SetChannelName(iTrack, std::string((const char*)psz));
 		}
 
 		iTrack++;

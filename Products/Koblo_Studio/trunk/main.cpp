@@ -27,7 +27,7 @@ static void HandleNew_Menu();
 volatile bool gbClosingDown = false;
 volatile bool gbInAudioEngine = false;
 
-CKSPlugIn* gpPlugIn = NULL;
+CApplication* gpPlugIn = NULL;
 CDSP* gpDSP = NULL;
 
 class CAppHost : public virtual kspi::IHost
@@ -258,7 +258,7 @@ void CCallback::OnMIDISysEx(const void* /*p*/, tint /*iSize*/)
 
 void ShowMessageBox(const tchar* pszMessage, const tchar* pszHeader)
 {
-	CKSPlugIn::ShowMessageBox(pszMessage, pszHeader);
+	CApplication::ShowMessageBox(pszMessage, pszHeader);
 }
 
 //aioe::IDevice* pAudio = NULL;
@@ -582,7 +582,7 @@ int main(int argc, char* argv[])
 #endif // #else WIN32
 	pContext->ShowWindow(gWndMain, false);
 
-	gpPlugIn = dynamic_cast<CKSPlugIn*>(pModule->CreateProcess(0));
+	gpPlugIn = dynamic_cast<CApplication*>(pModule->CreateProcess(0));
 	gpPlugIn->PreInitialize();
 	gpPlugIn->SetMaxBufferSize(512);
 	gpPlugIn->SetSampleRate(44100);
@@ -1063,7 +1063,7 @@ void timerCallbackGUI(CFRunLoopTimerRef timer, void *info)
 {
 	if (info) {
 //		((CGUI*)info)->Idle();
-		((CKSPlugIn*)info)->OnGUITimer();
+		((CApplication*)info)->OnGUITimer();
 	}
 }
 #endif	// _Mac

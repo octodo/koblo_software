@@ -54,24 +54,7 @@ void CKS_Import_Files::EventGeneric(ge::IControl* pControl, void* pEventData)
 
 void CKS_Import_Files::HandleMsg(SMsg* pMsg)
 {
-/*
-	if (pMsg->iOpcode == Msg_Update_File_List) {
-		std::list<CKSPlugIn::SFileInfo*>* pList = (std::list<CKSPlugIn::SFileInfo*>*)(pMsg->pDataIn);
 
-		std::string sText;
-		std::list<CKSPlugIn::SFileInfo*>::const_iterator it = pList->begin();
-		for (; it != pList->end(); it++) {
-			sText += (*it)->sName;
-			sText += '@';
-		}
-		sText = sText.substr(0, sText.size() - 1);
-
-		ge::IListBox* pListBox = dynamic_cast<ge::IListBox*>(GetControl(giCtrl_File_List));
-		pListBox->SetText(sText.c_str());
-	}
-	
-	Redraw_Pane_Rect();
-*/
 }
 
 tbool CKS_Import_Files::AddFile(const std::string& sPathName)

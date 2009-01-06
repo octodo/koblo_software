@@ -19,7 +19,7 @@
 class CKSProject_ID_GUI : public virtual CKSBaseGUI, public virtual ge::IEventReceiver, public virtual ITimerCallback
 {
 public:
-	CKSProject_ID_GUI(CKSPlugIn* pPlugIn, de::IParameterManager* pParmMan);
+	CKSProject_ID_GUI( de::IParameterManager* pParmMan);
 
 	virtual ~CKSProject_ID_GUI();
 
@@ -39,12 +39,6 @@ public:
 
 	//! IContextCallback override
 	virtual void GetName(tchar* psz);
-
-	//! Returns the plug-in we're connected to
-//	CKSPlugIn* GetPlugIn() {return dynamic_cast<CKSPlugIn*>(mpPlugIn);}
-
-	//! Overload
-//	const CKSPlugIn* GetPlugIn() const {return dynamic_cast<const CKSPlugIn*>(mpPlugIn);}
 
 	virtual void UpdateAll() {}
 
