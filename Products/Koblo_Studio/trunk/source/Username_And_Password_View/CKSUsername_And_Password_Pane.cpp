@@ -5,8 +5,7 @@
 CKSUsername_And_Password_Pane::CKSUsername_And_Password_Pane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	: CBasePane(pPaneParent, pGUI)
 {
-//	CBaseDSPEngine* pD = GetPlugIn()->GetDSPEngine();
-//	mpDSP = dynamic_cast<CKSDSP*>(pD);
+
 	
 }
 

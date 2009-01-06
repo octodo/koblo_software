@@ -4,16 +4,15 @@
 CTrack_Editor_Pane::CTrack_Editor_Pane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	: CBasePane(pPaneParent, pGUI), mbInited(false)
 {
-	CBaseDSPEngine* pD = GetPlugIn()->GetDSPEngine();
-	mpDSP = dynamic_cast<CKSDSP*>(pD);
-	mpKSPlugIn = dynamic_cast<CKSPlugIn*>(GetPlugIn());
+	
+	
 	miMouseOverTrack = -1;
 	miSelectedTrack = -1;
 	mpMouseTrap = NULL;
 //	mbPlaying	=	false;
 
 	// Init meters arrays
-	mpvoid_sMeters_All = (void*)new CKSDSP::SMeters_All();
+	mpvoid_sMeters_All = (void*)new CDSP::SMeters_All();
 	mbFirstMeterSet = true;
 	mbIsVisible = false;
 	mfGoToPos = 0.0;
@@ -31,7 +30,7 @@ CTrack_Editor_Pane::~CTrack_Editor_Pane()
 	}
 
 	// Delete meters arrays
-	delete ((CKSDSP::SMeters_All*)mpvoid_sMeters_All);
+	delete ((CDSP::SMeters_All*)mpvoid_sMeters_All);
 }
 
 void CTrack_Editor_Pane::Init()
@@ -246,7 +245,7 @@ void CTrack_Editor_Pane::UpdateTrackData(tint32 iID, tint32 iValue, tint32 iChan
 		//	if(iChannel <= miNr_Of_Tracks){
 				mpTrack_Side->Set_Track_Size(iChannel, iValue);
 				mpTrack_Player->Set_Track_Size(iChannel, iValue);
-				mpKSPlugIn->Stack_Tracks();
+				gpApplication->Stack_Tracks();
 
 		//	}
 			break;
@@ -388,16 +387,16 @@ void CTrack_Editor_Pane::OnTimer(tint32 iTimerID)
 	}
 
 	if (iTimerID == giTimerID_Meters_Track) {
-		CKSPlugIn::EPlaybackState eState = mpKSPlugIn->GetPlaybackState();
+		CKSPlugIn::EPlaybackState eState = gpApplication->GetPlaybackState();
 
 		// Only do things if not exporting
-		if (!mpKSPlugIn->IsInProgressTaskState()) {
-			tint64 iSample_Pos = mpKSPlugIn->GetSongPos();
+		if (!gpApplication->IsInProgressTaskState()) {
+			tint64 iSample_Pos = gpApplication->GetSongPos();
 			mpTrack_Player->Set_Play_Head(iSample_Pos);
 			mpTrack_Top->Update_Time_Display(iSample_Pos);
 
 			// Only advance scroll-pos if playing and not zoomed to much
-			if((miZoom < 20) && (mpKSPlugIn->IsPlayingOrRecording()))
+			if((miZoom < 20) && (gpApplication->IsPlayingOrRecording()))
 				SetScrollPosHorizontal(iSample_Pos);
 
 			// Calc elapsed time since previous meter get
@@ -406,7 +405,7 @@ void CTrack_Editor_Pane::OnTimer(tint32 iTimerID)
 			miuTimeMS_Prev = uiTimeMS_Now;
 
 			// Get meter values and decay factor
-			mpKSPlugIn->GetAllMeters_MaybeClear(mpvoid_sMeters_All, uiTimeMS_Elapsed, true);
+			gpApplication->GetAllMeters_MaybeClear(mpvoid_sMeters_All, uiTimeMS_Elapsed, true);
 		//	CKSDSP::SMeters_All* psMeters_All = (CKSDSP::SMeters_All*)mpvoid_sMeters_All;
 
 			// Update main window (track view) meters
@@ -423,7 +422,7 @@ void CTrack_Editor_Pane::OnTimer(tint32 iTimerID)
 			}
 
 			// Maybe update mixer and AUX meters
-			mpKSPlugIn->Set_All_Meters(mpvoid_sMeters_All);
+			gpApplication->Set_All_Meters(mpvoid_sMeters_All);
 
 			// Maybe display stutter warning - only once
 			if ((mbDisplayStutterWarning_Armed) && (gpDSPEngine->GetStutterCounter() > 1)) {
@@ -431,7 +430,7 @@ void CTrack_Editor_Pane::OnTimer(tint32 iTimerID)
 								
 				mbDisplayStutterWarning_Armed = false;
 
-				mpKSPlugIn->ShowMessageBox_NonModal(
+				gpApplication->ShowMessageBox_NonModal(
 					"It seems your system is too slow to play back this project\n"
 					"in real time.\n"
 					"\n"
@@ -569,7 +568,7 @@ void CTrack_Editor_Pane::Create_Track_Player_ScrollBar_Vertical()
 void CTrack_Editor_Pane::SetScrollPosHorizontal(tuint64 uiSample)
 {
 
-	tfloat32 fPixelPrSample		=	(tfloat32)mpKSPlugIn->GetPixelPrSample();
+	tfloat32 fPixelPrSample		=	(tfloat32)gpApplication->GetPixelPrSample();
 	tint32 iPlayHead_Pos		=	(tint32)(fPixelPrSample * (tfloat32)uiSample);
 	
 
@@ -607,7 +606,7 @@ void CTrack_Editor_Pane::SetScrollPosHorizontal(tuint64 uiSample)
 
 void CTrack_Editor_Pane::SetScrollPosToPlayHead()
 {
-	tint32 iPlayHead_Pos	=	(tint32)(mpKSPlugIn->GetPixelPrSample() * mpKSPlugIn->GetSongPos());
+	tint32 iPlayHead_Pos	=	(tint32)(gpApplication->GetPixelPrSample() * gpApplication->GetSongPos());
 
 	ge::SScrollPos scrollposBar;
 	mpScrollBarHorizontal->GetScrollPos(scrollposBar);
@@ -629,7 +628,7 @@ void CTrack_Editor_Pane::SetScrollPosToLoopStart()
 
 
 	
- 	tint32 iPlayHead_Pos	=	(tint32)(mpKSPlugIn->GetPixelPrSample() * (tfloat32)sInfo.uiLoop_Start);
+ 	tint32 iPlayHead_Pos	=	(tint32)(gpApplication->GetPixelPrSample() * (tfloat32)sInfo.uiLoop_Start);
 
 	ge::SScrollPos scrollposBar;
 	mpScrollBarHorizontal->GetScrollPos(scrollposBar);
@@ -734,7 +733,7 @@ void CTrack_Editor_Pane::SendMsgFromTop(SMsg* pMsg)
 	{
 		case Msg_Stack_Tracks: {
 
-			if (mpKSPlugIn->AreGUIsReady()) {
+			if (gpApplication->AreGUIsReady()) {
 				mbIsVisible = true;
 				SendMsg(pMsg);
 			}
@@ -888,9 +887,9 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			tbool bReallyVisible = GetPlugIn()->GetModule()->GetHost()->IsWindowVisible(giMix_Window) == 0 ? false : true;
 			if (bTest != bReallyVisible) {
 				//GetPlugIn()->SetGlobalParm(giParamID_Show_Mix_Window, !bTest, giSectionGUI);
-				mpKSPlugIn->GetParmMan()->Set(true, !bTest, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
+				gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 			}
-			mpKSPlugIn->GetParmMan()->Set(true, !bReallyVisible, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
+			gpApplication->GetParmMan()->Set(true, !bReallyVisible, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 			//GetPlugIn()->SetGlobalParm(giParamID_Show_Mix_Window, !bReallyVisible, giSectionGUI);
 			return true;
 		}
@@ -907,9 +906,9 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Show_AUX_Window, giSectionGUI) != 0);
 			tbool bReallyVisible = (GetPlugIn()->GetModule()->GetHost()->IsWindowVisible(giRack_Window) != 0);
 			if (bTest != bReallyVisible) {
-				mpKSPlugIn->GetParmMan()->Set(true, !bTest, giParamID_Show_AUX_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
+				gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Show_AUX_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 			}
-			mpKSPlugIn->GetParmMan()->Set(true, !bReallyVisible, giParamID_Show_AUX_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
+			gpApplication->GetParmMan()->Set(true, !bReallyVisible, giParamID_Show_AUX_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 			return true;
 			
 		}
@@ -943,13 +942,13 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 		}
 		case ge::Keyf: {
 			tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Show_Fade, giSectionGUI) != 0);
-			mpKSPlugIn->GetParmMan()->Set(true, !bTest, giParamID_Show_Fade, de::IParameterManager::TypeGlobal, giSectionGUI);
+			gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Show_Fade, de::IParameterManager::TypeGlobal, giSectionGUI);
 			//GetPlugIn()->SetGlobalParm(giParamID_Show_Fade,!bTest, giSectionGUI);
 			break;
 		}
 		case ge::Keyg: {
 			tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Grid, giSectionGUI) != 0);
-			mpKSPlugIn->GetParmMan()->Set(true, !bTest, giParamID_Grid, de::IParameterManager::TypeGlobal, giSectionGUI);
+			gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Grid, de::IParameterManager::TypeGlobal, giSectionGUI);
 			//GetPlugIn()->SetGlobalParm(giParamID_Grid,!bTest, giSectionGUI);
 			break;
 		}
@@ -960,7 +959,7 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 		}
 		case ge::Keyl: {
 			tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Loop_On, giSectionGlobal) != 0);
-			mpKSPlugIn->GetParmMan()->Set(true, !bTest, giParamID_Loop_On, de::IParameterManager::TypeGlobal, giSectionGlobal);
+			gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Loop_On, de::IParameterManager::TypeGlobal, giSectionGlobal);
 			//GetPlugIn()->SetGlobalParm(giParamID_Loop_On,!bTest, giSectionGlobal);
 			break;
 		}
@@ -969,10 +968,10 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			mbZoomFlipFlop = !mbZoomFlipFlop;
 			if(mbZoomFlipFlop){
 				miStoredZoom = GetPlugIn()->GetGlobalParm(giParamID_Zoom, giSectionGUI);
-				mpKSPlugIn->GetParmMan()->Set(true, giZoom_Levels - 10, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+				gpApplication->GetParmMan()->Set(true, giZoom_Levels - 10, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
 			}
 			else{
-				mpKSPlugIn->GetParmMan()->Set(true, miStoredZoom, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+				gpApplication->GetParmMan()->Set(true, miStoredZoom, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
 				
 			}
 			break;
@@ -984,7 +983,7 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 		}
 		case ge::Keyw: {
 			tbool bTest = (GetPlugIn()->GetGlobalParm(giParamID_Show_Waveform, giSectionGUI) != 0);
-			mpKSPlugIn->GetParmMan()->Set(true, bTest, giParamID_Show_Waveform, de::IParameterManager::TypeGlobal, giSectionGUI);
+			gpApplication->GetParmMan()->Set(true, bTest, giParamID_Show_Waveform, de::IParameterManager::TypeGlobal, giSectionGUI);
 			//GetPlugIn()->SetGlobalParm(giParamID_Show_Waveform,!bTest, giSectionGUI);
 			break;
 		}
@@ -1003,22 +1002,22 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 		*/
 		case ge::KeyMinus: {
 			tint32 iTest = GetPlugIn()->GetGlobalParm(giParamID_Zoom, giSectionGUI) -1;
-			mpKSPlugIn->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+			gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
 			break;
 		}
 		case ge::KeyPlus: {
 			tint32 iTest = GetPlugIn()->GetGlobalParm(giParamID_Zoom, giSectionGUI) +1;
-			mpKSPlugIn->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+			gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
 			break;
 		}
 		
 		case ge::KeyLeft: {
-			mpKSPlugIn->PlaybackRewind();
+			gpApplication->PlaybackRewind();
 			break;
 		}
 		case ge::KeyRight: {
 		
-			mpKSPlugIn->PlaybackFF();
+			gpApplication->PlaybackFF();
 			break;
 		}
 		
@@ -1044,12 +1043,12 @@ tbool CTrack_Editor_Pane::DoKeyUp(ge::EKey Key)
 		
 		
 		case ge::KeyLeft: {
-			mpKSPlugIn->PlaybackRewind();
+			gpApplication->PlaybackRewind();
 			break;
 		}
 		case ge::KeyRight: {
 		
-			mpKSPlugIn->PlaybackFF();
+			gpApplication->PlaybackFF();
 			break;
 		}
 		

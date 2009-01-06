@@ -5,11 +5,12 @@
 CKSAUXGUIPane::CKSAUXGUIPane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	: CBasePane(pPaneParent, pGUI)
 {
-	CBaseDSPEngine* pD = GetPlugIn()->GetDSPEngine();
-	mpDSP = dynamic_cast<CKSDSP*>(pD);
+	
+	
+	
 
 	// Init meters arrays
-	mpvoid_sMeters_All = (void*)new CKSDSP::SMeters_All();
+	mpvoid_sMeters_All = (void*)new CDSP::SMeters_All();
 	mbFirstMeterSet = true;
 	mbIsVisible = false;
 }
@@ -17,7 +18,7 @@ CKSAUXGUIPane::CKSAUXGUIPane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 CKSAUXGUIPane::~CKSAUXGUIPane()
 {
 	// Delete meters arrays
-	delete ((CKSDSP::SMeters_All*)mpvoid_sMeters_All);
+	delete ((CDSP::SMeters_All*)mpvoid_sMeters_All);
 }
 
 void CKSAUXGUIPane::Init()
@@ -210,7 +211,7 @@ void CKSAUXGUIPane::Update_AUXes_Meters(void* pvoid_sMeters_All)
 			mpReverb_MeterOutR->SetFloatValueWithDecay(1.0, 0.0);
 		}
 		else {
-			CKSDSP::SMeters_All* psMeters_All = (CKSDSP::SMeters_All*)pvoid_sMeters_All;
+			CDSP::SMeters_All* psMeters_All = (CDSP::SMeters_All*)pvoid_sMeters_All;
 			tfloat32* pMetersForEcho = psMeters_All->ppfMeters_AUXes[0];
 			mpEcho_MeterOutL->SetFloatValueWithDecay(pMetersForEcho[0], psMeters_All->fDecayFactor);
 			mpEcho_MeterOutR->SetFloatValueWithDecay(pMetersForEcho[1], psMeters_All->fDecayFactor);

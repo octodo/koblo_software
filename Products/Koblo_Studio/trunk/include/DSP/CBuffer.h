@@ -16,11 +16,10 @@
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
 
-//!!! max there might be an issue with the streams
-// are they freed up, is one pr region the right way to do it?
-const tint32 giNrOfStreams = 4096; //(giNumber_Of_Tracks * 2) +(giNumber_Of_Busses * 2); //!!! MO Check
+// Each region holds one/two streams
+const tint32 giNrOfStreams = 8092; 
 
-class CKSDSP;
+class CDSP;
 class IRegionCallback;
 
 const tuint32 guiMaxNrOfChannelsInBuffer = 2;

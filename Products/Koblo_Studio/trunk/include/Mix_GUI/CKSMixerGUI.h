@@ -17,7 +17,7 @@
 
 
 
-class CKSDSP;
+class CDSP;
 class CMix_Scroll;
 
 class CMix_Buss;

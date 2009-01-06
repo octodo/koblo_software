@@ -17,7 +17,7 @@
 
 
 
-class CKSDSP;
+class CDSP;
 
 class CKSAUXGUIPane : public virtual CBasePane
 {
@@ -50,7 +50,7 @@ public:
 	virtual void SendMsgFromTop(SMsg* pMsg);
 
 protected:
-	CKSDSP* mpDSP;
+	
 	
 	ge::IPeakMeter* mpEcho_MeterOutL;
 	ge::IPeakMeter* mpEcho_MeterOutR;

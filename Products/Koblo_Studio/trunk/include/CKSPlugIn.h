@@ -19,14 +19,14 @@
 // Forward definitions
 class CKSGUI;
 class CEffect;
-class CKSDSP;
+class CDSP;
 
 // The max buffer size of the audio processing. Larger buffers will be split into smaller ones
 // This should be set to the buffer size over which performance will start to decrease.
 // Note: The dezipper is using this buffer size, that is, it is only called each giAudioMaxBufferSize samples.
 const tint32 giAudioMaxBufferSize = 32;
 
-extern CKSDSP* gpDSPEngine;
+extern CDSP* gpDSPEngine;
 extern CKSPlugIn* gpApplication;
 
 class CMIDIEvent

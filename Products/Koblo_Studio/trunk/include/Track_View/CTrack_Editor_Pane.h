@@ -32,7 +32,7 @@ class CTrack_Player;
 class CTrack_File_Browser;
 class CSoloMuteContainer;
 
-class CKSDSP;
+class CDSP;
 
 class CTrack_Editor_Pane : public virtual CBasePane
 {
@@ -90,8 +90,8 @@ public:
 	
 
 protected:
-	CKSDSP* mpDSP;
-	CKSPlugIn* mpKSPlugIn;
+	
+//	CKSPlugIn* mpKSPlugIn;
 
 	tbool mbInited;
 

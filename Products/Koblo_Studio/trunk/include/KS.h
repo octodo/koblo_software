@@ -197,6 +197,6 @@ class CPlugInManager;
 // DSP
 #include "CBuffer.h"
 #include "CTrack_DSP.h"
-#include "CKSDSP.h"
+#include "CDSP.h"
 
 

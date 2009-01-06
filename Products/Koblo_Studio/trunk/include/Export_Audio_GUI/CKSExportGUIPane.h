@@ -17,7 +17,7 @@
 
 
 
-class CKSDSP;
+class CDSP;
 
 class CKSExportGUIPane : public virtual CBasePane
 {
@@ -46,7 +46,7 @@ public:
 	virtual void SendMsgFromTop(SMsg* pMsg);
 
 protected:
-	CKSDSP* mpDSP;
+	CDSP* mpDSP;
 	
 	tbool mbIsVisible;
 	

@@ -17,7 +17,7 @@
 
 
 
-class CKSDSP;
+class CDSP;
 class CKS_Import_File_Browser;
 class CKS_Import_Files;
 

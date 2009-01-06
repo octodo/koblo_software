@@ -245,7 +245,7 @@ void CTrack_Info_Big::UpdateTrackMeters_Maybe(void* pvoid_sMeters_All)
 			mpMeterOutR->SetFloatValueWithDecay(1.0, 0.0);
 		}
 		else {
-			CKSDSP::SMeters_All* psMeters_All = (CKSDSP::SMeters_All*)pvoid_sMeters_All;
+			CDSP::SMeters_All* psMeters_All = (CDSP::SMeters_All*)pvoid_sMeters_All;
 			tfloat32* pMetersForThisChannel = psMeters_All->ppfMeters_Tracks[miID];
 			mpMeterOutL->SetFloatValueWithDecay(pMetersForThisChannel[0], psMeters_All->fDecayFactor);
 			mpMeterOutR->SetFloatValueWithDecay(pMetersForThisChannel[1], psMeters_All->fDecayFactor);

@@ -6,18 +6,16 @@ CKSMixerGUIPane::CKSMixerGUIPane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	: CBasePane(pPaneParent, pGUI)
 {
 	CBaseDSPEngine* pD = GetPlugIn()->GetDSPEngine();
-	mpDSP = dynamic_cast<CKSDSP*>(pD);
+	mpDSP = dynamic_cast<CDSP*>(pD);
 
-	// Init meters arrays
-	//mpvoid_sMeters_All = (void*)new CKSDSP::SMeters_All();
+	
 	mbFirstMeterSet = true;
 	mbIsVisible = false;
 }
 
 CKSMixerGUIPane::~CKSMixerGUIPane()
 {
-	// Delete meters arrays
-	//delete ((CKSDSP::SMeters_All*)mpvoid_sMeters_All);
+	
 }
 
 void CKSMixerGUIPane::Init()

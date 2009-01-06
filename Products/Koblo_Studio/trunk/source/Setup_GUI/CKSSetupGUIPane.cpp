@@ -7,7 +7,7 @@ CKSSetupGUIPane::CKSSetupGUIPane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	mbMenuInited(false)
 {
 //	CBaseDSPEngine* pD = GetPlugIn()->GetDSPEngine();
-//	mpDSP = dynamic_cast<CKSDSP*>(pD);
+//	mpDSP = dynamic_cast<CDSP*>(pD);
 }
 
 CKSSetupGUIPane::~CKSSetupGUIPane()
@@ -155,7 +155,7 @@ void CKSSetupGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 					miBlockSetAudioDevice_volatile--;
 				}
 				else {
-					CKSDSP* pDSP = dynamic_cast<CKSDSP*>(GetPlugIn()->GetDSPEngine());
+					CDSP* pDSP = dynamic_cast<CDSP*>(GetPlugIn()->GetDSPEngine());
 					tbool bSuccess = pDSP->OpenAudioDevice_FromMenu_Output(iValueNew, -1, -1);
 					// Fill popup with valid frequencies and buffer sizes
 					InitAudioDevicePopupValues();
@@ -176,7 +176,7 @@ void CKSSetupGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 					miBlockSetAudioDevice_volatile--;
 				}
 				else {
-					CKSDSP* pDSP = dynamic_cast<CKSDSP*>(GetPlugIn()->GetDSPEngine());
+					CDSP* pDSP = dynamic_cast<CDSP*>(GetPlugIn()->GetDSPEngine());
 					tbool bSuccess = pDSP->OpenAudioDevice_FromMenu_Input(iValueNew, /*-1,*/ -1);
 					// Fill popup with valid frequencies and buffer sizes
 					InitAudioDevicePopupValuesInput();
@@ -198,7 +198,7 @@ void CKSSetupGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 					miBlockSetAudioDevice_volatile--;
 				}
 				else {
-					CKSDSP* pDSP = dynamic_cast<CKSDSP*>(GetPlugIn()->GetDSPEngine());
+					CDSP* pDSP = dynamic_cast<CDSP*>(GetPlugIn()->GetDSPEngine());
 					tint32 iMgr = pDSP->mPrefs_1.iAudioManagerIx;
 					tint32 iDev = pDSP->mPrefs_1.iAudioDeviceIx;
 					tchar* pszDev = pDSP->mPrefs_1.pszAudioDevName;
@@ -223,7 +223,7 @@ void CKSSetupGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 					miBlockSetAudioDevice_volatile--;
 				}
 				else {
-					CKSDSP* pDSP = dynamic_cast<CKSDSP*>(GetPlugIn()->GetDSPEngine());
+					CDSP* pDSP = dynamic_cast<CDSP*>(GetPlugIn()->GetDSPEngine());
 					tint32 iMgr = pDSP->mPrefs_1.iAudioManagerIx;
 					tint32 iDev = pDSP->mPrefs_1.iAudioDeviceIx;
 					tchar* pszDev = pDSP->mPrefs_1.pszAudioDevName;
@@ -295,7 +295,7 @@ void CKSSetupGUIPane::InitAudioDevicePopupValues()
 
 	ge::IPopupMenu::SMenuItemList list;
 	tint32 iSelectedValue;
-//	CKSDSP* pDSP = dynamic_cast<CKSDSP*>(GetPlugIn()->GetDSPEngine());
+//	CDSP* pDSP = dynamic_cast<CDSP*>(GetPlugIn()->GetDSPEngine());
 
 	// Devices
 	if (bScanDevices) {
@@ -343,7 +343,7 @@ void CKSSetupGUIPane::InitAudioDevicePopupValuesInput()
 	
 	ge::IPopupMenu::SMenuItemList list;
 	tint32 iSelectedValue;
-	//	CKSDSP* pDSP = dynamic_cast<CKSDSP*>(GetPlugIn()->GetDSPEngine());
+	//	CDSP* pDSP = dynamic_cast<CDSP*>(GetPlugIn()->GetDSPEngine());
 	
 	// Devices
 	gpDSPEngine->GetAudioDeviceMenuItemsInput(list, iSelectedValue);

@@ -5,8 +5,6 @@
 CKSExportForWebGUIPane::CKSExportForWebGUIPane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	: CBasePane(pPaneParent, pGUI)
 {
-//	CBaseDSPEngine* pD = GetPlugIn()->GetDSPEngine();
-//	mpDSP = dynamic_cast<CKSDSP*>(pD);
 
 	mbIsVisible = false;
 

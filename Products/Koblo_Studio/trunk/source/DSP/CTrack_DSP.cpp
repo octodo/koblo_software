@@ -1,6 +1,6 @@
 #include "KSOS.h"
 
-CTrack_DSP::CTrack_DSP(CKSDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTrack_DSP** ppAUXes)
+CTrack_DSP::CTrack_DSP(CDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTrack_DSP** ppAUXes)
 	: mpDSPTools(NULL), mpDSP(pDSP), miChannelNumber(iChannelNumber), // mpDezipperVolume(0),
 	miDestinationNumberOfChannels(2), miNumberOfChannelsForPanner(2),
 	mfPanningLeft(0.71),mfPanningRight(0.71), mfPanningFrontBack(0.0),

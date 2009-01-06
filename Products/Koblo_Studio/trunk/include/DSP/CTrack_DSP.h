@@ -4,7 +4,7 @@ class CTrack_DSP
 {
 public:
 	//! Constructor
-	CTrack_DSP(CKSDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTrack_DSP** ppAUXes);
+	CTrack_DSP(CDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTrack_DSP** ppAUXes);
 
 	//! Destructor
 	virtual ~CTrack_DSP();
@@ -134,7 +134,7 @@ protected:
 
 	CBuffer* mpBuffer;
 	// Parrent pointer, not needed there is a global one
-	CKSDSP* mpDSP;
+	CDSP* mpDSP;
 
 	CKSPlugIn* mpPlugIn;
 
@@ -206,7 +206,7 @@ protected:
 class CAUXReverb : public virtual CTrack_DSP
 {
 public:
-	CAUXReverb(CKSDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTrack_DSP** ppAUXes = 0) : CTrack_DSP(pDSP, iChannelNumber, bIsBusOrMix, ppAUXes)
+	CAUXReverb(CDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTrack_DSP** ppAUXes = 0) : CTrack_DSP(pDSP, iChannelNumber, bIsBusOrMix, ppAUXes)
 		{miDestinationNumberOfChannels = 2;}
 
 	//! CTrack_DSP override
@@ -251,7 +251,7 @@ private:
 class CAUXEcho : public virtual CTrack_DSP
 {
 public:
-	CAUXEcho(CKSDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTrack_DSP** ppAUXes = 0) : CTrack_DSP(pDSP, iChannelNumber, bIsBusOrMix, ppAUXes)
+	CAUXEcho(CDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTrack_DSP** ppAUXes = 0) : CTrack_DSP(pDSP, iChannelNumber, bIsBusOrMix, ppAUXes)
 		{miDestinationNumberOfChannels = 2;}
 
 	//! CTrack_DSP override

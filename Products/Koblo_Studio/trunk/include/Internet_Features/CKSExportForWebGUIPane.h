@@ -17,7 +17,7 @@
 
 
 
-class CKSDSP;
+class CDSP;
 
 class CKSExportForWebGUIPane : public virtual CBasePane
 {
@@ -48,7 +48,7 @@ public:
 	virtual void HandleMsg(SMsg* pMsg);
 
 protected:
-	CKSDSP* mpDSP;
+	CDSP* mpDSP;
 	CKSPlugIn* mpPlugIn;
 	
 	tbool mbIsVisible;

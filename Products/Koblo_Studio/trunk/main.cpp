@@ -28,7 +28,7 @@ volatile bool gbClosingDown = false;
 volatile bool gbInAudioEngine = false;
 
 CKSPlugIn* gpPlugIn = NULL;
-CKSDSP* gpDSP = NULL;
+CDSP* gpDSP = NULL;
 
 class CAppHost : public virtual kspi::IHost
 {
@@ -900,7 +900,7 @@ void OnMenuWindows(int iPopupIndex)
 //--------------------------------------------------------------------------------------------
 static void HandleNew_Audio()
 {
-	gpDSP = dynamic_cast<CKSDSP*>(gpPlugIn->GetDSPEngine());
+	gpDSP = dynamic_cast<CDSP*>(gpPlugIn->GetDSPEngine());
 	gpDSP->SetAudioCallback_Duplex(new CCallback(true, true));
 	gpDSP->SetAudioCallback_Input(new CCallback(true, false));
 	gpDSP->SetAudioCallback_Output(new CCallback(false, true));

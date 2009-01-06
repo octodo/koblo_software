@@ -30,7 +30,7 @@
 
 class CSoloMuteContainer;
 
-class CKSDSP;
+class CDSP;
 
 
 class CTrack_Editor_View : public virtual CKSBaseGUI, public virtual ge::IEventReceiver, public virtual ITimerCallback

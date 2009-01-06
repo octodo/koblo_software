@@ -19,7 +19,7 @@
 
 // Forward declarations
 
-class CKSDSP;
+class CDSP;
 class CMix_Scroll;
 
 class CMix_Buss;
@@ -70,7 +70,7 @@ public:
 	virtual void Update_All_Meters(void* pvoid_sMeters_All);
 
 protected:
-	CKSDSP* mpDSP;
+	CDSP* mpDSP;
 	
 	//void* mpvoid_sMeters_All;
 	//tuint32 miuTimeMS_Prev;

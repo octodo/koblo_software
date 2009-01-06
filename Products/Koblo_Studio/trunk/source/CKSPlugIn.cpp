@@ -6,7 +6,7 @@
 #define PRODUCT_NAME "KS"
 
 
-extern CKSDSP* gpDSPEngine = NULL;
+extern CDSP* gpDSPEngine = NULL;
 extern CKSPlugIn* gpApplication = NULL;
 
 
@@ -33,7 +33,7 @@ struct SSample24
 
 
 CKSPlugIn::CKSPlugIn(CKSModule* pModule, tuint32 uiProcessIndex) 
-: CBasePlugIn(dynamic_cast<CBaseModule*>(pModule),giAudioMaxBufferSize, dynamic_cast<CBaseDSPEngine*>(new CKSDSP(this)), uiProcessIndex, COMPANY_NAME, PRODUCT_NAME),
+: CBasePlugIn(dynamic_cast<CBaseModule*>(pModule),giAudioMaxBufferSize, dynamic_cast<CBaseDSPEngine*>(new CDSP(this)), uiProcessIndex, COMPANY_NAME, PRODUCT_NAME),
 mbUpdateGUISettings(true),
 mbBypass(false), 
 miSongPos(0), 
@@ -50,7 +50,7 @@ CKSInternet_Features(),
 CKSXML_Create_Sample()
 
 {
-	gpDSPEngine = dynamic_cast<CKSDSP*>(mpDSPEngine);
+	gpDSPEngine = dynamic_cast<CDSP*>(mpDSPEngine);
 	gpApplication = this;
 
 	gpDSPEngine->SetChannels(2);
@@ -637,7 +637,7 @@ void CKSPlugIn::UpdateCommandData(tint32 iID, tint32 iValue)
 		CBaseGUI* pGUI = *it;
 		dynamic_cast<CKSBaseGUI*>(pGUI)->UpdateCommandData(iID, iValue);
 	}
-//	dynamic_cast<CKSDSP*>(mpDSPEngine)->UpdateChannelData(iID, iValue);
+//	dynamic_cast<CDSP*>(mpDSPEngine)->UpdateChannelData(iID, iValue);
 } // UpdateCommandData
 
 
@@ -665,7 +665,7 @@ void CKSPlugIn::UpdateTrackData(tint32 iID, tint32 iValue, tint32 iChannel)
 		CBaseGUI* pGUI = *it;
 		dynamic_cast<CKSBaseGUI*>(pGUI)->UpdateTrackData(iID, iValue, iChannel);
 	}
-	dynamic_cast<CKSDSP*>(mpDSPEngine)->UpdateChannelData(iID, iValue, iChannel);
+	dynamic_cast<CDSP*>(mpDSPEngine)->UpdateChannelData(iID, iValue, iChannel);
 } // UpdateTrackData
 
 
@@ -677,7 +677,7 @@ void CKSPlugIn::UpdateBussData(tint32 iID, tint32 iValue, tint32 iBuss)
 		dynamic_cast<CKSBaseGUI*>(pGUI)->UpdateBussData(iID, iValue, iBuss);
 	}
 
-	dynamic_cast<CKSDSP*>(mpDSPEngine)->UpdateBussData(iID, iValue, iBuss);
+	dynamic_cast<CDSP*>(mpDSPEngine)->UpdateBussData(iID, iValue, iBuss);
 } // UpdateBussData
 
 
@@ -689,7 +689,7 @@ void CKSPlugIn::UpdateMasterData(tint32 iID, tint32 iValue)
 		dynamic_cast<CKSBaseGUI*>(pGUI)->UpdateMasterData(iID, iValue);
 	}
 
-	dynamic_cast<CKSDSP*>(mpDSPEngine)->UpdateMasterData(iID, iValue);
+	dynamic_cast<CDSP*>(mpDSPEngine)->UpdateMasterData(iID, iValue);
 } // UpdateMasterData
 
 
@@ -701,7 +701,7 @@ void CKSPlugIn::UpdateAUX1Data(tint32 iID, tint32 iValue)
 		CBaseGUI* pGUI = *it;
 		dynamic_cast<CKSBaseGUI*>(pGUI)->UpdateAUX1Data(iID, iValue);
 	}
-	dynamic_cast<CKSDSP*>(mpDSPEngine)->UpdateAUX1Data(iID, iValue);
+	dynamic_cast<CDSP*>(mpDSPEngine)->UpdateAUX1Data(iID, iValue);
 } // UpdateAUX1Data
 
 
@@ -713,7 +713,7 @@ void CKSPlugIn::UpdateAUX2Data(tint32 iID, tint32 iValue)
 		CBaseGUI* pGUI = *it;
 		dynamic_cast<CKSBaseGUI*>(pGUI)->UpdateAUX2Data(iID, iValue);
 	}
-	dynamic_cast<CKSDSP*>(mpDSPEngine)->UpdateAUX2Data(iID, iValue);
+	dynamic_cast<CDSP*>(mpDSPEngine)->UpdateAUX2Data(iID, iValue);
 } // UpdateAUX2Data
 
 
@@ -3163,7 +3163,7 @@ tbool CKSPlugIn::MenuFileLoadProject()
 			// Load wave regions for tracks
 			iTrack = -1;
 			iIndex = 0;
-			CKSDSP* pDSP = dynamic_cast<CKSDSP*>(GetDSPEngine());
+			CDSP* pDSP = dynamic_cast<CDSP*>(GetDSPEngine());
 			while (1) {
 				IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'REGI');
 				if (pChunkOrg == NULL) {
@@ -4176,7 +4176,7 @@ tbool CKSPlugIn::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 			pFile->SetChunk(pChunk, true);
 		}
 		
-		CKSDSP* pDSP = dynamic_cast<CKSDSP*>(GetDSPEngine());
+		CDSP* pDSP = dynamic_cast<CDSP*>(GetDSPEngine());
 		
 		// Save wave regions of visible tracks
 		for (iTrack = 0; iTrack < iTracksToSave; iTrack++) {
@@ -4194,7 +4194,7 @@ tbool CKSPlugIn::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 			tint32 iChannels = giNumber_Of_Tracks;
 			tint32 iChannel = 0;
 			for (iChannel = 0; iChannel < iChannels; iChannel++) {
-				CTrack_DSP* pChannel = dynamic_cast<CKSDSP*>(GetDSPEngine())->GetChannel(iChannel);
+				CTrack_DSP* pChannel = dynamic_cast<CDSP*>(GetDSPEngine())->GetChannel(iChannel);
 				//tint32 iInserts = 4;
 				//tint32 iInsert;
 				for (tint32 iInsert = 0; iInsert < giNumber_Of_Inserts; iInsert++) {
@@ -5087,7 +5087,7 @@ void CKSPlugIn::PlaybackFF()
 	miSongPos += iTempo;
 
 	/*
-	dynamic_cast<CKSDSP*>(GetDSPEngine())->SetSongPosition(miSongPos);
+	dynamic_cast<CDSP*>(GetDSPEngine())->SetSongPosition(miSongPos);
 	*/
 	gpDSPEngine->SetSongPosition_AndResetEffectsTails(miSongPos);
 } // PlaybackFF
@@ -5112,7 +5112,7 @@ void CKSPlugIn::PlaybackRewind()
 
 
 	/*
-	dynamic_cast<CKSDSP*>(GetDSPEngine())->SetSongPosition(miSongPos);
+	dynamic_cast<CDSP*>(GetDSPEngine())->SetSongPosition(miSongPos);
 	*/
 	gpDSPEngine->SetSongPosition_AndResetEffectsTails(miSongPos);
 } // PlaybackRewind
@@ -5130,7 +5130,7 @@ void CKSPlugIn::PlaybackGoToStart(tbool bIgnorePlayState /*= false*/)
 	miSongPos = 0;
 
 	/*
-	dynamic_cast<CKSDSP*>(GetDSPEngine())->SetSongPosition(miSongPos);
+	dynamic_cast<CDSP*>(GetDSPEngine())->SetSongPosition(miSongPos);
 	*/
 	gpDSPEngine->SetSongPosition_AndResetEffectsTails(miSongPos);
 } // PlaybackGoToStart
@@ -5145,10 +5145,10 @@ void CKSPlugIn::PlaybackGoToEnd()
 		return;
 	}
 
-	miSongPos = dynamic_cast<CKSDSP*>(GetDSPEngine())->GetFinalSoundPos();
+	miSongPos = dynamic_cast<CDSP*>(GetDSPEngine())->GetFinalSoundPos();
 
 	/*
-	dynamic_cast<CKSDSP*>(GetDSPEngine())->SetSongPosition(miSongPos);
+	dynamic_cast<CDSP*>(GetDSPEngine())->SetSongPosition(miSongPos);
 	*/
 	if (mePlaybackState != geStateStopped)
 		gpDSPEngine->SetSongPosition(miSongPos);
@@ -5612,15 +5612,15 @@ void CKSPlugIn::ClearAllMeters()
 {
 	CAutoLock Lock(mMutexMeter);
 
-	dynamic_cast<CKSDSP*>(mpDSPEngine)->ClearAllMeters();
+	dynamic_cast<CDSP*>(mpDSPEngine)->ClearAllMeters();
 }
 
 void CKSPlugIn::GetAllMeters_MaybeClear(void* pvoid_sMeters_All, tuint32 muiTimeMS_Elapsed, tbool bClear)
 {
 	CAutoLock Lock(mMutexMeter);
 
-	CKSDSP::SMeters_All* psMeters_All = (CKSDSP::SMeters_All*)pvoid_sMeters_All;
-	dynamic_cast<CKSDSP*>(mpDSPEngine)->GetAllMeters_MaybeClear(psMeters_All, bClear);
+	CDSP::SMeters_All* psMeters_All = (CDSP::SMeters_All*)pvoid_sMeters_All;
+	dynamic_cast<CDSP*>(mpDSPEngine)->GetAllMeters_MaybeClear(psMeters_All, bClear);
 
 	// Precalculate the LEDs decay value
 	const tfloat32 fDecayTimeMS = 4500.0f;//1000.0f;
@@ -5758,7 +5758,7 @@ void CKSPlugIn::DoProcess(tfloat** ppfSamplesOut, const tfloat** ppfSamplesIn, t
 
 tint32 CKSPlugIn::GetNrOfInputChannels()
 {
-	return dynamic_cast<CKSDSP*>(GetDSPEngine())->GetNrOfInputChannels();
+	return dynamic_cast<CDSP*>(GetDSPEngine())->GetNrOfInputChannels();
 }
 
 void CKSPlugIn::UpdateAudioGUI()

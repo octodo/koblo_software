@@ -821,23 +821,7 @@ void CKSXML_Write_Project::Write_Insert(TiXmlElement* pParent, tuint uiTrack, tu
 		pProduct->LinkEndChild( pProductTxt );
 		pInsert->LinkEndChild( pProduct );
 		
-		/*
-		// Get number of parameters here
-		// tint iParameters = pPlugManager->GetPlugInInfo(iInsertId);
-		CChannel* pChannel = dynamic_cast<CKSDSP*>(gpApplication->GetDSPEngine())->GetChannel(uiTrack);
-		kspi::IPlugIn* pPlugIn = pChannel->GetInsert(uiInsert);
-		
-		tint32 iSize = pPlugIn->GetChunkSize();
-		tchar* p = new tchar[iSize];
-		//tint* p = new tint[iSize];
-		pPlugIn->GetChunk(p);
-		
-		for(tuint i =0; i<iSize; i++){
-			printf("%d,", p[i]);
-		}
-		delete[] p;
-		printf("\n");			
-		*/	
+			
 		
 		
 		
