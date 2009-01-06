@@ -1,75 +1,40 @@
 
-class IMixerProcessor
-{
-public:
-	virtual void Initialize() = 0;
 
-	virtual void DeInitialize() = 0;
-
-	virtual void Process(tint32 iSamples) = 0;
-};
-
-class IMixerChannel
-{
-public:
-	virtual void SetVolume(tfloat32 fVolume) = 0;
-
-	virtual void SetAUXVolume(tint32 iAUX, tfloat32 fVolume) = 0;
-
-	virtual void ResetAllEffectsTails() = 0;
-	
-	virtual void SetPanningLeftRight(tfloat32 fLeftRight) = 0;
-	virtual void SetPanningFrontBack(tfloat32 fFrontBack) = 0;
-
-	virtual void SetInputChannelCount(tuint32 iChannels) = 0;
-	
-	virtual void SetFirstInput(tuint32 uiFirstInput) = 0;
-
-	virtual void SetChannelMode(tuint32 iChannels) = 0;
-
-	virtual void SetOutputDestination(tuint32 uiDest, tint32 iDestNumberOfChannels) = 0;
-	
-	virtual tint32 GetNumberOfChannelsForPanner() = 0;
-	virtual tint32 GetNumberOfInputChannels() = 0;
-	virtual tuint32 GetOutputDestination() const = 0;
-};
-
-
-class CChannel : public virtual IMixerProcessor, public virtual IMixerChannel
+class CTrack_DSP
 {
 public:
 	//! Constructor
-	CChannel(CKSDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CChannel** ppAUXes);
+	CTrack_DSP(CKSDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTrack_DSP** ppAUXes);
 
 	//! Destructor
-	virtual ~CChannel();
+	virtual ~CTrack_DSP();
 
-	//! IMixerProcessor override
+	//! Initializw
 	virtual void Initialize();
-	//! IMixerProcessor override
+	//! deinitialize
 	virtual void DeInitialize();
-	//! IMixerProcessor override
+	//! process track
 	virtual void Process(tint32 iSamples);
 
-	//! IMixerChannel override
+	//! Set volume 0.0-0.1f
 	virtual void SetVolume(tfloat32 fVolume);
-	//! IMixerChannel override
+	//! set aux send
 	virtual void SetAUXVolume(tint32 iAUX, tfloat32 fVolume);
-	//! IMixerChannel override
+	//! clear all effect tails
 	virtual void ResetAllEffectsTails();
-	//! IMixerChannel override
+	//! set left right panning
 	virtual void SetPanningLeftRight(tfloat32 fLeftRight);
-	//! IMixerChannel override
+	//! set front back panning !not used
 	virtual void SetPanningFrontBack(tfloat32 fFrontBack);
-	//! IMixerChannel override
+	//! Set input channel count
 	virtual void SetInputChannelCount(tuint32 iChannels);
-	//! IMixerChannel override
+	//! set first input
 	virtual void SetFirstInput(tuint32 uiFirstInput);
-	//! IMixerChannel override
-	virtual void SetChannelMode(tuint32 iChannels);
-	//! IMixerChannel override
+	//! set track mode (curently always stereo)
+	virtual void SetTrackMode(tuint32 iChannels);
+	//! out put destination
 	virtual void SetOutputDestination(tuint32 uiDest, tint32 iDestNumberOfChannels);
-
+	//! get track mode
 	tuint32 GetChannelMode() const {return miModeChannelCount;};
 
 	//! IMixerChannel override
@@ -80,7 +45,7 @@ public:
 
 	CBuffer* GetBuffer() {return mpBuffer;}
 
-	CSoundObject* CreateRegion(tint32 iUniqueID, 
+	CRegion_DSP* CreateRegion(tint32 iUniqueID, 
 								const std::string& sSoundListItemName, 
 								tuint64 uiTrackPosStart, 
 								tuint64 uiSamplePosStart, 
@@ -96,7 +61,7 @@ public:
 	
 	void DeleteRegion(tint32 iID);
 
-	CSoundObject* GetRegionSoundObject(tuint32 uiID);
+	CRegion_DSP* GetRegion_DSP(tuint32 uiID);
 	
 	//! Get region track pos
 	tuint64 GetRegionPosOnTrack(tuint32 uiID);
@@ -110,7 +75,7 @@ public:
 	void IncSongPos(tint32 iSamples) {muiSongPos += iSamples;}
 
 	struct SChannelRegionInfo {
-		CSoundObject* pSoundObject;
+		CRegion_DSP* pSoundObject;
 		tuint64 uiTrackPosStart;
 		tuint32 uiRegionID;
 	};
@@ -175,7 +140,7 @@ protected:
 
 	st::IDSPTools* mpDSPTools;
 
-	CChannel** mppAUXes;
+	CTrack_DSP** mppAUXes;
 
 	tfloat32 mfVolumeSlider;
 	tfloat32 mfPanningLeft;//, 
@@ -238,15 +203,15 @@ protected:
 	std::string msRecordingNameDest;
 };
 
-class CAUXReverb : public virtual CChannel
+class CAUXReverb : public virtual CTrack_DSP
 {
 public:
-	CAUXReverb(CKSDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CChannel** ppAUXes = 0) : CChannel(pDSP, iChannelNumber, bIsBusOrMix, ppAUXes)
+	CAUXReverb(CKSDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTrack_DSP** ppAUXes = 0) : CTrack_DSP(pDSP, iChannelNumber, bIsBusOrMix, ppAUXes)
 		{miDestinationNumberOfChannels = 2;}
 
-	//! CChannel override
+	//! CTrack_DSP override
 	virtual void Initialize();
-	//! CChannel override
+	//! CTrack_DSP override
 	virtual void DeInitialize();
 
 	//! IMixerChannel override
@@ -283,15 +248,15 @@ private:
 //! RAM allocated for echo effect (per channel). Must be a power of 2.
 #define EFFECT_ECHO_BUFFER_SIZE 131072*2
 
-class CAUXEcho : public virtual CChannel
+class CAUXEcho : public virtual CTrack_DSP
 {
 public:
-	CAUXEcho(CKSDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CChannel** ppAUXes = 0) : CChannel(pDSP, iChannelNumber, bIsBusOrMix, ppAUXes)
+	CAUXEcho(CKSDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTrack_DSP** ppAUXes = 0) : CTrack_DSP(pDSP, iChannelNumber, bIsBusOrMix, ppAUXes)
 		{miDestinationNumberOfChannels = 2;}
 
-	//! CChannel override
+	//! CTrack_DSP override
 	virtual void Initialize();
-	//! CChannel override
+	//! CTrack_DSP override
 	virtual void DeInitialize();
 
 	//! IMixerChannel override

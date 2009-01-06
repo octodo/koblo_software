@@ -64,10 +64,10 @@
 		FCA8CAEF0F08EF290007514D /* CKSAUXGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAEB0F08EF290007514D /* CKSAUXGUI.cpp */; };
 		FCA8CAF00F08EF290007514D /* CKSAUXGUIPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAEC0F08EF290007514D /* CKSAUXGUIPane.cpp */; };
 		FCA8CAFA0F08EF900007514D /* CBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF40F08EF900007514D /* CBuffer.cpp */; };
-		FCA8CAFB0F08EF900007514D /* CChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF50F08EF900007514D /* CChannel.cpp */; };
+		FCA8CAFB0F08EF900007514D /* CTrack_DSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF50F08EF900007514D /* CTrack_DSP.cpp */; };
 		FCA8CAFD0F08EF900007514D /* CKSDSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF70F08EF900007514D /* CKSDSP.cpp */; };
-		FCA8CAFE0F08EF900007514D /* CSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF80F08EF900007514D /* CSound.cpp */; };
-		FCA8CAFF0F08EF900007514D /* CSoundObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF90F08EF900007514D /* CSoundObject.cpp */; };
+		FCA8CAFE0F08EF900007514D /* CSample_DSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF80F08EF900007514D /* CSample_DSP.cpp */; };
+		FCA8CAFF0F08EF900007514D /* CRegion_DSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CAF90F08EF900007514D /* CRegion_DSP.cpp */; };
 		FCA8CB190F08F0250007514D /* CEffectControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CB150F08F0250007514D /* CEffectControl.cpp */; };
 		FCA8CB1A0F08F0250007514D /* CKSPlugInGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CB160F08F0250007514D /* CKSPlugInGUI.cpp */; };
 		FCA8CB1B0F08F0250007514D /* CKSPlugInGUIPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CB170F08F0250007514D /* CKSPlugInGUIPane.cpp */; };
@@ -341,10 +341,10 @@
 		FCA8CAEB0F08EF290007514D /* CKSAUXGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSAUXGUI.cpp; sourceTree = "<group>"; };
 		FCA8CAEC0F08EF290007514D /* CKSAUXGUIPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSAUXGUIPane.cpp; sourceTree = "<group>"; };
 		FCA8CAF40F08EF900007514D /* CBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CBuffer.cpp; sourceTree = "<group>"; };
-		FCA8CAF50F08EF900007514D /* CChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CChannel.cpp; sourceTree = "<group>"; };
+		FCA8CAF50F08EF900007514D /* CTrack_DSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_DSP.cpp; sourceTree = "<group>"; };
 		FCA8CAF70F08EF900007514D /* CKSDSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSDSP.cpp; sourceTree = "<group>"; };
-		FCA8CAF80F08EF900007514D /* CSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSound.cpp; sourceTree = "<group>"; };
-		FCA8CAF90F08EF900007514D /* CSoundObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSoundObject.cpp; sourceTree = "<group>"; };
+		FCA8CAF80F08EF900007514D /* CSample_DSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSample_DSP.cpp; sourceTree = "<group>"; };
+		FCA8CAF90F08EF900007514D /* CRegion_DSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRegion_DSP.cpp; sourceTree = "<group>"; };
 		FCA8CB150F08F0250007514D /* CEffectControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CEffectControl.cpp; sourceTree = "<group>"; };
 		FCA8CB160F08F0250007514D /* CKSPlugInGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSPlugInGUI.cpp; sourceTree = "<group>"; };
 		FCA8CB170F08F0250007514D /* CKSPlugInGUIPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSPlugInGUIPane.cpp; sourceTree = "<group>"; };
@@ -358,10 +358,10 @@
 		FCA8CB310F08F3A60007514D /* CKSExportGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSExportGUI.h; sourceTree = "<group>"; };
 		FCA8CB320F08F3A60007514D /* CKSExportGUIPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSExportGUIPane.h; sourceTree = "<group>"; };
 		FCA8CB340F08F3B20007514D /* CBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBuffer.h; sourceTree = "<group>"; };
-		FCA8CB350F08F3B20007514D /* CChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CChannel.h; sourceTree = "<group>"; };
+		FCA8CB350F08F3B20007514D /* CTrack_DSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_DSP.h; sourceTree = "<group>"; };
 		FCA8CB370F08F3B20007514D /* CKSDSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSDSP.h; sourceTree = "<group>"; };
-		FCA8CB380F08F3B20007514D /* CSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSound.h; sourceTree = "<group>"; };
-		FCA8CB390F08F3B20007514D /* CSoundObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSoundObject.h; sourceTree = "<group>"; };
+		FCA8CB380F08F3B20007514D /* CSample_DSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSample_DSP.h; sourceTree = "<group>"; };
+		FCA8CB390F08F3B20007514D /* CRegion_DSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRegion_DSP.h; sourceTree = "<group>"; };
 		FCA8CB3A0F08F3B20007514D /* WaveFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveFile.h; sourceTree = "<group>"; };
 		FCA8CB400F08F3F60007514D /* CKSExportForWebGUIPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSExportForWebGUIPane.h; sourceTree = "<group>"; };
 		FCA8CB410F08F3F60007514D /* CKSExportForWebGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSExportForWebGUI.h; sourceTree = "<group>"; };
@@ -797,10 +797,10 @@
 			isa = PBXGroup;
 			children = (
 				FCA8CAF40F08EF900007514D /* CBuffer.cpp */,
-				FCA8CAF50F08EF900007514D /* CChannel.cpp */,
+				FCA8CAF50F08EF900007514D /* CTrack_DSP.cpp */,
 				FCA8CAF70F08EF900007514D /* CKSDSP.cpp */,
-				FCA8CAF80F08EF900007514D /* CSound.cpp */,
-				FCA8CAF90F08EF900007514D /* CSoundObject.cpp */,
+				FCA8CAF80F08EF900007514D /* CSample_DSP.cpp */,
+				FCA8CAF90F08EF900007514D /* CRegion_DSP.cpp */,
 			);
 			name = DSP;
 			path = source/DSP;
@@ -846,10 +846,10 @@
 			isa = PBXGroup;
 			children = (
 				FCA8CB340F08F3B20007514D /* CBuffer.h */,
-				FCA8CB350F08F3B20007514D /* CChannel.h */,
+				FCA8CB350F08F3B20007514D /* CTrack_DSP.h */,
 				FCA8CB370F08F3B20007514D /* CKSDSP.h */,
-				FCA8CB380F08F3B20007514D /* CSound.h */,
-				FCA8CB390F08F3B20007514D /* CSoundObject.h */,
+				FCA8CB380F08F3B20007514D /* CSample_DSP.h */,
+				FCA8CB390F08F3B20007514D /* CRegion_DSP.h */,
 				FCA8CB3A0F08F3B20007514D /* WaveFile.h */,
 			);
 			name = DSP;
@@ -1310,10 +1310,10 @@
 				FCA8CAEF0F08EF290007514D /* CKSAUXGUI.cpp in Sources */,
 				FCA8CAF00F08EF290007514D /* CKSAUXGUIPane.cpp in Sources */,
 				FCA8CAFA0F08EF900007514D /* CBuffer.cpp in Sources */,
-				FCA8CAFB0F08EF900007514D /* CChannel.cpp in Sources */,
+				FCA8CAFB0F08EF900007514D /* CTrack_DSP.cpp in Sources */,
 				FCA8CAFD0F08EF900007514D /* CKSDSP.cpp in Sources */,
-				FCA8CAFE0F08EF900007514D /* CSound.cpp in Sources */,
-				FCA8CAFF0F08EF900007514D /* CSoundObject.cpp in Sources */,
+				FCA8CAFE0F08EF900007514D /* CSample_DSP.cpp in Sources */,
+				FCA8CAFF0F08EF900007514D /* CRegion_DSP.cpp in Sources */,
 				FCA8CB190F08F0250007514D /* CEffectControl.cpp in Sources */,
 				FCA8CB1A0F08F0250007514D /* CKSPlugInGUI.cpp in Sources */,
 				FCA8CB1B0F08F0250007514D /* CKSPlugInGUIPane.cpp in Sources */,

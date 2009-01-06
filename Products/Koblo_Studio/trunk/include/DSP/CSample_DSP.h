@@ -15,21 +15,25 @@
 // You should have received a copy of the GNU General Public License
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
+//!!! TO ASK is there always only one channel in a sound?
+//#define MAX_CHANNELS_IN_SOUND 0
 
-#define MAX_CHANNELS_IN_SOUND 8
+/*! \brief CSample process on CWaveFile \
+ *  trim start and end \
+ */
 
-class CSound
+class CSample_DSP
 {
 public:
-	CSound(const std::string& sPathName);
+	CSample_DSP(const std::string& sPathName);
 
 	tuint64 GetLength() {return muiLength;}
 
-	void GetSamples(tfloat32* pfData, tint32 iSamples) {mppStream[0]->GetSamples(pfData, iSamples); muiPos += iSamples;}
+	void GetSamples(tfloat32* pfData, tint32 iSamples) {mppStream->GetSamples(pfData, iSamples); muiPos += iSamples;}
 
 	const std::string& GetPathName() const {return msPathName;}
 
-	void SetPos(tuint64 uiPos) {mppStream[0]->SetPosition(uiPos); muiPos = uiPos;}
+	void SetPos(tuint64 uiPos) {mppStream->SetPosition(uiPos); muiPos = uiPos;}
 
 	tuint64 GetPos() const {return muiPos;}
 
@@ -39,7 +43,7 @@ protected:
 	std::string msPathName;
 
 	tuint64 muiLength;
-
-	st::IStream* mppStream[MAX_CHANNELS_IN_SOUND];
+	
+	st::IStream* mppStream;
 };
 

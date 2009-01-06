@@ -97,8 +97,8 @@
 
 // Sounds
 class CKSPlugIn;
-#include "CSound.h"
-#include "CSoundObject.h"
+#include "CSample_DSP.h"
+#include "CRegion_DSP.h"
 
 // PlugIn
 class CPlugInManager;
@@ -196,7 +196,7 @@ class CPlugInManager;
 
 // DSP
 #include "CBuffer.h"
-#include "CChannel.h"
+#include "CTrack_DSP.h"
 #include "CKSDSP.h"
 
 

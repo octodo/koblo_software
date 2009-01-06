@@ -1,4 +1,4 @@
-// Copyright 2004, 2005,2006,2007,2008 Koblo http://koblo.com
+// Copyright 2004, 2005,2006,2007,2008,2009 Koblo http://koblo.com
 //
 // This file is part of the Koblo SDK.
 //
@@ -249,29 +249,30 @@ public:
 	tbool SaveTrackRegionDataToChunk(tint32 iTrack, IChunk* pChunk);
 	tbool CreateRegionFromChunkData(tint32 iTrack, IChunk* pChunk);
 	
-	CChannel* GetChannel(tuint32 uiIndex) {return mppChannels[uiIndex];}
+	CTrack_DSP* GetChannel(tuint32 uiIndex) {return mppChannels[uiIndex];}
 
-	const CChannel* GetChannel(tuint32 uiIndex) const {return mppChannels[uiIndex];}
+	const CTrack_DSP* GetChannel(tuint32 uiIndex) const {return mppChannels[uiIndex];}
 
-	CChannel* GetBus(tuint32 uiIndex) {return mppBusses[uiIndex];}
+	CTrack_DSP* GetBus(tuint32 uiIndex) {return mppBusses[uiIndex];}
 
-	const CChannel* GetBus(tuint32 uiIndex) const {return mppBusses[uiIndex];}
+	const CTrack_DSP* GetBus(tuint32 uiIndex) const {return mppBusses[uiIndex];}
 
-	const CChannel* GetMaster() const {return mpMaster;}
+	const CTrack_DSP* GetMaster() const {return mpMaster;}
 
-//	CChannel* GetAUX(tuint32 uiIndex) {return mppAUXes[uiIndex];}
+//	CTrack_DSP* GetAUX(tuint32 uiIndex) {return mppAUXes[uiIndex];}
 
-//	const CChannel* GetAUX(tuint32 uiIndex) const {return mppAUXes[uiIndex];}
+//	const CTrack_DSP* GetAUX(tuint32 uiIndex) const {return mppAUXes[uiIndex];}
 
 	typedef void* RegionSearchHandle;
 
 	const RegionSearchHandle mRegionSearchEnd;
 
 	struct SRegionInfo
-	{
+	{	
+		//! region identifier
 		tuint32 uiRegionID;
-		// Track where the region belong
-		tuint32 uiChannel;
+		//! Track where the region belong
+		tuint32 uiTrack;
 		//! Start positon on track
 		tuint64 uiStartPos;
 		//! End Position on Track
@@ -474,28 +475,18 @@ protected:
 	tfloat** mppfInputCur;
 
 	tuint32 muiChannels;
-	
-//	tuint32 miSelected_Region;
-	
-//	tint64 miSelection;
-	
-//	tuint64 miSelection_Start;
-	
-//	tuint64 miSelection_Duration;
 
 	st::IStreamManager* mpStreamManager;
 
-//	st::IStream* mppStreams[giNrOfStreams];
-
 	tuint muiFinalSongPosition;
 
-	CChannel** mppChannels;
+	CTrack_DSP** mppChannels;
 
-	CChannel** mppBusses;
+	CTrack_DSP** mppBusses;
 
-	CChannel* mpMaster;
+	CTrack_DSP* mpMaster;
 
-	CChannel** mppAUXes;
+	CTrack_DSP** mppAUXes;
 
 //	CBuffer* mpBufferMix;
 
@@ -524,9 +515,9 @@ protected:
 	virtual tint32 FindDestinationNumberOfChannels(tint32 iDestination);
 
 	struct SRegionSearchInfo {
-		tuint32 uiChannelCur;
+		tuint32 uiTrackCur;
 
-		std::list<CChannel::SChannelRegionInfo*>::const_iterator itCur;
+		std::list<CTrack_DSP::SChannelRegionInfo*>::const_iterator itCur;
 	};
 	
 	void GetRegionInfo(SRegionInfo& RegionInfo,tuint32 uiID);

@@ -1657,7 +1657,7 @@ void CKSPlugIn::ExportSelection(tbool bIncludeEffects, ac::EAudioCodec eCodec, a
 		std::list<tint32> listiTracks;
 		std::list<tint32> listiTrack_NonMuted;
 		for(tint32 iTrack=0; (bSuccess) && (iTrack<giNumber_Of_Tracks); iTrack++) {
-			CChannel* pChannel = gpDSPEngine->GetChannel(iTrack);
+			CTrack_DSP* pChannel = gpDSPEngine->GetChannel(iTrack);
 			if (pChannel->HasRegions()) {
 				STrackSelectionInfo sInfo = gpDSPEngine->GetTrackSelection(iTrack);
 				if (
@@ -1744,9 +1744,9 @@ tbool CKSPlugIn::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iStartIx
 
 	CExportClipTask* pClipPrev = NULL;
 
-	CChannel* pChannel = gpDSPEngine->GetChannel(iTrack);
-	const std::list<CChannel::SChannelRegionInfo*>& regions = pChannel->GetRegionList();
-	std::list<CChannel::SChannelRegionInfo*>::const_iterator it = regions.begin();
+	CTrack_DSP* pChannel = gpDSPEngine->GetChannel(iTrack);
+	const std::list<CTrack_DSP::SChannelRegionInfo*>& regions = pChannel->GetRegionList();
+	std::list<CTrack_DSP::SChannelRegionInfo*>::const_iterator it = regions.begin();
 
 	tint64 iFirstSample = 0, iFinalSample = -1;
 	gpDSPEngine->CalcTrackDuration(iTrack, &iFirstSample, &iFinalSample);
@@ -1756,7 +1756,7 @@ tbool CKSPlugIn::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iStartIx
 	tint64 iLatestPos = iStartIx;
 	tint64 iEndPos = iStartIx + (iDuration - 1);
 	for ( ; (iLatestPos <= iEndPos) && (it != regions.end()); it++) {
-		CChannel::SChannelRegionInfo* pRegionInfo = *it;
+		CTrack_DSP::SChannelRegionInfo* pRegionInfo = *it;
 
 		// Maybe zereos before this clip
 		tint64 iZeroesBefore = pRegionInfo->uiTrackPosStart - iLatestPos;
@@ -1785,7 +1785,7 @@ tbool CKSPlugIn::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iStartIx
 		}
 
 		// Export clip
-		CSoundObject* pSoundObject = pRegionInfo->pSoundObject;
+		CRegion_DSP* pSoundObject = pRegionInfo->pSoundObject;
 		tint64 iClipStartPos = pSoundObject->GetSoundStartPos();
 		tint64 iClipDuration = pSoundObject->GetDuration();
 		const tchar* pszClipName = pSoundObject->GetSoundListItemName();
@@ -3636,7 +3636,7 @@ tbool CKSPlugIn::ExportAllTracks(ac::EAudioCodec eCodec, ac::EQuality eQuality, 
 	for(tint32  iTrack = 0; iTrack < giNumber_Of_Tracks; iTrack++)
 	{
 		if(GetGlobalParm(giParam_Ch_In_Use, iTrack + giSection_First_Track)) {
-			CChannel* pChannel = gpDSPEngine->GetChannel(iTrack);
+			CTrack_DSP* pChannel = gpDSPEngine->GetChannel(iTrack);
 			if (pChannel->HasRegions()) {
 				listiTracks_IncludeMuted.insert(listiTracks_IncludeMuted.end(), iTrack);
 				if (!gpDSPEngine->IsTrackMuted(iTrack)) {
@@ -4194,7 +4194,7 @@ tbool CKSPlugIn::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 			tint32 iChannels = giNumber_Of_Tracks;
 			tint32 iChannel = 0;
 			for (iChannel = 0; iChannel < iChannels; iChannel++) {
-				CChannel* pChannel = dynamic_cast<CKSDSP*>(GetDSPEngine())->GetChannel(iChannel);
+				CTrack_DSP* pChannel = dynamic_cast<CKSDSP*>(GetDSPEngine())->GetChannel(iChannel);
 				//tint32 iInserts = 4;
 				//tint32 iInsert;
 				for (tint32 iInsert = 0; iInsert < giNumber_Of_Inserts; iInsert++) {

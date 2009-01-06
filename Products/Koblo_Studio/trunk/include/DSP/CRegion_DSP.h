@@ -16,12 +16,21 @@
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
 
-class CSoundObject
+
+/*! \brief CRegion_DSP process one sample \
+ *	add fade in fade out and volume to a sample \
+ *  trim start and end \
+ *	holds the number of channels\
+ *  there is a one to one relation between a CRegion_DSP and a CRegion_Pane
+ */
+
+
+class CRegion_DSP
 {
 public:
-	CSoundObject(tint32 iUniqueID, const std::string& sSoundPathNameL, const std::string& sSoundPathNameR, const std::string& sSoundListItemName, tuint64 uiSamplePosStart, tuint64 uiSamplePosEnd);
+	CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, const std::string& sSoundPathNameR, const std::string& sSoundListItemName, tuint64 uiSamplePosStart, tuint64 uiSamplePosEnd);
 
-	virtual ~CSoundObject();
+	virtual ~CRegion_DSP();
 
 	tuint64 GetDuration() const {return muiEndPos - muiStartPos + 1;}
 	
@@ -29,7 +38,7 @@ public:
 	
 	void SetDuration(tuint64 iDuration);
 
-	//! Get samples from underlying wave(s)
+	//! Get samples from underlying CSample_DSP >> wave(s)
 	/*!
 		\param ppfData [out]: Receives the samples in 2D array
 		\param iSamples [in]: Number of samples to return
@@ -38,7 +47,7 @@ public:
 
 	tint32 GetID() const {return muiUniqueID;}
 
-	CSound* GetSound(tint32 iIndex) const {return mppSound[iIndex];}
+	CSample_DSP* GetSound(tint32 iIndex) const {return mppSample[iIndex];}
 
 	tuint64 GetSoundStartPos() const {return muiStartPos;}
 
@@ -76,7 +85,7 @@ public:
 	void GetPeakFile(IFile** ppFile, tint32 iChannel, tint32 iSize);
 
 protected:
-	CSound** mppSound;
+	CSample_DSP** mppSample;
 
 	tint32 miChannels;
 

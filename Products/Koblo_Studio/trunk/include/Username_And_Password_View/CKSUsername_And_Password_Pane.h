@@ -16,11 +16,6 @@
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
 
-
-//class CKSDSP;
-//class CKS_Import_File_Browser;
-//class CKS_Import_Files;
-
 class CKSUsername_And_Password_Pane : public virtual CBasePane
 {
 public:
