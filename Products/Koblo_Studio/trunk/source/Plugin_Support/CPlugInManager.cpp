@@ -239,6 +239,7 @@ void CPlugInManager::Init()
 
 CPlugInManager::PlugInHandle CPlugInManager::LoadPlugIn(tint32 iCompanyID, tint32 iProductID, tint32 iChannel, tint32 iInsertIndex)
 {
+	//!!! TO DO KS dont load old plug-in's here
 	CAutoLock Lock(gpApplication->GetMeterMutex());
 
 	tint32 iIndex = 0;
