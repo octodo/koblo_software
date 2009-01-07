@@ -408,7 +408,7 @@ CPlugInManager::PlugInHandle CPlugInManager::LoadPlugIn(tint32 iIndex, tint32 iC
 	pPlugIn->Initialize();
 	pPlugIn->Start();
 
-	CBaseGUI* pBaseGUI = gpApp->CreateExtraWindow(4, (void*)"PlugInWnd", true);
+	CBaseGUI* pBaseGUI = gpMainApplication->CreateExtraWindow(4, (void*)"PlugInWnd", true);
 	CKSPlugInGUI* pPlugInGUI = dynamic_cast<CKSPlugInGUI*>(pBaseGUI);
 
 	kspi::IGUI* pGUI = pPlugIn->CreateGUI(0);

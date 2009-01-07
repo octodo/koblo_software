@@ -93,16 +93,16 @@
 #include "CParmGlobal.h"
 #include "Grid_Patterns.h"
 
-#include "WaveFile.h"
+#include "DSP/WaveFile.h"
 
 // Sounds
-class CApplication;
-#include "CSample_DSP.h"
-#include "CRegion_DSP.h"
+class CKSApplication;
+#include "DSP/CSample_DSP.h"
+#include "DSP/CRegion_DSP.h"
 
 // PlugIn
 class CPlugInManager;
-#include "CApplication.h"
+#include "CKSApplication.h"
 
 // Plug-Ins
 #include "CPlugInManager.h"
@@ -195,8 +195,8 @@ class CPlugInManager;
 #include "CKSPreferences.h"
 
 // DSP
-#include "CBuffer.h"
-#include "CTrack_DSP.h"
-#include "CDSP.h"
+#include "DSP/CBuffer.h"
+#include "DSP/CTrack_DSP.h"
+#include "DSP/CDSP.h"
 
 

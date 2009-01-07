@@ -44,7 +44,7 @@
 		FC6117820DA4D61B00334DDF /* CKSSplashScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC6117810DA4D61B00334DDF /* CKSSplashScreen.cpp */; };
 		FC6117840DA4D62A00334DDF /* CKSBaseGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC6117830DA4D62A00334DDF /* CKSBaseGUI.cpp */; };
 		FC61178C0DA4D66F00334DDF /* CKSModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC61178B0DA4D66F00334DDF /* CKSModule.cpp */; };
-		FC61178E0DA4D68300334DDF /* CApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC61178D0DA4D68300334DDF /* CApplication.cpp */; };
+		FC61178E0DA4D68300334DDF /* CKSApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC61178D0DA4D68300334DDF /* CKSApplication.cpp */; };
 		FC6117AB0DA4D80900334DDF /* KS.icns in Resources */ = {isa = PBXBuildFile; fileRef = FC6117AA0DA4D80900334DDF /* KS.icns */; };
 		FC9D47810CB1462A006CEDB6 /* libGUIEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9D46A60CB13D44006CEDB6 /* libGUIEngine.a */; };
 		FC9D47820CB1462D006CEDB6 /* libDataEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9D469A0CB13D30006CEDB6 /* libDataEngine.a */; };
@@ -319,13 +319,13 @@
 		FC6117810DA4D61B00334DDF /* CKSSplashScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSSplashScreen.cpp; path = source/CKSSplashScreen.cpp; sourceTree = "<group>"; };
 		FC6117830DA4D62A00334DDF /* CKSBaseGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSBaseGUI.cpp; path = source/CKSBaseGUI.cpp; sourceTree = "<group>"; };
 		FC61178B0DA4D66F00334DDF /* CKSModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSModule.cpp; path = source/CKSModule.cpp; sourceTree = "<group>"; };
-		FC61178D0DA4D68300334DDF /* CApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CApplication.cpp; path = source/CApplication.cpp; sourceTree = "<group>"; };
+		FC61178D0DA4D68300334DDF /* CKSApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSApplication.cpp; path = source/CKSApplication.cpp; sourceTree = "<group>"; };
 		FC61178F0DA4D69600334DDF /* CKSSplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSSplashScreen.h; path = include/CKSSplashScreen.h; sourceTree = "<group>"; };
 		FC6117900DA4D6A600334DDF /* CKSBaseGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSBaseGUI.h; path = include/CKSBaseGUI.h; sourceTree = "<group>"; };
 		FC6117920DA4D6DA00334DDF /* KSGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSGlobals.h; path = include/KSGlobals.h; sourceTree = "<group>"; };
 		FC6117930DA4D6E600334DDF /* KS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KS.h; path = include/KS.h; sourceTree = "<group>"; };
 		FC6117950DA4D6FB00334DDF /* CKSModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSModule.h; path = include/CKSModule.h; sourceTree = "<group>"; };
-		FC6117960DA4D70500334DDF /* CApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CApplication.h; path = include/CApplication.h; sourceTree = "<group>"; };
+		FC6117960DA4D70500334DDF /* CKSApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSApplication.h; path = include/CKSApplication.h; sourceTree = "<group>"; };
 		FC6117970DA4D71A00334DDF /* KSOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSOS.h; path = include/KSOS.h; sourceTree = "<group>"; };
 		FC6117A90DA4D7FE00334DDF /* KS_OSX_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KS_OSX_Prefix.pch; sourceTree = "<group>"; };
 		FC6117AA0DA4D80900334DDF /* KS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = KS.icns; path = resources/KS.icns; sourceTree = "<group>"; };
@@ -616,7 +616,7 @@
 				FCF9545D0F12590F005147D1 /* Track_View */,
 				FCF336D30F1215D200AC1BBA /* Username_And_Password_View */,
 				320072BF0ED1900F0035E5A8 /* CKSPreferences.h */,
-				FC6117960DA4D70500334DDF /* CApplication.h */,
+				FC6117960DA4D70500334DDF /* CKSApplication.h */,
 				E358B3A30DDAF8A200A6863F /* IRegionCallback.h */,
 				FC61178F0DA4D69600334DDF /* CKSSplashScreen.h */,
 				FC6117900DA4D6A600334DDF /* CKSBaseGUI.h */,
@@ -650,7 +650,7 @@
 				FCF336D60F12160700AC1BBA /* Username_And_Password_View */,
 				320072BB0ED18FC30035E5A8 /* CKSPreferences.cpp */,
 				84A3ED520E82544700860BC6 /* ResourcesInc.cpp */,
-				FC61178D0DA4D68300334DDF /* CApplication.cpp */,
+				FC61178D0DA4D68300334DDF /* CKSApplication.cpp */,
 				FC6117830DA4D62A00334DDF /* CKSBaseGUI.cpp */,
 				FC6117810DA4D61B00334DDF /* CKSSplashScreen.cpp */,
 				E3B8EAA00CAB9E4B002CB7E4 /* CX3DisplayConverter.cpp */,
@@ -1276,7 +1276,7 @@
 				FC6117820DA4D61B00334DDF /* CKSSplashScreen.cpp in Sources */,
 				FC6117840DA4D62A00334DDF /* CKSBaseGUI.cpp in Sources */,
 				FC61178C0DA4D66F00334DDF /* CKSModule.cpp in Sources */,
-				FC61178E0DA4D68300334DDF /* CApplication.cpp in Sources */,
+				FC61178E0DA4D68300334DDF /* CKSApplication.cpp in Sources */,
 				E3AC49700DB7984900D70347 /* CKSMixerGUI.cpp in Sources */,
 				FCEF56D80DC086F2000AD4FE /* CMix_AUX_Insert.cpp in Sources */,
 				FCEF56D90DC086F2000AD4FE /* CMix_Scroll.cpp in Sources */,

@@ -17,7 +17,7 @@
 
 
 // Forwards
-class CApplication;
+class CKSApplication;
 
 class CParmGlobal : public virtual de::IParameter
 {

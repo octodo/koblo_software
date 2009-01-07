@@ -40,14 +40,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..;..\..\include\solomute;..\..\include\Track_GUI;..\..\include\Mix_GUI;..\..\include\Import_GUI;..\..\include\Setup_GUI;..\..\include\Track_GUI\Progress;..\..\..\..\..\SDK\tinyxml\"
+				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..\..\..\..\SDK\tinyxml\;..\..\include\DSP;..\..\include\Export_Audio_GUI;..\..\include\Import_Audio_GUI;..\..\include\Internet_Features;..\..\include\Mix_GUI;..\..\include\Plugin_Support;..\..\include\Project_ID;..\..\include\Rack_GUI_DSP;..\..\include\Setup_GUI;..\..\include\SoloMute;..\..\include\Track_View;..\..\include\Track_View\Progress;..\..\include\Username_And_Password_View"
 				PreprocessorDefinitions="KSPI_IMPORTS;WIN32;_WINDOWS;_DEBUG;_RESOURCE_FILE_HARDLINKED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="KSOS.h"
+				PrecompiledHeaderThrough="..\include\KSOS.h"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
@@ -122,11 +122,11 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..;..\..\include\solomute;..\..\include\Track_GUI;..\..\include\Mix_GUI;..\..\include\Import_GUI;..\..\include\Setup_GUI;..\..\include\Track_GUI\Progress;..\..\..\..\..\SDK\tinyxml\"
+				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..\..\..\..\SDK\tinyxml\;..\..\include\Export_Audio_GUI;..\..\include\Import_Audio_GUI;..\..\include\Internet_Features;..\..\include\Mix_GUI;..\..\include\Plugin_Support;..\..\include\Project_ID;..\..\include\Rack_GUI_DSP;..\..\include\Setup_GUI;..\..\include\SoloMute;..\..\include\Track_View;..\..\include\Track_View\Progress;..\..\include\Username_And_Password_View;..\..\"
 				PreprocessorDefinitions="KSPI_IMPORTS;WIN32;_WINDOWS;NDEBUG;_RESOURCE_FILE_HARDLINKED"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="KSOS.h"
+				PrecompiledHeaderThrough="..\include\KSOS.h"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
@@ -188,15 +188,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\source\CBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\CChannel.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\CEffectControl.cpp"
+				RelativePath="..\..\source\CKSApplication.cpp"
 				>
 			</File>
 			<File
@@ -204,27 +196,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\CKSDSP.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\source\CKSModule.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\CKSPlugIn.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\CKSPlugInEffectPane.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\CKSPlugInGUI.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\CKSPlugInGUIPane.cpp"
 				>
 			</File>
 			<File
@@ -240,30 +212,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\CPlugin_Toolbar.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\CPlugInManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\SoloMute\CSoloMuteContainer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\SoloMute\CSoloMuteState.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\CSound.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\CSoundObject.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\source\CX3DisplayConverter.cpp"
 				>
 			</File>
@@ -276,7 +224,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderThrough="..\include\KS.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -285,7 +232,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderThrough="..\include\KS.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -294,15 +240,123 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\main.h"
+				RelativePath="..\..\source\ResourcesInc.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\source\WaveFile.cpp"
 				>
 			</File>
 			<Filter
-				Name="MixGUI"
+				Name="DSP"
+				>
+				<File
+					RelativePath="..\..\source\DSP\CBuffer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\DSP\CDSP.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\DSP\CRegion_DSP.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\DSP\CSample_DSP.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\DSP\CTrack_DSP.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Export_Audio_GUI"
+				>
+				<File
+					RelativePath="..\..\source\Export_Audio_GUI\CKSExportGUI.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Export_Audio_GUI\CKSExportGUIPane.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Import_Audio_GUI"
+				>
+				<File
+					RelativePath="..\..\source\Import_Audio_GUI\CKS_Import_File_Browser.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Import_Audio_GUI\CKS_Import_Files.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Import_Audio_GUI\CKSImportGUI.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Import_Audio_GUI\CKSImportGUIPane.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Internet_Features"
+				>
+				<File
+					RelativePath="..\..\source\Internet_Features\CKSExportForWebGUI.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Internet_Features\CKSExportForWebGUIPane.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Internet_Features\CKSInternet_Features.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Internet_Features\CKSUsername_And_Password_Model.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Internet_Features\CKSXML_Create_Project.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Internet_Features\CKSXML_Create_Sample.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Internet_Features\CKSXML_Read_Project.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Internet_Features\CKSXML_Write_Project.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Mix_GUI"
 				>
 				<File
 					RelativePath="..\..\source\Mix_GUI\CKSMixerGUI.cpp"
@@ -342,167 +396,63 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="TrackGUI"
+				Name="Plugin_Support"
 				>
 				<File
-					RelativePath="..\..\source\Track_GUI\CKS_TrackEditor.cpp"
+					RelativePath="..\..\source\Plugin_Support\CEffectControl.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\Track_GUI\CKS_TrackEditorPane.cpp"
+					RelativePath="..\..\source\Plugin_Support\CKSPlugInEffectPane.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\CKSExportForWebGUI.cpp"
+					RelativePath="..\..\source\Plugin_Support\CKSPlugInGUI.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\CKSExportForWebGUIPane.cpp"
+					RelativePath="..\..\source\Plugin_Support\CKSPlugInGUIPane.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\CKSExportGUI.cpp"
+					RelativePath="..\..\source\Plugin_Support\CPlugin_Toolbar.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\CKSExportGUIPane.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CRegion_GUI.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_AUX_Insert.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_Fade_Handle.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_File_Browser.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_Files.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_Info.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_Info_Big.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_Info_Small.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_Player.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_Player2.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_Playhead.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_Setup.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_Side.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_Time_Pos.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Track_GUI\CTrack_Top.cpp"
-					>
-				</File>
-				<Filter
-					Name="Progress"
-					>
-					<File
-						RelativePath="..\..\source\Track_GUI\Progress\CAfterImportTask.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\source\Track_GUI\Progress\CExportClipTask.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\source\Track_GUI\Progress\CExportDSPTask.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\source\Track_GUI\Progress\CImportAudioTask.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\source\Track_GUI\Progress\CProgressTask.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\source\Track_GUI\Progress\CProgressTaskList.cpp"
-						>
-					</File>
-				</Filter>
-			</Filter>
-			<Filter
-				Name="AUXGUI"
-				>
-				<File
-					RelativePath="..\..\source\CKSAUXGUI.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\CKSAUXGUIPane.cpp"
+					RelativePath="..\..\source\Plugin_Support\CPlugInManager.cpp"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="BuiltInEffects"
+				Name="Project_ID_GUI"
 				>
 				<File
-					RelativePath="..\..\source\BuiltInEffects\CKobloVerb.cpp"
+					RelativePath="..\..\source\Project_ID_GUI\CKSProject_ID_GUI.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Project_ID_GUI\CKSProject_ID_GUI_Pane.cpp"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="Import GUI"
+				Name="Rack_GUI_DSP"
 				>
 				<File
-					RelativePath="..\..\source\Import_GUI\CKS_Import_File_Browser.cpp"
+					RelativePath="..\..\source\Rack_GUI_DSP\CKobloVerb.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\Import_GUI\CKS_Import_Files.cpp"
+					RelativePath="..\..\source\Rack_GUI_DSP\CKSAUXGUI.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\Import_GUI\CKSImportGUI.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\Import_GUI\CKSImportGUIPane.cpp"
+					RelativePath="..\..\source\Rack_GUI_DSP\CKSAUXGUIPane.cpp"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="SetupGUI"
+				Name="Setup_GUI"
 				>
 				<File
 					RelativePath="..\..\source\Setup_GUI\CKSSetupGUI.cpp"
@@ -514,14 +464,134 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="xmlparser"
+				Name="SoloMute"
 				>
 				<File
-					RelativePath="..\..\source\CKSXML_Read.cpp"
+					RelativePath="..\..\source\SoloMute\CSoloMuteContainer.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\CKSXML_Write.cpp"
+					RelativePath="..\..\source\SoloMute\CSoloMuteState.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Track_View"
+				>
+				<File
+					RelativePath="..\..\source\Track_View\CRegion_Pane.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_AUX_Insert.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Editor_Pane.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Editor_View.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Fade_Handle.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_File_Browser.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Files.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Info.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Info_Big.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Info_Small.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Insert.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Player.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Player2.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Playhead.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Setup.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Side.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Time_Pos.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Track_View\CTrack_Top.cpp"
+					>
+				</File>
+				<Filter
+					Name="Progress"
+					>
+					<File
+						RelativePath="..\..\source\Track_View\Progress\CAfterImportTask.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\source\Track_View\Progress\CExportClipTask.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\source\Track_View\Progress\CExportDSPTask.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\source\Track_View\Progress\CImportAudioTask.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\source\Track_View\Progress\CProgressTask.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\source\Track_View\Progress\CProgressTaskList.cpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="Username_And_Password_View"
+				>
+				<File
+					RelativePath="..\..\source\Username_And_Password_View\CKSUsername_And_Password_Pane.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Username_And_Password_View\CKSUsername_And_Password_View.cpp"
 					>
 				</File>
 			</Filter>
@@ -532,23 +602,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\include\CBuffer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\CChannel.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\CEffect.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\CEffectControl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\CEffectEcho.h"
+				RelativePath="..\..\include\CKSApplication.h"
 				>
 			</File>
 			<File
@@ -556,15 +610,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\CKSDSP.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\include\CKSModule.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\CKSPlugIn.h"
 				>
 			</File>
 			<File
@@ -584,31 +630,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\CPlugInManager.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\SoloMute\CSoloMuteContainer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\SoloMute\CSoloMuteState.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\CSound.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\CSoundObject.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\include\CX3DisplayConverter.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\include\GUIIDs.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\IRegionCallback.h"
 				>
 			</File>
 			<File
@@ -624,15 +654,199 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\main.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\ParmIDs.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\WaveFile.h"
+				RelativePath="..\..\include\Resources.h"
 				>
 			</File>
 			<Filter
-				Name="MixGUI"
+				Name="DSP"
+				>
+				<File
+					RelativePath="..\..\include\DSP\CBuffer.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\include\DSP\CDSP.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\include\DSP\CRegion_DSP.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\include\DSP\CSample_DSP.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\include\DSP\CTrack_DSP.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\include\DSP\WaveFile.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
+				</File>
+			</Filter>
+			<Filter
+				Name="Export_Audio_GUI"
+				>
+				<File
+					RelativePath="..\..\include\Export_Audio_GUI\CKSExportGUI.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Export_Audio_GUI\CKSExportGUIPane.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Import_Audio_GUI"
+				>
+				<File
+					RelativePath="..\..\include\Import_Audio_GUI\CKS_Import_File_Browser.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Import_Audio_GUI\CKS_Import_Files.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Import_Audio_GUI\CKSImportGUI.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Import_Audio_GUI\CKSImportGUIPane.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Internet_Features"
+				>
+				<File
+					RelativePath="..\..\include\Internet_Features\CKSExportForWebGUI.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CKSExportForWebGUIPane.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CKSInternet_Features.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CKSUsername_And_Password_Model.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CKSXML_Create_Project.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CKSXML_Create_Sample.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CKSXML_Read_Project.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CKSXML_Write_Project.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Mix_GUI"
 				>
 				<File
 					RelativePath="..\..\include\Mix_GUI\CKSMixerGUI.h"
@@ -672,198 +886,63 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="TrackGUI"
+				Name="Plugin_Support"
 				>
 				<File
-					RelativePath="..\..\include\Track_GUI\CKS_TrackEditor.h"
+					RelativePath="..\..\include\Plugin_Support\CEffectControl.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\include\Track_GUI\CKS_TrackEditorPane.h"
+					RelativePath="..\..\include\Plugin_Support\CKSPlugInEffectPane.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\include\CKSExportForWebGUI.h"
+					RelativePath="..\..\include\Plugin_Support\CKSPlugInGUI.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\include\CKSExportForWebGUIPane.h"
+					RelativePath="..\..\include\Plugin_Support\CKSPlugInGUIPane.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\include\CKSExportGUI.h"
+					RelativePath="..\..\include\Plugin_Support\CPlugin_Toolbar.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\include\CKSExportGUIPane.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CRegion_GUI.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_AUX_Insert.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_Edit.h"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_Fade_Handle.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_File_Browser.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_Files.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_Info.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_Info_Big.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_Info_Small.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_Player.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_Player2.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_Playhead.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_Setup.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_Side.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_System_Info.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_System_Setup.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_Time_Pos.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Track_GUI\CTrack_Top.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\IRegionCallback.h"
-					>
-				</File>
-				<Filter
-					Name="Progress"
-					>
-					<File
-						RelativePath="..\..\include\Track_GUI\Progress\CAfterImportTask.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\include\Track_GUI\Progress\CExportClipTask.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\include\Track_GUI\Progress\CExportDSPTask.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\include\Track_GUI\Progress\CImportAudioTask.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\include\Track_GUI\Progress\CProgressTask.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\include\Track_GUI\Progress\CProgressTaskList.h"
-						>
-					</File>
-				</Filter>
-			</Filter>
-			<Filter
-				Name="AUXGUI"
-				>
-				<File
-					RelativePath="..\..\include\CKSAUXGUI.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\CKSAUXGUIPane.h"
+					RelativePath="..\..\include\Plugin_Support\CPlugInManager.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="BuiltInEffects"
+				Name="Project_ID"
 				>
 				<File
-					RelativePath="..\..\include\BuiltInEffects\CKobloVerb.h"
+					RelativePath="..\..\include\Project_ID\CKSProject_ID_GUI.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Project_ID\CKSProject_ID_GUI_Pane.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="ImportGUI"
+				Name="Rack_GUI_DSP"
 				>
 				<File
-					RelativePath="..\..\include\Import_GUI\CKS_Import_File_Browser.h"
+					RelativePath="..\..\include\Rack_GUI_DSP\CKobloVerb.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\include\Import_GUI\CKS_Import_Files.h"
+					RelativePath="..\..\include\Rack_GUI_DSP\CKSAUXGUI.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\include\Import_GUI\CKSImportGUI.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\include\Import_GUI\CKSImportGUIPane.h"
+					RelativePath="..\..\include\Rack_GUI_DSP\CKSAUXGUIPane.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="SetupGUI"
+				Name="Setup_GUI"
 				>
 				<File
 					RelativePath="..\..\include\Setup_GUI\CKSSetupGUI.h"
@@ -875,14 +954,146 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="xmlparser"
+				Name="SoloMute"
 				>
 				<File
-					RelativePath="..\..\include\CKSXML_Read.h"
+					RelativePath="..\..\include\SoloMute\CSoloMuteContainer.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\include\CKSXML_Write.h"
+					RelativePath="..\..\include\SoloMute\CSoloMuteState.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Track_View"
+				>
+				<File
+					RelativePath="..\..\include\Track_View\CRegion_Pane.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTime_Pos.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_AUX_Insert.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Editor_Pane.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Editor_View.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Fade_Handle.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_File_Browser.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Files.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Info.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Info_Big.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Info_Small.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Insert.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Player.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Player2.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Playhead.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Regions.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Setup.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Side.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Time_Pos.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\CTrack_Top.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Track_View\Grid_Patterns.h"
+					>
+				</File>
+				<Filter
+					Name="Progress"
+					>
+					<File
+						RelativePath="..\..\include\Track_View\Progress\CAfterImportTask.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\include\Track_View\Progress\CExportClipTask.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\include\Track_View\Progress\CExportDSPTask.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\include\Track_View\Progress\CImportAudioTask.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\include\Track_View\Progress\CProgressTask.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\include\Track_View\Progress\CProgressTaskList.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="Username_And_Password_View"
+				>
+				<File
+					RelativePath="..\..\include\Username_And_Password_View\CKSUsername_And_Password_Pane.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Username_And_Password_View\CKSUsername_And_Password_View.h"
 					>
 				</File>
 			</Filter>
@@ -911,10 +1122,6 @@
 						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\KobloStudio.ico"
-				>
 			</File>
 			<File
 				RelativePath="..\..\resources\KobloStudio.ico"

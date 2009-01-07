@@ -7,7 +7,7 @@
 
 
 extern CDSP* gpDSPEngine = NULL;
-extern CApplication* gpApplication = NULL;
+extern CKSApplication* gpApplication = NULL;
 
 
 const tint giPolyphony = 4;
@@ -32,7 +32,7 @@ struct SSample24
 #endif	// WIN32
 
 
-CApplication::CApplication(CKSModule* pModule, tuint32 uiProcessIndex) 
+CKSApplication::CKSApplication(CKSModule* pModule, tuint32 uiProcessIndex) 
 : CBasePlugIn(dynamic_cast<CBaseModule*>(pModule),giAudioMaxBufferSize, dynamic_cast<CBaseDSPEngine*>(new CDSP()), uiProcessIndex, COMPANY_NAME, PRODUCT_NAME),
 mbUpdateGUISettings(true),
 mbBypass(false), 
@@ -142,7 +142,7 @@ CKSXML_Create_Sample()
 } // constructor
 
 
-CApplication::~CApplication()
+CKSApplication::~CKSApplication()
 {
 	if (mpPlugInManager) {
 		delete[] mpPlugInManager;
@@ -155,14 +155,14 @@ CApplication::~CApplication()
 } // destructor
 
 
-void CApplication::Destroy()
+void CKSApplication::Destroy()
 {
-	delete dynamic_cast<CApplication*>(this);
+	delete dynamic_cast<CKSApplication*>(this);
 	
 } // Destroy
 
 
-kspi::IGUI* CApplication::CreateGUI(tint32 iIndex)
+kspi::IGUI* CKSApplication::CreateGUI(tint32 iIndex)
 {
 	CBaseGUI* pGUI;
 	switch(iIndex) {
@@ -223,12 +223,12 @@ kspi::IGUI* CApplication::CreateGUI(tint32 iIndex)
 } // CreateGUI
 
 
-void CApplication::GetChannelConfigurations(tuint32* /*puiNrOfConfigurations*/, tuint32* /*puiChannelsIn*/, tuint32* /*puiChannelsOut*/, tuint32* /*puiSideChainChannels*/)
+void CKSApplication::GetChannelConfigurations(tuint32* /*puiNrOfConfigurations*/, tuint32* /*puiChannelsIn*/, tuint32* /*puiChannelsOut*/, tuint32* /*puiSideChainChannels*/)
 {
 }
 
 
-void CApplication::Initialize()
+void CKSApplication::Initialize()
 {
 	CBasePlugIn::Initialize();
 
@@ -243,7 +243,7 @@ void CApplication::Initialize()
 } // Initialize
 
 
-void CApplication::AddParameters()
+void CKSApplication::AddParameters()
 {
 	mpParmMan->SetGlobalSectionCount(giNrOfSections);
 	
@@ -494,7 +494,7 @@ void CApplication::AddParameters()
 } // AddParameters
 
 
-void CApplication::MakeAutomationMap()
+void CKSApplication::MakeAutomationMap()
 {
 	// For each automateable parameter make a SAutomationInfo and add it to the AutomationInfo list
 	SAutomationInfo Info;
@@ -520,7 +520,7 @@ void CApplication::MakeAutomationMap()
 } // MakeAutomationMap
 
 
-void CApplication::UpdateEngineData(tint32 iParamID, tint32 iValue)
+void CKSApplication::UpdateEngineData(tint32 iParamID, tint32 iValue)
 {
 	CAutoLock Lock(mMutex);
 
@@ -573,7 +573,7 @@ void CApplication::UpdateEngineData(tint32 iParamID, tint32 iValue)
 } // UpdateEngineData
 
 
-void CApplication::Maintain_Number_Of_Tracks(tint32 iNr_Tracks)
+void CKSApplication::Maintain_Number_Of_Tracks(tint32 iNr_Tracks)
 {
 	tint32 iTracks_In_Use = Get_Number_Of_Tracks();
 	if(iTracks_In_Use < iNr_Tracks){
@@ -593,7 +593,7 @@ void CApplication::Maintain_Number_Of_Tracks(tint32 iNr_Tracks)
 } // Maintain_Number_Of_Tracks
 
 
-void CApplication::UpdateGUIData(tint32 iID, tint32 iValue)
+void CKSApplication::UpdateGUIData(tint32 iID, tint32 iValue)
 {
 	if(iID == giParamID_Zoom){
 
@@ -630,7 +630,7 @@ void CApplication::UpdateGUIData(tint32 iID, tint32 iValue)
 } // UpdateGUIData
 
 
-void CApplication::UpdateCommandData(tint32 iID, tint32 iValue)
+void CKSApplication::UpdateCommandData(tint32 iID, tint32 iValue)
 {
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
 	for (; it != mGUIs.end(); it++) {
@@ -641,7 +641,7 @@ void CApplication::UpdateCommandData(tint32 iID, tint32 iValue)
 } // UpdateCommandData
 
 
-void CApplication::UpdateTrackData(tint32 iID, tint32 iValue, tint32 iChannel)
+void CKSApplication::UpdateTrackData(tint32 iID, tint32 iValue, tint32 iChannel)
 {
 	if(mbGUI_Created != true) 
 		return;
@@ -669,7 +669,7 @@ void CApplication::UpdateTrackData(tint32 iID, tint32 iValue, tint32 iChannel)
 } // UpdateTrackData
 
 
-void CApplication::UpdateBussData(tint32 iID, tint32 iValue, tint32 iBuss)
+void CKSApplication::UpdateBussData(tint32 iID, tint32 iValue, tint32 iBuss)
 {
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
 	for (; it != mGUIs.end(); it++) {
@@ -681,7 +681,7 @@ void CApplication::UpdateBussData(tint32 iID, tint32 iValue, tint32 iBuss)
 } // UpdateBussData
 
 
-void CApplication::UpdateMasterData(tint32 iID, tint32 iValue)
+void CKSApplication::UpdateMasterData(tint32 iID, tint32 iValue)
 {
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
 	for (; it != mGUIs.end(); it++) {
@@ -693,7 +693,7 @@ void CApplication::UpdateMasterData(tint32 iID, tint32 iValue)
 } // UpdateMasterData
 
 
-void CApplication::UpdateAUX1Data(tint32 iID, tint32 iValue)
+void CKSApplication::UpdateAUX1Data(tint32 iID, tint32 iValue)
 {
 
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
@@ -705,7 +705,7 @@ void CApplication::UpdateAUX1Data(tint32 iID, tint32 iValue)
 } // UpdateAUX1Data
 
 
-void CApplication::UpdateAUX2Data(tint32 iID, tint32 iValue)
+void CKSApplication::UpdateAUX2Data(tint32 iID, tint32 iValue)
 {
 
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
@@ -717,7 +717,7 @@ void CApplication::UpdateAUX2Data(tint32 iID, tint32 iValue)
 } // UpdateAUX2Data
 
 
-void CApplication::SetValue(tint32 iParmID, tint32 iValue)
+void CKSApplication::SetValue(tint32 iParmID, tint32 iValue)
 {
 	if (UpdateEngineSettings()) {
 //		switch(iParmID) {
@@ -726,7 +726,7 @@ void CApplication::SetValue(tint32 iParmID, tint32 iValue)
 }
 
 
-void CApplication::UpdateAllGUI()
+void CKSApplication::UpdateAllGUI()
 {
 //	if (mpGUI) {
 //		dynamic_cast<CKSGUI*>(mpGUI)->UpdateAll();
@@ -778,7 +778,7 @@ tuint32 GetVarLen(tuchar* pIn, tint32& iIndex)
 } // GetVarLen
 
 
-void CApplication::OnLoad(const std::string& sPathName)
+void CKSApplication::OnLoad(const std::string& sPathName)
 {
 	CAutoDelete<IChunkFile> pChunkFile(IChunkFile::Create());
 	tint32 iVersionNumber;
@@ -921,7 +921,7 @@ void CApplication::OnLoad(const std::string& sPathName)
 } // OnLoad
 
 
-void CApplication::GetDefaultProjectFolder(tchar* pszPathName)
+void CKSApplication::GetDefaultProjectFolder(tchar* pszPathName)
 {
 	IFile::GetSystemDirectory(IFile::SystemDirMyMusic, pszPathName);
 	strcat(pszPathName, "Koblo Studio:");
@@ -939,7 +939,7 @@ void CApplication::GetDefaultProjectFolder(tchar* pszPathName)
 } // GetDefaultProjectFolder
 
 
-void CApplication::GetTempFolder(tchar* pszPathName)
+void CKSApplication::GetTempFolder(tchar* pszPathName)
 {
 	IFile::GetSystemDirectory(IFile::SystemDirScratch, pszPathName);
 	strcat(pszPathName, "Koblo Studio Temp:");
@@ -962,7 +962,7 @@ void CApplication::GetTempFolder(tchar* pszPathName)
 const tchar pszCorrectExt[] = ".KSProject";
 
 
-void CApplication::SanitizeProjectFolderPath(std::string& rsProjectFolder, const tchar* pszCorrectExt)
+void CKSApplication::SanitizeProjectFolderPath(std::string& rsProjectFolder, const tchar* pszCorrectExt)
 {
 	std::string sProjectFolder = rsProjectFolder;
 	tchar pszPath[1024];
@@ -998,7 +998,7 @@ void CApplication::SanitizeProjectFolderPath(std::string& rsProjectFolder, const
 } // SanitizeProjectFolderPath
 
 
-void CApplication::CleanProject(tint32 iCreateEmptyTracks)
+void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 {
 	// Stop playback
 	PlaybackStop();
@@ -1029,25 +1029,25 @@ void CApplication::CleanProject(tint32 iCreateEmptyTracks)
 } // CleanProject
 
 
-std::string CApplication::GetExtendedError()
+std::string CKSApplication::GetExtendedError()
 {
 	return msExtendedError;
 }
 
 
-void CApplication::ShowMessageBox(const tchar* pszMessage, const tchar* pszHeader)
+void CKSApplication::ShowMessageBox(const tchar* pszMessage, const tchar* pszHeader)
 {
 	ge::IWindow::ShowMessageBox(pszMessage, pszHeader);
 } // ShowMessageBox
 
 
-void CApplication::ShowMessageBox_NonModal(const tchar* pszMessage, const tchar* pszHeader)
+void CKSApplication::ShowMessageBox_NonModal(const tchar* pszMessage, const tchar* pszHeader)
 {
 	NonModalDialog_Push(pszHeader, pszMessage);
 } // ShowMessageBox_NonModal
 
 
-void CApplication::LoadSaveErrDlg(std::string sMsg)
+void CKSApplication::LoadSaveErrDlg(std::string sMsg)
 {
 	std::string sExtendedError = GetExtendedError();
 	if (sExtendedError.length() > 0)
@@ -1063,7 +1063,7 @@ void CApplication::LoadSaveErrDlg(std::string sMsg)
 #endif // WIN32
 // .. Lasse
 
-void CApplication::OnMenuEvent(const tchar* pszString)
+void CKSApplication::OnMenuEvent(const tchar* pszString)
 {
 #ifdef WIN32
 	// It's not really a string - typecast and get value
@@ -1535,7 +1535,7 @@ void CApplication::OnMenuEvent(const tchar* pszString)
 } // OnMenuEvent
 
 
-void CApplication::MenuFileImportAudio()
+void CKSApplication::MenuFileImportAudio()
 {
 	tbool bTest = (GetGlobalParm(giParamID_Show_Import_Window, giSectionGUI) != 0);
 	if(!bTest){
@@ -1546,7 +1546,7 @@ void CApplication::MenuFileImportAudio()
 } // MenuFileImportAudio
 
 
-void CApplication::MenuSetupAudio()
+void CKSApplication::MenuSetupAudio()
 {
 	tbool bTest = (GetGlobalParm(giParamID_Audio_Setup_Window, giSectionGUI) != 0);
 
@@ -1562,7 +1562,7 @@ void CApplication::MenuSetupAudio()
 } // MenuSetupAudio
 
 
-void CApplication::Export(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
+void CKSApplication::Export(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
 {
 	tint32 iSelection = GetGlobalParm(giParamID_Export_Type, giSectionGUI);
 	
@@ -1592,7 +1592,7 @@ void CApplication::Export(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChann
 	}
 }
 
-void CApplication::Export_For_Web(ac::EQuality eQuality, tint32 iLicenseNb, std::string sUserName, std::string sUserUrl, std::string sUserStatus)
+void CKSApplication::Export_For_Web(ac::EQuality eQuality, tint32 iLicenseNb, std::string sUserName, std::string sUserUrl, std::string sUserStatus)
 {
 	msExportForWeb.eQuality = eQuality;
 	msExportForWeb.iLicenseNb = iLicenseNb;
@@ -1612,7 +1612,7 @@ void CApplication::Export_For_Web(ac::EQuality eQuality, tint32 iLicenseNb, std:
 } // Export_For_Web
 
 
-void CApplication::ExportAllClips(ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels)
+void CKSApplication::ExportAllClips(ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels)
 {
 	tbool bSuccess = false;
 	msExtendedError = "";
@@ -1643,7 +1643,7 @@ void CApplication::ExportAllClips(ac::EAudioCodec eCodec, ac::EQuality eQuality,
 } // ExportAllClips
 
 
-void CApplication::ExportSelection(tbool bIncludeEffects, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
+void CKSApplication::ExportSelection(tbool bIncludeEffects, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
 {
 	tbool bSuccess = true;
 	msExtendedError = "";
@@ -1717,7 +1717,7 @@ void CApplication::ExportSelection(tbool bIncludeEffects, ac::EAudioCodec eCodec
 } // ExportSelection
 
 
-tbool CApplication::ExportTracksSelection_Raw(std::list<tint32> listiTracks, tint64 iStartIx, tint64 iDuration, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels)
+tbool CKSApplication::ExportTracksSelection_Raw(std::list<tint32> listiTracks, tint64 iStartIx, tint64 iDuration, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels)
 {
 	std::list<CExportClipTask*> listpTasks;
 	std::list<tint32>::iterator it = listiTracks.begin();
@@ -1737,7 +1737,7 @@ tbool CApplication::ExportTracksSelection_Raw(std::list<tint32> listiTracks, tin
 } // ExportTracksSelection_Raw
 
 
-tbool CApplication::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iStartIx, tint64 iDuration, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, std::list<CExportClipTask*>* plistpInfo)
+tbool CKSApplication::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iStartIx, tint64 iDuration, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, std::list<CExportClipTask*>* plistpInfo)
 {
 	tchar pszNameUniteDefault[512];
 	sprintf(pszNameUniteDefault, "%s Clips Selection", GetChannelName(iTrack).c_str());
@@ -1839,7 +1839,7 @@ tbool CApplication::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iStar
 } // ExportTracksSelection_Raw_AddOne
 
 
-tbool CApplication::ExportRegionClip(const tchar* pszClipName, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels)
+tbool CKSApplication::ExportRegionClip(const tchar* pszClipName, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels)
 {
 	std::list<CExportClipTask*> listpInfo;
 	CExportClipTask* pInfo = new CExportClipTask( pszClipName, 0, (tuint64)-1);
@@ -1848,7 +1848,7 @@ tbool CApplication::ExportRegionClip(const tchar* pszClipName, ac::EAudioCodec e
 } // ExportRegionClip
 
 
-tbool CApplication::ExportClipsList(std::list<CExportClipTask*>* plistpInfo, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels)
+tbool CKSApplication::ExportClipsList(std::list<CExportClipTask*>* plistpInfo, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels)
 {
 	//CAutoDelete<ac::IEncoder> pEncoder(ac::IEncoder::Create(eCodec));
 	//if (!pEncoder) {
@@ -1925,7 +1925,7 @@ tbool CApplication::ExportClipsList(std::list<CExportClipTask*>* plistpInfo, ac:
 } // ExportClipsList
 
 
-tbool CApplication::ExportClipsList_AndAction(std::list<CExportClipTask*>* plistpInfo, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels)
+tbool CKSApplication::ExportClipsList_AndAction(std::list<CExportClipTask*>* plistpInfo, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels)
 {
 	tbool bError = false;
 	std::list<CExportClipTask*>::iterator it = plistpInfo->begin();
@@ -1978,7 +1978,7 @@ tbool CApplication::ExportClipsList_AndAction(std::list<CExportClipTask*>* plist
 } // ExportClipsList_AndAction
 
 
-tbool CApplication::ExportClipsList_WarnQuality(
+tbool CKSApplication::ExportClipsList_WarnQuality(
 	std::list<CExportClipTask*>* plistpInfo, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels,
 	tbool* pbGoAhead)
 {
@@ -2116,7 +2116,7 @@ tbool CApplication::ExportClipsList_WarnQuality(
 } // ExportClipsList_WarnQuality
 
 
-tbool CApplication::ExportClipsList_SelectDestination(std::list<CExportClipTask*>* plistpInfo, ac::EAudioCodec eCodec, tchar* pszDestinationFolder)
+tbool CKSApplication::ExportClipsList_SelectDestination(std::list<CExportClipTask*>* plistpInfo, ac::EAudioCodec eCodec, tchar* pszDestinationFolder)
 {
 	pszDestinationFolder[0] = '\0';
 
@@ -2237,7 +2237,7 @@ tbool CApplication::ExportClipsList_SelectDestination(std::list<CExportClipTask*
 } // ExportClipsList_SelectDestination
 
 
-tbool CApplication::ExportClipsList_VerifyOne(CExportClipTask* pInfo)
+tbool CKSApplication::ExportClipsList_VerifyOne(CExportClipTask* pInfo)
 {
 	if (pInfo->sClipName.empty()) {
 		// This is a bit of silence - no files to verify
@@ -2347,7 +2347,7 @@ tbool CApplication::ExportClipsList_VerifyOne(CExportClipTask* pInfo)
 } // ExportClipsList_VerifyOne
 
 
-tbool CApplication::MenuFileCreateNewProject()
+tbool CKSApplication::MenuFileCreateNewProject()
 {
 	msExtendedError = "";
 	
@@ -2361,7 +2361,7 @@ tbool CApplication::MenuFileCreateNewProject()
 } // MenuFileCreateNewProject
 
 
-tbool CApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/, tbool bCompress /*= true*/)
+tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/, tbool bCompress /*= true*/)
 {	
 	msExtendedError = "";
 
@@ -2872,7 +2872,7 @@ tbool CApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/, 
 } // MenuFileSaveProjectAs
 
 
-tbool CApplication::ExportProjectForWeb_Compress(
+tbool CKSApplication::ExportProjectForWeb_Compress(
 	std::string sWavePathL, std::string sWavePathR,
 	SFileInfo* pInfo, ac::EQuality ePreviousQuality)
 {
@@ -2960,7 +2960,7 @@ tbool CApplication::ExportProjectForWeb_Compress(
 } // ExportProjectForWeb_Compress
 
 
-tbool CApplication::MenuFileLoadProject()
+tbool CKSApplication::MenuFileLoadProject()
 {
 	msExtendedError = "";
 
@@ -3201,7 +3201,7 @@ tbool CApplication::MenuFileLoadProject()
 } // MenuFileLoadProject
 
 
-tbool CApplication::MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::list<CImportAudioTask*>* plistpImportTasks)
+tbool CKSApplication::MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::list<CImportAudioTask*>* plistpImportTasks)
 {
 	tint64 iIndex = 0;
 	tint32 iFileInList = -1;
@@ -3529,7 +3529,7 @@ tbool CApplication::MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::list<
 } // MenuFileLoadProject_QueueClips
 
 
-tbool CApplication::CanWaveFilePlay(const std::string& sWaveFilePath, tbool bAllowErrorDialog, tbool bIsMissingFileAnError)
+tbool CKSApplication::CanWaveFilePlay(const std::string& sWaveFilePath, tbool bAllowErrorDialog, tbool bIsMissingFileAnError)
 {
 	std::string sError = "";
 
@@ -3592,7 +3592,7 @@ tbool CApplication::CanWaveFilePlay(const std::string& sWaveFilePath, tbool bAll
 } // CanWaveFilePlay
 
 
-void CApplication::MenuFileDistributeMix(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
+void CKSApplication::MenuFileDistributeMix(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
 {
 	try {
 		if (!GenerateMix(eCodec, (ac::EQuality)iQuality, iChannels, iTailMS, bNormalize)) {
@@ -3606,13 +3606,13 @@ void CApplication::MenuFileDistributeMix(ac::EAudioCodec eCodec, tint32 iQuality
 } // MenuFileDistributeMix
 
 
-tbool CApplication::GenerateMix(ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
+tbool CKSApplication::GenerateMix(ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
 {
 	return ExportTracksOrMix(geStateExportingOutMix, NULL, false, eCodec, eQuality, iChannels, iTailMS, bNormalize);
 } // GenerateMix
 
 
-tbool CApplication::ExportSelectedTrack(ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
+tbool CKSApplication::ExportSelectedTrack(ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
 {
 	/* unused
 	std::list<tint32> listiTracks;
@@ -3628,7 +3628,7 @@ tbool CApplication::ExportSelectedTrack(ac::EAudioCodec eCodec, ac::EQuality eQu
 } // ExportSelectedTrack
 
 
-tbool CApplication::ExportAllTracks(ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
+tbool CKSApplication::ExportAllTracks(ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
 {
 	std::list<tint32> listiTracks;
 	std::list<tint32> listiTracks_IncludeMuted;
@@ -3652,7 +3652,7 @@ tbool CApplication::ExportAllTracks(ac::EAudioCodec eCodec, ac::EQuality eQualit
 } // ExportAllTracks
 
 
-tbool CApplication::ExportTracksOrMix(EPlaybackState eExportState, std::list<tint32>* plistiTracks, tbool bSelectionOnly, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
+tbool CKSApplication::ExportTracksOrMix(EPlaybackState eExportState, std::list<tint32>* plistiTracks, tbool bSelectionOnly, ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize)
 {
 	tbool bError = false;
 	msExtendedError = "";
@@ -3901,7 +3901,7 @@ tbool CApplication::ExportTracksOrMix(EPlaybackState eExportState, std::list<tin
 } // ExportTracksOrMix
 
 
-void CApplication::DeleteFileThatOccupiesFolderName(std::string sFolderName)
+void CKSApplication::DeleteFileThatOccupiesFolderName(std::string sFolderName)
 {
 	tint32 iLen = sFolderName.length();
 	if (iLen > 0) {
@@ -3913,7 +3913,7 @@ void CApplication::DeleteFileThatOccupiesFolderName(std::string sFolderName)
 } // DeleteFileThatOccupiesFolderName
 
 
-tbool CApplication::VerifyFolderCreated(std::string sFolderName)
+tbool CKSApplication::VerifyFolderCreated(std::string sFolderName)
 {
 	tbool bIsFolder;
 	if ((!IFile::Exists(sFolderName.c_str(), &bIsFolder)) || (!bIsFolder)) {
@@ -3924,7 +3924,7 @@ tbool CApplication::VerifyFolderCreated(std::string sFolderName)
 } // VerifyFolderCreated
 
 
-tbool CApplication::MenuFileSaveProject(tbool bOverwrite /*= false*/)
+tbool CKSApplication::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 {
 	msExtendedError = "";
 	
@@ -4232,8 +4232,8 @@ tbool CApplication::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 	return true;
 } // MenuFileSaveProject
 
-//tbool CApplication::DoAudioFileImport(const std::string& sPathName, tbool bDoCopy, tbool bAlwaysStereo)
-tbool CApplication::QueueAudioFileImport(const tchar* pszPathName, tbool bAlwaysKeepStereo, tint32 iTrackID /*=-1*/, tint64 iTrackPos /*= -1*/)
+//tbool CKSApplication::DoAudioFileImport(const std::string& sPathName, tbool bDoCopy, tbool bAlwaysStereo)
+tbool CKSApplication::QueueAudioFileImport(const tchar* pszPathName, tbool bAlwaysKeepStereo, tint32 iTrackID /*=-1*/, tint64 iTrackPos /*= -1*/)
 {
 	if (IsPlayingOrRecording()) {
 		PlaybackStop();
@@ -4260,7 +4260,7 @@ tbool CApplication::QueueAudioFileImport(const tchar* pszPathName, tbool bAlways
 	return bSuccess;
 } // QueueAudioFileImport
 
-tbool CApplication::IsClipNameInUse(const tchar* pszClipName, const tchar* pszWaveNameL, const tchar* pszWaveNameR, std::string* psDescription)
+tbool CKSApplication::IsClipNameInUse(const tchar* pszClipName, const tchar* pszWaveNameL, const tchar* pszWaveNameR, std::string* psDescription)
 {
 	const tchar** ppszNames = new const tchar*[4];
 	ppszNames[0] = pszClipName;
@@ -4268,9 +4268,9 @@ tbool CApplication::IsClipNameInUse(const tchar* pszClipName, const tchar* pszWa
 	ppszNames[2] = pszWaveNameR;
 	ppszNames[3] = NULL;
 
-	std::list<CApplication::SFileInfo*>::iterator it = mFileInfos.begin();
+	std::list<CKSApplication::SFileInfo*>::iterator it = mFileInfos.begin();
 	for ( ;it != mFileInfos.end(); it++) {
-		CApplication::SFileInfo* pInfo = *it;
+		CKSApplication::SFileInfo* pInfo = *it;
 		const tchar* pszName = pInfo->sName.c_str();
 		const tchar* pszNameL = pInfo->sWaveNameL.c_str();
 		const tchar* pszNameR = pInfo->sWaveNameR.c_str();
@@ -4302,14 +4302,14 @@ tbool CApplication::IsClipNameInUse(const tchar* pszClipName, const tchar* pszWa
 } // IsClipNameInUse
 
 
-tbool CApplication::StartProgressTasks(EPlaybackState eState, tint64 iPos /*= -1*/, tint32 iTrack /*= -1*/)
+tbool CKSApplication::StartProgressTasks(EPlaybackState eState, tint64 iPos /*= -1*/, tint32 iTrack /*= -1*/)
 {
 	CAutoLock Lock(mMutex_Progress);
 	
 	return StartProgressTasks_NoLock(eState, iPos, iTrack);
 } // StartProgressTasks
 
-tbool CApplication::StartProgressTasks_NoLock(EPlaybackState eState, tint64 iPos /*= -1*/, tint32 iTrack /*= -1*/)
+tbool CKSApplication::StartProgressTasks_NoLock(EPlaybackState eState, tint64 iPos /*= -1*/, tint32 iTrack /*= -1*/)
 {
 	if (mpProgressTasks->IsDone())
 		return false;
@@ -4350,14 +4350,14 @@ tbool CApplication::StartProgressTasks_NoLock(EPlaybackState eState, tint64 iPos
 } // StartProgressTasks_NoLock
 
 
-tbool CApplication::StopProgressTasks()
+tbool CKSApplication::StopProgressTasks()
 {
 	CAutoLock Lock(mMutex_Progress);
 	
 	return StopProgressTasks_NoLock();
 } // StopProgressTasks
 
-tbool CApplication::StopProgressTasks_NoLock()
+tbool CKSApplication::StopProgressTasks_NoLock()
 {
 	if (!mpProgressTasks->IsDone())
 		return false;
@@ -4368,14 +4368,14 @@ tbool CApplication::StopProgressTasks_NoLock()
 } // StopProgressTasks_NoLock
 
 
-void CApplication::AbortProgressTasks(tbool bNoDialogBoxOnAbort /*= false*/)
+void CKSApplication::AbortProgressTasks(tbool bNoDialogBoxOnAbort /*= false*/)
 {
 	CAutoLock Lock(mMutex_Progress);
 	
 	AbortProgressTasks_NoLock(bNoDialogBoxOnAbort);
 } // AbortProgressTasks
 
-void CApplication::AbortProgressTasks_NoLock(tbool bNoDialogBoxOnAbort /*= false*/)
+void CKSApplication::AbortProgressTasks_NoLock(tbool bNoDialogBoxOnAbort /*= false*/)
 {
 	if (mpTimer_ProgressTasks) {
 
@@ -4411,13 +4411,13 @@ void CApplication::AbortProgressTasks_NoLock(tbool bNoDialogBoxOnAbort /*= false
 } // AbortProgressTasks_NoLock
 
 
-void CApplication::OnTimer(tint32 iID)
+void CKSApplication::OnTimer(tint32 iID)
 {
 	// This is never called - use OnTimer_CanStop(..)
 } // OnTimer
 
 
-tbool CApplication::OnTimer_CanStop(tint32 iID)
+tbool CKSApplication::OnTimer_CanStop(tint32 iID)
 {
 	tbool bContinue = true;
 	switch (iID) {
@@ -4508,7 +4508,7 @@ tbool CApplication::OnTimer_CanStop(tint32 iID)
 } // OnTimer_CanStop
 
 
-void CApplication::NonModalDialog_Push(const tchar* pszHeader, const tchar* pszLongerText)
+void CKSApplication::NonModalDialog_Push(const tchar* pszHeader, const tchar* pszLongerText)
 {
 	CAutoLock lock(mMutex_NonModalDialog);
 
@@ -4518,7 +4518,7 @@ void CApplication::NonModalDialog_Push(const tchar* pszHeader, const tchar* pszL
 	mlistpNonModalDialogInfo.push_back(pInfo);
 } // NonModalDialog_Push
 
-tbool CApplication::NonModalDialog_Pop(SNonModalDialogInfo** ppInfo)
+tbool CKSApplication::NonModalDialog_Pop(SNonModalDialogInfo** ppInfo)
 {
 	CAutoLock lock(mMutex_NonModalDialog);
 
@@ -4533,7 +4533,7 @@ tbool CApplication::NonModalDialog_Pop(SNonModalDialogInfo** ppInfo)
 	return false;
 } // NonModalDialog_Pop
 
-void CApplication::NonModalDialogs_ZapList()
+void CKSApplication::NonModalDialogs_ZapList()
 {
 	CAutoLock lock(mMutex_NonModalDialog);
 
@@ -4544,7 +4544,7 @@ void CApplication::NonModalDialogs_ZapList()
 	}
 } // NonModalDialogs_ZapList
 
-tbool CApplication::DoProgressTasks()
+tbool CKSApplication::DoProgressTasks()
 {
 	CAutoLock Lock(mMutex_Progress);
 
@@ -4589,7 +4589,7 @@ tbool CApplication::DoProgressTasks()
 	return bWorkSuccess;
 } // DoProgressTasks
 
-void CApplication::AddClipToList(CImportAudioTask* pImportInfo)
+void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 {
 	if (!pImportInfo->mbStereo) {
 		SFileInfo* pInfo = new SFileInfo();
@@ -4661,13 +4661,13 @@ void CApplication::AddClipToList(CImportAudioTask* pImportInfo)
 	UpdateGUIFileList();
 } // AddClipToList
 
-tbool CApplication::OnAudioFileImport()
+tbool CKSApplication::OnAudioFileImport()
 {
 	MenuFileImportAudio();
 	return true;
 } // OnAudioFileImport
 
-void CApplication::VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar* pszWavePathR, tbool bForceRewrite)
+void CKSApplication::VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar* pszWavePathR, tbool bForceRewrite)
 {
 	tbool bStereo = (*pszWavePathR != '\0');
 	
@@ -4990,7 +4990,7 @@ void CApplication::VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar*
 	}
 } // VerifyCreatePeakFiles
 
-void CApplication::UpdateGUIFileList()
+void CKSApplication::UpdateGUIFileList()
 {
 	// Send a message to all panes
 	CBasePane::SMsg Msg(Msg_Update_File_List, &mFileInfos);
@@ -5000,7 +5000,7 @@ void CApplication::UpdateGUIFileList()
 	}
 } // UpdateGUIFileList
 
-void CApplication::PrepareMovePlayhead()
+void CKSApplication::PrepareMovePlayhead()
 {
 	if(mePlaybackState == geStatePlaying){
 		mbWasPlayingWhenMovePlayheadWasStarted = true;
@@ -5012,13 +5012,13 @@ void CApplication::PrepareMovePlayhead()
 	}
 }
 
-void CApplication::MovePlayhead(tuint64 uiSamplePos)
+void CKSApplication::MovePlayhead(tuint64 uiSamplePos)
 {
 	muiMoveToPos = uiSamplePos;
 	miSongPos	= uiSamplePos;
 }
 
-void CApplication::EndMovePlayhead()
+void CKSApplication::EndMovePlayhead()
 {
 	PlaybackGoToPos(muiMoveToPos);
 	
@@ -5028,7 +5028,7 @@ void CApplication::EndMovePlayhead()
 	}
 }
 
-void CApplication::PlaybackStart()
+void CKSApplication::PlaybackStart()
 {
 	CAutoLock Lock(mMutex);
 	CAutoLock Lock2(mMutex_Progress);
@@ -5046,7 +5046,7 @@ void CApplication::PlaybackStart()
 	}
 } // PlaybackStart
 
-void CApplication::PlaybackStop()
+void CKSApplication::PlaybackStop()
 {
 	CAutoLock Lock(mMutex);
 	CAutoLock Lock2(mMutex_Progress);
@@ -5054,7 +5054,7 @@ void CApplication::PlaybackStop()
 	PlaybackStop_NoLock();
 } // PlaybackStop
 
-void CApplication::PlaybackStop_NoLock()
+void CKSApplication::PlaybackStop_NoLock()
 {
 	if ((IsInProgressTaskState()) && (!mpProgressTasks->IsDone())) {
 		// We are doing something in progress - queue a "stop that" signal
@@ -5071,7 +5071,7 @@ void CApplication::PlaybackStop_NoLock()
 	}
 } // PlaybackStop_NoLock
 
-void CApplication::PlaybackFF()
+void CKSApplication::PlaybackFF()
 {
 	CAutoLock Lock(mMutex);
 	CAutoLock Lock2(mMutex_Progress);
@@ -5092,7 +5092,7 @@ void CApplication::PlaybackFF()
 	gpDSPEngine->SetSongPosition_AndResetEffectsTails(miSongPos);
 } // PlaybackFF
 
-void CApplication::PlaybackRewind()
+void CKSApplication::PlaybackRewind()
 {
 	CAutoLock Lock(mMutex);
 	CAutoLock Lock2(mMutex_Progress);
@@ -5117,7 +5117,7 @@ void CApplication::PlaybackRewind()
 	gpDSPEngine->SetSongPosition_AndResetEffectsTails(miSongPos);
 } // PlaybackRewind
 
-void CApplication::PlaybackGoToStart(tbool bIgnorePlayState /*= false*/)
+void CKSApplication::PlaybackGoToStart(tbool bIgnorePlayState /*= false*/)
 {
 	CAutoLock Lock(mMutex);
 	CAutoLock Lock2(mMutex_Progress);
@@ -5135,7 +5135,7 @@ void CApplication::PlaybackGoToStart(tbool bIgnorePlayState /*= false*/)
 	gpDSPEngine->SetSongPosition_AndResetEffectsTails(miSongPos);
 } // PlaybackGoToStart
 
-void CApplication::PlaybackGoToEnd()
+void CKSApplication::PlaybackGoToEnd()
 {
 	CAutoLock Lock(mMutex);
 	CAutoLock Lock2(mMutex_Progress);
@@ -5156,7 +5156,7 @@ void CApplication::PlaybackGoToEnd()
 		gpDSPEngine->SetSongPosition_AndResetEffectsTails(miSongPos);
 } // PlaybackGoToEnd
 
-void CApplication::PlaybackGoToPos(tint64 iSample)
+void CKSApplication::PlaybackGoToPos(tint64 iSample)
 {
 	CAutoLock Lock(mMutex);
 	CAutoLock Lock2(mMutex_Progress);
@@ -5174,13 +5174,13 @@ void CApplication::PlaybackGoToPos(tint64 iSample)
 		gpDSPEngine->SetSongPosition_AndResetEffectsTails(miSongPos);
 } // PlaybackGoToPos
 
-void CApplication::Playback_InProgressTask(tint64 iNewPos /*= -1*/)
+void CKSApplication::Playback_InProgressTask(tint64 iNewPos /*= -1*/)
 {
 	StartProgressTasks_NoLock(geStateInProgressTask, iNewPos);
 	gpDSPEngine->LimitDataFromStreams(false, 0, -1);
 } // Playback_InProgressTask
 
-void CApplication::Playback_ExportTrack(tint32 iTrack, tint64 iFirstSample, tint64 iFinalSample)
+void CKSApplication::Playback_ExportTrack(tint32 iTrack, tint64 iFirstSample, tint64 iFinalSample)
 {
 	StartProgressTasks_NoLock(geStateExportingTrack, iFirstSample, iTrack);
 	if ((iFirstSample > 0) || (iFinalSample >= 0)) {
@@ -5188,13 +5188,13 @@ void CApplication::Playback_ExportTrack(tint32 iTrack, tint64 iFirstSample, tint
 	}
 } // Playback_ExportTrack
 
-void CApplication::Playback_ExportOutMix(tint64 iPosToStart)
+void CKSApplication::Playback_ExportOutMix(tint64 iPosToStart)
 {
 	StartProgressTasks_NoLock(geStateExportingOutMix, iPosToStart);
 	gpDSPEngine->LimitDataFromStreams(false, 0, -1);
 } // Playback_ExportOutMix
 
-void CApplication::Zoom(tint32 iCmd, tint32 iVal)
+void CKSApplication::Zoom(tint32 iCmd, tint32 iVal)
 {
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
 	for (; it != mGUIs.end(); it++) {
@@ -5204,7 +5204,7 @@ void CApplication::Zoom(tint32 iCmd, tint32 iVal)
 
 } // Zoom
 
-tbool CApplication::OnKeyDown(ge::EKey Key)
+tbool CKSApplication::OnKeyDown(ge::EKey Key)
 {
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
 	for (; it != mGUIs.end(); it++) {
@@ -5225,7 +5225,7 @@ tbool CApplication::OnKeyDown(ge::EKey Key)
 	return false;
 } // OnKeyDown
 
-void CApplication::SelectTrack(tint32 iID)
+void CKSApplication::SelectTrack(tint32 iID)
 {
 	miSelected_Track = iID;
 	STrackData sData;
@@ -5234,7 +5234,7 @@ void CApplication::SelectTrack(tint32 iID)
 	Send_Msg_To_All_Panes(&Msg);
 } // SelectTrack
 
-tint32 CApplication::Get_Number_Of_Tracks()
+tint32 CKSApplication::Get_Number_Of_Tracks()
 {
 	tint32 iTracks_Usede	=	0;
 	
@@ -5246,7 +5246,7 @@ tint32 CApplication::Get_Number_Of_Tracks()
 	return iTracks_Usede;
 }
 
-tint32 CApplication::Get_Free_Track()
+tint32 CKSApplication::Get_Free_Track()
 {
 	// Find a free track
 	for( tint32 i = 0; i < giNumber_Of_Tracks; i++){
@@ -5257,7 +5257,7 @@ tint32 CApplication::Get_Free_Track()
 	return -1;
 }
 
-tint32 CApplication::AddTrack()
+tint32 CKSApplication::AddTrack()
 {	
 	// Find a free track to add
 	tint32 iTrack_To_Add	=	Get_Free_Track();
@@ -5309,7 +5309,7 @@ tint32 CApplication::AddTrack()
 	return iTrack_To_Add;
 }
 
-void CApplication::DeleteTrack()
+void CKSApplication::DeleteTrack()
 {
 	tint32 iTrack_To_Delete;
 	
@@ -5359,7 +5359,7 @@ void CApplication::DeleteTrack()
 	
 }
 
-tint32 CApplication::Find_Track_Pos(tint32 iTrack)
+tint32 CKSApplication::Find_Track_Pos(tint32 iTrack)
 {
 	for(tint32 iPos=0; iPos< giNumber_Of_Tracks; iPos++){
 		if(	msStack.iTrack[iPos]==iTrack)
@@ -5368,7 +5368,7 @@ tint32 CApplication::Find_Track_Pos(tint32 iTrack)
 	return -1;
 }
 
-void CApplication::Set_All_Meters(void* pvoidMeters_All)
+void CKSApplication::Set_All_Meters(void* pvoidMeters_All)
 {
 	// Don't do this during create
 	if (!mbGUI_Created)
@@ -5389,7 +5389,7 @@ void CApplication::Set_All_Meters(void* pvoidMeters_All)
 	}
 }
 
-void CApplication::Stack_Tracks()
+void CKSApplication::Stack_Tracks()
 {
 	// We mustn't stack track repeatedly during create / load
 	if (!mbAreGUIsReady)
@@ -5401,7 +5401,7 @@ void CApplication::Stack_Tracks()
 	Send_Msg_To_All_Panes(&Msg);
 }
 
-void CApplication::Send_Msg_To_All_Panes(CBasePane::SMsg* pMsg)
+void CKSApplication::Send_Msg_To_All_Panes(CBasePane::SMsg* pMsg)
 {
 	// Send a message to all panes
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
@@ -5411,7 +5411,7 @@ void CApplication::Send_Msg_To_All_Panes(CBasePane::SMsg* pMsg)
 	
 }
 
-void CApplication::Update_Zoom()
+void CKSApplication::Update_Zoom()
 {
 	SGUIData sData;
 	sData.iID	= giParamID_Zoom;
@@ -5435,7 +5435,7 @@ void CApplication::Update_Zoom()
 }
 
 
-void CApplication::DeleteAllRegionsForTrack(tint32 iTrack)
+void CKSApplication::DeleteAllRegionsForTrack(tint32 iTrack)
 {
 	STrackData sData;
 	sData.iTrack = iTrack;
@@ -5447,7 +5447,7 @@ void CApplication::DeleteAllRegionsForTrack(tint32 iTrack)
 }
 
 
-void CApplication::Set_Track_Visible(tuint iID, tbool bVisible)
+void CKSApplication::Set_Track_Visible(tuint iID, tbool bVisible)
 {
 /*
 	STrackData sData;
@@ -5463,12 +5463,12 @@ void CApplication::Set_Track_Visible(tuint iID, tbool bVisible)
 }
 
 
-void CApplication::Set_Track_To_Default(tuint iID)
+void CKSApplication::Set_Track_To_Default(tuint iID)
 {
 
 }
 	
-void CApplication::SetChannelName(tint32 iChannel, const std::string& sName)
+void CKSApplication::SetChannelName(tint32 iChannel, const std::string& sName)
 {
 	mpsChannelName[iChannel] = sName;
 	
@@ -5480,42 +5480,42 @@ void CApplication::SetChannelName(tint32 iChannel, const std::string& sName)
 }
 
 
-std::string CApplication::GetProjDir_Audio() const
+std::string CKSApplication::GetProjDir_Audio() const
 {
 	return GetProjDir_Contents() + "Audio:";
 }
 
-std::string CApplication::GetProjDir_Clips() const
+std::string CKSApplication::GetProjDir_Clips() const
 {
 	return GetProjDir_Audio() + "Clips:";
 }
 
-std::string CApplication::GetProjDir_ClipsDecomp() const
+std::string CKSApplication::GetProjDir_ClipsDecomp() const
 {
 	return GetProjDir_Clips() + "Decompressed:";
 }
 
-std::string CApplication::GetFromWaveName_ClipWave(const tchar* pszWaveName) const
+std::string CKSApplication::GetFromWaveName_ClipWave(const tchar* pszWaveName) const
 {
 	return GetProjDir_Clips() + std::string(pszWaveName) + ".wav";
 }
 
-std::string CApplication::GetFromWaveName_ClipWaveOld(const tchar* pszWaveName) const
+std::string CKSApplication::GetFromWaveName_ClipWaveOld(const tchar* pszWaveName) const
 {
 	return GetProjDir_Audio() + std::string(pszWaveName) + ".wav";
 }
 
-std::string CApplication::GetFromWaveName_ClipDefaultOgg(const tchar* pszWaveName) const
+std::string CKSApplication::GetFromWaveName_ClipDefaultOgg(const tchar* pszWaveName) const
 {
 	return GetProjDir_Clips() + std::string(pszWaveName) + ".ogg";
 }
 
-std::string CApplication::GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveName) const
+std::string CKSApplication::GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveName) const
 {
 	return GetProjDir_ClipsDecomp() + std::string(pszWaveName) + ".wav";
 }
 
-std::string CApplication::GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName)
+std::string CKSApplication::GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName)
 {
 	std::string sWavePath = GetFromWaveName_ClipWave(pszWaveName);
 	if (!CanWaveFilePlay(sWavePath, true, false)) {
@@ -5530,7 +5530,7 @@ std::string CApplication::GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName
 	return sWavePath;
 } // GetFromWaveName_ClipWave_Safe
 
-std::string CApplication::GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName) const
+std::string CKSApplication::GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName) const
 {
 	SFileInfo* pInfo = GetFromListName_ClipEntry(pszWaveName);
 	if ((pInfo == NULL) || (!pInfo->bIsOriginalLossy))
@@ -5551,7 +5551,7 @@ std::string CApplication::GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName
 } // GetFromWaveName_ClipComp_Safe
 
 
-CApplication::SFileInfo* CApplication::GetFromListName_ClipEntry(const tchar* pszListName) const
+CKSApplication::SFileInfo* CKSApplication::GetFromListName_ClipEntry(const tchar* pszListName) const
 {
 	std::list<SFileInfo*>::const_iterator it = mFileInfos.begin();
 	for ( ; it != mFileInfos.end(); it++) {
@@ -5562,7 +5562,7 @@ CApplication::SFileInfo* CApplication::GetFromListName_ClipEntry(const tchar* ps
 	return NULL;
 } // GetFromListName_ClipEntry
 
-tint32 CApplication::GetFromListName_ClipWavePathNames(const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed /*= NULL*/) const
+tint32 CKSApplication::GetFromListName_ClipWavePathNames(const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed /*= NULL*/) const
 {
 	SFileInfo* pInfo = GetFromListName_ClipEntry(pszListName);
 	if (pInfo) {
@@ -5608,14 +5608,14 @@ tint32 CApplication::GetFromListName_ClipWavePathNames(const tchar* pszListName,
 	return 0;
 } // GetFromListName_ClipWavePathNames
 
-void CApplication::ClearAllMeters()
+void CKSApplication::ClearAllMeters()
 {
 	CAutoLock Lock(mMutexMeter);
 
 	dynamic_cast<CDSP*>(mpDSPEngine)->ClearAllMeters();
 }
 
-void CApplication::GetAllMeters_MaybeClear(void* pvoid_sMeters_All, tuint32 muiTimeMS_Elapsed, tbool bClear)
+void CKSApplication::GetAllMeters_MaybeClear(void* pvoid_sMeters_All, tuint32 muiTimeMS_Elapsed, tbool bClear)
 {
 	CAutoLock Lock(mMutexMeter);
 
@@ -5635,7 +5635,7 @@ void CApplication::GetAllMeters_MaybeClear(void* pvoid_sMeters_All, tuint32 muiT
 	psMeters_All->fDecayFactor = fDecay;
 }
 
-void CApplication::WindowClosed(void* pWnd)
+void CKSApplication::WindowClosed(void* pWnd)
 {
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
 	for (; it != mGUIs.end(); it++) {
@@ -5646,13 +5646,13 @@ void CApplication::WindowClosed(void* pWnd)
 	}
 }
 
-void CApplication::CloseWindow(void* pWnd)
+void CKSApplication::CloseWindow(void* pWnd)
 {
 	gpMainApplication->CloseWindow(pWnd);
 }
 
 
-tuint64 CApplication::SnapToGrid(tuint64 uiSamplePos)
+tuint64 CKSApplication::SnapToGrid(tuint64 uiSamplePos)
 {
 	tbool bGrid_On = (GetGlobalParm(giParamID_Grid, giSectionGUI) != 0);
 	// Snap to grid
@@ -5677,7 +5677,7 @@ tuint64 CApplication::SnapToGrid(tuint64 uiSamplePos)
 	return uiSamplePos;
 }
 
-tuint64 CApplication::SnapToGridStart(tuint64 uiSamplePos)
+tuint64 CKSApplication::SnapToGridStart(tuint64 uiSamplePos)
 {
 	tbool bGrid_On = (GetGlobalParm(giParamID_Grid, giSectionGUI) != 0);
 
@@ -5695,7 +5695,7 @@ tuint64 CApplication::SnapToGridStart(tuint64 uiSamplePos)
 	return uiSamplePos;
 }
 
-tuint64 CApplication::SnapToGridEnd(tuint64 uiSamplePos)
+tuint64 CKSApplication::SnapToGridEnd(tuint64 uiSamplePos)
 {
 	tbool bGrid_On = (GetGlobalParm(giParamID_Grid, giSectionGUI) != 0);
 	// Snap to grid
@@ -5713,7 +5713,7 @@ tuint64 CApplication::SnapToGridEnd(tuint64 uiSamplePos)
 }
 
 
-tfloat64 CApplication::GetSamples_Pr_32()
+tfloat64 CKSApplication::GetSamples_Pr_32()
 {
 	tfloat64 fSamplesPrBeat		=	( 240.0f / mfTempo) * GetSampleRate();
 	tfloat64 fSamples_Pr_32		=	(fSamplesPrBeat / 32.0f);
@@ -5721,7 +5721,7 @@ tfloat64 CApplication::GetSamples_Pr_32()
 	return fSamples_Pr_32;
 }
 
-void CApplication::Set_Progress(tbool bOn, tfloat32 fProgress, const tchar* pszText /*= NULL*/)
+void CKSApplication::Set_Progress(tbool bOn, tfloat32 fProgress, const tchar* pszText /*= NULL*/)
 {
 	SProgressData sData;
 	sData.fProgress		= fProgress;
@@ -5735,7 +5735,7 @@ void CApplication::Set_Progress(tbool bOn, tfloat32 fProgress, const tchar* pszT
 	Send_Msg_To_All_Panes(&Msg);
 } // Set_Progress
 
-void CApplication::ShowProgress(tuint64 uiIx, tuint64 uiMax, const tchar* pszText, ge::IContext* pContext, tbool* pbAbort)
+void CKSApplication::ShowProgress(tuint64 uiIx, tuint64 uiMax, const tchar* pszText, ge::IContext* pContext, tbool* pbAbort)
 {
 	tbool bOn = (uiMax != 0);
 	tfloat32 f = bOn ? ((tfloat32)uiIx) / uiMax : 0.0f;
@@ -5750,18 +5750,18 @@ void CApplication::ShowProgress(tuint64 uiIx, tuint64 uiMax, const tchar* pszTex
 	}
 } // DoProgress
 
-void CApplication::DoProcess(tfloat** ppfSamplesOut, const tfloat** ppfSamplesIn, tuint32 iNrOfSamples)
+void CKSApplication::DoProcess(tfloat** ppfSamplesOut, const tfloat** ppfSamplesIn, tuint32 iNrOfSamples)
 {
 	CBasePlugIn::DoProcess(ppfSamplesOut, ppfSamplesIn, iNrOfSamples);
 	mpPreviewCallback->Accumulate(ppfSamplesOut, iNrOfSamples);
 }
 
-tint32 CApplication::GetNrOfInputChannels()
+tint32 CKSApplication::GetNrOfInputChannels()
 {
 	return dynamic_cast<CDSP*>(GetDSPEngine())->GetNrOfInputChannels();
 }
 
-void CApplication::UpdateAudioGUI()
+void CKSApplication::UpdateAudioGUI()
 {
 	CBasePane::SMsg Msg(MsgUpdateAudioGUI);
 
@@ -5772,7 +5772,7 @@ void CApplication::UpdateAudioGUI()
 }
 
 
-tint64 CApplication::AudioInput_IntermediateBuffer_CalcExtraLatency()
+tint64 CKSApplication::AudioInput_IntermediateBuffer_CalcExtraLatency()
 {
 	CAutoLock Lock(mMutex);
 
@@ -5788,7 +5788,7 @@ tint64 CApplication::AudioInput_IntermediateBuffer_CalcExtraLatency()
 } // AudioInput_IntermediateBuffer_CalcExtraLatency
 
 
-void CApplication::AudioInput_IntermediateBuffer_Kill()
+void CKSApplication::AudioInput_IntermediateBuffer_Kill()
 {
 	while (mlistAudioInput_IntermediateBuffer.size() > 0) {
 		// Pop one ..
@@ -5809,7 +5809,7 @@ void CApplication::AudioInput_IntermediateBuffer_Kill()
 } // AudioInput_IntermediateBuffer_Kill
 
 
-void CApplication::AudioInput_IntermediateBuffer_Push(const tfloat** ppfSamplesIn, tuint32 iNrOfSamples)
+void CKSApplication::AudioInput_IntermediateBuffer_Push(const tfloat** ppfSamplesIn, tuint32 iNrOfSamples)
 {
 	if (iNrOfSamples <= 0)
 		return;
@@ -5857,7 +5857,7 @@ void CApplication::AudioInput_IntermediateBuffer_Push(const tfloat** ppfSamplesI
 } // AudioInput_IntermediateBuffer_Push
 
 
-void CApplication::AudioInput_IntermediateBuffer_Pop(tfloat** ppfSamplesIn, tuint32 iNrOfSamples)
+void CKSApplication::AudioInput_IntermediateBuffer_Pop(tfloat** ppfSamplesIn, tuint32 iNrOfSamples)
 {
 	if (iNrOfSamples <= 0)
 		return;
@@ -5925,7 +5925,7 @@ void CApplication::AudioInput_IntermediateBuffer_Pop(tfloat** ppfSamplesIn, tuin
 } // AudioInput_IntermediateBuffer_Pop
 
 
-void CApplication::ProcessNonInPlace_InputOnly(const tfloat** ppfSamplesIn, tuint32 iNrOfSamples)
+void CKSApplication::ProcessNonInPlace_InputOnly(const tfloat** ppfSamplesIn, tuint32 iNrOfSamples)
 {
 	CAutoLock Lock(mMutex);
 
@@ -5933,7 +5933,7 @@ void CApplication::ProcessNonInPlace_InputOnly(const tfloat** ppfSamplesIn, tuin
 } // ProcessNonInPlace_InputOnly
 
 
-void CApplication::ProcessNonInPlace_OutputOnly(tfloat** ppfSamplesOut, tuint32 iNrOfSamples)
+void CKSApplication::ProcessNonInPlace_OutputOnly(tfloat** ppfSamplesOut, tuint32 iNrOfSamples)
 {
 	CAutoLock Lock(mMutex);
 
@@ -5953,7 +5953,7 @@ void CApplication::ProcessNonInPlace_OutputOnly(tfloat** ppfSamplesOut, tuint32 
 } // ProcessNonInPlace_OutputOnly
 
 
-void CApplication::ProcessNonInPlace(tfloat** ppfSamplesOut, const tfloat** ppfSamplesIn, tuint32 iNrOfSamples)
+void CKSApplication::ProcessNonInPlace(tfloat** ppfSamplesOut, const tfloat** ppfSamplesIn, tuint32 iNrOfSamples)
 {
 	CAutoLock Lock(mMutex);
 
@@ -5961,7 +5961,7 @@ void CApplication::ProcessNonInPlace(tfloat** ppfSamplesOut, const tfloat** ppfS
 } // ProcessNonInPlace
 
 	
-void CApplication::ProcessNonInPlace_NoLock(tfloat** ppfSamplesOut, const tfloat** ppfSamplesIn, tuint32 iNrOfSamples)
+void CKSApplication::ProcessNonInPlace_NoLock(tfloat** ppfSamplesOut, const tfloat** ppfSamplesIn, tuint32 iNrOfSamples)
 {
 	if (iNrOfSamples <= miMaxSubBufferSize) {
 		// Not too many samples, we handle them all in one go
@@ -6010,7 +6010,7 @@ void CApplication::ProcessNonInPlace_NoLock(tfloat** ppfSamplesOut, const tfloat
 	}
 } // ProcessNonInPlace_NoLock
 
-void CApplication::Set_Project_License()
+void CKSApplication::Set_Project_License()
 {
 	SetGlobalParm(giParamID_Show_Export_For_Web_Window, true, giSectionGUI);
 	

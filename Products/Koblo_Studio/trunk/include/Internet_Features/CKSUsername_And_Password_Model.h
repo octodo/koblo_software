@@ -27,7 +27,7 @@
  \ based on TinyXml www.sourceforge.net/projects/tinyxml
  */
 
-class CApplication;
+class CKSApplication;
 
 
 class CKSUsername_And_Password_Model

@@ -18,7 +18,7 @@ void CKSModule::Destroy()
 
 kspi::IPlugIn* CKSModule::CreateProcess(tuint32 iIndex)
 {
-	return new CApplication(this, iIndex);
+	return new CKSApplication(this, iIndex);
 }
 
 #ifdef WIN32
