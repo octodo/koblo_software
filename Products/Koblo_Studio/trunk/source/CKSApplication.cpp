@@ -1657,7 +1657,7 @@ void CKSApplication::ExportSelection(tbool bIncludeEffects, ac::EAudioCodec eCod
 		std::list<tint32> listiTracks;
 		std::list<tint32> listiTrack_NonMuted;
 		for(tint32 iTrack=0; (bSuccess) && (iTrack<giNumber_Of_Tracks); iTrack++) {
-			CTrack_DSP* pChannel = gpDSPEngine->GetChannel(iTrack);
+			CTrack_DSP* pChannel = gpDSPEngine->GetTrack(iTrack);
 			if (pChannel->HasRegions()) {
 				STrackSelectionInfo sInfo = gpDSPEngine->GetTrackSelection(iTrack);
 				if (
@@ -1744,7 +1744,7 @@ tbool CKSApplication::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iSt
 
 	CExportClipTask* pClipPrev = NULL;
 
-	CTrack_DSP* pChannel = gpDSPEngine->GetChannel(iTrack);
+	CTrack_DSP* pChannel = gpDSPEngine->GetTrack(iTrack);
 	const std::list<CTrack_DSP::SChannelRegionInfo*>& regions = pChannel->GetRegionList();
 	std::list<CTrack_DSP::SChannelRegionInfo*>::const_iterator it = regions.begin();
 
@@ -1785,10 +1785,10 @@ tbool CKSApplication::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iSt
 		}
 
 		// Export clip
-		CRegion_DSP* pSoundObject = pRegionInfo->pSoundObject;
-		tint64 iClipStartPos = pSoundObject->GetSoundStartPos();
-		tint64 iClipDuration = pSoundObject->GetDuration();
-		const tchar* pszClipName = pSoundObject->GetSoundListItemName();
+		CRegion_DSP* pRegion = pRegionInfo->pRegion;
+		tint64 iClipStartPos = pRegion->GetSoundStartPos();
+		tint64 iClipDuration = pRegion->GetDuration();
+		const tchar* pszClipName = pRegion->GetSoundListItemName();
 		if (iRegionCutOffStart > iClipDuration) {
 			// Cut-off entire clip - do nothing
 		}
@@ -3636,8 +3636,8 @@ tbool CKSApplication::ExportAllTracks(ac::EAudioCodec eCodec, ac::EQuality eQual
 	for(tint32  iTrack = 0; iTrack < giNumber_Of_Tracks; iTrack++)
 	{
 		if(GetGlobalParm(giParam_Ch_In_Use, iTrack + giSection_First_Track)) {
-			CTrack_DSP* pChannel = gpDSPEngine->GetChannel(iTrack);
-			if (pChannel->HasRegions()) {
+			CTrack_DSP* pTrack = gpDSPEngine->GetTrack(iTrack);
+			if (pTrack->HasRegions()) {
 				listiTracks_IncludeMuted.insert(listiTracks_IncludeMuted.end(), iTrack);
 				if (!gpDSPEngine->IsTrackMuted(iTrack)) {
 					listiTracks.insert(listiTracks.end(), iTrack);
@@ -4194,7 +4194,7 @@ tbool CKSApplication::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 			tint32 iChannels = giNumber_Of_Tracks;
 			tint32 iChannel = 0;
 			for (iChannel = 0; iChannel < iChannels; iChannel++) {
-				CTrack_DSP* pChannel = dynamic_cast<CDSP*>(GetDSPEngine())->GetChannel(iChannel);
+				CTrack_DSP* pChannel = pDSP->GetTrack(iChannel);
 				//tint32 iInserts = 4;
 				//tint32 iInsert;
 				for (tint32 iInsert = 0; iInsert < giNumber_Of_Inserts; iInsert++) {
@@ -4687,8 +4687,8 @@ void CKSApplication::VerifyCreatePeakFiles(const tchar* pszWavePathL, const tcha
 	std::string sPeakFileR1 = std::string(pszWavePathR) + ".kspk64";
 #endif // _Mac_PowerPC
 
-	std::auto_ptr<CWaveFile> pWaveFileL(new CWaveFile());
-	std::auto_ptr<CWaveFile> pWaveFileR(new CWaveFile());
+	std::auto_ptr<CWave_File> pWaveFileL(new CWave_File());
+	std::auto_ptr<CWave_File> pWaveFileR(new CWave_File());
 	IFile* pSrcFileL;
 	tint32 iOffsetL = 0;
 	tint32 iLengthL = 0;

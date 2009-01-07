@@ -130,7 +130,7 @@ void CAfterImportTask::LoadInserts()
 		tint32 iInsert;
 		pChunk->ReadCP(&iInsert, 1);
 
-		kspi::IPlugIn* pInsert = gpDSPEngine->GetChannel(iChannel)->GetInsert(iInsert);
+		kspi::IPlugIn* pInsert = gpDSPEngine->GetTrack(iChannel)->GetInsert(iInsert);
 		if (pInsert) {
 			tchar* p = new tchar[iSize];
 			pChunk->Read(p, iSize);
