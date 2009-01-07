@@ -200,6 +200,30 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\CDownloaderOSX.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\include\CDownloaderWin.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\CINetUtil.h"
 				>
 			</File>

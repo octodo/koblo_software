@@ -3,8 +3,15 @@
 #include "ineInternalOS.h"
 
 
-tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize)
+void CDownloader::Constructor_OSSpecific()
 {
+	// Nothing here yet
+} // Constructor_OSSpecific
+
+
+tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
+{
+	SetError("Not yet implemented");
 	return false;
 } // DownloadPortion
 

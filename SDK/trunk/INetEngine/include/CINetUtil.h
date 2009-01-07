@@ -11,6 +11,9 @@ public:
 	//! Destructor
 	virtual ~CINetUtil() {}
 
+	//! Internal use only URL-Encoder
+	static tbool URLEncode_Internal(const tchar* pszRaw, std::string& rsEncoded);
+
 protected:
 
 

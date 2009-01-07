@@ -35,7 +35,19 @@ public:
 		\param iPort [in]: Port number (default 80)
 		\return tbool: True upon success, false upon error.
 	*/
-	virtual tbool Init(tchar* pszHost, tchar* pszPage, tint32 iPort = 80) = 0;
+	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10) = 0;
+
+	//! Describes which data type the downloader wants to read
+	enum EDesiredMIMEType {
+		DESIRED_TYPE_TEXT, DESIRED_TYPE_HTML, DESIRED_TYPE_XML,
+		DESIRED_TYPE_BINARY, DESIRED_TYPE_OGG, DESIRED_TYPE_MP3);
+
+	//!
+	/*!
+		\param eType [in]: Sets the data type that the downloader wants to read
+		\return tbool: True upon success
+	*/
+	tbool SetDesiredMIMEType(EDesiredMIMEType eType) = 0;
 
 	//! Call this once for each parameter=value set to submit to download location
 	/*!
@@ -44,16 +56,17 @@ public:
 		\param iParamDataLen [in]: If >= 0 it is length of raw data. If -1 it's substituted by strlen(pcParamData)
 		\return tbool: True upon success, false upon error.
 	*/
-	virtual tbool AddParam(tchar* pszParamName, tchar* pcParamData, tint32 iParamDataLen) = 0;
+	virtual tbool AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen) = 0;
 
 	//! Poll for a portion of download data
 	/*!
 		\param pszBuffer [out]: Pre-allocated buffer to recieve the next portion of downloaded data
 		\param iBufferSize [in]: Size of pre-allocated buffer
 		\param piPortionSize [out]: The number of chars returned in this portion. May occationally be 0, caused by e.g. slow network
+		tint32* piTotalSize [out]
 		\return tbool: True upon success, false upon error.
 	*/
-	virtual tbool DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize) = 0;
+	virtual tbool DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize) = 0;
 
 	//! Breaks an ongoing download operation and releases internal buffers
 	virtual tbool Abort() = 0;
@@ -61,6 +74,11 @@ public:
 	//! Returns True if download has been succesfully completed
 	virtual tbool IsDone() = 0;
 
+	//! Returns True if download has failed and can't continue
+	virtual tbool IsFailed() = 0;
+
+	//! Returns pointer to human readable error description
+	virtual const tchar* GetLastError() = 0;
 };
 
 #endif // _ine_i_downloader
