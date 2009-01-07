@@ -1162,7 +1162,7 @@ void CDSP::Refresh_Region_GUI(tint32 iRegion, tuint32 iTrack)
 
 }
 
-tint32 CDSP::CreateRegion(const std::string& sSoundListItemName, 
+/*tint32 CDSP::CreateRegion(const std::string& sSoundListItemName, 
 							tint32 iChannel, 
 							tuint64 uiTrack_Pos, 
 							tuint64 uiSample_Start, 
@@ -1201,7 +1201,7 @@ tint32 CDSP::CreateRegion(const std::string& sSoundListItemName,
 	
 	return iRegionID;
 }
-
+*/
 void CDSP::Set_Session_Size(tuint64 uiRegionEndSample)
 {
 	if( muiSession_End_Sample < uiRegionEndSample)
@@ -2532,31 +2532,17 @@ tuint64 CDSP::Fade_Out(tuint32 uiRegionID, tuint64 uiFadeOutLength)
 	return uiFadeOutLength;
 }
 
-
+/*
 void CDSP::Region_Volume(tuint32 uiRegionID, tfloat32 fRegion_Volume)
 { 
 	
 	SRegionInfo RegionInfo;
 	GetRegionInfo( RegionInfo, uiRegionID);
-	CRegion_DSP* pRegionSoundObject	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
-	
-	/*
-	tuint64 uiSoundDuraion				=	pRegionSoundObject->GetDuration();
-	tuint64 uiFadeInLength				=	pRegionSoundObject->GetFadeInLength();
-	
-	if(uiFadeOutLength > uiSoundDuraion)
-		uiFadeOutLength = uiSoundDuraion;
-	
-	if(uiFadeOutLength + uiFadeInLength > uiSoundDuraion){
-		uiFadeInLength = uiSoundDuraion - uiFadeOutLength;
-		pRegionSoundObject->SetFadeInLength(uiFadeInLength);
-	}
-	*/
-	pRegionSoundObject->SetRegionVolume(fRegion_Volume);
-	
+	CRegion_DSP* pRegion	=	mppTracks[RegionInfo.uiTrack]->GetRegion_DSP(uiRegionID);
+	pRegion->SetRegionVolume(fRegion_Volume);	
 	
 }
-
+*/
 
 void CDSP::LoopSelection()
 { 

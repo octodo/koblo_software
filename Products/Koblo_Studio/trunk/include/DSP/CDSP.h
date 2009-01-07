@@ -20,7 +20,9 @@
 // (mo) Hmm, we ought to find a better solution here, instead of a global...
 extern st::IStreamManager* gpStreamManager;
 
-class CDSP : public virtual CBaseDSPEngine
+class CDSP : 
+public virtual CBaseDSPEngine,
+public virtual CRegion_Model
 {
 public:
 	//! Constructor
@@ -164,6 +166,10 @@ public:
 	virtual void SetDestinationForChannelOrBus(tint32 iChOrBus, tint32 iDestination, tint32 iDestNumberOfChannels);
 	virtual tbool UpdateDestinationForChannelOrBus_ButOnlyIfItMatches(tint32 iChOrBus, tint32 iDestination, tint32 iDestNumberOfChannels);
 
+
+	
+	
+	/*
 	// Creates a region, and returns its unique ID. If uiSamplePosEnd == -1 all of sound is used.
 	tint32 CreateRegion(const std::string& sSoundListItemName, 
 								tint32 iChannel, 
@@ -173,6 +179,7 @@ public:
 								tuint64 uiFadeInLength = 0,
 								tuint64 uiFadeOutLength = 0,
 								tfloat32 fRegionVolume = 1.0);
+	 */
 	
 	//! cut a region in two
 	void CutRegion(tuint32 uiTrack, tuint32 uiRegionID, tuint64 uiCutPos);
@@ -196,7 +203,7 @@ public:
 	tuint64 Fade_Out(tuint32 uiRegionID, tuint64 uiFadeOutLength);
 	
 	//! Region Volume
-	void Region_Volume(tuint32 uiRegionID, tfloat32 fRegion_Volume);
+//	void Region_Volume(tuint32 uiRegionID, tfloat32 fRegion_Volume);
 	
 	//! Loop Selectin
 	void LoopSelection();
@@ -264,7 +271,7 @@ public:
 	typedef void* RegionSearchHandle;
 
 	const RegionSearchHandle mRegionSearchEnd;
-
+/*
 	struct SRegionInfo
 	{	
 		//! region identifier
@@ -277,8 +284,7 @@ public:
 		tuint64 uiEndPos;
 
 	};
-	
-//	void GetRegionInfo(SRegionInfo& rInfo, tuint32 uiID);
+*/	
 	// Get First region look on all tracks
 	RegionSearchHandle GetFirstRegion(SRegionInfo& rInfo);
 	// Get next region on all tracks
@@ -286,7 +292,7 @@ public:
 
 	void FinishRegionSearch(RegionSearchHandle Handle);
 	
-	void SetRegionCallback(IRegionCallback* pRegionCallback) {mpRegionCallback = pRegionCallback;}
+//	void SetRegionCallback(IRegionCallback* pRegionCallback) {mpRegionCallback = pRegionCallback;}
 
 	const tchar* GetClipNameOfSelectedRegion();
 
@@ -461,13 +467,19 @@ public:
 
 	tint32 GetStutterCounter();
 
-	void ResetStutterCounter()
-	{ miStutterCounter = 0; };
+	void ResetStutterCounter(){ miStutterCounter = 0; };
+	
+	//! finds a region info for a region
+	/*!
+	 \param RegionInfo [out]: region info to write in
+	 \param uiID [in]: unique region id
+	*/
+	void GetRegionInfo(SRegionInfo& RegionInfo,tuint32 uiID);
 
 
 protected:
 
-	IRegionCallback* mpRegionCallback;
+//	IRegionCallback* mpRegionCallback;
 
 	tfloat** mppfInputCur;
 
@@ -517,7 +529,7 @@ protected:
 		std::list<CTrack_DSP::SChannelRegionInfo*>::const_iterator itCur;
 	};
 	
-	void GetRegionInfo(SRegionInfo& RegionInfo,tuint32 uiID);
+//	void GetRegionInfo(SRegionInfo& RegionInfo,tuint32 uiID);
 
 	// Lasse, 2008-0515
 #ifdef WIN32
