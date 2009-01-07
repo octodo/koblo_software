@@ -75,7 +75,7 @@ public:
 	void IncSongPos(tint32 iSamples) {muiSongPos += iSamples;}
 
 	struct SChannelRegionInfo {
-		CRegion_DSP* pSoundObject;
+		CRegion_DSP* pRegion;
 		tuint64 uiTrackPosStart;
 		tuint32 uiRegionID;
 	};
@@ -199,121 +199,8 @@ protected:
 	std::string msRecordingName;
 
 	std::string msRecordingNameDest;
+	
 };
-
-class CAUXReverb : public virtual CTrack_DSP
-{
-public:
-	CAUXReverb(CDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTrack_DSP** ppAUXes = 0) : CTrack_DSP(pDSP, iChannelNumber, bIsBusOrMix, ppAUXes)
-		{miDestinationNumberOfChannels = 2;}
-
-	//! CTrack_DSP override
-	virtual void Initialize();
-	//! CTrack_DSP override
-	virtual void DeInitialize();
-
-	//! IMixerChannel override
-	virtual void ResetAllEffectsTails();
-
-	virtual void Start();
-	virtual void Stop();
-
-	virtual void Process(tint32 iSamples);
-	
-	virtual void Set_Reverb_On(tint32 iValue);
-	virtual void Set_Reverb_Size(tint32 iValue);
-	virtual void Set_Reverb_PDelay(tint32 iValue);
-	virtual void Set_Reverb_Damp(tint32 iValue);
-	virtual void Set_Reverb_Panorama(tint32 iValue);
-	virtual void Set_Reverb_Color1(tint32 iValue);
-	virtual void Set_Reverb_Color2(tint32 iValue);
-	virtual void Set_Reverb_Mix(tint32 iValue);
-	
-private:
-
-	revmodel KobloVerb; 
-	tint32 miMix;
-//	tint32 miSize;
-//	tint32 miPDelay;
-//	tint32 miDamp;
-//	tint32 miPanorama;
-//	tint32 miColor1;
-//	tint32 miColor2;
-	tbool  mbReverb_On;
-			
-};
-
-//! RAM allocated for echo effect (per channel). Must be a power of 2.
-#define EFFECT_ECHO_BUFFER_SIZE 131072*2
-
-class CAUXEcho : public virtual CTrack_DSP
-{
-public:
-	CAUXEcho(CDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTrack_DSP** ppAUXes = 0) : CTrack_DSP(pDSP, iChannelNumber, bIsBusOrMix, ppAUXes)
-		{miDestinationNumberOfChannels = 2;}
-
-	//! CTrack_DSP override
-	virtual void Initialize();
-	//! CTrack_DSP override
-	virtual void DeInitialize();
-
-	//! IMixerChannel override
-	virtual void ResetAllEffectsTails();
-
-	virtual void Start();
-	virtual void Stop();
-
-	virtual void Process(tint32 iSamples);
-	
-	virtual void Set_Delay_Power(tbool bPower);
-	virtual void Set_Delay_Time(tint32 iMSec);
-	virtual void Set_Feedback(tint32 iFeedback);
-	virtual void Set_LF_Damping(tint32 iLF_Damping);
-	virtual void Set_HP_Damping(tint32 iHP_Damping);
-	virtual void Set_Sync_To_Tempo(tbool bSync);
-	
-	//tint32 GetSampleRate(){ return mfSampleRate;};
-	
-	
-private:
-	
-	//! Feedback
-	tfloat mfFeedback;
-	//! Damping
-	tfloat mfDamping;
-	//! High freq Damping
-	tfloat mfHPDamping;
-	//! Buffer (left channel)
-	tfloat* mpfBuffer1;
-	//! Buffer (right channel)
-	tfloat* mpfBuffer2;
-	//! Current writing position into buffer
-	tint32 miPos;
-	//! Current delay time in samples
-	tint32 miInterFaceDelayTime;
-	//! Current delay time in samples
-	tint32 miDelayTime;
-	//! Current Host delay time in samples
-	tint32 miHostDelayTime;
-	//! Synck to host time
-	tbool  mbSyncToHost;
-	//! Low pass history
-	tfloat mpfLPHistory[2];
-	//! High pass history
-	tfloat mpfHPHistory[2];
-	// Power on off
-	tint32 miPower;
-	// Delay time in mSec
-	tint32 miMSec;
-	
-
-	virtual void Set_Delay_in_Samples();
-	
-	
-	
-
-};
-
 
 
 

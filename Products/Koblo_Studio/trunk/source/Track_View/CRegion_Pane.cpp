@@ -762,7 +762,7 @@ void CRegion_Pane::Update_Region_Volume(tint32 uiRegion_Volume_Pixel)
 		fVolume = 1.0f;
 	
 	
-	gpDSPEngine->Region_Volume(muiRegionID, fVolume);
+	gpDSPEngine->Set_Region_Volume(muiRegionID, fVolume);
 	
 	Refresh_Region_GUI();
 	

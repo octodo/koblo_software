@@ -1,4 +1,4 @@
-//#include "KS.h"
+#include "KSOS.h"
 
 CTrack_Insert::CTrack_Insert(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	: CBasePane(pPaneParent, pGUI)

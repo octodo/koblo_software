@@ -239,6 +239,7 @@ void CPlugInManager::Init()
 
 CPlugInManager::PlugInHandle CPlugInManager::LoadPlugIn(tint32 iCompanyID, tint32 iProductID, tint32 iChannel, tint32 iInsertIndex)
 {
+	//!!! TO DO KS dont load old plug-in's here
 	CAutoLock Lock(gpApplication->GetMeterMutex());
 
 	tint32 iIndex = 0;
@@ -408,7 +409,7 @@ CPlugInManager::PlugInHandle CPlugInManager::LoadPlugIn(tint32 iIndex, tint32 iC
 	pPlugIn->Initialize();
 	pPlugIn->Start();
 
-	CBaseGUI* pBaseGUI = gpApp->CreateExtraWindow(4, (void*)"PlugInWnd", true);
+	CBaseGUI* pBaseGUI = gpMainApplication->CreateExtraWindow(4, (void*)"PlugInWnd", true);
 	CKSPlugInGUI* pPlugInGUI = dynamic_cast<CKSPlugInGUI*>(pBaseGUI);
 
 	kspi::IGUI* pGUI = pPlugIn->CreateGUI(0);

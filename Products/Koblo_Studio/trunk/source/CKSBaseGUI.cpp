@@ -12,7 +12,7 @@ CKSBaseGUI::CKSBaseGUI( de::IParameterManager* pParmMan)
 
 tbool CKSBaseGUI::OnKeyDown(ge::EKey Key)
 {
-	gpApplication->OnKeyDown(Key);
+	return gpApplication->OnKeyDown(Key);
 }
 
 

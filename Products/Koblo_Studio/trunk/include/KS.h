@@ -93,16 +93,20 @@
 #include "CParmGlobal.h"
 #include "Grid_Patterns.h"
 
-#include "WaveFile.h"
+#include "DSP/CLoad_Errors.h"
+#include "DSP/CWave_Parser.h"
+#include "DSP/CWave_File.h"
+
 
 // Sounds
 class CApplication;
-#include "CSample_DSP.h"
-#include "CRegion_DSP.h"
+#include "DSP/CSample_DSP.h"
+#include "DSP/CRegion_Model.h"
+#include "DSP/CRegion_DSP.h"
 
 // PlugIn
 class CPlugInManager;
-#include "CApplication.h"
+#include "CKSApplication.h"
 
 // Plug-Ins
 #include "CPlugInManager.h"
@@ -154,8 +158,6 @@ class CPlugInManager;
 #include  "CTrack_Info_Big.h"
 #include  "CTrack_AUX_Insert.h"
 #include  "CTrack_Insert.h"
-//#include  "CTrack_System_Info.h"
-//#include  "CTrack_System_Setup.h"
 #include  "CTrack_Fade_Handle.h"
 #include  "CMix_Scroll.h"
 #include  "CMix_Channel.h"
@@ -195,8 +197,9 @@ class CPlugInManager;
 #include "CKSPreferences.h"
 
 // DSP
-#include "CBuffer.h"
-#include "CTrack_DSP.h"
-#include "CDSP.h"
-
+#include "DSP/CBuffer.h"
+#include "DSP/CTrack_DSP.h"
+#include "DSP/CRack_Echo_DSP.h"
+#include "DSP/CRack_Reverb_DSP.h"
+#include "DSP/CDSP.h"
 
