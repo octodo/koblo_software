@@ -41,7 +41,7 @@ tbool CDownloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort
 			SetError("No param name");
 			return false;
 		}
-		for (tchar* pc = pszHost; *pc; pc++) {
+		for (tchar* pc = (tchar*)pszHost; *pc; pc++) {
 			tchar c = *pc;
 			if (
 				((c < 'A') || (c > 'Z'))
@@ -61,7 +61,7 @@ tbool CDownloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort
 	// Verify sanity of page
 	{
 		if (pszPage != NULL) {
-			for (tchar* pc = pszPage; *pc; pc++) {
+			for (tchar* pc = (tchar*)pszPage; *pc; pc++) {
 				tchar c = *pc;
 				if (
 					((c < 'A') || (c > 'Z'))
@@ -101,13 +101,13 @@ tbool CDownloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort
 	muiTimeOutSecs = (tuint32)iTimeOutSecs;
 
 	mbIsInitialized = true;
-	meDesiredMIMEType = DESIRED_TYPE_TXT;
+	meDesiredMIMEType = DESIRED_TYPE_TEXT;
 
 	return true;
 } // Init
 
 
-tbool CDownloader::SetDesiredMediaType(EDesiredMediaType eType)
+tbool CDownloader::SetDesiredMIMEType(EDesiredMIMEType eType)
 {
 	if (mbIsFailed) {
 		//SetError("Previous error");
@@ -123,10 +123,13 @@ tbool CDownloader::SetDesiredMediaType(EDesiredMediaType eType)
 		SetError("We can't set media type as we've already started downloading");
 		return false;
 	}
-} // SetDesiredMediaType
+
+	// Success
+	return true;
+} // SetDesiredMIMEType
 
 
-tbool CDownloader::AddParam(tchar* pszParamName, tchar* pcParamData, tint32 iParamDataLen)
+tbool CDownloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen)
 {
 	if (mbIsFailed) {
 		//SetError("Previous error");
@@ -149,7 +152,7 @@ tbool CDownloader::AddParam(tchar* pszParamName, tchar* pcParamData, tint32 iPar
 			SetError("No param name");
 			return false;
 		}
-		for (tchar* pc = pszParamName; *pc; pc++) {
+		for (tchar* pc = (tchar*)pszParamName; *pc; pc++) {
 			tchar c = *pc;
 			if (
 				((c < 'A') || (c > 'Z'))
@@ -157,8 +160,10 @@ tbool CDownloader::AddParam(tchar* pszParamName, tchar* pcParamData, tint32 iPar
 				((c < 'a') || (c > 'z'))
 				&&
 				((c < '0') || (c > '9'))
+				&&
+				((c != '_') && (c != '[') && (c != ']'))
 			) {
-				SetError("Not hexadecimal paramname");
+				SetError("Not valid paramname");
 				return false;
 			}
 		}

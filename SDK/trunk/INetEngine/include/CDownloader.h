@@ -10,7 +10,7 @@ public:
 	//! IDownloader implementation
 	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10);
 	//! IDownloader implementation
-	tbool SetDesiredMediaType(EDesiredMediaType eType);
+	virtual tbool SetDesiredMIMEType(EDesiredMIMEType eType);
 	//! IDownloader implementation
 	virtual tbool AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen);
 	//! IDownloader implementation
@@ -24,7 +24,7 @@ public:
 	virtual tbool IsFailed();
 
 	//! IDownloader implementation
-	virtual tchar* GetLastError();
+	virtual const tchar* GetLastError();
 
 protected:
 	std::string msHost;
@@ -56,7 +56,7 @@ protected:
 	std::string msLastError;
 	void SetError(const tchar* pszError);
 
-	tbool Constructor_OSSpecific();
+	void Constructor_OSSpecific();
 
 #ifdef _WIN32
 	#include "CDownloaderWin.h"

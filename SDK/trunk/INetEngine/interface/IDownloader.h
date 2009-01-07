@@ -40,14 +40,14 @@ public:
 	//! Describes which data type the downloader wants to read
 	enum EDesiredMIMEType {
 		DESIRED_TYPE_TEXT, DESIRED_TYPE_HTML, DESIRED_TYPE_XML,
-		DESIRED_TYPE_BINARY, DESIRED_TYPE_OGG, DESIRED_TYPE_MP3);
+		DESIRED_TYPE_BINARY, DESIRED_TYPE_OGG, DESIRED_TYPE_MP3};
 
 	//!
 	/*!
 		\param eType [in]: Sets the data type that the downloader wants to read
 		\return tbool: True upon success
 	*/
-	tbool SetDesiredMIMEType(EDesiredMIMEType eType) = 0;
+	virtual tbool SetDesiredMIMEType(EDesiredMIMEType eType) = 0;
 
 	//! Call this once for each parameter=value set to submit to download location
 	/*!

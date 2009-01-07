@@ -3,6 +3,10 @@
 #include "ineInternalOS.h"
 
 
+static DWORD dwContextID_Seed = 0;
+
+
+
 void CDownloader::Constructor_OSSpecific()
 {
 	// Make sure we only close what's been opened
@@ -30,43 +34,45 @@ tbool CDownloader::OpenConnection()
 	}
 	// 3 seconds of *connecting* should be quite enough - even for very slow analogue modems...
 	tint32 iConnectTimeOutMs = 3000; 
-	if (!InternetSetOption(Initialize, INTERNET_OPTION_CONNECT_TIMEOUT, &iConnectTimeOutMs, sizeof(iConnectTimeOutMs))) {
+	if (!InternetSetOption(mhInitialize, INTERNET_OPTION_CONNECT_TIMEOUT, &iConnectTimeOutMs, sizeof(iConnectTimeOutMs))) {
 		SetError("Unable to set connection time-out");
 		return false;
 	}
 
 	// Create pseudo-unique context identifier for the connection
 	mdwContextID = ++dwContextID_Seed;
+	DWORD_PTR pdwContextID = (DWORD_PTR)&mdwContextID;
 	// Connect to server
 	mhConnection = InternetConnect(
 		mhInitialize,
 		msHost.c_str(), miPort,	msUser.c_str(), msPassword.c_str(),
-		INTERNET_SERVICE_HTTP, 0, &mdwContextID);
+		INTERNET_SERVICE_HTTP, 0, pdwContextID);
 	if (mhConnection == NULL) {
 		SetError("InternetConnect(..) failed");
 		return false;
 	}
 
 	// Prepere media-type
-	tchar* pszMediaType = NULL;
+	tchar* apszTypes[2];
+	apszTypes[0] = apszTypes[1] = NULL;
 	switch (meDesiredMIMEType) {
-		case DESIRED_TYPE_HTML:		pszMediaType = "text/html";		break;
-		case DESIRED_TYPE_XML:		pszMediaType = "text/xml";		break;
-		case DESIRED_TYPE_BINARY:	pszMediaType = "application/octet-stream"; break;
-		case DESIRED_TYPE_OGG:		pszMediaType = "audio/ogg";		break;
-		case DESIRED_TYPE_MP3:		pszMediaType = "audio/mpeg";	break;
+		case DESIRED_TYPE_HTML:		apszTypes[0] = "text/html";		break;
+		case DESIRED_TYPE_XML:		apszTypes[0] = "text/xml";		break;
+		case DESIRED_TYPE_BINARY:	apszTypes[0] = "application/octet-stream"; break;
+		case DESIRED_TYPE_OGG:		apszTypes[0] = "audio/ogg";		break;
+		case DESIRED_TYPE_MP3:		apszTypes[0] = "audio/mpeg";	break;
 		
 		default:
-		case DESIRED_TYPE_TEXT:		pszMediaType = "text/*";		break
+		case DESIRED_TYPE_TEXT:		apszTypes[0] = "text/*";		break;
 	}
 	// Open document
 	mhFile = ::HttpOpenRequest(
 		mhConnection,
 		(miParamsAssembledLen > 0) ? "POST" : "GET",
 		msPage.c_str(),
-		NULL, NULL, pszMediaType,
+		NULL, NULL, (LPCTSTR*)apszTypes,
 		INTERNET_FLAG_NO_CACHE_WRITE|INTERNET_FLAG_RELOAD,
-		&mdwContextID);
+		pdwContextID);
 
 	if (mhFile == NULL) {
 		SetError("HttpOpenRequest(..) failed");
@@ -90,13 +96,13 @@ tbool CDownloader::OpenConnection()
 	muiTotalSize = 0;
 	DWORD dwBufferSize = sizeof(muiTotalSize);
 	DWORD dwHeaderIndex = 0;
-	tbool bQueryOK = ::HttpQueryInfo(
+	BOOL bQueryOK = ::HttpQueryInfo(
 		mhFile,
 		HTTP_QUERY_CONTENT_LENGTH, &muiTotalSize, &dwBufferSize,
 		&dwHeaderIndex);
 	if (!bQueryOK) {
 		// Fall back to largest possible value
-		muiTotalSize = ^((tuint64)0);
+		muiTotalSize = !((tuint64)0);
 	}
 
 	return true;

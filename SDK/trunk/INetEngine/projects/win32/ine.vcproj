@@ -258,6 +258,13 @@
 			<File
 				RelativePath="..\..\source\CDownloaderWin.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\source\CINetUtil.cpp"

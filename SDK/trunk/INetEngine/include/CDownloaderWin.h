@@ -6,7 +6,6 @@ protected:
 	HINTERNET mhConnection;
     HINTERNET mhFile;
 	DWORD mdwContextID;
-	static DWORD dwContextID_Seed = 0;
 
 	tuint64 muiTotalSize;
 
