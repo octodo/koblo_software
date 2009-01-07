@@ -19,7 +19,8 @@
 
 
 
-class CWave_File
+class CWave_File : 
+public virtual CLoad_Error
 {
 public:
 	CWave_File() {

@@ -93,7 +93,11 @@
 #include "CParmGlobal.h"
 #include "Grid_Patterns.h"
 
+
+#include "CLoad_Errors.h"
+#include "CWave_Parser.h"
 #include "CWave_File.h"
+
 
 // Sounds
 class CApplication;

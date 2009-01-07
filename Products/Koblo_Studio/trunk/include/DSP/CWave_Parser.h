@@ -1,9 +1,10 @@
 
-class CWaveParser
+class CWave_Parser : 
+public virtual CLoad_Error
 {
 public:
-	CWaveParser();
-	virtual ~CWaveParser();
+	CWave_Parser();
+	virtual ~CWave_Parser();
 
 
 	bool Load(IFile* pFile, tbool bLoadData = true);

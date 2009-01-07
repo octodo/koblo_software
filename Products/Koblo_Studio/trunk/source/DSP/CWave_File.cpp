@@ -6,7 +6,7 @@
 /*
 	Error reporting
 */
-
+/*
 void SoundLoadError(const tchar* psz)
 {
 #ifdef WIN32
@@ -14,7 +14,7 @@ void SoundLoadError(const tchar* psz)
 #endif	// WIN32
 }
 
-
+*/
 /*
 	CWave_File
 */
@@ -35,7 +35,7 @@ struct SSample24
 //tbool CWave_File::LoadSound(tint32 iSampleRate, const tchar* pszPathName)
 tbool CWave_File::LoadSound(tint32 iSampleRate, IChunk* pChunk)
 {
-	CWaveParser Parser;
+	CWave_Parser Parser;
 	if (Parser.Load(pChunk)) {
 	
 
@@ -87,7 +87,7 @@ tbool CWave_File::LoadSound(tint32 iSampleRate, IChunk* pChunk)
 		if (mfBaseFreq == 0) {
 			char psz[512];
 			sprintf(psz, "Converted base freq is 0: %s", (tchar*)"Unknown");
-			SoundLoadError((tchar*)psz);
+		//!!! TO DO make this work again	SoundLoadError((tchar*)psz);
 		}
 
 	//	float fSamplesPerCycle = Parser.GetSampleRate() / Parser.GetBaseFreq();
@@ -115,7 +115,7 @@ tbool CWave_File::LoadSoundStream(tint32 iBufferSize, const tchar* pszPathName)
 
 	mpFile = IFile::Create();
 	mpFile->Open(pszPathName, IFile::FileRead);
-	CWaveParser Parser;
+	CWave_Parser Parser;
 	if (Parser.Load(mpFile, false) == false) {
 		return false;
 	}
