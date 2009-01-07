@@ -39,10 +39,10 @@ protected:
 };
 
 
-class CWaveFile
+class CWave_File
 {
 public:
-	CWaveFile(/*CINetSynth3PlugIn* pPlugIn*/) {
+	CWave_File(/*CINetSynth3PlugIn* pPlugIn*/) {
 //		mpPlugIn = pPlugIn;
 //		mpChunk = NULL;
 		mpFile = NULL;
@@ -60,7 +60,7 @@ public:
 		mhFile = INVALID_HANDLE_VALUE;
 #endif	// WIN32*/
 	}
-	virtual ~CWaveFile() {
+	virtual ~CWave_File() {
 //		if (mppStreamBlock[0]) {
 /*		if (mppiStreamBlock[0]) {
 			tint32 iBlock;

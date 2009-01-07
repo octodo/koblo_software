@@ -93,7 +93,7 @@
 #include "CParmGlobal.h"
 #include "Grid_Patterns.h"
 
-#include "WaveFile.h"
+#include "CWave_File.h"
 
 // Sounds
 class CApplication;

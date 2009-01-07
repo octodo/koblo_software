@@ -7,7 +7,7 @@ CSample_DSP::CSample_DSP(const std::string& sPathName)
 
 	msPathName = sPathName;
 
-	CWaveFile* pWaveFile = new CWaveFile();
+	CWave_File* pWaveFile = new CWave_File();
 	pWaveFile->LoadSoundStream(512, msPathName.c_str());
 
 

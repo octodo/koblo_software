@@ -168,19 +168,6 @@ public:
 
 
 	
-	
-	/*
-	// Creates a region, and returns its unique ID. If uiSamplePosEnd == -1 all of sound is used.
-	tint32 CreateRegion(const std::string& sSoundListItemName, 
-								tint32 iChannel, 
-								tuint64 uiTrackPosStart,
-								tuint64 uiSamplePosStart, 
-								tuint64 uiSamplePosEnd = -1,
-								tuint64 uiFadeInLength = 0,
-								tuint64 uiFadeOutLength = 0,
-								tfloat32 fRegionVolume = 1.0);
-	 */
-	
 	//! cut a region in two
 	void CutRegion(tuint32 uiTrack, tuint32 uiRegionID, tuint64 uiCutPos);
 	

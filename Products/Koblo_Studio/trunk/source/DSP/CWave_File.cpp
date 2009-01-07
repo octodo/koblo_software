@@ -349,7 +349,7 @@ bool CWaveParser::Load(IFile* pFile, tbool bLoadData)
 
 
 /*
-	CWaveFile
+	CWave_File
 */
 
 #ifdef WIN32
@@ -365,8 +365,8 @@ struct SSample24
 #pragma pack(pop)
 #endif	// WIN32
 
-//tbool CWaveFile::LoadSound(tint32 iSampleRate, const tchar* pszPathName)
-tbool CWaveFile::LoadSound(tint32 iSampleRate, IChunk* pChunk)
+//tbool CWave_File::LoadSound(tint32 iSampleRate, const tchar* pszPathName)
+tbool CWave_File::LoadSound(tint32 iSampleRate, IChunk* pChunk)
 {
 	CWaveParser Parser;
 	if (Parser.Load(pChunk)) {
@@ -440,8 +440,8 @@ tbool CWaveFile::LoadSound(tint32 iSampleRate, IChunk* pChunk)
 
 tbool gbCheck = true;
 
-//tbool CWaveFile::LoadSoundStream(tint32 iSampleRate, IChunk* pChunk, tint32 iBufferSize, const std::string& sPathName)
-tbool CWaveFile::LoadSoundStream(tint32 iBufferSize, const tchar* pszPathName)
+//tbool CWave_File::LoadSoundStream(tint32 iSampleRate, IChunk* pChunk, tint32 iBufferSize, const std::string& sPathName)
+tbool CWave_File::LoadSoundStream(tint32 iBufferSize, const tchar* pszPathName)
 {
 	if ((pszPathName == NULL) || (*pszPathName == '\0'))
 		return false;
@@ -601,7 +601,7 @@ tbool CWaveFile::LoadSoundStream(tint32 iBufferSize, const tchar* pszPathName)
 	return true;
 }
 
-void CWaveFile::CreateEmpty()
+void CWave_File::CreateEmpty()
 {
 	mbIsEmpty = true;
 
@@ -622,7 +622,7 @@ void CWaveFile::CreateEmpty()
 	memset(mpfData, 0, 1000 * sizeof(tfloat32));*/
 }
 
-/*void CWaveFile::CheckBlock()
+/*void CWave_File::CheckBlock()
 {
 	return;
 	if (gbCheck == false) {
@@ -675,7 +675,7 @@ void CWaveFile::CreateEmpty()
 	}
 }
 
-void CWaveFile::AddToList(tint32 iBlock)
+void CWave_File::AddToList(tint32 iBlock)
 {
 	tbool bFoundIt = false;
 	std::list<tint32>::const_iterator it = mToFillList.begin();
@@ -690,7 +690,7 @@ void CWaveFile::AddToList(tint32 iBlock)
 	}
 }
 
-void CWaveFile::GetDataStream(tfloat32* pfData, tint32 iOffset, tint32 iSamples)
+void CWave_File::GetDataStream(tfloat32* pfData, tint32 iOffset, tint32 iSamples)
 {
 	ASSERT(iOffset >= 0);
 	ASSERT(iSamples >= 0);
@@ -799,7 +799,7 @@ inline tint32 ReadFromFile(IChunk* pChunk, tint32 iFilePos, tchar* pfData, tint3
 	return 0;
 }
 
-void CWaveFile::FillStreamBlock(tint32 iBuffer, tint32 iBlock)
+void CWave_File::FillStreamBlock(tint32 iBuffer, tint32 iBlock)
 {
 	mpiBlockUsage[iBuffer] = miBlockUsageCounter;
 	miBlockUsageCounter++;
@@ -833,7 +833,7 @@ void CWaveFile::FillStreamBlock(tint32 iBuffer, tint32 iBlock)
 	CheckBlock();
 }
 
-void CWaveFile::LoadStreamBlock(tint32 iBlock)
+void CWave_File::LoadStreamBlock(tint32 iBlock)
 {
 	// First find buffer to clear
 	// Note, we never clear the first buffers
@@ -864,7 +864,7 @@ void CWaveFile::LoadStreamBlock(tint32 iBlock)
 
 }
 
-void CWaveFile::LoadOne()
+void CWave_File::LoadOne()
 {
 	CAutoLock Lock(mMutex);
 
@@ -897,7 +897,7 @@ void CWaveFile::LoadOne()
 	ToDelete.clear();
 }*/
 
-void CWaveFile::Timer()
+void CWave_File::Timer()
 {
 //	while (mToFillList.size() != 0) {
 //		LoadOne();
@@ -913,7 +913,7 @@ void CWaveFile::Timer()
 }
 
 
-/*void CWaveFile::GetDataStreamAsync(tfloat32* pfData, tint32 iOffset, tint32 iSamples)
+/*void CWave_File::GetDataStreamAsync(tfloat32* pfData, tint32 iOffset, tint32 iSamples)
 {
 #ifdef WIN32
 	if (mbIsEmpty) {
@@ -943,7 +943,7 @@ void CWaveFile::Timer()
 #endif	// WIN32
 }*/
 
-/*void CWaveFile::CompleteAsyncTransfer()
+/*void CWave_File::CompleteAsyncTransfer()
 {
 #ifdef WIN32
 	if (mbHasAsyncTransfer == false) {
@@ -952,7 +952,7 @@ void CWaveFile::Timer()
 #endif	// WIN32
 }*/
 
-void CWaveFile::GetStreamInfo(IFile*& rpFile, tint32& riOffset, tint32& riLength, tint32* piBitWidth, tint32* piChannels)
+void CWave_File::GetStreamInfo(IFile*& rpFile, tint32& riOffset, tint32& riLength, tint32* piBitWidth, tint32* piChannels)
 {
 	rpFile = mpFile;
 

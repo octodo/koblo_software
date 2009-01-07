@@ -4687,8 +4687,8 @@ void CApplication::VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar*
 	std::string sPeakFileR1 = std::string(pszWavePathR) + ".kspk64";
 #endif // _Mac_PowerPC
 
-	std::auto_ptr<CWaveFile> pWaveFileL(new CWaveFile());
-	std::auto_ptr<CWaveFile> pWaveFileR(new CWaveFile());
+	std::auto_ptr<CWave_File> pWaveFileL(new CWave_File());
+	std::auto_ptr<CWave_File> pWaveFileR(new CWave_File());
 	IFile* pSrcFileL;
 	tint32 iOffsetL = 0;
 	tint32 iLengthL = 0;

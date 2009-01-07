@@ -18,7 +18,7 @@
 //!!! TO ASK is there always only one channel in a sound?
 //#define MAX_CHANNELS_IN_SOUND 0
 
-/*! \brief CSample process on CWaveFile \
+/*! \brief CSample process on CWave_File \
  *  trim start and end \
  */
 

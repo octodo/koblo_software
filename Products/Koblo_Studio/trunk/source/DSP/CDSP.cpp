@@ -192,7 +192,7 @@ void CDSP::SetSampleRate(tuint32 uiSampleRate)
 {
 	CBaseDSPEngine::SetSampleRate(uiSampleRate);
 
-/*	CWaveFile* pWaveFile = new CWaveFile();
+/*	CWave_File* pWaveFile = new CWave_File();
 	pWaveFile->LoadSoundStream(512, ":Macintosh HD:Track1.wav");
 	mpStream = mpStreamManager->GetStream();
 	IFile* pFile;
@@ -588,7 +588,7 @@ void CDSP::Stop()
 
 //void CDSP::SetTrackInputFile(tint32 iTrack, const std::string& sTargetPathName)
 //{
-//	CWaveFile* pWaveFile = new CWaveFile();
+//	CWave_File* pWaveFile = new CWave_File();
 //	pWaveFile->LoadSoundStream(512, sTargetPathName.c_str());
 ///*	mppStreams[iTrack] = mpStreamManager->GetStream();*/
 //	IFile* pFile;
