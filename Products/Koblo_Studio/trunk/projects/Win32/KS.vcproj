@@ -40,14 +40,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..\..\..\..\SDK\tinyxml\;..\..\include\DSP;..\..\include\Export_Audio_GUI;..\..\include\Import_Audio_GUI;..\..\include\Internet_Features;..\..\include\Mix_GUI;..\..\include\Plugin_Support;..\..\include\Project_ID;..\..\include\Rack_GUI_DSP;..\..\include\Setup_GUI;..\..\include\SoloMute;..\..\include\Track_View;..\..\include\Track_View\Progress;..\..\include\Username_And_Password_View"
+				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..\..\..\..\SDK\tinyxml\;..\..\;..\..\include;..\..\include\Export_Audio_GUI;..\..\include\Import_Audio_GUI;..\..\include\Internet_Features;..\..\include\Mix_GUI;..\..\include\Plugin_Support;..\..\include\Project_ID;..\..\include\Rack_GUI_DSP;..\..\include\Setup_GUI;..\..\include\SoloMute;..\..\include\Track_View;..\..\include\Track_View\Progress;..\..\include\Username_And_Password_View"
 				PreprocessorDefinitions="KSPI_IMPORTS;WIN32;_WINDOWS;_DEBUG;_RESOURCE_FILE_HARDLINKED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="..\include\KSOS.h"
+				PrecompiledHeaderThrough="KSOS.h"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
@@ -122,11 +122,11 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..\..\..\..\SDK\tinyxml\;..\..\include\Export_Audio_GUI;..\..\include\Import_Audio_GUI;..\..\include\Internet_Features;..\..\include\Mix_GUI;..\..\include\Plugin_Support;..\..\include\Project_ID;..\..\include\Rack_GUI_DSP;..\..\include\Setup_GUI;..\..\include\SoloMute;..\..\include\Track_View;..\..\include\Track_View\Progress;..\..\include\Username_And_Password_View;..\..\"
+				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..\..\..\..\SDK\tinyxml\;..\..\;..\..\include;..\..\include\Export_Audio_GUI;..\..\include\Import_Audio_GUI;..\..\include\Internet_Features;..\..\include\Mix_GUI;..\..\include\Plugin_Support;..\..\include\Project_ID;..\..\include\Rack_GUI_DSP;..\..\include\Setup_GUI;..\..\include\SoloMute;..\..\include\Track_View;..\..\include\Track_View\Progress;..\..\include\Username_And_Password_View"
 				PreprocessorDefinitions="KSPI_IMPORTS;WIN32;_WINDOWS;NDEBUG;_RESOURCE_FILE_HARDLINKED"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="..\include\KSOS.h"
+				PrecompiledHeaderThrough="KSOS.h"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
@@ -259,10 +259,6 @@
 					/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath="..\..\source\WaveFile.cpp"
-				>
-			</File>
 			<Filter
 				Name="DSP"
 				>
@@ -275,7 +271,23 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\source\DSP\CLoad_Errors.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\DSP\CRack_Echo_DSP.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\DSP\CRack_Reverb_DSP.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\DSP\CRegion_DSP.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\DSP\CRegion_Model.cpp"
 					>
 				</File>
 				<File
@@ -284,6 +296,14 @@
 				</File>
 				<File
 					RelativePath="..\..\source\DSP\CTrack_DSP.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\DSP\CWave_File.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\DSP\CWave_Parser.cpp"
 					>
 				</File>
 			</Filter>
@@ -705,6 +725,18 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath="..\..\include\DSP\CLoad_Errors.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\DSP\CRack_Echo_DSP.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\DSP\CRack_Reverb_DSP.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\include\DSP\CRegion_DSP.h"
 					>
 					<FileConfiguration
@@ -721,6 +753,10 @@
 							Name="VCCustomBuildTool"
 						/>
 					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\include\DSP\CRegion_Model.h"
+					>
 				</File>
 				<File
 					RelativePath="..\..\include\DSP\CSample_DSP.h"
@@ -759,7 +795,15 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\..\include\DSP\WaveFile.h"
+					RelativePath="..\..\include\DSP\CWave_File.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\DSP\CWave_Parser.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\DSP\CWaveFile.h"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"

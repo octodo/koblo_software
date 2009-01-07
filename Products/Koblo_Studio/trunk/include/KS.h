@@ -203,4 +203,3 @@ class CPlugInManager;
 #include "DSP/CRack_Reverb_DSP.h"
 #include "DSP/CDSP.h"
 
-
