@@ -258,28 +258,13 @@ public:
 	typedef void* RegionSearchHandle;
 
 	const RegionSearchHandle mRegionSearchEnd;
-/*
-	struct SRegionInfo
-	{	
-		//! region identifier
-		tuint32 uiRegionID;
-		//! Track where the region belong
-		tuint32 uiTrack;
-		//! Start positon on track
-		tuint64 uiStartPos;
-		//! End Position on Track
-		tuint64 uiEndPos;
-
-	};
-*/	
+	
 	// Get First region look on all tracks
 	RegionSearchHandle GetFirstRegion(SRegionInfo& rInfo);
 	// Get next region on all tracks
 	void GetNextRegion(RegionSearchHandle& Handle, SRegionInfo& rInfo);
 
 	void FinishRegionSearch(RegionSearchHandle Handle);
-	
-//	void SetRegionCallback(IRegionCallback* pRegionCallback) {mpRegionCallback = pRegionCallback;}
 
 	const tchar* GetClipNameOfSelectedRegion();
 
