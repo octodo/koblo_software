@@ -133,7 +133,7 @@ protected:
 	tint64 miRecordingSongPos;
 
 	CBuffer* mpBuffer;
-	// Parrent pointer, not needed there is a global one
+	// Parrent pointer
 	CDSP* mpDSP;
 	
 	st::IDSPTools* mpDSPTools;

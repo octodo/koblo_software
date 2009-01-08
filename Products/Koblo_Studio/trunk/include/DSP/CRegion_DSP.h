@@ -71,13 +71,13 @@ public:
 	
 	virtual void SetFadeOutLength(tuint64 uiFadeOutLength){muiFadeOutLength = uiFadeOutLength;};
 	
-	virtual void SetRegionVolume(tfloat32 fRegionVolume){mfRegionVolume = fRegionVolume;};
+	virtual void SetVolume(tfloat32 fVolume){mfVolume = fVolume;};
 	
 	tint64 GetFadeInLength(){ return muiFadeInLength;};
 	
 	tint64 GetFadeOutLength(){return muiFadeOutLength;};
 	
-	tfloat32 GetRegionVolume(){return mfRegionVolume;};
+	tfloat32 GetRegionVolume(){return mfVolume;};
 
 	tint32 GetChannels() const {return miChannels;}
 
@@ -109,6 +109,6 @@ protected:
 	tuint64 muiFadeOutLength;
 	
 	//! Region volume
-	tfloat32 mfRegionVolume;
+	tfloat32 mfVolume;
 };
 

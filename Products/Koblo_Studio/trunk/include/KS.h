@@ -102,7 +102,7 @@
 // Sounds
 class CApplication;
 #include "CSample_DSP.h"
-#include "CRegion_Model.h"
+#include "CRegion_Controller.h"
 #include "CRegion_DSP.h"
 
 // PlugIn
