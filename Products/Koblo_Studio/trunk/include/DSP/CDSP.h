@@ -22,7 +22,7 @@ extern st::IStreamManager* gpStreamManager;
 
 class CDSP : 
 public virtual CBaseDSPEngine,
-public virtual CRegion_Model
+public virtual CRegion_Controller
 {
 public:
 	//! Constructor
@@ -166,81 +166,38 @@ public:
 	virtual void SetDestinationForChannelOrBus(tint32 iChOrBus, tint32 iDestination, tint32 iDestNumberOfChannels);
 	virtual tbool UpdateDestinationForChannelOrBus_ButOnlyIfItMatches(tint32 iChOrBus, tint32 iDestination, tint32 iDestNumberOfChannels);
 
-
-	
-	//! cut a region in two
-	void CutRegion(tuint32 uiTrack, tuint32 uiRegionID, tuint64 uiCutPos);
-	
-	//! Trim region
-	void TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 uiSamplePos);
-	
-	//! Duplicate a region
-	void DuplicateRegion();
-	
-	//! Normalise a region
-	void NormaliseRegion();
-	
-	//! Inverse a region
-	void InverseRegion();
-	
-	//! Fade In
-	tuint64 Fade_In(tuint32 uiRegionID, tuint64 uiFadeInLength);
-	
-	//! Fade Out
-	tuint64 Fade_Out(tuint32 uiRegionID, tuint64 uiFadeOutLength);
-	
-	//! Region Volume
-//	void Region_Volume(tuint32 uiRegionID, tfloat32 fRegion_Volume);
-	
-	//! Loop Selectin
-	void LoopSelection();
-
-	
-	//! Move a region
-	void MoveRegion(tuint32 uiID, tint32 iChannel, tuint64 uiTrackPosStart, tuint64 uiSamplePosStart, tuint64 uiSamplePosEnd);
-	
-	//! Copy a region
-//	void CopyRegion(tuint32 uiID, tint32 iChannel, tuint64 uiTrackPosStart, tuint64 uiSamplePosStart, tuint64 uiSamplePosEnd);
-	//-------------------------------------
-
-	//! Refresh the region GUI
-	void Refresh_Region_GUI(tint32 iRegion);
-	void Refresh_Region_GUI(tint32 iRegion, tuint32 iTrack);
-	
-	// Delete all selected regions
-//	void DeleteSelectedRegions(tuint32 uiTrack);
-//	//! Delete one region
-	void DeleteRegion(tuint32 uiTrack, tuint32 uiRegionID);
-	//! Delete one region
-	void DeleteRegionOnGUI(tuint32 uiTrack, tuint32 uiRegionID);
-	
-	
-	//! Get the region size in samplepoints
-	tuint64 GetRegionSize(const std::string& sSoundPathName, tuint64 uiSamplePosStart, tint64 uiSamplePosEnd);
-	//! Get the region size in samplepoints
-	tuint64 GetRegionSize(tuint32 uiID);
-	//! Get Drawing info for a region
-	SRegion_Drawing_Info Get_Region_Drawing_Info(tuint uiRegion);
 	//! Get Loop Drawing info 
 	SLoop_Drawing_Info Get_Loop_Drawing_Info(){ return mLoop_Drawing_Info;};
+	
+	
+	
 
-
-
-	// iSize == 0: small (1 / 1024 sample). iSize == 1: large (1 / 64 sample)
-	void GetRegionPeakFile(tuint32 uiID, IFile** ppFile, tint32 iChannel, tint32 iSize);
+	//! delete all regions on a track
+	void DeleteAllRegionsForTrack(tint32 iTrack);
+	
+	typedef void* RegionSearchHandle;
+	
+	const RegionSearchHandle mRegionSearchEnd;
+	
+	// Get First region look on all tracks
+	RegionSearchHandle GetFirstRegion(SRegionInfo& rInfo);
+	// Get next region on all tracks
+	void GetNextRegion(RegionSearchHandle& Handle, SRegionInfo& rInfo);
+	
+	void FinishRegionSearch(RegionSearchHandle Handle);
+	
+	
+	
+	
+	
+	//! Loop Selectin
+	void LoopSelection();	
 
 	//! Delete selection
 	void Delete_Selection();
 	
 	void DeleteTrack(tuint32 uiTrack);
 
-	void DeleteAllRegionsForTrack(tint32 iTrack);
-
-	void MoveRegion(tuint32 uiID, tint32 iChannelNew, tuint64 uiTrackPosStartNew);
-
-	tbool SaveTrackRegionDataToChunk(tint32 iTrack, IChunk* pChunk);
-	tbool CreateRegionFromChunkData(tint32 iTrack, IChunk* pChunk);
-	
 	CTrack_DSP* GetTrack(tuint32 uiIndex) {return mppTracks[uiIndex];}
 
 	const CTrack_DSP* GetTrack(tuint32 uiIndex) const {return mppTracks[uiIndex];}
@@ -251,22 +208,6 @@ public:
 
 	const CTrack_DSP* GetMaster() const {return mpMaster;}
 
-//	CTrack_DSP* GetAUX(tuint32 uiIndex) {return mppAUXes[uiIndex];}
-
-//	const CTrack_DSP* GetAUX(tuint32 uiIndex) const {return mppAUXes[uiIndex];}
-
-	typedef void* RegionSearchHandle;
-
-	const RegionSearchHandle mRegionSearchEnd;
-	
-	// Get First region look on all tracks
-	RegionSearchHandle GetFirstRegion(SRegionInfo& rInfo);
-	// Get next region on all tracks
-	void GetNextRegion(RegionSearchHandle& Handle, SRegionInfo& rInfo);
-
-	void FinishRegionSearch(RegionSearchHandle Handle);
-
-	const tchar* GetClipNameOfSelectedRegion();
 
 	// Lasse, added 2008-05-15
 	//! Assign audio / midi callback
@@ -382,10 +323,13 @@ public:
 		\param iCmd [in]: Command to apply to track defined in KSGlobals.h ESelectionType
 	*/
 	void SetTrackSelection(tint32 iTrack, tint64 iStart_Sample, tint64 iDuration, tint32 iCmd, tint32 iRegionID = -1);
-	//! Get Selection on a track
-	STrackSelectionInfo GetTrackSelection(tint32 iTrack){ return mpTrackSelectionInfo[iTrack];};
-	//! Select region
-	STrackSelectionInfo SelectRegion(tint32 iRegionID);
+	
+	//! Set Selection on a track
+	void Set_Track_Selection_Type(tuint uiTrack, tint32 iType){mpTrackSelectionInfo[uiTrack].uiSelection_Type = iType;};
+	
+	void Set_Track_Selection_Region(tuint uiTrack, tint32 iID){mpTrackSelectionInfo[uiTrack].iRegionID	= iID;};
+	
+	
 	//! remove  selection on all tracks
 	virtual void Deselect_All_Tracks();
 	//! remove  selection on one track
@@ -447,8 +391,13 @@ public:
 	 \param uiID [in]: unique region id
 	*/
 	void GetRegionInfo(SRegionInfo& RegionInfo,tuint32 uiID);
-
-
+	
+	STrackSelectionInfo mpTrackSelectionInfo[giNumber_Of_Tracks];
+	
+	//! Get Selection on a track
+	STrackSelectionInfo GetTrackSelection(tint32 iTrack){ return mpTrackSelectionInfo[iTrack];};
+	
+	
 protected:
 
 //	IRegionCallback* mpRegionCallback;
@@ -524,7 +473,7 @@ protected:
 	void LoadPrefs();
 	void SavePrefs();
 	
-	STrackSelectionInfo mpTrackSelectionInfo[giNumber_Of_Tracks];
+//	STrackSelectionInfo mpTrackSelectionInfo[giNumber_Of_Tracks];
 	tint32 miSelectedTrack;
 	
 	void Update_Loop();

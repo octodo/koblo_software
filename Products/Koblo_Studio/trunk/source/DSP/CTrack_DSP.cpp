@@ -791,7 +791,7 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 		
 	pRegion->SetFadeInLength(uiFadeInLength);
 	pRegion->SetFadeOutLength(uiFadeOutLength);
-	pRegion->SetRegionVolume(fRegionVolume);
+	pRegion->SetVolume(fRegionVolume);
 		
 	tuint64 uiDuration = ruiSoundPosEnd - uiSoundPosStart +1;
 	Edit_Selection(giTrim,uiTrackPosStart, uiDuration);
@@ -1326,7 +1326,7 @@ void CTrack_DSP::Edit_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 ui
 		// Delet region
 		DeleteRegion(iRegionID);
 		// Delete region on GUI
-		mpDSP->DeleteRegionOnGUI(miChannelNumber, iRegionID);
+		mpDSP->Delete_Region_View(miChannelNumber, iRegionID);
 		// Delete region from list of regions
 		lRegionsToDelete.erase(lRegionsToDelete.begin());
 	}

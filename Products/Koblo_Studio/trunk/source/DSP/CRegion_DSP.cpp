@@ -137,7 +137,7 @@ void CRegion_DSP::GetSamples(tfloat32** ppfData, tint32 iSamples)
 		}
 		for (iSample = 0; iSample < iSamples; iSample++) {
 			tfloat32* pfData = ppfData[0];
-			pfData[iSample] *= mfRegionVolume;
+			pfData[iSample] *= mfVolume;
 		}
 	}
 	else {
@@ -186,8 +186,8 @@ void CRegion_DSP::GetSamples(tfloat32** ppfData, tint32 iSamples)
 			tfloat32* pfDataR = ppfData[1];
 			
 			
-			pfDataL[iSample] *= mfRegionVolume;
-			pfDataR[iSample] *= mfRegionVolume;
+			pfDataL[iSample] *= mfVolume;
+			pfDataR[iSample] *= mfVolume;
 		}
 	}
 } // GetSamples
