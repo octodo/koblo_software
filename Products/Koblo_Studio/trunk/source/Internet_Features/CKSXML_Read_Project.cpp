@@ -50,6 +50,25 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 {
 	// parse values from project tree in to KS data system
 	Parse_Project( mpDoc );
+
+	// (lasse) very very temporary code: download directly from koblo.com
+	CAutoDelete<ine::IDownloader> pDownloader(ine::IDownloader::Create());
+	if (pDownloader->Init("assets.koblo.com", "/mp3s/7/short2.mp3")) {
+		pDownloader->SetDesiredMIMEType(ine::IDownloader::DESIRED_TYPE_MP3);
+		CAutoDelete<IFile> pfTest(IFile::Create());
+		if (pfTest->Open("C:\\testhest.mp3", IFile::FileCreate)) {
+			tchar pszBuffer[1024];
+			tint32 iPortionSize = 0;
+			tuint64 iTotalSize = 0;
+			while (pDownloader->DownloadPortion(pszBuffer, 1024, &iPortionSize, &iTotalSize)) {
+				if (iPortionSize <= 0) {
+					// Done
+					break;
+				}
+				pfTest->Write(pszBuffer, iPortionSize);
+			}
+		}
+	}
 }
 
 void CKSXML_Read_Project::Parse_Project( TiXmlNode* pParent )
