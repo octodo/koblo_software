@@ -1105,7 +1105,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			}
 			break;
 			
-		case ID_FILE_EXPORT:
+		case ID_FILE_EXPORTAUDIO:
 			{
 				tbool bTest = (GetGlobalParm(giParamID_Show_Export_Window, giSectionGUI) != 0);
 				if(!bTest){
@@ -1127,10 +1127,24 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			}
 			break;
 
+		case ID_FILE_DOWNLOADPROJECT:
+			On_Menu_Download_Project();
+			break;
+		
+		case ID_FILE_UPLOADPROJECT:
+			On_Menu_Upload_Project();
+			break;
+		
+		case ID_FILE_COMMITCHANGES:
+			On_Menu_Commit_Project();
+			break;
+		
+		case ID_FILE_UPDATEPROJECT:
+			On_Menu_Update_Project();
+			break;
+
 		case ID_FILE_IMPORTAUDIO:
-			{
-				MenuFileImportAudio();
-			}
+			MenuFileImportAudio();
 			break;
 
 /*
@@ -1156,6 +1170,14 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 
 		case ID_EDIT_DUPLICATE:
 			gpDSPEngine->DuplicateRegion();
+			break;
+
+		case ID_EDIT_INVERSEREGION:
+			gpDSPEngine->InverseRegion();
+			break;
+
+		case ID_EDIT_NORMALIZEREGION:
+			gpDSPEngine->NormaliseRegion();
 			break;
 
 		case ID_EDIT_ADDTRACK:
@@ -1228,13 +1250,13 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			}
 			break;
 
-		case ID_SETUP_AUDIOSETUP:
+		case ID_SETTINGS_AUDIOSETUP:
 			{
 				MenuSetupAudio();
 			}
 			break;
 
-		case ID_SETUP_COLLABORATION:
+		case ID_SETTINGS_PROJECTLICENSE:
 			{
 				Set_Project_License();
 			}
