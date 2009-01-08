@@ -2,12 +2,13 @@
 // Is included into CDownloader.h
 
 protected:
-	HINTERNET mhInitialize;
-	HINTERNET mhConnection;
-    HINTERNET mhFile;
-	DWORD mdwContextID;
+	volatile HINTERNET mhInitialize;
+	volatile HINTERNET mhConnection;
+    volatile HINTERNET mhFile;
+	volatile DWORD mdwContextID;
 
 	tuint64 muiTotalSize;
 
 	tbool OpenConnection();
 	void CloseConnection();
+	CMutex mMutex_Connection;

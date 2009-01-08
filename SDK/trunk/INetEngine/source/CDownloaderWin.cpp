@@ -13,6 +13,11 @@ void CDownloader::Constructor_OSSpecific()
 	mhInitialize = mhConnection = mhFile = NULL;
 } // Constructor_OSSpecific
 
+void CDownloader::Destructor_OSSpecific()
+{
+	CloseConnection();
+} // Destructor_OSSpecific
+
 
 tbool CDownloader::OpenConnection()
 {
@@ -94,16 +99,6 @@ tbool CDownloader::OpenConnection()
 	}
 
 	muiTotalSize = 0;
-	DWORD dwBufferSize = sizeof(muiTotalSize);
-	DWORD dwHeaderIndex = 0;
-	BOOL bQueryOK = ::HttpQueryInfo(
-		mhFile,
-		HTTP_QUERY_CONTENT_LENGTH, &muiTotalSize, &dwBufferSize,
-		&dwHeaderIndex);
-	if (!bQueryOK) {
-		// Fall back to largest possible value
-		muiTotalSize = !((tuint64)0);
-	}
 
 	return true;
 } // OpenConnection
@@ -128,19 +123,24 @@ void CDownloader::CloseConnection()
 
 tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
 {
-	if (!mbIsInitialized) {
-		SetError("Not initialized");
-		return false;
-	}
+	*piPortionSize = 0;
 
 	if (mbIsFailed) {
 		//SetError("Previous error");
 		return false;
 	}
 
+	if (!mbIsInitialized) {
+		SetError("Not initialized");
+		return false;
+	}
+
 	tbool bFirstTime = (!mbIsDownloading);
 	mbIsDownloading = true;
 	if (bFirstTime) {
+		CAutoLock Lock(mMutex_Connection);
+
+		CloseConnection();
 		if (!AssembleParams()) return false;
 		if (!OpenConnection()) {
 			CloseConnection();
@@ -150,14 +150,77 @@ tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32*
 		RefreshAlive();
 	}
 
-	return false;
+	/* hm... ::InternetReadFileEx(..) is too complicated - will attempt InternetReadFile(..)
+	INTERNET_BUFFERS buffers;
+	// Initialize empty so we don't get confused
+	buffers.dwStructSize = sizeof(buffers);
+	buffers.Next = NULL;
+	buffers.lpcszHeader = NULL;
+	buffers.dwHeadersLength = 0;
+	buffers.dwHeadersTotal = 0;
+	buffers.lpvBuffer = NULL;
+	buffers.dwBufferLength = 0;
+	buffers.dwBufferTotal = 0;
+	buffers.dwOffsetLow = buffers.dwOffsetHigh = 0;
+	::InternetReadFileEx(mhFile
+	*/
+	DWORD dwReturned = 0;
+	if (::InternetReadFile(mhFile, pszBuffer, iBufferSize, &dwReturned)) {
+		// Read portion success
+
+		// We're alive
+		RefreshAlive();
+
+		// Tell how much we got in this portion
+		*piPortionSize = (tint32)dwReturned;
+		if (dwReturned == 0) {
+			// No more data
+			mbIsDone = true;
+			mbIsDownloading = false;
+		}
+		else {
+			// Get total data size
+			muiTotalSize = 0;
+			DWORD dwBufferSize = sizeof(muiTotalSize);
+			DWORD dwHeaderIndex = 0;
+			BOOL bQueryOK = ::HttpQueryInfo(
+				mhFile,
+				HTTP_QUERY_CONTENT_LENGTH, &muiTotalSize, &dwBufferSize,
+				&dwHeaderIndex);
+			if (!bQueryOK) {
+				// Fall back to largest possible value
+				muiTotalSize = !((tuint64)0);
+			}
+		}
+	}
+	else {
+		// Read portion failed!
+		tchar pszErr[1024];
+		pszErr[0] = '\0';
+		DWORD dwErrBuffSize = 1024;
+		DWORD dwErr_Dummy = 0;
+		if (::InternetGetLastResponseInfo(&dwErr_Dummy, pszErr, &dwErrBuffSize)) {
+			std::string sErr = "InternetReadFile(..) failed:\n\n";
+			sErr += pszErr;
+			SetError(sErr.c_str());
+		}
+		else {
+			// Message too long for our buffer
+			SetError("InternetReadFile(..) failed");
+		}
+
+		return false;
+	}
+
+	// Success!
+	return true;
 } // DownloadPortion
 
 
 tbool CDownloader::Abort()
 {
 	if (mbIsDownloading) {
-		// TODO: Add functionality...
+		CAutoLock Lock(mMutex_Connection);
 		
 		CloseConnection();
 		mbIsDownloading = false;

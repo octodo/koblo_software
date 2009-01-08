@@ -22,6 +22,7 @@
  * \brief Interface to download a large file from a web address
  *
  * Supplies more complex and buffered method for accessing web-data
+ * (lasse)
 */
 class IDownloader : public virtual IDestructable
 {
@@ -78,7 +79,12 @@ public:
 	virtual tbool IsFailed() = 0;
 
 	//! Returns pointer to human readable error description
-	virtual const tchar* GetLastError() = 0;
+	/*!
+		\param pszErrBuff [out]: Receives a copy of the latest error description
+		\param iErrBuffSize [in]: Size of buffer
+		\return: True upon function success (check buffer to see error - if "" then no error exists)
+	*/
+	virtual tbool GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize) = 0;
 };
 
 #endif // _ine_i_downloader

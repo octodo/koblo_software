@@ -131,6 +131,8 @@ tbool CDownloader::SetDesiredMIMEType(EDesiredMIMEType eType)
 
 tbool CDownloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen)
 {
+	CAutoLock Lock(mMutex_ForParams);
+
 	if (mbIsFailed) {
 		//SetError("Previous error");
 		return false;
@@ -211,6 +213,8 @@ tbool CDownloader::AddParam(const tchar* pszParamName, const tchar* pcParamData,
 
 tbool CDownloader::AssembleParams()
 {
+	CAutoLock Lock(mMutex_ForParams);
+
 	if (!mbIsInitialized) {
 		SetError("Not initialized");
 		return false;
@@ -297,6 +301,8 @@ tbool CDownloader::AssembleParams()
 
 void CDownloader::WipeParams()
 {
+	CAutoLock Lock(mMutex_ForParams);
+
 	mlist_sParamNames.clear();
 
 	std::list<tchar*>::iterator it = mlist_pszParamDataUrlEncoded.begin();
@@ -336,6 +342,8 @@ void CDownloader::RefreshAlive()
 
 tbool CDownloader::IsAlive()
 {
+	// (lasse) Are we really needing this? Anyway not used now
+
 	if ((!mbIsInitialized) || (!mbIsDownloading)) {
 		SetError("Not initialized or not downloading");
 		return false;
@@ -360,6 +368,38 @@ tbool CDownloader::IsAlive()
 
 void CDownloader::SetError(const tchar* pszError)
 {
+	CAutoLock Lock(mMutex_ForErrors);
+
 	msLastError = pszError;
 	mbIsFailed = true;
+}
+
+tbool CDownloader::GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize)
+{
+	CAutoLock Lock(mMutex_ForErrors);
+
+	if ((pszErrBuff == NULL) || (iErrBuffSize <= 0)) return false;
+
+	if (!mbIsFailed) {
+		// No error
+		*pszErrBuff = '\0';
+		return true;
+	}
+
+	tchar* pszMsg = (tchar*)(msLastError.c_str());
+	tint32 iLenMsg = msLastError.length();
+	if (iLenMsg == 0) {
+		// No error description available
+		pszMsg = "Unspecified error";
+		iLenMsg = strlen(pszMsg);
+	}
+	tbool bRoomEnough = iLenMsg < iErrBuffSize;
+	if (!bRoomEnough) {
+		// Cut off
+		iLenMsg = iErrBuffSize - 1;
+	}
+	memcpy(pszErrBuff, pszMsg, iLenMsg);
+	pszErrBuff[iLenMsg] = '\0';
+
+	return bRoomEnough;
 }

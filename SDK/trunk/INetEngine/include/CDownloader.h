@@ -24,7 +24,7 @@ public:
 	virtual tbool IsFailed();
 
 	//! IDownloader implementation
-	virtual const tchar* GetLastError();
+	virtual tbool GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize);
 
 protected:
 	std::string msHost;
@@ -43,20 +43,23 @@ protected:
 	tchar* mpszParamsAssembled;
 	tbool AssembleParams();
 	void WipeParams();
+	CMutex mMutex_ForParams;
 
-	tbool mbIsInitialized;
-	tbool mbIsDownloading;
-	tbool mbIsFailed;
-	tbool mbIsDone;
+	volatile tbool mbIsInitialized;
+	volatile tbool mbIsDownloading;
+	volatile tbool mbIsFailed;
+	volatile tbool mbIsDone;
 
-	tuint32 muiAliveMs;
+	volatile tuint32 muiAliveMs;
 	void RefreshAlive();
 	tbool IsAlive();
 
 	std::string msLastError;
 	void SetError(const tchar* pszError);
+	CMutex mMutex_ForErrors;
 
 	void Constructor_OSSpecific();
+	void Destructor_OSSpecific();
 
 #ifdef _WIN32
 	#include "CDownloaderWin.h"

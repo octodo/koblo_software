@@ -8,6 +8,11 @@ void CDownloader::Constructor_OSSpecific()
 	// Nothing here yet
 } // Constructor_OSSpecific
 
+void CDownloader::Destructor_OSSpecific()
+{
+	// Nothing here yet
+} // Destructor_OSSpecific
+
 
 tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
 {
