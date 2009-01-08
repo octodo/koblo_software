@@ -68,7 +68,7 @@ tbool CDownloader::OpenConnection()
 		case DESIRED_TYPE_MP3:		apszTypes[0] = "audio/mpeg";	break;
 		
 		default:
-		case DESIRED_TYPE_TEXT:		apszTypes[0] = "text/*";		break;
+		case DESIRED_TYPE_TEXT:		apszTypes[0] = NULL;		break;
 	}
 	// Open document
 	mhFile = ::HttpOpenRequest(
@@ -165,7 +165,7 @@ tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32*
 	::InternetReadFileEx(mhFile
 	*/
 	DWORD dwReturned = 0;
-	if (::InternetReadFile(mhFile, pszBuffer, iBufferSize, &dwReturned)) {
+	if (::InternetReadFile(mhFile, pszBuffer, (tuint32)iBufferSize, &dwReturned)) {
 		// Read portion success
 
 		// We're alive
@@ -179,15 +179,42 @@ tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32*
 			mbIsDownloading = false;
 		}
 		else {
+			// Check status code
+			{
+				tchar pszBuff[128];
+				DWORD dwBuffSize = 128;
+				DWORD dwHeaderIndex_Dummy = 0;
+				BOOL bQueryOK = ::HttpQueryInfo(
+					mhFile,
+					HTTP_QUERY_STATUS_CODE, pszBuff, &dwBuffSize,
+					&dwHeaderIndex_Dummy);
+				if (bQueryOK) {
+					tint32 iStatus = atol(pszBuff);
+					tbool bStatusOK = (iStatus == 200);
+					if (!bStatusOK) {
+						SetError(pszBuff);
+						return false;
+					}
+				}
+				else {
+					SetError("Can't get http status");
+					return false;
+				}
+			}
+
 			// Get total data size
+			tchar pszBuff[32];
+			DWORD dwBuffSize = 32;
 			muiTotalSize = 0;
-			DWORD dwBufferSize = sizeof(muiTotalSize);
-			DWORD dwHeaderIndex = 0;
+			DWORD dwHeaderIndex_Dummy = 0;
 			BOOL bQueryOK = ::HttpQueryInfo(
 				mhFile,
-				HTTP_QUERY_CONTENT_LENGTH, &muiTotalSize, &dwBufferSize,
-				&dwHeaderIndex);
-			if (!bQueryOK) {
+				HTTP_QUERY_CONTENT_LENGTH, pszBuff, &dwBuffSize,
+				&dwHeaderIndex_Dummy);
+			if (bQueryOK) {
+				muiTotalSize = atol(pszBuff);
+			}
+			else {
 				// Fall back to largest possible value
 				muiTotalSize = !((tuint64)0);
 			}
@@ -213,6 +240,9 @@ tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32*
 	}
 
 	// Success!
+#ifdef _DEBUG
+	tint64 iTotalSize_Debug = muiTotalSize;
+#endif // _DEBUG
 	return true;
 } // DownloadPortion
 
