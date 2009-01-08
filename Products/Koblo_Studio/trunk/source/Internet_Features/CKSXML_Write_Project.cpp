@@ -565,11 +565,11 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 	Add_Comment(pParent, "samples and their takes. only used takes are listed. a sample can be included that's not used on any track");
 	
 		
-	std::list<CApplication::SFileInfo*> sFileInfos = gpApplication->GetFileInfo();
+	std::list<CKSApplication::SFileInfo*> sFileInfos = gpApplication->GetFileInfo();
 	
 	
 
-	std::list<CApplication::SFileInfo*>::iterator  itFileList = sFileInfos.begin();
+	std::list<CKSApplication::SFileInfo*>::iterator  itFileList = sFileInfos.begin();
 	for (; itFileList != sFileInfos.end(); itFileList++) {
 		
 		TiXmlElement* pSample = new TiXmlElement( "sample" );
@@ -579,14 +579,14 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 		pSample->SetAttribute("id",uiID);
 		pParent->LinkEndChild( pSample );
 		
-		CApplication::SFileInfo* pInfo = *itFileList;
+		CKSApplication::SFileInfo* pInfo = *itFileList;
 		Write_Sample(pSample, pInfo->sOriginalName.c_str());
 		
 		/*
 		TiXmlElement* pName = new TiXmlElement( "sample" );
 		
 		
-		CApplication::SFileInfo* pInfo = *itFileList;
+		CKSApplication::SFileInfo* pInfo = *itFileList;
 	//	pInfo->sOriginalName.c_str();
 		
 		

@@ -27,7 +27,7 @@ class CDSP;
 const tint32 giAudioMaxBufferSize = 32;
 
 extern CDSP* gpDSPEngine;
-extern CApplication* gpApplication;
+extern CKSApplication* gpApplication;
 
 class CMIDIEvent
 {
@@ -62,7 +62,7 @@ class CProgressTask; // Forward declaration
 class CProgressTaskList; // Forward declaration
 
 
-class CApplication : 
+class CKSApplication : 
 public virtual CBasePlugIn, 
 public virtual IBaseDezipperCallback, 
 public virtual ITimerCallback_CanStop, 
@@ -76,9 +76,9 @@ public virtual CKSXML_Create_Sample
 {
 
 public:
-	CApplication(CKSModule* pModule, tuint32 uiProcessIndex);
+	CKSApplication(CKSModule* pModule, tuint32 uiProcessIndex);
 
-	virtual ~CApplication();
+	virtual ~CKSApplication();
 
 	//! IPlugIn override
 	virtual void KSPI_CALL Destroy();

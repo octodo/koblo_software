@@ -26,7 +26,7 @@
  * \brief class that handles all Internet features
 */
 
-class CApplication;
+class CKSApplication;
 
 
 

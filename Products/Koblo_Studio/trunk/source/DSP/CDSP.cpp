@@ -332,8 +332,8 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 		pBuffer->Clear();
 	}
 
-	CApplication::EPlaybackState eState = gpApplication->GetPlaybackState();
-	if (eState == CApplication::geStateExportingTrack) {
+	CKSApplication::EPlaybackState eState = gpApplication->GetPlaybackState();
+	if (eState == CKSApplication::geStateExportingTrack) {
 		// We only need to "play" one single track!
 
 		tint32 iTrack = gpApplication->GetTrackToExport();
@@ -362,11 +362,11 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 		return;
 	}
 	else if (
-		(eState == CApplication::geStatePlaying)
+		(eState == CKSApplication::geStatePlaying)
 		||
-		(eState == CApplication::geStateRecording)
+		(eState == CKSApplication::geStateRecording)
 		||
-		(eState == CApplication::geStateExportingOutMix)
+		(eState == CKSApplication::geStateExportingOutMix)
 	) {
 		tint32 iTrack;
 		for (iTrack = 0; iTrack < giNumber_Of_Tracks; iTrack++) {
@@ -1250,9 +1250,6 @@ void CDSP::DeleteAllRegionsForTrack(tint32 iTrack)
 		listuiIDs.erase(listuiIDs.begin());
 	}	
 }
-
-
-
 
 void CDSP::DeleteTrack(tuint32 uiTrack)
 {
