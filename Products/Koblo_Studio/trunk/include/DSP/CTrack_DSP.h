@@ -98,7 +98,7 @@ public:
 	// Fade selection in
 	void Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64  uiSelection_Duration);
 
-	
+/*	
 	//! Render fade region and insert it on track
 	tint32 Create_Fade_Region(	tint32 iCmd, 
 								const std::string& sSoundClipName, 
@@ -106,7 +106,7 @@ public:
 								tuint64 uiSample_Start, 
 								tuint64 uiSamplePosEnd,
 								tuint64 uiSelection_Duration);
-
+*/
 	kspi::IPlugIn* GetInsert(tint32 iIndex) {return mppInsert[iIndex];}
 
 	void SetArmed(tbool bNew) {mbArmed = bNew;}

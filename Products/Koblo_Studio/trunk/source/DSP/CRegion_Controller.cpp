@@ -35,9 +35,9 @@ tint32 CRegion_Controller::CreateRegion(const std::string& sSoundListItemName,
 												fRegionVolume);
  
 	// GUI		
-	tuint64 uiSample_Duration = uiSamplePosEnd - uiSample_Start;
+//	tuint64 uiSample_Duration = uiSamplePosEnd - uiSample_Start;
  
-	mpRegionCallback->InsertRegion(iRegionID, iTrack, uiTrack_Pos, uiSample_Start, uiSample_Duration, sSoundListItemName.c_str());
+	mpRegionCallback->InsertRegion(iRegionID, iTrack, uiTrack_Pos, uiSample_Offset, uiSample_Duration, sSoundListItemName.c_str());
 	mpRegionCallback->SelectRegion(iRegionID, iTrack);
 	gpDSPEngine->Select_Region(iRegionID);
  
@@ -129,7 +129,7 @@ void CRegion_Controller::TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool b
 		iSoundPos				+=	iClipSize;
 		
 		
-		mpTrack_DSP->TrimRegion(uiRegionID, iPossition, iSoundPos, iSampleEnd);
+		mpTrack_DSP->TrimRegion(uiRegionID, iPossition, iSoundPos, iSoundDuration);
 		mpRegionCallback->Refresh_Region_GUI(uiRegionID, uiTrack);
 	}
 	//--------------------------------------
