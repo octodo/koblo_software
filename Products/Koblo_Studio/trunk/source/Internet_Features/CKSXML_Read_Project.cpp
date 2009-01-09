@@ -56,16 +56,29 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 	if (pDownloader->Init("assets.koblo.com", "/mp3s/7/short2.mp3")) {
 		pDownloader->SetDesiredMIMEType(ine::IDownloader::DESIRED_TYPE_MP3);
 		CAutoDelete<IFile> pfTest(IFile::Create());
-		if (pfTest->Open("C:\\testhest.mp3", IFile::FileCreate)) {
+#ifdef _WIN32
+		tchar* pszTestFile = "C:\\testhest.mp3";
+#endif // _WIN32
+#ifdef _Mac
+		tchar* pszTestFile = "/testhest.mp3";
+#endif // _Mac
+		if (pfTest->Open(pszTestFile, IFile::FileCreate)) {
 			tchar pszBuffer[1024];
 			tint32 iPortionSize = 0;
 			tuint64 iTotalSize = 0;
 			while (pDownloader->DownloadPortion(pszBuffer, 1024, &iPortionSize, &iTotalSize)) {
-				if (iPortionSize <= 0) {
+				if (pDownloader->IsDone()) {
 					// Done
 					break;
 				}
-				pfTest->Write(pszBuffer, iPortionSize);
+				if (iPortionSize > 0) {
+					pfTest->Write(pszBuffer, iPortionSize);
+				}
+			}
+			if (pDownloader->IsFailed()) {
+				tchar pszErr[1024];
+				pDownloader->GetLatestError(pszErr, 1024);
+				ge::IWindow::ShowMessageBox(pszErr, "Downloader Error");
 			}
 		}
 	}
