@@ -1155,129 +1155,64 @@ void CTrack_DSP::SetInsertBypass(tint32 iInsert, tbool bBypass)
 
 void CTrack_DSP::Delete_Selection( tuint64 uiSelection_Pos, tuint64 uiSelection_Duration)
 {
-
-	tint32 iNewRegionID	= -1;
-	miFade_Pos			= 0;
-
-	// List of regions to delete
-	std::list<tuint32> lRegionsToDelete;
 	
-	// Look at all regions on track
-	std::list<SChannelRegionInfo*>::iterator it = mRegionInfoList.begin();
-	for (; it != mRegionInfoList.end(); it++) {
-		tint32 iRegionID					=	(*it)->uiRegionID;
-		tuint64 iSample_Duration			=	(*it)->pRegion->GetDuration();
-		std::string sClipName				=	(*it)->pRegion->GetSoundListItemName();
-		tuint64 uiRegionStart				=	(*it)->uiTrackPosStart;
-		tuint64 uiRegionEnd					=	uiRegionStart + iSample_Duration - 1;
-		tuint64 iSample_Offset				=	(*it)->pRegion->Get_Sample_Offset();
-		tuint64 uiSoundEnd					=	(*it)->pRegion->GetEndPos();
-		tuint64 uiSelectionStart			=	uiSelection_Pos;
-		tuint64 uiSelectionEnd				=	uiSelectionStart + uiSelection_Duration;
+	 tint32 iNewRegionID	= -1;
+	 
+	 // List of regions to delete
+	 std::list<tuint32> lRegionsToDelete;
+	 
+	 // Look at all regions on track
+	 std::list<SChannelRegionInfo*>::iterator it = mRegionInfoList.begin();
+	 for (; it != mRegionInfoList.end(); it++) {
+	 
+	 
+	 
+		 tint32 iRegionID					=	(*it)->uiRegionID;
+		 tuint64 iSample_Duration			=	(*it)->pRegion->GetDuration();
+		 std::string sClipName				=	(*it)->pRegion->GetSoundListItemName();
+		 tuint64 uiRegion_Pos				=	(*it)->uiTrackPosStart;
+		 tuint64 uiRegion_End				=	uiRegion_Pos + iSample_Duration - 1;
+		 tuint64 iSample_Offset				=	(*it)->pRegion->Get_Sample_Offset();
+	//	 tuint32 uiTrack					=	(*it)->uiTrack;
+		 
 		
-		// Prevent feedback on new fade in regions
-		//!!! BUG has to come up with somthing better
-		//!!! Make list of regions to add
-		//!!! find start sample and end sample, use it for fading
-		if(iNewRegionID != iRegionID){
-		// Make sure the region is inside the selection
-			if(uiSelectionEnd >= uiRegionStart && uiSelectionStart <= uiRegionEnd) 
-			{
-				//-----------------------------------------------------------
-				// Selection start on region
-				if(uiSelectionStart <= uiRegionStart)
-					uiSelectionStart		=	0;
-				else
-					uiSelectionStart		=	uiSelectionStart - uiRegionStart;
-				// Selection end on region	
-				if( uiSelectionEnd > uiRegionEnd)
-					uiSelectionEnd		=	iSample_Duration;
-				else
-					uiSelectionEnd		=	uiSelectionEnd - uiRegionStart;
-					
-				tuint64 uiSelectionDuration	=	uiSelectionEnd - uiSelectionStart + 1;
+		 tuint64 uiSelection_End			=	uiSelection_Pos + uiSelection_Duration;
+	 
+	 
+	 
+		 // Prevent feedback on new fade in regions
+		 //!!! BUG has to come up with somthing better
+		 //!!! Make list of regions to add
+		 //!!! find start sample and end sample, use it for fading
+		 if(iNewRegionID != iRegionID){
+			 //  entire region is inside the selection
+			 if( uiSelection_Pos <= uiRegion_Pos && uiSelection_End >= uiRegion_End ){
+				 lRegionsToDelete.insert(lRegionsToDelete.begin(), iRegionID);
+			 }
+			 // region start is inside the selection
+			 else if( uiSelection_Pos <= uiRegion_Pos && uiSelection_End < uiRegion_End ){
+				 
+				 uiSelection_Pos	=	 uiSelection_End - uiRegion_Pos;
+				 
+				 Trim_Region(iRegionID, uiSelection_End, iSample_Offset + uiSelection_Duration, iSample_Duration - uiSelection_Duration );
+				 
+				 mpDSP->Refresh_Region_GUI(miChannelNumber, iRegionID);
+	 
+			 }
+		 }
+	 }
+	 
+	 // Delete Regions on Channels and GUI and erase then from list to delete
+	 while (lRegionsToDelete.size()) {
+		 tint32 iRegionID = *(lRegionsToDelete.begin());
+		 // Delet region
+		 DeleteRegion(iRegionID);
+		 // Delete region on GUI
+		 mpDSP->Delete_Region_View(miChannelNumber, iRegionID);
+		 // Delete region from list of regions
+		 lRegionsToDelete.erase(lRegionsToDelete.begin());
+	 }
 
-				//-----------------------------------------------------------	
-				// Select entire region
-				if( uiSelectionStart == 0 ) {
-					// If the entire region is inside the selection
-					if( iSample_Duration <= uiSelectionDuration){
-						
-						
-						
-						lRegionsToDelete.insert(lRegionsToDelete.begin(), iRegionID);
-						
-					}
-				//-------------------------------------------------------
-				// Select beginning of region
-					else if(uiSelectionEnd < uiRegionEnd ){
-						
-						// DELETE BEGINNING OF REGION
-						Trim_Region(iRegionID, uiRegionStart + uiSelectionDuration, iSample_Offset + uiSelectionDuration, uiSoundEnd);
-						
-						
-											
-						// Update GUI
-						mpDSP->Refresh_Region_GUI(iRegionID, miChannelNumber);
-					}
-				}
-				//-----------------------------------------------------------
-				// Select end of region
-				else if(uiSelectionStart <= uiRegionEnd){
-					
-					if(uiSelectionEnd == iSample_Duration){
-						// DELETE END OF REGION
-						Trim_Region(iRegionID, uiRegionStart, iSample_Offset, uiSoundEnd - uiSelectionDuration);
-						
-						// Update GUI
-						mpDSP->Refresh_Region_GUI(iRegionID, miChannelNumber);
-					}
-				//-----------------------------------------------------------
-				// Select midt of region
-					else{
-						tuint uiFade_In	=	(*it)->pRegion->Get_Fade_In_Duration();
-						tuint uiFade_Out	=	(*it)->pRegion->Get_Fade_Out_Duration();
-						tfloat fVolume		=	(*it)->pRegion->Get_Volume();
-						
-						// Trim end of first region
-						tint64 iFirst_Sample_Duration		=	uiSelectionStart - 1;
-						tint64 iSecond_Sample_Duration		=	iFirst_Sample_Duration;
-						tint64 iPosition					=	uiRegionStart;
-						Trim_Region(iRegionID, iPosition, iSample_Offset, iFirst_Sample_Duration, uiFade_In );
-						
-						mpDSP->Refresh_Region_GUI(iRegionID, miChannelNumber);
-						
-
-						 // create a new region
-						iPosition				=	iPosition		+	iFirst_Sample_Duration	+	uiSelection_Duration;
-						iSample_Offset			=	iSample_Offset	+	iFirst_Sample_Duration	+	uiSelection_Duration;
-						iSecond_Sample_Duration	=	iSample_Duration - iFirst_Sample_Duration - uiSelection_Duration;
-						mpDSP->Create_Region(	(*it)->pRegion->GetSoundListItemName(),
-												miChannelNumber, 
-												iPosition , 
-												iSample_Offset, 
-												iSecond_Sample_Duration,
-												0,
-												uiFade_Out,
-												fVolume);
-						// No other regions can be selected and no regions will be deleted
-						return;
-						
-					}
-				}
-			}
-		}
-	}
-	
-	// Delete Regions on Channels and GUI and erase then from list to delete
-	while (lRegionsToDelete.size()) {
-		tint32 iRegionID = *(lRegionsToDelete.begin());
-		// Delet region
-		DeleteRegion(iRegionID);
-		// Delete region on GUI
-		mpDSP->Delete_Region_View(miChannelNumber, iRegionID);
-		// Delete region from list of regions
-		lRegionsToDelete.erase(lRegionsToDelete.begin());
-	}
+	 
 	
 }
