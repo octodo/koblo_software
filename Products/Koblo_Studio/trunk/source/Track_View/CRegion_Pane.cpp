@@ -251,14 +251,15 @@ void CRegion_Pane::Handle_Cut_Tool(tuint32 uiPos)
 	tuint64 uiSamplePos = (tfloat64)uiPos * gpApplication->GetSamplesPrPixel();
 	uiSamplePos			=	gpApplication->SnapToGrid(uiSamplePos);
 	
-	gpDSPEngine->CutRegion( mpTrack->Get_TrackID(), muiRegionID, uiSamplePos+1);
+	gpDSPEngine->Cut_Region( mpTrack->Get_TrackID(), muiRegionID, uiSamplePos);
 }
 
-void CRegion_Pane::Handle_Trim_Tool(tint32 uiPos)
+void CRegion_Pane::Handle_Trim_Tool(tint32 iPos)
 {
+//	if(iPos < 0 ) iPos = 0;
 
 	tfloat64 SamplesPrPixel =	gpApplication->GetSamplesPrPixel();
-	tint64 iSamplePos	= (tfloat64)uiPos * SamplesPrPixel;
+	tint64 iSamplePos	= (tfloat64)iPos * SamplesPrPixel;
 
 	gpDSPEngine->TrimRegion( mpTrack->Get_TrackID(), muiRegionID, miEdit_State != giEdit_Trim_End, iSamplePos);
 		

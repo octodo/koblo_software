@@ -427,7 +427,7 @@ tbool CImportAudioTask::DoWork()
 			{
 				muiProgressIx++;
 
-				gpDSPEngine->CreateRegion(msClipName, miRegion_TrackID, miRegion_TrackPos, 0);
+				gpDSPEngine->Create_Region(msClipName, miRegion_TrackID, miRegion_TrackPos, 0);
 				if (!mbSrcLossyCompressed) {
 					if (mbDeleteNonLossyOriginal) {
 						if (mpfSrc) {

@@ -49,7 +49,7 @@ public:
 								const std::string& sSoundListItemName, 
 								tuint64 uiTrackPosStart, 
 								tuint64 uiSamplePosStart, 
-								tuint64& ruiSamplePosEnd,
+								tuint64& ruiSound_Duration,
 								tuint64 uiFadeInLength = 0,
 								tuint64 uiFadeOutLength = 0,
 								tfloat32 fRegionVolume = 1.0f);
@@ -66,7 +66,7 @@ public:
 	//! Get region track pos
 	tuint64 GetRegionPosOnTrack(tuint32 uiID);
 	//! Update the size of a region;
-	void TrimRegion(tuint32 uiID, tuint64 iTrackStartPos, tuint64 iSoundStartPos, tint64 iSoundEndPos);
+	void Trim_Region(tuint32 uiID, tint64 iPos, tint64 iOffset, tint64 iDuration, tint64 iFade_In_Duration = 0, tint64 iFade_Out_Duration = 0);
 
 	void SetSongPosition(tuint64 uiPosNew);
 	
@@ -96,16 +96,7 @@ public:
 	
 //	void Edit_Selection_On_Track(tuint64 uiSelection_Pos, tuint64  uiSelection_Duration);
 	// Fade selection in
-	void Edit_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64  uiSelection_Duration);
-
-	
-	//! Render fade region and insert it on track
-	tint32 Create_Fade_Region(	tint32 iCmd, 
-								const std::string& sSoundClipName, 
-								tuint64 uiTrack_Pos, 
-								tuint64 uiSample_Start, 
-								tuint64 uiSamplePosEnd,
-								tuint64 uiSelection_Duration);
+	void Delete_Selection( tuint64 uiSelection_Pos, tuint64  uiSelection_Duration);
 
 	kspi::IPlugIn* GetInsert(tint32 iIndex) {return mppInsert[iIndex];}
 

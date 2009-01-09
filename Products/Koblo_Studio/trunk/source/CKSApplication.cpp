@@ -1786,24 +1786,24 @@ tbool CKSApplication::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iSt
 
 		// Export clip
 		CRegion_DSP* pRegion = pRegionInfo->pRegion;
-		tint64 iClipStartPos = pRegion->GetSoundStartPos();
-		tint64 iClipDuration = pRegion->GetDuration();
+		tint64 iSample_Offset = pRegion->Get_Sample_Offset();
+		tint64 iSample_Duration = pRegion->GetDuration();
 		const tchar* pszClipName = pRegion->GetSoundListItemName();
-		if (iRegionCutOffStart > iClipDuration) {
+		if (iRegionCutOffStart > iSample_Duration) {
 			// Cut-off entire clip - do nothing
 		}
 		else {
 			// Maybe cut off start of region
-			iClipStartPos += iRegionCutOffStart;
-			iClipDuration -= iRegionCutOffStart;
+			iSample_Offset += iRegionCutOffStart;
+			iSample_Duration -= iRegionCutOffStart;
 
 			// Maybe cut off end of region
 			tint64 iDurationLimit = iDuration - (iLatestPos - iStartIx);
-			if (iClipDuration > iDurationLimit)
-				iClipDuration = iDurationLimit;
+			if (iSample_Duration > iDurationLimit)
+				iSample_Duration = iDurationLimit;
 
 			// Add clip info
-			CExportClipTask* pClipInfo = new CExportClipTask( pszClipName, iClipStartPos, iClipDuration);
+			CExportClipTask* pClipInfo = new CExportClipTask( pszClipName, iSample_Offset, iSample_Duration);
 			//pClipInfo->bConcatenateNext = true;
 			pClipInfo->sDestName_Concatenate = pszNameUniteDefault;
 			plistpInfo->insert(plistpInfo->end(), pClipInfo);
@@ -1816,7 +1816,7 @@ tbool CKSApplication::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iSt
 			pClipPrev = pClipInfo;
 
 			// Advance position
-			iLatestPos += iClipDuration;
+			iLatestPos += iSample_Duration;
 		}
 	}
 	

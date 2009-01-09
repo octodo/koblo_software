@@ -1146,7 +1146,7 @@ void CDSP::Delete_Selection()
 			case giSelect_On_Track:{
 				tuint64 uiSelection_Pos			= mpTrackSelectionInfo[iTrack].uiSelection_Pos;
 				tuint64 uiSelection_Duration	= mpTrackSelectionInfo[iTrack].uiSelection_Duration;
-				mppTracks[iTrack]->Edit_Selection(giTrim,uiSelection_Pos, uiSelection_Duration);
+				mppTracks[iTrack]->Delete_Selection(uiSelection_Pos, uiSelection_Duration);
 
 				break;
 			}

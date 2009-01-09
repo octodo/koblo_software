@@ -449,7 +449,7 @@ void CTrack::Handle_Mouse_Drop(ge::SPos Pos)
 	if (Info.pOrigin->GetID() == giCtrl_File_List) {
 		// Drag and drop operation from file list. Add region
 		// List item *display name* is in Info.psz
-		gpDSPEngine->CreateRegion(Info.psz, miTrackID, uiSamplePos, 0);
+		gpDSPEngine->Create_Region(Info.psz, miTrackID, uiSamplePos, 0);
 	}
 	else if(Find_Tool() == giTool_Hand) {
 		// Drag and drop operation from region (region was moved)

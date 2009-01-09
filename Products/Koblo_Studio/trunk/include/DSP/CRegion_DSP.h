@@ -28,11 +28,14 @@
 class CRegion_DSP
 {
 public:
-	CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, const std::string& sSoundPathNameR, const std::string& sSoundListItemName, tuint64 uiSamplePosStart, tuint64 uiSamplePosEnd);
+	CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, const std::string& sSoundPathNameR, const std::string& sSoundListItemName, tuint64 uiSamplePosStart, tuint64 uiSample_Duration);
 
 	virtual ~CRegion_DSP();
 
 	tuint64 GetDuration() const {return muiEndPos - muiStartPos + 1;}
+	
+	// Get end pos
+	tuint64 GetEndPos(){return muiEndPos;};
 	
 	tuint64 GetEndPos() const {return muiEndPos;}
 	
@@ -49,13 +52,16 @@ public:
 
 	CSample_DSP* GetSound(tint32 iIndex) const {return mppSample[iIndex];}
 
-	tuint64 GetSoundStartPos() const {return muiStartPos;}
+	tuint64 Get_Sample_Offset() const {return muiStartPos;}
 
 	const tchar* GetSoundListItemName() const { return msSoundListItemName.c_str(); }
 	
 	void SetStartPos(tuint64 uiStartPos)  { muiStartPos = uiStartPos ;}
 
 //	tuint64 GetEndPos() const {return muiEndPos-muiStartPos;}
+	
+	//! get the duration of the embedded sample
+	tuint64 Get_Sample_Duration(){ return mppSample[0]->GetLength();};
 	
 
 	// Set sample offset
@@ -64,20 +70,17 @@ public:
 	// Set sample endpos
 	void SetEndPos(tuint64 uiPos);
 	
-	// Get end pos
-	tuint64 GetEndPos(){return muiEndPos;};
+	virtual void Set_Fade_In_Duration(tuint64 uiFadeInLength){muiFadeInLength = uiFadeInLength;};
 	
-	virtual void SetFadeInLength(tuint64 uiFadeInLength){muiFadeInLength = uiFadeInLength;};
+	virtual void Set_Fade_Out_Duration(tuint64 uiFadeOutLength){muiFadeOutLength = uiFadeOutLength;};
 	
-	virtual void SetFadeOutLength(tuint64 uiFadeOutLength){muiFadeOutLength = uiFadeOutLength;};
+	virtual void Set_Volume(tfloat32 fVolume){mfVolume = fVolume;};
 	
-	virtual void SetVolume(tfloat32 fVolume){mfVolume = fVolume;};
+	tint64 Get_Fade_In_Duration(){ return muiFadeInLength;};
 	
-	tint64 GetFadeInLength(){ return muiFadeInLength;};
+	tint64 Get_Fade_Out_Duration(){return muiFadeOutLength;};
 	
-	tint64 GetFadeOutLength(){return muiFadeOutLength;};
-	
-	tfloat32 GetRegionVolume(){return mfVolume;};
+	tfloat32 Get_Volume(){return mfVolume;};
 
 	tint32 GetChannels() const {return miChannels;}
 

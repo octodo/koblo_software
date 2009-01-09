@@ -2,7 +2,7 @@
 
 #include "KSOS.h"
 
-CRegion_DSP::CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, const std::string& sSoundPathNameR, const std::string& sSoundListItemName, tuint64 uiSamplePosStart, tuint64 uiSamplePosEnd)
+CRegion_DSP::CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, const std::string& sSoundPathNameR, const std::string& sSoundListItemName, tuint64 uiSamplePosStart, tuint64 uiSample_Duration)
 {
 	muiFadeInLength = 0;
 	muiFadeOutLength = 0;
@@ -15,7 +15,7 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, c
 	muiUniqueID = iUniqueID;
 
 	muiStartPos = uiSamplePosStart;
-	muiEndPos	= uiSamplePosEnd;
+	muiEndPos	= uiSamplePosStart + uiSample_Duration;
 
 	miChannels = 1;
 	if (sSoundPathNameR.size() > 0) {
@@ -105,19 +105,19 @@ void CRegion_DSP::GetSamples(tfloat32** ppfData, tint32 iSamples)
 		mppSample[0]->GetSamples(ppfData[0], iSamples);
 
 		if (muiFadeInLength) {
-			if (muiFadeInLength > uiPosBufferStart) {
+			if (muiStartPos + muiFadeInLength > uiPosBufferStart) {
 				tfloat32 fOneDivFadeInLength = 1.0f / muiFadeInLength;
 				tfloat32* pfData = ppfData[0];
 				
 				tint32 iSamplesToProcess = iSamples;
-				if (iSamplesToProcess > muiFadeInLength - uiPosBufferStart) {
-					iSamplesToProcess = (tint32)(muiFadeInLength - uiPosBufferStart);
+				if (iSamplesToProcess > muiStartPos + muiFadeInLength - uiPosBufferStart) {
+					iSamplesToProcess = (tint32)(muiStartPos + muiFadeInLength  - uiPosBufferStart);
 				}
 				for (iSample = 0; iSample < iSamplesToProcess; iSample++) {
-					tfloat32 fIndex = ((tint32)uiPosBufferStart + iSample) * fOneDivFadeInLength;
-					fIndex *= fIndex;
+					tfloat32 fVolume = ((tint32)uiPosBufferStart - muiStartPos + iSample) * fOneDivFadeInLength;
+					fVolume *= fVolume;
 
-					pfData[iSample] *= fIndex;
+					pfData[iSample] *= fVolume;
 				}
 			}
 		}
@@ -128,10 +128,10 @@ void CRegion_DSP::GetSamples(tfloat32** ppfData, tint32 iSamples)
 				tint32 iSample;
 				tint32 iSamplesToProcess = iSamples;
 				for (iSample = 0; iSample < iSamplesToProcess; iSample++) {
-					tfloat32 fIndex = ((tint32)muiEndPos - uiPosBufferStart + iSample) * fOneDivFadeOutLength;
-					fIndex *= fIndex;
+					tfloat32 fVolume = ((tint32)muiEndPos - uiPosBufferStart + iSample) * fOneDivFadeOutLength;
+					fVolume *= fVolume;
 
-					pfData[iSample] *= fIndex;
+					pfData[iSample] *= fVolume;
 				}
 			}
 		}
@@ -144,22 +144,24 @@ void CRegion_DSP::GetSamples(tfloat32** ppfData, tint32 iSamples)
 		mppSample[0]->GetSamples(ppfData[0], iSamples);
 		mppSample[1]->GetSamples(ppfData[1], iSamples);
 
+		
 		if (muiFadeInLength) {
-			if (muiFadeInLength > uiPosBufferStart) {
+			if ( muiStartPos + muiFadeInLength > uiPosBufferStart) {
 				tfloat32 fOneDivFadeInLength = 1.0f / muiFadeInLength;
 				tfloat32* pfDataL = ppfData[0];
 				tfloat32* pfDataR = ppfData[1];
 				tint32 iSamplesToProcess = iSamples;
-				if (iSamplesToProcess > muiFadeInLength - uiPosBufferStart) {
-					iSamplesToProcess = (tint32)(muiFadeInLength - uiPosBufferStart);
+				if (iSamplesToProcess > muiStartPos + muiFadeInLength - uiPosBufferStart) {
+					iSamplesToProcess = (tint32)(muiStartPos + muiFadeInLength  - uiPosBufferStart);
 				}
 				for (iSample = 0; iSample < iSamplesToProcess; iSample++) {
-					tfloat32 fIndex = ((tint32)uiPosBufferStart + iSample) * fOneDivFadeInLength;
-					fIndex *= fIndex;
+					// apply fade in volume
+					tfloat32 fVolume = ((tint32)uiPosBufferStart - muiStartPos + iSample) * fOneDivFadeInLength;
+					fVolume *= fVolume;
 
 					
-					pfDataL[iSample] *= fIndex;
-					pfDataR[iSample] *= fIndex;
+					pfDataL[iSample] *= fVolume;
+					pfDataR[iSample] *= fVolume;
 				}
 			}
 		}
@@ -172,11 +174,11 @@ void CRegion_DSP::GetSamples(tfloat32** ppfData, tint32 iSamples)
 				tint32 iSample;
 				tint32 iSamplesToProcess = iSamples;
 				for (iSample = 0; iSample < iSamplesToProcess; iSample++) {
-					tfloat32 fIndex = ((tint32)muiEndPos - uiPosBufferStart + iSample) * fOneDivFadeOutLength;
-					fIndex *= fIndex;
+					tfloat32 fVolume = ((tint32)muiEndPos - uiPosBufferStart + iSample) * fOneDivFadeOutLength;
+					fVolume *= fVolume;
 
-					pfDataL[iSample] *= fIndex;
-					pfDataR[iSample] *= fIndex;
+					pfDataL[iSample] *= fVolume;
+					pfDataR[iSample] *= fVolume;
 				}
 			}
 		}
