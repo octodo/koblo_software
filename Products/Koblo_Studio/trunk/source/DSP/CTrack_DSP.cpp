@@ -794,7 +794,7 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 	pRegion->SetVolume(fRegionVolume);
 		
 	tuint64 uiDuration = ruiSoundPosEnd - uiSoundPosStart +1;
-	Edit_Selection(giTrim,uiTrackPosStart, uiDuration);
+	Delete_Selection(giTrim,uiTrackPosStart, uiDuration);
 	
 	SChannelRegionInfo* pRegionInfo		=	new SChannelRegionInfo();
 	pRegionInfo->pRegion				=	pRegion;
@@ -1171,7 +1171,7 @@ void CTrack_DSP::SetInsertBypass(tint32 iInsert, tbool bBypass)
 	mpbInsertBypass[iInsert] = bBypass;
 }
 
-void CTrack_DSP::Edit_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 uiSelection_Duration)
+void CTrack_DSP::Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 uiSelection_Duration)
 {
 
 	tint32 iNewRegionID	= -1;

@@ -96,7 +96,7 @@ public:
 	
 //	void Edit_Selection_On_Track(tuint64 uiSelection_Pos, tuint64  uiSelection_Duration);
 	// Fade selection in
-	void Edit_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64  uiSelection_Duration);
+	void Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64  uiSelection_Duration);
 
 	
 	//! Render fade region and insert it on track
