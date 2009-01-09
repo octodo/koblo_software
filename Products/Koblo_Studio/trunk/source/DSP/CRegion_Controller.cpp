@@ -133,7 +133,11 @@ void CRegion_Controller::TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool b
 	if(bStart){
 		
 		 
-		iSamplePos
+		if(iTrackStartPos+iSamplePos > iTrackStartPos + iSample_Duration ){
+			
+			iSamplePos = iSample_Duration;
+			
+		}
 		
 		mpTrack_DSP->Trim_Region(uiRegionID, iTrackStartPos+iSamplePos, iSample_Offset+iSamplePos, iSample_Duration-iSamplePos);
 		
