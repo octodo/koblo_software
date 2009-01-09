@@ -100,8 +100,45 @@ void CRegion_Controller::CutRegion(tuint32 uiTrack, tuint32 uiRegionID, tuint64 
 }
 
 void CRegion_Controller::TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 iSamplePos)
-{ 
-
+{
+	Prepare(uiRegionID);
+	
+	std::string sClipName				=	mpRegion_DSP->GetSoundListItemName();
+	tint64 iTrackStartPos				=	mpTrack_DSP->GetRegionPosOnTrack(uiRegionID);	
+	tint64 iSample_Duration				=	mpRegion_DSP->GetDuration();
+	tint64 iSample_Offset				=	mpRegion_DSP->Get_Sample_Offset();
+	//	tint64 iSampleEnd					=	mpRegion_DSP->GetDuration() + iSample_Offset - 1;
+	//	tint64 iSoundDuration				=	mpRegion_DSP->GetSound(0)->GetLength();
+	
+	//--------------------------------------
+	// Trim start
+	if(bStart){
+		
+		
+		if(iTrackStartPos+iSamplePos > iTrackStartPos + iSample_Duration ){
+			
+			iSamplePos = iSample_Duration;
+			
+		}
+		
+		mpTrack_DSP->Trim_Region(uiRegionID, iTrackStartPos+iSamplePos, iSample_Offset+iSamplePos, iSample_Duration-iSamplePos);
+		
+		// Update fade in
+		//	Fade_In(uiRegionID, mpRegion_DSP->Get_Fade_In_Duration());
+	}
+	else{
+		//--------------------------------------
+		// Trim end-
+		
+		iSample_Duration = iSamplePos;
+		mpTrack_DSP->Trim_Region(uiRegionID, iTrackStartPos, iSample_Offset, iSample_Duration);
+		
+		
+	}
+	
+	mpRegionCallback->Refresh_Region_GUI(uiRegionID, uiTrack);
+	
+/*
 	Prepare(uiRegionID);
 	
 	std::string sClipName				=	mpRegion_DSP->GetSoundListItemName();
@@ -149,7 +186,7 @@ void CRegion_Controller::TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool b
 		mpTrack_DSP->TrimRegion(uiRegionID, iPossition, iSoundPos, iSampleEnd);
 		mpRegionCallback->Refresh_Region_GUI(uiRegionID, uiTrack);
 	}
-	
+*/	
 }
 
 void CRegion_Controller::DuplicateRegion()
