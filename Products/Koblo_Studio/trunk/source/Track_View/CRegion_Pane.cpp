@@ -260,7 +260,7 @@ void CRegion_Pane::Handle_Trim_Tool(tint32 uiPos)
 	tfloat64 SamplesPrPixel =	gpApplication->GetSamplesPrPixel();
 	tint64 iSamplePos	= (tfloat64)uiPos * SamplesPrPixel;
 
-	gpDSPEngine->TrimRegion( mpTrack->Get_TrackID(), muiRegionID, miEdit_State != giEdit_Trim_End, iSamplePos);
+	gpDSPEngine->Trim_Region( mpTrack->Get_TrackID(), muiRegionID, miEdit_State != giEdit_Trim_End, iSamplePos);
 		
 }
 

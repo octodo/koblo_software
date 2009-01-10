@@ -1016,10 +1016,7 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 
 void CTrack_Editor_Pane::Do_Delete()
 {
-//	tint32 iTool = gpApplication->GetGlobalParm(giParamID_Tool_Selected, giSectionGUI);
-	
 	gpDSPEngine->Delete_Selection();
-	
 }
 
 tbool CTrack_Editor_Pane::DoKeyUp(ge::EKey Key)

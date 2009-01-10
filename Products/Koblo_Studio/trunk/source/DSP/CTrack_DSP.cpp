@@ -101,7 +101,7 @@ void CTrack_DSP::SetSongPosition(tuint64 uiPosNew)
 		}
 
 		CRegion_DSP* pRegion = (*mitRegionsInfo)->pRegion;
-		tint64 iLength = pRegion->GetDuration();
+		tint64 iLength = pRegion->Get_Duration();
 		if (uiTrackPosStart + iLength - 1 < uiPosNew) {
 			// Position is beyond end of region
 			mitRegionsInfo++;
@@ -172,7 +172,7 @@ void CTrack_DSP::Process(tint32 iSamples)
 		// Still region(s) to play
 		CRegion_DSP* pRegion = (*mitRegionsInfo)->pRegion;
 		tuint64 uiPosStart = (*mitRegionsInfo)->uiTrackPosStart;
-		tuint64 uiPosEnd = uiPosStart + pRegion->GetDuration() - 1;
+		tuint64 uiPosEnd = uiPosStart + pRegion->Get_Duration() - 1;
 
 		tint32 iChannels = pRegion->GetChannels();
 		mpBuffer->SetChannels(iChannels);
@@ -789,9 +789,9 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 	if(ruiSoundPosEnd == (tuint64)-1)
 		ruiSoundPosEnd = pRegion->GetEndPos();
 		
-	pRegion->SetFadeInLength(uiFadeInLength);
-	pRegion->SetFadeOutLength(uiFadeOutLength);
-	pRegion->SetVolume(fRegionVolume);
+	pRegion->Set_Fade_In_Duration(uiFadeInLength);
+	pRegion->Set_Fade_Out_Duration(uiFadeOutLength);
+	pRegion->Set_Volume(fRegionVolume);
 		
 	tuint64 uiDuration = ruiSoundPosEnd - uiSoundPosStart +1;
 	Delete_Selection(giTrim,uiTrackPosStart, uiDuration);
@@ -910,7 +910,7 @@ tuint64 CTrack_DSP::GetRegionPosOnTrack(tuint32 uiRegionID)
 
 }
 
-void CTrack_DSP::TrimRegion(tuint32 uiID, tuint64 iTrack_Pos, tuint64 iSample_Offset, tint64 iSample_Duration)
+void CTrack_DSP::Resize_Region(tuint32 uiID, tuint64 iTrack_Pos, tuint64 iSample_Offset, tint64 iSample_Duration)
 {
 	
 	std::list<SChannelRegionInfo*>::iterator it = mRegionInfoList.begin();
@@ -918,9 +918,9 @@ void CTrack_DSP::TrimRegion(tuint32 uiID, tuint64 iTrack_Pos, tuint64 iSample_Of
 		
 		if ((*it)->pRegion->GetID() == uiID) {
 		
-			tuint64 uiFadeInLength	=	(*it)->pRegion->GetFadeInLength();
-			tuint64 uiFadeOutLength	=	(*it)->pRegion->GetFadeOutLength();
-			tuint64 uiOldDuration	=	(*it)->pRegion->GetDuration();
+			tuint64 uiFadeInLength	=	(*it)->pRegion->Get_Fade_In_Duration();
+			tuint64 uiFadeOutLength	=	(*it)->pRegion->Get_Fade_Out_Duration();
+			tuint64 uiOldDuration	=	(*it)->pRegion->Get_Duration();
 			tuint64 uiNewDuration	=	iSample_Duration;
 			//---------------------
 			// Trim end
@@ -951,11 +951,11 @@ void CTrack_DSP::TrimRegion(tuint32 uiID, tuint64 iTrack_Pos, tuint64 iSample_Of
 					uiFadeOutLength = uiNewDuration;
 			
 			}
-		
+			
 			(*it)->pRegion->SetStartPos(iSample_Offset);
 			(*it)->pRegion->SetDuration(uiNewDuration);
-			(*it)->pRegion->SetFadeInLength(uiFadeInLength);
-			(*it)->pRegion->SetFadeOutLength(uiFadeOutLength);
+			(*it)->pRegion->Set_Fade_In_Duration(uiFadeInLength);
+			(*it)->pRegion->Set_Fade_Out_Duration(uiFadeOutLength);
 			(*it)->uiTrackPosStart = iTrack_Pos;
 			Update_Regions_For_Playback();
 			return;
@@ -969,7 +969,7 @@ void CTrack_DSP::TrimRegion(tuint32 uiID, tuint64 iTrack_Pos, tuint64 iSample_Of
 
 
 
-void CTrack_DSP::SetVolume(tfloat32 fVolume)
+void CTrack_DSP::Set_Volume(tfloat32 fVolume)
 {
 	// Lasse, out-comment 2008-06-20 - guess we don't need this..
 	//CAutoLock lock(mInProcessMutex);
@@ -1183,25 +1183,64 @@ void CTrack_DSP::Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 
 	// Look at all regions on track
 	std::list<SChannelRegionInfo*>::iterator it = mRegionInfoList.begin();
 	for (; it != mRegionInfoList.end(); it++) {
+		
+		
 		CRegion_DSP* pRegion_DSP			=	(*it)->pRegion;
 		tint32 iRegionID					=	(*it)->uiRegionID;
-		tuint64 uiSample_Duration			=	pRegion_DSP->GetDuration();
+		tuint64 uiSample_Duration			=	pRegion_DSP->Get_Duration();
 		std::string sClipName				=	pRegion_DSP->GetSoundListItemName();
 		tuint64 uiRegion_Pos				=	(*it)->uiTrackPosStart;
 		tuint64 uiRegion_End				=	uiRegion_Pos + uiSample_Duration - 1;
-		tuint64 uiSample_Offset				=	pRegion_DSP->GetSoundStartPos();
-		tuint64 uiSample_End				=	pRegion_DSP->GetEndPos();
+		tuint64 uiSample_Offset				=	pRegion_DSP->Get_Sample_Offset();
 		tuint64 uiSelection_End				=	uiSelection_Pos + uiSelection_Duration;
 		
+
 		// Prevent feedback on new fade in regions
 		//!!! BUG? has to come up with somthing better
 		//!!! Make list of regions to add
 		//!!! find start sample and end sample, use it for fading
 		if(iNewRegionID != iRegionID){
-			// Make sure the region is inside the selection
+			
+			// delete region start
+			if(uiSelection_Pos <= uiRegion_Pos && uiSelection_End < uiRegion_End){
+				
+				uiSelection_Duration	-=	(uiRegion_Pos - uiSelection_Pos);
+				Resize_Region(iRegionID, uiRegion_Pos + uiSelection_Duration, uiSample_Offset + uiSelection_Duration, uiSample_Duration - uiSelection_Duration);
+				mpDSP->Refresh_Region_GUI(iRegionID, miChannelNumber);
+				
+			}
+			// delete region
+			else if(uiSelection_Pos <= uiRegion_Pos && uiSelection_End >= uiRegion_End){
+				
+				lRegionsToDelete.insert(lRegionsToDelete.begin(), iRegionID);
+			}
+			// delete region end
+			else if(uiSelection_Pos > uiRegion_Pos && uiSelection_End >= uiRegion_End){
+				
+				uiSample_Duration	=	uiSelection_Pos - uiRegion_Pos;
+				Resize_Region(iRegionID, uiRegion_Pos , uiSample_Offset , uiSample_Duration);
+				mpDSP->Refresh_Region_GUI(iRegionID, miChannelNumber);
+			}
+			// delete midt of region
+			else if(uiSelection_Pos > uiRegion_Pos && uiSelection_End < uiRegion_End){
+				
+				//delete region end
+				tuint64 uiDuration	=	uiSelection_Pos - uiRegion_Pos;
+				Resize_Region(iRegionID, uiRegion_Pos , uiSample_Offset , uiDuration);
+				mpDSP->Refresh_Region_GUI(iRegionID, miChannelNumber);
+				
+				
+				
+				
+				// create new region
+//				uiDuration	=	uiSample_Duration - uiDuration - uiSelection_Duration;
+//				mpDSP->CreateRegion(sClipName, miChannelNumber, uiSelection_End, uiDuration);
+				
+			}
+			
+			/*
 			if(uiSelection_End >= uiRegion_Pos && uiSelection_Pos <= uiRegion_End) 
 			{
-				
 				uiSelection_Pos					=	uiSelection_Pos <= uiRegion_Pos ? 0 : uiSelection_Pos - uiRegion_Pos;
 				uiSelection_End					=	uiSelection_End > uiRegion_End ? uiSample_Duration : uiSelection_End - uiRegion_Pos;
 				tuint64 uiSelection_Duration	=	uiSelection_End - uiSelection_Pos + 1;
@@ -1217,7 +1256,7 @@ void CTrack_DSP::Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 
 					// Select beginning of region
 					else if(uiSelection_End < uiRegion_End ){
 						
-						TrimRegion(iRegionID, uiRegion_Pos + uiSelection_Duration, uiSample_Offset + uiSelection_Duration, uiSample_Duration - uiSelection_Duration);
+						Resize_Region(iRegionID, uiRegion_Pos + uiSelection_Duration, uiSample_Offset + uiSelection_Duration, uiSample_Duration - uiSelection_Duration);
 						mpDSP->Refresh_Region_GUI(iRegionID, miChannelNumber);
 					}
 				}
@@ -1227,14 +1266,14 @@ void CTrack_DSP::Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 
 					
 					if(uiSelection_End == uiSample_Duration){
 						
-						TrimRegion(iRegionID, uiRegion_Pos, uiSample_Offset, uiSample_End - uiSelection_Duration);
+						Resize_Region(iRegionID, uiRegion_Pos, uiSample_Offset, uiSample_End - uiSelection_Duration);
 						mpDSP->Refresh_Region_GUI(iRegionID, miChannelNumber);
 					}
 				
 				// Select midt of region
 					else{
 						
-						TrimRegion(iRegionID, uiRegion_Pos, uiSample_Offset, uiSelection_Pos);
+						Resize_Region(iRegionID, uiRegion_Pos, uiSample_Offset, uiSelection_Pos);
 						
 						
 						
@@ -1245,6 +1284,7 @@ void CTrack_DSP::Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 
 					}
 				}
 			}
+			 */
 		}
 	}
 	
@@ -1260,43 +1300,3 @@ void CTrack_DSP::Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 
 	}
 	
 }
-/*
-tint32 CTrack_DSP::Create_Fade_Region(	tint32 iCmd,
-										const std::string& sSoundClipName, 
-										tuint64 uiTrack_Pos, 
-										tuint64 uiSample_Start, 
-										tuint64 uiSamplePosEnd,
-										tuint64 uiSelection_Duration)
-{
-	//!!! max is this used at all""
-
-	tint32 iTest =0;
-	switch(iCmd){
-		case giTrim:
-			iTest++;
-			return -1;
-		case giFade_In:
-			iTest++;
-			break;
-		case giFade_Out:
-			iTest++;
-			break;
-	}
-	
-	
-	
-	// Render fade file
-	tfloat64 fDuration		=	uiSamplePosEnd - uiSample_Start + 1;
-	tfloat32 fStep_Size		=	1.0f / fDuration;
-
-
-	//------------------------------------------------------
-	// create new fade file on disk based on function param's
-	// sSoundPathName = "Name of fade file"
-	
-	// insert the created fade region on the track, 
-	// for now I use the region without any rendering
-	tint32 iRegionID = mpDSP->CreateRegion(sSoundClipName, miChannelNumber, uiTrack_Pos, uiSample_Start, uiSamplePosEnd);
-	return iRegionID;
-}
-*/

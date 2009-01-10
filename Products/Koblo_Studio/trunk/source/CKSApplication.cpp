@@ -1786,8 +1786,8 @@ tbool CKSApplication::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iSt
 
 		// Export clip
 		CRegion_DSP* pRegion = pRegionInfo->pRegion;
-		tint64 iClipStartPos = pRegion->GetSoundStartPos();
-		tint64 iClipDuration = pRegion->GetDuration();
+		tint64 iClipStartPos = pRegion->Get_Sample_Offset();
+		tint64 iClipDuration = pRegion->Get_Duration();
 		const tchar* pszClipName = pRegion->GetSoundListItemName();
 		if (iRegionCutOffStart > iClipDuration) {
 			// Cut-off entire clip - do nothing

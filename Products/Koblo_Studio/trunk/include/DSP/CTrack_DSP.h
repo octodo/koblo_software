@@ -17,7 +17,7 @@ public:
 	virtual void Process(tint32 iSamples);
 
 	//! Set volume 0.0-0.1f
-	virtual void SetVolume(tfloat32 fVolume);
+	virtual void Set_Volume(tfloat32 fVolume);
 	//! set aux send
 	virtual void SetAUXVolume(tint32 iAUX, tfloat32 fVolume);
 	//! clear all effect tails
@@ -66,7 +66,7 @@ public:
 	//! Get region track pos
 	tuint64 GetRegionPosOnTrack(tuint32 uiID);
 	//! Update the size of a region;
-	void TrimRegion(tuint32 uiID, tuint64 iTrackStartPos, tuint64 iSoundStartPos, tint64 iSoundEndPos);
+	void Resize_Region(tuint32 uiID, tuint64 iTrackStartPos, tuint64 iSoundStartPos, tint64 iSoundEndPos);
 
 	void SetSongPosition(tuint64 uiPosNew);
 	

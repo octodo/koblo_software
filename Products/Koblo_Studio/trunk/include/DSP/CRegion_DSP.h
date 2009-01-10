@@ -32,7 +32,7 @@ class CRegion_DSP
 		
 		virtual ~CRegion_DSP();
 		
-		tuint64 GetDuration() const {return muiEndPos - muiStartPos + 1;}
+		tuint64 Get_Duration() const {return muiEndPos - muiStartPos + 1;}
 		
 		// Get end pos
 		tuint64 GetEndPos(){return muiEndPos;};

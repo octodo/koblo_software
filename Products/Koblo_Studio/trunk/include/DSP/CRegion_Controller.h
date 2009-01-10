@@ -71,7 +71,7 @@ public:
 	 \	param uiRegionID [in]: region id
 	 \	bStart lC [in]: if true we are cutting of the start of the region otherwise it's the end we are edditing
 	 */
-	void TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 uiSamplePos);
+	void Trim_Region(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 uiSamplePos);
 	
 	//! duplicate a region
 	void DuplicateRegion();

@@ -717,18 +717,18 @@ void CDSP::UpdateBussData(tint32 iID, tint32 iValue, tint32 iBus)
 	switch(iID) {
 		case giParam_ChVol:
 //			if(!mppTracks[iBus]->mbMuteFlag)
-				mppBusses[iBus]->SetVolume((tfloat32)(iValue / 10000.0));
+				mppBusses[iBus]->Set_Volume((tfloat32)(iValue / 10000.0));
 				miStored_Buss_Volume[iBus] = iValue;
 			break;
 		case giParam_ChSoftMute:
 		case giParam_ChMute: {
 			if(iValue) {
 				mbMute_Buss_Flag[iBus] = true;
-				mppBusses[iBus]->SetVolume((tfloat32)(0.000001f / 10000.0));
+				mppBusses[iBus]->Set_Volume((tfloat32)(0.000001f / 10000.0));
 			}
 			else {
 				mbMute_Buss_Flag[iBus] = false;
-				mppBusses[iBus]->SetVolume((tfloat32)(miStored_Buss_Volume[iBus] / 10000.0));
+				mppBusses[iBus]->Set_Volume((tfloat32)(miStored_Buss_Volume[iBus] / 10000.0));
 			}
 			break;
 		}
@@ -806,7 +806,7 @@ void CDSP::UpdateMasterData(tint32 iID, tint32 iValue)
 		case giParam_Master_Volume:{
 			
 			
-			mpMaster->SetVolume((tfloat32)(iValue / 10000.0));
+			mpMaster->Set_Volume((tfloat32)(iValue / 10000.0));
 			break;
 		}
 	}
@@ -822,7 +822,7 @@ void CDSP::UpdateChannelData(tint32 iID, tint32 iValue, tint32 iChannel)
 	switch(iID) {
 		case giParam_ChVol:{
 			if(!mbMute_Track_Flag[iChannel])
-				mppTracks[iChannel]->SetVolume((tfloat32)(iValue / 10000.0));
+				mppTracks[iChannel]->Set_Volume((tfloat32)(iValue / 10000.0));
 			miStored_Track_Volume[iChannel] = iValue;
 			break;
 			}
@@ -830,11 +830,11 @@ void CDSP::UpdateChannelData(tint32 iID, tint32 iValue, tint32 iChannel)
 		case giParam_ChMute: {
 			if(iValue) {
 				mbMute_Track_Flag[iChannel] = true;
-				mppTracks[iChannel]->SetVolume((tfloat32)(0.000001f / 10000.0));
+				mppTracks[iChannel]->Set_Volume((tfloat32)(0.000001f / 10000.0));
 			}
 			else {
 				mbMute_Track_Flag[iChannel] = false;
-				mppTracks[iChannel]->SetVolume((tfloat32)(miStored_Track_Volume[iChannel] / 10000.0));
+				mppTracks[iChannel]->Set_Volume((tfloat32)(miStored_Track_Volume[iChannel] / 10000.0));
 			}
 			break;
 		}
@@ -1070,7 +1070,7 @@ CDSP::RegionSearchHandle CDSP::GetFirstRegion(SRegionInfo& rInfo)
 			rInfo.uiRegionID = (*it)->pRegion->GetID();
 			rInfo.uiTrack = uiTrack;
 			rInfo.uiStartPos = (*it)->uiTrackPosStart;
-			rInfo.uiEndPos = rInfo.uiStartPos + (*it)->pRegion->GetDuration() - 1;
+			rInfo.uiEndPos = rInfo.uiStartPos + (*it)->pRegion->Get_Duration() - 1;
 
 			SRegionSearchInfo* pInfo = new SRegionSearchInfo();
 			pInfo->uiTrackCur = uiTrack;
@@ -1108,7 +1108,7 @@ void CDSP::GetNextRegion(CDSP::RegionSearchHandle& Handle, CDSP::SRegionInfo& rI
 			rInfo.uiRegionID = (*it)->pRegion->GetID();
 			rInfo.uiTrack = uiTrack;
 			rInfo.uiStartPos = (*it)->uiTrackPosStart;
-			rInfo.uiEndPos = rInfo.uiStartPos + (*it)->pRegion->GetDuration() - 1;
+			rInfo.uiEndPos = rInfo.uiStartPos + (*it)->pRegion->Get_Duration() - 1;
 
 			pInfo->uiTrackCur = uiTrack;
 			pInfo->itCur = it;
