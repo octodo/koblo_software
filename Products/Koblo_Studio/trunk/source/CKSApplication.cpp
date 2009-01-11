@@ -1155,7 +1155,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			break;
 
 		case ID_EDIT_DUPLICATE:
-			gpDSPEngine->DuplicateRegion();
+			gpDSPEngine->Duplicate_Region();
 			break;
 
 		case ID_EDIT_ADDTRACK:
@@ -1407,7 +1407,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	}
 	else if (s.compare("Edit@Duplicate") == 0) {
 		
-		gpDSPEngine->DuplicateRegion();
+		gpDSPEngine->Duplicate_Region();
 
 	}
 	
@@ -5697,19 +5697,29 @@ tuint64 CKSApplication::SnapToGridStart(tuint64 uiSamplePos)
 
 tuint64 CKSApplication::SnapToGridEnd(tuint64 uiSamplePos)
 {
-	tbool bGrid_On = (GetGlobalParm(giParamID_Grid, giSectionGUI) != 0);
-	// Snap to grid
-	if (bGrid_On) {
+	
+	
+	// if snap to grid is on
+	if (GetGlobalParm(giParamID_Grid, giSectionGUI)) {
+		
+		// Find previous gridline
+		uiSamplePos = SnapToGridStart(uiSamplePos);
+		
 		tfloat64 fSnap = GetGlobalParm(giParamID_KS_Snap_To, giSectionGlobal) * GetSamples_Pr_32();
-		// avoid to trunchate line nr
-		uiSamplePos += (tint64)(fSnap);
+		
+		// snap to next gridline
+		uiSamplePos += (tint64)(fSnap)-1;
+		
+		/*
 		// Find gridline in samples
 		tuint32 uiGridLineNr	=	(tuint32)((tfloat64)uiSamplePos / fSnap);
+		
 		// Set sample pos
 		uiSamplePos				=  (tint64)(uiGridLineNr * fSnap);
+		 */
 
 	}
-	return uiSamplePos-2;
+	return uiSamplePos;
 }
 
 

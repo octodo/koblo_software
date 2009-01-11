@@ -58,7 +58,7 @@ void CTrack_Top::Init()
 	Create2StateButton(giControlID_Record, IDB_Button_Record, ge::SPos(iPosX, iPosY), true); iPosX		+= 28;
 	Create2StateButton(giControlID_Play, IDB_Button_Play, ge::SPos(iPosX, iPosY), true); iPosX			+= 27;
 	
-	CreateButton(giControlID_Stop, IDB_Button_Stop, ge::SPos(iPosX, iPosY), false); iPosX					+= 27;
+	CreateButton(giControlID_Stop, IDB_Button_Stop, ge::SPos(iPosX, iPosY), false); iPosX	+= 27;
 	Create2StateButton(giControlID_Loop, IDB_Button_Loop, ge::SPos(iPosX, iPosY), true); 
 	
 	//-------------------------------

@@ -241,8 +241,8 @@ void CTrack::SetTrackSelection( const ge::SPos& Pos, tint32 iRegionID, tint32 iS
 	//-----------------------
 	// LEFT >>> RIGHT
 	else{
-		uiStart_Sample		=	Float2Int(fSamples_Pr_Pixel * (tfloat64)iStart_Pos);
-		uiDuration			=	Float2Int(fSamples_Pr_Pixel * (tfloat64)iRegionSizeX);
+		uiStart_Sample		=	fSamples_Pr_Pixel * (tfloat64)iStart_Pos;
+		uiDuration			=	fSamples_Pr_Pixel * (tfloat64)iRegionSizeX;
 		uiSampleEnd			=	uiStart_Sample + uiDuration - 1;
 
 	}
@@ -319,7 +319,7 @@ void CTrack::Set_Selection_Size_And_Pos()
 		}
 		miLastSelectionEndPos = uiEnd_Pixel;
 		
-		tuint32 uiSelectionSize	=	uiEnd_Pixel - uiStart_Pixel;
+		tuint32 uiSelectionSize	=	uiEnd_Pixel - uiStart_Pixel + 1;
 		
 		if(miTrack_Size_Y){
 			pmBmp_Select_Big->SetPos(ge::SPos(		uiStart_Pixel,		0));

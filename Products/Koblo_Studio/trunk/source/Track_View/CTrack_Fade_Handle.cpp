@@ -29,7 +29,7 @@ void CTrack_Fade_Handle::Init()
 	// Create the main pane
 	mpPane = ge::IPane::Create();
 	mpPane->SetSize(ge::SSize(6,6));
-	mpPane->SetBackgroundColour(ge::SRGB(0,0,64));
+	mpPane->SetBackgroundColour(ge::SRGB(92,92,92));
 	mpFill_Rect		= CreateRect(ge::IControl::giNoID, ge::SRect(ge::SPos(1, 1), ge::SSize(4, 4)), ge::SRGB(200, 200, 200));
 
 	// Custom control
@@ -115,7 +115,7 @@ tbool CTrack_Fade_Handle::OnMouse(ge::EMouseMsg MouseMsg, const ge::SPos& Pos)
 			
 			ge::SPos sPosNewY(0 , Pos.iY - sPosThis.iY);
 			tint iPosY = sPosNewY.iY;
-			iPosY++;
+			//iPosY++;
 			
 			switch(muiHandle_Type){
 				case giFade_Out_Handle:

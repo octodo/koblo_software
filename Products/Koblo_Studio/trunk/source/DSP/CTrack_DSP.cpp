@@ -1227,66 +1227,19 @@ void CTrack_DSP::Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 
 			else if(uiSelection_Pos > uiRegion_Pos && uiSelection_End < uiRegion_End){
 				
 				//delete region end
-				tuint64 uiDuration	=	uiSelection_Pos - uiRegion_Pos;
-				Resize_Region(iRegionID, uiRegion_Pos , uiSample_Offset , uiDuration);
+				tuint64 uiNew_Sample_Duration	=	uiSelection_Pos - uiRegion_Pos;
+				Resize_Region(iRegionID, uiRegion_Pos , uiSample_Offset , uiNew_Sample_Duration);
 				mpDSP->Refresh_Region_GUI(iRegionID, miTrack);
 				
 
 				// create new region
-				tuint64 uiDelta		=	uiSample_Duration - uiSelection_Duration - uiDuration;
+				tuint64 uiDelta		=	uiNew_Sample_Duration + uiSelection_Duration;
 				mpDSP->CreateRegion(sClipName, miTrack, uiRegion_Pos + uiDelta, uiSample_Offset + uiDelta , uiSample_Duration - uiDelta, 0,uiFade_Out_Duration, fVolume );
 				
 				
 				
 			}
 			
-			/*
-			if(uiSelection_End >= uiRegion_Pos && uiSelection_Pos <= uiRegion_End) 
-			{
-				uiSelection_Pos					=	uiSelection_Pos <= uiRegion_Pos ? 0 : uiSelection_Pos - uiRegion_Pos;
-				uiSelection_End					=	uiSelection_End > uiRegion_End ? uiSample_Duration : uiSelection_End - uiRegion_Pos;
-				tuint64 uiSelection_Duration	=	uiSelection_End - uiSelection_Pos + 1;
-
-				//-----------------------------------------------------------	
-				// Select entire region
-				if( uiSelection_Pos == 0 ) {
-					// If the entire region is inside the selection
-					if( uiSample_Duration <= uiSelection_Duration){
-						
-						lRegionsToDelete.insert(lRegionsToDelete.begin(), iRegionID);
-					}
-					// Select beginning of region
-					else if(uiSelection_End < uiRegion_End ){
-						
-						Resize_Region(iRegionID, uiRegion_Pos + uiSelection_Duration, uiSample_Offset + uiSelection_Duration, uiSample_Duration - uiSelection_Duration);
-						mpDSP->Refresh_Region_GUI(iRegionID, miTrack);
-					}
-				}
-				
-				// Select end of region
-				else if(uiSelection_Pos <= uiRegion_End){
-					
-					if(uiSelection_End == uiSample_Duration){
-						
-						Resize_Region(iRegionID, uiRegion_Pos, uiSample_Offset, uiSample_End - uiSelection_Duration);
-						mpDSP->Refresh_Region_GUI(iRegionID, miTrack);
-					}
-				
-				// Select midt of region
-					else{
-						
-						Resize_Region(iRegionID, uiRegion_Pos, uiSample_Offset, uiSelection_Pos);
-						
-						
-						
-						// Update GUI
-						mpDSP->Refresh_Region_GUI(iRegionID, miTrack);
-						// No other regions can be selected and no regions will be deleted
-						return;
-					}
-				}
-			}
-			 */
 		}
 	}
 	

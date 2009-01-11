@@ -36,9 +36,9 @@ public:
 						tuint64 uiTrack_Pos,
 						tuint64 uiSample_Offset, 
 						tuint64 uiSample_Duration = -1,
-						tuint64 uiFadeInLength = 0,
-						tuint64 uiFadeOutLength = 0,
-						tfloat32 fRegionVolume = 1.0);
+						tuint64 uiFade_In_Duration = 0,
+						tuint64 uiFade_Out_Duration = 0,
+						tfloat32 fVolume = 1.0);
 	
 	
 	//! set region volume
@@ -75,7 +75,7 @@ public:
 	void Trim_Region(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 iDelta);
 	
 	//! duplicate a region
-	void DuplicateRegion();
+	void Duplicate_Region();
 	
 	//! normalise a region
 	void NormaliseRegion();

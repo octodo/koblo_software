@@ -15,7 +15,7 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, c
 	muiUniqueID = iUniqueID;
 	
 	muiStartPos = uiSamplePosStart;
-	muiEndPos	= uiSamplePosStart + uiSample_Duration;
+	muiEndPos	= uiSamplePosStart + uiSample_Duration - 1;
 	
 	miChannels = 1;
 	if (sSoundPathNameR.size() > 0) {

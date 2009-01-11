@@ -935,7 +935,7 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			break;
 		}
 		case ge::Keyd: {
-			gpDSPEngine->DuplicateRegion();
+			gpDSPEngine->Duplicate_Region();
 			break;
 		}
 		case ge::Keyf: {

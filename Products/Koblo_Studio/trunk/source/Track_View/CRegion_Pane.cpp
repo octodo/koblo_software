@@ -112,7 +112,7 @@ void CRegion_Pane::Init()
 	mpRegion_Volume_Handle->Init();
 	mpPane->AddControl(mpRegion_Volume_Handle->GetPane(), ge::SPos(miSize_X-7, 30));
 	// Volume Line
-	mpLine_Region_Volume	= CreateLine(ge::IControl::giNoID, ge::SPos(miSize_X,0), ge::SPos(miSize_X,0) , ge::SRGB(0, 0, 0));
+	mpLine_Region_Volume	= CreateLine(ge::IControl::giNoID, ge::SPos(miSize_X,0), ge::SPos(miSize_X,0) , ge::SRGB(92, 92, 92));
 	
 	//--------------------------------------------
 	// Fade in 
@@ -121,7 +121,7 @@ void CRegion_Pane::Init()
 	mpFade_In_Handle->Init();
 	mpPane->AddControl(mpFade_In_Handle->GetPane(), ge::SPos(0, 0));
 	// Line
-	mpLine_Fade_In		= CreateLine(ge::IControl::giNoID, ge::SPos(0,0), ge::SPos(0,0) , ge::SRGB(0, 0, 0));
+	mpLine_Fade_In		= CreateLine(ge::IControl::giNoID, ge::SPos(0,0), ge::SPos(0,0) , ge::SRGB(92, 92, 92));
 	
 	//--------------------------------------------
 	// Fade out 
@@ -130,7 +130,7 @@ void CRegion_Pane::Init()
 	mpFade_Out_Handle->Init();
 	mpPane->AddControl(mpFade_Out_Handle->GetPane(), ge::SPos(miSize_X-7, 0));
 	// Line
-	mpLine_Fade_Out		= CreateLine(ge::IControl::giNoID, ge::SPos(miSize_X,0), ge::SPos(miSize_X,0) , ge::SRGB(0, 0, 0));
+	mpLine_Fade_Out		= CreateLine(ge::IControl::giNoID, ge::SPos(miSize_X,0), ge::SPos(miSize_X,0) , ge::SRGB(92, 92, 92));
 
 	
 
@@ -743,8 +743,9 @@ void CRegion_Pane::Draw_Fade_Out()
 	if(muiFade_Out_Pixel < 11)
 		muiFade_Out_Pixel	=	11;
 	
-	mpLine_Fade_Out->SetLinePos(ge::SPos(miSize_X-1, miPixel_Size_Y-1 ),ge::SPos(muiFade_Out_Pixel, muiRegion_Volume_Pixel ));
-	mpFade_Out_Handle->SetPos(ge::SPos(muiFade_Out_Pixel-6,muiRegion_Volume_Pixel));
+	mpLine_Fade_Out->SetLinePos(ge::SPos(miSize_X, miPixel_Size_Y-1 ),ge::SPos(muiFade_Out_Pixel, muiRegion_Volume_Pixel ));
+	
+	mpFade_Out_Handle->SetPos(ge::SPos(muiFade_Out_Pixel-5,muiRegion_Volume_Pixel));
 	
 }
 

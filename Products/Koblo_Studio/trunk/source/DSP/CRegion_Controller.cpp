@@ -18,9 +18,9 @@ const std::string& sSoundListItemName,
  tuint64 uiTrack_Pos, 
  tuint64 uiSample_Offset, 
  tuint64 uiSample_Duration,
- tuint64 uiFadeInLength,
- tuint64 uiFadeOutLength,
- tfloat32 fRegionVolume)
+ tuint64 uiFade_In_Duration,
+ tuint64 uiFade_Out_Duration,
+ tfloat32 fVolume)
 {
 	static int iID = 0;
 	tint32 iRegionID = iID++;
@@ -31,9 +31,9 @@ const std::string& sSoundListItemName,
 							uiTrack_Pos, 
 							uiSample_Offset, 
 							uiSample_Duration,
-							uiFadeInLength,
-							uiFadeOutLength,
-							fRegionVolume);
+							uiFade_In_Duration,
+							uiFade_Out_Duration,
+							fVolume);
  
 
 	mpRegionCallback->InsertRegion(iRegionID, iTrack, uiTrack_Pos, uiSample_Offset, uiSample_Duration, sSoundListItemName.c_str());
@@ -135,7 +135,7 @@ void CRegion_Controller::Trim_Region(tuint32 uiTrack, tuint32 uiRegionID, tbool 
 	
 }
 
-void CRegion_Controller::DuplicateRegion()
+void CRegion_Controller::Duplicate_Region()
 { 
 	for(tint32 uiTrack=0; uiTrack<giNumber_Of_Tracks; uiTrack++){
 		
@@ -143,21 +143,32 @@ void CRegion_Controller::DuplicateRegion()
 		
 		if(pTrack_Selection_Info.uiSelection_Type = giSelect_Region &&  pTrack_Selection_Info.iRegionID != -1)
 		{
-			tuint32 uiRegionID = pTrack_Selection_Info.iRegionID ;
+			tuint32 uiRegionID					= pTrack_Selection_Info.iRegionID ;
 			
 			SRegionInfo RegionInfo;
 			Get_Region_Info( RegionInfo, uiRegionID);
 			CTrack_DSP*		pTrack_DSP			=	gpDSPEngine->GetTrack(RegionInfo.uiTrack);
 			CRegion_DSP*	pRegion_DSP			=	pTrack_DSP->GetRegion_DSP(uiRegionID);
 			std::string sClipName				=	pRegion_DSP->GetSoundListItemName();
-			tfloat64 iPossition					=	pTrack_DSP->Get_Region_Pos(uiRegionID);	
-			tfloat64 fDuration					=	pRegion_DSP->Get_Duration();
+			tuint64 uiPossition					=	pTrack_DSP->Get_Region_Pos(uiRegionID);	
+			tuint64 uiDuration					=	pRegion_DSP->Get_Duration();
 			tuint64 uiSample_Offset				=	pRegion_DSP->Get_Sample_Offset();
-		//	tuint64 uiSamplePosEnd				=	pRegion_DSP->GetEndPos();
+			
+			tuint64	uiFade_In_Duration			=	pRegion_DSP->Get_Fade_In_Duration();
+			tuint64	uiFade_Out_Duration			=	pRegion_DSP->Get_Fade_Out_Duration();
+			tfloat32 fVolume					=	pRegion_DSP->Get_Volume();
+
 			
 			// Create new region
-			tuint32 uiTrack_Pos					=	iPossition + fDuration -1;
-			tuint32 muiRegionID = CreateRegion(sClipName, uiTrack, uiTrack_Pos , uiSample_Offset, fDuration);
+			tuint32 muiRegionID = CreateRegion(sClipName, 
+											   uiTrack, 
+											   uiPossition + uiDuration , 
+											   uiSample_Offset, 
+											   uiDuration,
+											   uiFade_In_Duration,
+											   uiFade_Out_Duration,
+											   fVolume);
+			
 			gpDSPEngine->Select_Region(muiRegionID);
 			mpRegionCallback->SelectRegion(muiRegionID,uiTrack);
 			return;
@@ -266,9 +277,10 @@ tbool CRegion_Controller::SaveTrackRegionDataToChunk(tint32 iTrack, IChunk* pChu
 			CTrack_DSP::SChannelRegionInfo* pRegionInfo = *it;
 			CRegion_DSP* pRegion_DSP = pRegionInfo->pRegion;
 			
-			tuint64 uiStart = pRegion_DSP->Get_Sample_Offset();
-			tuint64 uiEnd = pRegion_DSP->Get_Duration();
-			std::string sPath = pRegion_DSP->GetSound(0)->GetPathName();
+			tuint64 uiSample_Offset		=	pRegion_DSP->Get_Sample_Offset();
+			tuint64 uiDuration			=	pRegion_DSP->Get_Duration();
+			std::string sPath			=	pRegion_DSP->GetSound(0)->GetPathName();
+			
 			tchar pszPathOnly_Dummy[1024];
 			tchar pszNameOnly[1024];
 			if (IFile::SplitPathToPathAndName(sPath.c_str(), pszPathOnly_Dummy, pszNameOnly)) {
@@ -280,10 +292,10 @@ tbool CRegion_Controller::SaveTrackRegionDataToChunk(tint32 iTrack, IChunk* pChu
 				
 				tchar pszBuff[1024];
 				tchar* psz = pszBuff;
-				//psz += sprintf(psz, "%u|", uiID);uiTrack_Pos
+				
 				psz += sprintf(psz, pszUI64Format, pRegionInfo->uiTrack_Pos);
-				psz += sprintf(psz, pszUI64Format, uiStart);
-				psz += sprintf(psz, pszUI64Format, uiEnd);
+				psz += sprintf(psz, pszUI64Format, uiSample_Offset);
+				psz += sprintf(psz, pszUI64Format, uiDuration);
 				psz += sprintf(psz, "%s|", pszNameOnly);
 				
 				sRc += pszBuff;
@@ -303,7 +315,7 @@ tbool CRegion_Controller::SaveTrackRegionDataToChunk(tint32 iTrack, IChunk* pChu
 			tuint64 uiStart = pRegion_DSP->Get_Sample_Offset();
 			tuint64 uiDurat = pRegion_DSP->Get_Duration();
 			//
-			tuint64 uiFadeIn = pRegion_DSP->Get_Fade_Out_Duration();
+			tuint64 uiFadeIn = pRegion_DSP->Get_Fade_In_Duration();
 			tuint64 uiFadeOut = pRegion_DSP->Get_Fade_Out_Duration();
 			tfloat32 fVolume = pRegion_DSP->Get_Volume();
 			tuint64 uiVol1000000 = Float2Int(fVolume * (tuint64)1000000);
@@ -394,8 +406,8 @@ tbool CRegion_Controller::CreateRegionFromChunkData(tint32 iTrack, IChunk* pChun
 					while (iItems >= iItemsPerRecord) {
 						std::string sClipName;
 						tuint64 uiTrack_Pos;
-						tuint64 uiRegionStartPos;
-						tuint64 uiRegionDuration;
+						tuint64 uiSample_Offset;
+						tuint64 uiSample_Duration;
 						//
 						tuint64			uiFadeIn		= 0;
 						tuint64			uiFadeOut		= 0;
@@ -404,11 +416,11 @@ tbool CRegion_Controller::CreateRegionFromChunkData(tint32 iTrack, IChunk* pChun
 						std::string sItem = *it++;
 						sscanf(sItem.c_str(), pszUI64Format, &uiTrack_Pos);
 						sItem = *it++;
-						sscanf(sItem.c_str(), pszUI64Format, &uiRegionStartPos);
+						sscanf(sItem.c_str(), pszUI64Format, &uiSample_Offset);
 						sItem = *it++;
-						sscanf(sItem.c_str(), pszUI64Format, &uiRegionDuration);
+						sscanf(sItem.c_str(), pszUI64Format, &uiSample_Duration);
 						sClipName = *it++;
-						tuint64 uiRegionStopPos = uiRegionStartPos + uiRegionDuration - 1;
+						//tuint64 uiRegionStopPos = uiSample_Offset + uiSample_Duration - 1;
 						//
 						if (iItemsPerRecord >= 6) {
 							sItem = *it++;
@@ -424,9 +436,14 @@ tbool CRegion_Controller::CreateRegionFromChunkData(tint32 iTrack, IChunk* pChun
 							fRegionVolume = (tfloat32)(uiVol1000000 / 1000000.0);
 						}
 						//
-						CreateRegion(sClipName.c_str(), iTrack,
-									 uiTrack_Pos, uiRegionStartPos, uiRegionStopPos,
-									 uiFadeIn, uiFadeOut, fRegionVolume);
+						CreateRegion(sClipName.c_str(), 
+									 iTrack,
+									 uiTrack_Pos,
+									 uiSample_Offset, 
+									 uiSample_Duration,
+									 uiFadeIn, 
+									 uiFadeOut, 
+									 fRegionVolume);
 						//
 						
 						
