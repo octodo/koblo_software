@@ -49,7 +49,7 @@ void CKSExportGUIPane::Init()
 	Prepare_Popups();
 	
 	// Normalize
-	ge::IMultiStateButton* pBtnNorm = Create2StateButton(giCtrl_Normalize_On_Export, IDB_Button_Normalize, pos, false);
+	Create2StateButton(giCtrl_Normalize_On_Export, IDB_Button_Normalize, pos, false);
 	
 	// Type
 	mpDropDownAudioCodecs = CreatePop( giCtrl_Wave_Type_Popup, IDB_Button_Popup,  mpType_Popup, ge::SPos(192, 45), mpPane);

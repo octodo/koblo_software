@@ -180,7 +180,7 @@ void CMix_AUX_Insert::PreparePopups()
 		return;
 	}
 
-	tbool bUpdate = false;
+//	tbool bUpdate = false;
 	if (mpInput) {
 /*		GetPane()->RemoveControl(dynamic_cast<ge::IControl*>(mpInput));
 

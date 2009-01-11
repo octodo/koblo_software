@@ -40,17 +40,5 @@ public:
 };
 
 
-/*
 
-Michaels notes:
-
-To DSP:
-
-void CutRegion(tuint32 uiID, tuint64 uiCutStartPos, tuint64 uiCutEndPos);
-
-void DeleteTrack(tuint32 uiTrack);
-
-
-
-*/
 

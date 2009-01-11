@@ -1069,7 +1069,7 @@ CDSP::RegionSearchHandle CDSP::GetFirstRegion(SRegionInfo& rInfo)
 
 			rInfo.uiRegionID = (*it)->pRegion->GetID();
 			rInfo.uiTrack = uiTrack;
-			rInfo.uiStartPos = (*it)->uiTrackPosStart;
+			rInfo.uiStartPos = (*it)->uiTrack_Pos;
 			rInfo.uiEndPos = rInfo.uiStartPos + (*it)->pRegion->Get_Duration() - 1;
 
 			SRegionSearchInfo* pInfo = new SRegionSearchInfo();
@@ -1107,7 +1107,7 @@ void CDSP::GetNextRegion(CDSP::RegionSearchHandle& Handle, CDSP::SRegionInfo& rI
 
 			rInfo.uiRegionID = (*it)->pRegion->GetID();
 			rInfo.uiTrack = uiTrack;
-			rInfo.uiStartPos = (*it)->uiTrackPosStart;
+			rInfo.uiStartPos = (*it)->uiTrack_Pos;
 			rInfo.uiEndPos = rInfo.uiStartPos + (*it)->pRegion->Get_Duration() - 1;
 
 			pInfo->uiTrackCur = uiTrack;

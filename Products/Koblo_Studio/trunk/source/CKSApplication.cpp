@@ -1759,7 +1759,7 @@ tbool CKSApplication::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iSt
 		CTrack_DSP::SChannelRegionInfo* pRegionInfo = *it;
 
 		// Maybe zereos before this clip
-		tint64 iZeroesBefore = pRegionInfo->uiTrackPosStart - iLatestPos;
+		tint64 iZeroesBefore = pRegionInfo->uiTrack_Pos - iLatestPos;
 		tint64 iRegionCutOffStart = 0;
 		if (iZeroesBefore <= 0) {
 			// No zeroes before - actually we don't use start of this region
@@ -3163,7 +3163,7 @@ tbool CKSApplication::MenuFileLoadProject()
 			// Load wave regions for tracks
 			iTrack = -1;
 			iIndex = 0;
-			CDSP* pDSP = dynamic_cast<CDSP*>(GetDSPEngine());
+	//		CDSP* pDSP = dynamic_cast<CDSP*>(GetDSPEngine());
 			while (1) {
 				IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'REGI');
 				if (pChunkOrg == NULL) {

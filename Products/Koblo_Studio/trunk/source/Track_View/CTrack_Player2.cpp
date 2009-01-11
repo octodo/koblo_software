@@ -68,13 +68,7 @@ void CTrack_Player2::Init()
 		
 		iTrack_PosY			+= iTrack_SizeY + 1;
 	}
-	
-//	Snap_To_Grid();
-	
-	// Lasse, dynamic_cast is slow on Windows!
-	
-//	tfloat64 fPixelPrSample		= 	gpApplication->GetSamplesPrPixel();
-	tfloat64 fSamplesPrPixel	=	gpApplication->GetSamplesPrPixel();
+
 	
 	
 	//muiPane_Duration_In_Samples = gTrack_Scroll_Editor.iCX * fSamplesPrPixel;

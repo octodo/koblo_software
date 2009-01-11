@@ -91,7 +91,7 @@ void CMix_Channel::Init()
 	
 	
 	// Panner 
-	ge::IPanner* pPanner = CreatePanner(
+	CreatePanner(
 		giChannel_Pan  + miCtrl_Offset, ge::IControl::giNoID,
 		NULL, IDB_Button_Pan_Handle,
 		ge::SPos(3, 188), 

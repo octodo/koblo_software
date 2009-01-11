@@ -37,11 +37,8 @@ void CTrack_Files::Init()
 	mpPane->SetAutomaticResize(true, ge::IControl::ResizeAbsoluteY );
 	
 	mpPane->SetBackgroundColour(ge::SRGB(239,239,239));
-	
-	// Dummy pict used to check scroll
-//	CreateBitmap(ge::IControl::giNoID, IDB_Dummy, ge::SPos(10, 10));
 
-	ge::IListBox* pListBox = CreateListBox(giCtrl_File_List,
+	CreateListBox(giCtrl_File_List,
 											ge::SPos(4, 0), ge::SSize(SizeThis.iCX-4, SizeThis.iCY),
 											CreateFont(Generic128, 
 											IDB_Font_Minix_Tight, 

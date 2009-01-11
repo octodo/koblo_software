@@ -425,7 +425,7 @@ tbool CExportDSPTask::DoEncode_InALoop(tbool bWrite)
 	tbool bDone = false;
 	tbool bSuccess = true;
 	tuint32 uiTimeMS0 = ITime::GetTimeMS();
-	tuint32 uiDiff = 0;
+	
 	tint32 iActionOrderSave = miActionOrder;
 	do {
 		if (!DoEncode(bWrite)) {

@@ -148,6 +148,8 @@ void CKS_Import_Files::UpdateListBox()
 	for (; it != mItems.end(); it++) {
 		std::string sName;
 		tbool bFirstOld = bFirst;
+		
+		//!!! is this a bug ?
 		if (bFirst == false) {
 			sName = "@";
 		}

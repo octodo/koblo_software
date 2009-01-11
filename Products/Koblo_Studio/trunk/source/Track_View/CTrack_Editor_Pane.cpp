@@ -384,6 +384,7 @@ void CTrack_Editor_Pane::OnTimer(tint32 iTimerID)
 	}
 
 	if (iTimerID == giTimerID_Meters_Track) {
+		//!!! unused ?
 		CKSApplication::EPlaybackState eState = gpApplication->GetPlaybackState();
 
 		// Only do things if not exporting

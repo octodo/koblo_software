@@ -47,7 +47,7 @@ public:
 
 	CRegion_DSP* CreateRegion(tint32 iUniqueID, 
 								const std::string& sSoundListItemName, 
-								tuint64 uiTrackPosStart, 
+								tuint64 uiTrack_Pos, 
 								tuint64 uiSamplePosStart, 
 								tuint64& ruiSamplePosEnd,
 								tuint64 uiFadeInLength = 0,
@@ -64,7 +64,7 @@ public:
 	CRegion_DSP* GetRegion_DSP(tuint32 uiID);
 	
 	//! Get region track pos
-	tuint64 GetRegionPosOnTrack(tuint32 uiID);
+	tuint64 Get_Region_Pos(tuint32 uiID);
 	//! Update the size of a region;
 	void Resize_Region(tuint32 uiID, tuint64 iTrackStartPos, tuint64 iSoundStartPos, tint64 iSoundEndPos);
 
@@ -76,7 +76,7 @@ public:
 
 	struct SChannelRegionInfo {
 		CRegion_DSP* pRegion;
-		tuint64 uiTrackPosStart;
+		tuint64 uiTrack_Pos;
 		tuint32 uiRegionID;
 	};
 
@@ -152,7 +152,7 @@ protected:
 	tbool mbMeterBeforeEffects;
 	tint32 miNumberOfChannelsForMeter;
 
-	tint32 miChannelNumber;
+	tint32 miTrack;
 
 	tfloat32 mpfBufferTmp1[giAudioMaxBufferSize];
 	tfloat32 mpfBufferTmp2[giAudioMaxBufferSize];

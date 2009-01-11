@@ -337,7 +337,7 @@ CPlugInManager::PlugInHandle CPlugInManager::LoadPlugIn(tint32 iIndex, tint32 iC
 	if (pPlugIn == NULL) {
 		// No plugin with given index
 	}
-
+	//!!! unused ?
 	tint32 iLoadedPlugs = mLoadedPlugIns.size();
 
 	mLoadedPlugIns.push_back(pPlugIn);
