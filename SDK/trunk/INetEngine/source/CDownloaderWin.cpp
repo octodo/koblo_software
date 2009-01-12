@@ -15,7 +15,7 @@ void CDownloader::Constructor_OSSpecific()
 
 void CDownloader::Destructor_OSSpecific()
 {
-	CloseConnection();
+	// Nothing here
 } // Destructor_OSSpecific
 
 

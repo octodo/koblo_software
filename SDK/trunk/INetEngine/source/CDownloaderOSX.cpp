@@ -13,7 +13,7 @@ void CDownloader::Constructor_OSSpecific()
 
 void CDownloader::Destructor_OSSpecific()
 {
-	// Nothing here yet
+	// Nothing here
 } // Destructor_OSSpecific
 
 

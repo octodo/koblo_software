@@ -14,6 +14,9 @@ CDownloader::~CDownloader()
 {
 	Abort();
 	WipeParams();
+	CloseConnection();
+	//
+	Destructor_OSSpecific();
 } // destructor
 
 
@@ -242,7 +245,7 @@ tbool CDownloader::AssembleParams()
 		std::list<std::string>::iterator itName = mlist_sParamNames.begin();
 		for ( ; itName != mlist_sParamNames.end(); itName++) {
 			std::string& rsName = *itName;
-			miParamsAssembledLen += 1 + rsName.length();
+			miParamsAssembledLen += rsName.length();
 		}
 
 		// Then accumulate length of non-empty paramater data
@@ -250,9 +253,13 @@ tbool CDownloader::AssembleParams()
 		for ( ; itDataLen != mlist_iParamDataLen.end(); itDataLen++) {
 			tint32 iLen = *itDataLen;
 			if (iLen > 0) {
+				// An equation-sign and then data
 				miParamsAssembledLen += 1 + iLen;
 			}
 		}
+
+		// Lastly a new-line sequence (always DOS style due to w3c spec)
+		miParamsAssembledLen += 2;
 	}
 
 	// Attempt to allocate space for params + traling zero
@@ -265,7 +272,7 @@ tbool CDownloader::AssembleParams()
 	// And action! Assemble the parameter string
 	{
 		tchar* pszDst = mpszParamsAssembled;
-		tchar cNameDelimiter = '?';
+		//tchar cNameDelimiter = '?';
 		std::list<std::string>::iterator itName = mlist_sParamNames.begin();
 		std::list<tint32>::iterator itDataLen = mlist_iParamDataLen.begin();
 		std::list<tchar*>::iterator itParamData = mlist_pszParamDataUrlEncoded.begin();
@@ -276,7 +283,7 @@ tbool CDownloader::AssembleParams()
 			tchar* pcData = *itParamData;
 			tint32 iDataLen = *itDataLen;
 			// Copy param name
-			*pszDst++ = cNameDelimiter;
+			//*pszDst++ = cNameDelimiter;
 			memcpy(pszDst, rsName.c_str(), iNameLen);
 			pszDst += iNameLen;
 			// Maybe copy param data
@@ -285,11 +292,14 @@ tbool CDownloader::AssembleParams()
 				memcpy(pszDst, pcData, iDataLen);
 				pszDst += iDataLen;
 			}
+			// Newline sequence
+			memcpy(pszDst, "\r\n", 2);
+			pszDst += 2;
 			// Advance to next
 			itName++;
 			itDataLen++;
 			itParamData++;
-			cNameDelimiter = '&';
+			//cNameDelimiter = '&';
 		}
 		// Append zero-termination
 		*pszDst = '\0';
