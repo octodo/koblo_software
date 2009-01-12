@@ -19,7 +19,7 @@ void CDownloader::Destructor_OSSpecific()
 } // Destructor_OSSpecific
 
 
-tbool CDownloader::OpenConnection()
+tbool CDownloader::OpenConnection_OSSpecific()
 {
 	// First verify that computer is connected to the Internet
 	DWORD dwConnectedState = 0;
@@ -101,10 +101,10 @@ tbool CDownloader::OpenConnection()
 	muiTotalSize = 0;
 
 	return true;
-} // OpenConnection
+} // OpenConnection_OSSpecific
 
 
-void CDownloader::CloseConnection()
+void CDownloader::CloseConnection_OSSpecific()
 {
 	if (mhFile) {
 		::InternetCloseHandle(mhFile);
@@ -118,38 +118,11 @@ void CDownloader::CloseConnection()
 		::InternetCloseHandle(mhInitialize);
 		mhInitialize = NULL;
 	}
-} // CloseConnection
+} // CloseConnection_OSSpecific
 
 
-tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
+tbool CDownloader::DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
 {
-	*piPortionSize = 0;
-
-	if (mbIsFailed) {
-		//SetError("Previous error");
-		return false;
-	}
-
-	if (!mbIsInitialized) {
-		SetError("Not initialized");
-		return false;
-	}
-
-	tbool bFirstTime = (!mbIsDownloading);
-	mbIsDownloading = true;
-	if (bFirstTime) {
-		CAutoLock Lock(mMutex_Connection);
-
-		CloseConnection();
-		if (!AssembleParams()) return false;
-		if (!OpenConnection()) {
-			CloseConnection();
-			return false;
-		}
-		// We're alive
-		RefreshAlive();
-	}
-
 	/* hm... ::InternetReadFileEx(..) is too complicated - will attempt InternetReadFile(..)
 	INTERNET_BUFFERS buffers;
 	// Initialize empty so we don't get confused
@@ -244,21 +217,6 @@ tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32*
 	tint64 iTotalSize_Debug = muiTotalSize;
 #endif // _DEBUG
 	return true;
-} // DownloadPortion
-
-
-tbool CDownloader::Abort()
-{
-	if (mbIsDownloading) {
-		CAutoLock Lock(mMutex_Connection);
-		
-		CloseConnection();
-		mbIsDownloading = false;
-	}
-
-	WipeParams();
-
-	return true;
-} // Abort
+} // DownloadPortion_OSSpecific
 
 

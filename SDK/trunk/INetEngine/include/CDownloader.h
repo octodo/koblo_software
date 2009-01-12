@@ -61,6 +61,15 @@ protected:
 	void Constructor_OSSpecific();
 	void Destructor_OSSpecific();
 
+	CMutex mMutex_Connection;
+	tbool OpenConnection();
+	tbool OpenConnection_OSSpecific();
+	void CloseConnection();
+	void CloseConnection_OSSpecific();
+	
+	tbool DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize);
+	
+
 #ifdef _WIN32
 	#include "CDownloaderWin.h"
 #endif // _WIN32

@@ -9,6 +9,3 @@ protected:
 
 	tuint64 muiTotalSize;
 
-	tbool OpenConnection();
-	void CloseConnection();
-	CMutex mMutex_Connection;

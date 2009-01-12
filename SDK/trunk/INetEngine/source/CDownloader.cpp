@@ -322,6 +322,66 @@ void CDownloader::WipeParams()
 } // WipeParams
 
 
+tbool CDownloader::OpenConnection()
+{
+	return OpenConnection_OSSpecific();
+} // OpenConenction
+
+
+void CDownloader::CloseConnection()
+{
+	CloseConnection_OSSpecific();
+} // CloseConenction
+
+
+tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
+{
+	*piPortionSize = 0;
+	
+	if (mbIsFailed) {
+		//SetError("Previous error");
+		return false;
+	}
+	
+	if (!mbIsInitialized) {
+		SetError("Not initialized");
+		return false;
+	}
+	
+	tbool bFirstTime = (!mbIsDownloading);
+	mbIsDownloading = true;
+	if (bFirstTime) {
+		CAutoLock Lock(mMutex_Connection);
+		
+		CloseConnection();
+		if (!AssembleParams()) return false;
+		if (!OpenConnection()) {
+			CloseConnection();
+			return false;
+		}
+		// We're alive
+		RefreshAlive();
+	}
+	
+	return DownloadPortion_OSSpecific(pszBuffer, iBufferSize, piPortionSize, puiTotalSize);
+} // DownloadPortion
+
+
+tbool CDownloader::Abort()
+{
+	if (mbIsDownloading) {
+		CAutoLock Lock(mMutex_Connection);
+		
+		CloseConnection();
+		mbIsDownloading = false;
+	}
+	
+	WipeParams();
+	
+	return true;
+} // Abort
+
+
 tbool CDownloader::IsDone()
 {
 	return mbIsDone;
