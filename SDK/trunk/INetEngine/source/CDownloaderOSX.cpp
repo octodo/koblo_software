@@ -87,8 +87,10 @@ tbool CDownloader::OpenConnection_OSSpecific()
 
 void CDownloader::CloseConnection_OSSpecific()
 {
-	CFReadStreamClose( mReadStreamRef );
-	CFRelease( mReadStreamRef );
+	if (mReadStreamRef) {
+		CFReadStreamClose( mReadStreamRef );
+		CFRelease( mReadStreamRef );
+	}
 	
 	if (mMessageRef)
 		CFRelease( mMessageRef );
@@ -126,9 +128,14 @@ tbool CDownloader::DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSi
 		}
 	} 
 
-	if (CFReadStreamGetStatus(mReadStreamRef) == kCFStreamStatusAtEnd)
-	{
+	CFStreamStatus status = CFReadStreamGetStatus(mReadStreamRef);
+	if (status == kCFStreamStatusAtEnd)
+	{                 
 		mbIsDone = true;
+		mbIsDownloading = false;
+	}
+	else if ((status == kCFStreamStatusError) || (status == kCFStreamStatusClosed)) {
+		mbIsFailed = true;
 		mbIsDownloading = false;
 	}
 	
