@@ -532,7 +532,47 @@ void CPlugInManager::WindowClosed(tint32 iChannel, tint32 iInsertIndex)
 }
 
 
-
+std::string CPlugInManager::GetPlugInVendor(tint32 iId)
+{
+	
+	tuint32 uiCompanyID = iId >> 8;
+	tuint32 uiProductID = iId & 0xff;
+	
+	
+	std::list<SPlugInInfo*>::const_iterator it = mPlugIns.begin();
+	
+	for (; it != mPlugIns.end(); it++) {
+		
+		SPlugInInfo* pInfo = *it;
+		
+		if (pInfo->uiCompanyID == uiCompanyID && pInfo->uiProductID == uiProductID) {
+			return pInfo->sProductName;
+		}
+	}
+	std::string s = "NA";
+	return s;
+}
+std::string CPlugInManager::GetPlugInName(tint32 iId)
+{
+	
+	tuint32 uiCompanyID = iId >> 8;
+	tuint32 uiProductID = iId & 0xff ;
+	
+	
+	std::list<SPlugInInfo*>::const_iterator it = mPlugIns.begin();
+	
+	for (; it != mPlugIns.end(); it++) {
+		
+		SPlugInInfo* pInfo = *it;
+		tint32 iTest = pInfo->uiProductID;
+		tint32 iTest2 = pInfo->uiCompanyID;
+		if (iTest2 == uiCompanyID && iTest == uiProductID) {
+			return pInfo->sCompanyName;
+		}
+	}
+	std::string s = "NA";
+	return s;
+}
 
 
 

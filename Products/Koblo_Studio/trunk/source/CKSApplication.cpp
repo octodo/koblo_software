@@ -1307,6 +1307,9 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	}
 	else if (s.compare("File@Save Project") == 0) {
 		// Save
+		Save_Project_As_XML_File_To_Disk();
+		
+		
 		try {
 			if (!MenuFileSaveProject()) {
 				LoadSaveErrDlg("Error saving project");

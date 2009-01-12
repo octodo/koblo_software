@@ -10,7 +10,8 @@ CKSXML_Read_Project(),
 CKSUsername_And_Password_Model(),
 mbUpload_Project(false)
 {
-	
+	//!!!TO DO remove this dummy code
+	msProjectName = "flying pink elephants";
 }
 
 CKSInternet_Features::~CKSInternet_Features()

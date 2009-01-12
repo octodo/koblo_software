@@ -2,7 +2,7 @@
 
 #include "KSOS.h"
 
-CRegion_DSP::CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, const std::string& sSoundPathNameR, const std::string& sSoundListItemName, tuint64 uiSamplePosStart, tuint64 uiSample_Duration)
+CRegion_DSP::CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, const std::string& sSoundPathNameR, const std::string& sSoundListItemName, tuint64 uiSample_Offset, tuint64 uiSample_Duration)
 {
 	muiFadeInLength = 0;
 	muiFadeOutLength = 0;
@@ -14,8 +14,8 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, c
 	
 	muiUniqueID = iUniqueID;
 	
-	muiStartPos = uiSamplePosStart;
-	muiEndPos	= uiSamplePosStart + uiSample_Duration - 1;
+	muiStartPos = uiSample_Offset;
+	muiEndPos	= uiSample_Offset + uiSample_Duration - 1;
 	
 	miChannels = 1;
 	if (sSoundPathNameR.size() > 0) {
@@ -34,8 +34,8 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, c
 	
 	msSoundListItemName = sSoundListItemName;
 	
-	if (muiEndPos == (tuint64)-1) {
-		muiEndPos = (mppSample[0]->GetLength() - uiSamplePosStart) -1;
+	if (uiSample_Duration == (tuint64)-1) {
+		muiEndPos = (mppSample[0]->GetLength() - uiSample_Offset) -1;
 	}
 	
 #ifdef _Mac_PowerPC

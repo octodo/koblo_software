@@ -61,7 +61,7 @@ public:
 	/*!
 	 \param TiXmlNode [in]: TiXmlNode.
 	 */
-	void Set_Project(TiXmlNode* pParent);
+	void Read_Project(TiXmlNode* pParent);
 	
 	//! handle the different ellements at the root level of the xml file sort out comments and the like
 	/*!
@@ -73,47 +73,48 @@ public:
 	/*!
 	 \param TiXmlElement [in]: TiXmlElement.
 	 */
-	void Set_Branch(TiXmlElement* pElement);
-	void Set_Settings(TiXmlElement* pElement);
-	void Set_Signature(TiXmlElement* pElement);
+	void Read_Branch(TiXmlElement* pElement);
+	void Read_Settings(TiXmlElement* pElement);
+	void Read_Signature(TiXmlElement* pElement);
 	void Update_Signature(TiXmlElement* pElement);
-	void Set_Edditing(TiXmlElement* pElement);
-	void Set_Sample(TiXmlElement* pElement);
-	void Set_Sample_Take(TiXmlElement* pElement);
-	void Set_Loop(TiXmlElement* pElement);
-	void Set_Windows(TiXmlElement* pElement);
-	void Set_Window(TiXmlNode* pChild, tint32 iId);
-	void Set_Window_Pos(TiXmlNode* pChild, tint32 iId);
-	void Set_Window_Size(TiXmlNode* pChild, tint32 iId);
-	void Set_Dialogs(TiXmlElement* pElement);
-	void Set_Export_Dialog(TiXmlElement* pElement);
-	void Set_Insert(TiXmlElement* pElement);
-	void Set_Insert_Settings(TiXmlElement* pElement);
-	void Set_Insert_Parameter(TiXmlElement* pElement);
-	void Set_Track(TiXmlElement* pElement);
-	void Set_Track_Name(TiXmlElement* pElement, tint32 iTrackID);
-	void Set_Track_In(TiXmlElement* pElement, tint32 iTrackID);
-	void Set_Track_Out(TiXmlElement* pElement, tint32 iTrackID);
+	void Read_Edditing(TiXmlElement* pElement);
+	void Read_Sample(TiXmlElement* pElement);
+	void Read_Sample_Take(TiXmlElement* pElement);
+	void Read_Loop(TiXmlElement* pElement);
+	void Read_Windows(TiXmlElement* pElement);
+	void Read_Window(TiXmlNode* pChild, tint32 iId);
+	void Read_Window_Pos(TiXmlNode* pChild, tint32 iId);
+	void Read_Window_Size(TiXmlNode* pChild, tint32 iId);
+	void Read_Dialogs(TiXmlElement* pElement);
+	void Read_Export_Dialog(TiXmlElement* pElement);
+	void Read_Insert(TiXmlElement* pElement);
+	void Read_Insert_Settings(TiXmlElement* pElement);
+	void Read_Insert_Parameter(TiXmlElement* pElement);
+	void Read_Track(TiXmlElement* pElement);
+	void Read_Track_Name(TiXmlElement* pElement, tint32 iTrackID);
+	void Read_Track_In(TiXmlElement* pElement, tint32 iTrackID);
+	void Read_Track_Out(TiXmlElement* pElement, tint32 iTrackID);
+	void Read_Track_Regions(TiXmlElement* pElement, tint32 iTrackID);
 	
-	void Set_Track_Solo(TiXmlNode* pParent, tint32 iTrackID);
-	void Set_Track_Mute(TiXmlNode* pParent, tint32 iTrackID);
-	void Set_Track_Arm(TiXmlNode* pParent, tint32 iTrackID);
-//	void Set_Track_Aux(TiXmlNode* pParent, tint32 iTrackID, tint32 iAux);
+	void Read_Track_Solo(TiXmlNode* pParent, tint32 iTrackID);
+	void Read_Track_Mute(TiXmlNode* pParent, tint32 iTrackID);
+	void Read_Track_Arm(TiXmlNode* pParent, tint32 iTrackID);
+//	void Read_Track_Aux(TiXmlNode* pParent, tint32 iTrackID, tint32 iAux);
 	
-	//void Set_Track_Aux(TiXmlElement* pElement, tint32 iTrackID);
-	void Set_Track_Insert(TiXmlElement* pElement, tint32 iTrackID);
-	void Set_Track_Region(TiXmlElement* pElement, tint32 iTrackID);
-	void Set_Track_Region_Fade(TiXmlElement* pElement, tint32 iTrackID);
+	//void Read_Track_Aux(TiXmlElement* pElement, tint32 iTrackID);
+	void Read_Track_Insert(TiXmlElement* pElement, tint32 iTrackID);
+	void Read_Track_Region(TiXmlElement* pElement, tint32 iTrackID);
+	void Read_Track_Region_Fade(TiXmlElement* pElement, tint32 iTrackID);
 	
-	void Set_Bus(TiXmlElement* pElement);
-	void Set_Bus_Out(TiXmlElement* pElement);
-	void Set_Bus_Aux(TiXmlElement* pElement);
-	void Set_Bus_Insert(TiXmlElement* pElement);
+	void Read_Bus(TiXmlElement* pElement);
+	void Read_Bus_Out(TiXmlElement* pElement);
+	void Read_Bus_Aux(TiXmlElement* pElement);
+	void Read_Bus_Insert(TiXmlElement* pElement);
 	
-	void Set_Master(TiXmlElement* pElement);
-	void Set_Master_Out(TiXmlElement* pElement);
-	void Set_Master_Insert(TiXmlElement* pElement);
-	void Set_Master_Aux_Return(TiXmlElement* pElement);
+	void Read_Master(TiXmlElement* pElement);
+	void Read_Master_Out(TiXmlElement* pElement);
+	void Read_Master_Insert(TiXmlElement* pElement);
+	void Read_Master_Aux_Return(TiXmlElement* pElement);
 
 	
 	void Set_Param( TiXmlNode* pParent, tuint uiType, tuint32 uiID, tint32 Section, tfloat fFactor = 1.0f );

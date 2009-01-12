@@ -334,6 +334,7 @@ void CRegion_Pane::OnDraw(const ge::SRect &rUpdate)
 		SizeThis.iCY = miPixel_Size_Y-2;
 
 
+		//!!! TO DO check this
 		tuint64 uiPixelOffset	=	Float2Int(mfSample_Start * gpApplication->GetPixelPrSample());
 
 		tfloat64 fSamplesPerPixel	= gpApplication->GetSamplesPrPixel();

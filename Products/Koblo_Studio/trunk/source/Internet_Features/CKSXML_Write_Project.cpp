@@ -37,13 +37,13 @@ void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 //	printf(xml_str.c_str());
 	
 	//------------------ MISSING CODE ----------------------------
-/*
+
 	// missing code 
 	std::string sFileName = gpApplication->GetProjectName() + ".xml";
 	
 	//!!! path is missing write file to disk
 	pDoc->SaveFile(sFileName.c_str());
-*/	
+	
 	
 	
 }
@@ -677,10 +677,13 @@ void CKSXML_Write_Project::Write_Track(TiXmlElement* pParent, tuint uiTrack)
 	Write_Track_Out(pOut, uiTrack);
 	
 	// inserts
-	Write_Inserts(pParent, uiTrack);
+	Write_Track_Inserts(pParent, uiTrack);
 	
 	// AUXs
 	Write_AUXs(pParent, uiTrack);
+	
+	// regions
+	Write_Track_Regions( pParent, uiTrack);
 	
 	
 }
@@ -778,16 +781,16 @@ void CKSXML_Write_Project::Write_Track_Out(TiXmlElement* pParent, tuint uiTrack)
 	pParent->LinkEndChild( pArm );
 }
 
-void CKSXML_Write_Project::Write_Inserts(TiXmlElement* pParent, tuint uiTrack)
+void CKSXML_Write_Project::Write_Track_Inserts(TiXmlElement* pParent, tuint uiTrack)
 {
 	
 	for(tuint uiInsert=0; uiInsert<giNumber_Of_Inserts; uiInsert++)
 	{
-		Write_Insert( pParent, uiTrack, uiInsert);
+		Write_Track_Insert( pParent, uiTrack, uiInsert);
 	}
 }
 
-void CKSXML_Write_Project::Write_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert)
+void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert)
 {
 	
 	// output
@@ -829,6 +832,113 @@ void CKSXML_Write_Project::Write_Insert(TiXmlElement* pParent, tuint uiTrack, tu
 
 	}
 }
+
+void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTrack)
+{
+	tchar pszBuff[1024];
+	tchar* psz = pszBuff;
+	CTrack_DSP*		pTrack_DSP			=	gpDSPEngine->GetTrack(uiTrack);
+	std::list<CTrack_DSP::SChannelRegionInfo*>::const_iterator it = pTrack_DSP->GetRegionList().begin();
+	
+	for (; it != pTrack_DSP->GetRegionList().end(); it++) {
+		
+		CTrack_DSP::SChannelRegionInfo* pRegionInfo = *it;
+		CRegion_DSP* pRegion_DSP = pRegionInfo->pRegion;
+		
+		// region id and take nr.
+		TiXmlElement* pRegion = new TiXmlElement( "region" );
+		
+		tuint uiID = pRegion_DSP->GetID();
+		pRegion->SetAttribute("id", uiID );
+		pRegion->SetAttribute("take", 0);
+		pParent->LinkEndChild( pRegion );
+		
+		// sound file name
+		const tchar* pszListItemName = pRegion_DSP->GetSoundListItemName();
+		sprintf(psz, "%s", pszListItemName);
+		
+		TiXmlElement* pSoundfile = new TiXmlElement( "soundfile" );
+		TiXmlText* pSoundfileTxt = new TiXmlText(psz);
+		pSoundfile->LinkEndChild( pSoundfileTxt );
+		pRegion->LinkEndChild( pSoundfile );
+		
+		
+		// region position
+		tuint64 uiPosition = pRegionInfo->uiTrack_Pos;
+		sprintf(pszBuff, "%d", uiPosition);
+		
+		TiXmlElement* pPosition = new TiXmlElement( "position" );
+		TiXmlText* pPositionTxt = new TiXmlText(pszBuff);
+		pPosition->LinkEndChild( pPositionTxt );
+		pRegion->LinkEndChild( pPosition );
+		
+		// sample offset
+		tuint64 uiSample_Offset = pRegion_DSP->Get_Sample_Offset();
+		sprintf(pszBuff, "%d", uiSample_Offset);
+		
+		TiXmlElement* pSample_Offset = new TiXmlElement( "start" );
+		TiXmlText* pSample_OffsetTxt = new TiXmlText(pszBuff);
+		pSample_Offset->LinkEndChild( pSample_OffsetTxt );
+		pRegion->LinkEndChild( pSample_Offset );
+		
+		// sample duration
+		tuint64 uiSample_Duration = pRegion_DSP->Get_Duration();
+		sprintf(pszBuff, "%d", uiSample_Duration);
+		
+		TiXmlElement* pSample_Duration = new TiXmlElement( "duration" );
+		TiXmlText* pSample_DurationTxt = new TiXmlText(pszBuff);
+		pSample_Duration->LinkEndChild( pSample_DurationTxt );
+		pRegion->LinkEndChild( pSample_Duration );
+		
+		// volume
+		tfloat fVolume = pRegion_DSP->Get_Volume();
+		sprintf(pszBuff, "%f", fVolume);
+		
+		TiXmlElement* pVolume = new TiXmlElement( "volume" );
+		TiXmlText* pVolumeTxt = new TiXmlText(pszBuff);
+		pVolume->LinkEndChild( pVolumeTxt );
+		pRegion->LinkEndChild( pVolume);
+		
+		// fades
+		TiXmlElement* pFade = new TiXmlElement( "fade" );
+		pRegion->LinkEndChild( pFade );
+		
+		// fade in
+		tuint64 uiFade_In_Duration = pRegion_DSP->Get_Fade_In_Duration();
+		sprintf(pszBuff, "%d", uiFade_In_Duration);
+		
+		TiXmlElement* pFade_In_Duration = new TiXmlElement( "in" );
+		TiXmlText* pFade_In_DurationTxt = new TiXmlText(pszBuff);
+		pFade_In_Duration->LinkEndChild( pFade_In_DurationTxt );
+		pFade->LinkEndChild( pFade_In_Duration );
+		
+		// fade out
+		tuint64 uiFade_Out_Duration = pRegion_DSP->Get_Fade_Out_Duration();
+		sprintf(pszBuff, "%d", uiFade_Out_Duration);
+		
+		TiXmlElement* pFade_Out_Duration = new TiXmlElement( "out" );
+		TiXmlText* pFade_Out_DurationTxt = new TiXmlText(pszBuff);
+		pFade_Out_Duration->LinkEndChild( pFade_Out_DurationTxt );
+		pFade->LinkEndChild( pFade_Out_Duration );
+		
+		/*
+		
+		//
+		tuint64 uiFade_In_Duration = pRegion_DSP->Get_Fade_In_Duration();
+		tuint64 uiFade_Out_Durationt = pRegion_DSP->Get_Fade_Out_Duration();
+		tfloat32 fVolume = pRegion_DSP->Get_Volume();
+		
+		
+		tuint64 uiVol1000000 = Float2Int(fVolume * (tuint64)1000000);
+		 */
+		
+	}
+	
+	
+	
+}
+
+
 
 void CKSXML_Write_Project::Write_AUXs(TiXmlElement* pParent, tuint uiTrack)
 {

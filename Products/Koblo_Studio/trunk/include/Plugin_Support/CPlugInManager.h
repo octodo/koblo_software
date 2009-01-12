@@ -106,8 +106,10 @@ public:
 	
 	void WindowClosed(tint32 iChannel, tint32 iInsertIndex);
 	
-	std::string GetPlugInVendor(tint32 iInsertId){ return "Koblo";};
-	std::string GetPlugInName(tint32 iInsertId){ return "plug-in name";};
+	//! get vendor name
+	std::string GetPlugInVendor(tint32 iInsertId);
+	//! get plug-in name
+	std::string GetPlugInName(tint32 iInsertId);
 	
 protected:
 //	CKSPlugIn* mpPlugIn;

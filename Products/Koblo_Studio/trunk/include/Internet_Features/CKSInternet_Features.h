@@ -78,6 +78,7 @@ public:
 	//! upload compressed audio file and mp3 preview.
 	void Upload_OGG_And_MP3_File();
 	
+	//!!! To Do call this
 	void SetProjectName( const std::string& sName){ msProjectName = sName;}
 	
 	std::string GetProjectName(){ return msProjectName;}

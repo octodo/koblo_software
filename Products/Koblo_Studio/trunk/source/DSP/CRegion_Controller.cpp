@@ -527,7 +527,7 @@ STrackSelectionInfo CRegion_Controller::Select_Region(tint32 iRegionID)
 	return gpDSPEngine->GetTrackSelection(miTrack);
 }
 
-tuint64 CRegion_Controller::GetRegionSize(const std::string& sSoundPathName,tuint64 uiSamplePosStart, tint64 uiSamplePosEnd)
+tuint64 CRegion_Controller::GetRegionSize(const std::string& sSoundPathName,tuint64 uiSamplePosStart, tuint64 uiSamplePosEnd)
 {
 	CTrack_DSP*		pTrack_DSP			=	gpDSPEngine->GetTrack(0);
 	tint64 iSize = pTrack_DSP->GetRegionSize(0, sSoundPathName, uiSamplePosStart, uiSamplePosEnd);

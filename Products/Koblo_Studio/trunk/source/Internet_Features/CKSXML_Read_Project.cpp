@@ -61,11 +61,11 @@ void CKSXML_Read_Project::Parse_Project( TiXmlNode* pParent )
 	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
 	{
 		if(pChild->Type() == TiXmlNode::ELEMENT)
-			Set_Project(pChild);
+			Read_Project(pChild);
 	}	
 }
 
-void CKSXML_Read_Project::Set_Project(TiXmlNode* pParent)
+void CKSXML_Read_Project::Read_Project(TiXmlNode* pParent)
 {
 	if ( !pParent ) return ;
 	printf("--------------------------  PROJECT ----------------------------\n");
@@ -99,37 +99,37 @@ void CKSXML_Read_Project::Parse_Project_Childs(TiXmlNode* pParent)
 {
 	if (stricmp("branch", pParent->Value()) == 0) {
 		printf("--------------------------  BRANCH ------------------------------\n");
-		Set_Branch(pParent->ToElement());
+		Read_Branch(pParent->ToElement());
 	}
 	else if (stricmp("settings", pParent->Value()) == 0) {
 		printf("-------------------------  SETTINGS -----------------------------\n");
-		Set_Settings(pParent->ToElement());
+		Read_Settings(pParent->ToElement());
 	}
 	else if (stricmp("editing", pParent->Value()) == 0) {
 		printf("--------------------------  EDDITING ---------------------------\n");
-		Set_Edditing(pParent->ToElement());
+		Read_Edditing(pParent->ToElement());
 	}
 	else if (stricmp("sample", pParent->Value()) == 0) {
 		printf("--------------------------  SAMPLE ----------------------------\n");
-		Set_Sample(pParent->ToElement());
+		Read_Sample(pParent->ToElement());
 	}
 	/*
 	else if (stricmp("insert", pParent->Value()) == 0) {
 		printf("--------------------------  INSERT ----------------------------\n");
-		Set_Insert(pParent->ToElement());
+		Read_Insert(pParent->ToElement());
 	}
 	 */
 	else if (stricmp("track", pParent->Value()) == 0) {
 		printf("-------------------------  TRACK ------------------------------\n");
-		Set_Track(pParent->ToElement());
+		Read_Track(pParent->ToElement());
 	}
 	else if (stricmp("bus", pParent->Value()) == 0) {
 		printf("--------------------------  BUS -------------------------------\n");
-		Set_Bus(pParent->ToElement());
+		Read_Bus(pParent->ToElement());
 	}
 	else if (stricmp("master", pParent->Value()) == 0) {
 		printf("------------------------  MASTER ------------------------------\n");
-		Set_Master(pParent->ToElement());
+		Read_Master(pParent->ToElement());
 	}
 	else
 		Ignore_Tag( pParent);
@@ -148,7 +148,7 @@ void CKSXML_Read_Project::Ignore_Tag(TiXmlNode* pParent)
 	}
 }
 
-void CKSXML_Read_Project::Set_Branch(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Branch(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -187,7 +187,7 @@ void CKSXML_Read_Project::Set_Branch(TiXmlElement* pElement)
 	}
 }
 
-void CKSXML_Read_Project::Set_Settings(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Settings(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -226,7 +226,7 @@ void CKSXML_Read_Project::Set_Settings(TiXmlElement* pElement)
 			}
 			else if (stricmp("signature", pChild->Value()) == 0){
 				printf( "signature:  ");
-				Set_Signature(pChild->ToElement());
+				Read_Signature(pChild->ToElement());
 				printf( "\n" );
 				
 			}
@@ -239,7 +239,7 @@ void CKSXML_Read_Project::Set_Settings(TiXmlElement* pElement)
 	}
 }
 
-void CKSXML_Read_Project::Set_Signature(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Signature(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -310,7 +310,7 @@ void CKSXML_Read_Project::Update_Signature(TiXmlElement* pParent)
 }
 
 
-void CKSXML_Read_Project::Set_Edditing(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Edditing(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -362,7 +362,7 @@ void CKSXML_Read_Project::Set_Edditing(TiXmlElement* pElement)
 			}
 			else if (stricmp("loop", pChild->Value()) == 0){
 				printf( "loop:  ");
-				Set_Loop(pChild->ToElement());
+				Read_Loop(pChild->ToElement());
 			}
 			else if (stricmp("position", pChild->Value()) == 0){
 				printf( "position:  ");
@@ -371,17 +371,17 @@ void CKSXML_Read_Project::Set_Edditing(TiXmlElement* pElement)
 			}
 			else if (stricmp("windows", pChild->Value()) == 0){
 				//printf( "windows:  ");
-				Set_Windows(pChild->ToElement());
+				Read_Windows(pChild->ToElement());
 			}
 			else if (stricmp("dialogs", pChild->Value()) == 0){
 				//printf( "windows:  ");
-				Set_Dialogs(pChild->ToElement());
+				Read_Dialogs(pChild->ToElement());
 			}
 		}
 	}
 }
 
-void CKSXML_Read_Project::Set_Loop(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Loop(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -411,7 +411,7 @@ void CKSXML_Read_Project::Set_Loop(TiXmlElement* pElement)
 	}
 }
 
-void CKSXML_Read_Project::Set_Windows(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Windows(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -424,21 +424,21 @@ void CKSXML_Read_Project::Set_Windows(TiXmlElement* pElement)
 			
 			if (stricmp("edit", pChild->Value()) == 0){
 				printf( "---- EDIT WINDOW ----\n");
-				Set_Window(pChild, 0);
+				Read_Window(pChild, 0);
 			}
 			if (stricmp("mix", pChild->Value()) == 0){
 				printf( "---- MIX WINDOW ----\n");
-				Set_Window(pChild, 1);
+				Read_Window(pChild, 1);
 			}
 			if (stricmp("rack", pChild->Value()) == 0){
 				printf( "---- RACK WINDOW ----\n");
-				Set_Window(pChild, 3);
+				Read_Window(pChild, 3);
 			}
 		}
 	}
 }
 
-void CKSXML_Read_Project::Set_Window(TiXmlNode* pParrent, tint32 iId)
+void CKSXML_Read_Project::Read_Window(TiXmlNode* pParrent, tint32 iId)
 {
 	TiXmlElement* pElement = pParrent->ToElement();
 	
@@ -457,11 +457,11 @@ void CKSXML_Read_Project::Set_Window(TiXmlNode* pParrent, tint32 iId)
 			}
 			else if (stricmp("position", pChild->Value()) == 0){
 				printf( "position:  ");
-				Set_Window_Pos(pChild, iId);
+				Read_Window_Pos(pChild, iId);
 			}
 			else if (stricmp("size", pChild->Value()) == 0){
 				printf( "size:  ");
-				Set_Window_Size(pChild, iId);
+				Read_Window_Size(pChild, iId);
 			}
 			if (stricmp("layer", pChild->Value()) == 0) {
 				printf("layer: ");
@@ -473,7 +473,7 @@ void CKSXML_Read_Project::Set_Window(TiXmlNode* pParrent, tint32 iId)
 	}
 }
 
-void CKSXML_Read_Project::Set_Window_Pos(TiXmlNode* pParrent, tint32 iId)
+void CKSXML_Read_Project::Read_Window_Pos(TiXmlNode* pParrent, tint32 iId)
 {
 	TiXmlElement* pElement = pParrent->ToElement();
 	
@@ -499,7 +499,7 @@ void CKSXML_Read_Project::Set_Window_Pos(TiXmlNode* pParrent, tint32 iId)
 	}
 }
 
-void CKSXML_Read_Project::Set_Window_Size(TiXmlNode* pParrent, tint32 iId)
+void CKSXML_Read_Project::Read_Window_Size(TiXmlNode* pParrent, tint32 iId)
 {
 	TiXmlElement* pElement = pParrent->ToElement();
 	
@@ -525,7 +525,7 @@ void CKSXML_Read_Project::Set_Window_Size(TiXmlNode* pParrent, tint32 iId)
 	}
 }
 
-void CKSXML_Read_Project::Set_Dialogs(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Dialogs(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -538,13 +538,13 @@ void CKSXML_Read_Project::Set_Dialogs(TiXmlElement* pElement)
 			
 			if (stricmp("export", pChild->Value()) == 0){
 				printf( "---- EXPORT DIALOG ----\n");
-				Set_Export_Dialog(pChild->ToElement());
+				Read_Export_Dialog(pChild->ToElement());
 			}
 		}
 	}
 }
 
-void CKSXML_Read_Project::Set_Export_Dialog(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Export_Dialog(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -579,7 +579,7 @@ void CKSXML_Read_Project::Set_Export_Dialog(TiXmlElement* pElement)
 	}
 }
 
-void CKSXML_Read_Project::Set_Sample(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Sample(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -602,14 +602,14 @@ void CKSXML_Read_Project::Set_Sample(TiXmlElement* pElement)
 				printf( "\n" );
 			}
 			else if (stricmp("take", pChild->Value()) == 0) {
-				Set_Sample_Take(pChild->ToElement());
+				Read_Sample_Take(pChild->ToElement());
 				printf( "\n" );
 			}
 		}
 	}
 }
 
-void CKSXML_Read_Project::Set_Sample_Take(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Sample_Take(TiXmlElement* pElement)
 {
 	
 	
@@ -643,7 +643,7 @@ void CKSXML_Read_Project::Set_Sample_Take(TiXmlElement* pElement)
 	}
 }
 
-void CKSXML_Read_Project::Set_Track(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Track(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -670,7 +670,7 @@ void CKSXML_Read_Project::Set_Track(TiXmlElement* pElement)
 			
 			if (stricmp("name", pChild->Value()) == 0) {
 				
-				Set_Track_Name( pChild->ToElement(), iTrackID);
+				Read_Track_Name( pChild->ToElement(), iTrackID);
 			}
 			
 			
@@ -679,11 +679,11 @@ void CKSXML_Read_Project::Set_Track(TiXmlElement* pElement)
 			}
 			
 			else if (stricmp("in", pChild->Value()) == 0) {
-				Set_Track_In(pChild->ToElement(),  iTrackID);
+				Read_Track_In(pChild->ToElement(),  iTrackID);
 				printf( "\n" );
 			}
 			else if (stricmp("out", pChild->Value()) == 0) {
-				Set_Track_Out(pChild->ToElement(),  iTrackID);
+				Read_Track_Out(pChild->ToElement(),  iTrackID);
 				
 			}
 			else if (stricmp("aux", pChild->Value()) == 0) {
@@ -700,11 +700,11 @@ void CKSXML_Read_Project::Set_Track(TiXmlElement* pElement)
 
 			}
 			else if (stricmp("insert", pChild->Value() ) == 0) {
-				Set_Track_Insert(pChild->ToElement(), iTrackID);
+				Read_Track_Insert(pChild->ToElement(), iTrackID);
 				
 			}
 			else if (stricmp("region", pChild->Value()) == 0) {
-				Set_Track_Region(pChild->ToElement(),  iTrackID);
+				Read_Track_Region(pChild->ToElement(),  iTrackID);
 				
 			}
 		}
@@ -712,14 +712,14 @@ void CKSXML_Read_Project::Set_Track(TiXmlElement* pElement)
 	
 	miTrack_ID++;
 }
-void CKSXML_Read_Project::Set_Track_Name(TiXmlElement* pElement, tint32 iTrackID)
+void CKSXML_Read_Project::Read_Track_Name(TiXmlElement* pElement, tint32 iTrackID)
 {
 	if ( !pElement ) return ;
 	
 	TiXmlNode* pChild = pElement->FirstChild();
 	gpApplication->SetChannelName(iTrackID, pChild->Value());
 }
-void CKSXML_Read_Project::Set_Track_In(TiXmlElement* pElement, tint32 iTrackID)
+void CKSXML_Read_Project::Read_Track_In(TiXmlElement* pElement, tint32 iTrackID)
 {
 	if ( !pElement ) return ;
 	
@@ -749,7 +749,7 @@ void CKSXML_Read_Project::Set_Track_In(TiXmlElement* pElement, tint32 iTrackID)
 	}
 }
 
-void CKSXML_Read_Project::Set_Track_Out(TiXmlElement* pElement, tint32 iTrackID)
+void CKSXML_Read_Project::Read_Track_Out(TiXmlElement* pElement, tint32 iTrackID)
 {
 	if ( !pElement ) return ;
 	
@@ -773,13 +773,13 @@ void CKSXML_Read_Project::Set_Track_Out(TiXmlElement* pElement, tint32 iTrackID)
 				Set_Param(pChild, giTinyXml_Type_Float, giParam_ChPannerLeftRight, giSection_First_Track + iTrackID, 10000.0f);
 			
 			else if (stricmp("solo", pChild->Value()) == 0)
-				Set_Track_Solo(pChild,   iTrackID);
+				Read_Track_Solo(pChild,   iTrackID);
 			
 			else if (stricmp("mute", pChild->Value()) == 0) 
-				Set_Track_Mute(pChild,  iTrackID);
+				Read_Track_Mute(pChild,  iTrackID);
 			
 			else if (stricmp("arm", pChild->Value()) == 0)
-				Set_Track_Arm(pChild,  iTrackID);
+				Read_Track_Arm(pChild,  iTrackID);
 			
 			
 			
@@ -789,7 +789,7 @@ void CKSXML_Read_Project::Set_Track_Out(TiXmlElement* pElement, tint32 iTrackID)
 }
 
 
-void CKSXML_Read_Project::Set_Track_Solo(TiXmlNode* pParent, tint32 iTrackID)
+void CKSXML_Read_Project::Read_Track_Solo(TiXmlNode* pParent, tint32 iTrackID)
 {
 	TiXmlNode* pChild = pParent->FirstChild();
 
@@ -803,7 +803,7 @@ void CKSXML_Read_Project::Set_Track_Solo(TiXmlNode* pParent, tint32 iTrackID)
 	
 }
 
-void CKSXML_Read_Project::Set_Track_Mute(TiXmlNode* pParent, tint32 iTrackID)
+void CKSXML_Read_Project::Read_Track_Mute(TiXmlNode* pParent, tint32 iTrackID)
 {
 	TiXmlNode* pChild = pParent->FirstChild();
 	
@@ -816,7 +816,7 @@ void CKSXML_Read_Project::Set_Track_Mute(TiXmlNode* pParent, tint32 iTrackID)
 		gpApplication->SetGlobalParm(giParam_ChMute, 0, giSection_First_Track+ iTrackID);
 }
 
-void CKSXML_Read_Project::Set_Track_Arm(TiXmlNode* pParent, tint32 iTrackID)
+void CKSXML_Read_Project::Read_Track_Arm(TiXmlNode* pParent, tint32 iTrackID)
 {
 	TiXmlNode* pChild = pParent->FirstChild();
 	
@@ -830,7 +830,7 @@ void CKSXML_Read_Project::Set_Track_Arm(TiXmlNode* pParent, tint32 iTrackID)
 }
 /*
 
-void CKSXML_Read_Project::Set_Track_Aux(TiXmlNode* pParent, tint32 iTrackID)
+void CKSXML_Read_Project::Read_Track_Aux(TiXmlNode* pParent, tint32 iTrackID)
 {
 	TiXmlNode* pChild = pParent->FirstChild();
 	
@@ -847,7 +847,7 @@ void CKSXML_Read_Project::Set_Track_Aux(TiXmlNode* pParent, tint32 iTrackID)
 }
 */
 
-void CKSXML_Read_Project::Set_Track_Insert(TiXmlElement* pElement, tint32 uTrack)
+void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrack)
 {
 	if ( !pElement ) return ;
 	
@@ -889,14 +889,14 @@ void CKSXML_Read_Project::Set_Track_Insert(TiXmlElement* pElement, tint32 uTrack
 				printf( "\n" );
 			}
 			else if (stricmp("settings", pChild->Value()) == 0) {
-				Set_Insert_Settings(pChild->ToElement());
+				Read_Insert_Settings(pChild->ToElement());
 				printf( "\n" );
 			}
 		}
 	}
 }
 
-void CKSXML_Read_Project::Set_Insert(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Insert(TiXmlElement* pElement)
 {
 	/*
 	if ( !pElement ) return ;
@@ -943,7 +943,7 @@ void CKSXML_Read_Project::Set_Insert(TiXmlElement* pElement)
 	 */
 }
 
-void CKSXML_Read_Project::Set_Insert_Settings(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Insert_Settings(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -954,7 +954,7 @@ void CKSXML_Read_Project::Set_Insert_Settings(TiXmlElement* pElement)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("parameter", pChild->Value()) == 0) {
-				Set_Insert_Parameter(pChild->ToElement());
+				Read_Insert_Parameter(pChild->ToElement());
 				printf( "\n" );
 			}
 			else if (stricmp("chunk", pChild->Value()) == 0) {
@@ -966,7 +966,7 @@ void CKSXML_Read_Project::Set_Insert_Settings(TiXmlElement* pElement)
 	}
 }
 
-void CKSXML_Read_Project::Set_Insert_Parameter(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Insert_Parameter(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -995,7 +995,7 @@ void CKSXML_Read_Project::Set_Insert_Parameter(TiXmlElement* pElement)
 	}
 }
 
-void CKSXML_Read_Project::Set_Track_Region(TiXmlElement* pElement, tint32 iTrackID)
+void CKSXML_Read_Project::Read_Track_Region(TiXmlElement* pElement, tint32 iTrackID)
 {
 	if ( !pElement ) return ;
 	
@@ -1038,17 +1038,11 @@ void CKSXML_Read_Project::Set_Track_Region(TiXmlElement* pElement, tint32 iTrack
 				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
 				printf( "\n" );
 			}
-			/*
-			else if (stricmp("fade", pChild->Value()) == 0) {
-				Set_Track_Insert(pChild->ToElement());
-				
-			}
-			 */
 		}
 	}
 }
 
-void CKSXML_Read_Project::Set_Track_Region_Fade(TiXmlElement* pElement, tint32 iTrackID)
+void CKSXML_Read_Project::Read_Track_Region_Fade(TiXmlElement* pElement, tint32 iTrackID)
 {
 	if ( !pElement ) return ;
 	
@@ -1073,7 +1067,7 @@ void CKSXML_Read_Project::Set_Track_Region_Fade(TiXmlElement* pElement, tint32 i
 	}
 }
 
-void CKSXML_Read_Project::Set_Bus(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Bus(TiXmlElement* pElement)
 {
 	return;
 	if ( !pElement ) return ;
@@ -1092,16 +1086,16 @@ void CKSXML_Read_Project::Set_Bus(TiXmlElement* pElement)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("out", pChild->Value()) == 0) {
-			//	Set_Track_Out(pChild->ToElement(), ival);
+			//	Read_Track_Out(pChild->ToElement(), ival);
 				
 			}
 			else if (stricmp("aux", pChild->Value()) == 0) {
-			//	Set_Track_Aux(pChild->ToElement(), ival);
+			//	Read_Track_Aux(pChild->ToElement(), ival);
 				
 			}
 			/*
 			else if (stricmp("insert", pChild->Value()) == 0) {
-				Set_Track_Insert(pChild->ToElement());
+				Read_Track_Insert(pChild->ToElement());
 				
 			}
 			 */
@@ -1110,7 +1104,7 @@ void CKSXML_Read_Project::Set_Bus(TiXmlElement* pElement)
 }
 
 
-void CKSXML_Read_Project::Set_Bus_Out(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Bus_Out(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -1160,7 +1154,7 @@ void CKSXML_Read_Project::Set_Bus_Out(TiXmlElement* pElement)
 	}
 }
 
-void CKSXML_Read_Project::Set_Bus_Aux(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Bus_Aux(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -1186,7 +1180,7 @@ void CKSXML_Read_Project::Set_Bus_Aux(TiXmlElement* pElement)
 	}
 }
 
-void CKSXML_Read_Project::Set_Bus_Insert(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Bus_Insert(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -1206,7 +1200,7 @@ void CKSXML_Read_Project::Set_Bus_Insert(TiXmlElement* pElement)
 }
 
 
-void CKSXML_Read_Project::Set_Master(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Master(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -1219,22 +1213,22 @@ void CKSXML_Read_Project::Set_Master(TiXmlElement* pElement)
 			
 			
 			if (stricmp("out", pChild->Value()) == 0) {
-				Set_Master_Out(pChild->ToElement());
+				Read_Master_Out(pChild->ToElement());
 				
 			}
 			else if (stricmp("aux_return", pChild->Value()) == 0) {
-				Set_Master_Aux_Return(pChild->ToElement());
+				Read_Master_Aux_Return(pChild->ToElement());
 				
 			}
 			else if (stricmp("insert", pChild->Value()) == 0) {
-				Set_Master_Insert(pChild->ToElement());
+				Read_Master_Insert(pChild->ToElement());
 				
 			}
 		}
 	}
 }
 
-void CKSXML_Read_Project::Set_Master_Aux_Return(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Master_Aux_Return(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -1259,7 +1253,7 @@ void CKSXML_Read_Project::Set_Master_Aux_Return(TiXmlElement* pElement)
 	}
 }
 
-void CKSXML_Read_Project::Set_Master_Insert(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Master_Insert(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
@@ -1278,7 +1272,7 @@ void CKSXML_Read_Project::Set_Master_Insert(TiXmlElement* pElement)
 	
 }
 
-void CKSXML_Read_Project::Set_Master_Out(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Master_Out(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	

@@ -76,9 +76,9 @@ class CRegion_DSP
 		
 		virtual void Set_Volume(tfloat32 fVolume){mfVolume = fVolume;};
 		
-		tint64 Get_Fade_In_Duration(){ return muiFadeInLength;};
+		tuint64 Get_Fade_In_Duration(){ return muiFadeInLength;};
 		
-		tint64 Get_Fade_Out_Duration(){return muiFadeOutLength;};
+		tuint64 Get_Fade_Out_Duration(){return muiFadeOutLength;};
 		
 		tfloat32 Get_Volume(){return mfVolume;};
 		

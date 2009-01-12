@@ -806,7 +806,7 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 	return pRegion;
 }
 
-tint64 CTrack_DSP::GetRegionSize(tint32 iUniqueID, const std::string& sSoundListItemName, tuint64 uiSoundPosStart, tint64 uiSoundPosEnd)
+tint64 CTrack_DSP::GetRegionSize(tint32 iUniqueID, const std::string& sSoundListItemName, tuint64 uiSound_Offset, tuint64 uiSound_Duration)
 {
 	std::string sWavePathNameL;
 	std::string sWavePathNameR_NeverMind;
@@ -818,13 +818,13 @@ tint64 CTrack_DSP::GetRegionSize(tint32 iUniqueID, const std::string& sSoundList
 		return 0;
 	}
 
-	CRegion_DSP* pRegion	= new CRegion_DSP(iUniqueID, sWavePathNameL, "", sSoundListItemName, uiSoundPosStart, uiSoundPosEnd);
-	if(uiSoundPosEnd == (tuint64)-1)
-		uiSoundPosEnd = pRegion->GetEndPos();
+	CRegion_DSP* pRegion	= new CRegion_DSP(iUniqueID, sWavePathNameL, "", sSoundListItemName, uiSound_Offset, uiSound_Duration);
+	if(uiSound_Duration == (tuint64)-1)
+		uiSound_Duration = pRegion->Get_Sample_Duration();
 	
-	tint64 iSize = uiSoundPosEnd-uiSoundPosStart + 1;
+//	tint64 iSize = uiSoundPosEnd-uiSoundPosStart + 1;
 	delete(pRegion);
-	return iSize;
+	return uiSound_Duration;
 
 	
 }

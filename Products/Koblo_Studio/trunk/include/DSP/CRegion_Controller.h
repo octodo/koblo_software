@@ -116,7 +116,7 @@ public:
 	 \	param uiSamplePosStart [in]: start position of region
 	 \	param uiSamplePosEnd [in]: evd position of region
 	 */
-	tuint64 GetRegionSize(const std::string& sSoundPathName, tuint64 uiSamplePosStart, tint64 uiSamplePosEnd);
+	tuint64 GetRegionSize(const std::string& sSoundPathName, tuint64 uiSamplePosStart, tuint64 uiSamplePosEnd);
 	
 	//! Get the region size in samplepoints
 	tuint64 GetRegionSize(tuint32 uiID);

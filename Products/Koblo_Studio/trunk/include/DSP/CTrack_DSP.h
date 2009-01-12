@@ -55,7 +55,7 @@ public:
 								tfloat32 fRegionVolume = 1.0f);
 								
 	//! Get size of region in Samples
-	tint64 GetRegionSize(tint32 iUniqueID, const std::string& sSoundListItemName, tuint64 uiSoundPosStart, tint64 uiSoundPosEnd);
+	tint64 GetRegionSize(tint32 iUniqueID, const std::string& sSoundListItemName, tuint64 uiSoundPosStart, tuint64 uiSoundPosEnd);
 	
 	void Update_Regions_For_Playback();
 	
