@@ -77,6 +77,10 @@ CRegion_DSP::~CRegion_DSP()
 	if (mppPeakFile[3]) {
 		mppPeakFile[3]->Destroy();
 	}
+	
+	for (tint32 iSampleToDelete = miChannels - 1; iSampleToDelete >= 0; iSampleToDelete--) {
+		delete mppSample[iSampleToDelete];
+	}
 }
 
 void CRegion_DSP::SetEndPos(tuint64 iPos)
