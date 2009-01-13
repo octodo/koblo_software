@@ -11,7 +11,7 @@ CSample_DSP::CSample_DSP(const std::string& sPathName)
 	pWaveFile->LoadSoundStream(512, msPathName.c_str());
 
 
-	mppStream = gpStreamManager->GetStream();
+	mpStream = gpStreamManager->GetStream();
 
 	IFile* pFile;
 	tint32 iOffset;
@@ -21,11 +21,20 @@ CSample_DSP::CSample_DSP(const std::string& sPathName)
 	pWaveFile->GetStreamInfo(pFile, iOffset, iLength, &iBitWidth, &iChannels);
 
 
-	mppStream->Reset(pFile, iOffset, iLength, false, NULL, iBitWidth, iChannels);
-
+	mpStream->Reset(pFile, iOffset, iLength, false, NULL, iBitWidth, iChannels);
+	
 
 	muiLength = iLength;
-}
+} // constructor
+
+CSample_DSP::~CSample_DSP()
+{
+	if (mpStream) {
+		// Mark stream for asynchronous deletion 
+		gpStreamManager->ReleaseStream(mpStream);
+		mpStream = NULL;
+	}
+} // destructor
 
 
 

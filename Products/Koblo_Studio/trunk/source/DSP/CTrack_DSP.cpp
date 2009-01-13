@@ -874,8 +874,13 @@ void CTrack_DSP::DeleteRegion(tint32 iID)
 	std::list<SChannelRegionInfo*>::iterator it = mRegionInfoList.begin();
 	for (; it != mRegionInfoList.end(); it++) {
 		if ((*it)->pRegion->GetID() == iID) {
+			// Save pointer
+			CRegion_DSP* pRegionDSP = (*it)->pRegion;
+			// Remove entry
 			mRegionInfoList.erase(it);
 			SetSongPosition(muiSongPos);
+			// Relase pointer
+			delete pRegionDSP;
 			return;
 		}
 	}
