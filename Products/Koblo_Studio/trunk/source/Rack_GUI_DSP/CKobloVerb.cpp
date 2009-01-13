@@ -26,8 +26,9 @@ void allpass::setbuffer(float *buf, int size)
 
 void allpass::mute()
 {
-	for (int i=0; i<bufsize; i++)
+	for (int i=0; i<bufsize; i++) {
 		buffer[i]=0;
+	}
 }
 
 void allpass::setfeedback(float val) 
