@@ -19,32 +19,29 @@ void CDownloader::Destructor_OSSpecific()
 
 tbool CDownloader::OpenConnection_OSSpecific()
 {
+	// Form action string (http verb)
+	tbool bHasParameters = (miParamsAssembledLen > 0);
+	EVerbType eVerbDefault = bHasParameters ? VERB_POST : VERB_GET;
+	EVerbType eVerbToUse = GetVerb(eVerbDefault);
+	const tchar* pszActionStr = GetVerbString(eVerbDefault);
+    CFStringRef vActionStr = CFStringCreateWithCStringNoCopy(NULL, pszActionStr, kCFStringEncodingMacRoman, NULL);
+	if (vActionStr == NULL) {
+		SetError("Unable to create http-verb string");
+		return false;
+	}
+	
 	// Combined URL string
 	std::string sFormatedURL = std::string("http://") + msHost + msPage;
+	if ((eVerbToUse == VERB_GET) && (bHasParameters)) {
+		// Add parameters as part of URI (rather than as part of message body)
+		sFormatedURL += mpszParamsAssembled;
+	}
     CFStringRef vUrlStr = CFStringCreateWithCStringNoCopy(NULL, sFormatedURL.c_str(), kCFStringEncodingMacRoman, NULL);
 	if (vUrlStr == NULL) {
 		SetError("Unable to create URL string");
 		return false;
 	}
 
-	// Form action string
-	tbool bSendParameters = (miParamsAssembledLen > 0);
-	const tchar* pszActionStr = bSendParameters ? "POST" : "GET";
-    CFStringRef vActionStr = CFStringCreateWithCStringNoCopy(NULL, pszActionStr, kCFStringEncodingMacRoman, NULL);
-	if (vUrlStr == NULL) {
-		SetError("Unable to create action string");
-		return false;
-	}
-
-	// Form parameters (if any)
-	if (bSendParameters) {
-		mParametersDataRef = CFDataCreate(kCFAllocatorDefault, (unsigned char*)mpszParamsAssembled, miParamsAssembledLen);
-		if (mParametersDataRef == NULL) {
-			SetError("Unable to create parameters ref");
-			return false;
-		}
-	}
-	
     CFURLRef vUrlRef = CFURLCreateWithString (kCFAllocatorDefault, vUrlStr, NULL);
    	if (vUrlRef == NULL) {
 		SetError("Unable to create URL ref");
@@ -60,14 +57,20 @@ tbool CDownloader::OpenConnection_OSSpecific()
 
 	// Set desired MIME type for download
 	if (meMIMEType != MIME_TYPE_NONE) {
-		CFStringRef cfsMIME = CFStringCreateWithCStringNoCopy(NULL, GetMIMEString(), kCFStringEncodingMacRoman, NULL);
-		CFHTTPMessageSetHeaderFieldValue(mMessageRef, CFSTR("Accept"), cfsMIME);
+		CFStringRef vMIME = CFStringCreateWithCStringNoCopy(NULL, GetMIMEString(), kCFStringEncodingMacRoman, NULL);
+		CFHTTPMessageSetHeaderFieldValue(mMessageRef, CFSTR("Accept"), vMIME);
 	}
 
-	// Insert parameters into message body
-	if (bSendParameters) {
+	// Insert parameters into message body (POST verb only)
+	if (eVerbToUse == VERB_POST) {
 		CFHTTPMessageSetHeaderFieldValue(mMessageRef, CFSTR("Content-Type"), CFSTR("application/x-www-form-urlencoded"));
-		if (mParametersDataRef != NULL)	{
+		// Are there any parameters?
+		if (bHasParameters) {
+			mParametersDataRef = CFDataCreate(kCFAllocatorDefault, (unsigned char*)mpszParamsAssembled, miParamsAssembledLen);
+			if (mParametersDataRef == NULL) {
+				SetError("Unable to create parameters ref");
+				return false;
+			}
 			CFHTTPMessageSetBody(mMessageRef, mParametersDataRef);
 		}
 	}

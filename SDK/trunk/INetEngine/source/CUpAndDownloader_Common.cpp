@@ -180,14 +180,22 @@ tbool CUpAndDownloader_Common::SetSpecificVerb(EVerbType eVerb, tbool bIsUploade
 } // SetSpecificVerb
 
 
-const tchar* CUpAndDownloader_Common::GetVerbString(EVerbType eVerbDefault)
+EVerbType CUpAndDownloader_Common::GetVerb(EVerbType eVerbDefault)
 {
 	switch (meSpecificVerb) {
-		case VERB_GET:	return "GET";
-		case VERB_POST:	return "POST";
-		case VERB_PUT:	return "PUT";
+		case VERB_GET:
+		case VERB_POST:
+		case VERB_PUT:
+			return meSpecificVerb;
 	}
-	switch (eVerbDefault) {
+	
+	return eVerbDefault;
+} // GetVerb
+
+
+const tchar* CUpAndDownloader_Common::GetVerbString(EVerbType eVerbDefault)
+{
+	switch (GetVerb(eVerbDefault)) {
 		case VERB_GET:	return "GET";
 		case VERB_POST:	return "POST";
 		case VERB_PUT:	return "PUT";

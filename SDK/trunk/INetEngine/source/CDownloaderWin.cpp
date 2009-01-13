@@ -67,14 +67,22 @@ tbool CDownloader::OpenConnection_OSSpecific()
 	apszTypes[1] = NULL;
 
 	// Prepare verb
-	EVerbType eVerbDefault = (miParamsAssembledLen > 0) ? VERB_POST : VERB_GET;
+	tbool bHasParameters = (miParamsAssembledLen > 0);
+	EVerbType eVerbDefault = bHasParameters ? VERB_POST : VERB_GET;
+	EVerbType eVerbToUse = GetVerb(eVerbDefault);
 	const tchar* pszVerb = GetVerbString(eVerbDefault);
+	
+	// Maybe add parameters to end of URI (for GET verb)
+	std::string sDocument = msPage;
+	if ((eVerbToUse == VERB_GET) && (bHasParameters)) {
+		sDocument += mpszParamsAssembled;
+	}
 
 	// Open document
 	mhFile = ::HttpOpenRequest(
 		mhConnection,
 		pszVerb,
-		msPage.c_str(),
+		sDocument.c_str(),
 		NULL, NULL, (LPCTSTR*)apszTypes,
 		INTERNET_FLAG_NO_CACHE_WRITE|INTERNET_FLAG_RELOAD,
 		pdwContextID);
@@ -84,16 +92,18 @@ tbool CDownloader::OpenConnection_OSSpecific()
 		return false;
 	}
 
+	// Only include parameters into message body for POST verb
 	tchar* pszAdditionalHeaders = NULL;
 	tint32 iAdditionHeadersLen = 0;
-	if (miParamsAssembledLen > 0) {
+	tchar* pszBody = NULL;
+	tint32 iBody = 0;
+	if (eVerbToUse == VERB_POST) {
 		pszAdditionalHeaders = "Content-Type: application/x-www-form-urlencoded";
 		iAdditionHeadersLen = strlen(pszAdditionalHeaders);
+		pszBody = mpszParamsAssembled;
+		iBody = miParamsAssembledLen;
 	}
-	if (!::HttpSendRequest(mhFile,
-		pszAdditionalHeaders, iAdditionHeadersLen,
-		mpszParamsAssembled, miParamsAssembledLen)
-	){
+	if (!::HttpSendRequest(mhFile, pszAdditionalHeaders, iAdditionHeadersLen, pszBody, iBody)) {
 		SetError("HttpSendRequest(..) failed");
 		return false;
 	}

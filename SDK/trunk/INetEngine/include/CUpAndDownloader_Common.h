@@ -33,6 +33,7 @@ protected:
 
 	EVerbType meSpecificVerb;
 	tbool SetSpecificVerb(EVerbType eVerb, tbool bIsUploader);
+	EVerbType GetVerb(EVerbType eVerbDefault);
 	const tchar* GetVerbString(EVerbType eVerbDefault);
 
 	std::list<std::string> mlist_sParamNames;

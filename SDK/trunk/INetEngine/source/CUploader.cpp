@@ -100,6 +100,13 @@ tbool CUploader::UploadPortion(const tchar* pszData, tint32 iDataLen, tint32* pi
 } // UploadPortion
 
 
+tbool CUploader::UploadFinish()
+{
+	SetError("Not implemented yet");
+	return false;
+} // UploadFinish
+
+
 tbool CUploader::Abort()
 {
 	if (IsTransfering()) {
