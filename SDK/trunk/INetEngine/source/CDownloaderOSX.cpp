@@ -59,8 +59,8 @@ tbool CDownloader::OpenConnection_OSSpecific()
 	}
 
 	// Set desired MIME type for download
-	if (meMIMEType != MIME_NONE) {
-		CFString cfsMIME = CFStringCreateWithCStringNoCopy(NULL, GetMIMEString(), kCFStringEncodingMacRoman, NULL);
+	if (meMIMEType != MIME_TYPE_NONE) {
+		CFStringRef cfsMIME = CFStringCreateWithCStringNoCopy(NULL, GetMIMEString(), kCFStringEncodingMacRoman, NULL);
 		CFHTTPMessageSetHeaderFieldValue(mMessageRef, CFSTR("Accept"), cfsMIME);
 	}
 
@@ -143,12 +143,10 @@ tbool CDownloader::DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSi
 	CFStreamStatus status = CFReadStreamGetStatus(mReadStreamRef);
 	if (status == kCFStreamStatusAtEnd)
 	{                 
-		mbIsDone = true;
-		mbIsDownloading = false;
+		SetIsDone();
 	}
 	else if ((status == kCFStreamStatusError) || (status == kCFStreamStatusClosed)) {
-		mbIsFailed = true;
-		mbIsDownloading = false;
+		SetIsFailed();
 	}
 	
 	// Success

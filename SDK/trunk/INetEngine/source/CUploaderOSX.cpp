@@ -59,8 +59,8 @@ tbool CUploader::OpenConnection_OSSpecific()
 	}
 
 	// Set desired MIME type for download
-	if (meMIMEType != MIME_NONE) {
-		CFString cfsMIME = CFStringCreateWithCStringNoCopy(NULL, GetMIMEString(), kCFStringEncodingMacRoman, NULL);
+	if (meMIMEType != MIME_TYPE_NONE) {
+		CFStringRef cfsMIME = CFStringCreateWithCStringNoCopy(NULL, GetMIMEString(), kCFStringEncodingMacRoman, NULL);
 		CFHTTPMessageSetHeaderFieldValue(mMessageRef, CFSTR("Accept"), cfsMIME);
 	}
 
@@ -112,8 +112,11 @@ void CUploader::CloseConnection_OSSpecific()
 } // CloseConnection_OSSpecific
 
 
-tbool CUploader::DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
+tbool CUploader::UploadPortion_OSSpecific(const tchar* pszData, tint32 iDataLen, tint32* piActuallySent)
 {
+	SetError("Not implemented yet!");
+	return false;
+	/*
 	if (CFReadStreamHasBytesAvailable(mReadStreamRef)) 
 	{
 		CFIndex vBytesRead = CFReadStreamRead(mReadStreamRef, (unsigned char*)pszBuffer, iBufferSize);         
@@ -143,17 +146,16 @@ tbool CUploader::DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSize
 	CFStreamStatus status = CFReadStreamGetStatus(mReadStreamRef);
 	if (status == kCFStreamStatusAtEnd)
 	{                 
-		mbIsDone = true;
-		mbIsDownloading = false;
+		SetIsDone();
 	}
 	else if ((status == kCFStreamStatusError) || (status == kCFStreamStatusClosed)) {
-		mbIsFailed = true;
-		mbIsDownloading = false;
+		SetIsFailed();
 	}
 	
 	// Success
 	return true;
-} // DownloadPortion_OSSpecific
+	*/
+} // UploadPortion_OSSpecific
 
 
 
