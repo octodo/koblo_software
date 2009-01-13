@@ -15,19 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with the Koblo INetEngine. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _ine_i_downloader
-#define _ine_i_downloader
+#ifndef _ine_i_uploader
+#define _ine_i_uploader
 
-/*! \class IDownloader
- * \brief Interface to download a large file from a web address
+/*! \class IUploader
+ * \brief Interface to upload a large file to a web address
  *
- * Supplies more complex and buffered method for accessing web-data
+ * Supplies more complex and buffered method for posting/putting web-data
  * (lasse)
 */
-class IDownloader : public virtual IDestructable
+class IUploader : public virtual IDestructable
 {
 public:
-	static IDownloader* Create();
+	static IUploader* Create();
 
 	//! Prepare Internet location to connect to
 	/*!
@@ -38,21 +38,21 @@ public:
 	*/
 	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10) = 0;
 
-	//! Asks the server to give us data of the specified type
+	//! Tells the server which type of answer we want for our uploading
 	/*!
-		\param eType [in]: Sets the data type that the downloader wants to read
+		\param eType [in]: Sets the data type that the uploader wants to recieve
 		\return tbool: True upon success
 	*/
 	virtual tbool SetDesiredMIMEType(E_MIME_Type eType) = 0;
 
-	//! Force downloader to use a particular verb for downloads (default it is chosen as GET if no parameters are added and POST otherwise)
+	//! Force uploader to use a particular verb for uploads (default is PUT)<br/>Regardless of the chosen verb parameters are always sent as part of the message body rather than added to the URI
 	/*!
-		\param eVerb [in]: E_VERB_GET: simple download with no parameters in message body (if parameters are added anyway, they'll be sent as part of the URI)<br/>E_VERB_POST: Parameters are sent as part of the message body (default if parameters are present)
+		\param eVerb [in]: E_VERB_POST: Update existing data<br/>E_VERB_PUT: Upload new data
 		\return tbool: True upon succes, False otherwise
 	*/
 	virtual tbool SetSpecificVerb(EVerbType eVerb) = 0;
 
-	//! Call this once for each parameter=value set to submit to download location
+	//! Call this once for each parameter=value set to submit to upload location
 	/*!
 		\param pszParamName [in]: Name of parameter. Must be US-ASCII characters and numbers only (a-z, A-Z and 0-9)
 		\param pcParamData [in]: Raw data to submit (may or may not be zero-terminated)
@@ -61,17 +61,22 @@ public:
 	*/
 	virtual tbool AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen) = 0;
 
-	//! Poll for a portion of download data
+	//! Upload a portion of data
 	/*!
-		\param pszBuffer [out]: Pre-allocated buffer to recieve the next portion of downloaded data
-		\param iBufferSize [in]: Size of pre-allocated buffer
-		\param piPortionSize [out]: The number of bytes actually returned in this portion. May occationally be 0, caused by e.g. slow network
-		tint32* piTotalSize [out]: The total size of the resource/file we're downloading. May change, so always use latest return value for progress bar, etc.
+		\param pszData [in]: Buffer containing data to be uploaded
+		\param iDataLen [in]: Number of data bytes in upload buffer
+		\param piActuallySent [out]: The number of bytes actually uploaded in this portion. May occationally be 0, caused by e.g. slow network
 		\return tbool: True upon success, false upon error.
 	*/
-	virtual tbool DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize) = 0;
+	virtual tbool UploadPortion(const tchar* pszData, tint32 iDataLen, tint32* piActuallySent) = 0;
 
-	//! Breaks an ongoing download operation and releases internal buffers. It's OK to call from different thread.
+	//! Tell the server that we're done uploading. There can be no more calls to UploadPortion(..) after this.
+	/*!
+		\return tbool: True upon success, False upon error
+	*/
+	virtual tbool UploadFinish() = 0;
+
+	//! Breaks an ongoing upload operation and releases internal buffers. It's OK to call from different thread.
 	virtual tbool Abort() = 0;
 
 	//! Returns True if download has been succesfully completed
@@ -89,4 +94,4 @@ public:
 	virtual tbool GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize) = 0;
 };
 
-#endif // _ine_i_downloader
+#endif // _ine_i_uploader

@@ -1,13 +1,13 @@
 
 #include "ineInternalOS.h"
 
-CDownloader::CDownloader()
+CUploader::CUploader()
 {
 	Constructor_OSSpecific();
 } // constructor
 
 
-CDownloader::~CDownloader()
+CUploader::~CUploader()
 {
 	Abort();
 	WipeParams();
@@ -17,19 +17,19 @@ CDownloader::~CDownloader()
 } // destructor
 
 
-IDownloader* IDownloader::Create()
+IUploader* IUploader::Create()
 {
-	return dynamic_cast<IDownloader*>(new CDownloader());
+	return dynamic_cast<IUploader*>(new CUploader());
 } // Create
 
 
-void CDownloader::Destroy()
+void CUploader::Destroy()
 {
-	delete dynamic_cast<CDownloader*>(this);
+	delete dynamic_cast<CUploader*>(this);
 } // Destroy
 
 
-tbool CDownloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort /*= 80*/, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
+tbool CUploader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort /*= 80*/, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
 {
 	Abort();
 
@@ -37,39 +37,39 @@ tbool CDownloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort
 } // Init
 
 
-tbool CDownloader::SetDesiredMIMEType(E_MIME_Type eType)
+tbool CUploader::SetDesiredMIMEType(E_MIME_Type eType)
 {
 	return CUpAndDownloader_Common::SetMIMEType(eType);
 } // SetDesiredMIMEType
 
 
-tbool CDownloader::SetSpecificVerb(EVerbType eVerb)
+tbool CUploader::SetSpecificVerb(EVerbType eVerb)
 {
 	return CUpAndDownloader_Common::SetSpecificVerb(eVerb, false);
 } // SetSpecificVerb
 
 
-tbool CDownloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen)
+tbool CUploader::AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen)
 {
 	return CUpAndDownloader_Common::AddParam(pszParamName, pcParamData, iParamDataLen);
 } // AddParam
 
 
-tbool CDownloader::OpenConnection()
+tbool CUploader::OpenConnection()
 {
 	return OpenConnection_OSSpecific();
 } // OpenConnection
 
 
-void CDownloader::CloseConnection()
+void CUploader::CloseConnection()
 {
 	CloseConnection_OSSpecific();
 } // CloseConnection
 
 
-tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
+tbool CUploader::UploadPortion(const tchar* pszData, tint32 iDataLen, tint32* piActuallySent)
 {
-	*piPortionSize = 0;
+	*piActuallySent = 0;
 	
 	if (IsFailed()) {
 		//SetError("Previous error");
@@ -96,11 +96,11 @@ tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32*
 		RefreshAlive();
 	}
 	
-	return DownloadPortion_OSSpecific(pszBuffer, iBufferSize, piPortionSize, puiTotalSize);
-} // DownloadPortion
+	return UploadPortion_OSSpecific(pszData, iDataLen, piActuallySent);
+} // UploadPortion
 
 
-tbool CDownloader::Abort()
+tbool CUploader::Abort()
 {
 	if (IsTransfering()) {
 		CAutoLock Lock(mMutex_Connection);
@@ -115,19 +115,19 @@ tbool CDownloader::Abort()
 } // Abort
 
 
-tbool CDownloader::IsDone()
+tbool CUploader::IsDone()
 {
 	return CUpAndDownloader_Common::IsDone();
 } // IsDone
 
 
-tbool CDownloader::IsFailed()
+tbool CUploader::IsFailed()
 {
 	return CUpAndDownloader_Common::IsFailed();
 } // IsFailed
 
 
-tbool CDownloader::GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize)
+tbool CUploader::GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize)
 {
 	return CUpAndDownloader_Common::GetLatestError(pszErrBuff, iErrBuffSize);
 }

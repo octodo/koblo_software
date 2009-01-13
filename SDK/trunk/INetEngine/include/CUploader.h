@@ -1,31 +1,33 @@
-class CDownloader : public virtual IDownloader, public CUpAndDownloader_Common
+class CUploader : public virtual IUploader, public virtual CUpAndDownloader_Common
 {
 public:
-	CDownloader();
-	virtual ~CDownloader();
+	CUploader();
+	virtual ~CUploader();
 	
 	//! IDestructable override
 	virtual void Destroy();
 
-	//! IDownloader implementation
+	//! IUploader implementation
 	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10);
-	//! IDownloader implementation
+	//! IUploader implementation
 	virtual tbool SetDesiredMIMEType(E_MIME_Type eType);
-	//! IDownloader implementation
+	//! IUploader implementation
 	virtual tbool SetSpecificVerb(EVerbType eVerb);
-	//! IDownloader implementation
+	//! IUploader implementation
 	virtual tbool AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen);
-	//! IDownloader implementation
-	virtual tbool DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize);
-	//! IDownloader implementation
+	//! IUploader implementation
+	virtual tbool UploadPortion(const tchar* pszData, tint32 iDataLen, tint32* piActuallySent);
+	//! IUploader implementation
+	virtual tbool UploadFinish();
+	//! IUploader implementation
 	virtual tbool Abort();
 
-	//! IDownloader implementation
+	//! IUploader implementation
 	virtual tbool IsDone();
-	//! IDownloader implementation
+	//! IUploader implementation
 	virtual tbool IsFailed();
 
-	//! IDownloader implementation
+	//! IUploader implementation
 	virtual tbool GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize);
 
 protected:
@@ -38,14 +40,14 @@ protected:
 	void CloseConnection();
 	void CloseConnection_OSSpecific();
 	
-	tbool DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize);
+	tbool UploadPortion_OSSpecific(const tchar* pszData, tint32 iDataLen, tint32* piActuallySent);
 	
 
 #ifdef _WIN32
-	#include "CDownloaderWin.h"
+	#include "CUploaderWin.h"
 #endif // _WIN32
 #ifdef _Mac
-	#include "CDownloaderOSX.h"
+	#include "CUploaderOSX.h"
 #endif // _Mac
 
 };

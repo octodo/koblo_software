@@ -1,4 +1,4 @@
-// CDownloader MS-Windows only code
+// CUploader MS-Windows only code
 
 #include "ineInternalOS.h"
 
@@ -7,19 +7,19 @@ static DWORD dwContextID_Seed = 0;
 
 
 
-void CDownloader::Constructor_OSSpecific()
+void CUploader::Constructor_OSSpecific()
 {
 	// Make sure we only close what's been opened
 	mhInitialize = mhConnection = mhFile = NULL;
 } // Constructor_OSSpecific
 
-void CDownloader::Destructor_OSSpecific()
+void CUploader::Destructor_OSSpecific()
 {
 	// Nothing here
 } // Destructor_OSSpecific
 
 
-tbool CDownloader::OpenConnection_OSSpecific()
+tbool CUploader::OpenConnection_OSSpecific()
 {
 	// First verify that computer is connected to the Internet
 	// (lasse) Nope - it's a waste of time
@@ -104,7 +104,7 @@ tbool CDownloader::OpenConnection_OSSpecific()
 } // OpenConnection_OSSpecific
 
 
-void CDownloader::CloseConnection_OSSpecific()
+void CUploader::CloseConnection_OSSpecific()
 {
 	if (mhFile) {
 		::InternetCloseHandle(mhFile);
@@ -121,7 +121,7 @@ void CDownloader::CloseConnection_OSSpecific()
 } // CloseConnection_OSSpecific
 
 
-tbool CDownloader::DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
+tbool CUploader::UploadPortion_OSSpecific(const tchar* pszData, tint32 iDataLen, tint32* piActuallySent)
 {
 	/* hm... ::InternetReadFileEx(..) is too complicated - will attempt InternetReadFile(..)
 	INTERNET_BUFFERS buffers;
@@ -137,6 +137,7 @@ tbool CDownloader::DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSi
 	buffers.dwOffsetLow = buffers.dwOffsetHigh = 0;
 	::InternetReadFileEx(mhFile
 	*/
+	/*
 	DWORD dwReturned = 0;
 	if (::InternetReadFile(mhFile, pszBuffer, (tuint32)iBufferSize, &dwReturned)) {
 		// Read portion success
@@ -216,6 +217,9 @@ tbool CDownloader::DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSi
 	tint64 iTotalSize_Debug = muiTotalSize;
 #endif // _DEBUG
 	return true;
-} // DownloadPortion_OSSpecific
+	*/
+	SetError("Not implemented");
+	return false;
+} // UploadPortion_OSSpecific
 
 

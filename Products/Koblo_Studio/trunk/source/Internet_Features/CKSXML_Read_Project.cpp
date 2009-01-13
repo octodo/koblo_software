@@ -54,7 +54,7 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 	// (lasse) very very temporary code: download directly from koblo.com
 	CAutoDelete<ine::IDownloader> pDownloader(ine::IDownloader::Create());
 	if (pDownloader->Init("assets.koblo.com", "/mp3s/7/short2.mp3")) {
-		pDownloader->SetDesiredMIMEType(ine::IDownloader::DESIRED_TYPE_MP3);
+		pDownloader->SetDesiredMIMEType(ine::MIME_TYPE_MP3);
 		CAutoDelete<IFile> pfTest(IFile::Create());
 #ifdef _WIN32
 		tchar* pszTestFile = "C:\\testhest.mp3";
@@ -1032,7 +1032,7 @@ void CKSXML_Read_Project::Set_Track_Region(TiXmlElement* pElement, tint32 iTrack
 	if ( !pElement ) return ;
 	
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
-	tint32 ival;
+	static tint32 ival = 0;
 	printf( "--------\n", ival);
 	// aux id
 	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    

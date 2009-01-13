@@ -27,7 +27,10 @@ namespace ine {
 #endif	// _Mac
 
 #include "CINetUtil.h"
+
+#include "CUpAndDownloader_Common.h"
 #include "CDownloader.h"
+#include "CUploader.h"
 
 
 

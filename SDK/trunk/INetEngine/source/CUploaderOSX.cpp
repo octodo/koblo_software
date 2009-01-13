@@ -1,9 +1,9 @@
-// CDownloader OS X only code
+// CUploader OS X only code
 
 #include "ineInternalOS.h"
 
 
-void CDownloader::Constructor_OSSpecific()
+void CUploader::Constructor_OSSpecific()
 {
 	//mURLRef = NULL;
 	mMessageRef = NULL;
@@ -11,13 +11,13 @@ void CDownloader::Constructor_OSSpecific()
 	mParametersDataRef = NULL;
 } // Constructor_OSSpecific
 
-void CDownloader::Destructor_OSSpecific()
+void CUploader::Destructor_OSSpecific()
 {
 	// Nothing here
 } // Destructor_OSSpecific
 
 
-tbool CDownloader::OpenConnection_OSSpecific()
+tbool CUploader::OpenConnection_OSSpecific()
 {
 	// Combined URL string
 	std::string sFormatedURL = std::string("http://") + msHost + msPage;
@@ -92,7 +92,7 @@ tbool CDownloader::OpenConnection_OSSpecific()
 } // OpenConnection_OSSpecific
 
 
-void CDownloader::CloseConnection_OSSpecific()
+void CUploader::CloseConnection_OSSpecific()
 {
 	if (mReadStreamRef) {
 		CFReadStreamClose( mReadStreamRef );
@@ -112,7 +112,7 @@ void CDownloader::CloseConnection_OSSpecific()
 } // CloseConnection_OSSpecific
 
 
-tbool CDownloader::DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
+tbool CUploader::DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
 {
 	if (CFReadStreamHasBytesAvailable(mReadStreamRef)) 
 	{

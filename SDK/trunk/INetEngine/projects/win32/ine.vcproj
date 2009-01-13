@@ -191,6 +191,10 @@
 				RelativePath="..\..\interface\ine.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\interface\IUploader.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="include"
@@ -225,6 +229,38 @@
 			</File>
 			<File
 				RelativePath="..\..\include\CINetUtil.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\CUpAndDownloader_Common.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\CUploader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\CUploaderOSX.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\include\CUploaderWin.h"
 				>
 			</File>
 			<File
@@ -330,6 +366,38 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\source\CUpAndDownloader_Common.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\CUploader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\CUploaderOSX.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\source\CUploaderWin.cpp"
+				>
 			</File>
 			<File
 				RelativePath="..\..\source\ineInternal.cpp"
