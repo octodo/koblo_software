@@ -348,7 +348,7 @@ CPlugInManager::PlugInHandle CPlugInManager::LoadPlugIn(tint32 iIndex, tint32 iC
 	pPlugIn->Initialize();
 	pPlugIn->Start();
 
-	CBaseGUI* pBaseGUI = gpMainApplication->CreateExtraWindow(4, (void*)CFSTR("PlugInWnd"));
+	CBaseGUI* pBaseGUI = gpMainApplication->CreateExtraWindow(giPlug_In_Window, (void*)CFSTR("PlugInWnd"));
 	CKSPlugInGUI* pPlugInGUI = dynamic_cast<CKSPlugInGUI*>(pBaseGUI);
 
 	kspi::IGUI* pGUI = pPlugIn->CreateGUI(0);
@@ -409,7 +409,7 @@ CPlugInManager::PlugInHandle CPlugInManager::LoadPlugIn(tint32 iIndex, tint32 iC
 	pPlugIn->Initialize();
 	pPlugIn->Start();
 
-	CBaseGUI* pBaseGUI = gpMainApplication->CreateExtraWindow(4, (void*)"PlugInWnd", true);
+	CBaseGUI* pBaseGUI = gpMainApplication->CreateExtraWindow(giPlug_In_Window, (void*)"PlugInWnd", true);
 	CKSPlugInGUI* pPlugInGUI = dynamic_cast<CKSPlugInGUI*>(pBaseGUI);
 
 	kspi::IGUI* pGUI = pPlugIn->CreateGUI(0);
@@ -499,9 +499,9 @@ void CPlugInManager::OpenGUI(tint32 iChannel, tint32 iInsertIndex)
 	else {
 		// GUI doesn't exist
 #ifdef _Mac
-		CBaseGUI* pBaseGUI = gpMainApplication->CreateExtraWindow(4, (void*)CFSTR("PlugInWnd"));
+		CBaseGUI* pBaseGUI = gpMainApplication->CreateExtraWindow(giPlug_In_Window, (void*)CFSTR("PlugInWnd"));
 #else
-		CBaseGUI* pBaseGUI = gpMainApplication->CreateExtraWindow(4, (void*)"PlugInWnd", true);
+		CBaseGUI* pBaseGUI = gpMainApplication->CreateExtraWindow(giPlug_In_Window, (void*)"PlugInWnd", true);
 #endif
 		CKSPlugInGUI* pPlugInGUI = dynamic_cast<CKSPlugInGUI*>(pBaseGUI);
 
