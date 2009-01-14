@@ -34,7 +34,6 @@
 		E3ED2A190C68573700D125D1 /* CBasePlugIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A120C68573700D125D1 /* CBasePlugIn.cpp */; };
 		E3ED2A1A0C68573700D125D1 /* CBaseTopPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ED2A130C68573700D125D1 /* CBaseTopPane.cpp */; };
 		FC17A2A50F0E19B70083A614 /* CKSUsername_And_Password_Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC17A2A40F0E19B70083A614 /* CKSUsername_And_Password_Model.cpp */; };
-		FC289E780F140E2C006872A1 /* CRegion_Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC289E770F140E2C006872A1 /* CRegion_Model.cpp */; };
 		FC2D347B0EEE8691004DFC3D /* libINetEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2D347A0EEE868D004DFC3D /* libINetEngine.a */; };
 		FC31AC950EEFE9D400B3D3B7 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC940EEFE9D400B3D3B7 /* tinystr.cpp */; };
 		FC31AC970EEFE9DE00B3D3B7 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC960EEFE9DE00B3D3B7 /* tinyxml.cpp */; };
@@ -83,6 +82,7 @@
 		FCA8CBCE0F0906170007514D /* CKSXML_Create_Project.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CBCD0F0906170007514D /* CKSXML_Create_Project.cpp */; };
 		FCA8CCDD0F091D6F0007514D /* CKSXML_Create_Sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCA8CCDC0F091D6F0007514D /* CKSXML_Create_Sample.cpp */; };
 		FCAD39990DC138F50075A553 /* CMix_Master_AUX_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCAD39980DC138F50075A553 /* CMix_Master_AUX_Insert.cpp */; };
+		FCBB278E0F15E499005C1636 /* CRegion_Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBB278D0F15E499005C1636 /* CRegion_Controller.cpp */; };
 		FCBBC1CF0F064A10003201E4 /* CKSProject_ID_GUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC1CD0F064A10003201E4 /* CKSProject_ID_GUI.cpp */; };
 		FCBBC1D00F064A10003201E4 /* CKSProject_ID_GUI_Pane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC1CE0F064A10003201E4 /* CKSProject_ID_GUI_Pane.cpp */; };
 		FCBBC4DA0F06842C003201E4 /* CKSXML_Read_Project.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCBBC4D80F06842C003201E4 /* CKSXML_Read_Project.cpp */; };
@@ -312,8 +312,6 @@
 		E3F83F350C7D42CF00D2E408 /* main.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		FC17A2A40F0E19B70083A614 /* CKSUsername_And_Password_Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSUsername_And_Password_Model.cpp; sourceTree = "<group>"; };
 		FC17A2B40F0E1A040083A614 /* CKSUsername_And_Password_Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSUsername_And_Password_Model.h; sourceTree = "<group>"; };
-		FC289E760F140E1A006872A1 /* CRegion_Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRegion_Model.h; sourceTree = "<group>"; };
-		FC289E770F140E2C006872A1 /* CRegion_Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRegion_Model.cpp; sourceTree = "<group>"; };
 		FC2D34710EEE868D004DFC3D /* INetEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = INetEngine.xcodeproj; path = ../../../SDK/trunk/INetEngine/projects/osxxcode/INetEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
 		FC31AC930EEFE9D400B3D3B7 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinystr.h; path = ../../../SDK/tinyxml/tinystr.h; sourceTree = SOURCE_ROOT; };
 		FC31AC940EEFE9D400B3D3B7 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinystr.cpp; path = ../../../SDK/tinyxml/tinystr.cpp; sourceTree = SOURCE_ROOT; };
@@ -398,6 +396,8 @@
 		FCA8CCDC0F091D6F0007514D /* CKSXML_Create_Sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSXML_Create_Sample.cpp; sourceTree = "<group>"; };
 		FCAD39980DC138F50075A553 /* CMix_Master_AUX_Insert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CMix_Master_AUX_Insert.cpp; path = source/Mix_GUI/CMix_Master_AUX_Insert.cpp; sourceTree = "<group>"; };
 		FCAD39A90DC139260075A553 /* CMix_Master_AUX_Insert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_Master_AUX_Insert.h; path = include/Mix_GUI/CMix_Master_AUX_Insert.h; sourceTree = "<group>"; };
+		FCBB278D0F15E499005C1636 /* CRegion_Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRegion_Controller.cpp; sourceTree = "<group>"; };
+		FCBB27970F15E510005C1636 /* CRegion_Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRegion_Controller.h; sourceTree = "<group>"; };
 		FCBBC1CD0F064A10003201E4 /* CKSProject_ID_GUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSProject_ID_GUI.cpp; sourceTree = "<group>"; };
 		FCBBC1CE0F064A10003201E4 /* CKSProject_ID_GUI_Pane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSProject_ID_GUI_Pane.cpp; sourceTree = "<group>"; };
 		FCBBC1DC0F064ADA003201E4 /* CKSProject_ID_GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSProject_ID_GUI.h; sourceTree = "<group>"; };
@@ -816,8 +816,8 @@
 				FCA77D340F14B7BA00C0DB63 /* CLoad_Errors.cpp */,
 				FC68AFE20F13E8F000EC15AF /* CRack_Echo_DSP.cpp */,
 				FCA8CAF50F08EF900007514D /* CRack_Reverb_DSP.cpp */,
+				FCBB278D0F15E499005C1636 /* CRegion_Controller.cpp */,
 				FCA8CAF90F08EF900007514D /* CRegion_DSP.cpp */,
-				FC289E770F140E2C006872A1 /* CRegion_Model.cpp */,
 				FCA8CAF80F08EF900007514D /* CSample_DSP.cpp */,
 				FC68AFE40F13E90700EC15AF /* CTrack_DSP.cpp */,
 				FCA77C2D0F14AAE000C0DB63 /* CWave_File.cpp */,
@@ -871,9 +871,9 @@
 				FCA77D330F14B7B100C0DB63 /* CLoad_Errors.h */,
 				FCA8CB380F08F3B20007514D /* CSample_DSP.h */,
 				FC68AFC60F13E82700EC15AF /* CRack_Echo_DSP.h */,
+				FCBB27970F15E510005C1636 /* CRegion_Controller.h */,
 				FCA8CB350F08F3B20007514D /* CRack_Reverb_DSP.h */,
 				FCA8CB390F08F3B20007514D /* CRegion_DSP.h */,
-				FC289E760F140E1A006872A1 /* CRegion_Model.h */,
 				FC68AFC50F13E81D00EC15AF /* CTrack_DSP.h */,
 				FCA77C380F14AB3A00C0DB63 /* CWave_File.h */,
 				FCA77C540F14AF1E00C0DB63 /* CWave_Parser.h */,
@@ -1378,10 +1378,10 @@
 				FCF9544F0F125849005147D1 /* CProgressTaskList.cpp in Sources */,
 				FC68AFE30F13E8F000EC15AF /* CRack_Echo_DSP.cpp in Sources */,
 				FC68AFE50F13E90700EC15AF /* CTrack_DSP.cpp in Sources */,
-				FC289E780F140E2C006872A1 /* CRegion_Model.cpp in Sources */,
 				FCA77C2E0F14AAE000C0DB63 /* CWave_File.cpp in Sources */,
 				FCA77C560F14AF3500C0DB63 /* CWave_Parser.cpp in Sources */,
 				FCA77D350F14B7BA00C0DB63 /* CLoad_Errors.cpp in Sources */,
+				FCBB278E0F15E499005C1636 /* CRegion_Controller.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

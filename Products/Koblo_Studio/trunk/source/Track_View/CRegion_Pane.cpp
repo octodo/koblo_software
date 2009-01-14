@@ -242,7 +242,7 @@ tint32 CRegion_Pane::Find_Tool()
 void CRegion_Pane::Handel_Select_All_Tool()
 {
 	//Select region
-	STrackSelectionInfo sInfo = gpDSPEngine->SelectRegion(muiRegionID);
+	STrackSelectionInfo sInfo = gpDSPEngine->Select_Region(muiRegionID);
 	mpTrack->Set_Selection_Size_And_Pos();
 }
 

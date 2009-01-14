@@ -454,7 +454,7 @@ void CTrack::Handle_Mouse_Drop(ge::SPos Pos)
 	else if(Find_Tool() == giTool_Hand) {
 		// Drag and drop operation from region (region was moved)
 		tuint32 uiID = strtoul(Info.psz, NULL, 0);
-		gpDSPEngine->MoveRegion(uiID, miTrackID, uiSamplePos);
+		gpDSPEngine->Move_Region(uiID, miTrackID, uiSamplePos);
 	}
 	Set_Selection_Size_And_Pos();
 	Redraw_Pane_Rect();

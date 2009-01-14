@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32730E6F0F1CCDA30053F1B3 /* IStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 32730E6E0F1CCDA30053F1B3 /* IStream.h */; };
 		32B86E480EDC04DD00AC707E /* stXlat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32B86E470EDC04DD00AC707E /* stXlat.cpp */; };
 		32B86E4A0EDC04F300AC707E /* stXlat.h in Headers */ = {isa = PBXBuildFile; fileRef = 32B86E490EDC04F300AC707E /* stXlat.h */; };
 		7C599B350AF75821009A286B /* CAmpSim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C599B340AF75821009A286B /* CAmpSim.cpp */; };
@@ -120,6 +121,7 @@
 /* Begin PBXFileReference section */
 		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };
+		32730E6E0F1CCDA30053F1B3 /* IStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IStream.h; path = ../../interface/IStream.h; sourceTree = SOURCE_ROOT; };
 		32B86E470EDC04DD00AC707E /* stXlat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stXlat.cpp; path = ../../source/stXlat.cpp; sourceTree = SOURCE_ROOT; };
 		32B86E490EDC04F300AC707E /* stXlat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stXlat.h; path = ../../interface/stXlat.h; sourceTree = SOURCE_ROOT; };
 		7C599B340AF75821009A286B /* CAmpSim.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CAmpSim.cpp; path = ../../source/CAmpSim.cpp; sourceTree = SOURCE_ROOT; };
@@ -266,6 +268,7 @@
 		0B77317608A634BB004B30F3 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				32730E6E0F1CCDA30053F1B3 /* IStream.h */,
 				32B86E490EDC04F300AC707E /* stXlat.h */,
 				FC98A4A60EC33B7000B0CF30 /* IAmp.h */,
 				FC98A2EF0EC2F36B00B0CF30 /* IClipper.h */,
@@ -466,6 +469,7 @@
 				FC98A4A50EC33B4000B0CF30 /* CAmp.h in Headers */,
 				FC98A4A70EC33B7000B0CF30 /* IAmp.h in Headers */,
 				32B86E4A0EDC04F300AC707E /* stXlat.h in Headers */,
+				32730E6F0F1CCDA30053F1B3 /* IStream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

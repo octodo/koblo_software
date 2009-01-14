@@ -27,9 +27,9 @@ public:
 
 	//! Release stream. Call this when you're done with the stream, i.e. voice is no longer playing
 	/*!
-		\param pStream [in]: Stream to release
+		\param pStream [in]: Stream to release. It will be asynchronously deleted when not being accessed by OnTimer() anymore
 	*/
-	virtual void ReleaseStream(const IStream* pStream) = 0;
+	virtual void ReleaseStream(IStream* pStream) = 0;
 
 	//! Call this to see if sound playback has stuttered resently (flag will be reset after)
 	virtual tbool GetStutter() = 0;

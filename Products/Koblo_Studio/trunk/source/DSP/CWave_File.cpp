@@ -107,7 +107,6 @@ tbool CWave_File::LoadSound(tint32 iSampleRate, IChunk* pChunk)
 
 tbool gbCheck = true;
 
-//tbool CWave_File::LoadSoundStream(tint32 iSampleRate, IChunk* pChunk, tint32 iBufferSize, const std::string& sPathName)
 tbool CWave_File::LoadSoundStream(tint32 iBufferSize, const tchar* pszPathName)
 {
 	if ((pszPathName == NULL) || (*pszPathName == '\0'))

@@ -33,7 +33,7 @@ public:
 	//! IStreamManager override
 	virtual IStream* GetStream();
 	//! IStreamManager override
-	virtual void ReleaseStream(const IStream* pStream);
+	virtual void ReleaseStream(IStream* pStream);
 	//! IStreamManager override
 	virtual tbool GetStutter();
 
@@ -48,8 +48,11 @@ protected:
 	std::list<IStream*> mStreams;
 
 	//! Array of booleans, to keep track of which streams are currently in use.
-	tbool* mpbStreamInUse;
-
+	tbool* mabStreamInUse;
+	CMutex mMutex_ForStreamIxInUse;
+	tbool IsStreamIxInUse(tint32 iIx);
+	void SetStreamIxInUse(tint32 iIx, tbool bInUse);
+	
 	//! Whether sound has stuttered resently
 	volatile tbool mbStutter;
 };

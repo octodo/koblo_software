@@ -100,9 +100,10 @@
 
 // Sounds
 class CApplication;
-#include "DSP/CSample_DSP.h"
-#include "DSP/CRegion_Model.h"
-#include "DSP/CRegion_DSP.h"
+#include "CSample_DSP.h"
+#include "CRegion_Controller.h"
+#include "CRegion_DSP.h"
+
 
 // PlugIn
 class CPlugInManager;

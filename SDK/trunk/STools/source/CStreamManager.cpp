@@ -6,7 +6,7 @@
 #include "SToolsInternalOS.h"
 
 CStreamManager::CStreamManager()
-	: mpTimer(NULL), mpbStreamInUse(NULL)
+	: mpTimer(NULL), mabStreamInUse(NULL)
 {
 	mpTimer = ITimer::Create();
 
@@ -31,8 +31,8 @@ CStreamManager::~CStreamManager()
 		dynamic_cast<CStream*>(pStream)->Destroy();
 	}
 
-	if (mpbStreamInUse) {
-		delete[] mpbStreamInUse;
+	if (mabStreamInUse) {
+		delete[] mabStreamInUse;
 	}
 }
 
@@ -48,7 +48,7 @@ void CStreamManager::Destroy()
 
 void CStreamManager::CreateStreams(tint32 iPolyphony)
 {
-	mpbStreamInUse = new tbool[iPolyphony];
+	mabStreamInUse = new tbool[iPolyphony];
 
 	tint32 iStream;
 	for (iStream = 0; iStream < iPolyphony; iStream++) {
@@ -56,7 +56,7 @@ void CStreamManager::CreateStreams(tint32 iPolyphony)
 
 		mStreams.push_back(pStream);
 
-		mpbStreamInUse[iStream] = false;
+		mabStreamInUse[iStream] = false;
 	}
 }
 
@@ -65,8 +65,10 @@ st::IStream* CStreamManager::GetStream()
 	tint32 iStream;
 	std::list<IStream*>::iterator it = mStreams.begin();
 	for (iStream = 0; iStream < (tint32)mStreams.size(); iStream++, it++) {
-		if (mpbStreamInUse[iStream] == false) {
-			mpbStreamInUse[iStream] = true;
+		CAutoLock lock(mMutex_ForStreamIxInUse);
+		
+		if (!IsStreamIxInUse(iStream)) {
+			SetStreamIxInUse(iStream, true);
 
 			return *it;
 		}
@@ -75,13 +77,32 @@ st::IStream* CStreamManager::GetStream()
 	return NULL;
 }
 
-void CStreamManager::ReleaseStream(const st::IStream* pStream)
+tbool CStreamManager::IsStreamIxInUse(tint32 iIx)
 {
+	CAutoLock lock(mMutex_ForStreamIxInUse);
+
+	return mabStreamInUse[iIx];
+} // IsStreamIxInUse
+
+
+void CStreamManager::SetStreamIxInUse(tint32 iIx, tbool bInUse)
+{
+	CAutoLock lock(mMutex_ForStreamIxInUse);
+
+	mabStreamInUse[iIx] = bInUse;
+} // SetStreamIxInUse
+
+
+void CStreamManager::ReleaseStream(st::IStream* pStream)
+{
+	CAutoLock lock(mMutex_ForStreamIxInUse);
+
 	tint32 iStream;
 	std::list<IStream*>::iterator it = mStreams.begin();
 	for (iStream = 0; iStream < (tint32)mStreams.size(); iStream++, it++) {
 		if ((*it) == pStream) {
-			mpbStreamInUse[iStream] = false;
+			// Mark this index as unused
+			SetStreamIxInUse(iStream, false);
 
 			return;
 		}
@@ -90,22 +111,26 @@ void CStreamManager::ReleaseStream(const st::IStream* pStream)
 	ASSERT(NULL);
 }
 
+
 void CStreamManager::OnTimer(tint32 iID)
 {
 	tbool bStutter = false;
-
+	
+	tint32 iStreamIx = 0;
 	std::list<IStream*>::iterator it = mStreams.begin();
-	for (; it != mStreams.end(); it++) {
-		IStream* pStream = *it;
-		CStream* pCStream = dynamic_cast<CStream*>(pStream);
-		if (pCStream) {
-			pCStream->OnTimer();
-			if (pCStream->GetStutter()) {
-				bStutter = true;
+	for (; it != mStreams.end(); iStreamIx++, it++) {
+		if (IsStreamIxInUse(iStreamIx)) {
+			IStream* pStream = *it;
+			CStream* pCStream = dynamic_cast<CStream*>(pStream);
+			if (pCStream) {
+				pCStream->OnTimer();
+				if (pCStream->GetStutter()) {
+					bStutter = true;
+				}
 			}
 		}
 	}
-
+	
 	if (bStutter) {
 		mbStutter = true;
 	}
