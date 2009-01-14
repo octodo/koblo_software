@@ -76,12 +76,16 @@ tbool CDownloader::OpenConnection_OSSpecific()
 	}
 
 	// Allocate stream ref
-	mReadStreamRef = CFReadStreamCreateForHTTPRequest(kCFAllocatorDefault, mMessageRef);
+	// (Create for streamed http because large data can't be kept in memory)
+	//mReadStreamRef = CFReadStreamCreateForHTTPRequest(kCFAllocatorDefault, mMessageRef);
+	mReadStreamRef = CFReadStreamCreateForStreamedHTTPRequest(kCFAllocatorDefault, mMessageRef, NULL);
 	if (mReadStreamRef == NULL)
 	{
 		SetError("Unable to create read-stream ref");
 		return false;
 	}
+	// (lasse) Can't set auto-redirect property for streamed http - won't work
+	/*
 	if (!CFReadStreamSetProperty (mReadStreamRef,
 								  kCFStreamPropertyHTTPShouldAutoredirect, 
 								  kCFBooleanTrue))
@@ -89,6 +93,8 @@ tbool CDownloader::OpenConnection_OSSpecific()
 		SetError("Unable to set auto-redirect property");
 		return false;
 	}
+	*/
+	// .. (lasse)
 	
 	// And action!
 	return CFReadStreamOpen( mReadStreamRef );

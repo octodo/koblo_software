@@ -19,6 +19,17 @@ void CUploader::Destructor_OSSpecific()
 
 tbool CUploader::OpenConnection_OSSpecific()
 {
+	// Form action string (http verb)
+	tbool bHasParameters = (miParamsAssembledLen > 0);
+	EVerbType eVerbDefault = VERB_PUT;
+	EVerbType eVerbToUse = GetVerb(eVerbDefault);
+	const tchar* pszActionStr = GetVerbString(eVerbDefault);
+    CFStringRef vActionStr = CFStringCreateWithCStringNoCopy(NULL, pszActionStr, kCFStringEncodingMacRoman, NULL);
+	if (vActionStr == NULL) {
+		SetError("Unable to create http-verb string");
+		return false;
+	}
+	
 	// Combined URL string
 	std::string sFormatedURL = std::string("http://") + msHost + msPage;
     CFStringRef vUrlStr = CFStringCreateWithCStringNoCopy(NULL, sFormatedURL.c_str(), kCFStringEncodingMacRoman, NULL);
@@ -27,24 +38,6 @@ tbool CUploader::OpenConnection_OSSpecific()
 		return false;
 	}
 
-	// Form action string
-	tbool bSendParameters = (miParamsAssembledLen > 0);
-	const tchar* pszActionStr = bSendParameters ? "POST" : "GET";
-    CFStringRef vActionStr = CFStringCreateWithCStringNoCopy(NULL, pszActionStr, kCFStringEncodingMacRoman, NULL);
-	if (vUrlStr == NULL) {
-		SetError("Unable to create action string");
-		return false;
-	}
-
-	// Form parameters (if any)
-	if (bSendParameters) {
-		mParametersDataRef = CFDataCreate(kCFAllocatorDefault, (unsigned char*)mpszParamsAssembled, miParamsAssembledLen);
-		if (mParametersDataRef == NULL) {
-			SetError("Unable to create parameters ref");
-			return false;
-		}
-	}
-	
     CFURLRef vUrlRef = CFURLCreateWithString (kCFAllocatorDefault, vUrlStr, NULL);
    	if (vUrlRef == NULL) {
 		SetError("Unable to create URL ref");
@@ -65,11 +58,14 @@ tbool CUploader::OpenConnection_OSSpecific()
 	}
 
 	// Insert parameters into message body
-	if (bSendParameters) {
+	if (bHasParameters) {
 		CFHTTPMessageSetHeaderFieldValue(mMessageRef, CFSTR("Content-Type"), CFSTR("application/x-www-form-urlencoded"));
-		if (mParametersDataRef != NULL)	{
-			CFHTTPMessageSetBody(mMessageRef, mParametersDataRef);
+		mParametersDataRef = CFDataCreate(kCFAllocatorDefault, (unsigned char*)mpszParamsAssembled, miParamsAssembledLen);
+		if (mParametersDataRef == NULL) {
+			SetError("Unable to create parameters ref");
+			return false;
 		}
+		CFHTTPMessageSetBody(mMessageRef, mParametersDataRef);
 	}
 
 	// Allocate stream ref
