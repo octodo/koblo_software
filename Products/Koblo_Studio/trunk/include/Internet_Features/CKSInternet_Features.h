@@ -1,4 +1,4 @@
-// Copyright 2004, 2005,2006,2007,2008 Koblo http://koblo.com
+// Copyright 2004, 2005,2006,2007,2008,2009 Koblo http://koblo.com
 //
 // This file is part of the Koblo SDK.
 //
@@ -108,6 +108,9 @@ public:
 	tbool Get_Remember_Me(){ return mbRemember_Me;}
 	
 	tbool mbUpload_Project;
+	
+	//! compares the internal data structure to the xml file stroed on disk
+	tbool Project_Has_Changed();
 
 	
 private:

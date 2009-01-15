@@ -5,8 +5,9 @@ CTrack_Editor_View::CTrack_Editor_View( de::IParameterManager* pParmMan)
 	: CKSBaseGUI( pParmMan),
 	CBaseGUI(dynamic_cast<CBasePlugIn*>(gpApplication), pParmMan)
 {
-		mpTimerMeters = NULL;
-		mpPlay_Head_Timer = NULL;
+	mpTimerMeters = NULL;
+	mpPlay_Head_Timer = NULL;
+	
 }
 
 CTrack_Editor_View::~CTrack_Editor_View()
@@ -134,7 +135,8 @@ void CTrack_Editor_View::GetName(tchar* psz)
 
 void CTrack_Editor_View::OnTimer()
 {
-	CBaseGUI::OnTimer();
+	if(gpApplication->Timer_Is_Running() )
+		CBaseGUI::OnTimer();
 }
 
 

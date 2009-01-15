@@ -11,6 +11,45 @@ CRegion_Pane::CRegion_Pane(CBasePane* pParent, CBaseGUI* pGUI)
 
 	// (lasse) It's impossible to see errors if variables aren't initialized!!! Hrmpf!
 	mpTrack_Player2 = NULL;
+	
+	
+	
+	
+	
+	
+	
+	muiRegionID		=	0;
+	muiTrack_Pos	=	0;
+	mfSample_Start	=	0;
+	muiSample_Duration	=	0;
+	muiSample_End	=	0;
+	muiSample_Fade_In	=	0;
+	muiSample_Fade_Out	=	0;
+	mfRegion_Volume	=	0;
+	muiStart_Pixel	=	0;
+	muiEnd_Pixel	=	0;
+	muiFade_In_Pixel	=	0;
+	muiFade_Out_Pixel	=	0;
+	muiRegion_Volume_Pixel	=	0;
+	miSize_X	=	0;
+	miPixel_Size_Y	=	0;
+	miPos_X	=	0;
+	miColor	=	0;
+	mbMouseCaptured	=	false;
+	mbExtendSelection	=	0;
+	muiSample_Selection_Start	=	0;
+	muiSample_Selection_Duration	=	0;
+	mpLine_Start	= NULL;
+	mpLine_End	= NULL;
+	
+	mpFade_In_Handle	=	NULL;
+	mpFade_Out_Handle	=	NULL;
+	mpRegion_Volume_Handle	=	NULL;
+	
+	
+	
+	
+	
 }
 
 CRegion_Pane::~CRegion_Pane()
@@ -25,6 +64,7 @@ CRegion_Pane::~CRegion_Pane()
 	}
 
 	mpDrawPrimitives->Destroy();
+	
 }
 
 void CRegion_Pane::SetInfo(	tuint32 uiRegionID,
@@ -227,6 +267,7 @@ void CRegion_Pane::Update_Size()
 		mpFade_Out_Handle->GetPane()->SetVisible(false);
 		mpLine_Fade_Out->SetVisible(false);
 		
+		//!!! BUG size and pos becomes real bad inside 
 		mpRegion_Volume_Handle->GetPane()->SetVisible(false);
 		mpLine_Region_Volume->SetVisible(false);
 	}

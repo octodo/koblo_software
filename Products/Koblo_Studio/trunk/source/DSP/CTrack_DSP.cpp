@@ -777,6 +777,7 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 										tuint64	uiFadeOutLength,
 										tfloat fRegionVolume)
 {
+	gpApplication->Stop_Timer();
 	std::string sWavePathNameL;
 	std::string sWavePathNameR;
 	tint32 iWaveFiles = gpApplication->GetFromListName_ClipWavePathNames(sSoundListItemName.c_str(), sWavePathNameL, sWavePathNameR);
@@ -803,6 +804,8 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 	
 	Insert_Region_Info(pRegionInfo) ;
 	Update_Regions_For_Playback();
+	
+	gpApplication->Start_Timer();
 	return pRegion;
 }
 
@@ -971,7 +974,6 @@ void CTrack_DSP::Resize_Region(tuint32 uiID, tuint64 iTrack_Pos, tuint64 iSample
 	return;
 
 }
-
 
 
 void CTrack_DSP::Set_Volume(tfloat32 fVolume)

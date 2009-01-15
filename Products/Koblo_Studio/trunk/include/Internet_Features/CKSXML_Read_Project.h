@@ -1,4 +1,4 @@
-// Copyright 2004, 2005,2006,2007,2008 Koblo http://koblo.com
+// Copyright 2004, 2005,2006,2007,2008,2009 Koblo http://koblo.com
 //
 // This file is part of the Koblo SDK.
 //
@@ -41,6 +41,7 @@ public:
 	
 	CKSXML_Read_Project();
 	~CKSXML_Read_Project();
+	
 	
 	//! reset project
 	void Reset_Project();

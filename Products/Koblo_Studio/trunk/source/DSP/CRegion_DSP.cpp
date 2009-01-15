@@ -77,10 +77,16 @@ CRegion_DSP::~CRegion_DSP()
 	if (mppPeakFile[3]) {
 		mppPeakFile[3]->Destroy();
 	}
+	/*
+<<<<<<< HEAD:Products/Koblo_Studio/trunk/source/DSP/CRegion_DSP.cpp
+	printf("Delete region %d \n", muiUniqueID);
+=======
 	
 	for (tint32 iSampleToDelete = miChannels - 1; iSampleToDelete >= 0; iSampleToDelete--) {
 		delete mppSample[iSampleToDelete];
 	}
+>>>>>>> master:Products/Koblo_Studio/trunk/source/DSP/CRegion_DSP.cpp
+	 */
 }
 
 void CRegion_DSP::SetEndPos(tuint64 iPos)

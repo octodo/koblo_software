@@ -13,18 +13,27 @@ CKSXML_Write_Project::~CKSXML_Write_Project()
 	
 }
 
+std::string CKSXML_Write_Project::Get_Internal_Data_As_XML()
+{
+	TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
+	TiXmlDocument *pDoc		=	new TiXmlDocument("koblo_doc");
+	pDoc->LinkEndChild( decl );
+	
+	Write_Project(pDoc);
+	
+	// convert pDoc to a std::string
+	TiXmlPrinter printer;
+	pDoc->Accept(&printer);
+	std::string xml_str =  printer.CStr();
+	
+	return xml_str;
+}
 
 void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 {
 	TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
 	TiXmlDocument *pDoc		=	new TiXmlDocument("koblo_doc");
 	pDoc->LinkEndChild( decl );
-	
-	
-	Add_Comment(pDoc, "Koblo Studio music project XML format");
-	Add_Comment(pDoc, "most ids are originally returned from the website, and are globally unique (between different projects)");
-	Add_Comment(pDoc, "ids are always specified as attributes");
-	Add_Comment(pDoc, "all times and track positions are specified in sample points");
 	
 	Write_Project(pDoc);
 	
@@ -44,8 +53,6 @@ void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	//!!! path is missing write file to disk
 	pDoc->SaveFile(sFileName.c_str());
 	
-	
-	
 }
 
 void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID)
@@ -54,12 +61,7 @@ void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectI
 	TiXmlDocument *pDoc		=	new TiXmlDocument("koblo_doc");
 	pDoc->LinkEndChild( decl );
 	
-	
-	Add_Comment(pDoc, "Koblo Studio music project XML format");
-	Add_Comment(pDoc, "most ids are originally returned from the website, and are globally unique (between different projects)");
-	Add_Comment(pDoc, "ids are always specified as attributes");
-	Add_Comment(pDoc, "all times and track positions are specified in sample points");
-	
+
 	Write_Project(pDoc);
 	
 	// convert pDoc to a std::string
@@ -99,6 +101,11 @@ void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectI
 
 void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 {
+	
+	Add_Comment(pDoc, "Koblo Studio music project XML format");
+	Add_Comment(pDoc, "most ids are originally returned from the website, and are globally unique (between different projects)");
+	Add_Comment(pDoc, "ids are always specified as attributes");
+	Add_Comment(pDoc, "all times and track positions are specified in sample points");
 	
 	TiXmlElement* pProject = new TiXmlElement( "project" );
 //	TiXmlText * text = new TiXmlText( "World" );

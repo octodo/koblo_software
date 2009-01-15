@@ -318,7 +318,12 @@ void CControl::SetVisible(tbool bVisible)
 
 //	Redraw();
 	// We redraw this way, because Redraw() has a check for visibility
-	SRect rct(GetPos(), GetSize() + SSize(1, 1));
+	//!! TO DO
+	SPos pos = GetPos();
+	if(pos.iX < 0){
+		pos.iX = 0; //!!! quick fix
+	}
+	SRect rct(pos, GetSize() + SSize(1, 1));
 	IPane* pParentPane = GetParentPane();
 	if (pParentPane) {
 		pParentPane->Redraw(rct);

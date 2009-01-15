@@ -12,6 +12,8 @@ CInvalidater::CInvalidater() : mbRectInvalidated(false)
 {
 	miListLen_AtLastGet = 0;
 	mbIsAdding = false;
+	mRectInvalidated.iX = 0;
+	mRectInvalidated.iY	= 0;
 } // constructor
 
 
@@ -133,5 +135,15 @@ void CInvalidater::_IncludeRect(const SRect& Rect)
 		RectNew.iCY = max(Rect.iCY, mRectInvalidated.iY + mRectInvalidated.iCY - Rect.iY);
 	}
 	mRectInvalidated = RectNew;
+	
+	/*
+	if(-147482919 > mRectInvalidated.iX){
+		tuint bob = 5; //!!! TO DO
+		printf( "pos.x: %d  pos.y: %d  siz.ex: %d  size.y: %d \n " , mRectInvalidated.iX, mRectInvalidated.iY, mRectInvalidated.iCX, mRectInvalidated.iCY);
+		bob++;
+	}
+	 */
+	
+	
 } // _IncludeRect
 

@@ -441,8 +441,8 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 			CBuffer* pBufferMix = mpMaster->GetBuffer();
 			*pBufferMix += *pBuffer;
 
-			// Only volumes if playing (not exporting)
-			if (gpApplication->IsInProgressTaskState()) {
+			// Only volumes if playing (not exporting) 
+			if (!gpApplication->IsInProgressTaskState()) {
 				// Get volumes for bus (max 7.1 surround)
 				tfloat32 afAbsMeters[8] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 				CTrack_DSP* pBus = mppBusses[iBus];
@@ -471,7 +471,7 @@ void CDSP::ProcessStereo(float** ppfOut, const float** ppfIn, long lC)
 			*pBufferMix += *pBuffer;
 
 			// Only volumes if playing (not exporting)
-			if (gpApplication->IsInProgressTaskState()) {
+			if (!gpApplication->IsInProgressTaskState()) {
 				// Get volumes for AUX (max 7.1 surround)
 				tfloat32 afAbsMeters[8] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 		//		CTrack_DSP* pAUX = mppAUXes[iAUX];
@@ -758,7 +758,17 @@ void CDSP::UpdateBussData(tint32 iID, tint32 iValue, tint32 iBus)
 				pBus->SetPanningLeftRight(fLeftRight);
 			}
 			break;
-
+			
+			
+		case giParam_ChAUX1:
+			mppBusses[iBus]->SetAUXVolume(0, (tfloat32)(iValue / 10000.0));
+			break;
+		case giParam_ChAUX2:
+			mppBusses[iBus]->SetAUXVolume(1, (tfloat32)(iValue / 10000.0));
+			break;
+			
+			
+			
 		case giParam_Buss_Insert1:
 		case giParam_Buss_Insert2:
 		case giParam_Buss_Insert3:

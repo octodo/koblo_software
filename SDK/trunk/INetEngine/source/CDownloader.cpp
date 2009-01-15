@@ -4,13 +4,15 @@
 CDownloader::CDownloader()
 {
 	mpszParamsAssembled = NULL;
-	mbIsDownloading = false;
-	mbIsDone = false;
+	mbIsInitialized = mbIsDownloading = mbIsFailed = mbIsDone = false;
+	//
+	Constructor_OSSpecific();
 } // constructor
 
 
 CDownloader::~CDownloader()
 {
+	Abort();
 	WipeParams();
 } // destructor
 
@@ -27,32 +29,19 @@ void CDownloader::Destroy()
 } // Destroy
 
 
-tbool CDownloader::Init(tchar* pszHost, tchar* pszPage, tint32 iPort /*= 80*/)
+tbool CDownloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort /*= 80*/, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
 {
-	msHost = pszHost;
-	msPage = pszPage;
-	miPort = iPort;
-
+	Abort();
 	WipeParams();
+	mbIsInitialized = false;
 
-	return true;
-} // Init
-
-
-tbool CDownloader::AddParam(tchar* pszParamName, tchar* pcParamData, tint32 iParamDataLen)
-{
-	if (mbIsDownloading) {
-		// Error: We can't add more parameters as we've already started downloading
-		return false;
-	}
-
-	// Verify sanity of param name
+	// Verify sanity of host
 	{
-		if ((pszParamName == NULL) || (*pszParamName == '\0')) {
-			// Error: No param name
+		if ((pszHost == NULL) || (*pszHost == '\0')) {
+			SetError("No param name");
 			return false;
 		}
-		for (tchar* pc = pszParamName; *pc; pc++) {
+		for (tchar* pc = (tchar*)pszHost; *pc; pc++) {
 			tchar c = *pc;
 			if (
 				((c < 'A') || (c > 'Z'))
@@ -60,8 +49,123 @@ tbool CDownloader::AddParam(tchar* pszParamName, tchar* pcParamData, tint32 iPar
 				((c < 'a') || (c > 'z'))
 				&&
 				((c < '0') || (c > '9'))
+				&&
+				(c != '.')
 			) {
-				// Error: Not US-ASCII character
+				SetError("Not valid url-host");
+				return false;
+			}
+		}
+	}
+
+	// Verify sanity of page
+	{
+		if (pszPage != NULL) {
+			for (tchar* pc = (tchar*)pszPage; *pc; pc++) {
+				tchar c = *pc;
+				if (
+					((c < 'A') || (c > 'Z'))
+					&&
+					((c < 'a') || (c > 'z'))
+					&&
+					((c < '0') || (c > '9'))
+					&&
+					(c != '.')
+					&&
+					(c != '/')
+				) {
+					SetError("Not valid url-document");
+					return false;
+				}
+			}
+		}
+	}
+
+	// Verify sanity of port
+	if (iPort <= 0) {
+		SetError("Not a valid port");
+		return false;
+	}
+
+	// Verify sanity of time-out
+	if (iTimeOutSecs < 0) {
+		SetError("Negative time-out");
+		return false;
+	}
+
+	msHost = pszHost;
+	msPage = (pszPage == NULL) ? "" : pszPage;
+	miPort = iPort;
+	msUser = (pszUser == NULL) ? "" : pszUser;
+	msPassword = (pszPassword == NULL) ? "" : pszPassword;
+	muiTimeOutSecs = (tuint32)iTimeOutSecs;
+
+	mbIsInitialized = true;
+	meDesiredMIMEType = DESIRED_TYPE_TEXT;
+
+	return true;
+} // Init
+
+
+tbool CDownloader::SetDesiredMIMEType(EDesiredMIMEType eType)
+{
+	if (mbIsFailed) {
+		//SetError("Previous error");
+		return false;
+	}
+
+	if (!mbIsInitialized) {
+		SetError("Not initialized");
+		return false;
+	}
+
+	if (mbIsDownloading) {
+		SetError("We can't set media type as we've already started downloading");
+		return false;
+	}
+
+	// Success
+	return true;
+} // SetDesiredMIMEType
+
+
+tbool CDownloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen)
+{
+	CAutoLock Lock(mMutex_ForParams);
+
+	if (mbIsFailed) {
+		//SetError("Previous error");
+		return false;
+	}
+
+	if (!mbIsInitialized) {
+		SetError("Not initialized");
+		return false;
+	}
+
+	if (mbIsDownloading) {
+		SetError("We can't add more parameters as we've already started downloading");
+		return false;
+	}
+
+	// Verify sanity of param name
+	{
+		if ((pszParamName == NULL) || (*pszParamName == '\0')) {
+			SetError("No param name");
+			return false;
+		}
+		for (tchar* pc = (tchar*)pszParamName; *pc; pc++) {
+			tchar c = *pc;
+			if (
+				((c < 'A') || (c > 'Z'))
+				&&
+				((c < 'a') || (c > 'z'))
+				&&
+				((c < '0') || (c > '9'))
+				&&
+				((c != '_') && (c != '[') && (c != ']'))
+			) {
+				SetError("Not valid paramname");
 				return false;
 			}
 		}
@@ -78,12 +182,12 @@ tbool CDownloader::AddParam(tchar* pszParamName, tchar* pcParamData, tint32 iPar
 		if (iUrlEncodedLen > 0) {
 			pszUrlEncoded = new tchar[iUrlEncodedLen + 1];
 			if (pszUrlEncoded == NULL) {
-				// Error: Out of memory
+				SetError("Out of memory");
 				return false;
 			}
 			tint32 iActuallyEncoded = IINetUtil::URLEncode(pcParamData, iParamDataLen, pszUrlEncoded);
 			if (iActuallyEncoded != iUrlEncodedLen) {
-				// Error: Insane output length
+				SetError("Insane output length");
 				delete[] pszUrlEncoded;
 				return false;
 			}
@@ -109,8 +213,15 @@ tbool CDownloader::AddParam(tchar* pszParamName, tchar* pcParamData, tint32 iPar
 
 tbool CDownloader::AssembleParams()
 {
+	CAutoLock Lock(mMutex_ForParams);
+
+	if (!mbIsInitialized) {
+		SetError("Not initialized");
+		return false;
+	}
+
 	if (mpszParamsAssembled) {
-		// Error: Already assembled
+		SetError("Already assembled");
 		return false;
 	}
 
@@ -119,19 +230,19 @@ tbool CDownloader::AssembleParams()
 	tint32 iLens = mlist_iParamDataLen.size();
 	tint32 iDatas = mlist_pszParamDataUrlEncoded.size();
 	if ((iNames != iLens) || (iLens != iDatas)) {
-		// Error: List lengths aren't all the same
+		SetError("List lengths aren't all the same");
 		return false;
 	}
 
 	// Calculate space needed
 	{
-		iParamsAssembledLen = 0;
+		miParamsAssembledLen = 0;
 
 		// First accumulate lengths of parameter names
 		std::list<std::string>::iterator itName = mlist_sParamNames.begin();
 		for ( ; itName != mlist_sParamNames.end(); itName++) {
 			std::string& rsName = *itName;
-			iParamsAssembledLen += 1 + rsName.length();
+			miParamsAssembledLen += 1 + rsName.length();
 		}
 
 		// Then accumulate length of non-empty paramater data
@@ -139,15 +250,15 @@ tbool CDownloader::AssembleParams()
 		for ( ; itDataLen != mlist_iParamDataLen.end(); itDataLen++) {
 			tint32 iLen = *itDataLen;
 			if (iLen > 0) {
-				iParamsAssembledLen += 1 + iLen;
+				miParamsAssembledLen += 1 + iLen;
 			}
 		}
 	}
 
 	// Attempt to allocate space for params + traling zero
-	mpszParamsAssembled = new tchar[iParamsAssembledLen + 1];
+	mpszParamsAssembled = new tchar[miParamsAssembledLen + 1];
 	if (mpszParamsAssembled == NULL) {
-		// Error: Out of memory
+		SetError("Out of memory");
 		return false;
 	}
 
@@ -190,6 +301,8 @@ tbool CDownloader::AssembleParams()
 
 void CDownloader::WipeParams()
 {
+	CAutoLock Lock(mMutex_ForParams);
+
 	mlist_sParamNames.clear();
 
 	std::list<tchar*>::iterator it = mlist_pszParamDataUrlEncoded.begin();
@@ -209,7 +322,144 @@ void CDownloader::WipeParams()
 } // WipeParams
 
 
+tbool CDownloader::OpenConnection()
+{
+	return OpenConnection_OSSpecific();
+} // OpenConenction
+
+
+void CDownloader::CloseConnection()
+{
+	CloseConnection_OSSpecific();
+} // CloseConenction
+
+
+tbool CDownloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
+{
+	*piPortionSize = 0;
+	
+	if (mbIsFailed) {
+		//SetError("Previous error");
+		return false;
+	}
+	
+	if (!mbIsInitialized) {
+		SetError("Not initialized");
+		return false;
+	}
+	
+	tbool bFirstTime = (!mbIsDownloading);
+	mbIsDownloading = true;
+	if (bFirstTime) {
+		CAutoLock Lock(mMutex_Connection);
+		
+		CloseConnection();
+		if (!AssembleParams()) return false;
+		if (!OpenConnection()) {
+			CloseConnection();
+			return false;
+		}
+		// We're alive
+		RefreshAlive();
+	}
+	
+	return DownloadPortion_OSSpecific(pszBuffer, iBufferSize, piPortionSize, puiTotalSize);
+} // DownloadPortion
+
+
+tbool CDownloader::Abort()
+{
+	if (mbIsDownloading) {
+		CAutoLock Lock(mMutex_Connection);
+		
+		CloseConnection();
+		mbIsDownloading = false;
+	}
+	
+	WipeParams();
+	
+	return true;
+} // Abort
+
+
 tbool CDownloader::IsDone()
 {
 	return mbIsDone;
 } // IsDone
+
+
+tbool CDownloader::IsFailed()
+{
+	return mbIsFailed;
+} // IsFailed
+
+
+void CDownloader::RefreshAlive()
+{
+	muiAliveMs = ITime::GetTimeMS();
+} // RefreshAlive
+
+
+tbool CDownloader::IsAlive()
+{
+	// (lasse) Are we really needing this? Anyway not used now
+
+	if ((!mbIsInitialized) || (!mbIsDownloading)) {
+		SetError("Not initialized or not downloading");
+		return false;
+	}
+
+	if (mbIsFailed) {
+		//SetError("Previously failed");
+		return false;
+	}
+
+	tuint32 uiElapsedMs = ITime::GetTimeMS() - muiAliveMs;
+
+	if (muiTimeOutSecs == 0) {
+		// Special case for zero time-out: Actually use 500 ms
+		return (uiElapsedMs < 500);
+	}
+
+	tuint32 uiSecsElapsed = uiElapsedMs / 1000;
+	return (uiSecsElapsed <= muiTimeOutSecs);
+} // IsAlive
+
+
+void CDownloader::SetError(const tchar* pszError)
+{
+	CAutoLock Lock(mMutex_ForErrors);
+
+	msLastError = pszError;
+	mbIsFailed = true;
+}
+
+tbool CDownloader::GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize)
+{
+	CAutoLock Lock(mMutex_ForErrors);
+
+	if ((pszErrBuff == NULL) || (iErrBuffSize <= 0)) return false;
+
+	if (!mbIsFailed) {
+		// No error
+		*pszErrBuff = '\0';
+		return true;
+	}
+
+	tchar* pszMsg = (tchar*)(msLastError.c_str());
+	tint32 iLenMsg = msLastError.length();
+	if (iLenMsg == 0) {
+		// No error description available
+		pszMsg = "Unspecified error";
+		iLenMsg = strlen(pszMsg);
+	}
+	tbool bRoomEnough = iLenMsg < iErrBuffSize;
+	if (!bRoomEnough) {
+		// Cut off
+		iLenMsg = iErrBuffSize - 1;
+	}
+	memcpy(pszErrBuff, pszMsg, iLenMsg);
+	pszErrBuff[iLenMsg] = '\0';
+
+	return bRoomEnough;
+}

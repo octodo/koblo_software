@@ -4,7 +4,8 @@
 
 CRegion_Controller::CRegion_Controller()
 {
-	
+	for(tint32 i = 0; i< 64; i++)
+		mpRegion_Clipboard[i].bEmpty =  true;
 }
 
 CRegion_Controller::~CRegion_Controller()
@@ -41,6 +42,8 @@ const std::string& sSoundListItemName,
 	
 	gpDSPEngine->Select_Region(iRegionID);
 	gpDSPEngine->Sanitize_Session_End_Sample();	
+	
+	
  
 	return iRegionID;
 }
@@ -82,6 +85,7 @@ void CRegion_Controller::Cut_Region(tuint32 uiTrack, tuint32 uiRegionID, tuint64
 	tuint64 uiSample_Offset				=	mpRegion_DSP->Get_Sample_Offset();
 	tuint64 uiSample_Duration			=	mpRegion_DSP->Get_Duration();
 
+	tfloat32 fVolume					=	mpRegion_DSP->Get_Volume();
 	tuint64 uiFade_Out_Duration			=	mpRegion_DSP->Get_Fade_Out_Duration();
 	
 	// trim end of curent region
@@ -90,7 +94,14 @@ void CRegion_Controller::Cut_Region(tuint32 uiTrack, tuint32 uiRegionID, tuint64
 	
 	// create new region
 	
-	CreateRegion(sClipName, uiTrack, uiTrack_Pos + uiCutPos , uiSample_Offset + uiCutPos, uiSample_Duration - uiCutPos , 0, uiFade_Out_Duration );
+	CreateRegion(sClipName,
+				 uiTrack, 
+				 uiTrack_Pos + uiCutPos , 
+				 uiSample_Offset + uiCutPos, 
+				 uiSample_Duration - uiCutPos , 
+				 0, 
+				 uiFade_Out_Duration, 
+				 fVolume );
 	
 }
 
@@ -174,6 +185,61 @@ void CRegion_Controller::Duplicate_Region()
 			return;
 		}
 	}
+}
+
+void CRegion_Controller::Copy_Region()
+{
+	for(tint32 uiTrack=0; uiTrack<giNumber_Of_Tracks; uiTrack++){
+		
+		STrackSelectionInfo pTrack_Selection_Info	=	gpDSPEngine->GetTrackSelection(uiTrack);
+		
+		if(pTrack_Selection_Info.uiSelection_Type = giSelect_Region &&  pTrack_Selection_Info.iRegionID != -1)
+		{
+			tuint32 uiRegionID					= pTrack_Selection_Info.iRegionID ;
+			
+			SRegionInfo RegionInfo;
+			Get_Region_Info( RegionInfo, uiRegionID);
+			CTrack_DSP*		pTrack_DSP			=	gpDSPEngine->GetTrack(RegionInfo.uiTrack);
+			CRegion_DSP*	pRegion_DSP			=	pTrack_DSP->GetRegion_DSP(uiRegionID);
+			
+			
+			
+			mpRegion_Clipboard[0].bEmpty					=	false;
+			mpRegion_Clipboard[0].sClipName					=	pRegion_DSP->GetSoundListItemName();
+			mpRegion_Clipboard[0].uiDuration				=	pRegion_DSP->Get_Duration();
+			mpRegion_Clipboard[0].uiSample_Offset			=	pRegion_DSP->Get_Sample_Offset();
+			mpRegion_Clipboard[0].uiPossition				=	pTrack_DSP->Get_Region_Pos(uiRegionID) + mpRegion_Clipboard[0].uiDuration;	
+			mpRegion_Clipboard[0].uiFade_In_Duration		=	pRegion_DSP->Get_Fade_In_Duration();
+			mpRegion_Clipboard[0].uiFade_Out_Duration		=	pRegion_DSP->Get_Fade_Out_Duration();
+			mpRegion_Clipboard[0].fVolume					=	pRegion_DSP->Get_Volume();
+			
+
+			return;
+		}
+	}
+}
+
+void CRegion_Controller::Paste_Region(tuint32 uiTrack, tuint64 uiPosition)
+{ 
+	
+		//	tuint64 uiPosition = mpRegion_Clipboard[0].uiPossition;
+	if(!mpRegion_Clipboard[0].bEmpty) {	
+	
+			// Create new region
+		tuint32 uiID = CreateRegion(mpRegion_Clipboard[0].sClipName, 
+											uiTrack, 
+											uiPosition , 
+											mpRegion_Clipboard[0].uiSample_Offset, 
+											mpRegion_Clipboard[0].uiDuration,
+											mpRegion_Clipboard[0].uiFade_In_Duration,
+											mpRegion_Clipboard[0].uiFade_Out_Duration,
+											mpRegion_Clipboard[0].fVolume);
+			
+		gpDSPEngine->Select_Region(uiID);
+		mpRegionCallback->SelectRegion(uiID,uiTrack);
+	}
+		
+	
 }
 
 void CRegion_Controller::NormaliseRegion()

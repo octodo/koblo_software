@@ -518,6 +518,7 @@ void CPlugInManager::OpenGUI(tint32 iChannel, tint32 iInsertIndex)
 	}
 	
 	gpApplication->SetGUIsReady(true);
+	
 }
 
 void CPlugInManager::WindowClosed(tint32 iChannel, tint32 iInsertIndex)

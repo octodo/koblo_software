@@ -17,7 +17,7 @@ CTrack_Editor_Pane::CTrack_Editor_Pane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	mbIsVisible = false;
 	mfGoToPos = 0.0;
 	
-	mbZoomFlipFlop = false;
+
 
 	mbDisplayStutterWarning_Armed = true;
 }
@@ -817,8 +817,14 @@ void CTrack_Editor_Pane::SendMsgFromTop(SMsg* pMsg)
 					SendMsg(pMsg);
 				}
 			}
+
 			break;
-		}	
+		}
+		case Msg_Do_Delete: {
+			
+			Do_Delete();
+			break;
+		}
 	}	
 }
 
@@ -877,7 +883,7 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			GetPane()->GetControl(giControlID_Go_To_Start)->SetValue(1);
 			SetScrollPosHorizontalToStart();
 			return true;
-		}
+		}/*
 		case ge::KeyEqual:{
 			
 			// Show/hide Mix Window
@@ -891,6 +897,7 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			//gpApplication->SetGlobalParm(giParamID_Show_Mix_Window, !bReallyVisible, giSectionGUI);
 			return true;
 		}
+		 */
 		/*
 		case ge::Keya:{
 		//!!! For test only
@@ -898,6 +905,7 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			break;
 		}
 		*/
+			/*
 		case ge::KeySlash:{
 		
 		// Show/hide AUX Window
@@ -910,12 +918,13 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			return true;
 			
 		}
+			 */
 		case ge::KeyBackSpace:
 		case ge::KeyDelete:{
 			Do_Delete();
-			
 			break;
 		}
+			/*
 		case ge::Key1: {
 			gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Hand, giSectionGUI);
 			break;
@@ -934,22 +943,28 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Cut, giSectionGUI);
 			break;
 		}
+			 */
+			/*
 		case ge::Keyd: {
 			gpDSPEngine->Duplicate_Region();
 			break;
 		}
+			 */
+			/*
 		case ge::Keyf: {
 			tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Fade, giSectionGUI) != 0);
 			gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Show_Fade, de::IParameterManager::TypeGlobal, giSectionGUI);
 			//gpApplication->SetGlobalParm(giParamID_Show_Fade,!bTest, giSectionGUI);
 			break;
 		}
+			 */
+			/*
 		case ge::Keyg: {
 			tbool bTest = (gpApplication->GetGlobalParm(giParamID_Grid, giSectionGUI) != 0);
 			gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Grid, de::IParameterManager::TypeGlobal, giSectionGUI);
 			//gpApplication->SetGlobalParm(giParamID_Grid,!bTest, giSectionGUI);
 			break;
-		}
+		}/*
 		case ge::Keyk: {
 		
 			gpDSPEngine->Set_Loop_To_Selection();
@@ -974,18 +989,36 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			}
 			break;
 		}
+		 /*
 		case ge::Keyp: {
 			CBasePane::SMsg Msg(Msg_Go_To_Mouse);
 			SendMsgFromTop(&Msg);
 			break;
 		}
+		 */
+		case ge::Keyz: {
+			/*
+			mbZoomFlipFlop = !mbZoomFlipFlop;
+			if(mbZoomFlipFlop){
+				miStoredZoom = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI);
+				gpApplication->GetParmMan()->Set(true, giZoom_Levels - 10, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+			}
+			else{
+				gpApplication->GetParmMan()->Set(true, miStoredZoom, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+				
+			}
+			 */
+			break;
+		}
+			/*
 		case ge::Keyw: {
 			tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Waveform, giSectionGUI) != 0);
 			gpApplication->GetParmMan()->Set(true, bTest, giParamID_Show_Waveform, de::IParameterManager::TypeGlobal, giSectionGUI);
 			//gpApplication->SetGlobalParm(giParamID_Show_Waveform,!bTest, giSectionGUI);
 			break;
 		}
-		
+			 */
+		/*
 		case ge::KeyMinus: {
 			tint32 iTest = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI) -1;
 			gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
@@ -996,20 +1029,18 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
 			break;
 		}
-		
+		*/
 		case ge::KeyLeft: {
 			gpApplication->PlaybackRewind();
 			break;
 		}
 		case ge::KeyRight: {
-		
+			
 			gpApplication->PlaybackFF();
 			break;
 		}
 		
-		
-		
-		
+
 	}
 
 	return false;

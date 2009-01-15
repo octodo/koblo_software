@@ -34,9 +34,9 @@ void CMix_Buss_AUX_Insert::Init()
 	
 
 	// Echo
-	CreateKnob(ge::IControl::giNoID, IDB_Dial_Aux, ge::SPos(17, 20), 129);
+	CreateKnob(giCtrl_AUX1Send + miCtrl_Offset, IDB_Dial_Aux, ge::SPos(17, 20), 129);
 	// Reverb
-	CreateKnob(ge::IControl::giNoID, IDB_Dial_Aux, ge::SPos(17, 84), 129);
+	CreateKnob(giCtrl_AUX2Send + miCtrl_Offset, IDB_Dial_Aux, ge::SPos(17, 84), 129);
 
 	CreateButton(miCtrl_Offset + giCtrlOpenPlugEdit1, IDB_Button_Edit_Plugin, ge::SPos(116, 48));
 	CreateButton(miCtrl_Offset + giCtrlOpenPlugEdit2, IDB_Button_Edit_Plugin, ge::SPos(116, 48 + 16));
@@ -83,10 +83,14 @@ void CMix_Buss_AUX_Insert::Init()
 
 void CMix_Buss_AUX_Insert::ConnectControls()
 {
+	RegisterGlobalControlWithX3Translation(giSection_First_Buss + miID, giCtrl_AUX1Send + miCtrl_Offset, giParam_Buss_AUX1, 4);
+	RegisterGlobalControlWithX3Translation(giSection_First_Buss + miID, giCtrl_AUX2Send + miCtrl_Offset, giParam_Buss_AUX2, 4);
 	RegisterGlobalControl(giSection_First_Buss + miID, giCtrl_InsertPop1 + miCtrl_Offset, giParam_Buss_Insert1);
 	RegisterGlobalControl(giSection_First_Buss + miID, giCtrl_InsertPop2 + miCtrl_Offset, giParam_Buss_Insert2);
 	RegisterGlobalControl(giSection_First_Buss + miID, giCtrl_InsertPop3 + miCtrl_Offset, giParam_Buss_Insert3);
 	RegisterGlobalControl(giSection_First_Buss + miID, giCtrl_InsertPop4 + miCtrl_Offset, giParam_Buss_Insert4);
+	
+	
 }
 
 void CMix_Buss_AUX_Insert::EventValueChange(ge::IControl* pControl, tint32 iValueNew)

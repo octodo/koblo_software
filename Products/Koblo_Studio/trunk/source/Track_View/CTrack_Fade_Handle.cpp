@@ -24,8 +24,6 @@ void CTrack_Fade_Handle::SetInfo(CRegion_Pane* pRegion_GUI, tuint uiHandle_Type)
 
 void CTrack_Fade_Handle::Init()
 {
-
-
 	// Create the main pane
 	mpPane = ge::IPane::Create();
 	mpPane->SetSize(ge::SSize(6,6));

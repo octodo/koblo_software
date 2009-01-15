@@ -154,10 +154,15 @@ void IINetUtil::GetWebFile(const tchar* Parameters, const tchar* pszServer, cons
 				// Prevent hanging if no Internet avaliable 
 			//	else vDone = true;
                 
-                if (CFReadStreamGetStatus(vReadStreamRef) == kCFStreamStatusAtEnd)
+                CFStreamStatus status = CFReadStreamGetStatus(vReadStreamRef);
+				if (status == kCFStreamStatusAtEnd)
                 {                 
                     vDone = true;             
                 }
+				else if ((status == kCFStreamStatusError) || (status == kCFStreamStatusClosed)) {
+					vDone = true;
+					vSuccess = false;
+				}
             } 
     	
     	    CFReadStreamClose( vReadStreamRef );

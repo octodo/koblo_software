@@ -46,6 +46,8 @@ public:
 	//! callback used to communicate with the interface
 	void SetRegionCallback(IRegionCallback* pRegionCallback) {mpRegionCallback = pRegionCallback;}
 	
+	
+	
 	struct SRegionInfo
 	{	
 		//! region identifier
@@ -76,6 +78,12 @@ public:
 	
 	//! duplicate a region
 	void Duplicate_Region();
+	
+	//! make a copy of the selected region
+	void Copy_Region();
+	
+	//! paste region from the mpRegion_Clipboard[]
+	void Paste_Region(tuint32 uiTrack, tuint64 uiPosition);
 	
 	//! normalise a region
 	void NormaliseRegion();
@@ -151,6 +159,23 @@ protected:
 	CTrack_DSP*		mpTrack_DSP;
 	CRegion_DSP*	mpRegion_DSP;
 	tint64			miTrack;
+	
+	struct SRegion_Copy
+	{
+		tbool bEmpty;
+		std::string sClipName;
+		tuint64 uiPossition;
+		tuint64 uiDuration;
+		tuint64 uiSample_Offset;
+		tuint64	uiFade_In_Duration;
+		tuint64	uiFade_Out_Duration;
+		tfloat32 fVolume;
+		
+	};
+	
+	SRegion_Copy mpRegion_Clipboard[64];
+	
+	
 	
 	
 	

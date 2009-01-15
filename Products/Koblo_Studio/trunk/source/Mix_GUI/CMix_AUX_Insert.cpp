@@ -90,11 +90,8 @@ void CMix_AUX_Insert::Init()
 void CMix_AUX_Insert::ConnectControls()
 {
 	RegisterGlobalControl(miSection, giChannel_Input_Popup + miCtrl_Offset , giParam_ChIn);
-
 	RegisterGlobalControlWithX3Translation(miSection, giCtrl_AUX1Send + miCtrl_Offset, giParam_ChAUX1, 4);
-
 	RegisterGlobalControlWithX3Translation(miSection, giCtrl_AUX2Send + miCtrl_Offset, giParam_ChAUX2, 4);
-
 	RegisterGlobalControl(miSection, giCtrl_InsertPop1 + miCtrl_Offset, giParam_ChInsert1);
 	RegisterGlobalControl(miSection, giCtrl_InsertPop2 + miCtrl_Offset, giParam_ChInsert2);
 	RegisterGlobalControl(miSection, giCtrl_InsertPop3 + miCtrl_Offset, giParam_ChInsert3);
