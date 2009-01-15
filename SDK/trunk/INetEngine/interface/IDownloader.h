@@ -40,10 +40,10 @@ public:
 
 	//! Asks the server to give us data of the specified type
 	/*!
-		\param eType [in]: Sets the data type that the downloader wants to read
+		\param eMIME [in]: Sets the data type that the downloader wants to read
 		\return tbool: True upon success
 	*/
-	virtual tbool SetDesiredMIMEType(E_MIME_Type eType) = 0;
+	virtual tbool SetReplyMIMEType(E_MIME_Type eMIME) = 0;
 
 	//! Force downloader to use a particular verb for downloads (default it is chosen as GET if no parameters are added and POST otherwise)
 	/*!
@@ -66,7 +66,7 @@ public:
 		\param pszBuffer [out]: Pre-allocated buffer to recieve the next portion of downloaded data
 		\param iBufferSize [in]: Size of pre-allocated buffer
 		\param piPortionSize [out]: The number of bytes actually returned in this portion. May occationally be 0, caused by e.g. slow network
-		tint32* piTotalSize [out]: The total size of the resource/file we're downloading. May change, so always use latest return value for progress bar, etc.
+		\param puiTotalSize [out]: The total size of the resource/file we're downloading. Is initially 0 and may change, so always use latest return value for progress bar, etc.
 		\return tbool: True upon success, false upon error.
 	*/
 	virtual tbool DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize) = 0;

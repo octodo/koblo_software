@@ -1,5 +1,5 @@
-// CDownloader MS-Windows only code
-// Is included into CDownloader.h
+// CXloader MS-Windows only code
+// Is included into CXloader.h
 
 protected:
 	volatile HINTERNET mhInitialize;

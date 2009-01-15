@@ -28,9 +28,7 @@ namespace ine {
 
 #include "CINetUtil.h"
 
-#include "CUpAndDownloader_Common.h"
-#include "CDownloader.h"
-#include "CUploader.h"
+#include "CXloader.h"
 
 
 

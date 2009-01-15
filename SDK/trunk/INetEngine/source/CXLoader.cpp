@@ -1,27 +1,61 @@
 
 #include "ineInternalOS.h"
 
-CUpAndDownloader_Common::CUpAndDownloader_Common()
+CXloader::CXloader(tbool bIsUploader)
 {
+	mbIsUploader = bIsUploader;
+	mpfileToUpload = NULL;
 	mpszParamsAssembled = NULL;
 	miParamsAssembledLen = 0;
 	mbIsInitialized = mbIsTransfering = mbIsFailed = mbIsDone = false;
 	meMIMEType = MIME_TYPE_NONE;
 	meSpecificVerb = VERB_DEFAULT;
+	
+	Constructor_OSSpecific();
 } // constructor
 
 
-CUpAndDownloader_Common::~CUpAndDownloader_Common()
+CXloader::~CXloader()
 {
+	Abort();
 	WipeParams();
+	CloseConnection();
+	//
+	Destructor_OSSpecific();
 } // destructor
 
 
-tbool CUpAndDownloader_Common::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort /*= 80*/, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
+IDownloader* IDownloader::Create()
 {
+	return dynamic_cast<IDownloader*>(new CXloader(false));
+} // Create
+
+
+IUploader* IUploader::Create()
+{
+	return dynamic_cast<IUploader*>(new CXloader(true));
+} // Create
+
+
+void CXloader::Destroy()
+{
+	delete dynamic_cast<CXloader*>(this);
+} // Destroy
+
+
+tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort /*= 80*/, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
+{
+	// Call IUploader code, just without file pointer
+	return Init(pszHost, pszPage, NULL, iPort, pszUser, pszPassword, iTimeOutSecs);
+} // Init (for IDownloader)
+
+
+tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToUpload, tint32 iPort /*= 80*/, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
+{
+	Abort();
 	WipeParams();
 	mbIsInitialized = false;
-
+	
 	// Verify sanity of host
 	{
 		if ((pszHost == NULL) || (*pszHost == '\0')) {
@@ -38,13 +72,13 @@ tbool CUpAndDownloader_Common::Init(const tchar* pszHost, const tchar* pszPage, 
 				((c < '0') || (c > '9'))
 				&&
 				(c != '.')
-			) {
+				) {
 				SetError("Not valid url-host");
 				return false;
 			}
 		}
 	}
-
+	
 	// Verify sanity of page
 	{
 		if (pszPage != NULL) {
@@ -60,65 +94,65 @@ tbool CUpAndDownloader_Common::Init(const tchar* pszHost, const tchar* pszPage, 
 					(c != '.')
 					&&
 					(c != '/')
-				) {
+					) {
 					SetError("Not valid url-document");
 					return false;
 				}
 			}
 		}
 	}
-
+	
 	// Verify sanity of port
 	if (iPort <= 0) {
 		SetError("Not a valid port");
 		return false;
 	}
-
+	
 	// Verify sanity of time-out
 	if (iTimeOutSecs < 0) {
 		SetError("Negative time-out");
 		return false;
 	}
-
+	
 	msHost = pszHost;
 	msPage = (pszPage == NULL) ? "" : pszPage;
 	miPort = iPort;
 	msUser = (pszUser == NULL) ? "" : pszUser;
 	msPassword = (pszPassword == NULL) ? "" : pszPassword;
 	muiTimeOutSecs = (tuint32)iTimeOutSecs;
-
+	
 	mbIsInitialized = true;
 	meMIMEType = MIME_TYPE_NONE;
 	meSpecificVerb = VERB_DEFAULT;
-
+	
 	return true;
-} // Init
+} // Init (for IUploader)
 
 
-tbool CUpAndDownloader_Common::SetMIMEType(E_MIME_Type eMIME)
+tbool CXloader::SetReplyMIMEType(E_MIME_Type eMIME)
 {
 	if (mbIsFailed) {
 		//SetError("Previous error");
 		return false;
 	}
-
+	
 	if (!mbIsInitialized) {
 		SetError("Not initialized");
 		return false;
 	}
-
+	
 	if (mbIsTransfering) {
 		SetError("We can't set media type as we've already begun transfer");
 		return false;
 	}
-
+	
 	// Success
 	meMIMEType = eMIME;
 	return true;
-} // SetMIMEType
+} // SetReplyMIMEType
 
 
-const tchar* CUpAndDownloader_Common::GetMIMEString()
+const tchar* CXloader::GetMIMEString()
 {
 	switch (meMIMEType) {
 		case MIME_TYPE_TEXT:	return "text/*";
@@ -132,55 +166,57 @@ const tchar* CUpAndDownloader_Common::GetMIMEString()
 } // GetMIMEString
 
 
-tbool CUpAndDownloader_Common::SetSpecificVerb(EVerbType eVerb, tbool bIsUploader)
+tbool CXloader::SetSpecificVerb(EVerbType eVerb)
 {
 	if (mbIsFailed) {
 		//SetError("Previous error");
 		return false;
 	}
-
+	
 	if (!mbIsInitialized) {
 		SetError("Not initialized");
 		return false;
 	}
-
+	
 	if (mbIsTransfering) {
 		SetError("We can't change http-verb as we've already begun transfer");
 		return false;
 	}
-
+	
+	tbool bIsUploader = (mpfileToUpload != NULL);
+	
 	switch (eVerb) {
 		case VERB_DEFAULT:
 			meSpecificVerb = eVerb;
 			return true;
-
+			
 		case VERB_GET:
-			{
-				// Only IDownloader may use GET
-				if (!bIsUploader)
-					return true;
-			}
+		{
+			// Only IDownloader may use GET
+			if (!bIsUploader)
+				return true;
+		}
 			break;
-
+			
 		case VERB_POST:
 			meSpecificVerb = eVerb;
 			return true;
-
+			
 		case VERB_PUT:
-			{
-				// Only IUploader may use PUT
-				if (bIsUploader)
-					return true;
-			}
+		{
+			// Only IUploader may use PUT
+			if (bIsUploader)
+				return true;
+		}
 			break;
 	}
-
+	
 	// Fall-through to error
 	return false;
 } // SetSpecificVerb
 
 
-EVerbType CUpAndDownloader_Common::GetVerb(EVerbType eVerbDefault)
+EVerbType CXloader::GetVerb(EVerbType eVerbDefault)
 {
 	switch (meSpecificVerb) {
 		case VERB_GET:
@@ -193,38 +229,38 @@ EVerbType CUpAndDownloader_Common::GetVerb(EVerbType eVerbDefault)
 } // GetVerb
 
 
-const tchar* CUpAndDownloader_Common::GetVerbString(EVerbType eVerbDefault)
+const tchar* CXloader::GetVerbString(EVerbType eVerbDefault)
 {
 	switch (GetVerb(eVerbDefault)) {
 		case VERB_GET:	return "GET";
 		case VERB_POST:	return "POST";
 		case VERB_PUT:	return "PUT";
 	}
-
+	
 	// What?!
 	return "";
 } // GetVerbString
 
 
-tbool CUpAndDownloader_Common::AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen)
+tbool CXloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen)
 {
 	CAutoLock Lock(mMutex_ForParams);
-
+	
 	if (mbIsFailed) {
 		//SetError("Previous error");
 		return false;
 	}
-
+	
 	if (!mbIsInitialized) {
 		SetError("Not initialized");
 		return false;
 	}
-
+	
 	if (mbIsTransfering) {
 		SetError("We can't add more parameters as we've already begun transfer");
 		return false;
 	}
-
+	
 	// Verify sanity of param name
 	{
 		if ((pszParamName == NULL) || (*pszParamName == '\0')) {
@@ -241,13 +277,13 @@ tbool CUpAndDownloader_Common::AddParam(const tchar* pszParamName, const tchar* 
 				((c < '0') || (c > '9'))
 				&&
 				((c != '_') && (c != '[') && (c != ']'))
-			) {
+				) {
 				SetError("Not valid paramname");
 				return false;
 			}
 		}
 	}
-
+	
 	// Convert param data to URL-encoded safe string
 	tchar* pszUrlEncoded = NULL;
 	tint32 iUrlEncodedLen = 0;
@@ -270,7 +306,7 @@ tbool CUpAndDownloader_Common::AddParam(const tchar* pszParamName, const tchar* 
 			}
 		}
 	}
-
+	
 	// Add param name and encoded value to lists
 	try {
 		mlist_sParamNames.push_back(pszParamName);
@@ -282,26 +318,26 @@ tbool CUpAndDownloader_Common::AddParam(const tchar* pszParamName, const tchar* 
 		delete[] pszUrlEncoded;
 		return false;
 	}
-
+	
 	// Success
 	return true;
 } // AddParam
 
 
-tbool CUpAndDownloader_Common::AssembleParams()
+tbool CXloader::AssembleParams()
 {
 	CAutoLock Lock(mMutex_ForParams);
-
+	
 	if (!mbIsInitialized) {
 		SetError("Not initialized");
 		return false;
 	}
-
+	
 	if (mpszParamsAssembled) {
 		SetError("Already assembled");
 		return false;
 	}
-
+	
 	// Verify sanity of lists
 	tint32 iNames = mlist_sParamNames.size();
 	tint32 iLens = mlist_iParamDataLen.size();
@@ -310,18 +346,18 @@ tbool CUpAndDownloader_Common::AssembleParams()
 		SetError("List lengths aren't all the same");
 		return false;
 	}
-
+	
 	// Calculate space needed
 	{
 		miParamsAssembledLen = 0;
-
+		
 		// First accumulate lengths
 		std::list<std::string>::iterator itName = mlist_sParamNames.begin();
 		std::list<tint32>::iterator itDataLen = mlist_iParamDataLen.begin();
 		for ( ; itName != mlist_sParamNames.end(); itName++, itDataLen++) {
 			std::string& rsName = *itName;
 			tint32 iLen = *itDataLen;
-
+			
 			// First a parameter delimiter (for GET verb only)
 			if (meSpecificVerb == VERB_GET) {
 				// For verb GET we add the parameters as part of URI.
@@ -330,16 +366,16 @@ tbool CUpAndDownloader_Common::AssembleParams()
 				// - Rest of the parameters will be delimited by a '&'
 				miParamsAssembledLen++;
 			}
-
+			
 			// Then param name
 			miParamsAssembledLen += rsName.length();
-
+			
 			// Then maybe param data
 			if (iLen > 0) {
 				// An equation-sign and then data
 				miParamsAssembledLen += 1 + iLen;
 			}
-
+			
 			// Lastly a new-line sequence (always DOS style due to w3c spec)
 			if (meSpecificVerb == VERB_GET) {
 				// There's no new-line for verb GET, as the parameters are part of the URI
@@ -351,14 +387,14 @@ tbool CUpAndDownloader_Common::AssembleParams()
 			}
 		}
 	}
-
+	
 	// Attempt to allocate space for params + traling zero
 	mpszParamsAssembled = new tchar[miParamsAssembledLen + 1];
 	if (mpszParamsAssembled == NULL) {
 		SetError("Out of memory");
 		return false;
 	}
-
+	
 	// And action! Assemble the parameter string
 	{
 		tchar* pszDst = mpszParamsAssembled;
@@ -372,29 +408,29 @@ tbool CUpAndDownloader_Common::AssembleParams()
 			tint32 iNameLen = rsName.length();
 			tchar* pcData = *itParamData;
 			tint32 iDataLen = *itDataLen;
-
+			
 			// For verb GET we must prepend parameter names with a delimiter
 			if (meSpecificVerb == VERB_GET) {
 				*pszDst++ = cNameDelimiter;
 			}
-
+			
 			// Copy param name
 			memcpy(pszDst, rsName.c_str(), iNameLen);
 			pszDst += iNameLen;
-
+			
 			// Maybe copy param data
 			if (iDataLen > 0) {
 				*pszDst++ = '=';
 				memcpy(pszDst, pcData, iDataLen);
 				pszDst += iDataLen;
 			}
-
+			
 			// Newline sequence for verb POST only
 			if (meSpecificVerb != VERB_GET) {
 				memcpy(pszDst, "\r\n", 2);
 				pszDst += 2;
 			}
-
+			
 			// Advance to next
 			itName++;
 			itDataLen++;
@@ -409,12 +445,12 @@ tbool CUpAndDownloader_Common::AssembleParams()
 } // AssembleParams
 
 
-void CUpAndDownloader_Common::WipeParams()
+void CXloader::WipeParams()
 {
 	CAutoLock Lock(mMutex_ForParams);
-
+	
 	mlist_sParamNames.clear();
-
+	
 	std::list<tchar*>::iterator it = mlist_pszParamDataUrlEncoded.begin();
 	while (it != mlist_pszParamDataUrlEncoded.end()) {
 		tchar* psz = *it;
@@ -422,9 +458,9 @@ void CUpAndDownloader_Common::WipeParams()
 		mlist_pszParamDataUrlEncoded.erase(it);
 		it = mlist_pszParamDataUrlEncoded.begin();
 	}
-
+	
 	mlist_iParamDataLen.clear();
-
+	
 	if (mpszParamsAssembled) {
 		delete[] mpszParamsAssembled;
 		mpszParamsAssembled = NULL;
@@ -432,115 +468,194 @@ void CUpAndDownloader_Common::WipeParams()
 } // WipeParams
 
 
-void CUpAndDownloader_Common::SetIsUninitialized()
+tbool CXloader::OpenConnection()
+{
+	return OpenConnection_OSSpecific();
+} // OpenConnection
+
+
+void CXloader::CloseConnection()
+{
+	CloseConnection_OSSpecific();
+	CloseFile_IgnoreError();
+} // CloseConnection
+
+
+tbool CXloader::DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
+{
+	return UploadPortion(NULL, pszBuffer, iBufferSize, piPortionSize, puiTotalSize);
+} // DownloadPortion
+
+
+tbool CXloader::UploadPortion(tuint64* puiUploadProgress, tchar* pszReplyBuffer, tint32 iReplyBufferSize, tint32* piReplyPortionSize, tuint64* puiReplyTotalSize)
+{
+	*piReplyPortionSize = 0;
+	
+	if (IsFailed()) {
+		//SetError("Previous error");
+		return false;
+	}
+	
+	if (!IsInitialized()) {
+		SetError("Not initialized");
+		return false;
+	}
+	
+	tbool bFirstTime = (!IsTransfering());
+	SetIsTransfering();
+	if (bFirstTime) {
+		CAutoLock Lock(mMutex_Connection);
+		
+		CloseConnection();
+		if (!AssembleParams()) return false;
+		if (!OpenConnection()) {
+			CloseConnection();
+			return false;
+		}
+		// We're alive
+		RefreshAlive();
+	}
+	
+	return DoPortion_OSSpecific(puiUploadProgress, pszReplyBuffer, iReplyBufferSize, piReplyPortionSize, puiReplyTotalSize);
+} // UploadPortion
+
+
+tbool CXloader::Abort()
+{
+	if (IsTransfering()) {
+		CAutoLock Lock(mMutex_Connection);
+		
+		CloseConnection();
+		SetIsDone();
+	}
+	
+	WipeParams();
+	
+	CloseFile_IgnoreError();	
+	
+	return true;
+} // Abort
+
+
+void CXloader::CloseFile_IgnoreError()
+{
+	if (mpfileToUpload) {
+		//mpfileToUpload->Destroy(); - will be Destroy'ed from calling app
+		mpfileToUpload = NULL;
+	}
+} // CloseFile_IgnoreError
+
+
+void CXloader::SetIsUninitialized()
 {
 	mbIsInitialized = mbIsTransfering = mbIsDone = mbIsFailed = false;
 } // SetIsUninitialized
 
 
-void CUpAndDownloader_Common::SetIsInitialized()
+void CXloader::SetIsInitialized()
 {
 	mbIsInitialized = true;
 } // SetIsInitialized
 
 
-void CUpAndDownloader_Common::SetIsTransfering()
+void CXloader::SetIsTransfering()
 {
 	mbIsFailed = mbIsDone = false;
 	mbIsTransfering = true;
 } // SetIsTransfering
 
 
-void CUpAndDownloader_Common::SetIsDone()
+void CXloader::SetIsDone()
 {
 	mbIsDone = true;
 	mbIsTransfering = false;
 } // SetIsDone
 
 
-void CUpAndDownloader_Common::SetIsFailed()
+void CXloader::SetIsFailed()
 {
 	mbIsFailed = true;
 	mbIsTransfering = false;
 } // SetIsFailed
 
 
-tbool CUpAndDownloader_Common::IsTransfering()
+tbool CXloader::IsTransfering()
 {
 	return mbIsTransfering;
 } // IsTransfering
 
 
-tbool CUpAndDownloader_Common::IsInitialized()
+tbool CXloader::IsInitialized()
 {
 	return mbIsInitialized;
 } // IsInitialized
 
 
-tbool CUpAndDownloader_Common::IsDone()
+tbool CXloader::IsDone()
 {
 	return mbIsDone;
 } // IsDone
 
 
-tbool CUpAndDownloader_Common::IsFailed()
+tbool CXloader::IsFailed()
 {
 	return mbIsFailed;
 } // IsFailed
 
 
-void CUpAndDownloader_Common::RefreshAlive()
+void CXloader::RefreshAlive()
 {
 	muiAliveMs = ITime::GetTimeMS();
 } // RefreshAlive
 
 
-tbool CUpAndDownloader_Common::IsAlive()
+tbool CXloader::IsAlive()
 {
 	// (lasse) Are we really needing this? Anyway not used now
-
+	
 	if ((!mbIsInitialized) || (!mbIsTransfering)) {
 		SetError("Not initialized or not downloading");
 		return false;
 	}
-
+	
 	if (mbIsFailed) {
 		//SetError("Previously failed");
 		return false;
 	}
-
+	
 	tuint32 uiElapsedMs = ITime::GetTimeMS() - muiAliveMs;
-
+	
 	if (muiTimeOutSecs == 0) {
 		// Special case for zero time-out: Actually use 500 ms
 		return (uiElapsedMs < 500);
 	}
-
+	
 	tuint32 uiSecsElapsed = uiElapsedMs / 1000;
 	return (uiSecsElapsed <= muiTimeOutSecs);
 } // IsAlive
 
 
-void CUpAndDownloader_Common::SetError(const tchar* pszError)
+void CXloader::SetError(const tchar* pszError)
 {
 	CAutoLock Lock(mMutex_ForErrors);
-
+	
 	msLastError = pszError;
 	mbIsFailed = true;
 }
 
-tbool CUpAndDownloader_Common::GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize)
+
+tbool CXloader::GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize)
 {
 	CAutoLock Lock(mMutex_ForErrors);
-
+	
 	if ((pszErrBuff == NULL) || (iErrBuffSize <= 0)) return false;
-
+	
 	if (!mbIsFailed) {
 		// No error
 		*pszErrBuff = '\0';
 		return true;
 	}
-
+	
 	tchar* pszMsg = (tchar*)(msLastError.c_str());
 	tint32 iLenMsg = msLastError.length();
 	if (iLenMsg == 0) {
@@ -555,6 +670,6 @@ tbool CUpAndDownloader_Common::GetLatestError(tchar* pszErrBuff, tint32 iErrBuff
 	}
 	memcpy(pszErrBuff, pszMsg, iLenMsg);
 	pszErrBuff[iLenMsg] = '\0';
-
+	
 	return bRoomEnough;
 }

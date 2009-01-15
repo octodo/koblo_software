@@ -33,17 +33,21 @@ public:
 	/*!
 		\param pszHost [in]: Name of Internet host. DO NOT PREPEND WITH "http://" !
 		\param pszPage [in]: Folder+page to connect to on Internet host
+		\param pfileToUpload [in]: Previously read-access opened file you wish to upload. <b>Must</b> remain open during all calls to UploadPortion! Calling app must Destroy() object after use
 		\param iPort [in]: Port number (default 80)
+		\param pszUser [in]: Authentication user (default none)
+		\param pszPassword [in]: Autehtication password (default none)
+		\param iTimeOutSecs [in]: Time-out for transfer (default 10 seconds)
 		\return tbool: True upon success, false upon error.
 	*/
-	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10) = 0;
+	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToUpload, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10) = 0;
 
 	//! Tells the server which type of answer we want for our uploading
 	/*!
 		\param eType [in]: Sets the data type that the uploader wants to recieve
 		\return tbool: True upon success
 	*/
-	virtual tbool SetDesiredMIMEType(E_MIME_Type eType) = 0;
+	virtual tbool SetReplyMIMEType(E_MIME_Type eMIME) = 0;
 
 	//! Force uploader to use a particular verb for uploads (default is PUT)<br/>Regardless of the chosen verb parameters are always sent as part of the message body rather than added to the URI
 	/*!
@@ -63,18 +67,14 @@ public:
 
 	//! Upload a portion of data
 	/*!
-		\param pszData [in]: Buffer containing data to be uploaded
-		\param iDataLen [in]: Number of data bytes in upload buffer
-		\param piActuallySent [out]: The number of bytes actually uploaded in this portion. May occationally be 0, caused by e.g. slow network
+		\param puiUploadProgress [out]: The accumulated number of bytes buffered for upload from the local file (none of which may actually have been sent yet)
+		\param pszReplyBuffer [out]: Pre-allocated buffer to recieve the next portion of reply data
+		\param iReplyBufferSize [in]: Size of pre-allocated buffer
+		\param piReplyPortionSize [out]: The number of reply bytes actually returned in this portion. Will be 0 until upload is done, and may occasionally be 0 again during recieval of reply, caused by e.g. slow network
+		\param puiReplyTotalSize [out]: The total size of the reply we're getting. Will be zero at first (until reply starts) and may change, so always use latest return value for progress bar, etc.
 		\return tbool: True upon success, false upon error.
 	*/
-	virtual tbool UploadPortion(const tchar* pszData, tint32 iDataLen, tint32* piActuallySent) = 0;
-
-	//! Tell the server that we're done uploading. There can be no more calls to UploadPortion(..) after this.
-	/*!
-		\return tbool: True upon success, False upon error
-	*/
-	virtual tbool UploadFinish() = 0;
+	virtual tbool UploadPortion(tuint64* puiUploadProgress, tchar* pszReplyBuffer, tint32 iReplyBufferSize, tint32* piReplyPortionSize, tuint64* puiReplyTotalSize) = 0;
 
 	//! Breaks an ongoing upload operation and releases internal buffers. It's OK to call from different thread.
 	virtual tbool Abort() = 0;

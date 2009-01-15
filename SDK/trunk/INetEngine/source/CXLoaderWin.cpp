@@ -1,4 +1,4 @@
-// CDownloader MS-Windows only code
+// CXloader MS-Windows only code
 
 #include "ineInternalOS.h"
 
@@ -7,19 +7,19 @@ static DWORD dwContextID_Seed = 0;
 
 
 
-void CDownloader::Constructor_OSSpecific()
+void CXloader::Constructor_OSSpecific()
 {
 	// Make sure we only close what's been opened
 	mhInitialize = mhConnection = mhFile = NULL;
 } // Constructor_OSSpecific
 
-void CDownloader::Destructor_OSSpecific()
+void CXloader::Destructor_OSSpecific()
 {
 	// Nothing here
 } // Destructor_OSSpecific
 
 
-tbool CDownloader::OpenConnection_OSSpecific()
+tbool CXloader::OpenConnection_OSSpecific()
 {
 	// First verify that computer is connected to the Internet
 	// (lasse) Nope - it's a waste of time
@@ -114,7 +114,7 @@ tbool CDownloader::OpenConnection_OSSpecific()
 } // OpenConnection_OSSpecific
 
 
-void CDownloader::CloseConnection_OSSpecific()
+void CXloader::CloseConnection_OSSpecific()
 {
 	if (mhFile) {
 		::InternetCloseHandle(mhFile);
@@ -131,7 +131,7 @@ void CDownloader::CloseConnection_OSSpecific()
 } // CloseConnection_OSSpecific
 
 
-tbool CDownloader::DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
+tbool CXloader::DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
 {
 	/* hm... ::InternetReadFileEx(..) is too complicated - will attempt InternetReadFile(..)
 	INTERNET_BUFFERS buffers;
