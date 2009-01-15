@@ -252,6 +252,3 @@ public:
 	static tbool GetDriveNames(tchar* pszEnumNames, tint32 iBuffSize = -1, char cDelimiter = '@', tbool bAddExtraInfo = false);
 };
 
-
-
-
