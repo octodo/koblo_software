@@ -1,4 +1,4 @@
-// Copyright 2004, 2005,2006,2007,2008 Koblo http://koblo.com
+// Copyright 2004, 2005,2006,2007,2008,2009 Koblo http://koblo.com
 //
 // This file is part of the Koblo SDK.
 //
@@ -85,6 +85,8 @@ public:
 	virtual tbool WindowClosed(void* pWnd);
 
 //	kspi::IPlugIn* GetEffect(tint32 iChannel, tint32 iInsert);
+	
+	
 
 protected:
 	//! CBaseGUI override
@@ -94,11 +96,12 @@ protected:
 	virtual void ConnectControls();
 
 	
-	// Lasse, added 2007-10-02
+	
 	ITimer* mpPlay_Head_Timer;
 	ITimer* mpTimerMeters;
 	virtual void OnTimer(tint32 iTimerID);
-	// .. Lasse
+	
+	
 	
 	
 };

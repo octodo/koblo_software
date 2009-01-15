@@ -78,7 +78,7 @@ void CTrack_Info_Big::Init()
 	FindPane(mpMeterOutR)->CreateBitmap(ge::IControl::giNoID, IDB_Meter_Off_Right, ge::SPos(0, 0));
 	
 	// Panner 
-	ge::IPanner* pPanner =  CreatePanner(
+	CreatePanner(
 		giTrack_Info_Big_Pan  + miCtrl_Offset, ge::IControl::giNoID,
 		NULL, IDB_Button_Pan_Handle,
 		ge::SPos(3+64, 4), 

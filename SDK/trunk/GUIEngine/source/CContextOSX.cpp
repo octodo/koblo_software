@@ -338,13 +338,24 @@ void CContextOSX::DoCreateMenuItem(const MenuRef& Ref, const SMenuItemList* pLis
 			DoCreateMenuItem(RefSubMenu, pSubList, riMenuID, sNameCur);
 		}
 		else {
+		//	static int iID = 1000;
+			
 			::InsertMenuItem(Ref, (const unsigned char*)psPascal, 1000);
-
+			
+			char cmd = pList->pItems[uiMenuIndex].cmd;
+			
+			if(cmd)
+				::SetItemCmd( Ref, uiMenuIndex+1, cmd );
+		
+			
+	//		SetItemCmd( Ref, riMenuID, 'N'+riMenuID );
+			
 			SMenuInfo Info;
 			Info.Ref = Ref;
 			Info.iIndex = (tint32)uiMenuIndex + 1;
 			Info.sName = sNameCur;
 			mMenuInfos.push_back(Info);
+			
 		}
 	}
 }
@@ -352,6 +363,7 @@ void CContextOSX::DoCreateMenuItem(const MenuRef& Ref, const SMenuItemList* pLis
 void CContextOSX::CreateMenu(const SMenuItemList* pList)
 {
 	tint32 iMenuID = 10;
+
 
 	tuint32 uiMenuIndex;
 	for (uiMenuIndex = 0; uiMenuIndex < pList->uiItemCount; uiMenuIndex++) {

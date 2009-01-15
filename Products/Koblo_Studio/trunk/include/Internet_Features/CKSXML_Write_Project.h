@@ -1,4 +1,4 @@
-// Copyright 2004, 2005,2006,2007,2008 Koblo http://koblo.com
+// Copyright 2004, 2005,2006,2007,2008,2009 Koblo http://koblo.com
 //
 // This file is part of the Koblo SDK.
 //
@@ -37,8 +37,8 @@ public:
 	
 	CKSXML_Write_Project();
 	~CKSXML_Write_Project();
-	
-	
+	//! get the internal data as a xml text string
+	std::string Get_Internal_Data_As_XML();
 	//! write the XML file to Koblo.com
 	void Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID);
 	
@@ -84,8 +84,13 @@ private:
 	void Write_Track(TiXmlElement* pParent, tuint uiTrack);
 	void Write_Track_In(TiXmlElement* pParent, tuint uiTrack);
 	void Write_Track_Out(TiXmlElement* pParent, tuint uiTrack);
-	void Write_Inserts(TiXmlElement* pParent, tuint uiTrack);
-	void Write_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert);
+	void Write_Track_Inserts(TiXmlElement* pParent, tuint uiTrack);
+	void Write_Track_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert);
+	void Write_Track_Regions(TiXmlElement* pParent, tuint uiTrack);
+
+	
+	
+	
 	//! AUX
 	void Write_AUXs(TiXmlElement* pParent, tuint uiTrack);
 	void Write_AUX(TiXmlElement* pParent, tuint uiTrack, tuint iAux); 

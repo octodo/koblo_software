@@ -41,6 +41,7 @@ mePlaybackState(geStateStopped),
 mpPlugInManager(NULL),
 mbAreGUIsReady(false),
 mbRecord(false),
+mbTimer(false),
 
 CKSXML_Create_Project(),
 CKSXML_Read_Project(),
@@ -137,6 +138,8 @@ CKSXML_Create_Sample()
 	mbAudioInput_IntermediateBuffer_EverFull = false;
 	miAudioInput_IntermediateBuffer_FirstLinkIx = 0;
 	miAudioInput_IntermediateBuffer_FirstLinkSamples = 0;
+	
+	mbZoomFlipFlop = false;
 	
 
 } // constructor
@@ -240,6 +243,7 @@ void CKSApplication::Initialize()
 	mpProgressTasks = new CProgressTaskList();
 	mpTimer_NonModalDialog = ITimer::Create();
 	mpTimer_NonModalDialog->Init(giTimerID_NonModalDialog, this, 100);
+	Start_Timer();
 } // Initialize
 
 
@@ -383,12 +387,12 @@ void CKSApplication::AddParameters()
 		AddGlobalParm(i, giParam_Buss_AUX4OnOff, 0, 1, 0);
 		AddGlobalParm(i, giParam_Buss_AUX5OnOff, 0, 1, 0);
 		AddGlobalParm(i, giParam_Buss_AUX6OnOff, 0, 1, 0);
-		AddGlobalParm(i, giParam_Buss_AUX1, 0, 31622, 10000);
-		AddGlobalParm(i, giParam_Buss_AUX2, 0, 31622, 10000);
-		AddGlobalParm(i, giParam_Buss_AUX3, 0, 31622, 10000);
-		AddGlobalParm(i, giParam_Buss_AUX4, 0, 31622, 10000);
-		AddGlobalParm(i, giParam_Buss_AUX5, 0, 31622, 10000);
-		AddGlobalParm(i, giParam_Buss_AUX6, 0, 31622, 10000);
+		AddGlobalParm(i, giParam_Buss_AUX1, 0, 31622, 0);
+		AddGlobalParm(i, giParam_Buss_AUX2, 0, 31622, 0);
+		AddGlobalParm(i, giParam_Buss_AUX3, 0, 31622, 0);
+		AddGlobalParm(i, giParam_Buss_AUX4, 0, 31622, 0);
+		AddGlobalParm(i, giParam_Buss_AUX5, 0, 31622, 0);
+		AddGlobalParm(i, giParam_Buss_AUX6, 0, 31622, 0);
 		AddGlobalParm(i, giParam_Buss_Insert1, 0, 10000, 0);
 		AddGlobalParm(i, giParam_Buss_Insert2, 0, 10000, 0);
 		AddGlobalParm(i, giParam_Buss_Insert3, 0, 10000, 0);
@@ -1105,7 +1109,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			}
 			break;
 			
-		case ID_FILE_EXPORT:
+		case ID_FILE_EXPORTAUDIO:
 			{
 				tbool bTest = (GetGlobalParm(giParamID_Show_Export_Window, giSectionGUI) != 0);
 				if(!bTest){
@@ -1127,10 +1131,24 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			}
 			break;
 
+		case ID_FILE_DOWNLOADPROJECT:
+			On_Menu_Download_Project();
+			break;
+		
+		case ID_FILE_UPLOADPROJECT:
+			On_Menu_Upload_Project();
+			break;
+		
+		case ID_FILE_COMMITCHANGES:
+			On_Menu_Commit_Project();
+			break;
+		
+		case ID_FILE_UPDATEPROJECT:
+			On_Menu_Update_Project();
+			break;
+
 		case ID_FILE_IMPORTAUDIO:
-			{
-				MenuFileImportAudio();
-			}
+			MenuFileImportAudio();
 			break;
 
 /*
@@ -1155,7 +1173,15 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			break;
 
 		case ID_EDIT_DUPLICATE:
-			gpDSPEngine->DuplicateRegion();
+			gpDSPEngine->Duplicate_Region();
+			break;
+
+		case ID_EDIT_INVERSEREGION:
+			gpDSPEngine->InverseRegion();
+			break;
+
+		case ID_EDIT_NORMALIZEREGION:
+			gpDSPEngine->NormaliseRegion();
 			break;
 
 		case ID_EDIT_ADDTRACK:
@@ -1228,13 +1254,13 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			}
 			break;
 
-		case ID_SETUP_AUDIOSETUP:
+		case ID_SETTINGS_AUDIOSETUP:
 			{
 				MenuSetupAudio();
 			}
 			break;
 
-		case ID_SETUP_COLLABORATION:
+		case ID_SETTINGS_PROJECTLICENSE:
 			{
 				Set_Project_License();
 			}
@@ -1289,8 +1315,9 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	else if (s.compare("Setup@Project License") == 0) {
 		Set_Project_License();
 	}
-	
-	
+	//------------------------------------------
+	// file menu
+	//------------------------------------------
 	else if(s.compare("File@New Project") == 0) {
 		// Create
 		if (!MenuFileCreateNewProject()) {
@@ -1298,7 +1325,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 		}
 		
 	}
-	else if (s.compare("File@Load Project") == 0) {
+	else if (s.compare("File@Open Project") == 0) {
 		
 		// Load
 		if (!MenuFileLoadProject()) {
@@ -1307,6 +1334,9 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	}
 	else if (s.compare("File@Save Project") == 0) {
 		// Save
+		Save_Project_As_XML_File_To_Disk();
+		
+		
 		try {
 			if (!MenuFileSaveProject()) {
 				LoadSaveErrDlg("Error saving project");
@@ -1329,32 +1359,14 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			LoadSaveErrDlg(pEx->GetFullDescription());
 		}
 	}
-	
-	else if (s.compare("File@Export for Web") == 0) {
-	
-		tbool bTest = GetGlobalParm(giParamID_Show_Export_For_Web_Window, giSectionGUI) ;
-		if(!bTest){
-			SetGlobalParm(giParamID_Show_Export_For_Web_Window,true, giSectionGUI);
-		}
-		else{
-			GetModule()->GetHost()->ActivateWindow(giExport_For_Web_Window);
-		}
-			
-			
+	else if (s.compare("File@Close Project") == 0) {
 		
-		/*
-		// Export
-		try {
-			if (!MenuFileSaveProjectAs("", true)) {
-				LoadSaveErrDlg("Error exporting project");
-			}
-		}
-		catch (IException* pEx) {
-			// Display reason
-			LoadSaveErrDlg(pEx->GetFullDescription());
-		}
-		*/
 	}
+	else if (s.compare("File@Revert to Saved") == 0) {
+		
+	}
+	
+	
 	else if (s.compare("File@Export Audio") == 0) {
 		
 		tbool bTest = GetGlobalParm(giParamID_Show_Export_Window, giSectionGUI) ;
@@ -1390,26 +1402,46 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 		
 		On_Menu_Update_Project();
 	}
-	
-	
-
-	
 	//-------------------------------------------
 	// Edit Menu
+	//-------------------------------------------
+	else if (s.compare("Edit@Undo") == 0) {
+		
+		
+		//	CBasePane::SMsg Msg(Msg_Do_Delete);
+		//	Send_Msg_To_All_Panes(&Msg);
+		
+	}
+	
+	else if (s.compare("Edit@Copy Region") == 0) {
+		
+		gpDSPEngine->Copy_Region();
+		
+	}
+	else if (s.compare("Edit@Cut Region") == 0) {
+		
+		gpDSPEngine->Copy_Region();
+		CBasePane::SMsg Msg(Msg_Do_Delete);
+		Send_Msg_To_All_Panes(&Msg);
+		
+	}
+	else if (s.compare("Edit@Paste Region") == 0) {
+		
+		
+		gpDSPEngine->Paste_Region(0,0);
+		
+	}
+	else if (s.compare("Edit@Duplicate Region") == 0) {
+		
+		gpDSPEngine->Duplicate_Region();
+		
+	}
 	else if (s.compare("Edit@Delete") == 0) {
 		
-		if (GetProjDir().length() == 0) {
-			ShowMessageBox("Nothing to delete", "Sorry");
-		}
-		else {
-			AddTrack();
-		}
+		CBasePane::SMsg Msg(Msg_Do_Delete);
+		Send_Msg_To_All_Panes(&Msg);
 	}
-	else if (s.compare("Edit@Duplicate") == 0) {
-		
-		gpDSPEngine->DuplicateRegion();
-
-	}
+	
 	
 	else if (s.compare("Edit@Add Track") == 0) {
 		
@@ -1420,17 +1452,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			AddTrack();
 		}
 	}
-
-	else if (s.compare("Edit@Inverse Region") == 0) {
-		
-		gpDSPEngine->InverseRegion();
-		
-	}
-
-	else if (s.compare("Edit@Normalise Region") == 0) {
-		gpDSPEngine->NormaliseRegion();
-	}
-
+	
 	else if (s.compare("Edit@Delete Track") == 0) {
 		
 		if (Get_Number_Of_Tracks() == 0) {
@@ -1443,8 +1465,9 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 				DeleteTrack();
 			}
 		}
-
+		
 	}
+	
 	else if (s.compare("Edit@Loop Selection") == 0) {
 		
 		gpDSPEngine->LoopSelection();
@@ -1453,31 +1476,61 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 		Send_Msg_To_All_Panes(&Msg);
 		
 	}
+	else if (s.compare("Edit@Loop") == 0) {
+		
+		tbool bTest = (gpApplication->GetGlobalParm(giParamID_Loop_On, giSectionGlobal) != 0);
+		gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Loop_On, de::IParameterManager::TypeGlobal, giSectionGlobal);
+		
+	}
+	//-------------------------------------------
+	// toos Menu
+	//-------------------------------------------
+	else if (s.compare("Tools@Hand") == 0) {
+		gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Hand, giSectionGUI);
+	}
+	else if (s.compare("Tools@Trim") == 0) {
+		gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Trim, giSectionGUI);
+	}
+	else if (s.compare("Tools@Select") == 0) {
+		gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Select, giSectionGUI);
+	}
+	else if (s.compare("Tools@Cut") == 0) {
+		gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Cut, giSectionGUI);
+	}
+
 	
 	//-------------------------------------------
 	// View Menu
 	// Mix window
 	else if (s.compare("View@Mixer") == 0) {
-		tbool bTest = GetGlobalParm(giParamID_Show_Mix_Window, giSectionGUI) ;
-		if(!bTest){
-			SetGlobalParm(giParamID_Show_Mix_Window,true, giSectionGUI);
+		// Show/hide Mix Window
+		
+		tbool bTest = (GetGlobalParm(giParamID_Show_Mix_Window, giSectionGUI) != 0);
+		tbool bReallyVisible = GetModule()->GetHost()->IsWindowVisible(giMix_Window) == 0 ? false : true;
+		if (bTest != bReallyVisible) {
+			GetParmMan()->Set(true, !bTest, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 		}
-		else
-			GetModule()->GetHost()->ActivateWindow(giMix_Window);
+		GetParmMan()->Set(true, !bReallyVisible, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
+		 
+		
 	}
 	// Track Editor
 	else if (s.compare("View@Track Editor") == 0) {
 	
 		GetModule()->GetHost()->ActivateWindow(giMain_Window);
 	}
-	// Aux window
+	// rack window
 	else if (s.compare("View@AUX Rack") == 0) {
-		tbool bTest = GetGlobalParm(giParamID_Show_AUX_Window, giSectionGUI) ;
-		if(!bTest){
-			SetGlobalParm(giParamID_Show_AUX_Window,true, giSectionGUI);
+		
+		// Show/hide rack Window
+		tbool bTest = (GetGlobalParm(giParamID_Show_AUX_Window, giSectionGUI) != 0);
+		tbool bReallyVisible = (GetModule()->GetHost()->IsWindowVisible(giRack_Window) != 0);
+		if (bTest != bReallyVisible) {
+			GetParmMan()->Set(true, !bTest, giParamID_Show_AUX_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 		}
-		else
-			GetModule()->GetHost()->ActivateWindow(giRack_Window);
+		GetParmMan()->Set(true, !bReallyVisible, giParamID_Show_AUX_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
+
+	
 	}
 	
 	// View Waveforms
@@ -1500,6 +1553,42 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 		
 		tbool bTest = GetGlobalParm(giParamID_Show_Fade, giSectionGUI) ;
 		SetGlobalParm(giParamID_Show_Fade,!bTest, giSectionGUI);
+		
+	}
+	// Zoom
+	else if (s.compare("View@Zoom") == 0) {
+		
+		mbZoomFlipFlop = !mbZoomFlipFlop;
+		if(mbZoomFlipFlop){
+			miStoredZoom = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI);
+			gpApplication->GetParmMan()->Set(true, giZoom_Levels - 10, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+		}
+		else{
+			gpApplication->GetParmMan()->Set(true, miStoredZoom, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+			
+		}
+		
+	}
+	// zoom in
+	else if (s.compare("View@Zoom In") == 0) {
+		
+		tint32 iTest = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI) +1;
+		gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+		
+	}
+	
+	// zoom out
+	else if (s.compare("View@Zoom Out") == 0) {
+		
+		tint32 iTest = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI) -1;
+		gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+		
+	}
+	// jump to mouse pos
+	else if (s.compare("View@Jump to Mouse") == 0) {
+		
+		CBasePane::SMsg Msg(Msg_Go_To_Mouse);
+		Send_Msg_To_All_Panes(&Msg);
 		
 	}
 	
@@ -1759,7 +1848,7 @@ tbool CKSApplication::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iSt
 		CTrack_DSP::SChannelRegionInfo* pRegionInfo = *it;
 
 		// Maybe zereos before this clip
-		tint64 iZeroesBefore = pRegionInfo->uiTrackPosStart - iLatestPos;
+		tint64 iZeroesBefore = pRegionInfo->uiTrack_Pos - iLatestPos;
 		tint64 iRegionCutOffStart = 0;
 		if (iZeroesBefore <= 0) {
 			// No zeroes before - actually we don't use start of this region
@@ -1786,8 +1875,8 @@ tbool CKSApplication::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iSt
 
 		// Export clip
 		CRegion_DSP* pRegion = pRegionInfo->pRegion;
-		tint64 iClipStartPos = pRegion->GetSoundStartPos();
-		tint64 iClipDuration = pRegion->GetDuration();
+		tint64 iClipStartPos = pRegion->Get_Sample_Offset();
+		tint64 iClipDuration = pRegion->Get_Duration();
 		const tchar* pszClipName = pRegion->GetSoundListItemName();
 		if (iRegionCutOffStart > iClipDuration) {
 			// Cut-off entire clip - do nothing
@@ -2350,6 +2439,16 @@ tbool CKSApplication::ExportClipsList_VerifyOne(CExportClipTask* pInfo)
 tbool CKSApplication::MenuFileCreateNewProject()
 {
 	msExtendedError = "";
+	
+	if(Project_Has_Changed()) {
+		
+		// setup dialog: do you want to save before closing the project?
+		tuint32 hest = 0;
+		hest++;
+		// save project and continue
+		// cancel return true
+
+	}
 	
 	CleanProject(giDefault_Number_Of_Tracks);
 
@@ -2965,6 +3064,7 @@ tbool CKSApplication::MenuFileLoadProject()
 	msExtendedError = "";
 
 	PlaybackStop();
+	Stop_Timer();
 	
 	CAutoDelete<ge::IOpenDialog> pDlg(ge::IOpenDialog::Create());
 
@@ -3163,7 +3263,6 @@ tbool CKSApplication::MenuFileLoadProject()
 			// Load wave regions for tracks
 			iTrack = -1;
 			iIndex = 0;
-			CDSP* pDSP = dynamic_cast<CDSP*>(GetDSPEngine());
 			while (1) {
 				IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'REGI');
 				if (pChunkOrg == NULL) {
@@ -5076,15 +5175,19 @@ void CKSApplication::PlaybackFF()
 	CAutoLock Lock(mMutex);
 	CAutoLock Lock2(mMutex_Progress);
 	
-	if (IsInProgressTaskState()) {
-		// We are doing something in progress - ignore command
-		return;
+	// We are doing something in progress - ignore command
+	if (IsInProgressTaskState()) return;
+	
+	tbool bGrid_On = (GetGlobalParm(giParamID_Grid, giSectionGUI) != 0);
+	// Snap to grid
+	if(bGrid_On){
+		miSongPos = SnapToGrid(miSongPos);
+		miSongPos = SnapToGridEnd(miSongPos + 16);
 	}
-
-//	tfloat32 fSampleRate	= GetSampleRate();
-	tint32 iTempo			= Float2Int(GetSampleRate()/4.41f);
-
-	miSongPos += iTempo;
+	else{
+		
+		miSongPos += Float2Int(GetSampleRate()/4.41f);
+	}
 
 	/*
 	dynamic_cast<CDSP*>(GetDSPEngine())->SetSongPosition(miSongPos);
@@ -5097,18 +5200,24 @@ void CKSApplication::PlaybackRewind()
 	CAutoLock Lock(mMutex);
 	CAutoLock Lock2(mMutex_Progress);
 	
-	if (IsInProgressTaskState()) {
-		// We are doing something in progress - ignore command
-		return;
-	}
-
-	tfloat32 fSampleRate	= (GetSampleRate() * 1.0f);
-	tint32 iTempo			= Float2Int(fSampleRate/4.41f);
+	// We are doing something in progress - ignore command
+	if (IsInProgressTaskState()) return;
 	
-	if(miSongPos >= iTempo)
-		miSongPos -= iTempo;
-	else 
-		miSongPos = 0;
+	tbool bGrid_On = (GetGlobalParm(giParamID_Grid, giSectionGUI) != 0);
+	// Snap to grid
+	if(bGrid_On){
+		
+		miSongPos = miSongPos > 16 ? SnapToGridStart(miSongPos - 16): 0;
+		miSongPos = miSongPos > 16 ? SnapToGridStart(miSongPos - 16): 0;
+	}
+	else{
+		
+		tint32 iTempo = Float2Int(GetSampleRate()/4.41f);
+		
+		miSongPos >= iTempo ? miSongPos -= iTempo : 0;
+	}
+	
+
 
 
 	/*
@@ -5165,8 +5274,10 @@ void CKSApplication::PlaybackGoToPos(tint64 iSample)
 		// We are doing something in progress - ignore command
 		return;
 	}
-
-	miSongPos = iSample;
+	
+	tbool bGrid_On = (GetGlobalParm(giParamID_Grid, giSectionGUI) != 0);
+	// Snap to grid
+	miSongPos = bGrid_On ? SnapToGrid(iSample): iSample;
 
 	if (mePlaybackState != geStateStopped)
 		gpDSPEngine->SetSongPosition(miSongPos);
@@ -5697,19 +5808,29 @@ tuint64 CKSApplication::SnapToGridStart(tuint64 uiSamplePos)
 
 tuint64 CKSApplication::SnapToGridEnd(tuint64 uiSamplePos)
 {
-	tbool bGrid_On = (GetGlobalParm(giParamID_Grid, giSectionGUI) != 0);
-	// Snap to grid
-	if (bGrid_On) {
+	
+	
+	// if snap to grid is on
+	if (GetGlobalParm(giParamID_Grid, giSectionGUI)) {
+		
+		// Find previous gridline
+		uiSamplePos = SnapToGridStart(uiSamplePos);
+		
 		tfloat64 fSnap = GetGlobalParm(giParamID_KS_Snap_To, giSectionGlobal) * GetSamples_Pr_32();
-		// avoid to trunchate line nr
-		uiSamplePos += (tint64)(fSnap);
+		
+		// snap to next gridline
+		uiSamplePos += (tint64)(fSnap)-1;
+		
+		/*
 		// Find gridline in samples
 		tuint32 uiGridLineNr	=	(tuint32)((tfloat64)uiSamplePos / fSnap);
+		
 		// Set sample pos
 		uiSamplePos				=  (tint64)(uiGridLineNr * fSnap);
+		 */
 
 	}
-	return uiSamplePos-2;
+	return uiSamplePos;
 }
 
 

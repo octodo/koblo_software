@@ -67,8 +67,8 @@ public:
 	struct SMenuItemList;
 
 	struct SMenuItem {
-		SMenuItem(const tchar* pszName = NULL, tbool bHasSubMenu = false, SMenuItemList* pSubMenu = NULL)
-			: pszName(pszName), bHasSubMenu(bHasSubMenu), pSubMenu(pSubMenu) {}
+		SMenuItem(const tchar* pszName = NULL, tbool bHasSubMenu = false, SMenuItemList* pSubMenu = NULL, char cmd = 0)
+			: pszName(pszName), bHasSubMenu(bHasSubMenu), pSubMenu(pSubMenu), cmd(cmd) {}
 
 		~SMenuItem() {}
 
@@ -77,6 +77,8 @@ public:
 		tbool bHasSubMenu;
 
 		SMenuItemList* pSubMenu;
+		
+		char cmd;
 	};
 
 	struct SMenuItemList {

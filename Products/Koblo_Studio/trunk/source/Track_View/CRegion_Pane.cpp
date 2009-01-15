@@ -11,6 +11,45 @@ CRegion_Pane::CRegion_Pane(CBasePane* pParent, CBaseGUI* pGUI)
 
 	// (lasse) It's impossible to see errors if variables aren't initialized!!! Hrmpf!
 	mpTrack_Player2 = NULL;
+	
+	
+	
+	
+	
+	
+	
+	muiRegionID		=	0;
+	muiTrack_Pos	=	0;
+	mfSample_Start	=	0;
+	muiSample_Duration	=	0;
+	muiSample_End	=	0;
+	muiSample_Fade_In	=	0;
+	muiSample_Fade_Out	=	0;
+	mfRegion_Volume	=	0;
+	muiStart_Pixel	=	0;
+	muiEnd_Pixel	=	0;
+	muiFade_In_Pixel	=	0;
+	muiFade_Out_Pixel	=	0;
+	muiRegion_Volume_Pixel	=	0;
+	miSize_X	=	0;
+	miPixel_Size_Y	=	0;
+	miPos_X	=	0;
+	miColor	=	0;
+	mbMouseCaptured	=	false;
+	mbExtendSelection	=	0;
+	muiSample_Selection_Start	=	0;
+	muiSample_Selection_Duration	=	0;
+	mpLine_Start	= NULL;
+	mpLine_End	= NULL;
+	
+	mpFade_In_Handle	=	NULL;
+	mpFade_Out_Handle	=	NULL;
+	mpRegion_Volume_Handle	=	NULL;
+	
+	
+	
+	
+	
 }
 
 CRegion_Pane::~CRegion_Pane()
@@ -25,6 +64,7 @@ CRegion_Pane::~CRegion_Pane()
 	}
 
 	mpDrawPrimitives->Destroy();
+	
 }
 
 void CRegion_Pane::SetInfo(	tuint32 uiRegionID,
@@ -112,7 +152,7 @@ void CRegion_Pane::Init()
 	mpRegion_Volume_Handle->Init();
 	mpPane->AddControl(mpRegion_Volume_Handle->GetPane(), ge::SPos(miSize_X-7, 30));
 	// Volume Line
-	mpLine_Region_Volume	= CreateLine(ge::IControl::giNoID, ge::SPos(miSize_X,0), ge::SPos(miSize_X,0) , ge::SRGB(0, 0, 0));
+	mpLine_Region_Volume	= CreateLine(ge::IControl::giNoID, ge::SPos(miSize_X,0), ge::SPos(miSize_X,0) , ge::SRGB(92, 92, 92));
 	
 	//--------------------------------------------
 	// Fade in 
@@ -121,7 +161,7 @@ void CRegion_Pane::Init()
 	mpFade_In_Handle->Init();
 	mpPane->AddControl(mpFade_In_Handle->GetPane(), ge::SPos(0, 0));
 	// Line
-	mpLine_Fade_In		= CreateLine(ge::IControl::giNoID, ge::SPos(0,0), ge::SPos(0,0) , ge::SRGB(0, 0, 0));
+	mpLine_Fade_In		= CreateLine(ge::IControl::giNoID, ge::SPos(0,0), ge::SPos(0,0) , ge::SRGB(92, 92, 92));
 	
 	//--------------------------------------------
 	// Fade out 
@@ -130,7 +170,7 @@ void CRegion_Pane::Init()
 	mpFade_Out_Handle->Init();
 	mpPane->AddControl(mpFade_Out_Handle->GetPane(), ge::SPos(miSize_X-7, 0));
 	// Line
-	mpLine_Fade_Out		= CreateLine(ge::IControl::giNoID, ge::SPos(miSize_X,0), ge::SPos(miSize_X,0) , ge::SRGB(0, 0, 0));
+	mpLine_Fade_Out		= CreateLine(ge::IControl::giNoID, ge::SPos(miSize_X,0), ge::SPos(miSize_X,0) , ge::SRGB(92, 92, 92));
 
 	
 
@@ -227,6 +267,7 @@ void CRegion_Pane::Update_Size()
 		mpFade_Out_Handle->GetPane()->SetVisible(false);
 		mpLine_Fade_Out->SetVisible(false);
 		
+		//!!! BUG size and pos becomes real bad inside 
 		mpRegion_Volume_Handle->GetPane()->SetVisible(false);
 		mpLine_Region_Volume->SetVisible(false);
 	}
@@ -251,7 +292,7 @@ void CRegion_Pane::Handle_Cut_Tool(tuint32 uiPos)
 	tuint64 uiSamplePos = (tfloat64)uiPos * gpApplication->GetSamplesPrPixel();
 	uiSamplePos			=	gpApplication->SnapToGrid(uiSamplePos);
 	
-	gpDSPEngine->CutRegion( mpTrack->Get_TrackID(), muiRegionID, uiSamplePos+1);
+	gpDSPEngine->Cut_Region( mpTrack->Get_TrackID(), muiRegionID, uiSamplePos+1);
 }
 
 void CRegion_Pane::Handle_Trim_Tool(tint32 uiPos)
@@ -260,7 +301,7 @@ void CRegion_Pane::Handle_Trim_Tool(tint32 uiPos)
 	tfloat64 SamplesPrPixel =	gpApplication->GetSamplesPrPixel();
 	tint64 iSamplePos	= (tfloat64)uiPos * SamplesPrPixel;
 
-	gpDSPEngine->TrimRegion( mpTrack->Get_TrackID(), muiRegionID, miEdit_State != giEdit_Trim_End, iSamplePos);
+	gpDSPEngine->Trim_Region( mpTrack->Get_TrackID(), muiRegionID, miEdit_State != giEdit_Trim_End, iSamplePos);
 		
 }
 
@@ -334,6 +375,7 @@ void CRegion_Pane::OnDraw(const ge::SRect &rUpdate)
 		SizeThis.iCY = miPixel_Size_Y-2;
 
 
+		//!!! TO DO check this
 		tuint64 uiPixelOffset	=	Float2Int(mfSample_Start * gpApplication->GetPixelPrSample());
 
 		tfloat64 fSamplesPerPixel	= gpApplication->GetSamplesPrPixel();
@@ -743,8 +785,9 @@ void CRegion_Pane::Draw_Fade_Out()
 	if(muiFade_Out_Pixel < 11)
 		muiFade_Out_Pixel	=	11;
 	
-	mpLine_Fade_Out->SetLinePos(ge::SPos(miSize_X-1, miPixel_Size_Y-1 ),ge::SPos(muiFade_Out_Pixel, muiRegion_Volume_Pixel ));
-	mpFade_Out_Handle->SetPos(ge::SPos(muiFade_Out_Pixel-6,muiRegion_Volume_Pixel));
+	mpLine_Fade_Out->SetLinePos(ge::SPos(miSize_X, miPixel_Size_Y-1 ),ge::SPos(muiFade_Out_Pixel, muiRegion_Volume_Pixel ));
+	
+	mpFade_Out_Handle->SetPos(ge::SPos(muiFade_Out_Pixel-5,muiRegion_Volume_Pixel));
 	
 }
 

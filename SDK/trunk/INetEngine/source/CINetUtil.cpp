@@ -475,3 +475,27 @@ bool IINetUtil::GetMiddleStr(tchar **s, const char *sStart, const char *sEnd, ch
 	return true;
 }
 
+
+tbool CINetUtil::URLEncode_Internal(const tchar* pszRaw, std::string& rsEncoded)
+{
+	rsEncoded = "";
+
+	if ((pszRaw) && (*pszRaw != '\0')) {
+		tint32 iLenRaw = strlen(pszRaw);
+		tint32 iLenEncoded = IINetUtil::CalcURLEncodedLen(pszRaw, iLenRaw);
+		
+		if (iLenEncoded > 0) {
+			tchar* pszEncoded = new tchar[iLenEncoded + 1];
+			tint32 iReally = IINetUtil::URLEncode(pszRaw, iLenRaw, pszEncoded);
+			if (iReally != iLenEncoded) {
+				// Error: Insane conversion
+				delete[] pszEncoded;
+				return false;
+			}
+			rsEncoded = pszEncoded;
+			delete[] pszEncoded;
+		}
+	}
+
+	return true;
+} // UrlEncode

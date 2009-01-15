@@ -975,69 +975,88 @@ static void HandleNew_Menu()
 	MenuItemsSetup.pItems[6] = ge::IContext::SMenuItem("Project License");
 
 	//-----------------------------------
-	// File menu
+	// file menu
 	ge::IContext::SMenuItemList MenuItemsFile;
-	MenuItemsFile.uiItemCount = 12;
-	MenuItemsFile.pItems[0] = ge::IContext::SMenuItem("New Project");
-	MenuItemsFile.pItems[1] = ge::IContext::SMenuItem("Load Project");
-	MenuItemsFile.pItems[2] = ge::IContext::SMenuItem("Save Project");
+	MenuItemsFile.uiItemCount = 14;
+	MenuItemsFile.pItems[0] = ge::IContext::SMenuItem("New Project", false, NULL, 'N');
+	MenuItemsFile.pItems[1] = ge::IContext::SMenuItem("Open Project", false, NULL, 'O');
+	MenuItemsFile.pItems[2] = ge::IContext::SMenuItem("Save Project", false, NULL, 'S');
 	MenuItemsFile.pItems[3] = ge::IContext::SMenuItem("Save Project As");
-	MenuItemsFile.pItems[4] = ge::IContext::SMenuItem("-");
-	MenuItemsFile.pItems[5] = ge::IContext::SMenuItem("Import Audio");
-	MenuItemsFile.pItems[6] = ge::IContext::SMenuItem("Export Audio");
-	MenuItemsFile.pItems[7] = ge::IContext::SMenuItem("-");
-	MenuItemsFile.pItems[8] = ge::IContext::SMenuItem("Download Project");
-	MenuItemsFile.pItems[9] = ge::IContext::SMenuItem("Update Project");
-	MenuItemsFile.pItems[10] = ge::IContext::SMenuItem("Upload Project");
-	MenuItemsFile.pItems[11] = ge::IContext::SMenuItem("Commit Changes");
-	
+	MenuItemsFile.pItems[4] = ge::IContext::SMenuItem("Close Project", false, NULL, 'W');
+	MenuItemsFile.pItems[5] = ge::IContext::SMenuItem("Revert to Saved", false, NULL, 'R');
+	MenuItemsFile.pItems[6] = ge::IContext::SMenuItem("-");
+	MenuItemsFile.pItems[7] = ge::IContext::SMenuItem("Import Audio", false, NULL, 'I');
+	MenuItemsFile.pItems[8] = ge::IContext::SMenuItem("Export Audio", false, NULL, 'E');
+	MenuItemsFile.pItems[9] = ge::IContext::SMenuItem("-");
+	MenuItemsFile.pItems[10] = ge::IContext::SMenuItem("Download Project", false, NULL, 'T');
+	MenuItemsFile.pItems[11] = ge::IContext::SMenuItem("Update Project");
+	MenuItemsFile.pItems[12] = ge::IContext::SMenuItem("Upload Project", false, NULL, 'U');
+	MenuItemsFile.pItems[13] = ge::IContext::SMenuItem("Commit Changes", false, NULL, 'Y');
 	
 	//-----------------------------------
-	// Edit menu
+	// edit menu
 	ge::IContext::SMenuItemList MenuItemsTrack;
-	MenuItemsTrack.uiItemCount = 10;
-	MenuItemsTrack.pItems[0] = ge::IContext::SMenuItem("Delete Region");
-	MenuItemsTrack.pItems[1] = ge::IContext::SMenuItem("Duplicate Region");
-	MenuItemsTrack.pItems[2] = ge::IContext::SMenuItem("-");
-	MenuItemsTrack.pItems[3] = ge::IContext::SMenuItem("Inverse Region");
-	MenuItemsTrack.pItems[4] = ge::IContext::SMenuItem("Normalise Region");
-	MenuItemsTrack.pItems[5] = ge::IContext::SMenuItem("-");
-	MenuItemsTrack.pItems[6] = ge::IContext::SMenuItem("Add Track");
-	MenuItemsTrack.pItems[7] = ge::IContext::SMenuItem("Delete Track");
-	MenuItemsTrack.pItems[8] = ge::IContext::SMenuItem("-");
-
-	MenuItemsTrack.pItems[9] = ge::IContext::SMenuItem("Loop Selection");
+	MenuItemsTrack.uiItemCount = 12;
+	MenuItemsTrack.pItems[0] = ge::IContext::SMenuItem("Undo", false, NULL, 'Z');
+	MenuItemsTrack.pItems[1] = ge::IContext::SMenuItem("-");
+	MenuItemsTrack.pItems[2] = ge::IContext::SMenuItem("Copy Region", false, NULL, 'C');
+	MenuItemsTrack.pItems[3] = ge::IContext::SMenuItem("Cut Region", false, NULL, 'X');
+	MenuItemsTrack.pItems[4] = ge::IContext::SMenuItem("Paste Region", false, NULL, 'V');
+	MenuItemsTrack.pItems[5] = ge::IContext::SMenuItem("Duplicate Region", false, NULL, 'D');
+	MenuItemsTrack.pItems[6] = ge::IContext::SMenuItem("-");
+	MenuItemsTrack.pItems[7] = ge::IContext::SMenuItem("Add Track", false, NULL, 'A');
+	MenuItemsTrack.pItems[8] = ge::IContext::SMenuItem("Delete Track");
+	MenuItemsTrack.pItems[9] = ge::IContext::SMenuItem("-");
+	MenuItemsTrack.pItems[10] = ge::IContext::SMenuItem("Loop Selection", false, NULL, 'K');
+	MenuItemsTrack.pItems[11] = ge::IContext::SMenuItem("Loop", false, NULL, 'L');
+	
  
 	//-----------------------------------
-	// View menu
+	// view menu
 	ge::IContext::SMenuItemList MenuItemsWindow;
-	MenuItemsWindow.uiItemCount = 7;
-	MenuItemsWindow.pItems[0] = ge::IContext::SMenuItem("Mixer");
-	MenuItemsWindow.pItems[1] = ge::IContext::SMenuItem("Track Editor");
-	MenuItemsWindow.pItems[2] = ge::IContext::SMenuItem("AUX Rack");
+	MenuItemsWindow.uiItemCount = 13;
+	MenuItemsWindow.pItems[0] = ge::IContext::SMenuItem("Mixer", false, NULL, '=');
+	MenuItemsWindow.pItems[1] = ge::IContext::SMenuItem("Track Editor", false, NULL, '/');
+	MenuItemsWindow.pItems[2] = ge::IContext::SMenuItem("AUX Rack", false, NULL, '*');
 	MenuItemsWindow.pItems[3] = ge::IContext::SMenuItem("-");
-	MenuItemsWindow.pItems[4] = ge::IContext::SMenuItem("View Waveforms");
-	MenuItemsWindow.pItems[5] = ge::IContext::SMenuItem("View Grid");
-	MenuItemsWindow.pItems[6] = ge::IContext::SMenuItem("View Fades");
+	MenuItemsWindow.pItems[4] = ge::IContext::SMenuItem("View Waveforms", false, NULL, 'B');
+	MenuItemsWindow.pItems[5] = ge::IContext::SMenuItem("View Grid", false, NULL, 'G');
+	MenuItemsWindow.pItems[6] = ge::IContext::SMenuItem("View Fades", false, NULL, 'F');
+	MenuItemsWindow.pItems[7] = ge::IContext::SMenuItem("-");
+	MenuItemsWindow.pItems[8] = ge::IContext::SMenuItem("Zoom");
+	MenuItemsWindow.pItems[9] = ge::IContext::SMenuItem("Zoom In", false, NULL, '+');
+	MenuItemsWindow.pItems[10] = ge::IContext::SMenuItem("Zoom Out", false, NULL, '-');
+	MenuItemsWindow.pItems[11] = ge::IContext::SMenuItem("-");
+	MenuItemsWindow.pItems[12] = ge::IContext::SMenuItem("Jump to Mouse", false, NULL, '0');
 	
 	//-----------------------------------
-	// Help menu
+	// tools menu
+	ge::IContext::SMenuItemList MenuItemsTools;
+	MenuItemsTools.uiItemCount = 4;
+	MenuItemsTools.pItems[0] = ge::IContext::SMenuItem("Hand", false, NULL, '1');
+	MenuItemsTools.pItems[1] = ge::IContext::SMenuItem("Trim", false, NULL, '2');
+	MenuItemsTools.pItems[2] = ge::IContext::SMenuItem("Select", false, NULL, '3');
+	MenuItemsTools.pItems[3] = ge::IContext::SMenuItem("Cut", false, NULL, '4');
+	
+	//-----------------------------------
+	// help menu
 	ge::IContext::SMenuItemList MenuItemsHelp;
 	MenuItemsHelp.uiItemCount = 4;
 	MenuItemsHelp.pItems[0] = ge::IContext::SMenuItem("Koblo.com");
-	MenuItemsHelp.pItems[1] = ge::IContext::SMenuItem("Koblo Studio Help");
+	MenuItemsHelp.pItems[1] = ge::IContext::SMenuItem("Online Help", false, NULL, 'H');
 	MenuItemsHelp.pItems[2] = ge::IContext::SMenuItem("Getting Started");
 	MenuItemsHelp.pItems[3] = ge::IContext::SMenuItem("Short Cuts");
 	
 	//-----------------------------------
 	// Menus
 	ge::IContext::SMenuItemList MenuItems;
-	MenuItems.uiItemCount = 5;
+	MenuItems.uiItemCount = 6;
 	MenuItems.pItems[0] = ge::IContext::SMenuItem("Setup", true, &MenuItemsSetup);
 	MenuItems.pItems[1] = ge::IContext::SMenuItem("File", true, &MenuItemsFile);
 	MenuItems.pItems[2] = ge::IContext::SMenuItem("Edit", true, &MenuItemsTrack);
 	MenuItems.pItems[3] = ge::IContext::SMenuItem("View", true, &MenuItemsWindow);
-	MenuItems.pItems[4] = ge::IContext::SMenuItem("Help", true, &MenuItemsHelp);
+	MenuItems.pItems[4] = ge::IContext::SMenuItem("Tools", true, &MenuItemsTools);
+	MenuItems.pItems[5] = ge::IContext::SMenuItem("Help", true, &MenuItemsHelp);
 	
 	
 	

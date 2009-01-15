@@ -1,4 +1,4 @@
-// Copyright 2004, 2005,2006,2007,2008 Koblo http://koblo.com
+// Copyright 2004, 2005,2006,2007,2008,2009 Koblo http://koblo.com
 //
 // This file is part of the Koblo SDK.
 //
@@ -104,6 +104,7 @@ enum EBuss_Ctrls
 	giCtr_Mix_Buss_Output_Popup,
 	giCtr_Mix_Buss_Pan,
 	//gCtr_iCtr_Buss_Mix_Aux_ScrollPane_Timer,
+	
 		
 	giNr_Of_Buss_Ctls,
 

@@ -1,4 +1,4 @@
-// Copyright 2004, 2005,2006,2007,2008 Koblo http://koblo.com
+// Copyright 2004, 2005,2006,2007,2008,2009 Koblo http://koblo.com
 //
 // This file is part of the Koblo SDK.
 //
@@ -95,6 +95,7 @@ public:
 	virtual void Update_Fade_In(tuint32 uiFade_In_Pixel);
 	virtual void Update_Fade_Out(tuint32 uiFade_Out_Pixel);
 	virtual void Update_Region_Volume(tint32 uiRegion_Volume_Pixel);
+	
 	
 	
 	

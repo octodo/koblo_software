@@ -241,8 +241,8 @@ void CTrack::SetTrackSelection( const ge::SPos& Pos, tint32 iRegionID, tint32 iS
 	//-----------------------
 	// LEFT >>> RIGHT
 	else{
-		uiStart_Sample		=	Float2Int(fSamples_Pr_Pixel * (tfloat64)iStart_Pos);
-		uiDuration			=	Float2Int(fSamples_Pr_Pixel * (tfloat64)iRegionSizeX);
+		uiStart_Sample		=	fSamples_Pr_Pixel * (tfloat64)iStart_Pos;
+		uiDuration			=	fSamples_Pr_Pixel * (tfloat64)iRegionSizeX;
 		uiSampleEnd			=	uiStart_Sample + uiDuration - 1;
 
 	}
@@ -319,7 +319,7 @@ void CTrack::Set_Selection_Size_And_Pos()
 		}
 		miLastSelectionEndPos = uiEnd_Pixel;
 		
-		tuint32 uiSelectionSize	=	uiEnd_Pixel - uiStart_Pixel;
+		tuint32 uiSelectionSize	=	uiEnd_Pixel - uiStart_Pixel + 1;
 		
 		if(miTrack_Size_Y){
 			pmBmp_Select_Big->SetPos(ge::SPos(		uiStart_Pixel,		0));
@@ -638,33 +638,7 @@ void CTrack::InsertRegion(tuint32 uiRegionID, tuint64 uiSample_Pos, tuint64 uiSa
 
 }
 
-void CTrack::DeleteRegion(tuint32 uiID)
-{
-	std::list<CRegion_Pane*>::const_iterator it = mppRegions.begin();
-	
-	for (; it != mppRegions.end(); it++) {
-		CRegion_Pane*  pRegion = *it;
-		if(pRegion->GetID() == uiID){
-			ge::IPane* pPaneRegion = pRegion->GetPane();
-			if (pPaneRegion->GetParentWindow()->HasMouseFocus(pPaneRegion)) {
-				// The region we're about to delete has focus
-				// Remove focus from it
-				pPaneRegion->GetParentWindow()->ReleaseMouseFocus();
-			}
-			mpPane->RemoveControl(pPaneRegion);
-		
-			// Experimental code
-			this->RemoveChild(pRegion);
-			
-			mppRegions.remove(*it);
 
-			delete pRegion;
-			break;
-		}
-	}
-	miDrag_Region_Size = -1;
-	Hide_Selection();
-}
 
 void CTrack::Delete_All_Regions()
 {
@@ -701,6 +675,34 @@ void CTrack::Delete_All_Regions()
 	
 	mppRegions.clear();
 
+}
+
+void CTrack::DeleteRegion(tuint32 uiID)
+{
+	std::list<CRegion_Pane*>::const_iterator it = mppRegions.begin();
+	
+	for (; it != mppRegions.end(); it++) {
+		CRegion_Pane*  pRegion = *it;
+		if(pRegion->GetID() == uiID){
+			ge::IPane* pPaneRegion = pRegion->GetPane();
+			if (pPaneRegion->GetParentWindow()->HasMouseFocus(pPaneRegion)) {
+				// The region we're about to delete has focus
+				// Remove focus from it
+				pPaneRegion->GetParentWindow()->ReleaseMouseFocus();
+			}
+			mpPane->RemoveControl(pPaneRegion);
+			
+			// Experimental code
+			this->RemoveChild(pRegion);
+			
+			mppRegions.remove(*it);
+			
+			delete pRegion;
+			break;
+		}
+	}
+	miDrag_Region_Size = -1;
+	Hide_Selection();
 }
 
 tint32 CTrack::Find_Tool()

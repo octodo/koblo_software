@@ -10,7 +10,8 @@ CKSXML_Read_Project(),
 CKSUsername_And_Password_Model(),
 mbUpload_Project(false)
 {
-	
+	//!!!TO DO remove this dummy code
+	msProjectName = "flying pink elephants";
 }
 
 CKSInternet_Features::~CKSInternet_Features()
@@ -136,7 +137,17 @@ void CKSInternet_Features::Open_Project_Edit_Page_On_Koblo()
 	
 }
 
+tbool CKSInternet_Features::Project_Has_Changed()
+{
+	// if no file on disk return true to force the save dialog to open
+	// 
+	std::string sInternal	=	Get_Internal_Data_As_XML();
+	std::string sOn_Disk	=	"";
+	
+	return sInternal.compare(sOn_Disk) != 0 ; 
 
+	
+}
 
 
 

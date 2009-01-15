@@ -87,20 +87,7 @@ void CKSPlugInGUIPane::OnCloseGUI()
 
 void CKSPlugInGUIPane::UpdateChannelData(tint32 iID, tint32 iValue, tint32 iChannel)
 {
-	if (iChannel == miSectionID) {
-		switch(iID) {
-			case giParam_Ch_Insert1GUIOpen:
-			{
-				//gpApplication->GetPlugInManager()->OpenGUI(iChannel, iValue);
-				break;
-			}
-			case giParam_Ch_Insert2GUIOpen:
-			case giParam_Ch_Insert3GUIOpen:
-			case giParam_Ch_Insert4GUIOpen:
-				int a = 0;
-				break;
-		}
-	}
+
 }
 
 void CKSPlugInGUIPane::UpdateChannelName(tint32 iChannel, const std::string& sName)

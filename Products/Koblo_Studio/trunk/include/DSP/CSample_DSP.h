@@ -1,4 +1,4 @@
-// Copyright 2004, 2005,2006,2007,2008 Koblo http://koblo.com
+// Copyright 2004, 2005,2006,2007,2008,2009 Koblo http://koblo.com
 //
 // This file is part of the Koblo SDK.
 //
@@ -26,14 +26,16 @@ class CSample_DSP
 {
 public:
 	CSample_DSP(const std::string& sPathName);
+	
+	virtual ~CSample_DSP();
 
 	tuint64 GetLength() {return muiLength;}
 
-	void GetSamples(tfloat32* pfData, tint32 iSamples) {mppStream->GetSamples(pfData, iSamples); muiPos += iSamples;}
+	void GetSamples(tfloat32* pfData, tint32 iSamples) {mpStream->GetSamples(pfData, iSamples); muiPos += iSamples;}
 
 	const std::string& GetPathName() const {return msPathName;}
 
-	void SetPos(tuint64 uiPos) {mppStream->SetPosition(uiPos); muiPos = uiPos;}
+	void SetPos(tuint64 uiPos) {mpStream->SetPosition(uiPos); muiPos = uiPos;}
 
 	tuint64 GetPos() const {return muiPos;}
 
@@ -44,6 +46,6 @@ protected:
 
 	tuint64 muiLength;
 	
-	st::IStream* mppStream;
+	st::IStream* mpStream;
 };
 

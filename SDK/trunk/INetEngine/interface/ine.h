@@ -1,4 +1,4 @@
-// Copyright 2004, 2005,2006,2007,2008 Koblo http://koblo.com
+// Copyright 2004, 2005,2006,2007,2008,2009 Koblo http://koblo.com
 //
 // This file is part of the Koblo SDK.
 //
@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo INetEngine. If not, see <http://www.gnu.org/licenses/>.
 
 /*!	\file ine.h
 	\author Michael Olsen

@@ -147,7 +147,7 @@ void CKSMixerGUIPane::UpdateTrackData(tint32 iID, tint32 iValue, tint32 iChannel
 		case giParam_Ch_Insert7GUIOpen:
 		case giParam_Ch_Insert8GUIOpen:
 			{
-				tint iInsert = iID - giParam_Ch_Insert1GUIOpen;
+			//	tint iInsert = iID - giParam_Ch_Insert1GUIOpen;
 			}
 			break;
 	}

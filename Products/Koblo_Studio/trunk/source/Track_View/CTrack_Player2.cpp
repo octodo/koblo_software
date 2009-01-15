@@ -68,13 +68,7 @@ void CTrack_Player2::Init()
 		
 		iTrack_PosY			+= iTrack_SizeY + 1;
 	}
-	
-//	Snap_To_Grid();
-	
-	// Lasse, dynamic_cast is slow on Windows!
-	
-//	tfloat64 fPixelPrSample		= 	gpApplication->GetSamplesPrPixel();
-	tfloat64 fSamplesPrPixel	=	gpApplication->GetSamplesPrPixel();
+
 	
 	
 	//muiPane_Duration_In_Samples = gTrack_Scroll_Editor.iCX * fSamplesPrPixel;
@@ -161,7 +155,6 @@ void CTrack_Player2::HandleMsg(SMsg* pMsg)
 				case giParamID_Zoom:
 				{
 					Update_Zoom();
-				//	Snap_To_Grid();
 					Draw_Grid();
 					Update_Graphic();
 					break;
@@ -405,15 +398,7 @@ void CTrack_Player2::Update_Zoom()
 	tfloat64 iMin_Samples_Pr_Gridline	=	giMin_Pix_Pr_Gridline * gpApplication->GetSamplesPrPixel();
 	
 	tint32 iGrid = gpApplication->GetGlobalParm(giParamID_KS_Snap_To, giSectionGlobal);
-	
-	
-	/*
-	 SMsg Msg			=	Msg_Set_Grid;
-	 SendMsgFromTop(&Msg);
-	 }
-	 */
 
-	
 	
 	// Dont draw gridlines if they are to close to each other
 	mbDraw_32	= mfSamples_Pr_32		>= iMin_Samples_Pr_Gridline? true: false;
@@ -462,6 +447,8 @@ void CTrack_Player2::Update_Zoom()
 	else if(mbDraw_1)	mfGrid_In_Samples =  mfSamples_Pr_32 * 32.0f; 
 	
 	gpApplication->SetGridLinesInSamples(mfGrid_In_Samples);
+	
+	CBasePane::Redraw_Pane_Rect();
 }
 
 void CTrack_Player2::Stack_Tracks(STrack_Stack sData)
@@ -517,10 +504,13 @@ void CTrack_Player2::Update_Graphic()
 void CTrack_Player2::Update_Empty_Array(ge::SSize sPaneSize)
 {
 	ge::SPos pos	= ge::SPos(0,miAccumTrackHeight);
-	ge::SSize size	= ge::SSize(sPaneSize.iCX,sPaneSize.iCY - miAccumTrackHeight);	
+	tint32 iSizeX = sPaneSize.iCX;
+	ge::SSize size	= ge::SSize( iSizeX,sPaneSize.iCY - miAccumTrackHeight);	
+	//ge::SSize size	= ge::SSize(sPaneSize.iCX,sPaneSize.iCY - miAccumTrackHeight);	
 	ge::SRect rect	= ge::SRect(pos,size);
 	mpEmpty_Rect->SetRect(rect);
 	mpBack_Track_Shaddow_Bmp->SetPos(pos);
+	
 
 }
 

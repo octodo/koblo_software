@@ -33,18 +33,20 @@ public:
 	//! creates a region, and returns its unique ID. If uiSamplePosEnd == -1 all sound is used.
 	tint32 CreateRegion(const std::string& sSoundListItemName, 
 						tint32 iChannel, 
-						tuint64 uiTrackPosStart,
-						tuint64 uiSamplePosStart, 
-						tuint64 uiSamplePosEnd = -1,
-						tuint64 uiFadeInLength = 0,
-						tuint64 uiFadeOutLength = 0,
-						tfloat32 fRegionVolume = 1.0);
+						tuint64 uiTrack_Pos,
+						tuint64 uiSample_Offset, 
+						tuint64 uiSample_Duration = -1,
+						tuint64 uiFade_In_Duration = 0,
+						tuint64 uiFade_Out_Duration = 0,
+						tfloat32 fVolume = 1.0);
 	
 	
 	//! set region volume
 	void Set_Region_Volume(tuint32 uiRegionID, tfloat32 fRegion);
 	//! callback used to communicate with the interface
 	void SetRegionCallback(IRegionCallback* pRegionCallback) {mpRegionCallback = pRegionCallback;}
+	
+	
 	
 	struct SRegionInfo
 	{	
@@ -64,17 +66,24 @@ public:
 	 \	param uiRegionID [in]: region id
 	 \	uiCutPos lC [in]: cut pos on region
 	 */
-	void CutRegion(tuint32 uiTrack, tuint32 uiRegionID, tuint64 uiCutPos);
+	void Cut_Region(tuint32 uiTrack, tuint32 uiRegionID, tuint64 uiCutPos);
 	
 	/*! trim a region; cuts off start ore end
 	 \	param uiTrack [in]:	track
 	 \	param uiRegionID [in]: region id
-	 \	bStart lC [in]: if true we are cutting of the start of the region otherwise it's the end we are edditing
+	 \	bStart bStart [in]: if true we are cutting of the start of the region otherwise it's the end we are edditing
+	 \	bStart iDelta [in]: how much the start-end is being trimed
 	 */
-	void TrimRegion(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 uiSamplePos);
+	void Trim_Region(tuint32 uiTrack, tuint32 uiRegionID, tbool bStart, tint64 iDelta);
 	
 	//! duplicate a region
-	void DuplicateRegion();
+	void Duplicate_Region();
+	
+	//! make a copy of the selected region
+	void Copy_Region();
+	
+	//! paste region from the mpRegion_Clipboard[]
+	void Paste_Region(tuint32 uiTrack, tuint64 uiPosition);
 	
 	//! normalise a region
 	void NormaliseRegion();
@@ -115,7 +124,7 @@ public:
 	 \	param uiSamplePosStart [in]: start position of region
 	 \	param uiSamplePosEnd [in]: evd position of region
 	 */
-	tuint64 GetRegionSize(const std::string& sSoundPathName, tuint64 uiSamplePosStart, tint64 uiSamplePosEnd);
+	tuint64 GetRegionSize(const std::string& sSoundPathName, tuint64 uiSamplePosStart, tuint64 uiSamplePosEnd);
 	
 	//! Get the region size in samplepoints
 	tuint64 GetRegionSize(tuint32 uiID);
@@ -150,6 +159,23 @@ protected:
 	CTrack_DSP*		mpTrack_DSP;
 	CRegion_DSP*	mpRegion_DSP;
 	tint64			miTrack;
+	
+	struct SRegion_Copy
+	{
+		tbool bEmpty;
+		std::string sClipName;
+		tuint64 uiPossition;
+		tuint64 uiDuration;
+		tuint64 uiSample_Offset;
+		tuint64	uiFade_In_Duration;
+		tuint64	uiFade_Out_Duration;
+		tfloat32 fVolume;
+		
+	};
+	
+	SRegion_Copy mpRegion_Clipboard[64];
+	
+	
 	
 	
 	
