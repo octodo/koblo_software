@@ -72,14 +72,20 @@ void CMix_AUX_Insert::Init()
 	tint32 iPlugIn;
 	for (iPlugIn = 0; iPlugIn < iPlugInCount; iPlugIn++) {
 		CPlugInManager::SPlugInInfo* pInfo = pPlugManager->GetPlugInInfo(iPlugIn);
-
-	//	std::string s = pInfo->sCompanyName;
-	//	s += std::string(": ");
+		
+		//	std::string s = pInfo->sCompanyName;
+		//	s += std::string(": ");
 		std::string s  = pInfo->sProductName;
-		List.pItems[iPlugIn + 1] = ge::IPopupMenu::SMenuItem(s.c_str(), (pInfo->uiCompanyID << 8) | pInfo->uiProductID, NULL);
+		tint32* pi = new tint32[2];
+		pi[0] = pInfo->uiCompanyID;
+		pi[1] = pInfo->uiProductID;
+		List.pItems[iPlugIn + 1] = ge::IPopupMenu::SMenuItem(s.c_str(), iPlugIn + 1, NULL, NULL, -1, 0, (void*)pi);
 	}
-	List.pItems[0] = ge::IPopupMenu::SMenuItem("None", 0, NULL);
-
+	tint32* pi = new tint32[2];
+	pi[0] = 0;
+	pi[1] = 0;
+	List.pItems[0] = ge::IPopupMenu::SMenuItem("None", 0, NULL, NULL, -1, 0, (void*)pi);
+	
 	CreatePop(giCtrl_InsertPop1 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48), ge::SSize(61, 15), ge::SRGB(204,204,204));
 	CreatePop(giCtrl_InsertPop2 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16), ge::SSize(61, 15), ge::SRGB(204,204,204));
 	CreatePop(giCtrl_InsertPop3 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16 * 2), ge::SSize(61, 15), ge::SRGB(204,204,204));
@@ -100,6 +106,25 @@ void CMix_AUX_Insert::ConnectControls()
 
 void CMix_AUX_Insert::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 {
+	if (pControl->GetID() == giCtrl_InsertPop1 + miCtrl_Offset ||
+		pControl->GetID() == giCtrl_InsertPop2 + miCtrl_Offset ||
+		pControl->GetID() == giCtrl_InsertPop3 + miCtrl_Offset ||
+		pControl->GetID() == giCtrl_InsertPop4 + miCtrl_Offset) {
+		if (iValueNew != 0) {
+			//			tint32 iInsert = pControl->GetID() - (giCtrl_InsertPop1 + miCtrl_Offset);
+			ge::IPopupMenu* pPopup = dynamic_cast<ge::IDropDownListBox*>(pControl)->GetPopup();
+			tint32* pi = (tint32*)(pPopup->GetData(iValueNew));
+			tint32 iCompanyID = pi[0];
+			tint32 iProductID = pi[1];
+			if (iCompanyID == 2) {
+				iValueNew = iProductID;
+			}
+			else {
+				iValueNew = (iCompanyID << 8) | iProductID;
+			}
+		}
+	}
+
 	GetParmMan()->ControlUpdate(miPaneID, pControl->GetID(), iValueNew);
 
 	if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit1) {

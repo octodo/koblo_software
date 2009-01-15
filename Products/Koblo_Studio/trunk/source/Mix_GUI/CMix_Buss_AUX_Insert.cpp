@@ -58,11 +58,11 @@ void CMix_Buss_AUX_Insert::Init()
 	tint32 iPlugIn;
 	for (iPlugIn = 0; iPlugIn < iPlugInCount; iPlugIn++) {
 		CPlugInManager::SPlugInInfo* pInfo = pPlugManager->GetPlugInInfo(iPlugIn);
-	/*
-		std::string s = pInfo->sCompanyName;
-		s += std::string(": ");
-		s += pInfo->sProductName;
-	*/
+		/*
+		 std::string s = pInfo->sCompanyName;
+		 s += std::string(": ");
+		 s += pInfo->sProductName;
+		 */
 		std::string s = pInfo->sProductName;
 		tint32* pi = new tint32[2];
 		pi[0] = pInfo->uiCompanyID;

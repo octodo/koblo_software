@@ -914,29 +914,6 @@ void IFile::GetSystemDirectory(ESystemDir SystemDir, tchar* pszPathName)
 			}
 			break;
 			
-		case SystemDirLibrary:
-		{
-			OSErr err = ::FindFolder(kOnSystemDisk, kVolumeRootFolderType, kDontCreateFolder, &sVolRef, &lDirID);
-			if (err == 0) {
-				::PathNameFromDirID(lDirID, sVolRef, (char*)psz);
-				std::string s(psz);
-				tint32 iPos = s.find(':');
-				s = s.substr(0, iPos + 1);
-				s += std::string("Library:");
-				strcpy(psz, s.c_str());
-			}
-		}
-			break;
-
-		case SystemDirUser:
-		{
-			OSErr err = ::FindFolder(kOnSystemDisk, kCurrentUserFolderType, kDontCreateFolder, &sVolRef, &lDirID);
-			if (err == 0) {
-				::PathNameFromDirID(lDirID, sVolRef, (char*)psz);
-			}
-		}
-			break;
-
 		default:
 			throw IException::Create(IException::TypeCode, IException::ReasonCodePathInvalid, EXCEPTION_INFO, (tchar*)"Not implemented for OSX");
 	}

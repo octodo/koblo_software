@@ -71,10 +71,10 @@ void CTrack_AUX_Insert::Init()
 	for (iPlugIn = 0; iPlugIn < iPlugInCount; iPlugIn++) {
 		CPlugInManager::SPlugInInfo* pInfo = pPlugManager->GetPlugInInfo(iPlugIn);
 		/*
-		std::string s = pInfo->sCompanyName;
-		s += std::string(": ");
-		s += pInfo->sProductName;
-		*/
+		 std::string s = pInfo->sCompanyName;
+		 s += std::string(": ");
+		 s += pInfo->sProductName;
+		 */
 		std::string s = pInfo->sProductName;
 		tint32* pi = new tint32[2];
 		pi[0] = pInfo->uiCompanyID;
@@ -85,7 +85,7 @@ void CTrack_AUX_Insert::Init()
 	pi[0] = 0;
 	pi[1] = 0;
 	List.pItems[0] = ge::IPopupMenu::SMenuItem("None", 0, NULL, NULL, -1, 0, (void*)pi);
-
+	
 	CreatePop(giCtrl_InsertPop1 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(2 + 64, 48), ge::SSize(61, 15), ge::SRGB(204,204,204));
 	CreatePop(giCtrl_InsertPop2 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(2 + 64, 48+ 16), ge::SSize(61, 15), ge::SRGB(204,204,204));
 	CreatePop(giCtrl_InsertPop3 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(2 + 64, 48 + 16 * 2), ge::SSize(61, 15), ge::SRGB(204,204,204));
