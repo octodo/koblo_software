@@ -417,6 +417,8 @@ public:
 	void Stop_Timer(){ mbTimer = false;};
 	tbool Timer_Is_Running() { return mbTimer;};
 	
+	virtual void Zoom();
+	
 	
 
 protected:
@@ -570,10 +572,11 @@ protected:
 	
 	void Set_Project_License();
 	
-	tuint miStoredZoom;
+	tuint32 miStoredZoom;
 	tbool mbZoomFlipFlop;
 	
 	tbool mbTimer;
+
 
 	
 	

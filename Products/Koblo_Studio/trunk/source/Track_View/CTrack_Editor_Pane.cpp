@@ -997,17 +997,7 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 		}
 		 */
 		case ge::Keyz: {
-			/*
-			mbZoomFlipFlop = !mbZoomFlipFlop;
-			if(mbZoomFlipFlop){
-				miStoredZoom = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI);
-				gpApplication->GetParmMan()->Set(true, giZoom_Levels - 10, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
-			}
-			else{
-				gpApplication->GetParmMan()->Set(true, miStoredZoom, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
-				
-			}
-			 */
+			gpApplication->Zoom();
 			break;
 		}
 			/*

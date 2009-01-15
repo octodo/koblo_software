@@ -88,9 +88,7 @@ private:
 	void Write_Track_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert);
 	void Write_Track_Regions(TiXmlElement* pParent, tuint uiTrack);
 
-	
-	
-	
+
 	//! AUX
 	void Write_AUXs(TiXmlElement* pParent, tuint uiTrack);
 	void Write_AUX(TiXmlElement* pParent, tuint uiTrack, tuint iAux); 
@@ -98,13 +96,6 @@ private:
 	void Write_Busses(TiXmlElement* pParent);
 	void Write_Bus(TiXmlElement* pParent, tuint uiID);
 	void Write_Bus_Out(TiXmlElement* pParent, tuint uiID);
-	
-	
-	
-	
-
-	
-	
 	
 	
 	

@@ -1558,6 +1558,9 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	// Zoom
 	else if (s.compare("View@Zoom") == 0) {
 		
+		Zoom();
+		/*
+		
 		mbZoomFlipFlop = !mbZoomFlipFlop;
 		if(mbZoomFlipFlop){
 			miStoredZoom = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI);
@@ -1567,6 +1570,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			gpApplication->GetParmMan()->Set(true, miStoredZoom, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
 			
 		}
+		 */
 		
 	}
 	// zoom in
@@ -5207,7 +5211,7 @@ void CKSApplication::PlaybackRewind()
 	// Snap to grid
 	if(bGrid_On){
 		
-		miSongPos = miSongPos > 16 ? SnapToGridStart(miSongPos - 16): 0;
+		miSongPos = SnapToGrid(miSongPos + 16);
 		miSongPos = miSongPos > 16 ? SnapToGridStart(miSongPos - 16): 0;
 	}
 	else{
@@ -6135,5 +6139,20 @@ void CKSApplication::Set_Project_License()
 {
 	SetGlobalParm(giParamID_Show_Export_For_Web_Window, true, giSectionGUI);
 	
+	
+}
+
+void CKSApplication::Zoom(){
+
+	
+	mbZoomFlipFlop = !mbZoomFlipFlop;
+	
+	if(mbZoomFlipFlop){
+		miStoredZoom = GetGlobalParm(giParamID_Zoom, giSectionGUI);
+		GetParmMan()->Set(true, giZoom_Levels - 10, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+	}
+	else{
+		GetParmMan()->Set(true, miStoredZoom, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+	}
 	
 }
