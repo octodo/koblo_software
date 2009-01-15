@@ -996,10 +996,12 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			break;
 		}
 		 */
+			/*
 		case ge::Keyz: {
 			gpApplication->Zoom();
 			break;
 		}
+		*/
 			/*
 		case ge::Keyw: {
 			tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Waveform, giSectionGUI) != 0);

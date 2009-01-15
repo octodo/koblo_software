@@ -185,6 +185,7 @@ public:
 	void setWet(float value);
 	void setDry(float value);
 	void setSampleRate(tuint32 uiFreqHz);
+	void setAuxReturn(float value);
     void flush();
     float maxL, maxR;
 
@@ -249,6 +250,8 @@ private:
 	float	bufallpassR3[allpasstuningR3];
 	float	bufallpassL4[allpasstuningL4];
 	float	bufallpassR4[allpasstuningR4];
+	
+	float  auxreturn;
 };
 
 #endif//_revmodel_

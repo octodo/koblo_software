@@ -269,9 +269,13 @@ void CTrack_Top::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 		}
 		case giControlID_Open_Mix_Button:{
 			if (iValueNew == 0) {
+				
+				gpApplication->Open_Close_Mix_Window();
+				/*
 				// Show/ hide Mix Window
 				tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Mix_Window, giSectionGUI) != 0);
 				gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
+				 */
 			}
 			break;
 		}

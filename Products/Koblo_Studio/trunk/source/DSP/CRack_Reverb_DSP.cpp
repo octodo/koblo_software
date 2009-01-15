@@ -93,4 +93,10 @@ void CRack_Reverb_DSP:: Set_Reverb_Mix(tint32 iData)
 	
 }
 
+void CRack_Reverb_DSP::Set_AUX2_Return(tfloat32 fValue)
+{
+	KobloVerb.setAuxReturn (fValue);
+	
+}
+	
 

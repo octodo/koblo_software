@@ -27,12 +27,14 @@ public:
 	virtual void Set_Reverb_Color1(tint32 iValue);
 	virtual void Set_Reverb_Color2(tint32 iValue);
 	virtual void Set_Reverb_Mix(tint32 iValue);
+	virtual void Set_AUX2_Return(tfloat32 fValue);
 	
 private:
 
 	revmodel KobloVerb; 
 	tint32 miMix;
 	tbool  mbReverb_On;
+	tfloat32 mfAUX2_Return;
 			
 };
 

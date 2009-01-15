@@ -29,8 +29,9 @@ public:
 	virtual void Set_LF_Damping(tint32 iLF_Damping);
 	virtual void Set_HP_Damping(tint32 iHP_Damping);
 	virtual void Set_Sync_To_Tempo(tbool bSync);
+	virtual void Set_AUX1_Return(tfloat32 fValue);
 	
-	//tint32 GetSampleRate(){ return mfSampleRate;};
+
 	
 	
 private:
@@ -63,6 +64,8 @@ private:
 	tint32 miPower;
 	// Delay time in mSec
 	tint32 miMSec;
+	
+	tfloat mfAUX1_Return;
 	
 
 	virtual void Set_Delay_in_Samples();

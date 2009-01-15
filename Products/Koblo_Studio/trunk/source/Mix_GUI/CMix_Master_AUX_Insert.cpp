@@ -30,14 +30,14 @@ void CMix_Master_AUX_Insert::Init()
 	
 
 	// Echo
-	CreateKnob(ge::IControl::giNoID, IDB_Dial_Aux, ge::SPos(17, 20), 129);
+	CreateKnob(giCtrl_Master_AUX1_Return, IDB_Dial_Aux, ge::SPos(17, 20), 129);
 	// Reverb
-	CreateKnob(ge::IControl::giNoID, IDB_Dial_Aux, ge::SPos(17, 84), 129);
+	CreateKnob(giCtrl_Master_AUX2_Return, IDB_Dial_Aux, ge::SPos(17, 84), 129);
 
-	CreateButton(giCtrlmOpenPlugEdit1, IDB_Button_Edit_Plugin, ge::SPos(116, 48));
-	CreateButton(giCtrlmOpenPlugEdit2, IDB_Button_Edit_Plugin, ge::SPos(116, 48 + 16));
-	CreateButton(giCtrlmOpenPlugEdit3, IDB_Button_Edit_Plugin, ge::SPos(116, 48 + 16 * 2));
-	CreateButton(giCtrlmOpenPlugEdit4, IDB_Button_Edit_Plugin, ge::SPos(116, 48 + 16 * 3));
+	CreateButton(giCtrl_Master_Edit_Insert1, IDB_Button_Edit_Plugin, ge::SPos(116, 48));
+	CreateButton(giCtrl_Master_Edit_Insert2, IDB_Button_Edit_Plugin, ge::SPos(116, 48 + 16));
+	CreateButton(giCtrl_Master_Edit_Insert3, IDB_Button_Edit_Plugin, ge::SPos(116, 48 + 16 * 2));
+	CreateButton(giCtrl_Master_Edit_Insert4, IDB_Button_Edit_Plugin, ge::SPos(116, 48 + 16 * 3));
 
 	// Inserts
 	tint32 piIDs[ge::IPopupMenu::BitmapCount];
@@ -70,38 +70,42 @@ void CMix_Master_AUX_Insert::Init()
 	pi[1] = 0;
 	List.pItems[0] = ge::IPopupMenu::SMenuItem("None", 0, NULL, NULL, -1, 0, (void*)pi);
 	
-	CreatePop(giCtrlm_InsertPop1, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48), ge::SSize(61, 15), ge::SRGB(204,204,204));
-	CreatePop(giCtrlm_InsertPop2, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16), ge::SSize(61, 15), ge::SRGB(204,204,204));
-	CreatePop(giCtrlm_InsertPop3, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16 * 2), ge::SSize(61, 15), ge::SRGB(204,204,204));
-	CreatePop(giCtrlm_InsertPop4, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16 * 3), ge::SSize(61, 15), ge::SRGB(204,204,204));
+	CreatePop(giCtrl_Master_Insert_Pop1, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48), ge::SSize(61, 15), ge::SRGB(204,204,204));
+	CreatePop(giCtrl_Master_Insert_Pop2, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16), ge::SSize(61, 15), ge::SRGB(204,204,204));
+	CreatePop(giCtrl_Master_Insert_Pop3, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16 * 2), ge::SSize(61, 15), ge::SRGB(204,204,204));
+	CreatePop(giCtrl_Master_Insert_Pop4, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16 * 3), ge::SSize(61, 15), ge::SRGB(204,204,204));
 }
 
 
 void CMix_Master_AUX_Insert::ConnectControls()
 {
-	RegisterGlobalControl(giSection_Master, giCtrlm_InsertPop1, giParam_Master_Insert1);
-	RegisterGlobalControl(giSection_Master, giCtrlm_InsertPop2, giParam_Master_Insert2);
-	RegisterGlobalControl(giSection_Master, giCtrlm_InsertPop3, giParam_Master_Insert3);
-	RegisterGlobalControl(giSection_Master, giCtrlm_InsertPop4, giParam_Master_Insert4);
+	RegisterGlobalControl(giSection_Master, giCtrl_Master_Insert_Pop1, giParam_Master_Insert1);
+	RegisterGlobalControl(giSection_Master, giCtrl_Master_Insert_Pop2, giParam_Master_Insert2);
+	RegisterGlobalControl(giSection_Master, giCtrl_Master_Insert_Pop3, giParam_Master_Insert3);
+	RegisterGlobalControl(giSection_Master, giCtrl_Master_Insert_Pop4, giParam_Master_Insert4);
+	
+	RegisterGlobalControlWithX3Translation(giSection_Master, giCtrl_Master_AUX1_Return, giParam_Master_AUX1_Return, 4);
+	RegisterGlobalControlWithX3Translation(giSection_Master, giCtrl_Master_AUX2_Return, giParam_Master_AUX2_Return, 4);
+
 }
 
 void CMix_Master_AUX_Insert::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 {
 	GetParmMan()->ControlUpdate(miPaneID, pControl->GetID(), iValueNew);
 	
-	if (pControl->GetID() == giCtrlmOpenPlugEdit1) {
+	if (pControl->GetID() == giCtrl_Master_Edit_Insert1) {
 //		GetParmMan()->Set(true, 1, giParam_Ch_Insert1GUIOpen, de::IParameterManager::TypeGlobal, miSection);
 		gpApplication->GetPlugInManager()->OpenGUI(2048, 0);
 	}
-	else if (pControl->GetID() == giCtrlmOpenPlugEdit2) {
+	else if (pControl->GetID() == giCtrl_Master_Edit_Insert2) {
 //		GetParmMan()->Set(true, 1, giParam_Ch_Insert2GUIOpen, de::IParameterManager::TypeGlobal, miSection);
 		gpApplication->GetPlugInManager()->OpenGUI(2048, 1);
 	}
-	else if (pControl->GetID() == giCtrlmOpenPlugEdit3) {
+	else if (pControl->GetID() == giCtrl_Master_Edit_Insert3) {
 //		GetParmMan()->Set(true, 1, giParam_Ch_Insert3GUIOpen, de::IParameterManager::TypeGlobal, miSection);
 		gpApplication->GetPlugInManager()->OpenGUI(2048, 2);
 	}
-	else if (pControl->GetID() == giCtrlmOpenPlugEdit4) {
+	else if (pControl->GetID() == giCtrl_Master_Edit_Insert4) {
 //		GetParmMan()->Set(true, 1, giParam_Ch_Insert4GUIOpen, de::IParameterManager::TypeGlobal, miSection);
 		gpApplication->GetPlugInManager()->OpenGUI(2048, 3);
 	}

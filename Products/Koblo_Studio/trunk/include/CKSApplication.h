@@ -71,7 +71,8 @@ public virtual CKSInternet_Features,
 //public virtual CKSXML_Read_Project, 
 //public virtual CKSXML_Write_Project,
 //public virtual CKSXML_Create_Project,
-public virtual CKSXML_Create_Sample
+public virtual CKSXML_Create_Sample,
+public virtual CGUI_Controller
 //public virtual CKSXML_Sign_In
 {
 
