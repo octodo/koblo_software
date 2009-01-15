@@ -50,8 +50,14 @@ void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	// missing code 
 	std::string sFileName = gpApplication->GetProjectName() + ".xml";
 	
+	// Convert path from our internal format
+	tchar pszFilePath_OS_Format[1024];
+	if (!IFile::PathToOS2(sFileName.c_str(), pszFilePath_OS_Format)) {
+		tbool bDummy_SomethingIsRotten = true;
+	}
+	
 	//!!! path is missing write file to disk
-	pDoc->SaveFile(sFileName.c_str());
+	pDoc->SaveFile(pszFilePath_OS_Format);
 	
 }
 
