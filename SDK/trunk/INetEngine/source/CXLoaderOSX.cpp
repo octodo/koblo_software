@@ -2,12 +2,15 @@
 
 #include "ineInternalOS.h"
 
+#include "curl/curl.h"
+
 
 void CXloader::Constructor_OSSpecific()
 {
 	//mURLRef = NULL;
 	mMessageRef = NULL;
 	mReadStreamRef = mReadStreamRef_FileToUpload = NULL;
+	mURLRef_FileToUpload = NULL;
 	mParametersDataRef = NULL;
 } // Constructor_OSSpecific
 
@@ -61,18 +64,14 @@ tbool CXloader::OpenConnection_OSSpecific()
 		return false;
 	}
 	
-	if (mbIsUploader) {
-		mReadStreamRef_FileToUpload = NULL; // TODO: Create from file
-	}
-
-	// Set desired MIME type for download
+	// Set desired MIME type for download/reply
 	if (meMIMEType != MIME_TYPE_NONE) {
 		CFStringRef vMIME = CFStringCreateWithCStringNoCopy(NULL, GetMIMEString(), kCFStringEncodingMacRoman, NULL);
 		CFHTTPMessageSetHeaderFieldValue(mMessageRef, CFSTR("Accept"), vMIME);
 	}
 
-	// Insert parameters into message body (POST verb only)
-	if (eVerbToUse == VERB_POST) {
+	// Insert parameters into message body (POST + PUT verbs only)
+	if (eVerbToUse != VERB_GET) {
 		CFHTTPMessageSetHeaderFieldValue(mMessageRef, CFSTR("Content-Type"), CFSTR("application/x-www-form-urlencoded"));
 		// Are there any parameters?
 		if (bHasParameters) {
@@ -85,10 +84,43 @@ tbool CXloader::OpenConnection_OSSpecific()
 		}
 	}
 
+	// Prepare file for upload (IUploader only)
+	if ((mbIsUploader) && (mpfileToUpload)) {
+		tchar pszFilePath_InternalFormat[1024];
+		*pszFilePath_InternalFormat = '\0';
+		mpfileToUpload->GetPathName(pszFilePath_InternalFormat);
+		tchar pszFilePath_OSFormat[1024];
+		if (!IFile::PathToOS2(pszFilePath_InternalFormat, pszFilePath_OSFormat)) {
+			tchar pszErr[2048];
+			sprintf(pszErr, "Unable to convert file path \"%s\" to OS format", pszFilePath_InternalFormat);
+			SetError(pszErr);
+			return false;
+		}
+		CFStringRef cfstrFilePath = CFStringCreateWithCStringNoCopy(NULL, pszFilePath_OSFormat, kCFStringEncodingMacRoman, NULL);
+		if (cfstrFilePath == NULL) {
+			SetError("Unable to create CFStringRef from upload file path (out of memory?)");
+			return false;
+		}
+		mURLRef_FileToUpload = CFURLCreateWithFileSystemPath(NULL, cfstrFilePath, kCFURLPOSIXPathStyle, false);
+		if (mURLRef_FileToUpload == NULL) {
+			tchar pszErr[2048];
+			sprintf(pszErr, "Unable to create a file:// URL from upload file path \"%s\"", pszFilePath_OSFormat);
+			SetError(pszErr);
+			return false;
+		}
+		mReadStreamRef_FileToUpload = CFReadStreamCreateWithFile(NULL, mURLRef_FileToUpload);
+		if (mReadStreamRef_FileToUpload == NULL) {
+			tchar pszErr[2048];
+			sprintf(pszErr, "Unable to create CFReadStreamRef from upload file path \"%s\"", pszFilePath_OSFormat);
+			SetError(pszErr);
+			return false;
+		}
+	}
+	
 	// Allocate stream ref
 	// (Create for streamed http because large data can't be kept in memory)
 	//mReadStreamRef = CFReadStreamCreateForHTTPRequest(kCFAllocatorDefault, mMessageRef);
-	mReadStreamRef = CFReadStreamCreateForStreamedHTTPRequest(kCFAllocatorDefault, mMessageRef, NULL);
+	mReadStreamRef = CFReadStreamCreateForStreamedHTTPRequest(kCFAllocatorDefault, mMessageRef, mReadStreamRef_FileToUpload);
 	if (mReadStreamRef == NULL)
 	{
 		SetError("Unable to create read-stream ref");
@@ -127,6 +159,16 @@ void CXloader::CloseConnection_OSSpecific()
 	if (mParametersDataRef) {
 		CFRelease( mParametersDataRef );
 		mParametersDataRef = NULL;
+	}
+	
+	if (mReadStreamRef_FileToUpload) {
+		CFRelease( mReadStreamRef_FileToUpload );
+		mReadStreamRef_FileToUpload = NULL;
+	}
+	
+	if (mURLRef_FileToUpload) {
+		CFRelease( mURLRef_FileToUpload );
+		mURLRef_FileToUpload = NULL;
 	}
 } // CloseConnection_OSSpecific
 

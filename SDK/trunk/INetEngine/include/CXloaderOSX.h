@@ -7,4 +7,5 @@ protected:
 CFHTTPMessageRef        mMessageRef;
 CFReadStreamRef         mReadStreamRef;
 CFReadStreamRef         mReadStreamRef_FileToUpload;
+CFURLRef				mURLRef_FileToUpload;
 CFDataRef mParametersDataRef;
