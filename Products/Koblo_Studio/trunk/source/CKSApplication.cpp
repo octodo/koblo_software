@@ -467,6 +467,10 @@ void CKSApplication::AddParameters()
 	AddGlobalParm(giSection_Master, giParam_Master_Insert6Bypass, 0, 1, 0);
 	AddGlobalParm(giSection_Master, giParam_Master_Insert7Bypass, 0, 1, 0);
 	AddGlobalParm(giSection_Master, giParam_Master_Insert8Bypass, 0, 1, 0);
+	
+	AddGlobalParm(giSection_Master, giParam_Master_AUX1_Return, 0, 31622, 10000);
+	AddGlobalParm(giSection_Master, giParam_Master_AUX2_Return, 0, 31622, 10000);
+	
 	AddGlobalParm(giSection_Master, giLast_Master_Param, 0, 1, 0);
 	
 	
@@ -1504,15 +1508,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	// Mix window
 	else if (s.compare("View@Mixer") == 0) {
 		// Show/hide Mix Window
-		
-		tbool bTest = (GetGlobalParm(giParamID_Show_Mix_Window, giSectionGUI) != 0);
-		tbool bReallyVisible = GetModule()->GetHost()->IsWindowVisible(giMix_Window) == 0 ? false : true;
-		if (bTest != bReallyVisible) {
-			GetParmMan()->Set(true, !bTest, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
-		}
-		GetParmMan()->Set(true, !bReallyVisible, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
-		 
-		
+		Open_Close_Mix_Window();
 	}
 	// Track Editor
 	else if (s.compare("View@Track Editor") == 0) {
@@ -1558,6 +1554,9 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	// Zoom
 	else if (s.compare("View@Zoom") == 0) {
 		
+		Zoom();
+		/*
+		
 		mbZoomFlipFlop = !mbZoomFlipFlop;
 		if(mbZoomFlipFlop){
 			miStoredZoom = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI);
@@ -1567,6 +1566,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			gpApplication->GetParmMan()->Set(true, miStoredZoom, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
 			
 		}
+		 */
 		
 	}
 	// zoom in
@@ -2578,12 +2578,14 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 			if (bIsFolder) {
 				msProjectFolder = sItem + ":";
 				msProjectPathName = GetProjDir_Contents() + KSPROJ_FILE;
+				SetProjectName(GetProjDir_Contents());
 			}
 			else {
 				// This means we've selected an existing file
 				
 				msProjectFolder = sItem + ":"; //.substr(0, iPosColon + 1);
 				msProjectPathName = GetProjDir_Contents() + KSPROJ_FILE;
+				SetProjectName(GetProjDir_Contents());
 			}
 		}
 		else {
@@ -2606,6 +2608,7 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 			
 			msProjectFolder = sItem + ':';
 			msProjectPathName = GetProjDir_Contents() + KSPROJ_FILE;
+			SetProjectName(GetProjDir_Contents());
 		}
 		
 		// Save the project
@@ -2710,6 +2713,7 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 						if (!ExportProjectForWeb_Compress(sWaveOriginalL, sWaveOriginalR, pInfo, ac::geQualityLossless24)) {
 							msProjectFolder = sProjDir_Old;
 							msProjectPathName = sProjDir_ProjFile_Old;
+							SetProjectName(GetProjDir_Contents());
 							return false;
 						}
 					}
@@ -2779,6 +2783,7 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 										msExtendedError = "It seems you cancelled operation";
 										msProjectFolder = sProjDir_Old;
 										msProjectPathName = sProjDir_ProjFile_Old;
+										SetProjectName(GetProjDir_Contents());
 										ShowProgress(0, 0, NULL, NULL, NULL);
 										return false;
 									}
@@ -2801,6 +2806,7 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 										) {
 											msProjectFolder = sProjDir_Old;
 											msProjectPathName = sProjDir_ProjFile_Old;
+											SetProjectName(GetProjDir_Contents());
 											return false;
 										}
 									}
@@ -2812,6 +2818,7 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 										) {
 											msProjectFolder = sProjDir_Old;
 											msProjectPathName = sProjDir_ProjFile_Old;
+											SetProjectName(GetProjDir_Contents());
 											return false;
 										}
 									}
@@ -2834,6 +2841,7 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 							msExtendedError = "Unable to export clip '" + pInfo->sName + "'\nNo original wave(s) and/or premade compressed file(s) found.";
 							msProjectFolder = sProjDir_Old;
 							msProjectPathName = sProjDir_ProjFile_Old;
+							SetProjectName(GetProjDir_Contents());
 							ShowProgress(0, 0, NULL, NULL, NULL);
 							return false;
 						}
@@ -2841,6 +2849,7 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 							msExtendedError = "Unable to export clip '" + pInfo->sName + "'\nCopy operation of premade compressed file(s) failed.";
 							msProjectFolder = sProjDir_Old;
 							msProjectPathName = sProjDir_ProjFile_Old;
+							SetProjectName(GetProjDir_Contents());
 							ShowProgress(0, 0, NULL, NULL, NULL);
 							return false;
 						}
@@ -3402,6 +3411,7 @@ tbool CKSApplication::MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::lis
 						CleanProject(0);
 						msProjectPathName = "";
 						msProjectFolder = "";
+						SetProjectName(GetProjDir_Contents());
 						return false;
 					}
 
@@ -3551,6 +3561,7 @@ tbool CKSApplication::MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::lis
 							CleanProject(0);
 							msProjectPathName = "";
 							msProjectFolder = "";
+							SetProjectName(GetProjDir_Contents());
 							return false;
 						}
 					}
@@ -3585,6 +3596,7 @@ tbool CKSApplication::MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::lis
 							CleanProject(0);
 							msProjectPathName = "";
 							msProjectFolder = "";
+							SetProjectName(GetProjDir_Contents());
 							return false;
 						}
 					}
@@ -3607,6 +3619,7 @@ tbool CKSApplication::MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::lis
 					CleanProject(0);
 					msProjectPathName = "";
 					msProjectFolder = "";
+					SetProjectName(GetProjDir_Contents());
 					return false;
 				}
 			}
@@ -3620,6 +3633,7 @@ tbool CKSApplication::MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::lis
 		CleanProject(0);
 		msProjectPathName = "";
 		msProjectFolder = "";
+		SetProjectName(GetProjDir_Contents());
 		return false;
 	}
 
@@ -5207,7 +5221,7 @@ void CKSApplication::PlaybackRewind()
 	// Snap to grid
 	if(bGrid_On){
 		
-		miSongPos = miSongPos > 16 ? SnapToGridStart(miSongPos - 16): 0;
+		miSongPos = SnapToGrid(miSongPos + 16);
 		miSongPos = miSongPos > 16 ? SnapToGridStart(miSongPos - 16): 0;
 	}
 	else{
@@ -6135,5 +6149,20 @@ void CKSApplication::Set_Project_License()
 {
 	SetGlobalParm(giParamID_Show_Export_For_Web_Window, true, giSectionGUI);
 	
+	
+}
+
+void CKSApplication::Zoom(){
+
+	
+	mbZoomFlipFlop = !mbZoomFlipFlop;
+	
+	if(mbZoomFlipFlop){
+		miStoredZoom = GetGlobalParm(giParamID_Zoom, giSectionGUI);
+		GetParmMan()->Set(true, giZoom_Levels - 10, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+	}
+	else{
+		GetParmMan()->Set(true, miStoredZoom, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+	}
 	
 }

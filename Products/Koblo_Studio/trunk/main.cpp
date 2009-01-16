@@ -1023,11 +1023,11 @@ static void HandleNew_Menu()
 	MenuItemsWindow.pItems[5] = ge::IContext::SMenuItem("View Grid", false, NULL, 'G');
 	MenuItemsWindow.pItems[6] = ge::IContext::SMenuItem("View Fades", false, NULL, 'F');
 	MenuItemsWindow.pItems[7] = ge::IContext::SMenuItem("-");
-	MenuItemsWindow.pItems[8] = ge::IContext::SMenuItem("Zoom");
+	MenuItemsWindow.pItems[8] = ge::IContext::SMenuItem("Zoom", false, NULL, '0');
 	MenuItemsWindow.pItems[9] = ge::IContext::SMenuItem("Zoom In", false, NULL, '+');
 	MenuItemsWindow.pItems[10] = ge::IContext::SMenuItem("Zoom Out", false, NULL, '-');
 	MenuItemsWindow.pItems[11] = ge::IContext::SMenuItem("-");
-	MenuItemsWindow.pItems[12] = ge::IContext::SMenuItem("Jump to Mouse", false, NULL, '0');
+	MenuItemsWindow.pItems[12] = ge::IContext::SMenuItem("Jump to Mouse", false, NULL, 'J');
 	
 	//-----------------------------------
 	// tools menu

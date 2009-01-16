@@ -48,8 +48,8 @@ void CRack_Echo_DSP::Process(tint32 iSamples)
 			pfBuffer2[iPos] = f2 + pfR[uiSample];
 
 			// Write output
-			pfL[uiSample] = f1;
-			pfR[uiSample] = f2;
+			pfL[uiSample] = f1 * mfAUX1_Return;
+			pfR[uiSample] = f2 * mfAUX1_Return;
 			
 			miPos = iPos;
 			// End of echo
@@ -164,7 +164,6 @@ void CRack_Echo_DSP::Set_Sync_To_Tempo(tbool bSync)
 {
 	mbSyncToHost = bSync;
 	
-//	Set_Delay_in_Samples();
 }
 
 void CRack_Echo_DSP::Set_Delay_in_Samples()
@@ -172,4 +171,13 @@ void CRack_Echo_DSP::Set_Delay_in_Samples()
 	tint32 iSampleRate = gpApplication->GetSampleRate();
 	miDelayTime = miMSec * iSampleRate / 1000;
 }
+
+
+
+void CRack_Echo_DSP::Set_AUX1_Return(tfloat32  fVal)
+{
+
+	mfAUX1_Return = fVal;
+}
+
 

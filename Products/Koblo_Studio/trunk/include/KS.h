@@ -30,6 +30,8 @@
 #include "CKSUsername_And_Password_Model.h"
 #include "CKSInternet_Features.h"
 
+#include "CGUI_Controller.h"
+
 #include "aioe.h"
 #include "mioe.h"
 

@@ -34,14 +34,14 @@ void CMix_Buss_AUX_Insert::Init()
 	
 
 	// Echo
-	CreateKnob(giCtrl_AUX1Send + miCtrl_Offset, IDB_Dial_Aux, ge::SPos(17, 20), 129);
+	CreateKnob(giCtr_Mix_Buss_AUX1Send + miCtrl_Offset, IDB_Dial_Aux, ge::SPos(17, 20), 129);
 	// Reverb
-	CreateKnob(giCtrl_AUX2Send + miCtrl_Offset, IDB_Dial_Aux, ge::SPos(17, 84), 129);
+	CreateKnob(giCtr_Mix_Buss_AUX2Send + miCtrl_Offset, IDB_Dial_Aux, ge::SPos(17, 84), 129);
 
-	CreateButton(miCtrl_Offset + giCtrlOpenPlugEdit1, IDB_Button_Edit_Plugin, ge::SPos(116, 48));
-	CreateButton(miCtrl_Offset + giCtrlOpenPlugEdit2, IDB_Button_Edit_Plugin, ge::SPos(116, 48 + 16));
-	CreateButton(miCtrl_Offset + giCtrlOpenPlugEdit3, IDB_Button_Edit_Plugin, ge::SPos(116, 48 + 16 * 2));
-	CreateButton(miCtrl_Offset + giCtrlOpenPlugEdit4, IDB_Button_Edit_Plugin, ge::SPos(116, 48 + 16 * 3));
+	CreateButton(miCtrl_Offset + giCtrl_Trak_Edit_Insert1, IDB_Button_Edit_Plugin, ge::SPos(116, 48));
+	CreateButton(miCtrl_Offset + giCtrl_Trak_Edit_Insert2, IDB_Button_Edit_Plugin, ge::SPos(116, 48 + 16));
+	CreateButton(miCtrl_Offset + giCtrl_Trak_Edit_Insert3, IDB_Button_Edit_Plugin, ge::SPos(116, 48 + 16 * 2));
+	CreateButton(miCtrl_Offset + giCtrl_Trak_Edit_Insert4, IDB_Button_Edit_Plugin, ge::SPos(116, 48 + 16 * 3));
 
 	// Inserts
 	tint32 piIDs[ge::IPopupMenu::BitmapCount];
@@ -74,43 +74,65 @@ void CMix_Buss_AUX_Insert::Init()
 	pi[1] = 0;
 	List.pItems[0] = ge::IPopupMenu::SMenuItem("None", 0, NULL, NULL, -1, 0, (void*)pi);
 	
-	CreatePop(giCtrl_InsertPop1 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48), ge::SSize(61, 15),ge::SRGB(204,204,204));
-	CreatePop(giCtrl_InsertPop2 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16), ge::SSize(61, 15),ge::SRGB(204,204,204));
-	CreatePop(giCtrl_InsertPop3 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16 * 2), ge::SSize(61, 15),ge::SRGB(204,204,204));
-	CreatePop(giCtrl_InsertPop4 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16 * 3), ge::SSize(61, 15),ge::SRGB(204,204,204));
+	CreatePop(giCtr_Mix_Buss_Edit_Insert1 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48), ge::SSize(61, 15),ge::SRGB(204,204,204));
+	CreatePop(giCtr_Mix_Buss_Edit_Insert2 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16), ge::SSize(61, 15),ge::SRGB(204,204,204));
+	CreatePop(giCtr_Mix_Buss_Edit_Insert3 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16 * 2), ge::SSize(61, 15),ge::SRGB(204,204,204));
+	CreatePop(giCtr_Mix_Buss_Edit_Insert4 + miCtrl_Offset, IDB_Button_Invisible_16_64, List, ge::SPos(64, 48 + 16 * 3), ge::SSize(61, 15),ge::SRGB(204,204,204));
 }
 
 
 void CMix_Buss_AUX_Insert::ConnectControls()
 {
-	RegisterGlobalControlWithX3Translation(giSection_First_Buss + miID, giCtrl_AUX1Send + miCtrl_Offset, giParam_Buss_AUX1, 4);
-	RegisterGlobalControlWithX3Translation(giSection_First_Buss + miID, giCtrl_AUX2Send + miCtrl_Offset, giParam_Buss_AUX2, 4);
-	RegisterGlobalControl(giSection_First_Buss + miID, giCtrl_InsertPop1 + miCtrl_Offset, giParam_Buss_Insert1);
-	RegisterGlobalControl(giSection_First_Buss + miID, giCtrl_InsertPop2 + miCtrl_Offset, giParam_Buss_Insert2);
-	RegisterGlobalControl(giSection_First_Buss + miID, giCtrl_InsertPop3 + miCtrl_Offset, giParam_Buss_Insert3);
-	RegisterGlobalControl(giSection_First_Buss + miID, giCtrl_InsertPop4 + miCtrl_Offset, giParam_Buss_Insert4);
+	
+	RegisterGlobalControlWithX3Translation(giSection_First_Buss + miID, giCtr_Mix_Buss_AUX1Send + miCtrl_Offset, giParam_Buss_AUX1, 4);
+	RegisterGlobalControlWithX3Translation(giSection_First_Buss + miID, giCtr_Mix_Buss_AUX2Send + miCtrl_Offset, giParam_Buss_AUX2, 4);
+	RegisterGlobalControl(giSection_First_Buss + miID, giCtr_Mix_Buss_Edit_Insert1 + miCtrl_Offset, giParam_Buss_Insert1);
+	RegisterGlobalControl(giSection_First_Buss + miID, giCtr_Mix_Buss_Edit_Insert2 + miCtrl_Offset, giParam_Buss_Insert2);
+	RegisterGlobalControl(giSection_First_Buss + miID, giCtr_Mix_Buss_Edit_Insert3 + miCtrl_Offset, giParam_Buss_Insert3);
+	RegisterGlobalControl(giSection_First_Buss + miID, giCtr_Mix_Buss_Edit_Insert4 + miCtrl_Offset, giParam_Buss_Insert4);
 	
 	
 }
 
 void CMix_Buss_AUX_Insert::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 {
+	
+	if (pControl->GetID() == giCtr_Mix_Buss_Insert_Pop1 + miCtrl_Offset ||
+		pControl->GetID() == giCtr_Mix_Buss_Insert_Pop2 + miCtrl_Offset ||
+		pControl->GetID() == giCtr_Mix_Buss_Insert_Pop3 + miCtrl_Offset ||
+		pControl->GetID() == giCtr_Mix_Buss_Insert_Pop4 + miCtrl_Offset) {
+		if (iValueNew != 0) {
+			//			tint32 iInsert = pControl->GetID() - (giCtrl_Mix_Insert_Pop1 + miCtrl_Offset);
+			ge::IPopupMenu* pPopup = dynamic_cast<ge::IDropDownListBox*>(pControl)->GetPopup();
+			tint32* pi = (tint32*)(pPopup->GetData(iValueNew));
+			tint32 iCompanyID = pi[0];
+			tint32 iProductID = pi[1];
+			if (iCompanyID == 2) {
+				iValueNew = iProductID;
+			}
+			else {
+				iValueNew = (iCompanyID << 8) | iProductID;
+			}
+		}
+	}
+	
+	
 	GetParmMan()->ControlUpdate(miPaneID, pControl->GetID(), iValueNew);
 	
-	if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit1) {
-//		GetParmMan()->Set(true, 1, giParam_Ch_Insert1GUIOpen, de::IParameterManager::TypeGlobal, miSection);
+	if (pControl->GetID() == miCtrl_Offset + giCtr_Mix_Buss_Insert_Pop1) {
+
 		gpApplication->GetPlugInManager()->OpenGUI(miID + 1024, 0);
 	}
-	else if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit2) {
-//		GetParmMan()->Set(true, 1, giParam_Ch_Insert2GUIOpen, de::IParameterManager::TypeGlobal, miSection);
+	else if (pControl->GetID() == miCtrl_Offset + giCtr_Mix_Buss_Insert_Pop2) {
+
 		gpApplication->GetPlugInManager()->OpenGUI(miID + 1024, 1);
 	}
-	else if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit3) {
-//		GetParmMan()->Set(true, 1, giParam_Ch_Insert3GUIOpen, de::IParameterManager::TypeGlobal, miSection);
+	else if (pControl->GetID() == miCtrl_Offset + giCtr_Mix_Buss_Insert_Pop3) {
+
 		gpApplication->GetPlugInManager()->OpenGUI(miID + 1024, 2);
 	}
-	else if (pControl->GetID() == miCtrl_Offset + giCtrlOpenPlugEdit4) {
-//		GetParmMan()->Set(true, 1, giParam_Ch_Insert4GUIOpen, de::IParameterManager::TypeGlobal, miSection);
+	else if (pControl->GetID() == miCtrl_Offset + giCtr_Mix_Buss_Insert_Pop4) {
+
 		gpApplication->GetPlugInManager()->OpenGUI(miID + 1024, 3);
 	}
 }

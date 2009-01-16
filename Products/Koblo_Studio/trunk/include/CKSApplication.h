@@ -71,7 +71,8 @@ public virtual CKSInternet_Features,
 //public virtual CKSXML_Read_Project, 
 //public virtual CKSXML_Write_Project,
 //public virtual CKSXML_Create_Project,
-public virtual CKSXML_Create_Sample
+public virtual CKSXML_Create_Sample,
+public virtual CGUI_Controller
 //public virtual CKSXML_Sign_In
 {
 
@@ -417,6 +418,8 @@ public:
 	void Stop_Timer(){ mbTimer = false;};
 	tbool Timer_Is_Running() { return mbTimer;};
 	
+	virtual void Zoom();
+	
 	
 
 protected:
@@ -570,10 +573,11 @@ protected:
 	
 	void Set_Project_License();
 	
-	tuint miStoredZoom;
+	tuint32 miStoredZoom;
 	tbool mbZoomFlipFlop;
 	
 	tbool mbTimer;
+
 
 	
 	

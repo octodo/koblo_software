@@ -40,6 +40,7 @@
 		FC31AC9B0EEFE9ED00B3D3B7 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC990EEFE9ED00B3D3B7 /* tinyxmlparser.cpp */; };
 		FC31AC9C0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC31AC9A0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp */; };
 		FC45162A0DC200F900ADDE81 /* CMix_Buss_AUX_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC4516290DC200F900ADDE81 /* CMix_Buss_AUX_Insert.cpp */; };
+		FC598D2E0F1F4EDA00DE7E7B /* CGUI_Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC598D2D0F1F4EDA00DE7E7B /* CGUI_Controller.cpp */; };
 		FC6117820DA4D61B00334DDF /* CKSSplashScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC6117810DA4D61B00334DDF /* CKSSplashScreen.cpp */; };
 		FC6117840DA4D62A00334DDF /* CKSBaseGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC6117830DA4D62A00334DDF /* CKSBaseGUI.cpp */; };
 		FC61178C0DA4D66F00334DDF /* CKSModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC61178B0DA4D66F00334DDF /* CKSModule.cpp */; };
@@ -321,6 +322,8 @@
 		FC31AC9A0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlerror.cpp; path = ../../../SDK/tinyxml/tinyxmlerror.cpp; sourceTree = SOURCE_ROOT; };
 		FC4516290DC200F900ADDE81 /* CMix_Buss_AUX_Insert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CMix_Buss_AUX_Insert.cpp; path = source/Mix_GUI/CMix_Buss_AUX_Insert.cpp; sourceTree = "<group>"; };
 		FC4516380DC2016900ADDE81 /* CMix_Buss_AUX_Insert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_Buss_AUX_Insert.h; path = include/Mix_GUI/CMix_Buss_AUX_Insert.h; sourceTree = "<group>"; };
+		FC598D2C0F1F4ECA00DE7E7B /* CGUI_Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CGUI_Controller.h; path = include/Internet_Features/CGUI_Controller.h; sourceTree = "<group>"; };
+		FC598D2D0F1F4EDA00DE7E7B /* CGUI_Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CGUI_Controller.cpp; path = source/CGUI_Controller.cpp; sourceTree = "<group>"; };
 		FC6117810DA4D61B00334DDF /* CKSSplashScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSSplashScreen.cpp; path = source/CKSSplashScreen.cpp; sourceTree = "<group>"; };
 		FC6117830DA4D62A00334DDF /* CKSBaseGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSBaseGUI.cpp; path = source/CKSBaseGUI.cpp; sourceTree = "<group>"; };
 		FC61178B0DA4D66F00334DDF /* CKSModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKSModule.cpp; path = source/CKSModule.cpp; sourceTree = "<group>"; };
@@ -631,6 +634,7 @@
 				7C771DB60CAA4EC200A78C4E /* SoloMute */,
 				FCF9545D0F12590F005147D1 /* Track_View */,
 				FCF336D30F1215D200AC1BBA /* Username_And_Password_View */,
+				FC598D2C0F1F4ECA00DE7E7B /* CGUI_Controller.h */,
 				320072BF0ED1900F0035E5A8 /* CKSPreferences.h */,
 				FC6117960DA4D70500334DDF /* CKSApplication.h */,
 				E358B3A30DDAF8A200A6863F /* IRegionCallback.h */,
@@ -664,6 +668,7 @@
 				7C771DB10CAA4E9A00A78C4E /* SoloMute */,
 				FCF954180F125849005147D1 /* Track_View */,
 				FCF336D60F12160700AC1BBA /* Username_And_Password_View */,
+				FC598D2D0F1F4EDA00DE7E7B /* CGUI_Controller.cpp */,
 				320072BB0ED18FC30035E5A8 /* CKSPreferences.cpp */,
 				84A3ED520E82544700860BC6 /* ResourcesInc.cpp */,
 				FC61178D0DA4D68300334DDF /* CKSApplication.cpp */,
@@ -1382,6 +1387,7 @@
 				FCA77C560F14AF3500C0DB63 /* CWave_Parser.cpp in Sources */,
 				FCA77D350F14B7BA00C0DB63 /* CLoad_Errors.cpp in Sources */,
 				FCBB278E0F15E499005C1636 /* CRegion_Controller.cpp in Sources */,
+				FC598D2E0F1F4EDA00DE7E7B /* CGUI_Controller.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

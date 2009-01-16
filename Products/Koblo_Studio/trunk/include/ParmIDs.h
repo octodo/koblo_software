@@ -247,6 +247,7 @@ enum EAUX1ParmID
 	giAUX1_Param_LP_Damping,
 	giAUX1_Param_Sync,
 	
+	
 };
 
 enum EAUX2ParmID
@@ -294,6 +295,9 @@ enum EMasterParmID
 	giParam_Master_Insert6Bypass,
 	giParam_Master_Insert7Bypass,
 	giParam_Master_Insert8Bypass,
+	
+	giParam_Master_AUX1_Return,			// echo
+	giParam_Master_AUX2_Return,			// reverb
 
 	giLast_Master_Param,
 };
