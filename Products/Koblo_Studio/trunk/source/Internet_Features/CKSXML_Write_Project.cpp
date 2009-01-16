@@ -46,19 +46,20 @@ void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 //	printf(xml_str.c_str());
 	
 	//------------------ MISSING CODE ----------------------------
-
+/*
 	// missing code 
 	std::string sFileName = gpApplication->GetProjectName() + ".xml";
 	
-	// Convert path from our internal format
-	tchar pszFilePath_OS_Format[1024];
-	if (!IFile::PathToOS2(sFileName.c_str(), pszFilePath_OS_Format)) {
-		tbool bDummy_SomethingIsRotten = true;
+	CAutoDelete<IFile> pfile(IFile::Create());
+	if (pfile->Open(sFileName.c_str(), IFile::FileCreate)) {
+		pfile->Write(xml_str.c_str(), xml_str.length());
 	}
-	
+*/	
 	//!!! path is missing write file to disk
-	pDoc->SaveFile(pszFilePath_OS_Format);
+//	pDoc->SaveFile(pszFilePath_OS_Format);
 	
+
+
 }
 
 void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID)
@@ -1106,3 +1107,4 @@ void CKSXML_Write_Project::Add_Comment( TiXmlElement* pParent, std::string str)
 	pParent->LinkEndChild( comment );
 	
 }
+

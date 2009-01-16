@@ -46,6 +46,8 @@ public:
 	
 	void Save_Project_As_XML_File_To_Disk();
 	
+	
+	
 private:
 
 	
@@ -96,6 +98,8 @@ private:
 	void Write_Busses(TiXmlElement* pParent);
 	void Write_Bus(TiXmlElement* pParent, tuint uiID);
 	void Write_Bus_Out(TiXmlElement* pParent, tuint uiID);
+
+	
 	
 	
 	

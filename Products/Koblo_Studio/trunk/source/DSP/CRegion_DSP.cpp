@@ -65,6 +65,8 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, c
 		mppPeakFile[3] = IFile::Create();
 		mppPeakFile[3]->Open(sPeakFileName.c_str(), IFile::FileRead);
 	}
+	
+	
 }
 
 CRegion_DSP::~CRegion_DSP()
@@ -225,6 +227,21 @@ void CRegion_DSP::GetPeakFile(IFile** ppFile, tint32 iChannel, tint32 iSize)
 	
 	*ppFile = mppPeakFile[iSize + iChannel * 2];
 }
+
+void CRegion_DSP::Set_Region_UUID(std::string sUUID)
+{
+
+		msRegion_UUID = sUUID;
+}
+
+std::string CRegion_DSP::Get_Region_UUID()
+{
+	if(msRegion_UUID.size() == 0)
+		msRegion_UUID = gpApplication->Get_UUID();
+	
+	return msRegion_UUID;
+}
+
 
 
 

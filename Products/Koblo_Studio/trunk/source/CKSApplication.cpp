@@ -2534,7 +2534,10 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 		return true;
 	}
 	
+	// On mac this is a folder . on windows it's a file
 	std::string sItem = pszPathName;
+	
+	// convert sItem to a folder path
 	SanitizeProjectFolderPath(sItem, pszCorrectExt);
 	
 	// Verify that it has the correct extension
@@ -2553,6 +2556,7 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 	tchar pszNameOnly[512];
 	sprintf(pszNameOnly, sItem.c_str() + iPosColon + 1);
 	*/
+	
 	const tchar* pszNameOnly = pszPathName + (iPosColon + 1);
 	//_strlwr(pszNameOnly);
 	
