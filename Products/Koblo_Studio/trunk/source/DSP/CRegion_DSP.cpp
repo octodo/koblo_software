@@ -228,11 +228,7 @@ void CRegion_DSP::GetPeakFile(IFile** ppFile, tint32 iChannel, tint32 iSize)
 	*ppFile = mppPeakFile[iSize + iChannel * 2];
 }
 
-void CRegion_DSP::Set_Region_UUID(std::string sUUID)
-{
 
-		msRegion_UUID = sUUID;
-}
 
 std::string CRegion_DSP::Get_Region_UUID()
 {

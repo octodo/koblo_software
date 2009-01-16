@@ -1022,7 +1022,7 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 	Maintain_Number_Of_Tracks(0);
 	msStack.iNr_Of_Tracks = 0;
 
-	mFileInfos.clear();
+	mTake_Infos.clear();
 	UpdateGUIFileList();
 	miPreviousLicenseNb = -1;
 	
@@ -1711,9 +1711,9 @@ void CKSApplication::ExportAllClips(ac::EAudioCodec eCodec, ac::EQuality eQualit
 	}
 	else {
 		std::list<CExportClipTask*> listpInfo;
-		std::list<SFileInfo*>::const_iterator it = mFileInfos.begin();
-		for ( ; it != mFileInfos.end(); it++) {
-			SFileInfo* pFileInfo = *it;
+		std::list<SSample_Info*>::const_iterator it = mTake_Infos.begin();
+		for ( ; it != mTake_Infos.end(); it++) {
+			SSample_Info* pFileInfo = *it;
 			const tchar* pszClipName = pFileInfo->sName.c_str();
 			CExportClipTask* pClipInfo = new CExportClipTask( pszClipName, 0, (tuint64)-1);
 			listpInfo.insert(listpInfo.end(), pClipInfo);
@@ -2483,10 +2483,10 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 	std::string sProjDir_Audio_Old = GetProjDir_Audio();
 	std::string sProjDir_Clips_Old = GetProjDir_Clips();
 	std::string sProjDir_ClipsDecomp_Old = GetProjDir_ClipsDecomp();
-	std::list<SFileInfo*> listFileInfos_old;
-	std::list<SFileInfo*>::iterator itFileInfos = mFileInfos.begin();
-	for (; itFileInfos != mFileInfos.end(); itFileInfos++) {
-		SFileInfo* pOld = new SFileInfo;
+	std::list<SSample_Info*> listFileInfos_old;
+	std::list<SSample_Info*>::iterator itFileInfos = mTake_Infos.begin();
+	for (; itFileInfos != mTake_Infos.end(); itFileInfos++) {
+		SSample_Info* pOld = new SSample_Info;
 		pOld->sName = (*itFileInfos)->sName;
 		pOld->sWaveNameL = (*itFileInfos)->sWaveNameL;
 		pOld->sWaveNameR = (*itFileInfos)->sWaveNameR;
@@ -2673,7 +2673,7 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 				// This takes quite a long time - so display hour-glass cursor
 				CAutoDelete<ge::IWaitCursor> pWaitCursor(ge::IWaitCursor::Create());
 				
-				SFileInfo* pInfo = *itFileInfos;
+				SSample_Info* pInfo = *itFileInfos;
 				// Are we exporting?
 				if (bCompress) {
 					// Exporting project for upload - create oggs (or copy existing oggs/mp3s)
@@ -2986,7 +2986,7 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 
 tbool CKSApplication::ExportProjectForWeb_Compress(
 	std::string sWavePathL, std::string sWavePathR,
-	SFileInfo* pInfo, ac::EQuality ePreviousQuality)
+	SSample_Info* pInfo, ac::EQuality ePreviousQuality)
 {
 	// Compress one or two original waves
 	CAutoDelete<IFile> pWavL(IFile::Create());
@@ -3317,7 +3317,7 @@ tbool CKSApplication::MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::lis
 {
 	tint64 iIndex = 0;
 	tint32 iFileInList = -1;
-	mFileInfos.clear();
+	mTake_Infos.clear();
 	std::string sTemp_LeftSideOfStereoClip_Name = "";
 	std::string sTemp_LeftSideOfStereoClip_OriginalPathName = "";
 	std::string sTemp_LeftSideOfStereoClip_WaveName = "";
@@ -4235,11 +4235,11 @@ tbool CKSApplication::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 			pFile->SetChunk(pChunk, true);
 		}
 		
-		std::list<SFileInfo*>::iterator itFileList = mFileInfos.begin();
-		for (; itFileList != mFileInfos.end(); itFileList++) {
+		std::list<SSample_Info*>::iterator itFileList = mTake_Infos.begin();
+		for (; itFileList != mTake_Infos.end(); itFileList++) {
 			// Save wave info
 			CAutoDelete<IChunk> pChunk(IChunk::Create(NULL, 0, 'Clip'));
-			SFileInfo* pInfo = *itFileList;
+			SSample_Info* pInfo = *itFileList;
 			pChunk->Write(pInfo->sName.c_str(), pInfo->sName.length());
 			pChunk->Write("\0", 1);
 			pChunk->Write(pInfo->sWaveNameL.c_str(), pInfo->sWaveNameL.length());
@@ -4385,9 +4385,9 @@ tbool CKSApplication::IsClipNameInUse(const tchar* pszClipName, const tchar* psz
 	ppszNames[2] = pszWaveNameR;
 	ppszNames[3] = NULL;
 
-	std::list<CKSApplication::SFileInfo*>::iterator it = mFileInfos.begin();
-	for ( ;it != mFileInfos.end(); it++) {
-		CKSApplication::SFileInfo* pInfo = *it;
+	std::list<CKSApplication::SSample_Info*>::iterator it = mTake_Infos.begin();
+	for ( ;it != mTake_Infos.end(); it++) {
+		CKSApplication::SSample_Info* pInfo = *it;
 		const tchar* pszName = pInfo->sName.c_str();
 		const tchar* pszNameL = pInfo->sWaveNameL.c_str();
 		const tchar* pszNameR = pInfo->sWaveNameR.c_str();
@@ -4708,25 +4708,29 @@ tbool CKSApplication::DoProgressTasks()
 
 void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 {
+	SSample_Info* pInfo = new SSample_Info();
+	
+	if(pInfo->msSample_UUID.size() == 0)
+		pInfo->msSample_UUID = Get_UUID();
+	
 	if (!pImportInfo->mbStereo) {
-		SFileInfo* pInfo = new SFileInfo();
-		pInfo->sName = pImportInfo->msDstNameL;
-		pInfo->sWaveNameL = pImportInfo->msDstNameL;
-		pInfo->sWaveNameR = "";
-		pInfo->sOriginalName = pImportInfo->msClipName;
-		pInfo->sOriginalExt = pImportInfo->msExt;
-		pInfo->bIsOriginalStereo = false;
-		pInfo->bIsOriginalLossy = pImportInfo->mbSrcLossyCompressed;
-		pInfo->iOriginalChannelMask = 0;
-		pInfo->bIsStereoInList = false;
-		pInfo->sWavePathNameL = pImportInfo->msDstPathNameL;
-		pInfo->sWavePathNameR = "";
-		mFileInfos.push_back(pInfo);
+		// Stereo, both sides in a single list item
+		pInfo->sName					= pImportInfo->msDstNameL;
+		pInfo->sWaveNameL				= pImportInfo->msDstNameL;
+		pInfo->sWaveNameR				= "";
+		pInfo->sOriginalName			= pImportInfo->msClipName;
+		pInfo->sOriginalExt				= pImportInfo->msExt;
+		pInfo->bIsOriginalStereo		= false;
+		pInfo->bIsOriginalLossy			= pImportInfo->mbSrcLossyCompressed;
+		pInfo->iOriginalChannelMask		= 0;
+		pInfo->bIsStereoInList			= false;
+		pInfo->sWavePathNameL			= pImportInfo->msDstPathNameL;
+		pInfo->sWavePathNameR			= "";
+		mTake_Infos.push_back(pInfo);
 	}
 	else {
 		if (!pImportInfo->mbSplit) {
 			// Stereo, both sides in a single list item
-			SFileInfo* pInfo = new SFileInfo();
 			pInfo->sName = pImportInfo->msClipName;
 			pInfo->sWaveNameL = pImportInfo->msDstNameL;
 			pInfo->sWaveNameR = pImportInfo->msDstNameR;
@@ -4738,28 +4742,26 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 			pInfo->bIsStereoInList = true;
 			pInfo->sWavePathNameL = pImportInfo->msDstPathNameL;
 			pInfo->sWavePathNameR = pImportInfo->msDstPathNameR;
-			mFileInfos.push_back(pInfo);
+			mTake_Infos.push_back(pInfo);
 		}
 		else {
 			// Stereo split into two list items
-
 			// Stereo, left side
-			SFileInfo* pInfo = new SFileInfo();
-			pInfo->sName = pImportInfo->msDstNameL;
-			pInfo->sWaveNameL = pImportInfo->msDstNameL;
-			pInfo->sWaveNameR = "";
-			pInfo->sOriginalName = pImportInfo->msClipName;
-			pInfo->sOriginalExt = pImportInfo->msExt;
+			pInfo->sName			= pImportInfo->msDstNameL;
+			pInfo->sWaveNameL		= pImportInfo->msDstNameL;
+			pInfo->sWaveNameR		= "";
+			pInfo->sOriginalName	= pImportInfo->msClipName;
+			pInfo->sOriginalExt		= pImportInfo->msExt;
 			pInfo->bIsOriginalStereo = true;
 			pInfo->bIsOriginalLossy = pImportInfo->mbSrcLossyCompressed;
 			pInfo->iOriginalChannelMask = 0x01;
-			pInfo->bIsStereoInList = false;
-			pInfo->sWavePathNameL = pImportInfo->msDstPathNameL;
-			pInfo->sWavePathNameR = "";
-			mFileInfos.push_back(pInfo);
+			pInfo->bIsStereoInList	= false;
+			pInfo->sWavePathNameL	= pImportInfo->msDstPathNameL;
+			pInfo->sWavePathNameR	= "";
+			mTake_Infos.push_back(pInfo);
 
 			// Stereo, right side
-			pInfo = new SFileInfo();
+
 			pInfo->sName = pImportInfo->msDstNameR;
 			pInfo->sWaveNameL = "";
 			pInfo->sWaveNameR = pImportInfo->msDstNameR;
@@ -4771,7 +4773,7 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 			pInfo->bIsStereoInList = false;
 			pInfo->sWavePathNameL = "";
 			pInfo->sWavePathNameR = pImportInfo->msDstPathNameR;
-			mFileInfos.push_back(pInfo);
+			mTake_Infos.push_back(pInfo);
 		}
 	}
 
@@ -5110,7 +5112,7 @@ void CKSApplication::VerifyCreatePeakFiles(const tchar* pszWavePathL, const tcha
 void CKSApplication::UpdateGUIFileList()
 {
 	// Send a message to all panes
-	CBasePane::SMsg Msg(Msg_Update_File_List, &mFileInfos);
+	CBasePane::SMsg Msg(Msg_Update_File_List, &mTake_Infos);
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
 	for (; it != mGUIs.end(); it++) {
 		(*it)->GetPane()->SendMsg(&Msg);
@@ -5661,7 +5663,7 @@ std::string CKSApplication::GetFromWaveName_ClipWave_Safe(const tchar* pszWaveNa
 
 std::string CKSApplication::GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName) const
 {
-	SFileInfo* pInfo = GetFromListName_ClipEntry(pszWaveName);
+	SSample_Info* pInfo = GetFromListName_ClipEntry(pszWaveName);
 	if ((pInfo == NULL) || (!pInfo->bIsOriginalLossy))
 		return "";
 
@@ -5680,11 +5682,11 @@ std::string CKSApplication::GetFromWaveName_ClipComp_Safe(const tchar* pszWaveNa
 } // GetFromWaveName_ClipComp_Safe
 
 
-CKSApplication::SFileInfo* CKSApplication::GetFromListName_ClipEntry(const tchar* pszListName) const
+CKSApplication::SSample_Info* CKSApplication::GetFromListName_ClipEntry(const tchar* pszListName) const
 {
-	std::list<SFileInfo*>::const_iterator it = mFileInfos.begin();
-	for ( ; it != mFileInfos.end(); it++) {
-		SFileInfo* pInfo = *it;
+	std::list<SSample_Info*>::const_iterator it = mTake_Infos.begin();
+	for ( ; it != mTake_Infos.end(); it++) {
+		SSample_Info* pInfo = *it;
 		if (stricmp(pInfo->sName.c_str(), pszListName) == 0)
 			return pInfo;
 	}
@@ -5693,7 +5695,7 @@ CKSApplication::SFileInfo* CKSApplication::GetFromListName_ClipEntry(const tchar
 
 tint32 CKSApplication::GetFromListName_ClipWavePathNames(const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed /*= NULL*/) const
 {
-	SFileInfo* pInfo = GetFromListName_ClipEntry(pszListName);
+	SSample_Info* pInfo = GetFromListName_ClipEntry(pszListName);
 	if (pInfo) {
 		if (pbIsDecompressed)
 			*pbIsDecompressed = pInfo->bIsOriginalLossy;

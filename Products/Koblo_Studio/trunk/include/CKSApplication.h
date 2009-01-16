@@ -292,10 +292,24 @@ public:
 	
 	virtual tint32 Get_Selected_Track(){return miSelected_Track;};
 	virtual void Set_Selected_Track(tint32 iID){ miSelected_Track = iID;};
+	
+	
+	struct STake_Info {
+		//! UUID used for the fileformat
+		std::string msTake_UUID;
+	};
 
-	struct SFileInfo {
+	struct SSample_Info {
+		//! UUID used for the fileformat
+		std::string msSample_UUID;
 		//! Name of clip as seen in the list
 		std::string sName;
+		
+		// turn this in to a stdlist of takes later
+		STake_Info msTake;
+		
+		
+		
 		//! Name of the left side (or mono) wave file for clip
 		std::string sWaveNameL;
 		//! Name of the right side wave file for clip
@@ -325,11 +339,11 @@ public:
 		std::string sWavePathNameR;
 	};
 
-	std::list<SFileInfo*>::const_iterator GetFileInfos() const {return mFileInfos.begin();}
+	std::list<SSample_Info*>::const_iterator GetFileInfos() const {return mTake_Infos.begin();}
 	tbool IsClipNameInUse(const tchar* pszClipName, const tchar* pszWaveNameL, const tchar* pszWaveNameR, std::string* psDescription);
 	void AddClipToList(CImportAudioTask* pImportInfo);
 	
-	std::list<SFileInfo*> GetFileInfo(){return mFileInfos;}
+	std::list<SSample_Info*> Get_Sample_Infos(){return mTake_Infos;}
 
 	std::string GetProjDir() const {return msProjectFolder;}
 	std::string GetProjDir_Contents() const {return GetProjDir() + "Contents:";}
@@ -345,7 +359,7 @@ public:
 	std::string GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveName) const;
 	std::string GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName);
 	std::string GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName) const;
-	SFileInfo* GetFromListName_ClipEntry(const tchar* pszListName) const;
+	SSample_Info* GetFromListName_ClipEntry(const tchar* pszListName) const;
 	tint32 GetFromListName_ClipWavePathNames(const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed = NULL) const;
 	
 	virtual void Stack_Tracks();
@@ -506,9 +520,9 @@ protected:
 
 	tbool ExportProjectForWeb_Compress(
 		std::string sWavePathL, std::string sWavePathR,
-		SFileInfo* pInfo, ac::EQuality ePreviousQuality);
+		SSample_Info* pInfo, ac::EQuality ePreviousQuality);
 
-	std::list<SFileInfo*> mFileInfos;
+	std::list<SSample_Info*> mTake_Infos;
 
 	virtual void UpdateGUIFileList();
 

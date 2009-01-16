@@ -46,7 +46,7 @@ void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 //	printf(xml_str.c_str());
 	
 	//------------------ MISSING CODE ----------------------------
-/*
+
 	// missing code 
 	std::string sFileName = gpApplication->GetProjectName() + ".xml";
 	
@@ -54,9 +54,9 @@ void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	if (pfile->Open(sFileName.c_str(), IFile::FileCreate)) {
 		pfile->Write(xml_str.c_str(), xml_str.length());
 	}
-*/	
+	
 	//!!! path is missing write file to disk
-//	pDoc->SaveFile(pszFilePath_OS_Format);
+//	pDoc->SaveFile();
 	
 
 
@@ -579,28 +579,27 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 	Add_Comment(pParent, "samples and their takes. only used takes are listed. a sample can be included that's not used on any track");
 	
 		
-	std::list<CKSApplication::SFileInfo*> sFileInfos = gpApplication->GetFileInfo();
+	std::list<CKSApplication::SSample_Info*> SSample_Infos = gpApplication->Get_Sample_Infos();
+	std::list<CKSApplication::SSample_Info*>::iterator  itSample = SSample_Infos.begin();
 	
 	
-
-	std::list<CKSApplication::SFileInfo*>::iterator  itFileList = sFileInfos.begin();
-	for (; itFileList != sFileInfos.end(); itFileList++) {
+	for (; itSample != SSample_Infos.end(); itSample++) {
 		
 		TiXmlElement* pSample = new TiXmlElement( "sample" );
 		// ID
-		tint32 uiID = -1;
-		// track
-		pSample->SetAttribute("id",uiID);
+
 		pParent->LinkEndChild( pSample );
 		
-		CKSApplication::SFileInfo* pInfo = *itFileList;
-		Write_Sample(pSample, pInfo->sOriginalName.c_str());
+		CKSApplication::SSample_Info* pTake_Info = *itSample;
+		
+		pSample->SetAttribute("id", pTake_Info->msSample_UUID.c_str());
+		Write_Sample(pSample, pTake_Info->sOriginalName.c_str());
 		
 		/*
 		TiXmlElement* pName = new TiXmlElement( "sample" );
 		
 		
-		CKSApplication::SFileInfo* pInfo = *itFileList;
+		CKSApplication::SSample_Info* pInfo = *itFileList;
 	//	pInfo->sOriginalName.c_str();
 		
 		
@@ -610,9 +609,7 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 		pParent->LinkEndChild( pName );
 		
 		*/
-		
-		
-		
+			
 	}
 	
 }

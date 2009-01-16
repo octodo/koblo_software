@@ -64,10 +64,10 @@ void CTrack_Files::EventGeneric(ge::IControl* pControl, void* pEventData)
 void CTrack_Files::HandleMsg(SMsg* pMsg)
 {
 	if (pMsg->iOpcode == Msg_Update_File_List) {
-		std::list<CKSApplication::SFileInfo*>* pList = (std::list<CKSApplication::SFileInfo*>*)(pMsg->pDataIn);
+		std::list<CKSApplication::SSample_Info*>* pList = (std::list<CKSApplication::SSample_Info*>*)(pMsg->pDataIn);
 
 		std::string sText;
-		std::list<CKSApplication::SFileInfo*>::const_iterator it = pList->begin();
+		std::list<CKSApplication::SSample_Info*>::const_iterator it = pList->begin();
 		for (; it != pList->end(); it++) {
 			sText += (*it)->sName;
 			sText += '@';

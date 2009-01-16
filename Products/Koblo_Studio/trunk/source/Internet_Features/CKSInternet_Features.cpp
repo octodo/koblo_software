@@ -11,7 +11,7 @@ CKSUsername_And_Password_Model(),
 mbUpload_Project(false)
 {
 	//!!!TO DO remove this dummy code
-	msProject_Name = "flying pink elephants";
+	msProject_Name = "flying pink elephants with umbrellas";
 	msProject_Path	=	"";
 }
 
