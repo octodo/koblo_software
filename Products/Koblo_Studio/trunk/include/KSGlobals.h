@@ -197,8 +197,7 @@ struct SLoop_Drawing_Info
 	
 };
 
-//! SRegion_Drawing_Info holds info about a region used for drawing
-/*! All informations is in samples */
+//! windows id's
 enum EWindowIDs
 {
 	giMain_Window,

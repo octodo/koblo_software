@@ -778,15 +778,28 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 										tfloat fRegionVolume)
 {
 	gpApplication->Stop_Timer();
+	
+	
+	CSample_Data* pSample_Data = gpDSPEngine->Get_Sample_Data_From_Name(sSoundListItemName.c_str());
+	
+	if(pSample_Data == NULL) return NULL;
+	
 	std::string sWavePathNameL;
 	std::string sWavePathNameR;
-	tint32 iWaveFiles = gpApplication->GetFromListName_ClipWavePathNames(sSoundListItemName.c_str(), sWavePathNameL, sWavePathNameR);
-	if (iWaveFiles <= 0) {
-		// Internal error / missing waves: Exit gracefully instead of crashing
-		return NULL;
-	}
+	gpDSPEngine->Set_Wave_Path( pSample_Data->Get_Take_Data(), 
+							   sSoundListItemName.c_str(),  
+							   sWavePathNameL, 
+							   sWavePathNameR);
+
 	//! TODO: 1) If iWaveFiles == 2 it's a stereo list item; sWavePathR will be valid, and channel should run in stereo mode
-	CRegion_DSP* pRegion	= new CRegion_DSP(iUniqueID, sWavePathNameL, sWavePathNameR, sSoundListItemName, uiSample_Offset, ruiSample_Duration);
+	CRegion_DSP* pRegion	=  new CRegion_DSP(iUniqueID, 
+											   sWavePathNameL, 
+											   sWavePathNameR, 
+											   sSoundListItemName, 
+											   uiSample_Offset, 
+											   ruiSample_Duration);
+	pRegion->Gennerate_UUID();
+	
 	if(ruiSample_Duration == (tuint64)-1)
 		ruiSample_Duration = pRegion->Get_Sample_Duration();
 		
@@ -794,7 +807,6 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 	pRegion->Set_Fade_Out_Duration(uiFadeOutLength);
 	pRegion->Set_Volume(fRegionVolume);
 		
-//	tuint64 uiDuration = ruiSoundPosEnd - uiSoundPosStart +1;
 	Delete_Selection(giTrim,uiTrack_Pos, ruiSample_Duration);
 	
 	SChannelRegionInfo* pRegionInfo		=	new SChannelRegionInfo();
@@ -807,29 +819,6 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 	
 	gpApplication->Start_Timer();
 	return pRegion;
-}
-
-tint64 CTrack_DSP::GetRegionSize(tint32 iUniqueID, const std::string& sSoundListItemName, tuint64 uiSound_Offset, tuint64 uiSound_Duration)
-{
-	std::string sWavePathNameL;
-	std::string sWavePathNameR_NeverMind;
-	tint32 iWaveFiles = gpApplication->GetFromListName_ClipWavePathNames(sSoundListItemName.c_str(), sWavePathNameL, sWavePathNameR_NeverMind);
-	// If iWaveFiles == 2 then sWavePathR will be valid - but that doesn't matter for length calculations
-
-	if (iWaveFiles == 0) {
-		// Exit gracefully from internal error: size = 0
-		return 0;
-	}
-
-	CRegion_DSP* pRegion	= new CRegion_DSP(iUniqueID, sWavePathNameL, "", sSoundListItemName, uiSound_Offset, uiSound_Duration);
-	if(uiSound_Duration == (tuint64)-1)
-		uiSound_Duration = pRegion->Get_Sample_Duration();
-	
-//	tint64 iSize = uiSoundPosEnd-uiSoundPosStart + 1;
-	delete(pRegion);
-	return uiSound_Duration;
-
-	
 }
 
 void CTrack_DSP::Insert_Region_Info( SChannelRegionInfo* pRegionInfo) 

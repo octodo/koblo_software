@@ -95,7 +95,7 @@ extern "C" void kspiCCallbackDispatcher(void* pObject, tint32 iCode, void** ppPa
 		case kspiDispatchHostDoesWindowHaveToolbar:
 			*((tint32*)pReturn) = ((kspi::IHost*)pObject)->DoesWindowHaveToolbar((tint32)ppParms[0]);
 			break;
-	}
+		}
 }
 #endif	// KSPI_EXPORTS
 

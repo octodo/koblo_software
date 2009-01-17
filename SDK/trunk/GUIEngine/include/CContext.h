@@ -36,19 +36,17 @@ public:
 	//! IContext override
 	virtual void SetApplicationCallback(IApplicationCallback* pCallback);
 
-	// Lasse, added 2008-04-30
 	//! IContext override - dummy content
 	virtual void SetClosingBehaviour(void* pWnd, EClosingBehaviour eClosingBehaviour) { };
 	//! IContext override - dummy content
 	virtual const EClosingBehaviour GetClosingBehaviour(void* pWnd) { return ge::IContext::giClosingReallyCloses; };
-	// .. Lasse
 
-	// Lasse, added 2008-05-06
 	//! IContext override - dummy content
 	virtual void SetMinWindowSize(IWindow* pWnd, SSize sizeMin) { };
+	
 	//! IContext override - dummy content
 	virtual void SetMaxWindowSize(IWindow* pWnd, SSize sizeMax) { };
-	// .. Lasse
+
 
 	// Internal
 	virtual IContextCallback* GetCallback();

@@ -28,7 +28,8 @@
  */
 
 
-
+class CSample_Data;
+class CTake_Data;
 
 class CKSXML_Write_Project
 {
@@ -80,7 +81,8 @@ private:
 	void Write_Window_Size(TiXmlElement* pParent, tuint uiSizeX, tuint uiSizeY);
 	//! write samples
 	void Write_Samples(TiXmlElement* pParent);
-	void Write_Sample(TiXmlElement* pParent, std::string str);
+	void Write_Sample(TiXmlElement* pParent, CSample_Data* pSample_Data);
+	void Write_Take(TiXmlElement* pParent, CTake_Data* pTake_Data);
 	//! tracks
 	void Write_Tracks(TiXmlElement* pParent);
 	void Write_Track(TiXmlElement* pParent, tuint uiTrack);

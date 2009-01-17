@@ -67,13 +67,9 @@ public virtual CBasePlugIn,
 public virtual IBaseDezipperCallback, 
 public virtual ITimerCallback_CanStop, 
 public virtual CKSInternet_Features,
-
-//public virtual CKSXML_Read_Project, 
-//public virtual CKSXML_Write_Project,
-//public virtual CKSXML_Create_Project,
 public virtual CKSXML_Create_Sample,
 public virtual CGUI_Controller
-//public virtual CKSXML_Sign_In
+
 {
 
 public:
@@ -292,58 +288,14 @@ public:
 	
 	virtual tint32 Get_Selected_Track(){return miSelected_Track;};
 	virtual void Set_Selected_Track(tint32 iID){ miSelected_Track = iID;};
-	
-	
-	struct STake_Info {
-		//! UUID used for the fileformat
-		std::string msTake_UUID;
-	};
 
-	struct SSample_Info {
-		//! UUID used for the fileformat
-		std::string msSample_UUID;
-		//! Name of clip as seen in the list
-		std::string sName;
-		
-		// turn this in to a stdlist of takes later
-		STake_Info msTake;
-		
-		
-		
-		//! Name of the left side (or mono) wave file for clip
-		std::string sWaveNameL;
-		//! Name of the right side wave file for clip
-		std::string sWaveNameR;
 
-		//! Name of the original from which the clip was imported/decompressed
-		std::string sOriginalName;
-		//! Extension of the original from which the clip was imported/decompressed
-		std::string sOriginalExt;
-
-		//! This is relevant if unpacking a compressed project - must decompress both mono clips at same time
-		tbool bIsOriginalStereo;
-
-		//! Is the original lossy compressed?
-		tbool bIsOriginalLossy;
-
-		//! Which stereo channels to map: 1 = left, 2 = right, 3 = both
-		tint32 iOriginalChannelMask;
-
-		//! Is this displayed as a stereo clip in list?
-		tbool bIsStereoInList;
-
-		// -------------
-		// Variables below here aren't saved but rather regenerated upon load
-
-		std::string sWavePathNameL;
-		std::string sWavePathNameR;
-	};
-
-	std::list<SSample_Info*>::const_iterator GetFileInfos() const {return mTake_Infos.begin();}
+	std::list<CSample_Data*>::const_iterator Get_Sample_Data_List() const {return mSample_Data_List.begin();}
+	std::list<CSample_Data*>::const_iterator Get_Sample_Data_List_End() const {return mSample_Data_List.end();}
 	tbool IsClipNameInUse(const tchar* pszClipName, const tchar* pszWaveNameL, const tchar* pszWaveNameR, std::string* psDescription);
 	void AddClipToList(CImportAudioTask* pImportInfo);
 	
-	std::list<SSample_Info*> Get_Sample_Infos(){return mTake_Infos;}
+	std::list<CSample_Data*> Get_Sample_Data_List(){return mSample_Data_List;}
 
 	std::string GetProjDir() const {return msProjectFolder;}
 	std::string GetProjDir_Contents() const {return GetProjDir() + "Contents:";}
@@ -359,8 +311,11 @@ public:
 	std::string GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveName) const;
 	std::string GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName);
 	std::string GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName) const;
-	SSample_Info* GetFromListName_ClipEntry(const tchar* pszListName) const;
+//	CSample_Data* Get_Sample_Data_From_Name(const tchar* pszListName) const;
 	tint32 GetFromListName_ClipWavePathNames(const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed = NULL) const;
+//	void Set_Wave_Path( CSample_Data* pSample_Data, const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed = NULL) const;
+	
+//	tuint64 Get_Sample_Duration_From_Name( const tchar* pszListName);
 	
 	virtual void Stack_Tracks();
 	virtual void Update_Zoom();
@@ -520,9 +475,9 @@ protected:
 
 	tbool ExportProjectForWeb_Compress(
 		std::string sWavePathL, std::string sWavePathR,
-		SSample_Info* pInfo, ac::EQuality ePreviousQuality);
+		CSample_Data* pSample_Info, ac::EQuality ePreviousQuality);
 
-	std::list<SSample_Info*> mTake_Infos;
+	std::list<CSample_Data*> mSample_Data_List;
 
 	virtual void UpdateGUIFileList();
 

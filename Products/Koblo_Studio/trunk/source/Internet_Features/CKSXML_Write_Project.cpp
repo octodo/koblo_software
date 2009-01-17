@@ -579,50 +579,61 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 	Add_Comment(pParent, "samples and their takes. only used takes are listed. a sample can be included that's not used on any track");
 	
 		
-	std::list<CKSApplication::SSample_Info*> SSample_Infos = gpApplication->Get_Sample_Infos();
-	std::list<CKSApplication::SSample_Info*>::iterator  itSample = SSample_Infos.begin();
+	std::list<CSample_Data*> pSample_Data_List = gpApplication->Get_Sample_Data_List();
+	std::list<CSample_Data*>::iterator  itSample_Data = pSample_Data_List.begin();
 	
 	
-	for (; itSample != SSample_Infos.end(); itSample++) {
+	for (; itSample_Data != pSample_Data_List.end(); itSample_Data++) {
 		
+//		CSample_Data* pSample_Data = *itSample_Data;
+		
+		// sample tag with uuid as atribute
 		TiXmlElement* pSample = new TiXmlElement( "sample" );
-		// ID
-
+		pSample->SetAttribute("uuid", (*itSample_Data)->Get_UUID().c_str());
 		pParent->LinkEndChild( pSample );
 		
-		CKSApplication::SSample_Info* pTake_Info = *itSample;
+		Write_Sample( pSample, (*itSample_Data));
 		
-		pSample->SetAttribute("id", pTake_Info->msSample_UUID.c_str());
-		Write_Sample(pSample, pTake_Info->sOriginalName.c_str());
-		
-		/*
-		TiXmlElement* pName = new TiXmlElement( "sample" );
-		
-		
-		CKSApplication::SSample_Info* pInfo = *itFileList;
-	//	pInfo->sOriginalName.c_str();
-		
-		
-		TiXmlText* pSampleTxt = new TiXmlText(pInfo->sOriginalName.c_str());
-		
-		pName->LinkEndChild( pSampleTxt );
-		pParent->LinkEndChild( pName );
-		
-		*/
 			
 	}
 	
 }
 
-void CKSXML_Write_Project::Write_Sample(TiXmlElement* pParent, std::string str)
+void CKSXML_Write_Project::Write_Sample(TiXmlElement* pParent, CSample_Data* pSample_Data)
+{
+	TiXmlElement* pSample = new TiXmlElement("name" );
+	TiXmlText* pSampleTxt = new TiXmlText(pSample_Data->Get_Name().c_str());
+	pSample->LinkEndChild( pSampleTxt );
+	pParent->LinkEndChild( pSample );
+	
+
+	CTake_Data* pTake_Data = pSample_Data->Get_Take_Data();
+	Write_Take(pParent, pTake_Data);
+	
+	
+	
+}
+
+
+void CKSXML_Write_Project::Write_Take(TiXmlElement* pParent, CTake_Data* pTake_Data)
 {
 	// name
-	TiXmlElement* pName = new TiXmlElement( "name" );
-	TiXmlText* pNameTxt = new TiXmlText(str.c_str());
-	pName->LinkEndChild( pNameTxt );
-	pParent->LinkEndChild( pName );
+	TiXmlElement* pTake = new TiXmlElement( "take" );
+	pTake->SetAttribute("uuid", pTake_Data->Get_UUID().c_str());
+	pParent->LinkEndChild( pTake );
 	
-	// takes
+	// description
+	TiXmlElement* pDescription = new TiXmlElement( "description" );
+	TiXmlText* pDescriptionTxt = new TiXmlText(pTake_Data->Get_Description().c_str());
+	pDescription->LinkEndChild( pDescriptionTxt );
+	pTake->LinkEndChild( pDescription );
+	
+	// url
+	TiXmlElement* pURL = new TiXmlElement( "url" );
+	TiXmlText* pURLTxt = new TiXmlText(pTake_Data->Get_URL().c_str());
+	pURL->LinkEndChild( pURLTxt );
+	pTake->LinkEndChild( pURL );
+	
 	
 	
 	
@@ -859,8 +870,8 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		// region id and take nr.
 		TiXmlElement* pRegion = new TiXmlElement( "region" );
 		
-		tuint uiID = pRegion_DSP->GetID();
-		pRegion->SetAttribute("id", uiID );
+	//	tuint uiID = pRegion_DSP->Get_UUID();
+		pRegion->SetAttribute("id", pRegion_DSP->Get_UUID().c_str() );
 		pRegion->SetAttribute("take", 0);
 		pParent->LinkEndChild( pRegion );
 		

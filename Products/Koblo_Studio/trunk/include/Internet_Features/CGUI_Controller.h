@@ -23,8 +23,7 @@
  */
 
 /*! \class CGUI_Controller
- * \brief class that parse the XML data in to the internal KS DataEngine
- based on TinyXml www.sourceforge.net/projects/tinyxml
+ * \brief class that handles all gui logic 
  */
 
 
@@ -42,6 +41,11 @@ public:
 	~CGUI_Controller();
 	
 	void Open_Close_Mix_Window();
+	void Open_Close_Rack_Window();
+	void Select_All_Regions();
+	void Close_Window();
+	void Toggle_Window();
+	void Show_Hide_Plugins();
 	
 private:	
 	

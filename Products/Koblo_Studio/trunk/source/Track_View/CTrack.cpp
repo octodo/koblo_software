@@ -368,13 +368,14 @@ void CTrack::Handle_Drag_Region(ge::SPos Pos)
 		
 	if(miDrag_Region_Size == -1){
 
-		ge::IWindow::SDragAndDropInfo Info;
-		GetWindow()->GetDragAndDropInfo(Info);
+		ge::IWindow::SDragAndDropInfo sDrop_Info;
+		GetWindow()->GetDragAndDropInfo(sDrop_Info);
 		
-		if (Info.pOrigin->GetID() == giCtrl_File_List) {
-			// Drag and drop operation from file list. Add region
-			// File name is in Info.psz
-			miDrag_Region_Size = gpDSPEngine->GetRegionSize( Info.psz, 0, -1);
+		if (sDrop_Info.pOrigin->GetID() == giCtrl_File_List) {
+			
+			miDrag_Region_Size = gpDSPEngine->Get_Sample_Duration_From_Name(sDrop_Info.psz);
+			
+			
 			tint32 iRegionSizeX = (tfloat32)miDrag_Region_Size * fPixel_Pr_Sample;
 			pmBmp_Select_Small->SetSize(ge::SSize( iRegionSizeX,giTrack_Size_Small-1));
 			pmBmp_Select_Big->SetSize(ge::SSize( iRegionSizeX,giTrack_Size_Big-1));
@@ -382,8 +383,10 @@ void CTrack::Handle_Drag_Region(ge::SPos Pos)
 		}
 		else if(Find_Tool() == giTool_Hand) {
 			// Drag and drop operation from region (region was moved)
-			tuint32 uiID = strtoul(Info.psz, NULL, 0);
+			tuint32 uiID = strtoul(sDrop_Info.psz, NULL, 0);
 			miDrag_Region_Size = gpDSPEngine->GetRegionSize( uiID);
+			//miDrag_Region_Size = gpDSPEngine->Get_Sample_Duration_From_Name(sDrop_Info.psz);
+			
 			tint32 iRegionSizeX = (tfloat32)miDrag_Region_Size * fPixel_Pr_Sample;
 			pmBmp_Select_Small->SetSize(ge::SSize( iRegionSizeX,giTrack_Size_Small-1));
 			pmBmp_Select_Big->SetSize(ge::SSize( iRegionSizeX,giTrack_Size_Big-1));

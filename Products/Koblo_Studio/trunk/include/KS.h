@@ -102,9 +102,14 @@
 
 // Sounds
 class CApplication;
+
+#include "CTake_Data.h"
+#include "CSample_Data.h"
 #include "CSample_DSP.h"
+#include "CSample_Controller.h"
 #include "CRegion_Controller.h"
 #include "CRegion_DSP.h"
+
 
 
 // PlugIn

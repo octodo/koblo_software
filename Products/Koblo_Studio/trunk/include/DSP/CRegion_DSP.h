@@ -87,9 +87,10 @@ class CRegion_DSP
 		// iSize == 0: small (1 / 1024 sample). iSize == 1: large (1 / 64 sample)
 		void GetPeakFile(IFile** ppFile, tint32 iChannel, tint32 iSize);
 	
-		void Set_Region_UUID(std::string sUUID) { msRegion_UUID = sUUID;};
+		void Gennerate_UUID();
 	
-		std::string Get_Region_UUID();
+		std::string Get_UUID(){return msUUID;};
+	
 		
 	protected:
 		CSample_DSP** mppSample;
@@ -117,7 +118,7 @@ class CRegion_DSP
 		
 		//! Region volume
 		tfloat32 mfVolume;
-	
-	std::string msRegion_UUID;
+		// region uuid
+		std::string msUUID;
 	};
 
