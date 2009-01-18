@@ -53,7 +53,7 @@ public:
 								tuint64 uiFadeInLength = 0,
 								tuint64 uiFadeOutLength = 0,
 								tfloat32 fRegionVolume = 1.0f);
-								
+	
 	
 	void Update_Regions_For_Playback();
 	

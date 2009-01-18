@@ -143,6 +143,10 @@ public:
 	void GetRegionPeakFile(tuint32 uiRegionID, IFile** ppFile, tint32 iTrack, tint32 iSize);
 	
 	
+	//! Get the region size in samplepoints
+	tuint64 GetRegionSize(tuint32 uiID);
+	
+	
 	
 protected:
 	

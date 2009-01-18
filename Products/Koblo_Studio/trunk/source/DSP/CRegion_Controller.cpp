@@ -667,13 +667,6 @@ void CRegion_Controller::GetRegionPeakFile(tuint32 uiRegionID, IFile** ppFile, t
 		*ppFile = NULL;
 }
 
-
-
-
-
-
-
-
 void CRegion_Controller::Prepare(tuint32 uiRegionID)
 {
 
@@ -682,6 +675,12 @@ void CRegion_Controller::Prepare(tuint32 uiRegionID)
 	mpRegion_DSP		=	mpTrack_DSP->GetRegion_DSP(uiRegionID);
 	miTrack				=	mRegionInfo.uiTrack;
 	
+}
+
+tuint64 CRegion_Controller::GetRegionSize(tuint32 iRegionID )
+{
+	Prepare(iRegionID);	
+	return	mpRegion_DSP->Get_Duration();
 }
 
 
