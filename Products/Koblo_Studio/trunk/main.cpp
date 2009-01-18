@@ -398,7 +398,7 @@ tbool CAppCallback::OnInit(tint32 iRunIndex)
 			break;
 
 		case 6:
-			gpSplashGUI->SetText("Creating Licens Setup Dialog...");
+			gpSplashGUI->SetText("Creating License Setup Dialog...");
 			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
