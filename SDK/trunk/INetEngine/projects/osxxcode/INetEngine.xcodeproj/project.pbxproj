@@ -43,14 +43,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 325F1CF50F20CDF0003081D0 /* libcurl.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC046055464E500DB518D /* libcurl.a */;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
 			remoteInfo = libcurl;
 		};
 		325F1D000F20CE12003081D0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 325F1CF50F20CDF0003081D0 /* libcurl.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D /* libcurl */;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
 			remoteInfo = libcurl;
 		};
 /* End PBXContainerItemProxy section */
