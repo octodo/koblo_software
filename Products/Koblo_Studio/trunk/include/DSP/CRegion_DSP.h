@@ -28,6 +28,7 @@
 class CRegion_DSP
 {
 public:
+
 	CRegion_DSP(tint32 iUniqueID,  
 				CSample_Data* pSample_Data,
 				CTake_Data* pTake_Data,
@@ -44,12 +45,13 @@ public:
 	tuint64 GetEndPos() const {return muiEndPos;}
 		
 	void SetDuration(tuint64 iDuration);
-		
+	
 	//! Get samples from underlying CSample_DSP >> wave(s)
 	/*!
 	\param ppfData [out]: Receives the samples in 2D array
 	\param iSamples [in]: Number of samples to return
 	*/
+	
 	void GetSamples(tfloat32** ppfData, tint32 iSamples);
 		
 	tint32 GetID() const {return muiUniqueID;}

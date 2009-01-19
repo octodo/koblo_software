@@ -3083,7 +3083,7 @@ tbool CKSApplication::ExportProjectForWeb_Compress(
 
 tbool CKSApplication::Open_Project()
 {
-//	return MenuFileLoadProject();
+	return MenuFileLoadProject();
 	
 	msExtendedError = "";
 	PlaybackStop();

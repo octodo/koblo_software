@@ -165,12 +165,24 @@ std::string CKSInternet_Features::Get_Project_UUID()
 { 
 	// only generate the uuid once
 	if(msProject_UUID.size() == 0){
-		msProject_UUID = Get_UUID();
-		return true;
+		return	msProject_UUID = Get_UUID();
+		
 	}
 	return msProject_UUID;
 }
 
+std::string CKSInternet_Features::Get_UUID()
+{
+
+	tchar* pszUUID = new tchar[128];
+	tuint32 uiBuffer_Size;
+
+	Gen_UUID(pszUUID, uiBuffer_Size);
+	std::string sUUID = pszUUID;
+
+	return sUUID;
+
+}
 
 
 
