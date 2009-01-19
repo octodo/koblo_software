@@ -43,7 +43,7 @@ void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	std::string xml_str =  printer.CStr();
 	
 	// print xml_str to console
-	//	printf(xml_str.c_str());
+//	printf(xml_str.c_str());
 	
 	//------------------ MISSING CODE ----------------------------
 
@@ -116,9 +116,7 @@ void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 //	TiXmlText * text = new TiXmlText( "World" );
 //	pProject->LinkEndChild( text );
 	
-	
-	
-	pProject->SetAttribute("uuid", gpApplication->Get_Project_UUID().c_str());
+	pProject->SetAttribute("id",123);
 	pProject->SetAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 	pProject->SetAttribute("xsi:noNamespaceSchemaLocation","http://koblo.com/schemas/koblo_project.xsd");
 	
@@ -140,8 +138,10 @@ void CKSXML_Write_Project::Write_Branch(TiXmlElement* pParent)
 	Add_Comment(pParent, "information about the branch");
 	
 	TiXmlElement* pBranch = new TiXmlElement( "branch" );
-	// Branch uuid
-	pBranch->SetAttribute("uuid", gpApplication->Get_Branch_UUID().c_str());
+	// Branch ID
+	tint32 iBranch_ID = gpApplication->GetGlobalParm(giParamID_Branch_ID, giSectionGlobal);
+	pBranch->SetAttribute("id",iBranch_ID);
+	pParent->LinkEndChild( pBranch );
 	
 	// name
 	TiXmlElement* pName = new TiXmlElement( "name" );
@@ -868,7 +868,7 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		TiXmlElement* pRegion = new TiXmlElement( "region" );
 		
 	//	tuint uiID = pRegion_DSP->Get_UUID();
-		pRegion->SetAttribute("uuid", pRegion_DSP->Get_Region_UUID().c_str() );
+		pRegion->SetAttribute("uuid", pRegion_DSP->Get_UUID().c_str() );
 		//pRegion->SetAttribute("take", 0);
 		pParent->LinkEndChild( pRegion );
 		

@@ -223,20 +223,11 @@ void CRegion_DSP::GetPeakFile(IFile** ppFile, tint32 iChannel, tint32 iSize)
 	*ppFile = mppPeakFile[iSize + iChannel * 2];
 }
 
-tbool CRegion_DSP::Set_Region_UUID()
-{ 
-	// only generate the uuid once
-	if(msUUID.size() == 0){
+void CRegion_DSP::Gennerate_UUID()
+{
+	if(msUUID.size() == 0)
 		msUUID = gpApplication->Get_UUID();
-		return true;
-	}
-	return false;
-}
-
-std::string CRegion_DSP::Get_Region_UUID()
-{ 
-	Set_Region_UUID();	
-	return msUUID;
+	
 }
 
 

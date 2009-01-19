@@ -89,14 +89,9 @@ public:
 		// iSize == 0: small (1 / 1024 sample). iSize == 1: large (1 / 64 sample)
 	void GetPeakFile(IFile** ppFile, tint32 iChannel, tint32 iSize);
 	
-	//! set project uuid
-	tbool Set_Region_UUID();
-	
-	//! clear project uuid
-	tbool Clear_Region_UUID(){ msUUID.erase(0, msUUID.length());};
-	
-	//! get the project uuid
-	std::string Get_Region_UUID();
+	void Gennerate_UUID();
+	//! returns the UUID
+	std::string Get_UUID(){return msUUID;};
 	
 	//! returns UUID from the sample used by the region
 	std::string Get_Sample_UUID(){return mpSample_Data->Get_UUID();};

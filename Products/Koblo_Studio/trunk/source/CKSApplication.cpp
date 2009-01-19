@@ -3083,7 +3083,7 @@ tbool CKSApplication::ExportProjectForWeb_Compress(
 
 tbool CKSApplication::Open_Project()
 {
-	return MenuFileLoadProject();
+//	return MenuFileLoadProject();
 	
 	msExtendedError = "";
 	PlaybackStop();
@@ -6330,5 +6330,5 @@ void CKSApplication::Zoom(){
 	else{
 		GetParmMan()->Set(true, miStoredZoom, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
 	}
+	
 }
-

@@ -801,7 +801,7 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 											   pTake_Data,
 											   uiSample_Offset, 
 											   ruiSample_Duration);
-	pRegion->Get_Region_UUID();
+	pRegion->Gennerate_UUID();
 	
 	if(ruiSample_Duration == (tuint64)-1)
 		ruiSample_Duration = pRegion->Get_Sample_Duration();
@@ -1255,18 +1255,3 @@ void CTrack_DSP::Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 
 	
 }
 
-tbool CTrack_DSP::Set_Track_UUID()
-{ 
-	// only generate the uuid once
-	if(msUUID.size() == 0){
-		msUUID = gpApplication->Get_UUID();
-		return true;
-	}
-	return false;
-}
-
-std::string CTrack_DSP::Get_Track_UUID()
-{ 
-	Set_Track_UUID();	
-	return msUUID;
-}
