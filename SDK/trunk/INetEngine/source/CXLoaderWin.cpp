@@ -131,7 +131,7 @@ void CXloader::CloseConnection_OSSpecific()
 } // CloseConnection_OSSpecific
 
 
-tbool CXloader::DownloadPortion_OSSpecific(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
+tbool CXloader::DoPortion_OSSpecific(tuint64* puiUploadProgress, tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize)
 {
 	/* hm... ::InternetReadFileEx(..) is too complicated - will attempt InternetReadFile(..)
 	INTERNET_BUFFERS buffers;

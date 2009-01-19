@@ -59,6 +59,10 @@
 /*  DEFINITION OF THESE SYMBOLS SHALL NOT TAKE PLACE ANYWHERE ELSE  */
 /* ================================================================ */
 
+
+// (lasse) File modified a little to compile for both OS X and Windows
+
+
 #ifdef CURL_SIZEOF_LONG
 #  error "CURL_SIZEOF_LONG shall not be defined except in curlbuild.h"
    Error Compilation_aborted_CURL_SIZEOF_LONG_already_defined
@@ -114,21 +118,29 @@
 /* header file stdint.h must be included by the external interface.  */
 #define CURL_PULL_STDINT_H 1
 #ifdef CURL_PULL_STDINT_H
-#  include <stdint.h>
+#	ifndef _WIN32
+#		include <stdint.h>
+#	endif // _WIN32
 #endif
 
 /* Configure process defines this to 1 when it finds out that system  */
 /* header file inttypes.h must be included by the external interface. */
 #define CURL_PULL_INTTYPES_H 1
 #ifdef CURL_PULL_INTTYPES_H
-#  include <inttypes.h>
+#	ifndef _WIN32
+#		include <inttypes.h>
+#	endif // _WIN32
 #endif
 
 /* The size of `long', as computed by sizeof. */
 #define CURL_SIZEOF_LONG 4
 
 /* Signed integral data type used for curl_off_t. */
-#define CURL_TYPEOF_CURL_OFF_T int64_t
+#ifdef _WIN32
+#	define CURL_TYPEOF_CURL_OFF_T __int64
+#else _WIN32
+#	define CURL_TYPEOF_CURL_OFF_T int64_t
+#endif // _WIN32
 
 /* Data type definition of curl_off_t. */
 typedef CURL_TYPEOF_CURL_OFF_T curl_off_t;

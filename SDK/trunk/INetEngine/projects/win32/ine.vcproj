@@ -200,47 +200,15 @@
 			Name="include"
 			>
 			<File
-				RelativePath="..\..\include\CDownloader.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\CDownloaderOSX.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\include\CDownloaderWin.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\include\CINetUtil.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\CUpAndDownloader_Common.h"
+				RelativePath="..\..\include\CXloader.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\CUploader.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\CUploaderOSX.h"
+				RelativePath="..\..\include\CXloaderOSX.h"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -260,7 +228,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\include\CUploaderWin.h"
+				RelativePath="..\..\include\CXloaderWin.h"
 				>
 			</File>
 			<File
@@ -275,34 +243,6 @@
 		<Filter
 			Name="source"
 			>
-			<File
-				RelativePath="..\..\source\CDownloader.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\CDownloaderOSX.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\source\CDownloaderWin.cpp"
-				>
-			</File>
 			<File
 				RelativePath="..\..\source\CINetUtil.cpp"
 				>
@@ -368,24 +308,12 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\CUpAndDownloader_Common.cpp"
+				RelativePath="..\..\source\CXLoader.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\CUploader.cpp"
+				RelativePath="..\..\source\CXLoaderOSX.cpp"
 				>
-			</File>
-			<File
-				RelativePath="..\..\source\CUploaderOSX.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="true"
@@ -396,7 +324,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\CUploaderWin.cpp"
+				RelativePath="..\..\source\CXLoaderWin.cpp"
 				>
 			</File>
 			<File
