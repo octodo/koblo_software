@@ -113,8 +113,7 @@ void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 	Add_Comment(pDoc, "all times and track positions are specified in sample points");
 	
 	TiXmlElement* pProject = new TiXmlElement( "project" );
-//	TiXmlText * text = new TiXmlText( "World" );
-//	pProject->LinkEndChild( text );
+
 	
 	pProject->SetAttribute("id",123);
 	pProject->SetAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
@@ -854,6 +853,7 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 
 void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTrack)
 {
+	// Note
 	tchar pszBuff[1024];
 	tchar* psz = pszBuff;
 	CTrack_DSP*		pTrack_DSP			=	gpDSPEngine->GetTrack(uiTrack);
