@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..\..\BaseUtilities\interface,..\..\interface,..\..\include,..\..\..\DataEngine\interface"
+				AdditionalIncludeDirectories="..\..\..\BaseUtilities\interface;..\..\interface;..\..\include;..\..\..\DataEngine\interface;..\..\curl\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				StringPooling="true"
 				RuntimeLibrary="0"
@@ -120,7 +120,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\BaseUtilities\interface,..\..\interface,..\..\include,..\..\..\DataEngine\interface"
+				AdditionalIncludeDirectories="..\..\..\BaseUtilities\interface;..\..\interface;..\..\include;..\..\..\DataEngine\interface;..\..\curl\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"

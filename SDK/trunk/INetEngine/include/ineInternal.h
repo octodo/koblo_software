@@ -26,6 +26,9 @@ namespace ine {
 #ifdef _Mac
 #endif	// _Mac
 
+// libcurl for system independent internet access
+#include "curl/curl.h"
+
 #include "CINetUtil.h"
 
 #include "CXloader.h"
