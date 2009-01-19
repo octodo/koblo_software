@@ -159,10 +159,3 @@ void IINetUtil::GetWebFile(const tchar* Parameters, const tchar* pszServer, cons
 	if (Initialize != NULL) InternetCloseHandle(Initialize);
 }
 
-std::string CINetUtil::Generate_UUID()
-{
-//	CFUUIDRef CFUUIDCreate ( CFAllocatorRef alloc );
-	return "bob";
-	
-	
-}
