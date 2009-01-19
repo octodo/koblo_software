@@ -81,19 +81,16 @@ public:
 	//!!! To Do call this
 	void SetProjectName( const std::string& sName){ msProject_Name = sName;}
 	
+	//! get the project name
 	std::string GetProjectName(){ return msProject_Name;}
 	
 	
 	
-	
-	//!!! To Do call this
+	//! set project path
 	void SetProjectPath( const std::string& sName){ msProject_Path = sName;}
 	
 	std::string GetProjectPath(){ return msProject_Path;}
-	
-	
-	
-	
+
 	
 	void SetProjectDescription( const std::string& sDescription){ msProjectDescription = sDescription;}
 	
@@ -124,6 +121,36 @@ public:
 	//! compares the internal data structure to the xml file stroed on disk
 	tbool Project_Has_Changed();
 	
+	//! set project uuid
+	tbool Set_Project_UUID();
+	
+	//! set project uuid
+	tbool Set_Project_UUID(std::string sProject_UUID){msProject_UUID = msProject_UUID;};
+	
+	//! clear project uuid
+	tbool Clear_Project_UUID(){ msProject_UUID.erase(0, msProject_UUID.length());};
+	
+	//! get the project uuid
+	std::string Get_Project_UUID();
+	
+	
+	
+	//! set project uuid
+	tbool Set_Branch_UUID();
+	
+	//! set project uuid
+	tbool Set_Branch_UUID(std::string sBranch_UUID){msBranch_UUID = msBranch_UUID;};
+	
+	//! clear project uuid
+	tbool Clear_Branch_UUID(){ msBranch_UUID.erase(0, msBranch_UUID.length());};
+	
+	//! get the project uuid
+	std::string Get_Branch_UUID();
+	
+	
+	
+	
+	
 	//! generates a UUID
 	std::string Get_UUID();
 
@@ -135,6 +162,12 @@ private:
 	
 	//! project name
 	std::string msProject_Name;
+	
+	//! project uuid
+	std::string msProject_UUID;
+	
+	//! project uuid
+	std::string msBranch_UUID;
 	
 	//! project name
 	std::string msProject_Path;
@@ -156,12 +189,7 @@ private:
 	
 	//! password description
 	std::string msPassword;
-	
-	
-	
 		
-		
-	
 		
 };
 

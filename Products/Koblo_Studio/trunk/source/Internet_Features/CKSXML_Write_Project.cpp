@@ -43,23 +43,21 @@ void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	std::string xml_str =  printer.CStr();
 	
 	// print xml_str to console
-//	printf(xml_str.c_str());
+	//	printf(xml_str.c_str());
 	
 	//------------------ MISSING CODE ----------------------------
 
 	// missing code 
 	std::string sFileName = gpApplication->GetProjectName() + ".xml";
 	
+	
+	std::string sProject_Folder = gpApplication->Get_Project_Folder();
+	std::string sProject_Name	= gpApplication->Get_Project_Name();
+	
 	CAutoDelete<IFile> pfile(IFile::Create());
 	if (pfile->Open(sFileName.c_str(), IFile::FileCreate)) {
 		pfile->Write(xml_str.c_str(), xml_str.length());
 	}
-	
-	//!!! path is missing write file to disk
-//	pDoc->SaveFile();
-	
-
-
 }
 
 void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID)
@@ -118,7 +116,9 @@ void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 //	TiXmlText * text = new TiXmlText( "World" );
 //	pProject->LinkEndChild( text );
 	
-	pProject->SetAttribute("id",123);
+	
+	
+	pProject->SetAttribute("uuid", gpApplication->Get_Project_UUID().c_str());
 	pProject->SetAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 	pProject->SetAttribute("xsi:noNamespaceSchemaLocation","http://koblo.com/schemas/koblo_project.xsd");
 	
@@ -140,10 +140,8 @@ void CKSXML_Write_Project::Write_Branch(TiXmlElement* pParent)
 	Add_Comment(pParent, "information about the branch");
 	
 	TiXmlElement* pBranch = new TiXmlElement( "branch" );
-	// Branch ID
-	tint32 iBranch_ID = gpApplication->GetGlobalParm(giParamID_Branch_ID, giSectionGlobal);
-	pBranch->SetAttribute("id",iBranch_ID);
-	pParent->LinkEndChild( pBranch );
+	// Branch uuid
+	pBranch->SetAttribute("uuid", gpApplication->Get_Branch_UUID().c_str());
 	
 	// name
 	TiXmlElement* pName = new TiXmlElement( "name" );
@@ -593,7 +591,6 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 		pParent->LinkEndChild( pSample );
 		
 		Write_Sample( pSample, (*itSample_Data));
-		
 			
 	}
 	
@@ -871,18 +868,23 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		TiXmlElement* pRegion = new TiXmlElement( "region" );
 		
 	//	tuint uiID = pRegion_DSP->Get_UUID();
-		pRegion->SetAttribute("id", pRegion_DSP->Get_UUID().c_str() );
-		pRegion->SetAttribute("take", 0);
+		pRegion->SetAttribute("uuid", pRegion_DSP->Get_Region_UUID().c_str() );
+		//pRegion->SetAttribute("take", 0);
 		pParent->LinkEndChild( pRegion );
 		
 		// sound file name
-		const tchar* pszListItemName = pRegion_DSP->GetSoundListItemName();
-		sprintf(psz, "%s", pszListItemName);
+		const tchar* pszSample_Name = pRegion_DSP->Get_Sample_Name();
+		sprintf(psz, "%s", pszSample_Name);
 		
-		TiXmlElement* pSoundfile = new TiXmlElement( "soundfile" );
-		TiXmlText* pSoundfileTxt = new TiXmlText(psz);
-		pSoundfile->LinkEndChild( pSoundfileTxt );
-		pRegion->LinkEndChild( pSoundfile );
+		TiXmlElement* pSample_UUID = new TiXmlElement( "sample" );
+		TiXmlText* pSample_UUID_Txt = new TiXmlText(pRegion_DSP->Get_Sample_UUID().c_str());
+		pSample_UUID->LinkEndChild( pSample_UUID_Txt );
+		pRegion->LinkEndChild( pSample_UUID );
+		
+		TiXmlElement* pTake_UUID = new TiXmlElement( "take" );
+		TiXmlText* pTake_UUID_Txt = new TiXmlText(pRegion_DSP->Get_Take_UUID().c_str());
+		pTake_UUID->LinkEndChild( pTake_UUID_Txt );
+		pRegion->LinkEndChild( pTake_UUID );
 		
 		
 		// region position
@@ -898,7 +900,7 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		tuint64 uiSample_Offset = pRegion_DSP->Get_Sample_Offset();
 		sprintf(pszBuff, "%d", uiSample_Offset);
 		
-		TiXmlElement* pSample_Offset = new TiXmlElement( "start" );
+		TiXmlElement* pSample_Offset = new TiXmlElement( "offset" );
 		TiXmlText* pSample_OffsetTxt = new TiXmlText(pszBuff);
 		pSample_Offset->LinkEndChild( pSample_OffsetTxt );
 		pRegion->LinkEndChild( pSample_Offset );

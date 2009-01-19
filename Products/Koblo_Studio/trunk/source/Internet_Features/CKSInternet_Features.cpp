@@ -150,16 +150,62 @@ tbool CKSInternet_Features::Project_Has_Changed()
 	
 }
 
-std::string CKSInternet_Features::Get_UUID()
-{
-	tchar* pszUUID = new tchar[128];
-	tuint32 uiBuffer_Size;
-	Gen_UUID(pszUUID,  uiBuffer_Size);
-	std::string sUUID = pszUUID;
-	return sUUID;
+
+tbool CKSInternet_Features::Set_Project_UUID()
+{ 
+	// only generate the uuid once
+	if(msProject_UUID.size() == 0){
+		msProject_UUID = Get_UUID();
+		return true;
+	}
+	return false;
+}
+
+std::string CKSInternet_Features::Get_Project_UUID()
+{ 
+	// only generate the uuid once
+	Set_Project_UUID();
+	return msProject_UUID;
 }
 
 
+
+
+tbool CKSInternet_Features::Set_Branch_UUID()
+{ 
+	// only generate the uuid once
+	if(msBranch_UUID.size() == 0){
+		msBranch_UUID = Get_UUID();
+		return true;
+	}
+	return false;
+}
+
+std::string CKSInternet_Features::Get_Branch_UUID()
+{ 
+	// only generate the uuid once
+	Set_Branch_UUID();
+	return msBranch_UUID;
+}
+
+
+
+
+
+
+
+
+std::string CKSInternet_Features::Get_UUID()
+{
+
+	tchar* pszUUID = new tchar[128];
+	
+	tuint32 uiBuffer_Size;
+	Gen_UUID(pszUUID, uiBuffer_Size);
+	std::string sUUID = pszUUID;
+	
+	return sUUID;
+}
 
 
 

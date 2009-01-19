@@ -34,8 +34,7 @@ public:
 	tbool bIsStereoInList;
 	
 	// -------------
-	// Variables below here aren't saved but rather regenerated upon load
-	
+	// Variables below here aren't saved but regenerated upon load
 	std::string sWavePathNameL;
 	std::string sWavePathNameR;
 	

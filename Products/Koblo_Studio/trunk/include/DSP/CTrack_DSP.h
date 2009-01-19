@@ -116,6 +116,15 @@ public:
 	void Start();
 
 	void Stop();
+	
+	//! set project uuid
+	tbool Set_Track_UUID();
+	
+	//! clear project uuid
+	tbool Clear_Track_UUID(){ msUUID.erase(0, msUUID.length());};
+	
+	//! get the project uuid
+	std::string Get_Track_UUID();
 
 protected:
 	tbool mbArmed;
@@ -195,8 +204,9 @@ protected:
 	tfloat32 mfPeakMono;
 
 	std::string msRecordingName;
-
 	std::string msRecordingNameDest;
+	
+	std::string msUUID;
 	
 };
 

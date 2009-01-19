@@ -175,6 +175,14 @@ public:
 	virtual tbool MenuFileCreateNewProject();
 	virtual tbool MenuFileSaveProjectAs(const tchar* pszDefaultName = "", tbool bCompress = false);
 	virtual tbool MenuFileLoadProject();
+	
+	
+	
+	virtual tbool Open_Project();
+	
+	
+	
+	
 	virtual tbool MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::list<CImportAudioTask*>* plistpImportTasks);
 	virtual tbool MenuFileSaveProject(tbool bOverwriteIcons = false);
 	virtual void MenuFileDistributeMix(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize);
@@ -389,6 +397,9 @@ public:
 	
 	virtual void Zoom();
 	
+	std::string Get_Project_Folder(){ return msProject_Folder;};
+	std::string Get_Project_Name(){ return msProject_Name;};
+	
 	
 
 protected:
@@ -454,6 +465,9 @@ protected:
 	std::string msProjectFolder;
 
 	std::string msLastWaveImport;
+	
+	std::string msProject_Folder;
+	std::string msProject_Name;
 	
 	//! Extended info about last error that happened in a failing method
 	std::string msExtendedError;

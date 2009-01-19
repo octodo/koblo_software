@@ -769,7 +769,7 @@ void CTrack_DSP::Stop()
 
 
 CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID, 
-										const std::string& sSoundListItemName, 
+										const std::string& sSample_Name, 
 										tuint64 uiTrack_Pos, 
 										tuint64 uiSample_Offset, 
 										tuint64& ruiSample_Duration,
@@ -780,25 +780,28 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 	gpApplication->Stop_Timer();
 	
 	
-	CSample_Data* pSample_Data = gpDSPEngine->Get_Sample_Data_From_Name(sSoundListItemName.c_str());
+	CSample_Data* pSample_Data	= gpDSPEngine->Get_Sample_Data_From_Name(sSample_Name.c_str());
+	CTake_Data* pTake_Data		= pSample_Data->Get_Take_Data();
 	
 	if(pSample_Data == NULL) return NULL;
 	
 	std::string sWavePathNameL;
 	std::string sWavePathNameR;
-	gpDSPEngine->Set_Wave_Path( pSample_Data->Get_Take_Data(), 
-							   sSoundListItemName.c_str(),  
+	gpDSPEngine->Set_Wave_Path( pTake_Data, 
+							   sSample_Name.c_str(),  
 							   sWavePathNameL, 
 							   sWavePathNameR);
 
 	//! TODO: 1) If iWaveFiles == 2 it's a stereo list item; sWavePathR will be valid, and channel should run in stereo mode
 	CRegion_DSP* pRegion	=  new CRegion_DSP(iUniqueID, 
-											   sWavePathNameL, 
-											   sWavePathNameR, 
-											   sSoundListItemName, 
+											  // sWavePathNameL, 
+											  // sWavePathNameR, 
+											  // sSample_Name, 
+											   pSample_Data,
+											   pTake_Data,
 											   uiSample_Offset, 
 											   ruiSample_Duration);
-	pRegion->Gennerate_UUID();
+	pRegion->Get_Region_UUID();
 	
 	if(ruiSample_Duration == (tuint64)-1)
 		ruiSample_Duration = pRegion->Get_Sample_Duration();
@@ -1184,7 +1187,7 @@ void CTrack_DSP::Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 
 		CRegion_DSP* pRegion_DSP			=	(*it)->pRegion;
 		tint32 iRegionID					=	(*it)->uiRegionID;
 		tuint64 uiSample_Duration			=	pRegion_DSP->Get_Duration();
-		std::string sClipName				=	pRegion_DSP->GetSoundListItemName();
+		std::string sSample_Name				=	pRegion_DSP->Get_Sample_Name();
 		tuint64 uiRegion_Pos				=	(*it)->uiTrack_Pos;
 		tuint64 uiRegion_End				=	uiRegion_Pos + uiSample_Duration - 1;
 		tuint64 uiSample_Offset				=	pRegion_DSP->Get_Sample_Offset();
@@ -1230,7 +1233,7 @@ void CTrack_DSP::Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 
 
 				// create new region
 				tuint64 uiDelta		=	uiNew_Sample_Duration + uiSelection_Duration;
-				mpDSP->CreateRegion(sClipName, miTrack, uiRegion_Pos + uiDelta, uiSample_Offset + uiDelta , uiSample_Duration - uiDelta, 0,uiFade_Out_Duration, fVolume );
+				mpDSP->CreateRegion(sSample_Name, miTrack, uiRegion_Pos + uiDelta, uiSample_Offset + uiDelta , uiSample_Duration - uiDelta, 0,uiFade_Out_Duration, fVolume );
 				
 				
 				
@@ -1252,3 +1255,18 @@ void CTrack_DSP::Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 
 	
 }
 
+tbool CTrack_DSP::Set_Track_UUID()
+{ 
+	// only generate the uuid once
+	if(msUUID.size() == 0){
+		msUUID = gpApplication->Get_UUID();
+		return true;
+	}
+	return false;
+}
+
+std::string CTrack_DSP::Get_Track_UUID()
+{ 
+	Set_Track_UUID();	
+	return msUUID;
+}

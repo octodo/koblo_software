@@ -3,7 +3,7 @@
 
 CSample_Data::CSample_Data()
 {
-	mpTake_Data = &msTake_Data;
+	mpTake_Data = new(CTake_Data);
 	mpTake_Data->Generate_UUID();
 	
 	msUUID	=	"";
@@ -12,8 +12,8 @@ CSample_Data::CSample_Data()
 
 CSample_Data::~CSample_Data()
 {
-
-} // destructor
+	delete mpTake_Data;
+} 
 
 
 

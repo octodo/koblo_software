@@ -14,10 +14,46 @@ CKSXML_Read_Project::~CKSXML_Read_Project()
 	delete mpDoc;
 }
 
+void CKSXML_Read_Project::Read_Project_From_Disk()
+{
+	
+	
+	std::string sProject_Folder = gpApplication->Get_Project_Folder();
+	std::string sProject_Name	= gpApplication->Get_Project_Name();
+	
+	/*
+	for(tint i = 0; i != std::string::npos; i = sProject_Folder.find(":")) {
+		
+		sProject_Folder.erase(i,1);
+		sProject_Folder.insert(i,"/");
+	}
+	 */
+	
+
+	std::string sRead			= sProject_Folder +  sProject_Name ;
+	
+	
+	CAutoDelete<IFile> pfile(IFile::Create());
+	if (pfile->Open(sRead.c_str(), IFile::FileRead)) {
+		
+		Reset_Project();
+		tuint iSize = pfile->GetSizeWhenOpened();
+		char psz[iSize];
+		
+		pfile->Read(psz, iSize);
+		mpDoc->Parse(psz);
+		Parse_Project( mpDoc );
+	}
+	
+}
+
 void CKSXML_Read_Project::Reset_Project()
 {
 	miTrack_ID	=	0;
+	gpApplication->CleanProject(0);
 	gpApplication->Set_Selected_Track(-1);
+	mpDoc->Clear();
+	
 }
 
 void CKSXML_Read_Project::Read_Project_XML_To_DOM(tint32 iProjectID )

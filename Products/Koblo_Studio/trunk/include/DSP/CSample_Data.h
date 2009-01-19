@@ -53,7 +53,7 @@ protected:
 	
 	
 	//!!! TO DO turn this in to a stdlist of takes later
-	CTake_Data msTake_Data;
+	
 	CTake_Data* mpTake_Data;
 	
 };

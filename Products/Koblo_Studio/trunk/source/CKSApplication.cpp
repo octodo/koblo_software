@@ -1323,10 +1323,16 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	}
 	else if (s.compare("File@Open Project") == 0) {
 		
+
+		if (!Open_Project()) {
+			LoadSaveErrDlg("Error loading project");
+		}
+		/*
 		// Load
 		if (!MenuFileLoadProject()) {
 			LoadSaveErrDlg("Error loading project");
 		}
+		 */
 	}
 	else if (s.compare("File@Save Project") == 0) {
 		// Save
@@ -1860,7 +1866,7 @@ tbool CKSApplication::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iSt
 		CRegion_DSP* pRegion = pRegionInfo->pRegion;
 		tint64 iClipStartPos = pRegion->Get_Sample_Offset();
 		tint64 iClipDuration = pRegion->Get_Duration();
-		const tchar* pszClipName = pRegion->GetSoundListItemName();
+		const tchar* pszSample_Name = pRegion->Get_Sample_Name();
 		if (iRegionCutOffStart > iClipDuration) {
 			// Cut-off entire clip - do nothing
 		}
@@ -1875,7 +1881,7 @@ tbool CKSApplication::ExportTracksSelection_Raw_AddOne(tint32 iTrack, tint64 iSt
 				iClipDuration = iDurationLimit;
 
 			// Add clip info
-			CExportClipTask* pClipInfo = new CExportClipTask( pszClipName, iClipStartPos, iClipDuration);
+			CExportClipTask* pClipInfo = new CExportClipTask( pszSample_Name, iClipStartPos, iClipDuration);
 			//pClipInfo->bConcatenateNext = true;
 			pClipInfo->sDestName_Concatenate = pszNameUniteDefault;
 			plistpInfo->insert(plistpInfo->end(), pClipInfo);
@@ -3075,7 +3081,96 @@ tbool CKSApplication::ExportProjectForWeb_Compress(
 	return true;
 } // ExportProjectForWeb_Compress
 
+tbool CKSApplication::Open_Project()
+{
+	return MenuFileLoadProject();
+	
+	msExtendedError = "";
+	PlaybackStop();
+	Stop_Timer();
+	
+	CAutoDelete<ge::IOpenDialog> pDlg(ge::IOpenDialog::Create());
+	
+	
+	
+	// Default Name
+	tchar pszDefaultFolder[1024];
+	std::string sDefaultName = "";
+	/*
+	if (msProjectFolder.length()) {
+		
+		std::string sPath = msProjectFolder;
+		sPath.erase(sPath.find_last_of(':'));
+		tint32 iPosColon = sPath.find_last_of(':');
+		strncpy(pszDefaultFolder, sPath.c_str(), iPosColon + 1);
+		pszDefaultFolder[iPosColon + 1] = '\0';
+		if (sDefaultName.length() == 0) {
+			// Use current project name as default
+			sDefaultName = sPath;
+			sDefaultName.erase(0, iPosColon + 1);
+		}
+	}
+	else
+	 */
+	GetDefaultProjectFolder(pszDefaultFolder);
+	
+	if (sDefaultName.length() == 0)
+		sDefaultName = "New Project.xml";
+	
+	tchar pszPathName[1024];
 
+//	pDlg->SetBundleBehaviour(1);
+	pDlg->DoDialog(pszPathName, pszDefaultFolder, "*.xml", "KS Project (*.xml)", sDefaultName.c_str());
+	
+	if (pszPathName[0] == 0) {
+		// Exit with no error
+		return true;
+	}
+	
+	
+	
+
+	CAutoLock Lock(mMutex);
+//	CleanProject(0);
+	
+	//	std::string sPathName(pszPathName);
+	msProject_Folder = pszPathName;//sPathName;
+	
+	
+	
+	
+	if (msProject_Folder.length()) {
+		std::string sProject_Name = msProject_Folder;
+		tint32 iPosColon = sProject_Name.find_last_of(':');
+		sProject_Name.erase(0, iPosColon + 1);
+		msProject_Name = sProject_Name;
+		
+		
+		
+		
+		std::string sProjectFolder = msProject_Folder;
+		
+	//	//iPosColon = sProject_Name.find_first_of(':');
+	//	sProject_Name.erase(0, 1);
+		
+		tint32 iEndPos = sProjectFolder.find(msProject_Name);
+		tint32 iChars_To_Rempve = msProject_Name.size();
+		sProjectFolder.erase(iEndPos, iChars_To_Rempve+1 );
+		msProject_Folder = sProjectFolder;
+		
+		
+		Read_Project_From_Disk();
+	}
+		
+		
+		
+		
+
+	
+	
+	
+	return true;
+}
 tbool CKSApplication::MenuFileLoadProject()
 {
 	msExtendedError = "";
@@ -6235,5 +6330,5 @@ void CKSApplication::Zoom(){
 	else{
 		GetParmMan()->Set(true, miStoredZoom, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
 	}
-	
 }
+
