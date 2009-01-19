@@ -1338,7 +1338,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 		// Save
 		Save_Project_As_XML_File_To_Disk();
 		
-		
+		/*
 		try {
 			if (!MenuFileSaveProject()) {
 				LoadSaveErrDlg("Error saving project");
@@ -1348,6 +1348,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			// Display reason
 			LoadSaveErrDlg(pEx->GetFullDescription());
 		}
+		 */
 	}
 	else if (s.compare("File@Save Project As") == 0) {
 		// Save
@@ -4820,7 +4821,7 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 	CTake_Data* pTake_Info = pSample_Data->Get_Take_Data();
 	
 	
-	pSample_Data->Generate_UUID();
+//	pSample_Data->Set_Sample_UUID();
 	
 	if (!pImportInfo->mbStereo) {
 		

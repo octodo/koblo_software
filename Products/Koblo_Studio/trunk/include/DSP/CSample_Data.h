@@ -21,7 +21,9 @@
  *  holds sample info 
  */
 
-class CSample_Data{
+class CSample_Data:
+public virtual CKSUUID
+{
 	
 public:
 	//! Constructor
@@ -39,21 +41,20 @@ public:
 	std::string Get_Name(){ return sName;};
 	//! get a pointer to the takes
 	CTake_Data* Get_Take_Data(){ return mpTake_Data;};
-	//! get the Sample UUID
-	std::string Get_UUID(){ return msUUID;};
-	//! set uuid
-	void Generate_UUID();
-	
-	
-	
+
+/*	// get uuid from CKSUUID object
+	std::string Get_Sample_UUID(){ return mpUUID->Get_UUID();};
+	// set a new uuid
+	void Set_Sample_UUID(){ mpUUID->Set_UUID();};
+	// set a uuid from a string
+	void Set_Sample_UUID(std::string  sUUID ){ mpUUID->Set_UUID(sUUID);};
+*/	
 protected:
 	
-	//! UUID
-	std::string msUUID;
-	
+	// uuid object
+//	CKSUUID* mpUUID;
 	
 	//!!! TO DO turn this in to a stdlist of takes later
-	
 	CTake_Data* mpTake_Data;
 	
 };

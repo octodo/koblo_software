@@ -19,6 +19,7 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID,
 	mppPeakFile[1]		= NULL;
 	mppPeakFile[2]		= NULL;
 	mppPeakFile[3]		= NULL;
+//	mpUUID				= new(CKSUUID);
 	
 	
 	if (pTake_Data->sWavePathNameR.size() == 0) {
@@ -222,13 +223,4 @@ void CRegion_DSP::GetPeakFile(IFile** ppFile, tint32 iChannel, tint32 iSize)
 	
 	*ppFile = mppPeakFile[iSize + iChannel * 2];
 }
-
-void CRegion_DSP::Gennerate_UUID()
-{
-	if(msUUID.size() == 0)
-		msUUID = gpApplication->Get_UUID();
-	
-}
-
-
 

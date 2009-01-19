@@ -41,7 +41,7 @@ CTrack_DSP::CTrack_DSP(CDSP* pDSP, tint32 iChannelNumber, tbool bIsBusOrMix, CTr
 	// Avoid violent noise caused by Echo and KVerb volumes being default set at -400 millions (windows debug version only)
 	SetAUXVolume(0, 0.0f);
 	SetAUXVolume(1, 0.0f);
-	// .. Lasse
+	
 }
 
 CTrack_DSP::~CTrack_DSP()
@@ -801,7 +801,7 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 											   pTake_Data,
 											   uiSample_Offset, 
 											   ruiSample_Duration);
-	pRegion->Gennerate_UUID();
+//	pRegion->Check_Region_UUID();
 	
 	if(ruiSample_Duration == (tuint64)-1)
 		ruiSample_Duration = pRegion->Get_Sample_Duration();
@@ -1234,8 +1234,6 @@ void CTrack_DSP::Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 
 				// create new region
 				tuint64 uiDelta		=	uiNew_Sample_Duration + uiSelection_Duration;
 				mpDSP->CreateRegion(sSample_Name, miTrack, uiRegion_Pos + uiDelta, uiSample_Offset + uiDelta , uiSample_Duration - uiDelta, 0,uiFade_Out_Duration, fVolume );
-				
-				
 				
 			}
 			

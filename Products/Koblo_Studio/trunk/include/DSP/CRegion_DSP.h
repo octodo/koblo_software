@@ -25,7 +25,8 @@
  */
 
 
-class CRegion_DSP
+class CRegion_DSP:
+public virtual CKSUUID
 {
 public:
 
@@ -88,23 +89,37 @@ public:
 		
 	tint32 GetChannels() const {return miChannels;}
 		
-		// iSize == 0: small (1 / 1024 sample). iSize == 1: large (1 / 64 sample)
+	// iSize == 0: small (1 / 1024 sample). iSize == 1: large (1 / 64 sample)
 	void GetPeakFile(IFile** ppFile, tint32 iChannel, tint32 iSize);
+
+	 
 	
-	void Gennerate_UUID();
-	//! returns the UUID
-	std::string Get_UUID(){return msUUID;};
+	//! get the sample uuid
+	std::string Get_Region_Sample_UUID(){ return mpSample_Data->Get_UUID();};
 	
-	//! returns UUID from the sample used by the region
-	std::string Get_Sample_UUID(){return mpSample_Data->Get_UUID();};
-	
-	//! returns UUID from the take used by the region
-	std::string Get_Take_UUID(){return mpTake_Data->Get_UUID();};
+	//! get the take uuid
+	std::string Get_Region_Take_UUID(){ return mpTake_Data->Get_UUID();};
 	
 	
+	/*
+	
+	// get region uuid
+	std::string Get_Region_UUID(){ return mpUUID->Get_UUID();};
+	// set a new uuid
+	void Set_Region_UUID(){ mpUUID->Set_UUID();};
+	// set a uuid from a string
+	void Set_Region_UUID(std::string  sUUID ){ mpUUID->Set_UUID(sUUID);};
+	// check if the region ID is alreaddy set
+	void Check_Region_UUID(){mpUUID->Check_UUID();};
+	
+*/
 	
 		
 protected:
+	
+	//! region uuid
+//	CKSUUID* mpUUID;
+	
 	//! pointer to CSample_Data data object
 	CSample_Data* mpSample_Data;
 	
@@ -138,7 +153,6 @@ protected:
 	//! Region volume
 	tfloat32 mfVolume;
 	
-	// region uuid
-	std::string msUUID;
+
 	};
 

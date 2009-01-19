@@ -445,6 +445,7 @@ protected:
 	}
 	
 	CMIDISong mSong;
+	
 /*
 	//! project name
 	std::string msProjectName;
@@ -460,12 +461,12 @@ protected:
 	
 */	
 	
+	//obsoleete
 	std::string msProjectPathName;
-
 	std::string msProjectFolder;
-
 	std::string msLastWaveImport;
 	
+	// New ones
 	std::string msProject_Folder;
 	std::string msProject_Name;
 	

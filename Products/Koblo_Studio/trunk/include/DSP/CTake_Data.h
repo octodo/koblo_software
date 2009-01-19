@@ -1,6 +1,7 @@
 
 
-class CTake_Data
+class CTake_Data:
+public virtual CKSUUID
 {
 public:
 	//! Constructor
@@ -39,11 +40,6 @@ public:
 	std::string sWavePathNameR;
 	
 	//! get the Sample UUID
-	std::string Get_UUID(){ return msUUID;};
-	
-	void Generate_UUID();
-	
-	//! get the Sample UUID
 	void Set_Description(std::string sDescription ){msDescription =  sDescription;};
 	
 	//! get the description
@@ -54,13 +50,24 @@ public:
 	
 	//! get the description
 	std::string Get_URL(){ return msURL;};
+/*	
+	// get uuid from CKSUUID object
+	std::string Get_Take_UUID(){ return mpUUID->Get_UUID();};
+	// set a new uuid
+	void Set_Take_UUID(){ mpUUID->Set_UUID();};
+	// set a uuid from a string
+	void Set_Take_UUID(std::string  sUUID ){ mpUUID->Set_UUID(sUUID);};
+	
+*/	
 	
 	
 	
 protected:
 	
+//	CKSUUID* mpUUID;
+	
 	//! UUID
-	std::string msUUID;
+//	std::string msUUID;
 	//! description
 	std::string msDescription;
 	//! url
