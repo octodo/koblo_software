@@ -39,8 +39,34 @@ namespace k2s {
 */
 namespace ine {
 
+// ------------------------------------
+// Simple tools for accessing web-page
 #include "IINetUtil.h"
+
+// ------------------------------------------
+// More complex tools for accessing web-page
+	//! Describes which data type the dowloader/uploader wants to have or give
+	enum E_MIME_Type {
+		MIME_TYPE_NONE,
+		MIME_TYPE_TEXT, MIME_TYPE_HTML, MIME_TYPE_XML,
+		MIME_TYPE_BINARY, MIME_TYPE_OGG, MIME_TYPE_MP3,
+		MIME_TYPE_DEFAULT = MIME_TYPE_NONE
+	};
+
+	// Describes the operation that the downloader/uploader will be performing
+	enum EVerbType {
+		//! Default; lets the downloader/uploader decide what verb to use (IDownloader & IUploader)
+		VERB_DEFAULT,
+		//! Retrieve existing data (IDownloader only)
+		VERB_GET,
+		//! Update existing data (IUploader) or retrieve existing data (IDownloader)
+		VERB_POST,
+		//! Upload new data (IUploader only)
+		VERB_PUT,
+	};
+
 #include "IDownloader.h"
+#include "IUploader.h"
 
 }	// namespace ine
 
