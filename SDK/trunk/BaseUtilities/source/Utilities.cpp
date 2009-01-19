@@ -587,6 +587,8 @@ namespace k2s {
 
 
 		std::string sUUID	= "";
+
+#ifdef _Mac
 		char psz[4];
 		
 		CFUUIDRef uuid = CFUUIDCreate (NULL );
@@ -612,14 +614,21 @@ namespace k2s {
 		sprintf(psz, "%02x", uuid_bytes.byte14); 	sUUID += psz;
 		sprintf(psz, "%02x", uuid_bytes.byte15); 	sUUID += psz;
 		
+#endif // _Mac
 
+#ifdef _WIN32
+		//! TODO: Insert UUID code for windows here
+#endif // _WIN32
+
+
+		//! TODO: (lasse) This is wrong! Please fix it Max
 		uiBuffer_Size = sUUID.size();
+
 		strcpy(pszUUID, sUUID.c_str());
 		
-		
-		
-	}
-}
+	} // Gen_UUID
+
+} // namespace k2s
 
 
 
