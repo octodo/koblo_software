@@ -28,7 +28,8 @@
  */
 
 
-
+class CSample_Data;
+class CTake_Data;
 
 class CKSXML_Write_Project
 {
@@ -45,6 +46,8 @@ public:
 	std::string Create_License_String();
 	
 	void Save_Project_As_XML_File_To_Disk();
+	
+	
 	
 private:
 
@@ -78,7 +81,8 @@ private:
 	void Write_Window_Size(TiXmlElement* pParent, tuint uiSizeX, tuint uiSizeY);
 	//! write samples
 	void Write_Samples(TiXmlElement* pParent);
-	void Write_Sample(TiXmlElement* pParent, std::string str);
+	void Write_Sample(TiXmlElement* pParent, CSample_Data* pSample_Data);
+	void Write_Take(TiXmlElement* pParent, CTake_Data* pTake_Data);
 	//! tracks
 	void Write_Tracks(TiXmlElement* pParent);
 	void Write_Track(TiXmlElement* pParent, tuint uiTrack);
@@ -88,9 +92,7 @@ private:
 	void Write_Track_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert);
 	void Write_Track_Regions(TiXmlElement* pParent, tuint uiTrack);
 
-	
-	
-	
+
 	//! AUX
 	void Write_AUXs(TiXmlElement* pParent, tuint uiTrack);
 	void Write_AUX(TiXmlElement* pParent, tuint uiTrack, tuint iAux); 
@@ -98,12 +100,7 @@ private:
 	void Write_Busses(TiXmlElement* pParent);
 	void Write_Bus(TiXmlElement* pParent, tuint uiID);
 	void Write_Bus_Out(TiXmlElement* pParent, tuint uiID);
-	
-	
-	
-	
 
-	
 	
 	
 	

@@ -87,6 +87,11 @@ public:
 	// iSize == 0: small (1 / 1024 sample). iSize == 1: large (1 / 64 sample)
 	void GetPeakFile(IFile** ppFile, tint32 iChannel, tint32 iSize);
 	
+	void Gennerate_UUID();
+	
+	std::string Get_UUID(){return msUUID;};
+	
+	
 protected:
 	CSample_DSP** mppSample;
 	
@@ -113,5 +118,7 @@ protected:
 	
 	//! Region volume
 	tfloat32 mfVolume;
+	// region uuid
+	std::string msUUID;
 };
 

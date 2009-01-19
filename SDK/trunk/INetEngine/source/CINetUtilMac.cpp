@@ -273,4 +273,5 @@ void CINetUtil::GetWebFile(tchar* Parameters, tchar* FileName, tint32* OutputLen
 	if (Initialize != NULL) InternetCloseHandle(Initialize);
 }
 
+
 #endif

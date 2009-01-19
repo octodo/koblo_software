@@ -30,6 +30,8 @@
 #include "CKSUsername_And_Password_Model.h"
 #include "CKSInternet_Features.h"
 
+#include "CGUI_Controller.h"
+
 #include "aioe.h"
 #include "mioe.h"
 
@@ -100,9 +102,14 @@
 
 // Sounds
 class CApplication;
+
+#include "CTake_Data.h"
+#include "CSample_Data.h"
 #include "CSample_DSP.h"
+#include "CSample_Controller.h"
 #include "CRegion_Controller.h"
 #include "CRegion_DSP.h"
+
 
 
 // PlugIn

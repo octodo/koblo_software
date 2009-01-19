@@ -38,6 +38,10 @@ public:
 	void SetPos(tuint64 uiPos) {mpStream->SetPosition(uiPos); muiPos = uiPos;}
 
 	tuint64 GetPos() const {return muiPos;}
+	
+//	void CSample_DSP::Set_Sample_UUID(std::string sUUID) { msSample_UUID = sUUID;};
+	
+//	std::string Get_Sample_UUID();
 
 protected:
 	tuint64 muiPos;
@@ -47,5 +51,7 @@ protected:
 	tuint64 muiLength;
 	
 	st::IStream* mpStream;
+	
+	
 };
 

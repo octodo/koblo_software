@@ -149,7 +149,7 @@ void CKS_Import_Files::UpdateListBox()
 		std::string sName;
 		tbool bFirstOld = bFirst;
 		
-		//!!! is this a bug ?
+		//!!! Lasse is this a bug ?
 		if (bFirst == false) {
 			sName = "@";
 		}

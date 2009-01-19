@@ -238,7 +238,12 @@ tbool IINetUtil::URLDecode(tchar* pszInData, tint32 iInDataLen, tchar* pszOutDat
 	return true;
 } // URLDecode
 
-
+/*
+std::string IINetUtil::Get_UUID()
+{
+	return "jim";
+}
+*/
 tbool IINetUtil::GetValue(const tchar* SourceString, tint32* OutputLength, tchar** OutputBuffer)
 {
 	*OutputBuffer = NULL;

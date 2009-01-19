@@ -11,7 +11,7 @@ CStreamManager::CStreamManager()
 	mpTimer = ITimer::Create();
 
 #ifdef _DEBUG
-	mpTimer->Init(0, dynamic_cast<ITimerCallback*>(this), 50);
+	mpTimer->Init(0, dynamic_cast<ITimerCallback*>(this), 500);
 #else	// _DEBUG
 	mpTimer->Init(0, dynamic_cast<ITimerCallback*>(this), 10);
 #endif	// _DEBUG
@@ -119,7 +119,7 @@ void CStreamManager::OnTimer(tint32 iID)
 	tint32 iStreamIx = 0;
 	std::list<IStream*>::iterator it = mStreams.begin();
 	for (; it != mStreams.end(); iStreamIx++, it++) {
-		if (IsStreamIxInUse(iStreamIx)) {
+//		if (IsStreamIxInUse(iStreamIx)) {
 			IStream* pStream = *it;
 			CStream* pCStream = dynamic_cast<CStream*>(pStream);
 			if (pCStream) {
@@ -128,7 +128,7 @@ void CStreamManager::OnTimer(tint32 iID)
 					bStutter = true;
 				}
 			}
-		}
+//		}
 	}
 	
 	if (bStutter) {

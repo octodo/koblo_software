@@ -996,20 +996,12 @@ tbool CTrack_Editor_Pane::DoKeyDown(ge::EKey Key)
 			break;
 		}
 		 */
-		case ge::Keyz: {
 			/*
-			mbZoomFlipFlop = !mbZoomFlipFlop;
-			if(mbZoomFlipFlop){
-				miStoredZoom = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI);
-				gpApplication->GetParmMan()->Set(true, giZoom_Levels - 10, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
-			}
-			else{
-				gpApplication->GetParmMan()->Set(true, miStoredZoom, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
-				
-			}
-			 */
+		case ge::Keyz: {
+			gpApplication->Zoom();
 			break;
 		}
+		*/
 			/*
 		case ge::Keyw: {
 			tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Waveform, giSectionGUI) != 0);

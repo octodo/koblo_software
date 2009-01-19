@@ -398,7 +398,7 @@ tbool CAppCallback::OnInit(tint32 iRunIndex)
 			break;
 
 		case 6:
-			gpSplashGUI->SetText("Creating Licens Setup Dialog...");
+			gpSplashGUI->SetText("Creating License Setup Dialog...");
 			gpHost->ActivateWindow(giSplash_Window);
 			break;
 
@@ -1000,11 +1000,11 @@ static void HandleNew_Menu()
 	MenuItemsTrack.pItems[0] = ge::IContext::SMenuItem("Undo", false, NULL, 'Z');
 	MenuItemsTrack.pItems[1] = ge::IContext::SMenuItem("-");
 	MenuItemsTrack.pItems[2] = ge::IContext::SMenuItem("Copy Region", false, NULL, 'C');
-	MenuItemsTrack.pItems[3] = ge::IContext::SMenuItem("Cut Region", false, NULL, 'X');
+	MenuItemsTrack.pItems[3] = ge::IContext::SMenuItem("Cut Selection", false, NULL, 'X');
 	MenuItemsTrack.pItems[4] = ge::IContext::SMenuItem("Paste Region", false, NULL, 'V');
 	MenuItemsTrack.pItems[5] = ge::IContext::SMenuItem("Duplicate Region", false, NULL, 'D');
 	MenuItemsTrack.pItems[6] = ge::IContext::SMenuItem("-");
-	MenuItemsTrack.pItems[7] = ge::IContext::SMenuItem("Add Track", false, NULL, 'A');
+	MenuItemsTrack.pItems[7] = ge::IContext::SMenuItem("Add Track", false, NULL, 'T');
 	MenuItemsTrack.pItems[8] = ge::IContext::SMenuItem("Delete Track");
 	MenuItemsTrack.pItems[9] = ge::IContext::SMenuItem("-");
 	MenuItemsTrack.pItems[10] = ge::IContext::SMenuItem("Loop Selection", false, NULL, 'K');
@@ -1023,11 +1023,11 @@ static void HandleNew_Menu()
 	MenuItemsWindow.pItems[5] = ge::IContext::SMenuItem("View Grid", false, NULL, 'G');
 	MenuItemsWindow.pItems[6] = ge::IContext::SMenuItem("View Fades", false, NULL, 'F');
 	MenuItemsWindow.pItems[7] = ge::IContext::SMenuItem("-");
-	MenuItemsWindow.pItems[8] = ge::IContext::SMenuItem("Zoom");
+	MenuItemsWindow.pItems[8] = ge::IContext::SMenuItem("Zoom", false, NULL, '0');
 	MenuItemsWindow.pItems[9] = ge::IContext::SMenuItem("Zoom In", false, NULL, '+');
 	MenuItemsWindow.pItems[10] = ge::IContext::SMenuItem("Zoom Out", false, NULL, '-');
 	MenuItemsWindow.pItems[11] = ge::IContext::SMenuItem("-");
-	MenuItemsWindow.pItems[12] = ge::IContext::SMenuItem("Jump to Mouse", false, NULL, '0');
+	MenuItemsWindow.pItems[12] = ge::IContext::SMenuItem("Jump to Mouse", false, NULL, 'J');
 	
 	//-----------------------------------
 	// tools menu

@@ -22,7 +22,8 @@ extern st::IStreamManager* gpStreamManager;
 
 class CDSP : 
 public virtual CBaseDSPEngine,
-public virtual CRegion_Controller
+public virtual CRegion_Controller,
+public virtual CSample_Controller
 {
 public:
 	//! Constructor

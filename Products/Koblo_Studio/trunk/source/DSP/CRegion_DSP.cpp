@@ -65,6 +65,8 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, c
 		mppPeakFile[3] = IFile::Create();
 		mppPeakFile[3]->Open(sPeakFileName.c_str(), IFile::FileRead);
 	}
+	
+	
 }
 
 CRegion_DSP::~CRegion_DSP()
@@ -77,16 +79,6 @@ CRegion_DSP::~CRegion_DSP()
 	if (mppPeakFile[3]) {
 		mppPeakFile[3]->Destroy();
 	}
-	/*
-<<<<<<< HEAD:Products/Koblo_Studio/trunk/source/DSP/CRegion_DSP.cpp
-	printf("Delete region %d \n", muiUniqueID);
-=======
-	
-	for (tint32 iSampleToDelete = miChannels - 1; iSampleToDelete >= 0; iSampleToDelete--) {
-		delete mppSample[iSampleToDelete];
-	}
->>>>>>> master:Products/Koblo_Studio/trunk/source/DSP/CRegion_DSP.cpp
-	 */
 }
 
 void CRegion_DSP::SetEndPos(tuint64 iPos)
@@ -225,6 +217,17 @@ void CRegion_DSP::GetPeakFile(IFile** ppFile, tint32 iChannel, tint32 iSize)
 	
 	*ppFile = mppPeakFile[iSize + iChannel * 2];
 }
+
+
+
+void CRegion_DSP::Gennerate_UUID()
+{
+	if(msUUID.size() == 0)
+		msUUID = gpApplication->Get_UUID();
+	
+}
+
+
 
 
 

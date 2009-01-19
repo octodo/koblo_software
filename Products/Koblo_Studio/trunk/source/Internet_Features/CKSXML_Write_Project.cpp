@@ -50,15 +50,16 @@ void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	// missing code 
 	std::string sFileName = gpApplication->GetProjectName() + ".xml";
 	
-	// Convert path from our internal format
-	tchar pszFilePath_OS_Format[1024];
-	if (!IFile::PathToOS2(sFileName.c_str(), pszFilePath_OS_Format)) {
-		tbool bDummy_SomethingIsRotten = true;
+	CAutoDelete<IFile> pfile(IFile::Create());
+	if (pfile->Open(sFileName.c_str(), IFile::FileCreate)) {
+		pfile->Write(xml_str.c_str(), xml_str.length());
 	}
 	
 	//!!! path is missing write file to disk
-	pDoc->SaveFile(pszFilePath_OS_Format);
+//	pDoc->SaveFile();
 	
+
+
 }
 
 void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID)
@@ -578,53 +579,61 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 	Add_Comment(pParent, "samples and their takes. only used takes are listed. a sample can be included that's not used on any track");
 	
 		
-	std::list<CKSApplication::SFileInfo*> sFileInfos = gpApplication->GetFileInfo();
+	std::list<CSample_Data*> pSample_Data_List = gpApplication->Get_Sample_Data_List();
+	std::list<CSample_Data*>::iterator  itSample_Data = pSample_Data_List.begin();
 	
 	
-
-	std::list<CKSApplication::SFileInfo*>::iterator  itFileList = sFileInfos.begin();
-	for (; itFileList != sFileInfos.end(); itFileList++) {
+	for (; itSample_Data != pSample_Data_List.end(); itSample_Data++) {
 		
+//		CSample_Data* pSample_Data = *itSample_Data;
+		
+		// sample tag with uuid as atribute
 		TiXmlElement* pSample = new TiXmlElement( "sample" );
-		// ID
-		tint32 uiID = -1;
-		// track
-		pSample->SetAttribute("id",uiID);
+		pSample->SetAttribute("uuid", (*itSample_Data)->Get_UUID().c_str());
 		pParent->LinkEndChild( pSample );
 		
-		CKSApplication::SFileInfo* pInfo = *itFileList;
-		Write_Sample(pSample, pInfo->sOriginalName.c_str());
+		Write_Sample( pSample, (*itSample_Data));
 		
-		/*
-		TiXmlElement* pName = new TiXmlElement( "sample" );
-		
-		
-		CKSApplication::SFileInfo* pInfo = *itFileList;
-	//	pInfo->sOriginalName.c_str();
-		
-		
-		TiXmlText* pSampleTxt = new TiXmlText(pInfo->sOriginalName.c_str());
-		
-		pName->LinkEndChild( pSampleTxt );
-		pParent->LinkEndChild( pName );
-		
-		*/
-		
-		
-		
+			
 	}
 	
 }
 
-void CKSXML_Write_Project::Write_Sample(TiXmlElement* pParent, std::string str)
+void CKSXML_Write_Project::Write_Sample(TiXmlElement* pParent, CSample_Data* pSample_Data)
+{
+	TiXmlElement* pSample = new TiXmlElement("name" );
+	TiXmlText* pSampleTxt = new TiXmlText(pSample_Data->Get_Name().c_str());
+	pSample->LinkEndChild( pSampleTxt );
+	pParent->LinkEndChild( pSample );
+	
+
+	CTake_Data* pTake_Data = pSample_Data->Get_Take_Data();
+	Write_Take(pParent, pTake_Data);
+	
+	
+	
+}
+
+
+void CKSXML_Write_Project::Write_Take(TiXmlElement* pParent, CTake_Data* pTake_Data)
 {
 	// name
-	TiXmlElement* pName = new TiXmlElement( "name" );
-	TiXmlText* pNameTxt = new TiXmlText(str.c_str());
-	pName->LinkEndChild( pNameTxt );
-	pParent->LinkEndChild( pName );
+	TiXmlElement* pTake = new TiXmlElement( "take" );
+	pTake->SetAttribute("uuid", pTake_Data->Get_UUID().c_str());
+	pParent->LinkEndChild( pTake );
 	
-	// takes
+	// description
+	TiXmlElement* pDescription = new TiXmlElement( "description" );
+	TiXmlText* pDescriptionTxt = new TiXmlText(pTake_Data->Get_Description().c_str());
+	pDescription->LinkEndChild( pDescriptionTxt );
+	pTake->LinkEndChild( pDescription );
+	
+	// url
+	TiXmlElement* pURL = new TiXmlElement( "url" );
+	TiXmlText* pURLTxt = new TiXmlText(pTake_Data->Get_URL().c_str());
+	pURL->LinkEndChild( pURLTxt );
+	pTake->LinkEndChild( pURL );
+	
 	
 	
 	
@@ -861,8 +870,8 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		// region id and take nr.
 		TiXmlElement* pRegion = new TiXmlElement( "region" );
 		
-		tuint uiID = pRegion_DSP->GetID();
-		pRegion->SetAttribute("id", uiID );
+	//	tuint uiID = pRegion_DSP->Get_UUID();
+		pRegion->SetAttribute("id", pRegion_DSP->Get_UUID().c_str() );
 		pRegion->SetAttribute("take", 0);
 		pParent->LinkEndChild( pRegion );
 		
@@ -1106,3 +1115,4 @@ void CKSXML_Write_Project::Add_Comment( TiXmlElement* pParent, std::string str)
 	pParent->LinkEndChild( comment );
 	
 }
+

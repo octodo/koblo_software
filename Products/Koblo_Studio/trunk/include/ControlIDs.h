@@ -60,30 +60,19 @@ enum ETrack_Ctrls
 	giCtrl_Track_Big_AUX1_Send,
 	giCtrl_Track_Big_AUX2_Send,
 	giCtr_Mix_Channel_Text,
-	giChannel_Arm_Button,
-	giChannel_Mute_Button,
-	giChannel_Solo_Button,
-	giChannel_Show_Insert_Button,
-	giChannel_Volume_Slider,
-	giChannel_Volume_Slider_Display,
-	giChannel_Input_Popup,
-	giChannel_Output_Popup,
-	giChannel_Pan,
-	//giCtr_Mix_Aux_ScrollPane_Timer,
-	giCtrl_AUX1Send,
-	giCtrl_AUX2Send,
-	giCtrl_InsertPop1,
-	giCtrl_InsertPop2,
-	giCtrl_InsertPop3,
-	giCtrl_InsertPop4,
-	giCtrl_InsertTrackPop1,
-	giCtrl_InsertTrackPop2,
-	giCtrl_InsertTrackPop3,
-	giCtrl_InsertTrackPop4,
-	giCtrlOpenPlugEdit1,
-	giCtrlOpenPlugEdit2,
-	giCtrlOpenPlugEdit3,
-	giCtrlOpenPlugEdit4,
+	
+	giCtrl_Trak_Edit_Insert1,
+	giCtrl_Trak_Edit_Insert2,
+	giCtrl_Trak_Edit_Insert3,
+	giCtrl_Trak_Edit_Insert4,
+	
+	
+	giCtrl_Track_Insert_Pop1,
+	giCtrl_Track_Insert_Pop2,
+	giCtrl_Track_Insert_Pop3,
+	giCtrl_Track_Insert_Pop4,
+	
+
 
 	giNr_Of_Track_Ctls,
 
@@ -103,39 +92,87 @@ enum EBuss_Ctrls
 	giCtr_Mix_Buss_Volume_Slider_Display,
 	giCtr_Mix_Buss_Output_Popup,
 	giCtr_Mix_Buss_Pan,
-	//gCtr_iCtr_Buss_Mix_Aux_ScrollPane_Timer,
 	
+	giCtr_Mix_Buss_Edit_Insert1,
+	giCtr_Mix_Buss_Edit_Insert2,
+	giCtr_Mix_Buss_Edit_Insert3,
+	giCtr_Mix_Buss_Edit_Insert4,
+	
+	
+	
+	giCtr_Mix_Buss_Insert_Pop1,
+	giCtr_Mix_Buss_Insert_Pop2,
+	giCtr_Mix_Buss_Insert_Pop3,
+	giCtr_Mix_Buss_Insert_Pop4,
+	
+
+	giCtr_Mix_Buss_AUX1Send,
+	giCtr_Mix_Buss_AUX2Send,
 		
 	giNr_Of_Buss_Ctls,
+	
+	
 
+};
+
+enum E_Mix_Ctrls
+{
+	// Mixer
+	giFirst_Mix_Ctrl = giNr_Of_Buss_Ctls * giNumber_Of_Busses,
+ 
+	giChannel_Arm_Button,
+	giChannel_Mute_Button,
+	giChannel_Solo_Button,
+	giChannel_Show_Insert_Button,
+	giChannel_Volume_Slider,
+	giChannel_Volume_Slider_Display,
+	giChannel_Input_Popup,
+	giChannel_Output_Popup,
+	giChannel_Pan,
+	
+	giCtrl_Mix_Edit_Insert1,
+	giCtrl_Mix_Edit_Insert2,
+	giCtrl_Mix_Edit_Insert3,
+	giCtrl_Mix_Edit_Insert4,
+	
+	giCtrl_Mix_Insert_Pop1,	
+	giCtrl_Mix_Insert_Pop2,
+	giCtrl_Mix_Insert_Pop3,
+	giCtrl_Mix_Insert_Pop4,
+	
+	giCtrl_Mix_AUX1Send,
+	giCtrl_Mix_AUX2Send,
+	
+	giNr_Of_Mix_Ctls,
+	
 };
 
 enum E_Master_Ctrls
 {
 	// Mixer
-	giCtr_Mix_Master_ID = giNr_Of_Buss_Ctls * giNumber_Of_Busses,
+	giCtr_Mix_Master_ID = giNr_Of_Mix_Ctls * giNumber_Of_Tracks,
 	giCtr_Mix_Master_Aux_ScrollPane_Timer,
 	giCtr_Mix_Master_Text,
-//	giCtr_Mix_Master_Mute_Button,
-//	giCtr_Mix_Master_Solo_Button,
 	giCtr_Mix_Master_Show_Insert_Button,
 	giCtr_Mix_Master_Volume_Slider,
 	giCtr_Mix_Master_Volume_Slider_Display,
 	giCtrl_Mix_Master_Out_Popup,
 	giCtrl_Lopp_Start,
 	giCtrl_Loop_End,
-	giCtrlm_InsertPop1,
-	giCtrlm_InsertPop2,
-	giCtrlm_InsertPop3,
-	giCtrlm_InsertPop4,
-	giCtrlm_InsertTrackPop1,
-	giCtrlm_InsertTrackPop2,
-	giCtrlm_InsertTrackPop3,
-	giCtrlm_InsertTrackPop4,
-	giCtrlmOpenPlugEdit1,
-	giCtrlmOpenPlugEdit2,
-	giCtrlmOpenPlugEdit3,
-	giCtrlmOpenPlugEdit4,
+	
+
+	giCtrl_Master_Edit_Insert1,
+	giCtrl_Master_Edit_Insert2,
+	giCtrl_Master_Edit_Insert3,
+	giCtrl_Master_Edit_Insert4,
+	
+	giCtrl_Master_Insert_Pop1,	
+	giCtrl_Master_Insert_Pop2,
+	giCtrl_Master_Insert_Pop3,
+	giCtrl_Master_Insert_Pop4,
+		
+	giCtrl_Master_AUX1_Return,
+	giCtrl_Master_AUX2_Return, 
 	
 //	giCtr_Mix_Master_Out_Display,
 
