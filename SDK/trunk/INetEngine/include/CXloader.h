@@ -1,3 +1,4 @@
+//! Implement of IUploader and IDownloader
 class CXloader : public virtual IDownloader, public virtual IUploader
 {
 public:
