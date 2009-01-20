@@ -70,6 +70,8 @@ public virtual CKSInternet_Features,
 public virtual CKSXML_Create_Sample,
 public virtual CGUI_Controller
 
+// Changes made to VST
+
 {
 
 public:
