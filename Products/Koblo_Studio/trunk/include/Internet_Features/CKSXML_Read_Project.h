@@ -47,6 +47,9 @@ public:
 	void Reset_Project();
 	
 	//! read a project XML file from Koblo.comin to the tiny xml DOM
+	void Read_Project_From_Disk();
+	
+	//! read a project XML file from Koblo.comin to the tiny xml DOM
 	void Read_Project_XML_To_DOM(tint32 iProjectID);
 	
 	//! pass the DOM in to the KS data structure

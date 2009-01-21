@@ -22,7 +22,8 @@
  *  trim start and end \
  */
 
-class CSample_DSP
+class CSample_DSP:
+public virtual CKSUUID
 {
 public:
 	CSample_DSP(const std::string& sPathName);
@@ -39,9 +40,6 @@ public:
 
 	tuint64 GetPos() const {return muiPos;}
 	
-//	void CSample_DSP::Set_Sample_UUID(std::string sUUID) { msSample_UUID = sUUID;};
-	
-//	std::string Get_Sample_UUID();
 
 protected:
 	tuint64 muiPos;

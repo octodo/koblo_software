@@ -103,6 +103,7 @@
 // Sounds
 class CApplication;
 
+#include "CKSUUID.h"
 #include "CTake_Data.h"
 #include "CSample_Data.h"
 #include "CSample_DSP.h"

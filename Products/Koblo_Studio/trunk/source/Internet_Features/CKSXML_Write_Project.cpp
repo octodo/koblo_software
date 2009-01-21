@@ -50,16 +50,14 @@ void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	// missing code 
 	std::string sFileName = gpApplication->GetProjectName() + ".xml";
 	
+	
+	std::string sProject_Folder = gpApplication->Get_Project_Folder();
+	std::string sProject_Name	= gpApplication->Get_Project_Name();
+	
 	CAutoDelete<IFile> pfile(IFile::Create());
 	if (pfile->Open(sFileName.c_str(), IFile::FileCreate)) {
 		pfile->Write(xml_str.c_str(), xml_str.length());
 	}
-	
-	//!!! path is missing write file to disk
-//	pDoc->SaveFile();
-	
-
-
 }
 
 void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID)
@@ -115,14 +113,11 @@ void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 	Add_Comment(pDoc, "all times and track positions are specified in sample points");
 	
 	TiXmlElement* pProject = new TiXmlElement( "project" );
-//	TiXmlText * text = new TiXmlText( "World" );
-//	pProject->LinkEndChild( text );
+
 	
-	pProject->SetAttribute("id",123);
+	pProject->SetAttribute("uuid", gpApplication->Get_Project_UUID().c_str());
 	pProject->SetAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
 	pProject->SetAttribute("xsi:noNamespaceSchemaLocation","http://koblo.com/schemas/koblo_project.xsd");
-	
-	
 	pDoc->LinkEndChild( pProject );
 	
 	Write_Branch( pProject);
@@ -141,8 +136,8 @@ void CKSXML_Write_Project::Write_Branch(TiXmlElement* pParent)
 	
 	TiXmlElement* pBranch = new TiXmlElement( "branch" );
 	// Branch ID
-	tint32 iBranch_ID = gpApplication->GetGlobalParm(giParamID_Branch_ID, giSectionGlobal);
-	pBranch->SetAttribute("id",iBranch_ID);
+//	tint32 iBranch_ID = gpApplication->GetGlobalParm(giParamID_Branch_ID, giSectionGlobal);
+	pBranch->SetAttribute("uuid",gpApplication->Get_Branch_UUID().c_str());
 	pParent->LinkEndChild( pBranch );
 	
 	// name
@@ -391,14 +386,6 @@ void CKSXML_Write_Project::Write_Editing(TiXmlElement* pParent)
 	pEditing->LinkEndChild( pLoop );
 	Write_Loop(pLoop);
 	
-/*	// position
-	iVal = gpApplication->GetGlobalParm(giParamID_Loop_End, giSectionGlobal);
-	sprintf(pszBuff, "%d", iVal);
-	TiXmlElement* pEnd = new TiXmlElement( "end" );
-	TiXmlText* pEndTxt = new TiXmlText(pszBuff);
-	pEnd->LinkEndChild( pEndTxt );
-	pParent->LinkEndChild( pEnd );
-*/	
 	// windows
 	TiXmlElement* pWindows = new TiXmlElement( "windows" );;
 	pEditing->LinkEndChild( pWindows );
@@ -578,14 +565,10 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 {
 	Add_Comment(pParent, "samples and their takes. only used takes are listed. a sample can be included that's not used on any track");
 	
-		
 	std::list<CSample_Data*> pSample_Data_List = gpApplication->Get_Sample_Data_List();
 	std::list<CSample_Data*>::iterator  itSample_Data = pSample_Data_List.begin();
 	
-	
 	for (; itSample_Data != pSample_Data_List.end(); itSample_Data++) {
-		
-//		CSample_Data* pSample_Data = *itSample_Data;
 		
 		// sample tag with uuid as atribute
 		TiXmlElement* pSample = new TiXmlElement( "sample" );
@@ -593,10 +576,7 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 		pParent->LinkEndChild( pSample );
 		
 		Write_Sample( pSample, (*itSample_Data));
-		
-			
 	}
-	
 }
 
 void CKSXML_Write_Project::Write_Sample(TiXmlElement* pParent, CSample_Data* pSample_Data)
@@ -605,13 +585,9 @@ void CKSXML_Write_Project::Write_Sample(TiXmlElement* pParent, CSample_Data* pSa
 	TiXmlText* pSampleTxt = new TiXmlText(pSample_Data->Get_Name().c_str());
 	pSample->LinkEndChild( pSampleTxt );
 	pParent->LinkEndChild( pSample );
-	
 
 	CTake_Data* pTake_Data = pSample_Data->Get_Take_Data();
 	Write_Take(pParent, pTake_Data);
-	
-	
-	
 }
 
 
@@ -633,11 +609,7 @@ void CKSXML_Write_Project::Write_Take(TiXmlElement* pParent, CTake_Data* pTake_D
 	TiXmlText* pURLTxt = new TiXmlText(pTake_Data->Get_URL().c_str());
 	pURL->LinkEndChild( pURLTxt );
 	pTake->LinkEndChild( pURL );
-	
-	
-	
-	
-	
+
 }
 
 //----------------------------------------------------------------
@@ -650,15 +622,16 @@ void CKSXML_Write_Project::Write_Tracks(TiXmlElement* pParent)
 	
 	for(tint32 i = 0; i<iNrTracks; i++){
 		
-		// ID
+		// id
 		tuint uiTrack = gpApplication->Get_Track_Id(i);
+		
 		// track
 		TiXmlElement* pTrack = new TiXmlElement( "track" );
 		pTrack->SetAttribute("id",uiTrack);
 		pParent->LinkEndChild( pTrack );
+		
 		// write track data
 		Write_Track(pTrack, uiTrack);	
-		
 	}
 }
 
@@ -680,7 +653,7 @@ void CKSXML_Write_Project::Write_Track(TiXmlElement* pParent, tuint uiTrack)
 	pParent->LinkEndChild( pDescription );
 	
 	
-	// Size
+	// size
 	TiXmlElement* pSize = new TiXmlElement( "size" );
 	tint32 iVal = gpApplication->GetGlobalParm(giParam_Track_Info_SizeY, giSection_First_Track + uiTrack);
 	sprintf(pszBuff, "%d", iVal);
@@ -710,12 +683,13 @@ void CKSXML_Write_Project::Write_Track(TiXmlElement* pParent, tuint uiTrack)
 	
 }
 
-void CKSXML_Write_Project::Write_Track_In(TiXmlElement* pParent, tuint uiID)
+void CKSXML_Write_Project::Write_Track_In(TiXmlElement* pParent, tuint uiTrack)
 {
+	CTrack_DSP*		pTrack_DSP		=	gpDSPEngine->GetTrack(uiTrack);
 	
 	// input
 	char pszBuff [64];
-	tint32 iVal = gpApplication->GetGlobalParm(giParam_ChIn, giSection_First_Track + uiID);
+	tint32 iVal = gpApplication->GetGlobalParm(giParam_ChIn, giSection_First_Track + uiTrack);
 	sprintf(pszBuff, "%d", iVal);
 	TiXmlElement* pIn = new TiXmlElement( "input" );
 	TiXmlText* pInTxt = new TiXmlText(pszBuff);
@@ -723,7 +697,7 @@ void CKSXML_Write_Project::Write_Track_In(TiXmlElement* pParent, tuint uiID)
 	pParent->LinkEndChild( pIn );
 	
 	// mode
-	iVal = gpApplication->GetGlobalParm(giParam_ChInMode, giSection_First_Track + uiID);
+	iVal = gpApplication->GetGlobalParm(giParam_ChInMode, giSection_First_Track + uiTrack);
 	iVal ? sprintf(pszBuff, "mono") : sprintf(pszBuff, "stereo");
 	TiXmlElement* pMode = new TiXmlElement( "in" );
 	TiXmlText* pModeTxt = new TiXmlText(pszBuff);
@@ -731,7 +705,7 @@ void CKSXML_Write_Project::Write_Track_In(TiXmlElement* pParent, tuint uiID)
 	pParent->LinkEndChild( pMode );
 	
 	// gain
-	iVal = gpApplication->GetGlobalParm(giParam_ChInGain, giSection_First_Track + uiID);
+	iVal = gpApplication->GetGlobalParm(giParam_ChInGain, giSection_First_Track + uiTrack);
 	tfloat fGain	=	(tfloat)iVal * 0.0001f;
 	sprintf(pszBuff, "%f", fGain);
 	TiXmlElement* pGain = new TiXmlElement( "gain" );
@@ -846,20 +820,17 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		pProduct->LinkEndChild( pProductTxt );
 		pInsert->LinkEndChild( pProduct );
 		
-			
-		
-		
-		
-		
 
 	}
 }
 
 void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTrack)
 {
+	// Note
 	tchar pszBuff[1024];
-	tchar* psz = pszBuff;
-	CTrack_DSP*		pTrack_DSP			=	gpDSPEngine->GetTrack(uiTrack);
+//	tchar* psz = pszBuff;
+	CTrack_DSP*		pTrack_DSP		=	gpDSPEngine->GetTrack(uiTrack);
+	
 	std::list<CTrack_DSP::SChannelRegionInfo*>::const_iterator it = pTrack_DSP->GetRegionList().begin();
 	
 	for (; it != pTrack_DSP->GetRegionList().end(); it++) {
@@ -871,20 +842,23 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		TiXmlElement* pRegion = new TiXmlElement( "region" );
 		
 	//	tuint uiID = pRegion_DSP->Get_UUID();
-		pRegion->SetAttribute("id", pRegion_DSP->Get_UUID().c_str() );
-		pRegion->SetAttribute("take", 0);
+		pRegion->SetAttribute("uuid", pRegion_DSP->Get_UUID().c_str() );
+		//pRegion->SetAttribute("take", 0);
 		pParent->LinkEndChild( pRegion );
 		
-		// sound file name
-		const tchar* pszListItemName = pRegion_DSP->GetSoundListItemName();
-		sprintf(psz, "%s", pszListItemName);
-		
-		TiXmlElement* pSoundfile = new TiXmlElement( "soundfile" );
-		TiXmlText* pSoundfileTxt = new TiXmlText(psz);
-		pSoundfile->LinkEndChild( pSoundfileTxt );
-		pRegion->LinkEndChild( pSoundfile );
 		
 		
+		TiXmlElement* pSample_UUID = new TiXmlElement( "sample" );
+		TiXmlText* pSample_UUID_Txt = new TiXmlText(pRegion_DSP->Get_Region_Sample_UUID().c_str());
+		pSample_UUID->LinkEndChild( pSample_UUID_Txt );
+		pRegion->LinkEndChild( pSample_UUID );
+		
+		TiXmlElement* pTake_UUID = new TiXmlElement( "take" );
+		TiXmlText* pTake_UUID_Txt = new TiXmlText(pRegion_DSP->Get_Region_Take_UUID().c_str());
+		pTake_UUID->LinkEndChild( pTake_UUID_Txt );
+		pRegion->LinkEndChild( pTake_UUID );
+		
+
 		// region position
 		tuint64 uiPosition = pRegionInfo->uiTrack_Pos;
 		sprintf(pszBuff, "%d", uiPosition);
@@ -898,7 +872,7 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		tuint64 uiSample_Offset = pRegion_DSP->Get_Sample_Offset();
 		sprintf(pszBuff, "%d", uiSample_Offset);
 		
-		TiXmlElement* pSample_Offset = new TiXmlElement( "start" );
+		TiXmlElement* pSample_Offset = new TiXmlElement( "offset" );
 		TiXmlText* pSample_OffsetTxt = new TiXmlText(pszBuff);
 		pSample_Offset->LinkEndChild( pSample_OffsetTxt );
 		pRegion->LinkEndChild( pSample_Offset );
@@ -943,16 +917,6 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		pFade_Out_Duration->LinkEndChild( pFade_Out_DurationTxt );
 		pFade->LinkEndChild( pFade_Out_Duration );
 		
-		/*
-		
-		//
-		tuint64 uiFade_In_Duration = pRegion_DSP->Get_Fade_In_Duration();
-		tuint64 uiFade_Out_Durationt = pRegion_DSP->Get_Fade_Out_Duration();
-		tfloat32 fVolume = pRegion_DSP->Get_Volume();
-		
-		
-		tuint64 uiVol1000000 = Float2Int(fVolume * (tuint64)1000000);
-		 */
 		
 	}
 	

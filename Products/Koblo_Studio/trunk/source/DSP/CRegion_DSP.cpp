@@ -2,37 +2,39 @@
 
 #include "KSOS.h"
 
-CRegion_DSP::CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, const std::string& sSoundPathNameR, const std::string& sSoundListItemName, tuint64 uiSample_Offset, tuint64 uiSample_Duration)
+CRegion_DSP::CRegion_DSP(tint32 iUniqueID, 
+						 CSample_Data* pSample_Data,
+						 CTake_Data* pTake_Data,
+						 tuint64 uiSample_Offset, 
+						 tuint64 uiSample_Duration)
 {
-	muiFadeInLength = 0;
-	muiFadeOutLength = 0;
+	muiUniqueID			= iUniqueID;
+	mpSample_Data		= pSample_Data;
+	mpTake_Data			= pTake_Data;
+	muiSample_Offset	= uiSample_Offset;
+	muiEndPos			= uiSample_Offset + uiSample_Duration - 1;
+	muiFadeInLength		= 0;
+	muiFadeOutLength	= 0;
+	mppPeakFile[0]		= NULL;
+	mppPeakFile[1]		= NULL;
+	mppPeakFile[2]		= NULL;
+	mppPeakFile[3]		= NULL;
+//	mpUUID				= new(CKSUUID);
 	
-	mppPeakFile[0] = NULL;
-	mppPeakFile[1] = NULL;
-	mppPeakFile[2] = NULL;
-	mppPeakFile[3] = NULL;
 	
-	muiUniqueID = iUniqueID;
-	
-	muiStartPos = uiSample_Offset;
-	muiEndPos	= uiSample_Offset + uiSample_Duration - 1;
-	
-	miChannels = 1;
-	if (sSoundPathNameR.size() > 0) {
-		miChannels = 2;
-	}
-	
-	if (miChannels == 1) {
+	if (pTake_Data->sWavePathNameR.size() == 0) {
+		miChannels = 1;
 		mppSample	= new CSample_DSP*[1];
-		mppSample[0] = new CSample_DSP(sSoundPathNameL);
+		mppSample[0] = new CSample_DSP(mpTake_Data->sWavePathNameL);
 	}
 	else {
+		miChannels = 2;
 		mppSample = new CSample_DSP*[2];
-		mppSample[0] = new CSample_DSP(sSoundPathNameL);
-		mppSample[1] = new CSample_DSP(sSoundPathNameR);
+		mppSample[0] = new CSample_DSP(mpTake_Data->sWavePathNameL);
+		mppSample[1] = new CSample_DSP(mpTake_Data->sWavePathNameR);
 	}
 	
-	msSoundListItemName = sSoundListItemName;
+	msSample_Name = mpSample_Data->Get_Name();
 	
 	if (uiSample_Duration == (tuint64)-1) {
 		muiEndPos = (mppSample[0]->GetLength() - uiSample_Offset) -1;
@@ -45,23 +47,27 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID, const std::string& sSoundPathNameL, c
 	tchar kpsk1024[] = ".kspk1024";
 	tchar kpsk64[] = ".kspk64";
 #endif // _Mac_PowerPC
-	std::string sPeakFileName = sSoundPathNameL + kpsk1024;
+	
+	
+	
+	std::string sPeakFileName = mpTake_Data->sWavePathNameL + kpsk1024;
 	mppPeakFile[0] = IFile::Create();
+	
 	if (!mppPeakFile[0]->Open(sPeakFileName.c_str(), IFile::FileRead)) {
 		mppPeakFile[0]->Destroy();
 		mppPeakFile[0] = NULL;
 	}
 	
-	sPeakFileName = sSoundPathNameL + kpsk64;
+	sPeakFileName = mpTake_Data->sWavePathNameL + kpsk64;
 	mppPeakFile[1] = IFile::Create();
 	mppPeakFile[1]->Open(sPeakFileName.c_str(), IFile::FileRead);
 	
 	if (miChannels > 1) {
-		sPeakFileName = sSoundPathNameR + kpsk1024;
+		sPeakFileName = mpTake_Data->sWavePathNameR + kpsk1024;
 		mppPeakFile[2] = IFile::Create();
 		mppPeakFile[2]->Open(sPeakFileName.c_str(), IFile::FileRead);
 		
-		sPeakFileName = sSoundPathNameR + kpsk64;
+		sPeakFileName = mpTake_Data->sWavePathNameR + kpsk64;
 		mppPeakFile[3] = IFile::Create();
 		mppPeakFile[3]->Open(sPeakFileName.c_str(), IFile::FileRead);
 	}
@@ -92,9 +98,9 @@ void CRegion_DSP::SetEndPos(tuint64 iPos)
 
 void CRegion_DSP::SetDuration(tuint64 iDuration)
 {
-	muiEndPos = (muiStartPos + iDuration) -1;
+	muiEndPos = (muiSample_Offset + iDuration) -1;
 	
-	ASSERT( (muiEndPos!=0) && (muiEndPos >= muiStartPos) );
+	ASSERT( (muiEndPos!=0) && (muiEndPos >= muiSample_Offset) );
 }
 
 
@@ -107,16 +113,16 @@ void CRegion_DSP::GetSamples(tfloat32** ppfData, tint32 iSamples)
 		mppSample[0]->GetSamples(ppfData[0], iSamples);
 		
 		if (muiFadeInLength) {
-			if (muiStartPos + muiFadeInLength > uiPosBufferStart) {
+			if (muiSample_Offset + muiFadeInLength > uiPosBufferStart) {
 				tfloat32 fOneDivFadeInLength = 1.0f / muiFadeInLength;
 				tfloat32* pfData = ppfData[0];
 				
 				tint32 iSamplesToProcess = iSamples;
-				if (iSamplesToProcess > muiStartPos + muiFadeInLength - uiPosBufferStart) {
-					iSamplesToProcess = (tint32)(muiStartPos + muiFadeInLength  - uiPosBufferStart);
+				if (iSamplesToProcess > muiSample_Offset + muiFadeInLength - uiPosBufferStart) {
+					iSamplesToProcess = (tint32)(muiSample_Offset + muiFadeInLength  - uiPosBufferStart);
 				}
 				for (iSample = 0; iSample < iSamplesToProcess; iSample++) {
-					tfloat32 fVolume = ((tint32)uiPosBufferStart - muiStartPos + iSample) * fOneDivFadeInLength;
+					tfloat32 fVolume = ((tint32)uiPosBufferStart - muiSample_Offset + iSample) * fOneDivFadeInLength;
 					fVolume *= fVolume;
 					
 					pfData[iSample] *= fVolume;
@@ -148,17 +154,17 @@ void CRegion_DSP::GetSamples(tfloat32** ppfData, tint32 iSamples)
 		
 		
 		if (muiFadeInLength) {
-			if ( muiStartPos + muiFadeInLength > uiPosBufferStart) {
+			if ( muiSample_Offset + muiFadeInLength > uiPosBufferStart) {
 				tfloat32 fOneDivFadeInLength = 1.0f / muiFadeInLength;
 				tfloat32* pfDataL = ppfData[0];
 				tfloat32* pfDataR = ppfData[1];
 				tint32 iSamplesToProcess = iSamples;
-				if (iSamplesToProcess > muiStartPos + muiFadeInLength - uiPosBufferStart) {
-					iSamplesToProcess = (tint32)(muiStartPos + muiFadeInLength  - uiPosBufferStart);
+				if (iSamplesToProcess > muiSample_Offset + muiFadeInLength - uiPosBufferStart) {
+					iSamplesToProcess = (tint32)(muiSample_Offset + muiFadeInLength  - uiPosBufferStart);
 				}
 				for (iSample = 0; iSample < iSamplesToProcess; iSample++) {
 					// apply fade in volume
-					tfloat32 fVolume = ((tint32)uiPosBufferStart - muiStartPos + iSample) * fOneDivFadeInLength;
+					tfloat32 fVolume = ((tint32)uiPosBufferStart - muiSample_Offset + iSample) * fOneDivFadeInLength;
 					fVolume *= fVolume;
 					
 					
@@ -199,10 +205,10 @@ void CRegion_DSP::GetSamples(tfloat32** ppfData, tint32 iSamples)
 
 void CRegion_DSP::SetPos(tuint64 uiPos)
 {
-	mppSample[0]->SetPos(muiStartPos + uiPos);
+	mppSample[0]->SetPos(muiSample_Offset + uiPos);
 	
 	if (miChannels > 1) {
-		mppSample[1]->SetPos(muiStartPos + uiPos);
+		mppSample[1]->SetPos(muiSample_Offset + uiPos);
 	}
 }
 
@@ -217,18 +223,4 @@ void CRegion_DSP::GetPeakFile(IFile** ppFile, tint32 iChannel, tint32 iSize)
 	
 	*ppFile = mppPeakFile[iSize + iChannel * 2];
 }
-
-
-
-void CRegion_DSP::Gennerate_UUID()
-{
-	if(msUUID.size() == 0)
-		msUUID = gpApplication->Get_UUID();
-	
-}
-
-
-
-
-
 

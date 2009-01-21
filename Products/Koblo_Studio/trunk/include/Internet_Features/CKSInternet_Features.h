@@ -27,10 +27,10 @@
 */
 
 class CKSApplication;
+class CKSUUID;
 
 
-
-class CKSInternet_Features 
+class CKSInternet_Features
 : 
 public virtual CKSXML_Create_Project,
 public virtual CKSXML_Write_Project,
@@ -81,19 +81,14 @@ public:
 	//!!! To Do call this
 	void SetProjectName( const std::string& sName){ msProject_Name = sName;}
 	
+	//! get the project name
 	std::string GetProjectName(){ return msProject_Name;}
 	
-	
-	
-	
-	//!!! To Do call this
+	//! set project path
 	void SetProjectPath( const std::string& sName){ msProject_Path = sName;}
 	
 	std::string GetProjectPath(){ return msProject_Path;}
-	
-	
-	
-	
+
 	
 	void SetProjectDescription( const std::string& sDescription){ msProjectDescription = sDescription;}
 	
@@ -124,17 +119,37 @@ public:
 	//! compares the internal data structure to the xml file stroed on disk
 	tbool Project_Has_Changed();
 	
-	//! generates a UUID
-	std::string Get_UUID();
-
+	
+		
+	// get uuid from CKSUUID object
+	std::string Get_Project_UUID();
+	// set a new uuid
+	void Set_Project_UUID();
+	// set a uuid from a string
+	void Set_Project_UUID(std::string  sUUID);
+	
+	
+	// get uuid from CKSUUID object
+	std::string Get_Branch_UUID();
+	// set a new uuid
+	void Set_Branch_UUID();
+	// set a uuid from a string
+	void Set_Branch_UUID(std::string sUUID);
+	 
 	
 private:
 
+	// project uuid object
+	CKSUUID* mpProject_UUID;
+	
+	// branch uuid object
+	CKSUUID* mpBranch_UUID;
 	
 	virtual void Open_Project_Edit_Page_On_Koblo();
 	
 	//! project name
 	std::string msProject_Name;
+	
 	
 	//! project name
 	std::string msProject_Path;
@@ -156,12 +171,7 @@ private:
 	
 	//! password description
 	std::string msPassword;
-	
-	
-	
-		
-		
-	
+
 		
 };
 

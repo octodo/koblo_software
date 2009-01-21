@@ -38,17 +38,19 @@ public:
 	*/
 	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10) = 0;
 
-	//! Describes which data type the downloader wants to read
-	enum EDesiredMIMEType {
-		DESIRED_TYPE_TEXT, DESIRED_TYPE_HTML, DESIRED_TYPE_XML,
-		DESIRED_TYPE_BINARY, DESIRED_TYPE_OGG, DESIRED_TYPE_MP3};
-
-	//!
+	//! Asks the server to give us data of the specified type
 	/*!
-		\param eType [in]: Sets the data type that the downloader wants to read
+		\param eMIME [in]: Sets the data type that the downloader wants to read
 		\return tbool: True upon success
 	*/
-	virtual tbool SetDesiredMIMEType(EDesiredMIMEType eType) = 0;
+	virtual tbool SetReplyMIMEType(E_MIME_Type eMIME) = 0;
+
+	//! Force downloader to use a particular verb for downloads (default it is chosen as GET if no parameters are added and POST otherwise)
+	/*!
+		\param eVerb [in]: E_VERB_GET: simple download with no parameters in message body (if parameters are added anyway, they'll be sent as part of the URI)<br/>E_VERB_POST: Parameters are sent as part of the message body (default if parameters are present)
+		\return tbool: True upon succes, False otherwise
+	*/
+	virtual tbool SetSpecificVerb(EVerbType eVerb) = 0;
 
 	//! Call this once for each parameter=value set to submit to download location
 	/*!
@@ -63,13 +65,13 @@ public:
 	/*!
 		\param pszBuffer [out]: Pre-allocated buffer to recieve the next portion of downloaded data
 		\param iBufferSize [in]: Size of pre-allocated buffer
-		\param piPortionSize [out]: The number of chars returned in this portion. May occationally be 0, caused by e.g. slow network
-		tint32* piTotalSize [out]
+		\param piPortionSize [out]: The number of bytes actually returned in this portion. May occationally be 0, caused by e.g. slow network
+		\param puiTotalSize [out]: The total size of the resource/file we're downloading. Is initially 0 and may change, so always use latest return value for progress bar, etc.
 		\return tbool: True upon success, false upon error.
 	*/
 	virtual tbool DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize) = 0;
 
-	//! Breaks an ongoing download operation and releases internal buffers
+	//! Breaks an ongoing download operation and releases internal buffers. It's OK to call from different thread.
 	virtual tbool Abort() = 0;
 
 	//! Returns True if download has been succesfully completed

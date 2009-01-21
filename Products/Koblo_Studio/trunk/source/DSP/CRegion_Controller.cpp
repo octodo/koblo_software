@@ -80,7 +80,7 @@ void CRegion_Controller::Cut_Region(tuint32 uiTrack, tuint32 uiRegionID, tuint64
 
 	Prepare(uiRegionID);
 	
-	std::string sClipName				=	mpRegion_DSP->GetSoundListItemName();
+	std::string sSample_Name			=	mpRegion_DSP->Get_Sample_Name();
 	tfloat64 uiTrack_Pos				=	mpTrack_DSP->Get_Region_Pos(uiRegionID);	
 	tuint64 uiSample_Offset				=	mpRegion_DSP->Get_Sample_Offset();
 	tuint64 uiSample_Duration			=	mpRegion_DSP->Get_Duration();
@@ -94,7 +94,7 @@ void CRegion_Controller::Cut_Region(tuint32 uiTrack, tuint32 uiRegionID, tuint64
 	
 	// create new region
 	
-	CreateRegion(sClipName,
+	CreateRegion(sSample_Name,
 				 uiTrack, 
 				 uiTrack_Pos + uiCutPos , 
 				 uiSample_Offset + uiCutPos, 
@@ -110,7 +110,7 @@ void CRegion_Controller::Trim_Region(tuint32 uiTrack, tuint32 uiRegionID, tbool 
 
 	Prepare(uiRegionID);
 	
-	std::string sClipName		=	mpRegion_DSP->GetSoundListItemName();
+	std::string sSample_Name		=	mpRegion_DSP->Get_Sample_Name();
 	tuint64 uiRegion_Pos		=	mpTrack_DSP->Get_Region_Pos(uiRegionID);	
 	tint64 iDuration			=	mpRegion_DSP->Get_Duration();
 	tint64 iSample_Offset		=	mpRegion_DSP->Get_Sample_Offset();
@@ -160,7 +160,7 @@ void CRegion_Controller::Duplicate_Region()
 			Get_Region_Info( RegionInfo, uiRegionID);
 			CTrack_DSP*		pTrack_DSP			=	gpDSPEngine->GetTrack(RegionInfo.uiTrack);
 			CRegion_DSP*	pRegion_DSP			=	pTrack_DSP->GetRegion_DSP(uiRegionID);
-			std::string sClipName				=	pRegion_DSP->GetSoundListItemName();
+			std::string sSample_Name				=	pRegion_DSP->Get_Sample_Name();
 			tuint64 uiPossition					=	pTrack_DSP->Get_Region_Pos(uiRegionID);	
 			tuint64 uiDuration					=	pRegion_DSP->Get_Duration();
 			tuint64 uiSample_Offset				=	pRegion_DSP->Get_Sample_Offset();
@@ -171,7 +171,7 @@ void CRegion_Controller::Duplicate_Region()
 
 			
 			// Create new region
-			tuint32 muiRegionID = CreateRegion(sClipName, 
+			tuint32 muiRegionID = CreateRegion(sSample_Name, 
 											   uiTrack, 
 											   uiPossition + uiDuration , 
 											   uiSample_Offset, 
@@ -205,7 +205,7 @@ void CRegion_Controller::Copy_Region()
 			
 			
 			mpRegion_Clipboard[0].bEmpty					=	false;
-			mpRegion_Clipboard[0].sClipName					=	pRegion_DSP->GetSoundListItemName();
+			mpRegion_Clipboard[0].sClipName					=	pRegion_DSP->Get_Sample_Name();
 			mpRegion_Clipboard[0].uiDuration				=	pRegion_DSP->Get_Duration();
 			mpRegion_Clipboard[0].uiSample_Offset			=	pRegion_DSP->Get_Sample_Offset();
 			mpRegion_Clipboard[0].uiPossition				=	pTrack_DSP->Get_Region_Pos(uiRegionID) + mpRegion_Clipboard[0].uiDuration;	
@@ -303,7 +303,7 @@ void CRegion_Controller::Move_Region(tuint32 uiRegionID, tint32 iTrack, tuint64 
 	Prepare(uiRegionID);
 	
 	
-	std::string sClipName				=	mpRegion_DSP->GetSoundListItemName();
+	std::string sClipName				=	mpRegion_DSP->Get_Sample_Name();
 	tuint64 uiSample_Offset				=	mpRegion_DSP->Get_Sample_Offset();
 	tuint64 uiSample_Duration			=	mpRegion_DSP->Get_Duration();
 	tuint64 uiFade_In_Duration			=	mpRegion_DSP->Get_Fade_In_Duration();
@@ -381,7 +381,7 @@ tbool CRegion_Controller::SaveTrackRegionDataToChunk(tint32 iTrack, IChunk* pChu
 		for (; it != pTrack_DSP->GetRegionList().end(); it++) {
 			CTrack_DSP::SChannelRegionInfo* pRegionInfo = *it;
 			CRegion_DSP* pRegion_DSP = pRegionInfo->pRegion;
-			const tchar* pszListItemName = pRegion_DSP->GetSoundListItemName();
+			const tchar* pszListItemName = pRegion_DSP->Get_Sample_Name();
 			tuint64 uiStart = pRegion_DSP->Get_Sample_Offset();
 			tuint64 uiDurat = pRegion_DSP->Get_Duration();
 			//
@@ -596,21 +596,7 @@ STrackSelectionInfo CRegion_Controller::Select_Region(tint32 iRegionID)
 	
 	return gpDSPEngine->GetTrackSelection(miTrack);
 }
-/*
-tuint64 CRegion_Controller::GetRegionSize(const std::string& sSoundPathName,tuint64 uiSamplePosStart, tuint64 uiSamplePosEnd)
-{
-	CTrack_DSP*		pTrack_DSP			=	gpDSPEngine->GetTrack(0);
-	
-	tint64 iSize = pTrack_DSP->GetRegionSize(0, sSoundPathName, uiSamplePosStart, uiSamplePosEnd);
-	return iSize;
-}
 
-tuint64 CRegion_Controller::GetRegionSize(tuint32 iRegionID )
-{
-	Prepare(iRegionID);	
-	return	mpRegion_DSP->Get_Duration();
-}
-*/
 SRegion_Drawing_Info CRegion_Controller::Get_Region_Drawing_Info(tuint iRegionID)
 {
 	SRegion_Drawing_Info info;
@@ -646,7 +632,7 @@ const tchar* CRegion_Controller::GetClipNameOfSelectedRegion()
 		if(pTrack_Selection_Info.uiSelection_Type = giSelect_Region &&  pTrack_Selection_Info.iRegionID != -1)
 		{
 			Prepare(pTrack_Selection_Info.iRegionID);
-			return mpRegion_DSP->GetSoundListItemName();
+			return mpRegion_DSP->Get_Sample_Name();
 		}
 	}
 	return "";
