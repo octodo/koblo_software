@@ -145,6 +145,7 @@ public:
 		\return tbool: True upon success, False if some error in the URL-encoding was found. If False the string in pszData_InOut may be half converted and should be discarded
 	*/
 	static tbool URLDecode(tchar* pszInData, tint32 iInDataLen, tchar* pszOutData, tint32* piOutDataLen);
+	
 
 protected:
 

@@ -39,3 +39,13 @@ CSample_DSP::~CSample_DSP()
 
 
 
+/*
+
+std::string CSample_DSP::Get_Sample_UUID()
+{
+	if(msSample_UUID.size() == 0)
+		msSample_UUID = gpApplication->Get_UUID();
+	
+	return msSample_UUID;
+}
+*/

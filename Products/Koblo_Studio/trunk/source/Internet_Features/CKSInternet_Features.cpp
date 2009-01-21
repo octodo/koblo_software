@@ -11,7 +11,8 @@ CKSUsername_And_Password_Model(),
 mbUpload_Project(false)
 {
 	//!!!TO DO remove this dummy code
-	msProjectName = "flying pink elephants";
+	msProject_Name = "flying pink elephants with umbrellas";
+	msProject_Path	=	"";
 }
 
 CKSInternet_Features::~CKSInternet_Features()
@@ -149,7 +150,14 @@ tbool CKSInternet_Features::Project_Has_Changed()
 	
 }
 
-
+std::string CKSInternet_Features::Get_UUID()
+{
+	tchar* pszUUID = new tchar[128];
+	tuint32 uiBuffer_Size = 0;
+	Gen_UUID(pszUUID,  uiBuffer_Size);
+	std::string sUUID = pszUUID;
+	return sUUID;
+}
 
 
 

@@ -82,6 +82,9 @@ public:
 	//! make a copy of the selected region
 	void Copy_Region();
 	
+	//! make a copy of the selection
+	void Copy_Selection();
+	
 	//! paste region from the mpRegion_Clipboard[]
 	void Paste_Region(tuint32 uiTrack, tuint64 uiPosition);
 	
@@ -124,10 +127,10 @@ public:
 	 \	param uiSamplePosStart [in]: start position of region
 	 \	param uiSamplePosEnd [in]: evd position of region
 	 */
-	tuint64 GetRegionSize(const std::string& sSoundPathName, tuint64 uiSamplePosStart, tuint64 uiSamplePosEnd);
+//	tuint64 GetRegionSize(const std::string& sSoundPathName, tuint64 uiSamplePosStart, tuint64 uiSamplePosEnd);
 	
 	//! Get the region size in samplepoints
-	tuint64 GetRegionSize(tuint32 uiID);
+//	tuint64 GetRegionSize(tuint32 uiID);
 	
 	//! Get Drawing info for a region
 	SRegion_Drawing_Info Get_Region_Drawing_Info(tuint uiRegion);
@@ -138,6 +141,10 @@ public:
 	
 	// iSize == 0: small (1 / 1024 sample). iSize == 1: large (1 / 64 sample)
 	void GetRegionPeakFile(tuint32 uiRegionID, IFile** ppFile, tint32 iTrack, tint32 iSize);
+	
+	
+	//! Get the region size in samplepoints
+	tuint64 GetRegionSize(tuint32 uiID);
 	
 	
 	

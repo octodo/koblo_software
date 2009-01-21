@@ -371,9 +371,8 @@ void CContextWin::RunMainLoop()
 //!!!
 	while (bStop == false) {
 		// Lasse, bug-fix 2008-06-18 - make sure redraws get through
-		/*
 		// old code:
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+/*		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
 			// New message
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
@@ -386,8 +385,8 @@ void CContextWin::RunMainLoop()
 			else {
 				bStop = true;
 			}
-		}
-		*/
+		}*/
+
 		// new code:
 		// Handle all waiting messages
 		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {

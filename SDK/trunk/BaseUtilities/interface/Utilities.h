@@ -193,9 +193,11 @@ int strnicmp(const char* pszA, const char* pszB, size_t iCount);
 
 namespace k2s {
 	
-	// Lasse, added 2007-12-06
+	
 	void PszEnumString2List(const tchar* psz, tchar cDelimiter, std::list<std::string>& rlistOfStrings);
-	// .. Lasse
+	
+	//! generates a UUID
+	void Gen_UUID( tchar* pszUUID, tuint32 uiBuffer_Size);
 
 
 

@@ -218,6 +218,10 @@ void CRegion_Controller::Copy_Region()
 		}
 	}
 }
+void CRegion_Controller::Copy_Selection()
+{
+	
+}
 
 void CRegion_Controller::Paste_Region(tuint32 uiTrack, tuint64 uiPosition)
 { 
@@ -592,10 +596,11 @@ STrackSelectionInfo CRegion_Controller::Select_Region(tint32 iRegionID)
 	
 	return gpDSPEngine->GetTrackSelection(miTrack);
 }
-
+/*
 tuint64 CRegion_Controller::GetRegionSize(const std::string& sSoundPathName,tuint64 uiSamplePosStart, tuint64 uiSamplePosEnd)
 {
 	CTrack_DSP*		pTrack_DSP			=	gpDSPEngine->GetTrack(0);
+	
 	tint64 iSize = pTrack_DSP->GetRegionSize(0, sSoundPathName, uiSamplePosStart, uiSamplePosEnd);
 	return iSize;
 }
@@ -605,7 +610,7 @@ tuint64 CRegion_Controller::GetRegionSize(tuint32 iRegionID )
 	Prepare(iRegionID);	
 	return	mpRegion_DSP->Get_Duration();
 }
-
+*/
 SRegion_Drawing_Info CRegion_Controller::Get_Region_Drawing_Info(tuint iRegionID)
 {
 	SRegion_Drawing_Info info;
@@ -662,13 +667,6 @@ void CRegion_Controller::GetRegionPeakFile(tuint32 uiRegionID, IFile** ppFile, t
 		*ppFile = NULL;
 }
 
-
-
-
-
-
-
-
 void CRegion_Controller::Prepare(tuint32 uiRegionID)
 {
 
@@ -677,6 +675,12 @@ void CRegion_Controller::Prepare(tuint32 uiRegionID)
 	mpRegion_DSP		=	mpTrack_DSP->GetRegion_DSP(uiRegionID);
 	miTrack				=	mRegionInfo.uiTrack;
 	
+}
+
+tuint64 CRegion_Controller::GetRegionSize(tuint32 iRegionID )
+{
+	Prepare(iRegionID);	
+	return	mpRegion_DSP->Get_Duration();
 }
 
 

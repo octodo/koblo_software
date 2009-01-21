@@ -17,7 +17,7 @@
 
 
 // Each region holds one/two streams
-const tint32 giNrOfStreams = 8092; 
+const tint32 giNrOfStreams = 8092;
 
 class CDSP;
 class IRegionCallback;

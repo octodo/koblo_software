@@ -79,9 +79,21 @@ public:
 	void Upload_OGG_And_MP3_File();
 	
 	//!!! To Do call this
-	void SetProjectName( const std::string& sName){ msProjectName = sName;}
+	void SetProjectName( const std::string& sName){ msProject_Name = sName;}
 	
-	std::string GetProjectName(){ return msProjectName;}
+	std::string GetProjectName(){ return msProject_Name;}
+	
+	
+	
+	
+	//!!! To Do call this
+	void SetProjectPath( const std::string& sName){ msProject_Path = sName;}
+	
+	std::string GetProjectPath(){ return msProject_Path;}
+	
+	
+	
+	
 	
 	void SetProjectDescription( const std::string& sDescription){ msProjectDescription = sDescription;}
 	
@@ -111,6 +123,9 @@ public:
 	
 	//! compares the internal data structure to the xml file stroed on disk
 	tbool Project_Has_Changed();
+	
+	//! generates a UUID
+	std::string Get_UUID();
 
 	
 private:
@@ -119,7 +134,10 @@ private:
 	virtual void Open_Project_Edit_Page_On_Koblo();
 	
 	//! project name
-	std::string msProjectName;
+	std::string msProject_Name;
+	
+	//! project name
+	std::string msProject_Path;
 	
 	//! project description
 	std::string msProjectDescription;

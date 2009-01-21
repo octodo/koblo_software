@@ -815,10 +815,22 @@ void CDSP::UpdateMasterData(tint32 iID, tint32 iValue)
 			break;
 		case giParam_Master_Volume:{
 			
-			
 			mpMaster->Set_Volume((tfloat32)(iValue / 10000.0));
 			break;
 		}
+			
+		case giParam_Master_AUX1_Return:{
+			CRack_Echo_DSP* pEcho = dynamic_cast<CRack_Echo_DSP*>(mppAUXes[0]);
+			pEcho->Set_AUX1_Return((tfloat32)(iValue / 10000.0));
+			break;
+		}
+			
+		case giParam_Master_AUX2_Return:{
+			CRack_Reverb_DSP* pReverb = dynamic_cast<CRack_Reverb_DSP*>(mppAUXes[1]);
+			pReverb->Set_AUX2_Return((tfloat32)(iValue / 10000.0));
+			break;
+		}
+		
 	}
 }
 

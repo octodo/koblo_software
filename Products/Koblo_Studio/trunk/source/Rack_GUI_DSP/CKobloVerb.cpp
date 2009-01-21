@@ -82,7 +82,7 @@ float comb::getfeedback()
 
 revmodel::revmodel()
 {
-
+	auxreturn	=	1.0f;
 	// defaults
 	revquality=10; // always best quality
 	mfSampleRatekHz = 44.1f;
@@ -274,8 +274,8 @@ void revmodel::processReplace(float **inputs, float **outputs, long numsamples)
 		   predelay[p_poi]=(*inputL+*inputR)*p_gain; // Originalinput im PreDelayBuffer merken
 		   if(++p_poi>=p_pre) p_poi = 0;
 
-		   (*outputL)= semioutL; 
-		   (*outputR)= semioutR; 
+		   (*outputL)= semioutL * auxreturn; 
+		   (*outputR)= semioutR * auxreturn; 
 
 		   inputL++; 
 		   inputR++; 
@@ -298,11 +298,11 @@ void revmodel::processReplace(float **inputs, float **outputs, long numsamples)
 
 		maxL=p_maxL;
 		maxR=p_maxR;
-	}
+		}
 		else{
 			for(long i=0; i< numsamples; i++){
-				outputL[i]	=	inputL[i];
-				outputR[i]	=	inputR[i];
+				outputL[i]	=	inputL[i] * auxreturn;
+				outputR[i]	=	inputR[i] * auxreturn;
 		}
 	}
 }
@@ -384,6 +384,11 @@ void revmodel::setWet(float value)
 void revmodel::setDry(float value)
 {
 	dry = value*scaledry;
+}
+
+void revmodel::setAuxReturn(float value)
+{
+	auxreturn = value;
 }
 
 

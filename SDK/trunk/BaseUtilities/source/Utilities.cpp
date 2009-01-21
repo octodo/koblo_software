@@ -579,7 +579,56 @@ namespace k2s {
 			}
 		}
 	}
-}
+	
+	
+	
+	void Gen_UUID( tchar* pszUUID, tuint32 uiBuffer_Size)
+	{
+
+
+		std::string sUUID	= "";
+
+#ifdef _Mac
+		char psz[4];
+		
+		CFUUIDRef uuid = CFUUIDCreate (NULL );
+		CFUUIDBytes uuid_bytes = CFUUIDGetUUIDBytes(uuid);
+		
+		sprintf(psz, "%02x", uuid_bytes.byte0 ); 	
+		sUUID += psz;
+		sprintf(psz, "%02x", uuid_bytes.byte1 ); 	
+		sUUID += psz;
+		sprintf(psz, "%02x", uuid_bytes.byte2 ); 
+		sUUID += psz;
+		sprintf(psz, "%02x", uuid_bytes.byte3 ); 	sUUID += psz;
+		sprintf(psz, "-%02x", uuid_bytes.byte4 ); 	sUUID += psz;
+		sprintf(psz, "%02x", uuid_bytes.byte5 ); 	sUUID += psz;
+		sprintf(psz, "-%02x", uuid_bytes.byte6 ); 	sUUID += psz;
+		sprintf(psz, "%02x", uuid_bytes.byte7 ); 	sUUID += psz;
+		sprintf(psz, "-%02x", uuid_bytes.byte8 ); 	sUUID += psz;
+		sprintf(psz, "%02x", uuid_bytes.byte9 ); 	sUUID += psz;
+		sprintf(psz, "-%02x", uuid_bytes.byte10); 	sUUID += psz;
+		sprintf(psz, "%02x", uuid_bytes.byte11); 	sUUID += psz;
+		sprintf(psz, "%02x", uuid_bytes.byte12); 	sUUID += psz;
+		sprintf(psz, "%02x", uuid_bytes.byte13); 	sUUID += psz;
+		sprintf(psz, "%02x", uuid_bytes.byte14); 	sUUID += psz;
+		sprintf(psz, "%02x", uuid_bytes.byte15); 	sUUID += psz;
+		
+#endif // _Mac
+
+#ifdef _WIN32
+		//! TODO: Insert UUID code for windows here
+#endif // _WIN32
+
+
+		//! TODO: (lasse) This is wrong! Please fix it Max
+		uiBuffer_Size = sUUID.size();
+
+		strcpy(pszUUID, sUUID.c_str());
+		
+	} // Gen_UUID
+
+} // namespace k2s
 
 
 
