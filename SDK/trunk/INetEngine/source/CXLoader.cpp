@@ -10,6 +10,18 @@ CXloader::CXloader(tbool bIsUploader)
 	mbIsInitialized = mbIsTransfering = mbIsFailed = mbIsDone = false;
 	meMIMEType = MIME_TYPE_NONE;
 	meSpecificVerb = VERB_DEFAULT;
+
+	// Prepare CURL multi instance
+	{
+		GetLockForMultiInstance();
+		//
+		// Maybe create CURL multi instance
+		if (gpCURLMulti == NULL) gpCURLMulti = curl_multi_init();
+		// Hook CURL multi instance
+		giCURLMultiHooks++;
+		//
+		ReleaseLockForMultiInstance();
+	}
 	
 	Constructor_OSSpecific();
 } // constructor
@@ -20,11 +32,47 @@ CXloader::~CXloader()
 	Abort();
 	WipeParams();
 	CloseConnection();
-	//
+	
+	// Unhook and maybe release CURL multi instance
+	{
+		GetLockForMultiInstance();
+		//
+		// Unhook CURL multi instance
+		giCURLMultiHooks--;
+		// Maybe release CURL multi instance
+		if (giCURLMultiHooks == 0) {
+			// No more use for instance - release it
+			curl_multi_cleanup(gpCURLMulti);
+			gpCURLMulti = NULL;
+		}
+		//
+		ReleaseLockForMultiInstance();
+	}
+
 	Destructor_OSSpecific();
 } // destructor
 
 
+void CXloader::GetLockForMultiInstance()
+{
+	// Attempt lock
+	while (++giCURLMulti_Level != 1) {
+		// We're not alone - release again
+		giCURLMulti_Level--;
+		// Sleep 1 - 3 ms (random)
+		tint32 iSleepMS = (tint32)(rand() * (3.0f / RAND_MAX));
+		iSleepMS++;
+		ITime::SleepMS(iSleepMS);
+	}
+} // GetLockForMultiInstance
+
+
+void CXloader::ReleaseLockForMultiInstance()
+{
+	giCURLMulti_Level--;
+} // ReleaseLockForMultiInstance
+
+	
 IDownloader* IDownloader::Create()
 {
 	return dynamic_cast<IDownloader*>(new CXloader(false));

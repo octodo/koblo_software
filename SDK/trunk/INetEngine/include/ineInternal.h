@@ -19,15 +19,15 @@ namespace k2s {
 
 namespace ine {
 
+// libcurl for system independent internet access
+#include "curl/curl.h"
+
 #ifdef WIN32
 #include <wininet.h>
 #endif	// WIN32
 
 #ifdef _Mac
 #endif	// _Mac
-
-// libcurl for system independent internet access
-#include "curl/curl.h"
 
 #include "CINetUtil.h"
 

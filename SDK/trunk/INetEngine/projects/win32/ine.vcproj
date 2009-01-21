@@ -121,7 +121,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\..\BaseUtilities\interface;..\..\interface;..\..\include;..\..\..\DataEngine\interface;..\..\curl\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;BUILDING_LIBCURL;CURL_STATICLIB;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -152,6 +152,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				OutputFile=".\Debug\ine.lib"
+				AdditionalLibraryDirectories=""
 				SuppressStartupBanner="true"
 			/>
 			<Tool
@@ -314,6 +315,14 @@
 			<File
 				RelativePath="..\..\source\CXLoaderOSX.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="true"

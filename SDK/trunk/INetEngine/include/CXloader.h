@@ -1,3 +1,10 @@
+//! Static pointer to CURL multi instance. The instance holds a number of active download/upload threads (every IUploader and IDownloader has 0 or 1 active thread)
+static CURLM* gpCURLMulti = NULL; //curl_multi_init( );
+//! Keeps track of how many IUploader and IDownloader objects are using this CURL multi instance
+static volatile tint32 giCURLMultiHooks = 0;
+//! Lock for modifying pointer to CURL multi instance
+static volatile tint32 giCURLMulti_Level = 0;
+
 //! Implement of IUploader and IDownloader
 class CXloader : public virtual IDownloader, public virtual IUploader
 {
@@ -35,6 +42,9 @@ public:
 
 protected:
 	tbool mbIsUploader;
+
+	void GetLockForMultiInstance();
+	void ReleaseLockForMultiInstance();
 	
 	std::string msHost;
 	std::string msPage;
