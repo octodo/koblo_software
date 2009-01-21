@@ -45,7 +45,7 @@ public:
 	
 	std::string Create_License_String();
 	
-	void Save_Project_As_XML_File_To_Disk();
+	tbool Save_Project_As_XML_File_To_Disk();
 	
 	
 	

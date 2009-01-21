@@ -10,12 +10,9 @@ CKSXML_Read_Project(),
 CKSUsername_And_Password_Model(),
 mbUpload_Project(false)
 {
-	//!!!TO DO remove this dummy code
-	msProject_Name = "flying pink elephants with umbrellas";
-	msProject_Path	=	"";
-	mpProject_UUID	= new(CKSUUID);
-	mpBranch_UUID	= new(CKSUUID);
-	
+
+	mpProject_UUID = new(CKSUUID);
+	mpBranch_UUID = new(CKSUUID);
 
 }
 
@@ -184,7 +181,11 @@ void CKSInternet_Features::Set_Branch_UUID(std::string  sUUID )
 	mpBranch_UUID->Set_UUID(sUUID);
 }
 
-
+void CKSInternet_Features::SetProjectName( const std::string& sName)
+{ 
+	msProjectName = sName;
+	gpApplication->Set_Project_Name(sName);
+}
 
 
 

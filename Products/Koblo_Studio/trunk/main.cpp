@@ -986,12 +986,13 @@ static void HandleNew_Menu()
 	MenuItemsFile.pItems[5] = ge::IContext::SMenuItem("Revert to Saved", false, NULL, 'R');
 	MenuItemsFile.pItems[6] = ge::IContext::SMenuItem("-");
 	MenuItemsFile.pItems[7] = ge::IContext::SMenuItem("Import Audio", false, NULL, 'I');
-	MenuItemsFile.pItems[8] = ge::IContext::SMenuItem("Export Audio", false, NULL, 'E');
-	MenuItemsFile.pItems[9] = ge::IContext::SMenuItem("-");
-	MenuItemsFile.pItems[10] = ge::IContext::SMenuItem("Download Project", false, NULL, 'T');
-	MenuItemsFile.pItems[11] = ge::IContext::SMenuItem("Update Project");
-	MenuItemsFile.pItems[12] = ge::IContext::SMenuItem("Upload Project", false, NULL, 'U');
-	MenuItemsFile.pItems[13] = ge::IContext::SMenuItem("Commit Changes", false, NULL, 'Y');
+	MenuItemsFile.pItems[8] = ge::IContext::SMenuItem("Import KSProject");
+	MenuItemsFile.pItems[9] = ge::IContext::SMenuItem("Export Audio", false, NULL, 'E');
+	MenuItemsFile.pItems[10] = ge::IContext::SMenuItem("-");
+	MenuItemsFile.pItems[11] = ge::IContext::SMenuItem("Download Project", false, NULL, 'T');
+	MenuItemsFile.pItems[12] = ge::IContext::SMenuItem("Update Project");
+	MenuItemsFile.pItems[13] = ge::IContext::SMenuItem("Upload Project", false, NULL, 'U');
+	MenuItemsFile.pItems[14] = ge::IContext::SMenuItem("Commit Changes", false, NULL, 'Y');
 	
 	//-----------------------------------
 	// edit menu

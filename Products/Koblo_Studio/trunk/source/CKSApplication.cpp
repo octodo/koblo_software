@@ -140,6 +140,7 @@ CKSXML_Create_Sample()
 	miAudioInput_IntermediateBuffer_FirstLinkSamples = 0;
 	
 	mbZoomFlipFlop = false;
+	mbKSProject_Imported = false;
 	
 
 } // constructor
@@ -1017,6 +1018,7 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 		CBaseGUI* pGUI = *it;
 		dynamic_cast<CKSBaseGUI*>(pGUI)->PlaybackStopped();
 	}
+	Set_Project_Name("");
 
 	// Delete all tracks
 	Maintain_Number_Of_Tracks(0);
@@ -1091,9 +1093,10 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			
 		case ID_FILE_SAVE:
 			try {
-				if (!MenuFileSaveProject()) {
-					LoadSaveErrDlg("Error saving project");
-				}
+				if (gpApplication->Get_Project_Folder().length() == 0) 
+					gpApplication->ShowMessageBox("No Project to Save", "Sorry");
+				else
+					Save_Project_As_XML_File_To_Disk();
 			}
 			catch (IException* pEx) {
 				// Display reason
@@ -1152,7 +1155,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			break;
 
 		case ID_FILE_IMPORTAUDIO:
-			MenuFileImportAudio();
+			Open_Close_Import_Audio_Window();
 			break;
 
 /*
@@ -1189,6 +1192,8 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			break;
 
 		case ID_EDIT_ADDTRACK:
+			if(Get_Project_Folder().size() == 0)
+			
 			if (GetProjDir().length() == 0) {
 				ShowMessageBox("You must create or load a project before adding tracks", "Sorry");
 			}
@@ -1335,8 +1340,22 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 		 */
 	}
 	else if (s.compare("File@Save Project") == 0) {
+		
+		if(mbKSProject_Imported){
+			mbKSProject_Imported = false;
+			if (!Save_As()) {
+				LoadSaveErrDlg("Error saving project");
+			}
+		}
+		else{
 		// Save
-		Save_Project_As_XML_File_To_Disk();
+			if (Get_Project_Folder().length() == 0) 
+				ShowMessageBox("No Project to Save", "Sorry");
+		
+			else
+				Save_Project();
+		}
+			
 		
 		/*
 		try {
@@ -1353,9 +1372,15 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	else if (s.compare("File@Save Project As") == 0) {
 		// Save
 		try {
+			if (!Save_As()) {
+				LoadSaveErrDlg("Error saving project");
+			}
+			
+			/*
 			if (!MenuFileSaveProjectAs()) {
 				LoadSaveErrDlg("Error saving project");
 			}
+			 */
 		}
 		catch (IException* pEx) {
 			// Display reason
@@ -1383,7 +1408,13 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	}
 	
 	else if (s.compare("File@Import Audio") == 0) {
-		MenuFileImportAudio();
+		Open_Close_Import_Audio_Window();
+	}
+	
+	else if (s.compare("File@Import KSProject") == 0) {
+		mbKSProject_Imported = true;
+		MenuFileLoadProject();
+		Set_Project_Name("Imported");
 	}
 	
 	else if (s.compare("File@Download Project") == 0) {
@@ -1613,9 +1644,17 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 #endif // #ifdef _Mac
 } // OnMenuEvent
 
-
+/*
 void CKSApplication::MenuFileImportAudio()
 {
+	
+	
+	if (Get_Project_Folder().length() == 0) {
+		ShowMessageBox("You must create or load a project before importing audio", "Sorry");
+		return;
+	}
+	
+	
 	tbool bTest = (GetGlobalParm(giParamID_Show_Import_Window, giSectionGUI) != 0);
 	if(!bTest){
 		SetGlobalParm(giParamID_Show_Import_Window,true, giSectionGUI);
@@ -1624,7 +1663,7 @@ void CKSApplication::MenuFileImportAudio()
 		GetModule()->GetHost()->ActivateWindow(giImport_Audio_Window);
 } // MenuFileImportAudio
 
-
+*/
 void CKSApplication::MenuSetupAudio()
 {
 	tbool bTest = (GetGlobalParm(giParamID_Audio_Setup_Window, giSectionGUI) != 0);
@@ -2428,6 +2467,9 @@ tbool CKSApplication::ExportClipsList_VerifyOne(CExportClipTask* pInfo)
 
 tbool CKSApplication::MenuFileCreateNewProject()
 {
+	return New_Project();
+	
+	
 	msExtendedError = "";
 	
 	if(Project_Has_Changed()) {
@@ -2443,6 +2485,7 @@ tbool CKSApplication::MenuFileCreateNewProject()
 	CleanProject(giDefault_Number_Of_Tracks);
 
 	tbool bRes = MenuFileSaveProjectAs((std::string("NewProject") + pszCorrectExt).c_str());
+	
 	if (msProjectFolder.length() == 0)
 		CleanProject(0);
 
@@ -2468,11 +2511,11 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 	//CAutoLock Lock(mMutex);
 	
 	// Remember old project wave file info
-	std::string sProjDir_Old = msProjectFolder;
-	std::string sProjDir_ProjFile_Old = msProjectPathName;
-	std::string sProjDir_Audio_Old = GetProjDir_Audio();
-	std::string sProjDir_Clips_Old = GetProjDir_Clips();
-	std::string sProjDir_ClipsDecomp_Old = GetProjDir_ClipsDecomp();
+	std::string sProjDir_Old				= msProjectFolder;
+	std::string sProjDir_ProjFile_Old		= msProjectPathName;
+	std::string sProjDir_Audio_Old			= GetProjDir_Audio();
+	std::string sProjDir_Clips_Old			= GetProjDir_Clips();
+	std::string sProjDir_ClipsDecomp_Old	= GetProjDir_ClipsDecomp();
 	
 	std::list<CSample_Data*> Sample_Infos_Old;
 	std::list<CSample_Data*>::iterator itSample_Info = mSample_Data_List.begin();
@@ -2489,16 +2532,16 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 		
 
 		
-		pTake_Old->sWaveNameL = pTake->sWaveNameL;
-		pTake_Old->sWaveNameR = pTake->sWaveNameR;
-		pTake_Old->sOriginalName = pTake->sOriginalName;
-		pTake_Old->sOriginalExt = pTake->sOriginalExt;
-		pTake_Old->bIsOriginalStereo = pTake->bIsOriginalStereo;
-		pTake_Old->bIsOriginalLossy = pTake->bIsOriginalLossy;
-		pTake_Old->bIsStereoInList = pTake->bIsStereoInList;
+		pTake_Old->sWaveNameL			= pTake->sWaveNameL;
+		pTake_Old->sWaveNameR			= pTake->sWaveNameR;
+		pTake_Old->sOriginalName		= pTake->sOriginalName;
+		pTake_Old->sOriginalExt			= pTake->sOriginalExt;
+		pTake_Old->bIsOriginalStereo	= pTake->bIsOriginalStereo;
+		pTake_Old->bIsOriginalLossy		= pTake->bIsOriginalLossy;
+		pTake_Old->bIsStereoInList		= pTake->bIsStereoInList;
 		pTake_Old->iOriginalChannelMask = pTake->iOriginalChannelMask;
-		pTake_Old->sWavePathNameL = pTake->sWavePathNameL;
-		pTake_Old->sWavePathNameR = pTake->sWavePathNameR;
+		pTake_Old->sWavePathNameL		= pTake->sWavePathNameL;
+		pTake_Old->sWavePathNameR		= pTake->sWavePathNameR;
 		
 		
 		Sample_Infos_Old.insert(Sample_Infos_Old.end(), pSample_Old);
@@ -3082,9 +3125,11 @@ tbool CKSApplication::ExportProjectForWeb_Compress(
 	return true;
 } // ExportProjectForWeb_Compress
 
+
+
 tbool CKSApplication::Open_Project()
 {
-	return MenuFileLoadProject();
+
 	
 	msExtendedError = "";
 	PlaybackStop();
@@ -3121,59 +3166,40 @@ tbool CKSApplication::Open_Project()
 	tchar pszPathName[1024];
 
 //	pDlg->SetBundleBehaviour(1);
-	pDlg->DoDialog(pszPathName, pszDefaultFolder, "*.xml", "KS Project (*.xml)", sDefaultName.c_str());
+	pDlg->DoDialog(pszPathName, pszDefaultFolder, "*.KSProject", "KS Project (*.KSProject)", sDefaultName.c_str());
 	
 	if (pszPathName[0] == 0) {
 		// Exit with no error
 		return true;
 	}
-	
-	
-	
 
 	CAutoLock Lock(mMutex);
-//	CleanProject(0);
-	
-	//	std::string sPathName(pszPathName);
-	msProject_Folder = pszPathName;//sPathName;
+
+	Set_Project_Folder(pszPathName);
 	
 	
 	
 	
-	if (msProject_Folder.length()) {
-		std::string sProject_Name = msProject_Folder;
+	if (Get_Project_Folder().length()) {
+		std::string sProject_Name = Get_Project_Folder();
 		tint32 iPosColon = sProject_Name.find_last_of(':');
 		sProject_Name.erase(0, iPosColon + 1);
-		msProject_Name = sProject_Name;
-		
-		
-		
-		
-		std::string sProjectFolder = msProject_Folder;
-		
-	//	//iPosColon = sProject_Name.find_first_of(':');
-	//	sProject_Name.erase(0, 1);
-		
-		tint32 iEndPos = sProjectFolder.find(msProject_Name);
-		tint32 iChars_To_Rempve = msProject_Name.size();
+		Set_Project_Name(sProject_Name);
+		std::string sProjectFolder = Get_Project_Folder();
+		tint32 iEndPos = sProjectFolder.find(Get_Project_Name());
+		tint32 iChars_To_Rempve = Get_Project_Name().size();
 		sProjectFolder.erase(iEndPos, iChars_To_Rempve+1 );
-		msProject_Folder = sProjectFolder;
-		
+		Set_Project_Folder(sProjectFolder);
 		
 		Read_Project_From_Disk();
 	}
-		
-		
-		
-		
 
-	
-	
-	
 	return true;
 }
 tbool CKSApplication::MenuFileLoadProject()
 {
+	
+	
 	msExtendedError = "";
 
 	PlaybackStop();
@@ -3212,6 +3238,7 @@ tbool CKSApplication::MenuFileLoadProject()
 		// Exit with no error
 		return true;
 	}
+	
 	
 	// Really do it
 	if (1) {
@@ -4149,11 +4176,15 @@ tbool CKSApplication::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 		return MenuFileCreateNewProject();
 	}
 
+	std::string s = GetProjDir_Clips();
 	// Delete any files that occupy the names of the folders we wish to create
-	DeleteFileThatOccupiesFolderName(GetProjDir_Clips());
-	DeleteFileThatOccupiesFolderName(GetProjDir_Icons());
-	DeleteFileThatOccupiesFolderName(GetProjDir_Contents());
-	DeleteFileThatOccupiesFolderName(msProjectFolder);
+	DeleteFileThatOccupiesFolderName(s);
+	s = GetProjDir_Icons();
+	DeleteFileThatOccupiesFolderName(s);
+	s = GetProjDir_Contents();
+	DeleteFileThatOccupiesFolderName(s);
+	s = msProjectFolder;
+	DeleteFileThatOccupiesFolderName(s);
 
 	// This will also create project folder
 	IFile::CreateDirectory(GetProjDir_ClipsDecomp().c_str());
@@ -4894,7 +4925,7 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 
 tbool CKSApplication::OnAudioFileImport()
 {
-	MenuFileImportAudio();
+	Open_Close_Import_Audio_Window();
 	return true;
 } // OnAudioFileImport
 

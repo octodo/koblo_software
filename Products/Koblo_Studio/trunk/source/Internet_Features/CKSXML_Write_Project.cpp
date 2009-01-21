@@ -29,7 +29,7 @@ std::string CKSXML_Write_Project::Get_Internal_Data_As_XML()
 	return xml_str;
 }
 
-void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
+tbool CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 {
 	TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
 	TiXmlDocument *pDoc		=	new TiXmlDocument("koblo_doc");
@@ -51,13 +51,16 @@ void CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	std::string sFileName = gpApplication->GetProjectName() + ".xml";
 	
 	
-	std::string sProject_Folder = gpApplication->Get_Project_Folder();
 	std::string sProject_Name	= gpApplication->Get_Project_Name();
+	std::string sProject_Folder = gpApplication->Get_Project_Folder();
+	std::string sProject		=  sProject_Folder + ":" + sProject_Name + ".xml";
 	
 	CAutoDelete<IFile> pfile(IFile::Create());
-	if (pfile->Open(sFileName.c_str(), IFile::FileCreate)) {
+	if (pfile->Open(sProject.c_str(), IFile::FileWrite)) {
 		pfile->Write(xml_str.c_str(), xml_str.length());
+		return true;
 	}
+	return false;
 }
 
 void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID)
@@ -120,6 +123,18 @@ void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 	pProject->SetAttribute("xsi:noNamespaceSchemaLocation","http://koblo.com/schemas/koblo_project.xsd");
 	pDoc->LinkEndChild( pProject );
 	
+	// name
+	TiXmlElement* pName = new TiXmlElement( "name" );
+	TiXmlText* pNameTxt = new TiXmlText(gpApplication->Get_Project_Name().c_str());
+	pName->LinkEndChild( pNameTxt );
+	pProject->LinkEndChild( pName );
+	
+/*	// description
+	TiXmlElement* pDescription = new TiXmlElement( "description" );
+	TiXmlText* pDescriptionTxt = new TiXmlText(gpApplication->Get_Branch_Description().c_str());
+	pDescription->LinkEndChild( pDescriptionTxt );
+	pBranch->LinkEndChild( pDescription );
+*/	
 	Write_Branch( pProject);
 	Write_Settings( pProject);
 	Write_Editing( pProject);

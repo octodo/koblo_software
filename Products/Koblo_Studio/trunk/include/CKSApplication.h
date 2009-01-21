@@ -68,7 +68,8 @@ public virtual IBaseDezipperCallback,
 public virtual ITimerCallback_CanStop, 
 public virtual CKSInternet_Features,
 public virtual CKSXML_Create_Sample,
-public virtual CGUI_Controller
+public virtual CGUI_Controller,
+public virtual CKSFile_Controller
 
 {
 
@@ -187,7 +188,7 @@ public:
 	virtual tbool MenuFileSaveProject(tbool bOverwriteIcons = false);
 	virtual void MenuFileDistributeMix(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize);
 	virtual void MenuSetupAudio();
-	virtual void MenuFileImportAudio();
+//	virtual void MenuFileImportAudio();
 	
 
 	virtual void VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar* pszWavePathR, tbool bForceRewrite);
@@ -397,8 +398,7 @@ public:
 	
 	virtual void Zoom();
 	
-	std::string Get_Project_Folder(){ return msProject_Folder;};
-	std::string Get_Project_Name(){ return msProject_Name;};
+	
 	
 	
 
@@ -446,29 +446,14 @@ protected:
 	
 	CMIDISong mSong;
 	
-/*
-	//! project name
-	std::string msProjectName;
+
 	
-	//! project description
-	std::string msProjectDescription;
 	
-	//! branch name
-	std::string msBranchName;
+
 	
-	//! branch description
-	std::string msBranchDescription;
 	
-*/	
 	
-	//obsoleete
-	std::string msProjectPathName;
-	std::string msProjectFolder;
-	std::string msLastWaveImport;
 	
-	// New ones
-	std::string msProject_Folder;
-	std::string msProject_Name;
 	
 	//! Extended info about last error that happened in a failing method
 	std::string msExtendedError;
@@ -495,9 +480,9 @@ protected:
 	std::list<CSample_Data*> mSample_Data_List;
 
 	virtual void UpdateGUIFileList();
-
+public:
 	void SanitizeProjectFolderPath(std::string& rsProjectFolder, const tchar* pszCorrectExt);
-	
+protected:	
 	tint32 piTrack_Setup[giNumber_Of_Tracks];
 	
 	
@@ -561,6 +546,8 @@ protected:
 	tbool mbZoomFlipFlop;
 	
 	tbool mbTimer;
+	
+	tbool mbKSProject_Imported;
 
 
 	

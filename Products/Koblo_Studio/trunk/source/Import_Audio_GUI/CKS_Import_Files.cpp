@@ -118,11 +118,12 @@ void CKS_Import_Files::RemoveFile()
 
 void CKS_Import_Files::ImportFiles()
 {
+	/*
 	if (gpApplication->GetProjDir().length() == 0) {
 		gpApplication->ShowMessageBox("You must create or load a project before importing audio", "Sorry");
 		return;
 	}
-
+*/
 	std::list<SItemInfo>::iterator it = mItems.begin();
 	for (; it != mItems.end(); it++) {
 		SItemInfo Info = *it;

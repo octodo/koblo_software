@@ -78,29 +78,47 @@ public:
 	//! upload compressed audio file and mp3 preview.
 	void Upload_OGG_And_MP3_File();
 	
-	//!!! To Do call this
-	void SetProjectName( const std::string& sName){ msProject_Name = sName;}
 	
+	/*! Obsolete
+	 \ keep for campability with old files
+	*/
+	//!!! To Do call this
+	void SetProjectName( const std::string& sName);
+	/*{ 
+		msProjectName = sName;
+		gpApplication->Set_Project_Name(sName);
+	};
+	*/
 	//! get the project name
-	std::string GetProjectName(){ return msProject_Name;}
+	std::string GetProjectName(){ return msProjectName;}
 	
 	//! set project path
-	void SetProjectPath( const std::string& sName){ msProject_Path = sName;}
+	void SetProjectPath( const std::string& sName){ msProjectPath = sName;}
 	
-	std::string GetProjectPath(){ return msProject_Path;}
+	std::string GetProjectPath(){ return msProjectPath;}
+	
+	//! project name
+	std::string msProjectName;
+	std::string msProjectPathName;
+	std::string msProjectFolder;
+	std::string msLastWaveImport;
+	std::string msProjectPath;
 
 	
-	void SetProjectDescription( const std::string& sDescription){ msProjectDescription = sDescription;}
+	//***********************************************
 	
-	std::string Get_Project_Description(){ return msBranchDescription;}
+	
+	void Set_Project_Description( const std::string& sDescription){ msProject_Description = sDescription;}
+	
+	std::string Get_Project_Description(){ return msBranch_Description;}
 	
 	void Set_Branch_Name( const std::string& sName){ msBranchName = sName;}
 	
 	std::string Get_Branch_Name(){ return msBranchName;}
 	
-	void Set_Branch_Description( const std::string& sName){ msBranchDescription = sName;}
+	void Set_Branch_Description( const std::string& sName){ msBranch_Description = sName;}
 	
-	std::string Get_Branch_Description(){ return msBranchDescription;}
+	std::string Get_Branch_Description(){ return msBranch_Description;}
 	
 	void Set_User_Name( const std::string& sName){ msUser_Name = sName;}
 	
@@ -148,20 +166,20 @@ private:
 	virtual void Open_Project_Edit_Page_On_Koblo();
 	
 	//! project name
-	std::string msProject_Name;
+//	std::string msProject_Name;
 	
 	
 	//! project name
 	std::string msProject_Path;
 	
 	//! project description
-	std::string msProjectDescription;
+	std::string msProject_Description;
 	
 	//! branch name
 	std::string msBranchName;
 	
 	//! branch description
-	std::string msBranchDescription;
+	std::string msBranch_Description;
 	
 	//! if true the users sign in informations is stored in the pref file
 	tbool mbRemember_Me;

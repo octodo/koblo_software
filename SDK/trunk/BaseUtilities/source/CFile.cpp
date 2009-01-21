@@ -959,6 +959,7 @@ tbool IFile::CreateDirectory(const tchar* pszPathName)
 		std::string sPathName2;
 		sPathName2 = sPathName.substr(0, sPathName.size() - 1);
 
+		//!!! Called to many times during startup
 		tint iPos = sPathName2.find_last_of(':');
 		if (iPos != std::string::npos && iPos >= 3) {
 			sPathName2 = sPathName2.substr(0, iPos);

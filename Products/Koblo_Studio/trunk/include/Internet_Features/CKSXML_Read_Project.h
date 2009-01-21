@@ -46,7 +46,7 @@ public:
 	//! reset project
 	void Reset_Project();
 	
-	//! read a project XML file from Koblo.comin to the tiny xml DOM
+	//! read a olde binary KSProject file
 	void Read_Project_From_Disk();
 	
 	//! read a project XML file from Koblo.comin to the tiny xml DOM

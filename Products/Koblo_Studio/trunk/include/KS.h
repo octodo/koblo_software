@@ -22,6 +22,7 @@
 
 // XML File parser
 #include "tinyxml.h"
+#include "CKSFile_Controller.h"
 #include "CKSXML_Read_Project.h"
 #include "CKSXML_Write_Project.h"
 #include "CKSXML_Create_Project.h"
