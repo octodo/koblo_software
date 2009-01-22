@@ -119,7 +119,17 @@ tbool CKSFile_Controller::Save_As()
 
 tbool CKSFile_Controller::Copy_Project()
 {
-	Copy_Waves();
+	if(Project_Is_Imported())
+	{
+		
+		
+	}
+	else{
+		
+		Copy_Waves();
+		
+		
+	}
 		
 	return true;
 	
@@ -127,6 +137,7 @@ tbool CKSFile_Controller::Copy_Project()
 
 tbool CKSFile_Controller::Copy_Waves()
 {
+/*
 	std::list<CSample_Data*> pSample_Data_List = gpApplication->Get_Sample_Data_List();
 	std::list<CSample_Data*>::iterator  itSample_Data = pSample_Data_List.begin();
 	
@@ -153,8 +164,32 @@ tbool CKSFile_Controller::Copy_Waves()
 		}
 	}
 	// p
-	//CopyFile(const tchar* pszPathNameDest, const tchar* pszPathNameSrc, const tchar* pszName);
 	
+*/
+	
+	
+	
+	CAutoDelete<IFileSearch> pSearch(IFileSearch::Create());
+//	std::string sSearchPathName(msCopy_From_Project_Folder);
+	
+	
+	std::string sFolder = gpApplication->Get_Project_Folder() + ": Wave Files";
+	
+	pSearch->Init2(sFolder.c_str());
+	
+
+	tchar pszName[1024];
+	tbool bDir;
+	
+	while (pSearch->GetNext(pszName, bDir)) {
+		
+		std::string sSource = pszName;
+		
+		//CopyFile(const tchar* pszPathNameDest, const tchar* pszPathNameSrc, const tchar* pszName);
+		
+	}
+	
+		
 	return true;
 	
 }
