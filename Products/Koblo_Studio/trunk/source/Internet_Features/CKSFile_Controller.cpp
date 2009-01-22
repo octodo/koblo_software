@@ -152,6 +152,7 @@ tbool CKSFile_Controller::Copy_Waves()
 				break;
 		}
 	}
+	// p
 	//CopyFile(const tchar* pszPathNameDest, const tchar* pszPathNameSrc, const tchar* pszName);
 	
 	return true;
