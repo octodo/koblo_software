@@ -125,12 +125,38 @@ tbool CKSFile_Controller::Save_As()
 }
 
 
+tbool CKSFile_Controller::Copy_KSProject_Waves()
+{
+	CAutoDelete<IFileSearch> pSearch(IFileSearch::Create());
+	//	std::string sSearchPathName(msCopy_From_Project_Folder);
+	
+	
+	std::string sFolder = gpApplication->Get_Project_Folder() + ": Wave Files";
+	
+	pSearch->Init2(sFolder.c_str());
+	
+	
+	tchar pszName[1024];
+	tbool bDir;
+	
+	while (pSearch->GetNext(pszName, bDir)) {
+		
+		std::string sSource = pszName;
+		
+		//CopyFile(const tchar* pszPathNameDest, const tchar* pszPathNameSrc, const tchar* pszName);
+		
+	}
+	
+	return true;
+	
+	
+}
+
 tbool CKSFile_Controller::Copy_Project()
 {
-	if(Project_Is_Imported())
-	{
+	if(gpApplication->Project_Is_Imported()) {
 		
-		
+		Copy_KSProject_Waves();
 	}
 	else{
 		
@@ -176,16 +202,11 @@ tbool CKSFile_Controller::Copy_Waves()
 */
 	
 	
-	
-	CAutoDelete<IFileSearch> pSearch(IFileSearch::Create());
-//	std::string sSearchPathName(msCopy_From_Project_Folder);
-	
-	
 	std::string sFolder = gpApplication->Get_Project_Folder() + ": Wave Files";
 	
 	pSearch->Init2(sFolder.c_str());
 	
-
+	
 	tchar pszName[1024];
 	tbool bDir;
 	
@@ -196,6 +217,9 @@ tbool CKSFile_Controller::Copy_Waves()
 		//CopyFile(const tchar* pszPathNameDest, const tchar* pszPathNameSrc, const tchar* pszName);
 		
 	}
+	
+	return true;
+	
 	
 		
 	return true;
@@ -255,6 +279,15 @@ tbool CKSFile_Controller::Create_Upload_Folder()
 	return true;
 }
 
+//! create a new uplaod folder inside the project folder
+tbool CKSFile_Controller::Create_Wave_Picts_Folder()
+{
+	std::string sFolder = gpApplication->Get_Project_Folder() + ": Wave Picts";
+	IFile::CreateDirectory(sFolder.c_str());
+	// make check here
+	return true;
+}
+
 
 
 //! create a new project file
@@ -293,17 +326,20 @@ tbool CKSFile_Controller::Create_Folders()
 	// create a new project folder
 	if(Create_Audio_Folder() == false ) return false;
 	
-	// create a new project folder
+	// create a midi project folder
 	if(Create_Midi_Folder() == false ) return false;
 	
-	// create a new project folder
+	// create a plug-in data project folder
 	if(Create_Plugin_Data_Folder() == false ) return false;
 	
-	// create a new project folder
+	// create a new download folder
 	if(Create_Download_Folder() == false ) return false;
 	
-	// create a new project folder
+	// create a new upload folder
 	if(Create_Upload_Folder() == false ) return false;
+	
+	// create a new upload folder
+	if(Create_Wave_Picts_Folder() == false ) return false;
 	
 	
 	

@@ -85,6 +85,9 @@ private:
 	//! create a new uplaod folder inside the project folder
 	tbool Create_Upload_Folder();
 	
+	//! create a new uplaod wave pict inside the project folder
+	tbool Create_Wave_Picts_Folder();
+	
 	//! create a new project file
 	tbool Create_Project_File();
 	
@@ -108,6 +111,9 @@ private:
 	
 	// copy sample Wave from one project to another one 
 	tbool Copy_Waves();
+	
+	// copy waves from old KSProject file
+	tbool Copy_KSProject_Waves();
 	
 	CMIDI_Sequencer* mpMIDI_Sequencer;
 	
