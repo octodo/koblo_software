@@ -31,6 +31,20 @@
 #include "CKSUsername_And_Password_Model.h"
 #include "CKSInternet_Features.h"
 
+
+
+#include "jdkmidi/world.h"
+#include "jdkmidi/track.h"
+#include "jdkmidi/multitrack.h"
+#include "jdkmidi/filereadmultitrack.h"
+#include "jdkmidi/fileread.h"
+#include "jdkmidi/fileshow.h"
+#include "jdkmidi/filewritemultitrack.h"
+#include "jdkmidi/msg.h"
+#include "jdkmidi/sysex.h"
+
+#include "CMIDI_Sequencer.h"
+
 #include "CGUI_Controller.h"
 
 #include "aioe.h"

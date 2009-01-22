@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
+class CMIDI_Sequencer;
 
 class CKSFile_Controller
 {
@@ -107,6 +108,8 @@ private:
 	
 	// copy sample Wave from one project to another one 
 	tbool Copy_Waves();
+	
+	CMIDI_Sequencer* mpMIDI_Sequencer;
 	
 	
 	

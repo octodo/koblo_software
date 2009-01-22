@@ -6,6 +6,14 @@
 CKSFile_Controller::CKSFile_Controller()
 {
 
+	
+	mpMIDI_Sequencer = new(CMIDI_Sequencer);
+	
+	char pszInFile[1024];
+	char pszOutFile[1024];
+	
+	
+	mpMIDI_Sequencer->Init( pszInFile, pszOutFile);
 }
 
 CKSFile_Controller::~CKSFile_Controller()
