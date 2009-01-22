@@ -105,6 +105,9 @@ private:
 	// copy files from one project to another one 
 	tbool Copy_Project();
 	
+	// copy sample Wave from one project to another one 
+	tbool Copy_Waves();
+	
 	
 	
 };

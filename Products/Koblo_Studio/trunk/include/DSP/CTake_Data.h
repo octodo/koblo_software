@@ -50,24 +50,12 @@ public:
 	
 	//! get the description
 	std::string Get_URL(){ return msURL;};
-/*	
-	// get uuid from CKSUUID object
-	std::string Get_Take_UUID(){ return mpUUID->Get_UUID();};
-	// set a new uuid
-	void Set_Take_UUID(){ mpUUID->Set_UUID();};
-	// set a uuid from a string
-	void Set_Take_UUID(std::string  sUUID ){ mpUUID->Set_UUID(sUUID);};
-	
-*/	
-	
+
 	
 	
 protected:
 	
-//	CKSUUID* mpUUID;
-	
-	//! UUID
-//	std::string msUUID;
+
 	//! description
 	std::string msDescription;
 	//! url

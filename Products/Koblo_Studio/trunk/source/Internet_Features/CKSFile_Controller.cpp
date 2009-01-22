@@ -109,6 +109,7 @@ tbool CKSFile_Controller::Save_As()
 	// Save settings in project file
 	gpApplication->Save_Project_As_XML_File_To_Disk();
 	
+	// copy samples and files from old project in to the new project folder
 	Copy_Project();
 	
 	return true;
@@ -118,12 +119,45 @@ tbool CKSFile_Controller::Save_As()
 
 tbool CKSFile_Controller::Copy_Project()
 {
+	Copy_Waves();
+		
+	return true;
 	
+}
 
+tbool CKSFile_Controller::Copy_Waves()
+{
+	std::list<CSample_Data*> pSample_Data_List = gpApplication->Get_Sample_Data_List();
+	std::list<CSample_Data*>::iterator  itSample_Data = pSample_Data_List.begin();
+	
+	
+	
+	for (; itSample_Data != pSample_Data_List.end(); itSample_Data++) {
+		
+		CSample_Data* pSample_Data	= (*itSample_Data);
+		CTake_Data*	pTake_Data		=	pSample_Data->Get_Take_Data();
+		
+		std::string sName = (*itSample_Data)->Get_Name().c_str();
+		
+		switch(pTake_Data->iOriginalChannelMask)
+		{
+				// Left
+			case 1:
+				break;
+				// right	
+			case 2:
+				break;
+				// stereo
+			case 3:
+				break;
+		}
+	}
+	//CopyFile(const tchar* pszPathNameDest, const tchar* pszPathNameSrc, const tchar* pszName);
 	
 	return true;
 	
 }
+
 
 tbool CKSFile_Controller::Create_Project_Folder()
 {
