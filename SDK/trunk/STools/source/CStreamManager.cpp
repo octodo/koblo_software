@@ -11,7 +11,7 @@ CStreamManager::CStreamManager()
 	mpTimer = ITimer::Create();
 
 #ifdef _DEBUG
-	mpTimer->Init(0, dynamic_cast<ITimerCallback*>(this), 500);
+	mpTimer->Init(0, dynamic_cast<ITimerCallback*>(this), 1000);
 #else	// _DEBUG
 	mpTimer->Init(0, dynamic_cast<ITimerCallback*>(this), 10);
 #endif	// _DEBUG

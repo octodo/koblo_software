@@ -154,6 +154,7 @@ tbool CKSInternet_Features::Project_Has_Changed()
 	
 }
 
+//<<<<<<< HEAD:Products/Koblo_Studio/trunk/source/Internet_Features/CKSInternet_Features.cpp
 std::string CKSInternet_Features::Get_Project_UUID()
 { 
 	return mpProject_UUID->Get_UUID();
@@ -182,11 +183,24 @@ void CKSInternet_Features::Set_Branch_UUID()
 void CKSInternet_Features::Set_Branch_UUID(std::string  sUUID )
 { 
 	mpBranch_UUID->Set_UUID(sUUID);
+	
+}
+//=======
+	
+	/*
+std::string CKSInternet_Features::Get_UUID()
+{
+	tchar* pszUUID = new tchar[128];
+	tuint32 uiBuffer_Size = 0;
+	Gen_UUID(pszUUID,  uiBuffer_Size);
+	std::string sUUID = pszUUID;
+	return sUUID;
+>>>>>>> 9330e4aed07b0ce2368b809d2ee708ef63359c8d:Products/Koblo_Studio/trunk/source/Internet_Features/CKSInternet_Features.cpp
 }
 
 
 
-
+*/
 
 
 
