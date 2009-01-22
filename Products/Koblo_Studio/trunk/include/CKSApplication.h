@@ -398,6 +398,8 @@ public:
 	
 	virtual void Zoom();
 	
+	tbool Project_Is_Imported(){return mbKSProject_Imported;};
+	
 	
 	
 	
