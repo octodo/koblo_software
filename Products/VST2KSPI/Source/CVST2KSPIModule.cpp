@@ -108,7 +108,9 @@ void CVST2KSPIModule::DoScanDirectory(const std::string& sPathName)
 			}
 			
 			VSTMainFunc mainFunc = (VSTMainFunc)(void*)GetProcAddress(hDLL, "VSTPluginMain");
-			//			VSTMainFunc mainFunc = (VSTMainFunc)CFBundleGetFunctionPointerForName(BundleRef, CFSTR("main") );
+			if (mainFunc == NULL) {
+				mainFunc = (VSTMainFunc)(void*)GetProcAddress(hDLL, "main");
+			}
 			if (mainFunc == NULL) {
 				continue;
 			}

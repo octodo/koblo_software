@@ -57,6 +57,9 @@ CVST2KSPIPlugIn::CVST2KSPIPlugIn(CVST2KSPIModule* pModule, const std::string& sE
 			
 		VSTMainFunc mainFunc = (VSTMainFunc)(void*)GetProcAddress(hDLL, "VSTPluginMain");
 		if (mainFunc == NULL) {
+			mainFunc = (VSTMainFunc)(void*)GetProcAddress(hDLL, "main");
+		}
+		if (mainFunc == NULL) {
 		}
 
 		try {
