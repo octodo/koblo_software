@@ -57,12 +57,13 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 		pDownloader->SetReplyMIMEType(ine::MIME_TYPE_MP3);
 		CAutoDelete<IFile> pfTest(IFile::Create());
 #ifdef _WIN32
-		tchar* pszTestFile = "C:\\testhest.mp3";
+		tchar* pszTestFile = "C:\\_testhest.mp3";
 #endif // _WIN32
 #ifdef _Mac
-		tchar* pszTestFile = "/testhest.mp3";
+		tchar* pszTestFile = "/_testhest.mp3";
 #endif // _Mac
 		if (pfTest->Open(pszTestFile, IFile::FileCreate)) {
+			/*
 			tchar pszBuffer[1024];
 			tint32 iPortionSize = 0;
 			tuint64 iTotalSize = 0;
@@ -74,6 +75,14 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 				if (iPortionSize > 0) {
 					pfTest->Write(pszBuffer, iPortionSize);
 				}
+			}
+			*/
+			if (pDownloader->Start(pfTest)) {
+				tbool bSuccess, bError;
+				do {
+					bSuccess = pDownloader->IsDone();
+					bError = pDownloader->IsFailed();
+				} while ((!bSuccess) && (!bError));
 			}
 			if (pDownloader->IsFailed()) {
 				tchar pszErr[1024];
@@ -1032,7 +1041,7 @@ void CKSXML_Read_Project::Read_Track_Region(TiXmlElement* pElement, tint32 iTrac
 	if ( !pElement ) return ;
 	
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
-	tint32 ival;
+	static tint32 ival = 0;
 	printf( "--------\n", ival);
 	// aux id
 	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    

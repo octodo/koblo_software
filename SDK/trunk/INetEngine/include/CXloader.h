@@ -1,5 +1,5 @@
 //! Keeps track of whether CURL library has been initialized (must only happen once)
-static volatile gbCURLInitialized = false;
+static volatile tbool gbCURLInitialized = false;
 //! Static pointer to CURL multi instance. The instance holds a number of active download/upload threads (every IUploader and IDownloader has 0 or 1 active thread)
 static CURLM* gpCURLMulti = NULL; //curl_multi_init( );
 //! Keeps track of how many IUploader and IDownloader objects are using this CURL multi instance
@@ -34,11 +34,15 @@ public:
 	//! IDownloader implementation
 	virtual tbool AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen);
 	//! IDownloader implementation
-	virtual tbool DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize);
-	//! IUploader implementation
-	virtual tbool UploadPortion(tuint64* puiUploadProgress, tchar* pszReplyBuffer, tint32 iReplyBufferSize, tint32* piReplyPortionSize, tuint64* puiReplyTotalSize);
+	virtual tbool Start(IFile* pfileForDownload = NULL);
+	//! IDownloader implementation
+	virtual tbool GetReplyPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize);
 	//! IDownloader implementation
 	virtual tbool Abort();
+	//! IUploader implementation
+	virtual tbool GetProgress(tint64* piUploadProgress, tint64* piUploadSize, tint64* piDownloadProgress, tint64* piDownloadSize);
+	//! IDownloader implementation
+	virtual tbool GetProgress(tint64* piDownloadProgress, tint64* piDownloadSize);
 
 	//! IDownloader implementation
 	virtual tbool IsDone();
@@ -51,12 +55,10 @@ public:
 	// Callbacks
 	size_t ReadFunction_ForUpload(void *ptr, size_t size, size_t nmemb);
 	int SeekFunction_ForUpload(curl_off_t offset, int origin);
+	size_t WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb);
 
 protected:
 	tbool mbIsUploader;
-
-	void GetLockForMultiInstance();
-	void ReleaseLockForMultiInstance();
 
 	std::string msHost;
 	std::string msPage;
@@ -88,23 +90,65 @@ protected:
 	CMutex mMutex_ForParams;
 	void CloseFile_IgnoreError();
 
+	// File for writing reply directly into
 	IFile* mpfileForReply;
+
+	// Buffer for holding reply (when no file)
+	class CReplyChainLink {
+	public:
+		CReplyChainLink(void* p, tuint32 uiBytes)
+		{
+			if (uiBytes == 0) {
+				mpcBytes = 0;
+			}
+			else {
+				mpcBytes = new tchar[uiBytes];
+				memcpy(mpcBytes, p, uiBytes);
+			}
+			muiBytes = uiBytes;
+			muiIndex = 0;
+		}
+		virtual ~CReplyChainLink()
+		{
+			if (mpcBytes) {
+				delete[] mpcBytes;
+				mpcBytes = NULL;
+			}
+		}
+		tuint32 GetBytes(tchar* pcBuff, tuint32 uiBytesWanted)
+		{
+			tuint32 uiBytesReturned = muiBytes - muiIndex;
+			if (uiBytesReturned > uiBytesWanted) uiBytesReturned = uiBytesWanted;
+			if (uiBytesReturned > 0) {
+				tchar* pcIndex = mpcBytes + muiIndex;
+				memcpy(pcBuff, pcIndex, uiBytesReturned);
+			}
+			return uiBytesReturned;
+		}
+	protected:
+		tchar* mpcBytes;
+		tuint32 muiBytes;
+		tuint32 muiIndex;
+	}; // CReplyChainLink
+	std::list<CReplyChainLink*> mlist_pReplyChain;
+	CMutex mMutex_ForReplyBuffer;
+	void ZapReplyBuffer();
 
 	tuint64 muiUploadProgress;
 	tuint64 muiReplyProgress;
 	tuint64 muiReplySize;
 
-	volatile tuint32 muiAliveMs;
-	void RefreshAlive();
-	tbool IsAlive();
+	//volatile tuint32 muiAliveMs;
+	//void RefreshAlive();
+	//tbool IsAlive();
 	
 	std::string msLastError;
 	void SetError(const tchar* pszError);
 	CMutex mMutex_ForErrors;
 
 	
-	void Constructor_OSSpecific();
-	void Destructor_OSSpecific();
+	//void Constructor_OSSpecific();
+	//void Destructor_OSSpecific();
 
 	CMutex mMutex_Connection;
 	tbool OpenConnection();
@@ -112,7 +156,7 @@ protected:
 	void CloseConnection();
 	//void CloseConnection_OSSpecific();
 	
-	tbool DoPortion_OSSpecific(tuint64* puiUploadProgress, tchar* pszReplyBuffer, tint32 iReplyBufferSize, tint32* piReplyPortionSize, tuint64* puiReplyTotalSize);
+	//tbool DoPortion_OSSpecific(tuint64* puiUploadProgress, tchar* pszReplyBuffer, tint32 iReplyBufferSize, tint32* piReplyPortionSize, tuint64* puiReplyTotalSize);
 	
 	void SetIsUninitialized();
 	void SetIsInitialized();
@@ -130,6 +174,10 @@ private:
 	volatile tbool mbIsFailed;
 	volatile tbool mbIsDone;
 
+	void GetLockForMultiInstance();
+	void ReleaseLockForMultiInstance();
+
+	tchar mpszErrorBuffer[CURL_ERROR_SIZE];
 
 	CURL* mpCURLEasyHandle;
 	curl_httppost* mpFormPost_First;
