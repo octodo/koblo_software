@@ -135,9 +135,7 @@ tbool CKSFile_Controller::Copy_Project()
 	}
 	else{
 		
-		Copy_Waves();
-		
-		
+		Copy_Samples();
 	}
 		
 	return true;
@@ -153,8 +151,8 @@ tbool CKSFile_Controller::Copy_KSProject_Waves()
 	sCopy_From_Folder += "Contents:Audio:Clips:Decompressed:";
 	
 	
-	std::string sCopy_To_Folder = gpApplication->Get_Project_Folder() + ":Wave Files:*.wav";
-	pSearch->Init2(sCopy_From_Folder.c_str());
+	std::string sCopy_To_Folder = gpApplication->Get_Project_Folder() + ":Wave Files:";
+	pSearch->Init2((sCopy_From_Folder + "*.wav").c_str());
 	
 	
 	tchar pszFile_Name[1024];
@@ -164,72 +162,11 @@ tbool CKSFile_Controller::Copy_KSProject_Waves()
 	while (pSearch->GetNext(pszFile_Name, bDir)) {
 		
 		std::string sFile_Name = pszFile_Name;
-		std::string sFile_Path = sCopy_From_Folder;
-	
 		IFile::CopyFile(sCopy_To_Folder.c_str(), sCopy_From_Folder.c_str(), sFile_Name.c_str());
 		
 	}
 	
 	return true;
-	
-}
-
-tbool CKSFile_Controller::Copy_Waves()
-{
-/*
-	std::list<CSample_Data*> pSample_Data_List = gpApplication->Get_Sample_Data_List();
-	std::list<CSample_Data*>::iterator  itSample_Data = pSample_Data_List.begin();
-	
-	
-	
-	for (; itSample_Data != pSample_Data_List.end(); itSample_Data++) {
-		
-		CSample_Data* pSample_Data	= (*itSample_Data);
-		CTake_Data*	pTake_Data		=	pSample_Data->Get_Take_Data();
-		
-		std::string sName = (*itSample_Data)->Get_Name().c_str();
-		
-		switch(pTake_Data->iOriginalChannelMask)
-		{
-				// Left
-			case 1:
-				break;
-				// right	
-			case 2:
-				break;
-				// stereo
-			case 3:
-				break;
-		}
-	}
-	// p
-	
-*/
-	
-	CAutoDelete<IFileSearch> pSearch(IFileSearch::Create());
-	
-	std::string sFolder = gpApplication->Get_Project_Folder() + ": Wave Files";
-	
-	pSearch->Init2(sFolder.c_str());
-	
-	
-	tchar pszName[1024];
-	tbool bDir;
-	
-	while (pSearch->GetNext(pszName, bDir)) {
-		
-		std::string sSource = pszName;
-		
-		//CopyFile(const tchar* pszPathNameDest, const tchar* pszPathNameSrc, const tchar* pszName);
-		
-	}
-	
-	return true;
-	
-	
-		
-	return true;
-	
 }
 
 
@@ -318,8 +255,29 @@ tbool CKSFile_Controller::Create_Project_File()
 	return false;
 }
 
-tbool CKSFile_Controller::Copy_Samples(std::string sSource_Path, std::string sDestination_Path)
+tbool CKSFile_Controller::Copy_Samples()
 {
+	CAutoDelete<IFileSearch> pSearch(IFileSearch::Create());
+	
+	
+	// copy from project folder
+	std::string sCopy_From_Folder = msCopy_From_Project_Folder + ":Wave Files:";
+	pSearch->Init2((sCopy_From_Folder + "*.wav").c_str());
+	
+	
+	std::string sCopy_To_Folder = gpApplication->Get_Project_Folder() + ":Wave Files:";
+	
+	
+	
+	tchar pszFile_Name[1024];
+	tbool bDir;
+	while (pSearch->GetNext(pszFile_Name, bDir)) {
+		
+		std::string sFile_Name = pszFile_Name;
+		IFile::CopyFile(sCopy_To_Folder.c_str(), sCopy_From_Folder.c_str(), sFile_Name.c_str());
+		
+	}
+	
 	return true;
 }
 
@@ -346,9 +304,7 @@ tbool CKSFile_Controller::Create_Folders()
 	
 	// create a new upload folder
 	if(Create_Wave_Picts_Folder() == false ) return false;
-	
-	
-	
+
 	
 	// create a new project file
 	if( Create_Project_File() == false ) return false;

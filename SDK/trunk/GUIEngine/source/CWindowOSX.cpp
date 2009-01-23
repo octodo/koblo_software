@@ -360,11 +360,19 @@ IWindow::EMsgBoxReturn IWindow::ShowMessageBox(const tchar* pszMessage, const tc
 			ParamRec.otherText = CFSTR("Cancel");
 			ParamRec.cancelButton = kAlertStdAlertOtherButton;
 			break;
+			
 
 		case MsgBoxRetryCancel:
 			ParamRec.defaultText = CFSTR("Retry");
 			ParamRec.cancelText = CFSTR("Cancel");
 			ParamRec.otherText = nil;
+			break;
+			
+		case MsgBoxSplitStereo:
+			ParamRec.defaultText = CFSTR("Split");
+			ParamRec.cancelText = CFSTR("Stereo");
+			ParamRec.otherText = CFSTR("Cancel");
+			ParamRec.cancelButton = kAlertStdAlertOtherButton;
 			break;
 	}
 	

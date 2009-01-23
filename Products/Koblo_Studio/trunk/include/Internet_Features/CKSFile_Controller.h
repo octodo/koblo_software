@@ -59,6 +59,7 @@ public:
 	//!!! TO DO make private when old fileformat no longer is supported
 	void Update_Project_Name(std::string sNew_Name);
 	
+	
 private:	
 	
 	//! project folder
@@ -92,7 +93,7 @@ private:
 	tbool Create_Project_File();
 	
 	// copy samples to project folder
-	tbool Copy_Samples(std::string sSource_Path, std::string sDestination_Path); 
+	tbool Copy_Samples(); 
 	
 	//! create folder for project files
 	tbool Create_Folders();
@@ -108,9 +109,6 @@ private:
 	
 	// copy files from one project to another one 
 	tbool Copy_Project();
-	
-	// copy sample Wave from one project to another one 
-	tbool Copy_Waves();
 	
 	// copy waves from old KSProject file
 	tbool Copy_KSProject_Waves();
