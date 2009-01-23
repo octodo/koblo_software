@@ -36,6 +36,8 @@ tbool CXloader::OpenConnection_OSSpecific()
 	*/
 	// .. (lasse)
 
+	// No longer - will use libCURL instead
+	/*
 	mhInitialize = ::InternetOpen("Koblo INet Engine 1.0", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
 	if (mhInitialize == NULL) {
 		SetError("InternetOpen(..) failed");
@@ -111,6 +113,7 @@ tbool CXloader::OpenConnection_OSSpecific()
 	muiTotalSize = 0;
 
 	return true;
+	*/
 } // OpenConnection_OSSpecific
 
 

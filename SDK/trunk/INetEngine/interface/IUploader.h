@@ -35,12 +35,19 @@ public:
 		\param pszPage [in]: Folder+page to connect to on Internet host
 		\param pfileToUpload [in]: Previously read-access opened file you wish to upload. <b>Must</b> remain open during all calls to UploadPortion! Calling app must Destroy() object after use
 		\param iPort [in]: Port number (default 80)
-		\param pszUser [in]: Authentication user (default none)
-		\param pszPassword [in]: Autehtication password (default none)
-		\param iTimeOutSecs [in]: Time-out for transfer (default 10 seconds)
+		\param pszUser [in]: User for authentication (default none)
+		\param pszPassword [in]: Password for authentication (default none)
+		\param iTimeOutSecs [in]: The max allowed amount of seconds without anything happening before error (default 10)
 		\return tbool: True upon success, false upon error.
 	*/
-	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToUpload, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10) = 0;
+	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToUpload, tchar* pszParamName = "Upload", tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10) = 0;
+
+	//! Overrides the name of the file added in Init(..) so the receiving server sees this instead of the real name
+	/*!
+		\param pszOverrideName [in]: The custom name for the file
+		\return tbool: True upon success
+	*/
+	virtual tbool SetNameOfUploadFile(tchar* pszOverrideName) = 0;
 
 	//! Tells the server which type of answer we want for our uploading
 	/*!
@@ -56,6 +63,18 @@ public:
 	*/
 	virtual tbool SetSpecificVerb(EVerbType eVerb) = 0;
 
+	//! By calling this you'll prevent the uploader from following redirect requests. Must be called after Init(..) since that resets this behaviour
+	/*!
+		\return tbool: True upon successfully setting the parameter
+	*/
+	virtual tbool DisableAutoRedirects() = 0;
+
+	//! By calling this you'll allow the uploader to follow redirect requests (default unless DisableAutoRedirects() has been previously called)
+	/*!
+		\return tbool: True upon successfully setting the parameter
+	*/
+	virtual tbool EnableAutoRedirects() = 0;
+
 	//! Call this once for each parameter=value set to submit to upload location
 	/*!
 		\param pszParamName [in]: Name of parameter. Must be US-ASCII characters and numbers only (a-z, A-Z and 0-9)
@@ -65,16 +84,31 @@ public:
 	*/
 	virtual tbool AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen) = 0;
 
-	//! Upload a portion of data
+	//! Start background upload of file + recieval of reply either to buffer in memory or directly to file. Will run until IsDone() == true
 	/*!
-		\param puiUploadProgress [out]: The accumulated number of bytes buffered for upload from the local file (none of which may actually have been sent yet)
-		\param pszReplyBuffer [out]: Pre-allocated buffer to recieve the next portion of reply data
-		\param iReplyBufferSize [in]: Size of pre-allocated buffer
-		\param piReplyPortionSize [out]: The number of reply bytes actually returned in this portion. Will be 0 until upload is done, and may occasionally be 0 again during recieval of reply, caused by e.g. slow network
-		\param puiReplyTotalSize [out]: The total size of the reply we're getting. Will be zero at first (until reply starts) and may change, so always use latest return value for progress bar, etc.
+		\param pfileForReply [in]: File that has been previously opened for write-access. Default NULL means that reply is kept in memory instead
 		\return tbool: True upon success, false upon error.
 	*/
-	virtual tbool UploadPortion(tuint64* puiUploadProgress, tchar* pszReplyBuffer, tint32 iReplyBufferSize, tint32* piReplyPortionSize, tuint64* puiReplyTotalSize) = 0;
+	virtual tbool Start(IFile* pfileForReply = NULL) = 0;
+
+	//! Ask for a portion of reply data (this is only possible if Start(..) was called with NULL)
+	/*!
+		\param pszBuffer [out]: Pre-allocated buffer to recieve the next portion of reply data
+		\param iBufferSize [in]: Size of pre-allocated buffer
+		\param piPortionSize [out]: The number of reply bytes actually returned in this portion. Will be 0 until upload part of transaction has completed and may occationally be 0 later, caused by e.g. slow network
+		\return tbool: True upon success, false upon error.
+	*/
+	virtual tbool GetReplyPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize) = 0;
+
+	//! Get info on upload + reply progress
+	/*!
+		\param piUploadProgress [out]: How much of data has been uploaded
+		\param piUploadSize [out]: The total number of bytes in upload data
+		\param piDownloadProgress [out]: How much of downloaded data has been either 1) written to file or 2) returned via GetReplyPortion(..)
+		\param piDownloadSize [out]: The total number of bytes in download data (will be unknown (i.e. 1) until reply starts)
+		\return tbool: True upon success, false upon error.
+	*/
+	virtual tbool GetProgress(tint64* piUploadProgress, tint64* piUploadSize, tint64* piDownloadProgress, tint64* piDownloadSize) = 0;
 
 	//! Breaks an ongoing upload operation and releases internal buffers. It's OK to call from different thread.
 	virtual tbool Abort() = 0;

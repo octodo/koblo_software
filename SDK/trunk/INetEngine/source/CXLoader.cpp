@@ -4,17 +4,32 @@
 CXloader::CXloader(tbool bIsUploader)
 {
 	mbIsUploader = bIsUploader;
-	mpfileToUpload = NULL;
+	mpfileToUpload = mpfileForReply = NULL;
 	mpszParamsAssembled = NULL;
 	miParamsAssembledLen = 0;
 	mbIsInitialized = mbIsTransfering = mbIsFailed = mbIsDone = false;
 	meMIMEType = MIME_TYPE_NONE;
 	meSpecificVerb = VERB_DEFAULT;
+	mbAllowRedirects = true;
 
 	// Prepare CURL multi instance
 	{
 		GetLockForMultiInstance();
 		//
+		// Maybe initialize library
+		if (!gbCURLInitialized) {
+			tint32 iInitFlags = CURL_GLOBAL_DEFAULT;
+			//! TODO! Determine if this should be enabled
+			// Maybe we would need to not initialize win32 sockets if
+			// they were already used for IINetUtil? Would be done like this:
+			tbool bIsWin32AlreadyInitialized = false;
+			if (bIsWin32AlreadyInitialized) {
+				// Don't initialize win32 socket stuff again
+				iInitFlags &= (CURL_GLOBAL_ALL - CURL_GLOBAL_WIN32);
+			}
+			CURLcode code = curl_global_init(iInitFlags);
+			gbCURLInitialized = true;
+		}
 		// Maybe create CURL multi instance
 		if (gpCURLMulti == NULL) gpCURLMulti = curl_multi_init();
 		// Hook CURL multi instance
@@ -22,6 +37,11 @@ CXloader::CXloader(tbool bIsUploader)
 		//
 		ReleaseLockForMultiInstance();
 	}
+
+	// Make sure we only close what's been opened
+	mpCURLEasyHandle = NULL;
+	mpFormPost_First = mpFormPost_Last = NULL;
+	mpSList_ExtraHeaders = NULL;
 	
 	Constructor_OSSpecific();
 } // constructor
@@ -98,12 +118,15 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort /*
 } // Init (for IDownloader)
 
 
-tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToUpload, tint32 iPort /*= 80*/, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
+tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToUpload, tchar* pszParamName /*= "Upload"*/, tint32 iPort /*= 80*/, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
 {
 	Abort();
 	WipeParams();
 	mbIsInitialized = false;
 	
+	// Get an "easy" handle
+	mpCURLEasyHandle = curl_easy_init();
+
 	// Verify sanity of host
 	{
 		if ((pszHost == NULL) || (*pszHost == '\0')) {
@@ -164,17 +187,70 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToU
 	
 	msHost = pszHost;
 	msPage = (pszPage == NULL) ? "" : pszPage;
+	mpfileToUpload = pfileToUpload;
+	msUploadFileParamName =
+		((pszParamName == NULL) || (*pszParamName = '\0'))
+		? "Upload" : pszParamName;
+	msOverrideNameOfFileToUpload = "";
 	miPort = iPort;
 	msUser = (pszUser == NULL) ? "" : pszUser;
 	msPassword = (pszPassword == NULL) ? "" : pszPassword;
 	muiTimeOutSecs = (tuint32)iTimeOutSecs;
-	
+
+	// Extract path and name from upload IFile object
+	if (mpfileToUpload) {
+		tchar pszNameOnly[512];
+		tchar pszFilePathName[1024];
+		if ((dynamic_cast<IFileMemory*>(mpfileToUpload)) != NULL) {
+			// This is a memory file - no name
+			sprintf(pszFilePathName, "(no name)");
+		}
+		else {
+			if (!mpfileToUpload->GetPathName(pszFilePathName)) {
+				SetError("Unable to get file path+name for upload");
+				return false;
+			}
+			tchar* pszColon = strrchr(pszFilePathName, ':');
+			if (pszColon == NULL) {
+				SetError("Huh?!");
+				return false;
+			}
+			msUploadFileNameAndExtOnly = pszColon + 1;
+		}
+	}
+
 	mbIsInitialized = true;
 	meMIMEType = MIME_TYPE_NONE;
 	meSpecificVerb = VERB_DEFAULT;
+	mbAllowRedirects = true;
+	mpfileForReply = NULL;
 	
+	muiUploadProgress = muiReplyProgress = muiReplySize;
 	return true;
 } // Init (for IUploader)
+
+
+tbool CXloader::SetNameOfUploadFile(tchar* pszOverrideName)
+{
+	if (mbIsFailed) {
+		//SetError("Previous error");
+		return false;
+	}
+	
+	if (!mbIsInitialized) {
+		SetError("Not initialized");
+		return false;
+	}
+	
+	if (mbIsTransfering) {
+		SetError("We can't rename upload file as we've already begun transfer");
+		return false;
+	}
+	
+	// Success
+	msUploadFileNameAndExtOnly = (pszOverrideName == NULL) ? "" : pszOverrideName;
+	return true;
+} // SetNameOfUploadFile
 
 
 tbool CXloader::SetReplyMIMEType(E_MIME_Type eMIME)
@@ -264,22 +340,42 @@ tbool CXloader::SetSpecificVerb(EVerbType eVerb)
 } // SetSpecificVerb
 
 
-EVerbType CXloader::GetVerb(EVerbType eVerbDefault)
+EVerbType CXloader::GetActuallyUsedVerb()
 {
+	// Did calling app set a specific VERB to use?
 	switch (meSpecificVerb) {
 		case VERB_GET:
 		case VERB_POST:
 		case VERB_PUT:
 			return meSpecificVerb;
 	}
-	
-	return eVerbDefault;
-} // GetVerb
+
+	if (mbIsUploader) {
+		if (mlist_sParamNames.size() > 0) {
+			// IUploaders are POST as default when there are more parameters than the file itself
+			return VERB_POST;
+		}
+		else {
+			// IUploaders are PUT as default when there's only the file
+			return VERB_PUT;
+		}
+	}
+	else {
+		if (mlist_sParamNames.size() > 0) {
+			// IDownloaders are POST as default if they have parameters
+			return VERB_POST;
+		}
+		else {
+			// IDownloaders without parameters are GET as default
+			return VERB_GET;
+		}
+	}
+} // GetActuallyUsedVerb
 
 
-const tchar* CXloader::GetVerbString(EVerbType eVerbDefault)
+const tchar* CXloader::GetVerbString(EVerbType eVerb)
 {
-	switch (GetVerb(eVerbDefault)) {
+	switch (eVerb) {
 		case VERB_GET:	return "GET";
 		case VERB_POST:	return "POST";
 		case VERB_PUT:	return "PUT";
@@ -288,6 +384,36 @@ const tchar* CXloader::GetVerbString(EVerbType eVerbDefault)
 	// What?!
 	return "";
 } // GetVerbString
+
+
+tbool CXloader::SetAllowRedirects(tbool bAllow)
+{
+	if (mbIsFailed) {
+		//SetError("Previous error");
+		return false;
+	}
+	
+	if (!mbIsInitialized) {
+		SetError("Not initialized");
+		return false;
+	}
+	
+	if (mbIsTransfering) {
+		SetError("We can't change redirect behaviour as we've already begun transfer");
+		return false;
+	}
+
+	mbAllowRedirects = bAllow;
+	return true;
+} // SetAllowRedirects
+
+
+tbool CXloader::DisableAutoRedirects()
+{ return SetAllowRedirects(false); }
+
+
+tbool CXloader::EnableAutoRedirects()
+{ return SetAllowRedirects(true); }
 
 
 tbool CXloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen)
@@ -372,7 +498,7 @@ tbool CXloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, ti
 } // AddParam
 
 
-tbool CXloader::AssembleParams()
+tbool CXloader::AssembleParams(EVerbType eVerb)
 {
 	CAutoLock Lock(mMutex_ForParams);
 	
@@ -381,8 +507,8 @@ tbool CXloader::AssembleParams()
 		return false;
 	}
 	
-	if (mpszParamsAssembled) {
-		SetError("Already assembled");
+	if ((mpszParamsAssembled) || (mpFormPost_First)) {
+		SetError("Already assembled parameters");
 		return false;
 	}
 	
@@ -394,7 +520,16 @@ tbool CXloader::AssembleParams()
 		SetError("List lengths aren't all the same");
 		return false;
 	}
+
+	if (mbIsUploader)
+		return AssembleParams_ForMultiPartForm(eVerb);
+	else
+		return AssembleParams_ForUrlEncoded(eVerb);
+} // AssembleParams
 	
+
+tbool CXLoader::AssembleParams_ForUrlEncoded(EVerbType eVerb)
+{
 	// Calculate space needed
 	{
 		miParamsAssembledLen = 0;
@@ -406,16 +541,7 @@ tbool CXloader::AssembleParams()
 			std::string& rsName = *itName;
 			tint32 iLen = *itDataLen;
 			
-			// First a parameter delimiter (for GET verb only)
-			if (meSpecificVerb == VERB_GET) {
-				// For verb GET we add the parameters as part of URI.
-				// Therefore all will be prepend with a delimiter char:
-				// - First parameter will be delimited from page part by a '?'
-				// - Rest of the parameters will be delimited by a '&'
-				miParamsAssembledLen++;
-			}
-			
-			// Then param name
+			// First param name
 			miParamsAssembledLen += rsName.length();
 			
 			// Then maybe param data
@@ -423,20 +549,16 @@ tbool CXloader::AssembleParams()
 				// An equation-sign and then data
 				miParamsAssembledLen += 1 + iLen;
 			}
-			
-			// Lastly a new-line sequence (always DOS style due to w3c spec)
-			if (meSpecificVerb == VERB_GET) {
-				// There's no new-line for verb GET, as the parameters are part of the URI
-				// Do nothing  here...
-			}
-			else {
-				// Using verb POST: Two new-line chars, CR + LF
-				miParamsAssembledLen += 2;
-			}
+
+			// Then a parameter delimiter
+			miParamsAssembledLen++;			
 		}
 	}
+
+	// Remove last parameter delimiter
+	if (miParamsAssembledLen > 0) miParamsAssembledLen--;
 	
-	// Attempt to allocate space for params + traling zero
+	// Attempt to allocate space for params + trailing zero
 	mpszParamsAssembled = new tchar[miParamsAssembledLen + 1];
 	if (mpszParamsAssembled == NULL) {
 		SetError("Out of memory");
@@ -446,7 +568,6 @@ tbool CXloader::AssembleParams()
 	// And action! Assemble the parameter string
 	{
 		tchar* pszDst = mpszParamsAssembled;
-		tchar cNameDelimiter = '?';
 		std::list<std::string>::iterator itName = mlist_sParamNames.begin();
 		std::list<tint32>::iterator itDataLen = mlist_iParamDataLen.begin();
 		std::list<tchar*>::iterator itParamData = mlist_pszParamDataUrlEncoded.begin();
@@ -456,11 +577,6 @@ tbool CXloader::AssembleParams()
 			tint32 iNameLen = rsName.length();
 			tchar* pcData = *itParamData;
 			tint32 iDataLen = *itDataLen;
-			
-			// For verb GET we must prepend parameter names with a delimiter
-			if (meSpecificVerb == VERB_GET) {
-				*pszDst++ = cNameDelimiter;
-			}
 			
 			// Copy param name
 			memcpy(pszDst, rsName.c_str(), iNameLen);
@@ -473,24 +589,137 @@ tbool CXloader::AssembleParams()
 				pszDst += iDataLen;
 			}
 			
-			// Newline sequence for verb POST only
-			if (meSpecificVerb != VERB_GET) {
-				memcpy(pszDst, "\r\n", 2);
-				pszDst += 2;
+			// We delimit parameters
+			*pszDst++ = "&";
+			
+			// Advance to next
+			itName++;
+			itDataLen++;
+			itParamData++;
+		}
+
+		// Remove last delimiter
+		if (miParamsAssembledLen > 0) {
+			pszDst--;
+		}
+
+		// Append zero-termination
+		*pszDst = '\0';
+	}
+
+	return true;
+} // AssembleParams_ForUrlEncoded
+
+
+tbool CXLoader::AssembleParams_ForMultiPartForm(EVerbType eVerb)
+{
+	// First add any non-file parameters
+	{
+		std::list<std::string>::iterator itName = mlist_sParamNames.begin();
+		std::list<tint32>::iterator itDataLen = mlist_iParamDataLen.begin();
+		std::list<tchar*>::iterator itParamData = mlist_pszParamDataUrlEncoded.begin();
+		while (itName != mlist_sParamNames.end()) {
+			// Get elements
+			std::string& rsName = *itName;
+			tint32 iNameLen = rsName.length();
+			tchar* pcData = *itParamData;
+			tint32 iDataLen = *itDataLen;
+
+			CURLFORMcode rc = 0;
+
+			// Add param name
+			rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
+				CURLFORM_PTRNAME, rsName.c_str());
+			if (rc != 0) {
+				tchar pszErr[128];
+				sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_PTRNAME", rc);
+				SetError(pszErr);
+				return false;
+			}
+
+			// Set param contents length
+			rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
+				CURLFORM_BUFFERLENGTH, iDataLen);
+			if (rc != 0) {
+				tchar pszErr[128];
+				sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_BUFFERLENGTH", rc);
+				SetError(pszErr);
+				return false;
+			}
+
+			// Add param contents
+			rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
+				CURLFORM_BUFFERPTR, pcData);
+			if (rc != 0) {
+				tchar pszErr[128];
+				sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_BUFFERPTR", rc);
+				SetError(pszErr);
+				return false;
+			}
+			
+			// Set contents type for param
+			rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
+				CURLFORM_CONTENTTYPE, "application/x-www-form-urlencoded");
+			if (rc != 0) {
+				tchar pszErr[128];
+				sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_CONTENTTYPE", rc);
+				SetError(pszErr);
+				return false;
 			}
 			
 			// Advance to next
 			itName++;
 			itDataLen++;
 			itParamData++;
-			//cNameDelimiter = '&';
 		}
-		// Append zero-termination
-		*pszDst = '\0';
 	}
-	
+
+	// Finally add file
+	{
+		CURLFORMcode rc = 0;
+
+		// Add upload file param name
+		rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
+			CURLFORM_PTRNAME, msUploadFileParamName.c_str());
+		if (rc != 0) {
+			tchar pszErr[128];
+			sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_PTRNAME := upload file param name", rc);
+			SetError(pszErr);
+			return false;
+		}
+
+		// Make file upload as stream (not all in memory at once)
+		rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last, CURLFORM_STREAM, this);
+		if (rc != 0) {
+			tchar pszErr[128];
+			sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_STREAM", rc);
+			SetError(pszErr);
+			return false;
+		}
+
+		// Inform of total size of file to upload
+		tint32 iTotalSize = (tint32)(mpfileToUpload->GetSizeWhenOpened());
+		rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last, CURLFORM_CONTENTSLENGTH, iTotalSize);
+		if (rc != 0) {
+			tchar pszErr[128];
+			sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_CONTENTSLENGTH", rc);
+			SetError(pszErr);
+			return false;
+		}
+
+		// Set file name for upload
+		rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
+			CURLFORM_FILENAME, msUploadFileNameAndExtOnly.c_str());
+		if (rc != 0) {
+			tchar pszErr[128];
+			sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_FILENAME", rc);
+			SetError(pszErr);
+			return false;
+		}
+	}
+
 	return true;
-} // AssembleParams
+} // AssembleParams_ForMultiPartForm
 
 
 void CXloader::WipeParams()
@@ -513,18 +742,330 @@ void CXloader::WipeParams()
 		delete[] mpszParamsAssembled;
 		mpszParamsAssembled = NULL;
 	}
+
+	if (mpFormPost_First) {
+		// Free entire chain of multi-part form params by freeing the first
+		curl_formfree(mpFormPost_First);
+		mpFormPost_First = mpFormPost_Last = NULL;
+	}
 } // WipeParams
+
+
+size_t Static_ReadFunction_ForUpload(void *ptr, size_t size, size_t nmemb, void *stream)
+{
+	CXloader* pUploader = (CXloader*)stream;
+	return pUploader->ReadFunction_ForUpload(ptr, size, nmemb);
+} // Static_ReadFunction_ForUpload
+
+
+size_t CXloader::ReadFunction_ForUpload(void *ptr, size_t size, size_t nmemb)
+{
+	if (mbIsFailed) {
+		// We can't continue
+		return CURL_READFUNC_ABORT;
+	}
+
+	tuint64 uiMaxNumberOfBytes = (tuint64)size * (tuint64)nmemb;
+
+	tuint64 uiFileIx = mpfileToUpload->GetCurrentFilePosition();
+	tuint64 uiFileSize  mpfileToUpload->GetSizeWhenOpened();
+	tuint64 uiBytesAvailable = uiFileSize - uiFileIx;
+
+	tuint64 uiBytesWanted = (uiBytesAvailable < uiMaxNumberOfBytes) ? uiBytesAvailable : uiMaxNumberOfBytes;
+	tuint64 uiActuallyRead = mpfileToUpload->Read((tchar*)ptr, uiBytesWanted);
+	if (uiActuallyRead != uiBytesWanted) {
+		SetError("Unable to read file for upload");
+		return CURL_READFUNC_ABORT;
+	}
+
+	return uiActuallyRead;
+} // ReadFunction_ForUpload
+
+
+int Static_SeekFunction_ForUpload(void *instream, curl_off_t offset, int origin)
+{
+	CXloader* pUploader = (CXloader*)instream;
+	return pUploader->SeekFunction_ForUpload(offset, origin);
+} // Static_SeekFunction_ForUpload
+
+
+int CXloader::SeekFunction_ForUpload(curl_off_t offset, int origin)
+{
+	if (mbIsFailed) {
+		// We can't continue
+		return CURL_READFUNC_ABORT;
+	}
+	tuint64 uiWantedPos = origin;
+	uiWantedPos += offset;
+	tuint uiActualPos = mpfileToUpload->Seek(uiWantedPos);
+	if (uiActualPos != uiWantedPos) {
+		SetError("SeekFunction_ForUpload failed");
+		// We can't continue
+		return CURL_READFUNC_ABORT;
+	}
+	// Success
+	return 0;
+} // SeekFunction_ForUpload
+
+
+size_t Static_WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb, void *stream)
+{
+	CXloader* pUploader = (CXloader*)stream;
+	return pUploader->WriteFunction_ForReply(ptr, size, nmemb);
+} // Static_WriteFunction_ForReply
+
+
+size_t CXloader::WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb, void *stream)
+{
+	if (mbIsFailed) {
+		// We can't continue
+		// Signal that by returning a value that differs from write request
+		return 0;
+		// Special case: If file is empty we'll get called once with a size of 0
+		// and so returning 0 won't signal error - but since we'll never get
+		// called again after that anyway it won't matter.
+	}
+
+	tuint64 uiBytesToWrite = (tuint64)size * (tuint64)nmemb;
+	muiUploadProgress += uiBytesToWrite;
+
+	if (mpfileForReply) {
+		// Write directly into file buffer
+		return mpfileForReply->Write(ptr, uiBytesToWrite);
+	}
+	else {
+	}
+	hsgdasjhdvsav;
+
+	tuint64 uiFileIx = mpfileToUpload->GetCurrentFilePosition();
+	tuint64 uiFileSize  mpfileToUpload->GetSizeWhenOpened();
+	tuint64 uiBytesAvailable = uiFileSize - uiFileIx;
+
+	tuint64 uiBytesWanted = (uiBytesAvailable < uiMaxNumberOfBytes) ? uiBytesAvailable : uiMaxNumberOfBytes;
+	tuint64 uiActuallyRead = mpfileToUpload->Read((tchar*)ptr, uiBytesWanted);
+	if (uiActuallyRead != uiBytesWanted) {
+		SetError("Unable to read file for upload");
+		return CURL_READFUNC_ABORT;
+	}
+
+	return uiActuallyRead;
+} // WriteFunction_ForReply
+
+
+tbool CXloader::SetOpt(CURLoption iOption, const tchar* pszOption, const void* pData, const tchar* pszExtraInfo /*= ""*/)
+{
+	CURLcode rc = curl_easy_setopt(mpCURLEasyHandle, iOption, pData);
+	if (rc != 0) {
+		tchar pszErr[512];
+		sprintf(pszErr, "curl_easy_setopt(..) returned error %d for %s%s", rc);
+		SetError(pszErr);
+		return false;
+	}
+	return true;
+} // SetOpt(void*)
+
+
+tbool CXloader::SetOpt(CURLoption iOption, const tchar* pszOption, tint32 iData, const tchar* pszExtraInfo /*= ""*/)
+{
+	return SetOpt(iOption, pszOption, (const void*)iData, pszExtraInfo);
+} // SetOpt(tint64)
+
+
+tbool CXloader::SetOpt(CURLoption iOption, const tchar* pszOption, tuint32 uiData, const tchar* pszExtraInfo /*= ""*/)
+{
+	return SetOpt(iOption, pszOption, (const void*)uiData, pszExtraInfo);
+} // SetOpt(tuint64)
+
+
+tbool CXloader::SetOpt(CURLoption iOption, const tchar* pszOption, tchar* pszData, const tchar* pszExtraInfo /*= ""*/)
+{
+	return SetOpt(iOption, pszOption, (const void*)pszData, pszExtraInfo);
+} // SetOpt(const tchar*)
+
+
+tbool CXloader::SetOpt(CURLoption iOption, const tchar* pszOption, const std::string& rsData, const tchar* pszExtraInfo /*= ""*/)
+{
+	return SetOpt(iOption, pszOption, (const void*)(rsData.c_str()), pszExtraInfo);
+} // SetOpt(const std::string&)
+
+
+tbool CXloader::SetOpt(CURLoption iOption, const tchar* pszOption, tbool bData, const tchar* pszExtraInfo /*= ""*/)
+{
+	tint64 iData = bData ? 1 : 0;
+	return SetOpt(iOption, pszOption, (const void*)iData, pszExtraInfo); 
+} // SetOpt(tbool)
 
 
 tbool CXloader::OpenConnection()
 {
-	return OpenConnection_OSSpecific();
+	// No longer - will use libCURL instead
+	//return OpenConnection_OSSpecific();
+
+	EVerbType eVerb = GetActuallyUsedVerb();
+
+	tint64 iFalse = 0;
+	tint64 iTrue = 1;
+
+	// Assemble URL string
+	std::string sURL = std::string("http://") + msHost;
+	if (miPort != 80) {
+		// Custom port
+		tchar pszPort[16];
+		sprintf(pszPort, miPort);
+		sRUL += pszPort;
+	}
+	sURL += msPage;
+	if ((eVerb == VERB_GET) && (miParamsAssembledLen > 0)) {
+		// Add URL-encoded params as part of the URL
+		sURL += "?";
+		sURL += std::string(mpszParamsAssembled, miParamsAssembledLen);
+	}
+
+	// Set URL
+	if (!SetOpt(CURLOPT_URL, "CURLOPT_URL", sURL))
+		return false;
+
+	// Set VERB for x-Loader
+	if (mbIsUploader) {
+		// This is an IUploader
+
+		// Signal to use a POST verb + use multi-part form message body + append message body
+		if (!SetOpt(CURLOPT_HTTPPOST, "CURLOPT_HTTPPOST", mpFormPost_First))
+			return false;
+		
+		// Set callbacks for upload
+		{
+			// Set callback function for streaming upload file
+			if (!SetOpt(CURLOPT_READFUNCTION, "CURLOPT_READFUNCTION", &Static_ReadFunction_ForUpload))
+				return false;
+			// Set pointer so callback function for streaming upload file can find correct contents
+			if (!SetOpt(CURLOPT_READDATA, "CURLOPT_READDATA", this))
+				return false;
+
+			// Set callback function for seeking upload file
+			if (!SetOpt(CURLOPT_SEEKFUNCTION, "CURLOPT_SEEKFUNCTION", &Static_SeekFunction_ForUpload))
+				return false;
+			// Set pointer so callback function for seeking upload file can find correct contents
+			if (!SetOpt(CURLOPT_SEEKDATA, "CURLOPT_SEEKDATA", this))
+				return false;
+		}
+
+		// To use the PUT verb we must set it explicitly
+		if (eVerb == VERB_PUT) {
+			if (!SetOpt(CURLOPT_CUSTOMREQUEST, "CURLOPT_CUSTOMREQUEST", "PUT", " := \"PUT\""))
+				return false;
+		}
+	}
+	else {
+		// This is an IDownloader
+
+		// Set URL-encoded message body (only for verb POST style IDownloader)
+		if (eVerb == VERB_GET) {
+			// Signal to use GET verb
+			if (!SetOpt(CURLOPT_GET, "CURLOPT_GET", true))
+				return false;
+		}
+		else { //if (eVerb == VERB_POST) {
+			// Signal to use POST verb with a URL-encoded message body
+			if (!SetOpt(CURLOPT_POST, "CURLOPT_POST", true))
+				return false;
+
+			// Prepare size of URL-encoded message body
+			if (!SetOpt(CURLOPT_POSTFIELDSIZE, "CURLOPT_POSTFIELDSIZE", miParamsAssembledLen))
+				return false;
+
+			// Add URL-encoded message body
+			if (!SetOpt(CURLOPT_POSTFIELDS, "CURLOPT_POSTFIELDS", mpszParamsAssembled))
+				return false;
+		}
+	}
+
+	// Setup receiver for reply / download
+	{
+		// Set callback function for saving download file / reply data
+		if (!SetOpt(CURLOPT_WRITEFUNCTION, "CURLOPT_WRITEFUNCTION", &Static_WriteFunction_ForReply))
+			return false;
+		// Set pointer so callback function for receiving download / reply can find correct contents
+		if (!SetOpt(CURLOPT_WRITEDATA, "CURLOPT_WRITEDATA", this))
+			return false;
+	}
+
+	// Set user for authentication
+	if (msUser.length() > 0) {
+		if (!SetOpt(CURLOPT_USERNAME, "CURLOPT_USERNAME", msUser))
+			return false;
+	}
+
+	// Set password for authentication
+	if (msUser.length() > 0) {
+		if (!SetOpt(CURLOPT_PASSWORD, "CURLOPT_PASSWORD", msPassword))
+			return false;
+	}
+
+	// Set time-out - but not the usual brain-dead way
+	{
+		// Set "nothing happening" time-out period
+		tchar pszInfo[32];
+		sprintf(pszInfo, " := %u seconds", muiTimeOutSecs);
+		if (!SetOpt(CURLOPT_LOW_SPEED_TIME, "CURLOPT_LOW_SPEED_TIME", muiTimeOutSecs, pszInfo))
+			return false;
+
+		// Set "nothing happening" time-out trigger level: < 1 byte per second
+		if (!SetOpt(CURLOPT_LOW_SPEED_LIMIT, "CURLOPT_LOW_SPEED_LIMIT", 1))
+			return false;
+	}
+
+	// Set "get connected" time-out at 3 seconds (that's quite enough even for slow analogue modems)
+	if (!SetOpt(CURLOPT_CONNECTTIMEOUT, "CURLOPT_CONNECTTIMEOUT", 3))
+		return false;
+
+	// Maybe set auto-redirect
+	{
+		// Allow/prohibit redirects
+		if (!SetOpt(CURLOPT_FOLLOWLOCATION, "CURLOPT_FOLLOWLOCATION", mbAllowRedirects))
+			return false;
+
+		// Set referrer document when redirecting
+		if (!SetOpt(CURLOPT_AUTOREFERER, "CURLOPT_AUTOREFERER", mbAllowRedirects))
+			return false;
+
+		// Allow/prohibit forward of username and password on redirect
+		if (!SetOpt(CURLOPT_UNRESTRICTED_AUTH, "CURLOPT_UNRESTRICTED_AUTH", mbAllowRedirects))
+			return false;
+	}
+
+	// Set MIME for reply (additional header)
+	if (meMIMEType != MIME_TYPE_NONE) {
+		std::string sAccept = "Accept: ";
+		sAccept += GetMIMEString();
+		mpSList_ExtraHeaders = curl_slist_append(mpSList_ExtraHeaders, sAccept.c_str());
+		if (!SetOpt(CURLOPT_HTTPHEADER, "CURLOPT_HTTPHEADER", mpSList_ExtraHeaders))
+			return false;
+	}
+
+	// Make sure we fail on status codes indicating error
+	if (!SetOpt(CURLOPT_FAILONERROR, "CURLOPT_FAILONERROR", true))
+		return false;
 } // OpenConnection
 
 
 void CXloader::CloseConnection()
 {
-	CloseConnection_OSSpecific();
+	// No longer - will use libCURL instead
+	//CloseConnection_OSSpecific();
+	
+	// Close handle, effectively kills any transfers
+	if (mpCURLEasyHandle) {
+		curl_easy_cleanup(mpCURLEasyHandle);
+		mpCURLEasyHandle = NULL;
+	}
+
+	// Release extra headers chain
+	if (mpSList_ExtraHeaders) {
+		curl_slist_free_all(mpSList_ExtraHeaders);
+		mpSList_ExtraHeaders = NULL;
+	}
+
 	CloseFile_IgnoreError();
 } // CloseConnection
 
