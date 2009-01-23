@@ -150,10 +150,10 @@ tbool CKSFile_Controller::Copy_KSProject_Waves()
 	
 	// Old project folder
 	std::string sCopy_From_Folder = gpApplication->GetProjDir();
-	sCopy_From_Folder += "Contents:Audio:Clips:";
+	sCopy_From_Folder += "Contents:Audio:Clips:Decompressed:";
 	
 	
-	std::string sCopy_To_Folder = gpApplication->Get_Project_Folder() + ":Wave Files";
+	std::string sCopy_To_Folder = gpApplication->Get_Project_Folder() + ":Wave Files:*.wav";
 	pSearch->Init2(sCopy_From_Folder.c_str());
 	
 	
