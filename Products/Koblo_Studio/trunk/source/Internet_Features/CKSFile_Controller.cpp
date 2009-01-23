@@ -125,32 +125,7 @@ tbool CKSFile_Controller::Save_As()
 }
 
 
-tbool CKSFile_Controller::Copy_KSProject_Waves()
-{
-	CAutoDelete<IFileSearch> pSearch(IFileSearch::Create());
-	//	std::string sSearchPathName(msCopy_From_Project_Folder);
-	
-	
-	std::string sFolder = gpApplication->Get_Project_Folder() + ": Wave Files";
-	
-	pSearch->Init2(sFolder.c_str());
-	
-	
-	tchar pszName[1024];
-	tbool bDir;
-	
-	while (pSearch->GetNext(pszName, bDir)) {
-		
-		std::string sSource = pszName;
-		
-		//CopyFile(const tchar* pszPathNameDest, const tchar* pszPathNameSrc, const tchar* pszName);
-		
-	}
-	
-	return true;
-	
-	
-}
+
 
 tbool CKSFile_Controller::Copy_Project()
 {
@@ -165,6 +140,36 @@ tbool CKSFile_Controller::Copy_Project()
 		
 	}
 		
+	return true;
+	
+}
+tbool CKSFile_Controller::Copy_KSProject_Waves()
+{
+	CAutoDelete<IFileSearch> pSearch(IFileSearch::Create());
+	
+	
+	// Old project folder
+	std::string sCopy_From_Folder = gpApplication->GetProjDir();
+	sCopy_From_Folder += "Contents:Audio:Clips:";
+	
+	
+	std::string sCopy_To_Folder = gpApplication->Get_Project_Folder() + ":Wave Files";
+	pSearch->Init2(sCopy_From_Folder.c_str());
+	
+	
+	tchar pszFile_Name[1024];
+	tbool bDir;
+	
+	
+	while (pSearch->GetNext(pszFile_Name, bDir)) {
+		
+		std::string sFile_Name = pszFile_Name;
+		std::string sFile_Path = sCopy_From_Folder;
+	
+		IFile::CopyFile(sCopy_To_Folder.c_str(), sCopy_From_Folder.c_str(), sFile_Name.c_str());
+		
+	}
+	
 	return true;
 	
 }
@@ -201,6 +206,7 @@ tbool CKSFile_Controller::Copy_Waves()
 	
 */
 	
+	CAutoDelete<IFileSearch> pSearch(IFileSearch::Create());
 	
 	std::string sFolder = gpApplication->Get_Project_Folder() + ": Wave Files";
 	

@@ -1372,15 +1372,18 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	else if (s.compare("File@Save Project As") == 0) {
 		// Save
 		try {
+			
 			if (!Save_As()) {
 				LoadSaveErrDlg("Error saving project");
 			}
-			
+			 
 			/*
+			
 			if (!MenuFileSaveProjectAs()) {
 				LoadSaveErrDlg("Error saving project");
 			}
 			 */
+			 
 		}
 		catch (IException* pEx) {
 			// Display reason
