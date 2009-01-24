@@ -16,6 +16,8 @@
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
 
+//! tasks shown in the progress bar at the top o the endit window
+
 enum EAudioImportOrder {
 	geAudioImport_Start,
 
@@ -41,6 +43,10 @@ enum EAudioImportOrder {
 
 class CImportAudioTask : public CProgressTask {
 public:
+	
+	CImportAudioTask();
+	
+	virtual ~CImportAudioTask();
 
 
 	enum EStereoBehavior { geStereoDoAsk, geStereoDoSplit, geStereoDoKeep };
@@ -78,24 +84,7 @@ public:
 
 	tint32 miAudioImportOrder;
 
-	CImportAudioTask() {
 	
-
-		meCodec = ac::geAudioCodecUndefined;
-
-		mpfSrc = mpfDstL = mpfDstR = NULL;
-		mpDecoder = NULL;
-		miAudioImportOrder = geAudioImport_Start;
-
-		mbDstIsAlreadyThere = false;
-		mbCopyLossyOriginal = false;
-
-		miRegion_TrackID = -1;
-		miRegion_TrackPos = -1;
-		mbDeleteNonLossyOriginal = false;
-	};
-
-	virtual ~CImportAudioTask();
 
 	virtual void Destroy();
 

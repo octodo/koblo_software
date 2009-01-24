@@ -53,22 +53,32 @@ public:
 
 	void ClearFiles();
 
-	tint32 GetAddedFiles() { return mItems.size(); };
+	tint32 GetAddedFiles() { return mFile_Items.size(); };
 
 protected:
+	
 	CKSImportGUIPane* mpImportGUI;
-
-//	ge::ILine*		mpLine;
 	ge::IScrollPane* mpScrollPane;
 
 	ge::IListBox* mpListBox;
-
+	
+	
+	
+	
+	
+	
+/*
 	struct SItemInfo {
 		std::string sPathName;
 		std::string sName;
 	};
+*/	
+	
+	
+	
+	
 
-	std::list<SItemInfo> mItems;
+	std::list<CKSFile_Item> mFile_Items;
 
 	void UpdateListBox();
 };

@@ -23,6 +23,7 @@
 // XML File parser
 #include "tinyxml.h"
 #include "CKSFile_Controller.h"
+#include "CKSFile_Item.h"
 #include "CKSXML_Read_Project.h"
 #include "CKSXML_Write_Project.h"
 #include "CKSXML_Create_Project.h"
@@ -124,6 +125,7 @@ class CApplication;
 #include "CSample_DSP.h"
 #include "CSample_Controller.h"
 #include "CRegion_Controller.h"
+#include "CImport_Auido_Controller.h"
 #include "CRegion_DSP.h"
 
 

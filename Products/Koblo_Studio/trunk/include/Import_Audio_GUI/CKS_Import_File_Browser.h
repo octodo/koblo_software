@@ -60,10 +60,7 @@ protected:
 	tint32 miLatestGenuineIndex;
 	tint32 miLatestSelectedFile;
 
-	struct SItemInfo {
-		std::string sName;
-		tbool bDir;
-	};
 
-	std::list<SItemInfo> mItems;
+	std::list<CKSFile_Item> mFile_Items;
+	
 };

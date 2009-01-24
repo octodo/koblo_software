@@ -43,7 +43,8 @@ void CKS_Import_File_Browser::SetPath(const std::string& sPath)
 	CAutoDelete<ge::IWaitCursor> pWaitCursor(ge::IWaitCursor::Create());
 
 	std::string sEnum;
-	mItems.clear();
+	// clear list of file items
+	mFile_Items.clear();
 
 	tbool bWasOldMyComputer = (strcmp(msPath.c_str(), ":") == 0);
 	tbool bIsNewMyComputer = (strcmp(sPath.c_str(), ":") == 0);
@@ -58,10 +59,11 @@ void CKS_Import_File_Browser::SetPath(const std::string& sPath)
 			PszEnumString2List(pszEnumVolumes, '@', listVolumes);
 			std::list<std::string>::iterator itVolumes = listVolumes.begin();
 			for ( ; itVolumes != listVolumes.end(); itVolumes++) {
-				SItemInfo Info;
-				Info.sName = *itVolumes;
-				Info.bDir = true;
-				mItems.push_back(Info);
+				CKSFile_Item File_Item;
+				File_Item.Name(*itVolumes);
+				File_Item.Is_A_Dir(true);
+				
+				mFile_Items.push_back(File_Item);
 			}
 			sEnum = pszEnumVolumes;
 		}
@@ -115,10 +117,10 @@ void CKS_Import_File_Browser::SetPath(const std::string& sPath)
 		if (bOK) {
 			sEnum += sName;
 
-			SItemInfo Info;
-			Info.sName = std::string(pszName);
-			Info.bDir = bDir;
-			mItems.push_back(Info);
+			CKSFile_Item File_Item;
+			File_Item.Name(std::string(pszName));
+			File_Item.Is_A_Dir(bDir);
+			mFile_Items.push_back(File_Item);
 		}
 		else {
 			bFirst = bFirstOld;
@@ -127,7 +129,7 @@ void CKS_Import_File_Browser::SetPath(const std::string& sPath)
 
 	mpListBox->SetText(sEnum.c_str(), '@');
 
-	tint32 iTextHeight = mItems.size() * 14;
+	tint32 iTextHeight = mFile_Items.size() * 14;
 
 	ge::SSize SizeScroll(200 - giScrollBarSize, iTextHeight);
 	ge::SScrollPos ScrollPos;
@@ -153,28 +155,34 @@ void CKS_Import_File_Browser::EventValueChange(ge::IControl* pControl, tint32 iV
 	GetParmMan()->ControlUpdate(miPaneID, pControl->GetID(), iValueNew);
 
 	switch(pControl->GetID()) {
+			
+		// Click in filebrowswe
 		case giCtrl_File_List:
-			{
-				tbool bIsDoubleClick = (iValueNew == -2);
+			{	
+				tbool bDoubleClick = (iValueNew == -2);
 				if (iValueNew >= -1) {
-					miLatestGenuineIndex = iValueNew;
+					// selection to be highlighted 
+					miLatestGenuineIndex = iValueNew; 
 				}
-
+				
 				tint32 iIndex = miLatestGenuineIndex; //pControl->GetValue();
-				std::list<SItemInfo>::const_iterator it = mItems.begin();
+				
+				std::list<CKSFile_Item>::const_iterator it = mFile_Items.begin();
+				
+				// move list iterator back 
 				while (iIndex > 0) {
 					iIndex--;
 					it++;
 				}
-				SItemInfo Info = *it;
-				if (Info.bDir == true) {
+				CKSFile_Item Info = *it;
+				if (Info.Is_A_Dir()) {
 					mpImportGUI->PreviewStop();
 					miLatestSelectedFile = -1;
 
 					std::string sPath(msPath);
-					sPath += Info.sName;
+					sPath += Info.Name();
 					sPath += ":";
-					if (bIsDoubleClick) {
+					if (bDoubleClick) {
 						mpImportGUI->BrowseToDir(sPath);
 					}
 				}
@@ -183,10 +191,10 @@ void CKS_Import_File_Browser::EventValueChange(ge::IControl* pControl, tint32 iV
 
 					if (bSameFile) {
 						// Same file
-						if (bIsDoubleClick) {
+						if (bDoubleClick) {
 							// Add file to import list
 							std::string sPathName(msPath);
-							sPathName += Info.sName;
+							sPathName += Info.Name();
 							mpImportGUI->AddFile(sPathName);
 						}
 					}
@@ -199,7 +207,7 @@ void CKS_Import_File_Browser::EventValueChange(ge::IControl* pControl, tint32 iV
 						// Get info
 						miLatestSelectedFile = miLatestGenuineIndex;
 						std::string sPathName(msPath);
-						sPathName += Info.sName;
+						sPathName += Info.Name();
 						CAutoDelete<IFile> pFile(IFile::Create());
 						if (pFile->Open(sPathName.c_str(), IFile::FileRead)) {
 							ac::IDecoder* pdec = ac::IDecoder::Create(pFile);
@@ -250,18 +258,18 @@ std::string CKS_Import_File_Browser::GetSelectedFile()
 		return "";
 	}
 
-	std::list<SItemInfo>::const_iterator it = mItems.begin();
+	std::list<CKSFile_Item>::const_iterator it = mFile_Items.begin();
 	while (iIndex) {
 		iIndex--;
 		it++;
 	}
-	SItemInfo Info = *it;
-	if (Info.bDir == true) {
+	CKSFile_Item Info = *it;
+	if (Info.Is_A_Dir()) {
 		return "";
 	}
 	else {
 		std::string sPathName(msPath);
-		sPathName += Info.sName;
+		sPathName += Info.Name();
 		return sPathName;
 	}
 }

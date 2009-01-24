@@ -7,6 +7,22 @@ const tint32 kiPortionSize = 128 * 1024;
 const tint32 kiPortionSize = 1024 * 1024;
 #endif // _DEBUG
 
+CImportAudioTask::CImportAudioTask() {
+	
+	
+	meCodec = ac::geAudioCodecUndefined;
+	
+	mpfSrc = mpfDstL = mpfDstR = NULL;
+	mpDecoder = NULL;
+	miAudioImportOrder = geAudioImport_Start;
+	
+	mbDstIsAlreadyThere = false;
+	mbCopyLossyOriginal = false;
+	
+	miRegion_TrackID = -1;
+	miRegion_TrackPos = -1;
+	mbDeleteNonLossyOriginal = false;
+}
 
 CImportAudioTask::~CImportAudioTask() {
 	tbool bWasAborted = false;

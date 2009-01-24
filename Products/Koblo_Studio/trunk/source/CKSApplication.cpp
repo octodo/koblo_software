@@ -5757,6 +5757,13 @@ void CKSApplication::SetChannelName(tint32 iChannel, const std::string& sName)
 }
 
 
+
+
+
+
+
+
+
 std::string CKSApplication::GetProjDir_Audio() const
 {
 	return GetProjDir_Contents() + "Audio:";
@@ -5791,6 +5798,15 @@ std::string CKSApplication::GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveN
 {
 	return GetProjDir_ClipsDecomp() + std::string(pszWaveName) + ".wav";
 }
+
+
+
+
+
+
+
+
+
 
 std::string CKSApplication::GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName)
 {

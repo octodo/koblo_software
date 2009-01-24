@@ -69,7 +69,8 @@ public virtual ITimerCallback_CanStop,
 public virtual CKSInternet_Features,
 public virtual CKSXML_Create_Sample,
 public virtual CGUI_Controller,
-public virtual CKSFile_Controller
+public virtual CKSFile_Controller,
+public virtual CImport_Auido_Controller
 
 {
 
@@ -131,13 +132,11 @@ public:
 	void UpdateEngineData(tint32 iID, tint32 iValue);
 	void UpdateGUIData(tint32 iID, tint32 iValue);
 	void UpdateCommandData(tint32 iID, tint32 iValue);
-//	void UpdateTrackData(tint32 iID, tint32 iValue);
 	void UpdateTrackData(tint32 iID, tint32 iValue, tint32 iTrack = 0);
 	void UpdateBussData(tint32 iID, tint32 iValue, tint32 iBuss);
 	void UpdateMasterData(tint32 iID, tint32 iValue);
 	void UpdateAUX1Data(tint32 iID, tint32 iValue);
 	void UpdateAUX2Data(tint32 iID, tint32 iValue);
-//	void UpdateAuxMonitorData(tint32 iID, tint32 iValue);
 
 	void DoProcess(tfloat** ppfSamplesOut, const tfloat** ppfSamplesIn, tuint32 iNrOfSamples);
 
@@ -188,7 +187,7 @@ public:
 	virtual tbool MenuFileSaveProject(tbool bOverwriteIcons = false);
 	virtual void MenuFileDistributeMix(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize);
 	virtual void MenuSetupAudio();
-//	virtual void MenuFileImportAudio();
+
 	
 
 	virtual void VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar* pszWavePathR, tbool bForceRewrite);
@@ -299,12 +298,26 @@ public:
 	virtual void Set_Selected_Track(tint32 iID){ miSelected_Track = iID;};
 
 
+	std::list<CSample_Data*> Get_Sample_Data_List(){return mSample_Data_List;}
 	std::list<CSample_Data*>::const_iterator Get_Sample_Data_List() const {return mSample_Data_List.begin();}
 	std::list<CSample_Data*>::const_iterator Get_Sample_Data_List_End() const {return mSample_Data_List.end();}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//--------------------------------
+	// Obsolete stuff has to remain until old projects are converted
+	
 	tbool IsClipNameInUse(const tchar* pszClipName, const tchar* pszWaveNameL, const tchar* pszWaveNameR, std::string* psDescription);
 	void AddClipToList(CImportAudioTask* pImportInfo);
 	
-	std::list<CSample_Data*> Get_Sample_Data_List(){return mSample_Data_List;}
 
 	std::string GetProjDir() const {return msProjectFolder;}
 	std::string GetProjDir_Contents() const {return GetProjDir() + "Contents:";}
@@ -320,11 +333,13 @@ public:
 	std::string GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveName) const;
 	std::string GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName);
 	std::string GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName) const;
-//	CSample_Data* Get_Sample_Data_From_Name(const tchar* pszListName) const;
 	tint32 GetFromListName_ClipWavePathNames(const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed = NULL) const;
-//	void Set_Wave_Path( CSample_Data* pSample_Data, const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed = NULL) const;
 	
-//	tuint64 Get_Sample_Duration_From_Name( const tchar* pszListName);
+	
+	
+
+	
+
 	
 	virtual void Stack_Tracks();
 	virtual void Update_Zoom();
