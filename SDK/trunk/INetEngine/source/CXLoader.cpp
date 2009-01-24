@@ -127,14 +127,6 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToU
 	ZapReplyBuffer();
 	mbIsInitialized = false;
 	
-	// Get an "easy" handle
-	mpCURLEasyHandle = curl_easy_init();
-
-	// Set buffer for human readble error
-	*mpszErrorBuffer = '\0';
-	if (!SetOpt(CURLOPT_ERRORBUFFER, "CURLOPT_ERRORBUFFER", mpszErrorBuffer))
-		return false;
-
 	// Verify sanity of host
 	{
 		if ((pszHost == NULL) || (*pszHost == '\0')) {
@@ -913,6 +905,16 @@ tbool CXloader::OpenConnection()
 	// No longer - will use libCURL instead
 	//return OpenConnection_OSSpecific();
 
+	// Get an "easy" handle
+	if (mpCURLEasyHandle == NULL) {
+		mpCURLEasyHandle = curl_easy_init();
+	}
+
+	// Set buffer for human readble error
+	*mpszErrorBuffer = '\0';
+	if (!SetOpt(CURLOPT_ERRORBUFFER, "CURLOPT_ERRORBUFFER", mpszErrorBuffer))
+		return false;
+
 	EVerbType eVerb = GetActuallyUsedVerb();
 
 	tint64 iFalse = 0;
@@ -1009,7 +1011,7 @@ tbool CXloader::OpenConnection()
 	}
 
 	// Set password for authentication
-	if (msUser.length() > 0) {
+	if (msPassword.length() > 0) {
 		if (!SetOpt(CURLOPT_PASSWORD, "CURLOPT_PASSWORD", msPassword))
 			return false;
 	}
@@ -1071,6 +1073,7 @@ void CXloader::CloseConnection()
 	
 	// Close handle, effectively kills any transfers
 	if (mpCURLEasyHandle) {
+		curl_multi_remove_handle(gpCURLMulti, mpCURLEasyHandle);
 		curl_easy_cleanup(mpCURLEasyHandle);
 		mpCURLEasyHandle = NULL;
 	}
@@ -1133,7 +1136,9 @@ tbool CXloader::Start(IFile* pfileForDownload /*= NULL*/)
 
 		// Start all 
 		tint32 iRunningHandles_Dummy = 0;
-		rc = curl_multi_perform(gpCURLMulti, &iRunningHandles_Dummy);
+		do {
+			rc = curl_multi_perform(gpCURLMulti, &iRunningHandles_Dummy);
+		} while (rc == CURLM_CALL_MULTI_PERFORM);
 		if (rc != 0) {
 			tchar pszErr[128];
 			sprintf(pszErr, "curl_multi_perform(..) returned %d", rc);
