@@ -54,7 +54,7 @@ tbool CKSFile_Controller::New_Project()
 tbool CKSFile_Controller::Leave_Old_Project()
 {
 	
-	if (gpApplication->Get_Project_Folder().size()) {
+	if (gpApplication->Project_Folder().size()) {
 		
 		// Warning dialog
 		tchar pszMsg[1024];
@@ -90,7 +90,7 @@ tbool CKSFile_Controller::Save_Project()
 tbool CKSFile_Controller::Save_As()
 {
 	// store copy from locations
-	msCopy_From_Project_Folder	=	msProject_Folder;
+	msCopy_From_Project_Folder	=	gpApplication->Project_Folder();
 	msCopy_From_Project_Name	=	msProject_Name;
 	
 	// default folder
@@ -151,7 +151,7 @@ tbool CKSFile_Controller::Copy_KSProject_Waves()
 	sCopy_From_Folder += "Contents:Audio:Clips:Decompressed:";
 	
 	
-	std::string sCopy_To_Folder = gpApplication->Get_Project_Folder() + ":Wave Files:";
+	std::string sCopy_To_Folder = gpApplication->Project_Folder() + ":Wave Files:";
 	pSearch->Init2((sCopy_From_Folder + "*.wav").c_str());
 	
 	
@@ -172,7 +172,7 @@ tbool CKSFile_Controller::Copy_KSProject_Waves()
 
 tbool CKSFile_Controller::Create_Project_Folder()
 {
-	IFile::CreateDirectory(gpApplication->Get_Project_Folder().c_str());
+	IFile::CreateDirectory(gpApplication->Project_Folder().c_str());
 	// make check here
 	return true;
 }
@@ -180,7 +180,7 @@ tbool CKSFile_Controller::Create_Project_Folder()
 //! create a new sample folder inside the project folder
 tbool CKSFile_Controller::Create_Audio_Folder()
 {
-	std::string sFolder = gpApplication->Get_Project_Folder() + ": Wave Files";
+	std::string sFolder = gpApplication->Project_Folder() + ": Wave Files";
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -189,8 +189,8 @@ tbool CKSFile_Controller::Create_Audio_Folder()
 //! create a new midi folder inside the project folder
 tbool CKSFile_Controller::Create_Midi_Folder()
 {
-	std::string sFolder = gpApplication->Get_Project_Folder() + ": MIDI FIles";
-	IFile::CreateDirectory(gpApplication->Get_Project_Folder().c_str());
+	std::string sFolder = gpApplication->Project_Folder() + ": MIDI FIles";
+	IFile::CreateDirectory(gpApplication->Project_Folder().c_str());
 	// make check here
 	return true;
 }
@@ -198,7 +198,7 @@ tbool CKSFile_Controller::Create_Midi_Folder()
 //! create a new plug-in data folder inside the project folder
 tbool CKSFile_Controller::Create_Plugin_Data_Folder()
 {
-	std::string sFolder = gpApplication->Get_Project_Folder() + ": Plug-In's Settings";
+	std::string sFolder = gpApplication->Project_Folder() + ": Plug-In's Settings";
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -207,7 +207,7 @@ tbool CKSFile_Controller::Create_Plugin_Data_Folder()
 //! create a new download folder inside the project folder
 tbool CKSFile_Controller::Create_Download_Folder()
 {
-	std::string sFolder = gpApplication->Get_Project_Folder() + ": Download";
+	std::string sFolder = gpApplication->Project_Folder() + ": Download";
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -216,7 +216,7 @@ tbool CKSFile_Controller::Create_Download_Folder()
 //! create a new uplaod folder inside the project folder
 tbool CKSFile_Controller::Create_Upload_Folder()
 {
-	std::string sFolder = gpApplication->Get_Project_Folder() + ": Upload";
+	std::string sFolder = gpApplication->Project_Folder() + ": Upload";
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -225,7 +225,7 @@ tbool CKSFile_Controller::Create_Upload_Folder()
 //! create a new uplaod folder inside the project folder
 tbool CKSFile_Controller::Create_Wave_Picts_Folder()
 {
-	std::string sFolder = gpApplication->Get_Project_Folder() + ": Wave Picts";
+	std::string sFolder = gpApplication->Project_Folder() + ": Wave Picts";
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -237,7 +237,7 @@ tbool CKSFile_Controller::Create_Wave_Picts_Folder()
 tbool CKSFile_Controller::Create_Project_File()
 {
 	std::string sProject_Name	= gpApplication->Get_Project_Name();
-	std::string sProject_Folder = gpApplication->Get_Project_Folder();
+	std::string sProject_Folder = gpApplication->Project_Folder();
 	std::string sProject		=  sProject_Folder + ":" + sProject_Name + ".xml";
 	
 	
@@ -265,7 +265,7 @@ tbool CKSFile_Controller::Copy_Samples()
 	pSearch->Init2((sCopy_From_Folder + "*.wav").c_str());
 	
 	
-	std::string sCopy_To_Folder = gpApplication->Get_Project_Folder() + ":Wave Files:";
+	std::string sCopy_To_Folder = gpApplication->Project_Folder() + ":Wave Files:";
 	
 	
 	
@@ -316,13 +316,15 @@ tbool CKSFile_Controller::Create_Folders()
 void CKSFile_Controller::Update_Project_Name(std::string sNew_Name)
 {
 	// set project folder
-	gpApplication->Set_Project_Folder(sNew_Name);
+	gpApplication->Project_Folder(sNew_Name);
 	
 	// set project name
 	std::string sProject_Name = sNew_Name;
 	tint iPos = sProject_Name.find_last_of(':');
 	sProject_Name = sProject_Name.substr(iPos + 1, sProject_Name.size());
 	gpApplication->Set_Project_Name(sProject_Name);
+	
+
 	
 }
 

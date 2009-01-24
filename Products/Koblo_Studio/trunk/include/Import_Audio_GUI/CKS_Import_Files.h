@@ -49,11 +49,19 @@ public:
 
 	void RemoveFile();
 
+	//! obsolete version
 	void ImportFiles();
 
 	void ClearFiles();
 
 	tint32 GetAddedFiles() { return mFile_Items.size(); };
+	
+	
+	
+	//! new version
+	void Import_Audio_Files();
+	
+	virtual tbool Import_Audio_File(const tchar* pszPathName, tbool bAlwaysKeepStereo, tint32 iTrackID =-1, tint64 iTrackPos = -1);
 
 protected:
 	

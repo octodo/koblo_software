@@ -47,9 +47,9 @@ public:
 	
 	
 	// get project folder
-	std::string Get_Project_Folder(){ return msProject_Folder;};
+	std::string Project_Folder(){ return msProject_Folder;};
 	//! set project name
-	void Set_Project_Folder(std::string sFolder){  msProject_Folder = sFolder;};
+	void Project_Folder(std::string sFolder){  msProject_Folder = sFolder;};
 	
 	std::string Get_Project_Name(){ return msProject_Name;};
 	//! set project name

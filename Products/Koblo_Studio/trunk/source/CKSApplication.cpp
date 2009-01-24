@@ -1349,7 +1349,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 		}
 		else{
 		// Save
-			if (Get_Project_Folder().length() == 0) 
+			if (gpApplication->Project_Folder().length() == 0) 
 				ShowMessageBox("No Project to Save", "Sorry");
 		
 			else
@@ -3145,22 +3145,7 @@ tbool CKSApplication::Open_Project()
 	// Default Name
 	tchar pszDefaultFolder[1024];
 	std::string sDefaultName = "";
-	/*
-	if (msProjectFolder.length()) {
-		
-		std::string sPath = msProjectFolder;
-		sPath.erase(sPath.find_last_of(':'));
-		tint32 iPosColon = sPath.find_last_of(':');
-		strncpy(pszDefaultFolder, sPath.c_str(), iPosColon + 1);
-		pszDefaultFolder[iPosColon + 1] = '\0';
-		if (sDefaultName.length() == 0) {
-			// Use current project name as default
-			sDefaultName = sPath;
-			sDefaultName.erase(0, iPosColon + 1);
-		}
-	}
-	else
-	 */
+	
 	GetDefaultProjectFolder(pszDefaultFolder);
 	
 	if (sDefaultName.length() == 0)
@@ -3178,21 +3163,21 @@ tbool CKSApplication::Open_Project()
 
 	CAutoLock Lock(mMutex);
 
-	Set_Project_Folder(pszPathName);
+	Project_Folder(pszPathName);
 	
 	
 	
 	
-	if (Get_Project_Folder().length()) {
-		std::string sProject_Name = Get_Project_Folder();
+	if (Project_Folder().length()) {
+		std::string sProject_Name = Project_Folder();
 		tint32 iPosColon = sProject_Name.find_last_of(':');
 		sProject_Name.erase(0, iPosColon + 1);
 		Set_Project_Name(sProject_Name);
-		std::string sProjectFolder = Get_Project_Folder();
+		std::string sProjectFolder = Project_Folder();
 		tint32 iEndPos = sProjectFolder.find(Get_Project_Name());
 		tint32 iChars_To_Rempve = Get_Project_Name().size();
 		sProjectFolder.erase(iEndPos, iChars_To_Rempve+1 );
-		Set_Project_Folder(sProjectFolder);
+		Project_Folder(sProjectFolder);
 		
 		Read_Project_From_Disk();
 	}
@@ -4487,29 +4472,29 @@ tbool CKSApplication::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 	return true;
 } // MenuFileSaveProject
 
-//tbool CKSApplication::DoAudioFileImport(const std::string& sPathName, tbool bDoCopy, tbool bAlwaysStereo)
+
 tbool CKSApplication::QueueAudioFileImport(const tchar* pszPathName, tbool bAlwaysKeepStereo, tint32 iTrackID /*=-1*/, tint64 iTrackPos /*= -1*/)
 {
 	if (IsPlayingOrRecording()) {
 		PlaybackStop();
 	}
 
-	CImportAudioTask* pTask = new CImportAudioTask();
+	CImportAudioTask* pImportAudioTask = new CImportAudioTask();
 	tbool bDoesWaveAlreadyExist = false;
 	tbool bForceOriginalIsLossy = false;
 	CImportAudioTask::EStereoBehavior eBehave = (bAlwaysKeepStereo) ? CImportAudioTask::geStereoDoKeep : CImportAudioTask::geStereoDoAsk;
-	tbool bSuccess = pTask->Init( pszPathName, bDoesWaveAlreadyExist, eBehave, bForceOriginalIsLossy);
+	tbool bSuccess = pImportAudioTask->Init( pszPathName, bDoesWaveAlreadyExist, eBehave, bForceOriginalIsLossy);
 	if (iTrackID >= 0) {
-		pTask->Init_InsertAsRegionAfterImport(iTrackID, iTrackPos);
+		pImportAudioTask->Init_InsertAsRegionAfterImport(iTrackID, iTrackPos);
 	}
 	if (bSuccess) {
-		mpProgressTasks->Add(pTask);
+		mpProgressTasks->Add(pImportAudioTask);
 		Playback_InProgressTask();
 		//bSuccess = DoAudioFileImport(pInfo);
 	}
 	if (!bSuccess) {
-		msExtendedError = pTask->GetError();
-		pTask->Destroy();
+		msExtendedError = pImportAudioTask->GetError();
+		pImportAudioTask->Destroy();
 	}
 	//delete pTask;
 	return bSuccess;

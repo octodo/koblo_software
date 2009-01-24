@@ -201,7 +201,6 @@ public:
 
 	virtual tbool OnAudioFileImport();
 
-//	virtual tbool DoAudioFileImport(const std::string& sPathName, tbool bDoCopy = true, tbool bAlwaysStereo = false);
 	virtual tbool QueueAudioFileImport(const tchar* pszPathName, tbool bAlwaysKeepStereo, tint32 iTrackID =-1, tint64 iTrackPos = -1);
 
 	virtual tbool CanWaveFilePlay(const std::string& sWaveFilePath, tbool bAllowErrorDialog, tbool bIsMissingFileAnError);
@@ -414,6 +413,11 @@ public:
 	virtual void Zoom();
 	
 	tbool Project_Is_Imported(){return mbKSProject_Imported;};
+	
+	//! get extended error
+	std::string Extended_Error(){ return msExtendedError;};
+	//! set extended error
+	void Extended_Error(std::string sError){ msExtendedError = sError;};
 	
 	
 	

@@ -78,7 +78,7 @@ public:
 	//! upload compressed audio file and mp3 preview.
 	void Upload_OGG_And_MP3_File();
 	
-	
+	//***********************************************
 	/*! Obsolete
 	 \ keep for campability with old files
 	*/
@@ -153,7 +153,10 @@ public:
 	void Set_Branch_UUID();
 	// set a uuid from a string
 	void Set_Branch_UUID(std::string sUUID);
-	 
+	/*
+	std::string Project_Path(){return msProject_Path;};
+	void Project_Path(std::string sProject_Path){ msProject_Path = sProject_Path;};
+	*/ 
 	
 private:
 
@@ -169,8 +172,8 @@ private:
 //	std::string msProject_Name;
 	
 	
-	//! project name
-	std::string msProject_Path;
+	//! project path
+//	std::string msProject_Path;
 	
 	//! project description
 	std::string msProject_Description;

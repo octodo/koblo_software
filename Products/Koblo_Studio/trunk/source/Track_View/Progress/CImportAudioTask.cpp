@@ -59,8 +59,9 @@ void CImportAudioTask::Destroy()
 	delete dynamic_cast<CImportAudioTask*>(this);
 } // Destroy
 
-
-tbool CImportAudioTask::Init(const tchar* pszSrcPath, tbool bDoesWaveAlreadyExist /*= false*/, EStereoBehavior eStereoBehavior /*= geStereoDoAsk*/, tbool bForceOriginalIsLossy /*= false*/)
+/*
+ // old one
+tbool CImportAudioTask::Init(const tchar* pszSrcPath, tbool bDoesWaveAlreadyExist , EStereoBehavior eStereoBehavior , tbool bForceOriginalIsLossy )
 {
 //	mpPlugIn = pPlugIn;
 	msSrcPathName = pszSrcPath;
@@ -153,12 +154,154 @@ tbool CImportAudioTask::Init(const tchar* pszSrcPath, tbool bDoesWaveAlreadyExis
 				"\n"
 				"This is a stereo file. Do you want to use it like that?\n"
 				"\n"
-				" Yes:\tImport as a stereo stream\n"
-				" No:\tSplit file into two mono streams\n"
+				" Stereo:\tImport as a stereo stream\n"
+				" Split:\tSplit file into two mono streams\n"
 				" Cancel:\tDon't import file(s) anyway",
 				msClipName.c_str()
 				);
 
+			ge::IWindow::EMsgBoxReturn eRet;
+			eRet = ge::IWindow::ShowMessageBox(pszMsg, "Stereo file", ge::IWindow::MsgBoxSplitStereo);
+			switch (eRet) {
+				case ge::IWindow::MsgBoxRetYes:
+					mbSplit = false;
+					break;
+				case ge::IWindow::MsgBoxRetNo:
+					mbSplit = true;
+					break;
+				case ge::IWindow::MsgBoxRetCancel: 
+					// User aborted - not an error
+					return false; // true;
+			}
+		}
+	}
+	// This can take some time - so display hour-glass cursor
+	//CAutoDelete<ge::IWaitCursor> pWaitCursor(ge::IWaitCursor::Create());
+	
+
+	// Build target path name
+	if (bDoesWaveAlreadyExist) {
+		msDstPathNameL = gpApplication->GetFromWaveName_ClipWave_Safe(msDstNameL.c_str());
+		msDstPathNameR = gpApplication->GetFromWaveName_ClipWave_Safe(msDstNameR.c_str());
+	}
+	else {
+		if (mbSrcLossyCompressed) {
+			msDstPathNameL = gpApplication->GetFromWaveName_ClipWaveDecomp(msDstNameL.c_str());
+			msDstPathNameR = gpApplication->GetFromWaveName_ClipWaveDecomp(msDstNameR.c_str());
+		}
+		else {
+			msDstPathNameL = gpApplication->GetFromWaveName_ClipWave(msDstNameL.c_str());
+			msDstPathNameR = gpApplication->GetFromWaveName_ClipWave(msDstNameR.c_str());
+		}
+	}
+
+	return true;
+} // Init
+*/
+// new one
+tbool CImportAudioTask::Init(const tchar* pszSrcPath, tbool bDoesWaveAlreadyExist , EStereoBehavior eStereoBehavior , tbool bForceOriginalIsLossy )
+{
+	//	mpPlugIn = pPlugIn;
+	msSrcPathName = pszSrcPath;
+	
+	// Extract the file name from path
+	tint iPos = msSrcPathName.find_last_of(":");
+	msClipName = msSrcPathName.substr(iPos + 1);
+	msPathOnly = msSrcPathName.substr(0, iPos + 1);
+	tint iPosDot = msClipName.find_last_of(".");
+	
+	
+	msExt = "";
+	// Note: '>' is intented; not '>=' 
+	if (iPosDot > 0) {
+		msExt = msClipName.substr(iPosDot, msClipName.length() - iPosDot);
+		msClipName.erase(iPosDot, msExt.length());
+	}
+	
+	// Build target path
+	std::string sOldTargetPath = gpApplication->GetProjDir_Clips();
+	// Build target path
+	std::string sTargetPath = gpApplication->Project_Folder() + ":Wave Files:";
+	
+	// Determine file format and number of channels
+	if (bDoesWaveAlreadyExist) {
+		mbDstIsAlreadyThere = true;
+		
+		meCodec = ac::geAudioCodecWave;
+		meSrcQuality = ac::geQualityUnknown;
+		mbSrcLossyCompressed = bForceOriginalIsLossy;
+		msDstNameL = msClipName;
+		msDstNameR = msClipName;
+		mbStereo = (eStereoBehavior > geStereoDoAsk);
+		miBitWidth = 0;
+	}
+	else {
+		mpfSrc = IFile::Create();
+		if (mpfSrc == NULL) {
+			msExtendedError = std::string("IFile::Create() => NULL for '") + msClipName + "' (out of memory?).";
+			return false;
+		}
+		if (!mpfSrc->Open(pszSrcPath, IFile::FileRead)) {
+			msExtendedError = std::string("Can't open file '") + msClipName + "'.";
+			return false;
+		}
+		
+		tchar pszErrMsgBuff[1024];
+		*pszErrMsgBuff = '\0';
+		ac::IDecoder* pDecoder = ac::IDecoder::Create(mpfSrc, pszErrMsgBuff, 1024);
+		if (!pDecoder) {
+			if (*pszErrMsgBuff != '\0')
+				msExtendedError = pszErrMsgBuff;
+			else
+				msExtendedError = std::string("Unknown format file '") + msClipName + "'.";
+			return false;
+		}
+		// We have to do a TestFile here - even though it will fail if it causes mp3
+		// LAME engine to be invoked from two different threads
+		if (!pDecoder->TestFile(mpfSrc)) {
+			tchar pszErrMsg[1024];
+			pDecoder->GetErrMsg(pszErrMsg, 1024, true);
+			msExtendedError = std::string("Error testing file: ") + pszErrMsg;
+			return false;
+		}
+		meCodec = pDecoder->GetAudioCodec();
+		mbSrcLossyCompressed = pDecoder->mbIsLossyCompression;
+		meSrcQuality = pDecoder->meLowestInputQuality;
+		msDstNameL = msClipName;
+		msDstNameR = msClipName;
+		mbStereo = (pDecoder->miOutputChannels > 1);
+		if (mbSrcLossyCompressed)
+			miBitWidth = 24; //pDecoder->miOutputBitWidth;
+		else
+			miBitWidth = (meSrcQuality == ac::geQualityLossless16) ? 16 : 24;
+		// First close decoder, so it won't crash later
+		pDecoder->Destroy();
+		pDecoder = NULL;
+	}
+	
+	mbSplit = false;
+	if (mbStereo) {
+		msDstNameL += "-1";
+		msDstNameR += "-2";
+		
+		if (eStereoBehavior == geStereoDoSplit)
+			mbSplit = true;
+		else if (eStereoBehavior == geStereoDoKeep)
+			mbSplit = false;
+		else {
+			tchar pszMsg[1024];
+			sprintf(
+					pszMsg,
+					"Importing clip '%s'\n"
+					"\n"
+					"This is a stereo file. Do you want to use it like that?\n"
+					"\n"
+					" Stereo:\tImport as a stereo stream\n"
+					" Split:\tSplit file into two mono streams\n"
+					" Cancel:\tDon't import file(s) anyway",
+					msClipName.c_str()
+					);
+			
 			ge::IWindow::EMsgBoxReturn eRet;
 			eRet = ge::IWindow::ShowMessageBox(pszMsg, "Stereo file", ge::IWindow::MsgBoxYesNoCancel);
 			switch (eRet) {
@@ -177,13 +320,10 @@ tbool CImportAudioTask::Init(const tchar* pszSrcPath, tbool bDoesWaveAlreadyExis
 	// This can take some time - so display hour-glass cursor
 	//CAutoDelete<ge::IWaitCursor> pWaitCursor(ge::IWaitCursor::Create());
 	
-	/* Don't do that here - could result in both false errors and false positives
-	// Verify that file hasn't already been imported
-	if (mpPlugIn->IsClipNameInUse(msClipName.c_str(), msDstNameL.c_str(), msDstNameR.c_str(), &msExtendedError)) {
-		return false;
-	}
-	*/
-
+	msDstPathNameL = sTargetPath;
+	msDstPathNameR = sTargetPath;
+	
+	/*
 	// Build target path name
 	if (bDoesWaveAlreadyExist) {
 		msDstPathNameL = gpApplication->GetFromWaveName_ClipWave_Safe(msDstNameL.c_str());
@@ -198,8 +338,8 @@ tbool CImportAudioTask::Init(const tchar* pszSrcPath, tbool bDoesWaveAlreadyExis
 			msDstPathNameL = gpApplication->GetFromWaveName_ClipWave(msDstNameL.c_str());
 			msDstPathNameR = gpApplication->GetFromWaveName_ClipWave(msDstNameR.c_str());
 		}
-	}
-
+	}*/
+	
 	return true;
 } // Init
 

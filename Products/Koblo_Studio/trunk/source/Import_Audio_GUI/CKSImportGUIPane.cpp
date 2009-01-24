@@ -131,7 +131,10 @@ void CKSImportGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew
 				mpGUI->GetWindow()->ShowMessageBox("You must add some files\nbefore clicking import", "Sorry");
 			}
 			else {
-				mpImport_Files->ImportFiles();
+				// old version
+				//mpImport_Files->ImportFiles();
+				// new version
+				mpImport_Files->Import_Audio_Files();
 				gpApplication->SetGlobalParm(giParamID_Show_Import_Window, 0, giSectionGUI);
 				PreviewStop();
 			}

@@ -18,7 +18,7 @@ void CKSXML_Read_Project::Read_Project_From_Disk()
 {
 	
 	
-	std::string sProject_Folder = gpApplication->Get_Project_Folder();
+	std::string sProject_Folder = gpApplication->Project_Folder();
 	std::string sProject_Name	= gpApplication->Get_Project_Name();
 	
 	/*

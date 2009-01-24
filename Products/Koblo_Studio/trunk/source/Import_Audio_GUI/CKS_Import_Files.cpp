@@ -117,14 +117,15 @@ void CKS_Import_Files::RemoveFile()
 	UpdateListBox();
 }
 
+// old version
 void CKS_Import_Files::ImportFiles()
 {
 	/*
-	if (gpApplication->GetProjDir().length() == 0) {
-		gpApplication->ShowMessageBox("You must create or load a project before importing audio", "Sorry");
-		return;
-	}
-*/
+	 if (gpApplication->GetProjDir().length() == 0) {
+	 gpApplication->ShowMessageBox("You must create or load a project before importing audio", "Sorry");
+	 return;
+	 }
+	 */
 	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
 	for (; it != mFile_Items.end(); it++) {
 		CKSFile_Item Info = *it;
@@ -132,6 +133,56 @@ void CKS_Import_Files::ImportFiles()
 	}
 	ClearFiles();
 }
+
+
+// new version
+void CKS_Import_Files::Import_Audio_Files()
+{
+	
+	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
+	for (; it != mFile_Items.end(); it++) {
+		
+		CKSFile_Item Audio_File = *it;
+		
+		Import_Audio_File(Audio_File.Path().c_str(), false);
+	}
+	ClearFiles();
+}
+
+tbool CKS_Import_Files::Import_Audio_File(const tchar* pszPathName, tbool bAlwaysKeepStereo, tint32 iTrackID , tint64 iTrackPos)
+{
+	if (gpApplication->IsPlayingOrRecording()) {
+		gpApplication->PlaybackStop();
+	}
+	
+	CImportAudioTask* pImportAudioTask = new CImportAudioTask();
+	
+	tbool bDoesWaveAlreadyExist = false;
+	tbool bForceOriginalIsLossy = false;
+	
+	CImportAudioTask::EStereoBehavior eBehave = (bAlwaysKeepStereo) ? CImportAudioTask::geStereoDoKeep : CImportAudioTask::geStereoDoAsk;
+	
+	tbool bSuccess = pImportAudioTask->Init( pszPathName, bDoesWaveAlreadyExist, eBehave, bForceOriginalIsLossy);
+	
+	
+	if (iTrackID >= 0) {
+		pImportAudioTask->Init_InsertAsRegionAfterImport(iTrackID, iTrackPos);
+	}
+	
+	if (bSuccess) {
+		gpApplication->mpProgressTasks->Add(pImportAudioTask);
+		gpApplication->Playback_InProgressTask();
+		//bSuccess = DoAudioFileImport(pInfo);
+	}
+	
+	if (!bSuccess) {
+		gpApplication->Extended_Error(pImportAudioTask->GetError());
+		pImportAudioTask->Destroy();
+	}
+	//delete pTask;
+	return bSuccess;
+} // QueueAudioFileImport
+
 
 void CKS_Import_Files::ClearFiles()
 {
