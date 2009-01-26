@@ -618,6 +618,43 @@ namespace k2s {
 
 #ifdef _WIN32
 		//! TODO: Insert UUID code for windows here
+		UUID Uuid;
+		//RPC_STATUS rc = UuidCreate(pUuid);
+		HRESULT rc = CoCreateGuid(&Uuid);
+		if (rc == 0) {
+			tchar* psz = pszUUID;
+			// First 8 hex
+			psz += sprintf(psz, "%08x-", Uuid.Data1);
+			// Then 4 hex
+			psz += sprintf(psz, "%04x-", Uuid.Data2);
+			// Then 4 hex
+			psz += sprintf(psz, "%04x-", Uuid.Data3);
+			// Split data 4 into smaller portions
+			tuchar* pucData4 = (tuchar*)&Uuid.Data4;
+			// Then 4 hex
+			{
+				tint32 c0 = *pucData4++;
+				tint32 c1 = *pucData4++;
+				psz += sprintf(psz, "%02x%02x-", c0, c1);
+			}
+			// Then 10 hex
+			{
+				tint32 c2 = *pucData4++;
+				tint32 c3 = *pucData4++;
+				tint32 c4 = *pucData4++;
+				tint32 c5 = *pucData4++;
+				tint32 c6 = *pucData4++;
+				tint32 c7 = *pucData4++;
+				psz += sprintf(
+					psz,
+					"%02x%02x%02x%02x%02x%02x",
+					c2, c3, c4, c5, c6, c7
+					);
+				tint32 iDebug = 0;
+			}
+
+			return;
+		}
 #endif // _WIN32
 
 
