@@ -272,7 +272,7 @@ const tchar* CXloader::GetMIMEString()
 		case MIME_TYPE_OGG:		return "audio/ogg";
 		case MIME_TYPE_MP3:		return "audio/mpeg";
 	}
-	return NULL;
+	return "*/*";
 } // GetMIMEString
 
 
@@ -1042,7 +1042,7 @@ tbool CXloader::OpenConnection()
 	}
 
 	// Set MIME for reply (additional header)
-	if (meMIMEType != MIME_TYPE_NONE) {
+	{ //if (meMIMEType != MIME_TYPE_NONE) {
 		std::string sAccept = "Accept: ";
 		sAccept += GetMIMEString();
 		mpSList_ExtraHeaders = curl_slist_append(mpSList_ExtraHeaders, sAccept.c_str());
@@ -1341,7 +1341,23 @@ void CXloader::SetMultiSaysDone(CURLcode status)
 		if (status != 0) {
 			// There's an error
 			tchar pszErr[512];
-			sprintf(pszErr, "curl_multi_info_read(..) gave status DONE but code %d", status);
+			*pszErr = '\0';
+			if (status == CURLE_HTTP_RETURNED_ERROR) {
+				// An error was reported by web server
+				tint32 iResponse = 0;
+				CURLcode rc = curl_easy_getinfo(
+					mpCURLEasyHandle,
+					CURLINFO_RESPONSE_CODE,
+					&iResponse
+					);
+				if ((rc == 0) && (iResponse != 0)) {
+					sprintf(pszErr, "%s responded with error %d", msHost.c_str(), iResponse);
+				}
+			}
+			if (*pszErr == '\0') {
+				// Some other error
+				sprintf(pszErr, "curl_multi_info_read(..) gave status DONE but code %d", status);
+			}
 			SetError(pszErr);
 		}
 		else {

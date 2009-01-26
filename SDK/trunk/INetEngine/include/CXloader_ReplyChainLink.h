@@ -27,6 +27,7 @@ public:
 		if (uiBytesReturned > 0) {
 			tchar* pcIndex = mpcBytes + muiIndex;
 			memcpy(pcBuff, pcIndex, uiBytesReturned);
+			muiIndex += uiBytesReturned;
 		}
 		return uiBytesReturned;
 	}

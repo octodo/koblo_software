@@ -51,6 +51,43 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 	// parse values from project tree in to KS data system
 	Parse_Project( mpDoc );
 
+	CAutoDelete<ine::IDownloader> pDownloader(ine::IDownloader::Create());
+	if (pDownloader->Init("koblo.com", "/projects/13/branches/1")) {
+		pDownloader->SetReplyMIMEType(ine::MIME_TYPE_XML);
+		//pDownloader->AddParam("hl", "da", -1);
+		//pDownloader->AddParam("q", "hest", -1);
+		//pDownloader->AddParam("btnG", NULL, 0);
+		CAutoDelete<IFile> pfTest(IFile::Create());
+#ifdef _WIN32
+		tchar* pszTestFile = "C:\\_testhest.html";
+#endif // _WIN32
+#ifdef _Mac
+		tchar* pszTestFile = "/_testhest.html";
+#endif // _Mac
+		if (pfTest->Open(pszTestFile, IFile::FileCreate)) {
+			if (pDownloader->Start()) {
+				tchar pszBuffer[1024];
+				tint32 iPortionSize = 0;
+				tbool bSuccess, bError;
+				do {
+					pDownloader->GetReplyPortion(pszBuffer, 1024, &iPortionSize);
+					if (iPortionSize > 0) {
+						pfTest->Write(pszBuffer, iPortionSize);
+					}
+					bSuccess = pDownloader->IsDone();
+					bError = pDownloader->IsFailed();
+				} while ((!bSuccess) && (!bError));
+			}
+			if (pDownloader->IsFailed()) {
+				tchar pszErr[1024];
+				pDownloader->GetError(pszErr, 1024);
+				ge::IWindow::ShowMessageBox(pszErr, "Downloader Error");
+			}
+		}
+	}
+
+
+#if (0)
 	// (lasse) very very temporary code: download directly from koblo.com
 	CAutoDelete<ine::IDownloader> pDownloader(ine::IDownloader::Create());
 	if (pDownloader->Init("assets.koblo.com", "/mp3s/7/short2.mp3")) {
@@ -91,6 +128,7 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 			}
 		}
 	}
+#endif
 }
 
 void CKSXML_Read_Project::Parse_Project( TiXmlNode* pParent )
