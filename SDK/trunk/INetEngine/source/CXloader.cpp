@@ -55,6 +55,12 @@ CXloader::~CXloader()
 	Abort();
 	WipeParams();
 	CloseConnection();
+
+	// Now it's OK to delete handle (could be kept around for speed optimization)
+	if (mpCURLEasyHandle) {
+		curl_easy_cleanup(mpCURLEasyHandle);
+		mpCURLEasyHandle = NULL;
+	}
 	
 	/*
 	// Unhook and maybe release CURL multi instance
@@ -1058,14 +1064,12 @@ void CXloader::CloseConnection()
 	// No longer - will use libCURL instead
 	//CloseConnection_OSSpecific();
 	
-	// Close handle, effectively kills any transfers
+	// Remove handle from "multi" handler, effectively kills any transfers
 	if (mpCURLEasyHandle) {
 		std::string sErr;
-		if (!CURLMulti_Wrapper::Remove(this, &sErr)) {
+		if (!CXloader_MultiWrapper::Remove(this, &sErr)) {
 			SetError(sErr.c_str());
 		}
-		curl_easy_cleanup(mpCURLEasyHandle);
-		mpCURLEasyHandle = NULL;
 	}
 
 	// Release extra headers chain
@@ -1145,7 +1149,7 @@ tbool CXloader::Start(IFile* pfileForDownload /*= NULL*/)
 	*/
 
 	std::string sErr;
-	if (!CURLMulti_Wrapper::Add(this, &sErr)) {
+	if (!CXloader_MultiWrapper::Add(this, &sErr)) {
 		SetError(sErr.c_str());
 		return false;
 	}

@@ -4,10 +4,10 @@
 //! Lock for modifying pointer to CURL multi instance
 static volatile tint32 giCURLMulti_LockLevel = 0;
 //! Static pointer to the one and only CURL multi instance wrapper. The instance holds a number of active download/upload threads (every IUploader and IDownloader has 0 or 1 active thread)
-static CURLMulti_Wrapper* gpCURLMulti_Wrapper = NULL;
+static CXloader_MultiWrapper* gpCXloader_MultiWrapper = NULL;
 
 
-CURLMulti_Wrapper::CURLMulti_Wrapper()
+CXloader_MultiWrapper::CXloader_MultiWrapper()
 {
 	mpCURLMulti = curl_multi_init();
 
@@ -17,7 +17,7 @@ CURLMulti_Wrapper::CURLMulti_Wrapper()
 } // constructor
 
 
-CURLMulti_Wrapper::~CURLMulti_Wrapper()
+CXloader_MultiWrapper::~CXloader_MultiWrapper()
 {
 	if (mpTimer) {
 		mpTimer->Destroy();
@@ -30,7 +30,7 @@ CURLMulti_Wrapper::~CURLMulti_Wrapper()
 } // destructor
 
 
-void CURLMulti_Wrapper::GetLockForMultiInstance()
+void CXloader_MultiWrapper::GetLockForMultiInstance()
 {
 	// Attempt lock
 	while (++giCURLMulti_LockLevel != 1) {
@@ -44,29 +44,29 @@ void CURLMulti_Wrapper::GetLockForMultiInstance()
 } // GetLockForMultiInstance
 
 
-void CURLMulti_Wrapper::ReleaseLockForMultiInstance()
+void CXloader_MultiWrapper::ReleaseLockForMultiInstance()
 {
 	giCURLMulti_LockLevel--;
 } // ReleaseLockForMultiInstance
 
 
-tbool CURLMulti_Wrapper::Add(CXloader* pXloader, std::string* psError)
+tbool CXloader_MultiWrapper::Add(CXloader* pXloader, std::string* psError)
 {
 	GetLockForMultiInstance();
 
 	*psError = "";
 
 	// Maybe create global instance
-	if (gpCURLMulti_Wrapper == NULL) {
-		gpCURLMulti_Wrapper = new CURLMulti_Wrapper();
+	if (gpCXloader_MultiWrapper == NULL) {
+		gpCXloader_MultiWrapper = new CXloader_MultiWrapper();
 	}
 
 	if (!Find(pXloader)) {
 		// Not previously added - add now
-		gpCURLMulti_Wrapper->mlistXloaders.push_back(pXloader);
+		gpCXloader_MultiWrapper->mlistXloaders.push_back(pXloader);
 		// Start transaction
 		CURLMcode rc = curl_multi_add_handle(
-			gpCURLMulti_Wrapper->mpCURLMulti,
+			gpCXloader_MultiWrapper->mpCURLMulti,
 			pXloader->mpCURLEasyHandle
 			);
 		if (rc != 0) {
@@ -82,14 +82,14 @@ tbool CURLMulti_Wrapper::Add(CXloader* pXloader, std::string* psError)
 } // Add
 
 
-tbool CURLMulti_Wrapper::Remove(CXloader* pXloader, std::string* psError)
+tbool CXloader_MultiWrapper::Remove(CXloader* pXloader, std::string* psError)
 {
 	GetLockForMultiInstance();
 
 	*psError = "";
 
-	if (gpCURLMulti_Wrapper) {
-		std::list<CXloader*>& rlist = gpCURLMulti_Wrapper->mlistXloaders;
+	if (gpCXloader_MultiWrapper) {
+		std::list<CXloader*>& rlist = gpCXloader_MultiWrapper->mlistXloaders;
 
 		std::list<CXloader*>::iterator it;
 		if (Find(pXloader, &it)) {
@@ -97,7 +97,7 @@ tbool CURLMulti_Wrapper::Remove(CXloader* pXloader, std::string* psError)
 			rlist.erase(it);
 			// Stop any ongoing transactions
 			CURLMcode rc = curl_multi_remove_handle(
-				gpCURLMulti_Wrapper->mpCURLMulti,
+				gpCXloader_MultiWrapper->mpCURLMulti,
 				pXloader->mpCURLEasyHandle
 				);
 			if (rc != 0) {
@@ -109,8 +109,8 @@ tbool CURLMulti_Wrapper::Remove(CXloader* pXloader, std::string* psError)
 
 		if (rlist.size() == 0) {
 			// All IUploader and IDownloader instances were removed - kill multi handler
-			delete gpCURLMulti_Wrapper;
-			gpCURLMulti_Wrapper = NULL;
+			delete gpCXloader_MultiWrapper;
+			gpCXloader_MultiWrapper = NULL;
 		}
 	}
 
@@ -120,9 +120,9 @@ tbool CURLMulti_Wrapper::Remove(CXloader* pXloader, std::string* psError)
 } // Remove
 
 
-tbool CURLMulti_Wrapper::Find(CXloader* pXloader, std::list<CXloader*>::iterator* pit)
+tbool CXloader_MultiWrapper::Find(CXloader* pXloader, std::list<CXloader*>::iterator* pit)
 {
-	std::list<CXloader*>& rlist = gpCURLMulti_Wrapper->mlistXloaders;
+	std::list<CXloader*>& rlist = gpCXloader_MultiWrapper->mlistXloaders;
 	*pit = rlist.begin();
 	tbool bFound = false;
 	for ( ; *pit != rlist.end(); (*pit)++) {
@@ -136,14 +136,14 @@ tbool CURLMulti_Wrapper::Find(CXloader* pXloader, std::list<CXloader*>::iterator
 } // Find
 
 
-tbool CURLMulti_Wrapper::Find(CXloader* pXloader)
+tbool CXloader_MultiWrapper::Find(CXloader* pXloader)
 {
 	std::list<CXloader*>::iterator it_Ignored;
 	return Find(pXloader, &it_Ignored);
 } // Find
 
 
-void CURLMulti_Wrapper::OnTimer(tint32 iID)
+void CXloader_MultiWrapper::OnTimer(tint32 iID)
 {
 	if (iID == miTimerID) {
 		GetLockForMultiInstance();
@@ -196,7 +196,7 @@ void CURLMulti_Wrapper::OnTimer(tint32 iID)
 } // OnTimer
 
 
-void CURLMulti_Wrapper::SetAllError(const tchar* pszErr)
+void CXloader_MultiWrapper::SetAllError(const tchar* pszErr)
 {
 	std::list<CXloader*>::iterator it = mlistXloaders.begin();
 	for ( ; it != mlistXloaders.end(); it++) {

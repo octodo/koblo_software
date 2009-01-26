@@ -205,56 +205,16 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\CURLMulti_Wrapper.h"
+				RelativePath="..\..\include\CXloader.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\CXloader.h"
+				RelativePath="..\..\include\CXloader_MultiWrapper.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\include\CXloader_ReplyChainLink.h"
 				>
-			</File>
-			<File
-				RelativePath="..\..\include\CXloaderOSX.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\include\CXloaderWin.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\include\ineInternal.h"
@@ -333,52 +293,12 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\CURLMulti_Wrapper.cpp"
+				RelativePath="..\..\source\CXloader.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\CXLoader.cpp"
+				RelativePath="..\..\source\CXloader_MultiWrapper.cpp"
 				>
-			</File>
-			<File
-				RelativePath="..\..\source\CXLoaderOSX.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\source\CXLoaderWin.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\source\ineInternal.cpp"
