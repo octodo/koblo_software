@@ -7,7 +7,7 @@
 */
 class CXloader : public virtual IDownloader, public virtual IUploader
 {
-	friend class CURLMulti_Wrapper;
+	friend class CXloader_MultiWrapper;
 public:
 	CXloader(tbool bIsUploader);
 	virtual ~CXloader();

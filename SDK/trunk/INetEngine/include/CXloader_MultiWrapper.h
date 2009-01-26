@@ -1,25 +1,25 @@
 
-#ifndef _curl_multi_wrapper_h
-#define _curl_multi_wrapper_h
+#ifndef _c_xloader_multi_wrapper_h
+#define _c_xloader_multi_wrapper_h
 
 // Forward definition
 class CXloader;
 
 	
-/*! \class CURLMulti_Wrapper
+/*! \class CXloader_MultiWrapper
  * \brief Handles timed events for all allocated IUploader and IDownloader instances
  *
  * Wraps CURLMulti (a.k.a. "multi" handle), which holds several CURL class instances (a.k.a. "easy" handles).
  * This is done so we can run web-access in the background and don't need to wait for every "easy" handle to complete its entire upload or download operation before returning control to application.
  * (lasse)
 */
-class CURLMulti_Wrapper : public virtual ITimerCallback
+class CXloader_MultiWrapper : public virtual ITimerCallback
 {
 protected:
 	//! Constructor
-	CURLMulti_Wrapper();
+	CXloader_MultiWrapper();
 	//! Destructor
-	virtual ~CURLMulti_Wrapper();
+	virtual ~CXloader_MultiWrapper();
 public:
 	//! Add a new IUploader or IDownloader to handler. If a handler doesn't exist it will be created
 	static tbool Add(CXloader* pXloader, std::string* psError);
@@ -48,4 +48,4 @@ protected:
 };
 
 
-#endif // _curl_multi_wrapper_h
+#endif // _c_xloader_multi_wrapper_h
