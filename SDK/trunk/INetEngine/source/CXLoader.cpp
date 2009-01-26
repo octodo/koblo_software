@@ -7,11 +7,12 @@ CXloader::CXloader(tbool bIsUploader)
 	mpfileToUpload = mpfileForReply = NULL;
 	mpszParamsAssembled = NULL;
 	miParamsAssembledLen = 0;
-	mbIsInitialized = mbIsTransfering = mbIsFailed = mbIsDone = false;
+	mbIsInitialized = mbIsTransfering = mbIsFailed = mbIsMultiDone = mbIsDone = false;
 	meMIMEType = MIME_TYPE_NONE;
 	meSpecificVerb = VERB_DEFAULT;
 	mbAllowRedirects = true;
 
+	/*
 	// Prepare CURL multi instance
 	{
 		GetLockForMultiInstance();
@@ -37,6 +38,7 @@ CXloader::CXloader(tbool bIsUploader)
 		//
 		ReleaseLockForMultiInstance();
 	}
+	*/
 
 	// Make sure we only close what's been opened
 	mpCURLEasyHandle = NULL;
@@ -54,6 +56,7 @@ CXloader::~CXloader()
 	WipeParams();
 	CloseConnection();
 	
+	/*
 	// Unhook and maybe release CURL multi instance
 	{
 		GetLockForMultiInstance();
@@ -69,32 +72,13 @@ CXloader::~CXloader()
 		//
 		ReleaseLockForMultiInstance();
 	}
+	*/
 
 	// No longer - will use libCURL instead
 	//Destructor_OSSpecific();
 } // destructor
 
 
-void CXloader::GetLockForMultiInstance()
-{
-	// Attempt lock
-	while (++giCURLMulti_Level != 1) {
-		// We're not alone - release again
-		giCURLMulti_Level--;
-		// Sleep 1 - 3 ms (random)
-		tint32 iSleepMS = (tint32)(rand() * (3.0f / RAND_MAX));
-		iSleepMS++;
-		ITime::SleepMS(iSleepMS);
-	}
-} // GetLockForMultiInstance
-
-
-void CXloader::ReleaseLockForMultiInstance()
-{
-	giCURLMulti_Level--;
-} // ReleaseLockForMultiInstance
-
-	
 IDownloader* IDownloader::Create()
 {
 	return dynamic_cast<IDownloader*>(new CXloader(false));
@@ -836,7 +820,7 @@ size_t CXloader::WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb)
 	else {
 		CAutoLock Lock(mMutex_ForReplyBuffer);
 
-		CReplyChainLink* pLink = new CReplyChainLink(ptr, (tuint32)uiBytesToWrite);
+		CXloader_ReplyChainLink* pLink = new CXloader_ReplyChainLink(ptr, (tuint32)uiBytesToWrite);
 		mlist_pReplyChain.push_back(pLink);
 		return (size_t)uiBytesToWrite;
 	}
@@ -847,9 +831,9 @@ void CXloader::ZapReplyBuffer()
 {
 	CAutoLock Lock(mMutex_ForReplyBuffer);
 
-	std::list<CReplyChainLink*>::iterator it = mlist_pReplyChain.begin();
+	std::list<CXloader_ReplyChainLink*>::iterator it = mlist_pReplyChain.begin();
 	for ( ; it != mlist_pReplyChain.end(); it++) {
-		CReplyChainLink* pLink = *it;
+		CXloader_ReplyChainLink* pLink = *it;
 		delete pLink;
 	}
 	mlist_pReplyChain.clear();
@@ -908,6 +892,9 @@ tbool CXloader::OpenConnection()
 	// Get an "easy" handle
 	if (mpCURLEasyHandle == NULL) {
 		mpCURLEasyHandle = curl_easy_init();
+		if (!SetOpt(CURLOPT_PRIVATE, "CURLOPT_PRIVATE", this, " => this"))
+			return false;
+
 	}
 
 	// Set buffer for human readble error
@@ -1073,7 +1060,10 @@ void CXloader::CloseConnection()
 	
 	// Close handle, effectively kills any transfers
 	if (mpCURLEasyHandle) {
-		curl_multi_remove_handle(gpCURLMulti, mpCURLEasyHandle);
+		std::string sErr;
+		if (!CURLMulti_Wrapper::Remove(this, &sErr)) {
+			SetError(sErr.c_str());
+		}
 		curl_easy_cleanup(mpCURLEasyHandle);
 		mpCURLEasyHandle = NULL;
 	}
@@ -1118,6 +1108,7 @@ tbool CXloader::Start(IFile* pfileForDownload /*= NULL*/)
 	mpfileForReply = pfileForDownload;
 	SetIsTransfering();
 
+	/*
 	// Start transfer
 	{
 		// Get lock
@@ -1151,6 +1142,13 @@ tbool CXloader::Start(IFile* pfileForDownload /*= NULL*/)
 		// Release lock
 		ReleaseLockForMultiInstance();
 	}
+	*/
+
+	std::string sErr;
+	if (!CURLMulti_Wrapper::Add(this, &sErr)) {
+		SetError(sErr.c_str());
+		return false;
+	}
 
 	// Success
 	return true;
@@ -1181,27 +1179,43 @@ tbool CXloader::GetReplyPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* pi
 		return false;
 	}
 
-	tchar* pszDst = pszBuffer;
-	tuint32 uiBytes = iBufferSize;
-	while (uiBytes > 0) {
-		if (mlist_pReplyChain.size() > 0) {
-			CReplyChainLink* pLink = *(mlist_pReplyChain.begin());
-			tuint32 uiGot = pLink->GetBytes(pszDst, uiBytes);
-			if (uiGot == 0) {
-				// That one's empty
-				delete pLink;
-				mlist_pReplyChain.erase(mlist_pReplyChain.begin());
+	// Get data
+	{
+		// Make sure we're the only thread working on data
+		CAutoLock Lock(mMutex_ForReplyBuffer);
+
+		tchar* pszDst = pszBuffer;
+		tuint32 uiBytesToGet = iBufferSize;
+		while (uiBytesToGet > 0) {
+			if (mlist_pReplyChain.size() > 0) {
+				CXloader_ReplyChainLink* pLink = *(mlist_pReplyChain.begin());
+				tuint32 uiGot = pLink->GetBytes(pszDst, uiBytesToGet);
+				if (uiGot == 0) {
+					// That one's empty
+					delete pLink;
+					mlist_pReplyChain.erase(mlist_pReplyChain.begin());
+				}
+				else {
+					// Remember how much we got
+					uiBytesToGet -= uiGot;
+					pszDst += uiGot;
+					*piPortionSize += uiGot;
+				}
 			}
 			else {
-				// Remember how much we got
-				uiBytes -= uiGot;
-				pszDst += uiGot;
-				*piPortionSize += uiGot;
+				// Not enough buffered data to fill receiver - but it's still a success
+				uiBytesToGet = 0;
 			}
 		}
-		else {
-			// Not enough buffered data - but it's still success
-			return true;
+
+		if (mlist_pReplyChain.size() == 0) {
+			// No more data in buffer
+			// Are we done?
+			if (mbIsMultiDone) {
+				// Yes, multi handler already told us before that we're done,
+				// and now all data has been delivered too, so:
+				SetIsDone();
+			}
 		}
 	}
 
@@ -1300,7 +1314,7 @@ void CXloader::CloseFile_IgnoreError()
 
 void CXloader::SetIsUninitialized()
 {
-	mbIsInitialized = mbIsTransfering = mbIsDone = mbIsFailed = false;
+	mbIsInitialized = mbIsTransfering = mbIsMultiDone = mbIsDone = mbIsFailed = false;
 } // SetIsUninitialized
 
 
@@ -1317,10 +1331,33 @@ void CXloader::SetIsTransfering()
 } // SetIsTransfering
 
 
+void CXloader::SetMultiSaysDone(CURLcode status)
+{
+	if (!IsFailed()) {
+		if (status != 0) {
+			// There's an error
+			tchar pszErr[512];
+			sprintf(pszErr, "curl_multi_info_read(..) gave status DONE but code %d", status);
+			SetError(pszErr);
+		}
+		else {
+			// External transfer is done
+			mbIsMultiDone = true;
+			if (mpfileForReply != NULL) {
+				// No internal buffer - set all transfer done
+				SetIsDone();
+			}
+		}
+	}
+} // SetMultiSaysDone
+
+
 void CXloader::SetIsDone()
 {
-	mbIsDone = true;
-	mbIsTransfering = false;
+	if (!IsFailed()) {
+		mbIsDone = true;
+		mbIsTransfering = false;
+	}
 } // SetIsDone
 
 
@@ -1393,16 +1430,26 @@ void CXloader::SetError(const tchar* pszError)
 {
 	CAutoLock Lock(mMutex_ForErrors);
 	
-	msLastError = pszError;
-	mbIsFailed = true;
+	if (IsFailed()) {
+		// Append error
+		msLastError += std::string("\n") + pszError;
+	}
+	else {
+		// New error
+		msLastError = pszError;
+	}
+	SetIsFailed();
 } // SetError
 
 
-tbool CXloader::GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize)
+tbool CXloader::GetError(tchar* pszErrBuff, tint32 iErrBuffSize)
 {
 	CAutoLock Lock(mMutex_ForErrors);
 	
-	if ((pszErrBuff == NULL) || (iErrBuffSize <= 0)) return false;
+	if ((pszErrBuff == NULL) || (iErrBuffSize <= 1)) {
+		// Invalid input - can't do anything!
+		return false;
+	}
 	
 	if (!mbIsFailed) {
 		// No error
@@ -1426,4 +1473,4 @@ tbool CXloader::GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize)
 	pszErrBuff[iLenMsg] = '\0';
 	
 	return bRoomEnough;
-} // GetLatestError
+} // GetError

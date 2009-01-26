@@ -1,15 +1,13 @@
-//! Keeps track of whether CURL library has been initialized (must only happen once)
-static volatile tbool gbCURLInitialized = false;
-//! Static pointer to CURL multi instance. The instance holds a number of active download/upload threads (every IUploader and IDownloader has 0 or 1 active thread)
-static CURLM* gpCURLMulti = NULL; //curl_multi_init( );
-//! Keeps track of how many IUploader and IDownloader objects are using this CURL multi instance
-static volatile tint32 giCURLMultiHooks = 0;
-//! Lock for modifying pointer to CURL multi instance
-static volatile tint32 giCURLMulti_Level = 0;
 
-//! Implement of IUploader and IDownloader
+/*! \class CXloader
+ * \brief Implements IUploader and IDownloader
+ *
+ * Supplies more complex and buffered method for posting/putting web-data
+ * (lasse)
+*/
 class CXloader : public virtual IDownloader, public virtual IUploader
 {
+	friend class CURLMulti_Wrapper;
 public:
 	CXloader(tbool bIsUploader);
 	virtual ~CXloader();
@@ -50,7 +48,7 @@ public:
 	virtual tbool IsFailed();
 
 	//! IDownloader implementation
-	virtual tbool GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize);
+	virtual tbool GetError(tchar* pszErrBuff, tint32 iErrBuffSize);
 
 	// Callbacks
 	size_t ReadFunction_ForUpload(void *ptr, size_t size, size_t nmemb);
@@ -93,44 +91,7 @@ protected:
 	// File for writing reply directly into
 	IFile* mpfileForReply;
 
-	// Buffer for holding reply (when no file)
-	class CReplyChainLink {
-	public:
-		CReplyChainLink(void* p, tuint32 uiBytes)
-		{
-			if (uiBytes == 0) {
-				mpcBytes = 0;
-			}
-			else {
-				mpcBytes = new tchar[uiBytes];
-				memcpy(mpcBytes, p, uiBytes);
-			}
-			muiBytes = uiBytes;
-			muiIndex = 0;
-		}
-		virtual ~CReplyChainLink()
-		{
-			if (mpcBytes) {
-				delete[] mpcBytes;
-				mpcBytes = NULL;
-			}
-		}
-		tuint32 GetBytes(tchar* pcBuff, tuint32 uiBytesWanted)
-		{
-			tuint32 uiBytesReturned = muiBytes - muiIndex;
-			if (uiBytesReturned > uiBytesWanted) uiBytesReturned = uiBytesWanted;
-			if (uiBytesReturned > 0) {
-				tchar* pcIndex = mpcBytes + muiIndex;
-				memcpy(pcBuff, pcIndex, uiBytesReturned);
-			}
-			return uiBytesReturned;
-		}
-	protected:
-		tchar* mpcBytes;
-		tuint32 muiBytes;
-		tuint32 muiIndex;
-	}; // CReplyChainLink
-	std::list<CReplyChainLink*> mlist_pReplyChain;
+	std::list<CXloader_ReplyChainLink*> mlist_pReplyChain;
 	CMutex mMutex_ForReplyBuffer;
 	void ZapReplyBuffer();
 
@@ -161,9 +122,10 @@ protected:
 	void SetIsUninitialized();
 	void SetIsInitialized();
 	void SetIsTransfering();
+	void SetMultiSaysDone(CURLcode status);
 	void SetIsDone();
 	void SetIsFailed();
-	
+
 	tbool IsInitialized();
 	tbool IsTransfering();
 	
@@ -172,10 +134,8 @@ private:
 	volatile tbool mbIsInitialized;
 	volatile tbool mbIsTransfering;
 	volatile tbool mbIsFailed;
+	volatile tbool mbIsMultiDone;
 	volatile tbool mbIsDone;
-
-	void GetLockForMultiInstance();
-	void ReleaseLockForMultiInstance();
 
 	tchar mpszErrorBuffer[CURL_ERROR_SIZE];
 

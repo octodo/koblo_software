@@ -31,6 +31,8 @@ namespace ine {
 
 #include "CINetUtil.h"
 
+#include "CURLMulti_Wrapper.h"
+#include "CXloader_ReplyChainLink.h"
 #include "CXloader.h"
 
 

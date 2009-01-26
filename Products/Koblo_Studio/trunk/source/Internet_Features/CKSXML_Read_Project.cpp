@@ -86,7 +86,7 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 			}
 			if (pDownloader->IsFailed()) {
 				tchar pszErr[1024];
-				pDownloader->GetLatestError(pszErr, 1024);
+				pDownloader->GetError(pszErr, 1024);
 				ge::IWindow::ShowMessageBox(pszErr, "Downloader Error");
 			}
 		}

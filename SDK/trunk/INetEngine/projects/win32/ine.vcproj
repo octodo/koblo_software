@@ -205,7 +205,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\CURLMulti_Wrapper.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\CXloader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\CXloader_ReplyChainLink.h"
 				>
 			</File>
 			<File
@@ -323,6 +331,10 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\source\CURLMulti_Wrapper.cpp"
+				>
 			</File>
 			<File
 				RelativePath="..\..\source\CXLoader.cpp"

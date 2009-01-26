@@ -115,7 +115,7 @@ public:
 		\param iErrBuffSize [in]: Size of buffer
 		\return: True upon function success (check buffer to see error - if "" then no error exists)
 	*/
-	virtual tbool GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize) = 0;
+	virtual tbool GetError(tchar* pszErrBuff, tint32 iErrBuffSize) = 0;
 };
 
 #endif // _ine_i_downloader
