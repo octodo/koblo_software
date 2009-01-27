@@ -585,6 +585,12 @@ namespace k2s {
 	void Gen_UUID( tchar* pszUUID, tuint32 uiBuffer_Size)
 	{
 
+		// Verify that buffer is big enough for UUID
+		tuint32 uiLen = 8+1 + 4+1 + 4+1 + 4+1 + 12;
+		if (uiLen >= uiBuffer_Size) {
+			// Not room for UUID + trailig zero
+			return; //false;
+		}
 
 		std::string sUUID	= "";
 
@@ -614,30 +620,30 @@ namespace k2s {
 		sprintf(psz, "%02x", uuid_bytes.byte14); 	sUUID += psz;
 		sprintf(psz, "%02x", uuid_bytes.byte15); 	sUUID += psz;
 		
+		strcpy(pszUUID, sUUID.c_str());
 #endif // _Mac
 
 #ifdef _WIN32
-		//! TODO: Insert UUID code for windows here
 		UUID Uuid;
 		//RPC_STATUS rc = UuidCreate(pUuid);
 		HRESULT rc = CoCreateGuid(&Uuid);
 		if (rc == 0) {
 			tchar* psz = pszUUID;
-			// First 8 hex
+			// First 8 hex (32 bit)
 			psz += sprintf(psz, "%08x-", Uuid.Data1);
-			// Then 4 hex
+			// Then 4 hex (16 bit)
 			psz += sprintf(psz, "%04x-", Uuid.Data2);
-			// Then 4 hex
+			// Then 4 hex (16 bit)
 			psz += sprintf(psz, "%04x-", Uuid.Data3);
 			// Split data 4 into smaller portions
 			tuchar* pucData4 = (tuchar*)&Uuid.Data4;
-			// Then 4 hex
+			// Then 4 hex (16 bit)
 			{
 				tint32 c0 = *pucData4++;
 				tint32 c1 = *pucData4++;
 				psz += sprintf(psz, "%02x%02x-", c0, c1);
 			}
-			// Then 10 hex
+			// Then 12 hex (48 bit)
 			{
 				tint32 c2 = *pucData4++;
 				tint32 c3 = *pucData4++;
@@ -650,18 +656,9 @@ namespace k2s {
 					"%02x%02x%02x%02x%02x%02x",
 					c2, c3, c4, c5, c6, c7
 					);
-				tint32 iDebug = 0;
 			}
-
-			return;
 		}
 #endif // _WIN32
-
-
-		//! TODO: (lasse) This is wrong! Please fix it Max
-		uiBuffer_Size = sUUID.size();
-
-		strcpy(pszUUID, sUUID.c_str());
 		
 	} // Gen_UUID
 
