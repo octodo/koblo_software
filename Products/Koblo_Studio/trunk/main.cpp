@@ -1005,7 +1005,7 @@ static void HandleNew_Menu()
 	MenuItemsTrack.pItems[4] = ge::IContext::SMenuItem("Paste Region", false, NULL, 'V');
 	MenuItemsTrack.pItems[5] = ge::IContext::SMenuItem("Duplicate Region", false, NULL, 'D');
 	MenuItemsTrack.pItems[6] = ge::IContext::SMenuItem("-");
-	MenuItemsTrack.pItems[7] = ge::IContext::SMenuItem("Add Track", false, NULL, 'T');
+	MenuItemsTrack.pItems[7] = ge::IContext::SMenuItem("Add Track", false, NULL, 'M');
 	MenuItemsTrack.pItems[8] = ge::IContext::SMenuItem("Delete Track");
 	MenuItemsTrack.pItems[9] = ge::IContext::SMenuItem("-");
 	MenuItemsTrack.pItems[10] = ge::IContext::SMenuItem("Loop Selection", false, NULL, 'K');

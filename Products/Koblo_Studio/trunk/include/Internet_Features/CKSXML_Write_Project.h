@@ -72,6 +72,7 @@ private:
 	//! editing settings. these are things that would typically not be moved/merged between branches
 	void Write_Editing(TiXmlElement* pParent);
 	void Write_Tool(TiXmlElement* pParent);
+	void Write_Snap(TiXmlElement* pParent);
 	void Write_Loop(TiXmlElement* pParent);
 	void Write_Windows(TiXmlElement* pParent);
 	void Write_Window_Edit(TiXmlElement* pParent);

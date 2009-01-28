@@ -5,7 +5,7 @@
 
 CKSFile_Controller::CKSFile_Controller()
 {
-
+	msProject_Name = "";
 	
 	mpMIDI_Sequencer = new(CMIDI_Sequencer);
 	
@@ -21,44 +21,51 @@ CKSFile_Controller::~CKSFile_Controller()
 	
 }
 
-tbool CKSFile_Controller::New_Project()
+tint32 CKSFile_Controller::New_Project()
 {
 	// take care of not owerwriting a project withour  warning
-	if(Leave_Old_Project() == false) return false;
+	if (Save_Before_Close() == giUser_Canceld_Save) 
+		return giUser_Canceld_Save;
+			
 
 	// get default folder
 	tchar pszDefault_Folder[1024];
 	gpApplication->GetDefaultProjectFolder(pszDefault_Folder);
-	
-	// open new project dialog
+
 	tchar pszProject_Folder[1024];
 	CAutoDelete<ge::ISaveAsDialog> pDlg(ge::ISaveAsDialog::Create());
 	pDlg->DoDialog(pszProject_Folder, pszDefault_Folder, "", "", "New Project");
 	
 	// user canceled operation
-	if (pszProject_Folder[0] == 0)  return false;
-	
+	if (pszProject_Folder[0] == 0)
+		return giUser_Canceld_Create_New_Project;
+		
 	// clean project
 	gpApplication->CleanProject(giDefault_Number_Of_Tracks);
 	
-	// updaate path's and names for files and folders
+	// update path's and names for files and folders
 	Update_Project_Name(pszProject_Folder);
 	
 	// create new folders for the project
-	return Create_Folders();
-
-
+	Create_Folders();
+	
+	// save project so name in file isn't lost
+	Save_Project();
+	
+	return giUser_Created_A_New_Project;
+		
+	
 	
 }
 
-tbool CKSFile_Controller::Leave_Old_Project()
+tint32 CKSFile_Controller::Save_Before_Close()
 {
-	
-	if (gpApplication->Project_Folder().size()) {
+	// If a project is alreaddy loaded
+	if (gpApplication->Project_Name().size()) {
 		
 		// Warning dialog
 		tchar pszMsg[1024];
-		sprintf( pszMsg, "Save changes to '%s before closing'\n", Get_Project_Name().c_str() );
+		sprintf( pszMsg, "Save changes to '%s before closing'\n", Project_Name().c_str() );
 		ge::IWindow::EMsgBoxReturn eRet;
 		eRet = ge::IWindow::ShowMessageBox(pszMsg, "!Warning", ge::IWindow::MsgBoxYesNoCancel);
 		
@@ -67,17 +74,17 @@ tbool CKSFile_Controller::Leave_Old_Project()
 				
 			case ge::IWindow::MsgBoxRetYes:{
 				Save_Project();
-				return true;
+				return giUser_Saved_Project;
 			}
 			case ge::IWindow::MsgBoxRetNo:
-				return true;
+				return giUser_Didn_Save;
 				
 			case ge::IWindow::MsgBoxRetCancel: 
-				return false; 
+				return giUser_Canceld_Save; 
 				
 		}
 	}
-	return true;
+	return giUser_No_Project_To_Save;
 }
 
 tbool CKSFile_Controller::Save_Project()
@@ -99,7 +106,7 @@ tbool CKSFile_Controller::Save_As()
 	
 	// open new project dialog
 	tchar pszProject_Folder[1024];
-	std::string sName_Copy	=	gpApplication->Get_Project_Name();
+	std::string sName_Copy	=	gpApplication->Project_Name();
 	sName_Copy				+= " Copy";
 	
 	CAutoDelete<ge::ISaveAsDialog> pDlg(ge::ISaveAsDialog::Create());
@@ -178,9 +185,9 @@ tbool CKSFile_Controller::Create_Project_Folder()
 }
 
 //! create a new sample folder inside the project folder
-tbool CKSFile_Controller::Create_Audio_Folder()
+tbool CKSFile_Controller::Create_Audio_Folders()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ": Wave Files";
+	std::string sFolder = gpApplication->Project_Folder() + ":Wave Files";
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -189,7 +196,7 @@ tbool CKSFile_Controller::Create_Audio_Folder()
 //! create a new midi folder inside the project folder
 tbool CKSFile_Controller::Create_Midi_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ": MIDI FIles";
+	std::string sFolder = gpApplication->Project_Folder() + ":MIDI FIles";
 	IFile::CreateDirectory(gpApplication->Project_Folder().c_str());
 	// make check here
 	return true;
@@ -198,7 +205,7 @@ tbool CKSFile_Controller::Create_Midi_Folder()
 //! create a new plug-in data folder inside the project folder
 tbool CKSFile_Controller::Create_Plugin_Data_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ": Plug-In's Settings";
+	std::string sFolder = gpApplication->Project_Folder() + ":Plug-In's Settings";
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -207,8 +214,12 @@ tbool CKSFile_Controller::Create_Plugin_Data_Folder()
 //! create a new download folder inside the project folder
 tbool CKSFile_Controller::Create_Download_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ": Download";
+	std::string sFolder = gpApplication->Project_Folder() + ":Download";
 	IFile::CreateDirectory(sFolder.c_str());
+	
+	// folder for downloaded ogg files
+	std::string sOggFolder =	sFolder + ":OGG Files";
+	IFile::CreateDirectory(sOggFolder.c_str());
 	// make check here
 	return true;
 }
@@ -216,8 +227,16 @@ tbool CKSFile_Controller::Create_Download_Folder()
 //! create a new uplaod folder inside the project folder
 tbool CKSFile_Controller::Create_Upload_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ": Upload";
+	std::string sFolder = gpApplication->Project_Folder() + ":Upload";
 	IFile::CreateDirectory(sFolder.c_str());
+	
+	// folder for mp3 previews to upload
+	std::string sMP3Folder =	sFolder + ":MP3 Files";
+	IFile::CreateDirectory(sMP3Folder.c_str());
+	
+	// folder for ogg files to upload
+	std::string sOggFolder =	sFolder + ":OGG Files";
+	IFile::CreateDirectory(sOggFolder.c_str());
 	// make check here
 	return true;
 }
@@ -225,7 +244,7 @@ tbool CKSFile_Controller::Create_Upload_Folder()
 //! create a new uplaod folder inside the project folder
 tbool CKSFile_Controller::Create_Wave_Picts_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ": Wave Picts";
+	std::string sFolder = gpApplication->Project_Folder() + ":Wave Picts";
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -236,7 +255,7 @@ tbool CKSFile_Controller::Create_Wave_Picts_Folder()
 //! create a new project file
 tbool CKSFile_Controller::Create_Project_File()
 {
-	std::string sProject_Name	= gpApplication->Get_Project_Name();
+	std::string sProject_Name	= gpApplication->Project_Name();
 	std::string sProject_Folder = gpApplication->Project_Folder();
 	std::string sProject		=  sProject_Folder + ":" + sProject_Name + ".xml";
 	
@@ -288,7 +307,7 @@ tbool CKSFile_Controller::Create_Folders()
 	if(Create_Project_Folder() == false ) return false;
 	
 	// create a new project folder
-	if(Create_Audio_Folder() == false ) return false;
+	if(Create_Audio_Folders() == false ) return false;
 	
 	// create a midi project folder
 	if(Create_Midi_Folder() == false ) return false;
@@ -322,13 +341,60 @@ void CKSFile_Controller::Update_Project_Name(std::string sNew_Name)
 	std::string sProject_Name = sNew_Name;
 	tint iPos = sProject_Name.find_last_of(':');
 	sProject_Name = sProject_Name.substr(iPos + 1, sProject_Name.size());
-	gpApplication->Set_Project_Name(sProject_Name);
+	gpApplication->Project_Name(sProject_Name);
 	
 
 	
 }
+tbool CKSFile_Controller::Is_A_Audio_File(std::string sFile)
+{
+	
+	return Check_Extencion( Get_Extencion(sFile)  );
+}
 
+tbool CKSFile_Controller::Check_Extencion(std::string sFile)
+{
+	if( sFile.size() == 0)					return false;
+	// supported extencions
+	if (sFile.compare(".wav") == 0)			return true;
+	else if (sFile.compare(".WAV") == 0)		return true;
+	else if (sFile.compare(".ogg") == 0)		return true;
+	else if (sFile.compare(".OGG") == 0)		return true;
+	else if (sFile.compare(".mp3") == 0)		return true;
+	else if (sFile.compare(".MP3") == 0)		return true;
+	
+	return false;
+	
+}
 
+std::string  CKSFile_Controller::Get_Extencion(std::string sFile)
+{
+	tint iPos	=	sFile.find_last_of('.');
+	sFile		=	sFile.substr(iPos, sFile.size());
+	return sFile;
+	
+}
+
+tbool CKSFile_Controller::Readable_Audio(std::string sFile)
+{
+	CAutoDelete<IFile> pFile(IFile::Create());
+	
+	if (pFile->Open(sFile.c_str(), IFile::FileRead)) {
+		
+		ac::IDecoder* pDec = ac::IDecoder::Create(pFile);
+		
+		
+		
+
+		if (pDec) {
+			
+			tbool bReturn = pDec->TestFile(pFile);
+			pDec->Destroy();
+			return  bReturn;
+		}
+	}
+	return false;
+}
 
 
 

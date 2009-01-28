@@ -137,6 +137,12 @@ public:
 	//! compares the internal data structure to the xml file stroed on disk
 	tbool Project_Has_Changed();
 	
+	// set branch revision
+	void Branch_Revision( tuint32 uiBranch_Revision ){ muiBranch_Revision = uiBranch_Revision;};
+	
+	//! get branch revision
+	tuint32 Branch_Revision(  ){ return muiBranch_Revision;};
+	
 	
 		
 	// get uuid from CKSUUID object
@@ -192,6 +198,8 @@ private:
 	
 	//! password description
 	std::string msPassword;
+	
+	tuint32 muiBranch_Revision;
 
 		
 };

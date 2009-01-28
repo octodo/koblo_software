@@ -190,7 +190,7 @@ public:
 
 	
 
-	virtual void VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar* pszWavePathR, tbool bForceRewrite);
+	virtual void VerifyCreatePeakFiles(CKSFile_Item* pFile_Item , tbool bForceCreate);
 
 	virtual tbool GenerateMix(ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize);
 
@@ -301,8 +301,8 @@ public:
 	std::list<CSample_Data*>::const_iterator Get_Sample_Data_List() const {return mSample_Data_List.begin();}
 	std::list<CSample_Data*>::const_iterator Get_Sample_Data_List_End() const {return mSample_Data_List.end();}
 	
-	
-	
+	//! check if take is in use
+	tbool Take_Is_In_Use(std::string sName);
 	
 	
 	
@@ -330,8 +330,8 @@ public:
 	std::string GetFromWaveName_ClipWaveOld(const tchar* pszWaveName) const;
 	std::string GetFromWaveName_ClipDefaultOgg(const tchar* pszWaveName) const;
 	std::string GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveName) const;
-	std::string GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName);
-	std::string GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName) const;
+//	std::string GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName);
+//	std::string GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName) const;
 	tint32 GetFromListName_ClipWavePathNames(const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed = NULL) const;
 	
 	

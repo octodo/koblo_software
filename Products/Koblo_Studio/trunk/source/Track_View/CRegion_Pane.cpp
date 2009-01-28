@@ -339,21 +339,29 @@ void CRegion_Pane::OnDraw(const ge::SRect &rUpdate)
 	if (mppfPeak[0] == NULL) {
 		tint32 iChannel;
 		for (iChannel = 0; iChannel < 2; iChannel++) {
-			tint32 iPeakFile;
-			for (iPeakFile = 0; iPeakFile < 2; iPeakFile++) {
-				gpDSPEngine->GetRegionPeakFile(muiRegionID, &(mppPeakFile[iPeakFile + iChannel * 2]), iChannel, iPeakFile);
+			tint32 iSize;
+			for (iSize = 0; iSize < 2; iSize++) {
+				// Four wave picts one for each size and one for each channel
+				tuint32 iPict_File = iSize + iChannel * 2;
+				
+				gpDSPEngine->GetRegionPeakFile(muiRegionID, &(mppPeakFile[iPict_File]), iChannel, iSize);
 
-				if (mppPeakFile[iPeakFile + iChannel * 2] == NULL) {
-					mpiPeakFileSize[iPeakFile + iChannel * 2] = 0;
-					mppfPeak[iPeakFile + iChannel * 2] = NULL;
+				// if the is no pict file
+				if (mppPeakFile[iPict_File] == NULL) {
+					mpiPeakFileSize[iPict_File] = 0;
+					mppfPeak[iPict_File] = NULL;
 				}
 				else {
-					mpiPeakFileSize[iPeakFile + iChannel * 2] = mppPeakFile[iPeakFile + iChannel * 2]->GetSizeWhenOpened();
-					mppfPeak[iPeakFile + iChannel * 2] = new tfloat32[(tint32)(mpiPeakFileSize[iPeakFile + iChannel * 2] / sizeof(tfloat32))];
-					mppPeakFile[iPeakFile + iChannel * 2]->Seek(0);
-					tint64 iWantsToRead = mpiPeakFileSize[iPeakFile + iChannel * 2];
-					tint64 iActuallyRead = mppPeakFile[iPeakFile + iChannel * 2]->Read((tchar*)mppfPeak[iPeakFile + iChannel * 2], iWantsToRead);
-					maiActuallyRead[iPeakFile + iChannel * 2] = iActuallyRead;
+					// get size
+					mpiPeakFileSize[iPict_File] = mppPeakFile[iPict_File]->GetSizeWhenOpened();
+					// buffer for drawing
+					mppfPeak[iPict_File]		= new tfloat32[(tint32)(mpiPeakFileSize[iPict_File] / sizeof(tfloat32))];
+					// read from start of file
+					mppPeakFile[iPict_File]->Seek(0);
+					// check how far we read
+					tint64 iWantsToRead = mpiPeakFileSize[iPict_File];
+					tint64 iActuallyRead = mppPeakFile[iPict_File]->Read((tchar*)mppfPeak[iPict_File], iWantsToRead);
+					maiActuallyRead[iPict_File] = iActuallyRead;
 				}
 			}
 		}
@@ -376,7 +384,8 @@ void CRegion_Pane::OnDraw(const ge::SRect &rUpdate)
 
 
 		//!!! TO DO check this
-		tuint64 uiPixelOffset	=	Float2Int(mfSample_Start * gpApplication->GetPixelPrSample());
+		tuint32 uiPixelOffset	=	tfloat32(mfSample_Start * gpApplication->GetPixelPrSample());
+		//tuint64 uiPixelOffset	=	Float2Int(mfSample_Start * gpApplication->GetPixelPrSample());
 
 		tfloat64 fSamplesPerPixel	= gpApplication->GetSamplesPrPixel();
 		
@@ -417,7 +426,7 @@ void CRegion_Pane::OnDraw(const ge::SRect &rUpdate)
 				tfloat32 fAlpha = fPeakIndex - iPeakLow;
 				tfloat32 fPeak = pfPeak[iPeakLow] * (1 - fAlpha) + pfPeak[iPeakHigh] * fAlpha;
 
-				tint32 iPeak = (tint32)(fPeak * SizeThis.iCY / 2);
+				tint32 iPeak = (tint32)(fPeak * SizeThis.iCY * 0.5f);
 
 				mpDrawPrimitives->DrawLine(rUpdate,
 					PosThis + ge::SPos(iPixel, SizeThis.iCY / 2 + iPeak),

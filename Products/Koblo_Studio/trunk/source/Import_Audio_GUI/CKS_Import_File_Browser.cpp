@@ -30,15 +30,15 @@ void CKS_Import_File_Browser::Init()
 	mpPane->GetSize(SizeThis);
 	mpPane->SetBackgroundColour(ge::SRGB(239,239,239));
 
-	mpListBox = CreateListBox(giCtrl_File_List,
+	mpDirectory_Popup = CreateListBox(giCtrl_File_List,
 		ge::SPos(4, 0), ge::SSize(SizeThis.iCX-4, SizeThis.iCY),
 		CreateFont(Generic128, 
 		IDB_Font_Minix_Tight, 
 		ge::SRGB(10, 10, 10)));
-	mpListBox->EnableExtraMouseEvent(ge::LeftButtonDblClk, -2);
+	mpDirectory_Popup->EnableExtraMouseEvent(ge::LeftButtonDblClk, -2);
 }
 
-void CKS_Import_File_Browser::SetPath(const std::string& sPath)
+void CKS_Import_File_Browser::Build_File_List(const std::string& sPath)
 {
 	CAutoDelete<ge::IWaitCursor> pWaitCursor(ge::IWaitCursor::Create());
 
@@ -46,10 +46,10 @@ void CKS_Import_File_Browser::SetPath(const std::string& sPath)
 	// clear list of file items
 	mFile_Items.clear();
 
-	tbool bWasOldMyComputer = (strcmp(msPath.c_str(), ":") == 0);
-	tbool bIsNewMyComputer = (strcmp(sPath.c_str(), ":") == 0);
+	tbool bWasOldMyComputer = (strcmp(msFolder_Path.c_str(), ":")	== 0);
+	tbool bIsNewMyComputer = (strcmp(sPath.c_str(), ":")	== 0);
 
-	msPath = sPath;
+	msFolder_Path = sPath;
 
 	if (bIsNewMyComputer) {
 		// List "My Computer" - a.k.a. disk volumes
@@ -71,66 +71,81 @@ void CKS_Import_File_Browser::SetPath(const std::string& sPath)
 	else if (bWasOldMyComputer) {
 #ifdef _WIN32
 		// For windows we must use only the drive letter part of the path
-		tint32 iPosSpace = msPath.find_first_of(' ');
+		tint32 iPosSpace = msFolder_Path.find_first_of(' ');
 		if (iPosSpace > -1) {
-			msPath.erase(iPosSpace);
-			msPath += ":\\";
+			msFolder_Path.erase(iPosSpace);
+			msFolder_Path += ":\\";
 		}
 #endif // _WIN32
 	}
-
+	// prepare check if files in folder
 	CAutoDelete<IFileSearch> pSearch(IFileSearch::Create());
-	std::string sSearchPathName(msPath);
+	std::string sSearchPathName(msFolder_Path);
+	std::string sTest(msFolder_Path);
+	
 	sSearchPathName += "*";
 	pSearch->Init2(sSearchPathName.c_str());
 
 	tbool bFirst = true;
 	tchar pszName[1024];
 	tbool bDir;
+	
+	// check all files and folders in directory
 	while (pSearch->GetNext(pszName, bDir)) {
+		
 		std::string sName;
+		std::string sFolder_Path = msFolder_Path + pszName;
 		tbool bFirstOld = bFirst;
 		if (bFirst == false) {
+			// Put a "@" tag on root 
 			sName = "@";
 		}
 		bFirst = false;
 
-		tbool bOK = false;
+
 		sName += std::string(pszName);
+		
+		CKSFile_Item File_Item;
+		
 		if (bDir) {
-			sName += " (dir)";
-			bOK = true;
-		}
-		else {
-			std::string sPathName(msPath);
-			sPathName += std::string(pszName);
-			CAutoDelete<IFile> pFile(IFile::Create());
-			if (pFile->Open(sPathName.c_str(), IFile::FileRead)) {
-				ac::IDecoder* pDec = ac::IDecoder::Create(pFile);
-				if (pDec) {
-					bOK = true;
-					pDec->Destroy();
-				}
-			}
-		}
+			// directory
+			sName						+= " (dir)";
 
-		if (bOK) {
-			sEnum += sName;
-
-			CKSFile_Item File_Item;
-			File_Item.Name(std::string(pszName));
-			File_Item.Is_A_Dir(bDir);
+			sFolder_Path				+=	":";
+			File_Item.Is_A_Dir(true);
+			File_Item.Source_Path(sFolder_Path );
 			mFile_Items.push_back(File_Item);
+			sEnum += sName;
 		}
 		else {
-			bFirst = bFirstOld;
+			// file
+			std::string sPathName(msFolder_Path);
+			sPathName += std::string(pszName);
+			if(gpApplication->Readable_Audio(sPathName) ){
+				File_Item.Import(std::string(sPathName)); 
+				mFile_Items.push_back(File_Item);
+				sEnum += sName;
+			}
+			else 
+				bFirst = bFirstOld;
+			 
+			
+			 
 		}
+		
 	}
+	
+	Update_Interface(sEnum);
+	
+} // SetPath
 
-	mpListBox->SetText(sEnum.c_str(), '@');
-
+void CKS_Import_File_Browser::Update_Interface(std::string sMenu_Items)
+{
+	
+	mpDirectory_Popup->SetText(sMenu_Items.c_str(), '@');
+	
 	tint32 iTextHeight = mFile_Items.size() * 14;
-
+	
 	ge::SSize SizeScroll(200 - giScrollBarSize, iTextHeight);
 	ge::SScrollPos ScrollPos;
 	mpScrollPane->GetScrollPos(ScrollPos);
@@ -139,11 +154,11 @@ void CKS_Import_File_Browser::SetPath(const std::string& sPath)
 		ScrollPos.AreaSize.iCY = ScrollPos.VisibleRect.iCY;
 	}
 	mpScrollPane->SetScrollPos(ScrollPos);
-
+	
 	ge::SSize SizeListBox(SizeScroll - ge::SSize(4, 0));
-	mpListBox->SetSize(SizeListBox);
-} // SetPath
-
+	mpDirectory_Popup->SetSize(SizeListBox);
+	
+}
 
 void CKS_Import_File_Browser::ConnectControls()
 {
@@ -160,28 +175,30 @@ void CKS_Import_File_Browser::EventValueChange(ge::IControl* pControl, tint32 iV
 		case giCtrl_File_List:
 			{	
 				tbool bDoubleClick = (iValueNew == -2);
+				
 				if (iValueNew >= -1) {
 					// selection to be highlighted 
 					miLatestGenuineIndex = iValueNew; 
 				}
 				
-				tint32 iIndex = miLatestGenuineIndex; //pControl->GetValue();
+				tint32 iIndex = miLatestGenuineIndex; 
 				
 				std::list<CKSFile_Item>::const_iterator it = mFile_Items.begin();
 				
-				// move list iterator back 
+				// move list iterator to selected item 
 				while (iIndex > 0) {
 					iIndex--;
 					it++;
 				}
-				CKSFile_Item Info = *it;
-				if (Info.Is_A_Dir()) {
+				CKSFile_Item File_Item = *it;
+				if (File_Item.Is_A_Dir()) {
 					mpImportGUI->PreviewStop();
 					miLatestSelectedFile = -1;
 
-					std::string sPath(msPath);
-					sPath += Info.Name();
-					sPath += ":";
+					std::string sPath;
+					sPath = File_Item.Source_Path();
+					sPath += File_Item.Name();
+					
 					if (bDoubleClick) {
 						mpImportGUI->BrowseToDir(sPath);
 					}
@@ -190,59 +207,14 @@ void CKS_Import_File_Browser::EventValueChange(ge::IControl* pControl, tint32 iV
 					tbool bSameFile = (miLatestGenuineIndex == miLatestSelectedFile);
 
 					if (bSameFile) {
-						// Same file
+						// add selected file to the import list
 						if (bDoubleClick) {
-							// Add file to import list
-							std::string sPathName(msPath);
-							sPathName += Info.Name();
-							mpImportGUI->AddFile(sPathName);
+							mpImportGUI->AddFile(File_Item.Source_Path());
 						}
 					}
 					else {
-						// New file - read its info
-
-						// First we need to stop previewing (may crash on read info if we don't)
-						mpImportGUI->PreviewStop();
-
-						// Get info
-						miLatestSelectedFile = miLatestGenuineIndex;
-						std::string sPathName(msPath);
-						sPathName += Info.Name();
-						CAutoDelete<IFile> pFile(IFile::Create());
-						if (pFile->Open(sPathName.c_str(), IFile::FileRead)) {
-							ac::IDecoder* pdec = ac::IDecoder::Create(pFile);
-							if (pdec) {
-								// Attempt to test file - if it fails ignore it
-								pdec->TestFile(pFile);
-								// Now we have tried to decipher file - we pretend it succeeded
-								CAutoDelete<ac::IDecoder> pDecoder(pdec);
-								ac::EAudioCodec Codec = pDecoder->GetAudioCodec();
-								if (Codec == ac::geAudioCodecWave) {
-									mpImportGUI->SetType(0);
-									ac::EQuality eQ = ac::geQualityUnknown;
-									tint32 iBitDepth = pdec->miLastInputBitWidth;
-									if (iBitDepth == 16)
-										eQ = ac::geQualityLossless16;
-									else if (iBitDepth == 24)
-										eQ = ac::geQualityLossless24;
-									tint32 iSampleRate = pdec->miOutputSampleFreq;
-									tint32 iChannels = pdec->miOutputChannels;
-									mpImportGUI->SetInfo(eQ, iSampleRate, iChannels);
-								}
-								else if (Codec == geAudioCodecVorbis) {
-									mpImportGUI->SetType(1);
-									tint32 iSampleRate = pdec->miOutputSampleFreq;
-									tint32 iChannels = pdec->miOutputChannels;
-									mpImportGUI->SetInfo(pdec->meLowestInputQuality, iSampleRate, iChannels);
-								}
-								else {
-									mpImportGUI->SetType(2);
-									tint32 iSampleRate = pdec->miOutputSampleFreq;
-									tint32 iChannels = pdec->miOutputChannels;
-									mpImportGUI->SetInfo(pdec->meLowestInputQuality, iSampleRate, iChannels);
-								}
-							}
-						}
+						// present file info on the gui
+						Display_File_Info(File_Item.Name() + File_Item.Extencion());
 					}
 				}
 			}
@@ -251,9 +223,69 @@ void CKS_Import_File_Browser::EventValueChange(ge::IControl* pControl, tint32 iV
 } // EventValueChange
 
 
+void CKS_Import_File_Browser::Display_File_Info(std::string sName)
+{
+	// New file - read its info
+	// First we need to stop previewing
+	mpImportGUI->PreviewStop();
+	
+	// Get info
+	miLatestSelectedFile = miLatestGenuineIndex;
+	
+	std::string sPathName(msFolder_Path);
+	sPathName += sName;
+	
+	
+	CAutoDelete<IFile> pFile(IFile::Create());
+	
+	if (pFile->Open(sPathName.c_str(), IFile::FileRead)) {
+		
+		ac::IDecoder* pdec = ac::IDecoder::Create(pFile);
+		
+		if (pdec) {
+			// Attempt to test file - if it fails ignore it
+			pdec->TestFile(pFile);
+			
+			// Now we have tried to decipher file - we pretend it succeeded
+			CAutoDelete<ac::IDecoder> pDecoder(pdec);
+			
+			ac::EAudioCodec Codec = pDecoder->GetAudioCodec();
+			
+			if (Codec == ac::geAudioCodecWave) {
+				mpImportGUI->SetType(0);
+				ac::EQuality eQ = ac::geQualityUnknown;
+				tint32 iBitDepth = pdec->miLastInputBitWidth;
+				if (iBitDepth == 16)
+					eQ = ac::geQualityLossless16;
+				else if (iBitDepth == 24)
+					eQ = ac::geQualityLossless24;
+				tint32 iSampleRate = pdec->miOutputSampleFreq;
+				tint32 iChannels = pdec->miOutputChannels;
+				mpImportGUI->SetInfo(eQ, iSampleRate, iChannels);
+			}
+			
+			else if (Codec == geAudioCodecVorbis) {
+				mpImportGUI->SetType(1);
+				tint32 iSampleRate = pdec->miOutputSampleFreq;
+				tint32 iChannels = pdec->miOutputChannels;
+				mpImportGUI->SetInfo(pdec->meLowestInputQuality, iSampleRate, iChannels);
+			}
+			
+			else {
+				mpImportGUI->SetType(2);
+				tint32 iSampleRate = pdec->miOutputSampleFreq;
+				tint32 iChannels = pdec->miOutputChannels;
+				mpImportGUI->SetInfo(pdec->meLowestInputQuality, iSampleRate, iChannels);
+			}
+		}
+	}
+}
+
+
+
 std::string CKS_Import_File_Browser::GetSelectedFile()
 {
-	tint32 iIndex = miLatestSelectedFile; //mpListBox->GetValue();
+	tint32 iIndex = miLatestSelectedFile; //mpDirectory_Popup->GetValue();
 	if (iIndex < 0) {
 		return "";
 	}
@@ -263,14 +295,18 @@ std::string CKS_Import_File_Browser::GetSelectedFile()
 		iIndex--;
 		it++;
 	}
-	CKSFile_Item Info = *it;
-	if (Info.Is_A_Dir()) {
+	CKSFile_Item File_Item = *it;
+	if (File_Item.Is_A_Dir()) {
 		return "";
 	}
 	else {
-		std::string sPathName(msPath);
-		sPathName += Info.Name();
+		/*
+		std::string sPathName(msFolder_Path);
+		sPathName += File_Item.Name();
+		sPathName += File_Item.Extencion();
 		return sPathName;
+		 */ 
+		return File_Item.Source_Path();
 	}
 }
 

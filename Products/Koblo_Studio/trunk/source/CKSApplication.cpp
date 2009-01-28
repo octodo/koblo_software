@@ -1018,7 +1018,7 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 		CBaseGUI* pGUI = *it;
 		dynamic_cast<CKSBaseGUI*>(pGUI)->PlaybackStopped();
 	}
-	Set_Project_Name("");
+	Project_Name("");
 
 	// Delete all tracks
 	Maintain_Number_Of_Tracks(0);
@@ -1027,15 +1027,33 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 	mSample_Data_List.clear();
 	UpdateGUIFileList();
 	miPreviousLicenseNb = -1;
+	Set_Selected_Track(-1);
 	
-	// Reorder all tracks, so they are straight forward (GUI position)
+	
 	for (tint32 i = 0; i < giNumber_Of_Tracks; i++) {
-		msStack.iTrack[i]= i;
+		// reorder all tracks, so they are straight forward (GUI position)
+		msStack.iTrack[i]		= i;
+		// unmute all tracks
+		SetGlobalParm(giParam_ChSolo,		0,		giSection_First_Track + i);
+		SetGlobalParm(giParam_ChMute,		0,		giSection_First_Track + i);
+		SetGlobalParm(giParam_ChSoftMute,	0,		giSection_First_Track + i);
 	}
 
 	// Add empty tracks
 	Maintain_Number_Of_Tracks(iCreateEmptyTracks);
-	msStack.iNr_Of_Tracks = iCreateEmptyTracks;
+	msStack.iNr_Of_Tracks	= iCreateEmptyTracks;
+	
+	// set zoom to default 
+	SetGlobalParm(giParamID_Zoom,	gi_Default_Zoom_Level,		giSectionGUI);
+	// show track window
+	SetGlobalParm(giParamID_Show_Track_Window,	1,		giSectionGUI);
+	// hide mix window
+	SetGlobalParm(giParamID_Show_Mix_Window,	0,		giSectionGUI);
+	// hide aux window
+	SetGlobalParm(giParamID_Show_AUX_Window,	0,		giSectionGUI);
+	// hide export window
+	SetGlobalParm(giParamID_Show_Export_Window,	0,		giSectionGUI);
+	
 } // CleanProject
 
 
@@ -1322,13 +1340,13 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	else if(s.compare("File@New Project") == 0) {
 		// Create
 		if (!MenuFileCreateNewProject()) {
-			LoadSaveErrDlg("Error creating project");			
+		//	LoadSaveErrDlg("Error creating project");			
 		}
 		
 	}
 	else if (s.compare("File@Open Project") == 0) {
 		
-
+		
 		if (!Open_Project()) {
 			LoadSaveErrDlg("Error loading project");
 		}
@@ -1417,7 +1435,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	else if (s.compare("File@Import KSProject") == 0) {
 		mbKSProject_Imported = true;
 		MenuFileLoadProject();
-		Set_Project_Name("Imported");
+		Project_Name("Imported");
 	}
 	
 	else if (s.compare("File@Download Project") == 0) {
@@ -2360,6 +2378,7 @@ tbool CKSApplication::ExportClipsList_SelectDestination(std::list<CExportClipTas
 
 tbool CKSApplication::ExportClipsList_VerifyOne(CExportClipTask* pInfo)
 {
+	/*
 	if (pInfo->sClipName.empty()) {
 		// This is a bit of silence - no files to verify
 		pInfo->iFiles = 0;
@@ -2463,8 +2482,12 @@ tbool CKSApplication::ExportClipsList_VerifyOne(CExportClipTask* pInfo)
 			}
 		}
 	}
+	 
 
 	return bIsClipSane;
+	 */
+	//!! dummy code
+	return true;
 } // ExportClipsList_VerifyOne
 
 
@@ -2472,7 +2495,7 @@ tbool CKSApplication::MenuFileCreateNewProject()
 {
 	return New_Project();
 	
-	
+	/*
 	msExtendedError = "";
 	
 	if(Project_Has_Changed()) {
@@ -2493,11 +2516,13 @@ tbool CKSApplication::MenuFileCreateNewProject()
 		CleanProject(0);
 
 	return bRes;
+	 */
 } // MenuFileCreateNewProject
 
 
 tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/, tbool bCompress /*= true*/)
 {	
+	/*
 	msExtendedError = "";
 
 	if ((msProjectPathName.length() == 0) && ((pszDefaultName == NULL) || (*pszDefaultName == '\0'))) {
@@ -2537,10 +2562,10 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 		
 		pTake_Old->sWaveNameL			= pTake->sWaveNameL;
 		pTake_Old->sWaveNameR			= pTake->sWaveNameR;
-		pTake_Old->sOriginalName		= pTake->sOriginalName;
-		pTake_Old->sOriginalExt			= pTake->sOriginalExt;
-		pTake_Old->bIsOriginalStereo	= pTake->bIsOriginalStereo;
-		pTake_Old->bIsOriginalLossy		= pTake->bIsOriginalLossy;
+//		pTake_Old->sOriginalName		= pTake->sOriginalName;
+//		pTake_Old->sOriginalExt			= pTake->sOriginalExt;
+//		pTake_Old->bIsOriginalStereo	= pTake->bIsOriginalStereo;
+//		pTake_Old->bIsOriginalLossy		= pTake->bIsOriginalLossy;
 		pTake_Old->bIsStereoInList		= pTake->bIsStereoInList;
 		pTake_Old->iOriginalChannelMask = pTake->iOriginalChannelMask;
 		pTake_Old->sWavePathNameL		= pTake->sWavePathNameL;
@@ -2601,10 +2626,7 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 		msExtendedError = "Internal error: Path interpretation failed";
 		return false;
 	}
-	/*
-	tchar pszNameOnly[512];
-	sprintf(pszNameOnly, sItem.c_str() + iPosColon + 1);
-	*/
+	
 	
 	const tchar* pszNameOnly = pszPathName + (iPosColon + 1);
 	//_strlwr(pszNameOnly);
@@ -2648,11 +2670,7 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 			// Lasse, remove any doublet file-extension
 			std::string sToReplace = std::string(pszCorrectExt) + pszCorrectExt;
 			std::string sReplaceWith = pszCorrectExt;
-			/*
-			 while ((iIxToReplace = sItem.find(sToReplace, iPos)) >= 0) {
-			 sItem.replace(iIxToReplace, sToReplace.length(), sReplaceWith.c_str(), sReplaceWith.length());
-			 }
-			 */
+			
 			for (tint32 iIxToReplace = 0; iIxToReplace < (tint32)sItem.length(); iIxToReplace++) {
 				if (strnicmp(sItem.c_str() + iIxToReplace, sToReplace.c_str(), sToReplace.length()) == 0) {
 					sItem.replace(iIxToReplace, sToReplace.length(), sReplaceWith.c_str(), sReplaceWith.length());
@@ -2889,14 +2907,6 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 							// We have no original; neither wave nor ogg or mp3 - what to do?
 							// Include non-original decompressed wave?
 
-							// No: We don't copy decompressed waves - ever!
-							/*
-							// Try to copy an existing decompressed wave (last resort)
-							if (!IFile::CopyFile(GetProjDir_Clips().c_str(), sProjDir_Clips_Old.c_str(), (pInfo->sName + ".ogg").c_str())) {
-								msExtendedError = "Unable to export clip '" + pInfo->sName + "'";
-								return false;
-							}
-							*/
 							msExtendedError = "Unable to export clip '" + pSample_Data->sName + "'\nNo original wave(s) and/or premade compressed file(s) found.";
 							msProjectFolder = sProjDir_Old;
 							msProjectPathName = sProjDir_ProjFile_Old;
@@ -3035,6 +3045,7 @@ tbool CKSApplication::MenuFileSaveProjectAs(const tchar* pszDefaultName /*= ""*/
 	}
 		
 	// No error
+	*/
 	return true;
 } // MenuFileSaveProjectAs
 
@@ -3043,6 +3054,7 @@ tbool CKSApplication::ExportProjectForWeb_Compress(
 	std::string sWavePathL, std::string sWavePathR,
 	CSample_Data* pSample_Data, ac::EQuality ePreviousQuality)
 {
+	/*
 	CTake_Data* pTake_Info = pSample_Data->Get_Take_Data();
 	
 	// Compress one or two original waves
@@ -3123,7 +3135,7 @@ tbool CKSApplication::ExportProjectForWeb_Compress(
 	// Close encoder manually (before IFiles get destroyed)
 	pEnc->Finalize();
 	ShowProgress(0, 0, NULL, NULL, NULL);
-
+	 */
 	// Success
 	return true;
 } // ExportProjectForWeb_Compress
@@ -3133,11 +3145,11 @@ tbool CKSApplication::ExportProjectForWeb_Compress(
 tbool CKSApplication::Open_Project()
 {
 
-	
+	/*
 	msExtendedError = "";
 	PlaybackStop();
 	Stop_Timer();
-	
+	*/
 	CAutoDelete<ge::IOpenDialog> pDlg(ge::IOpenDialog::Create());
 	
 	
@@ -3151,37 +3163,48 @@ tbool CKSApplication::Open_Project()
 	if (sDefaultName.length() == 0)
 		sDefaultName = "New Project.xml";
 	
-	tchar pszPathName[1024];
+	tchar pszXML_Path[1024];
 
 //	pDlg->SetBundleBehaviour(1);
-	pDlg->DoDialog(pszPathName, pszDefaultFolder, "*.KSProject", "KS Project (*.KSProject)", sDefaultName.c_str());
+	pDlg->DoDialog(pszXML_Path, pszDefaultFolder, "*.KSProject", "KS Project (*.KSProject)", sDefaultName.c_str());
 	
-	if (pszPathName[0] == 0) {
+	if (pszXML_Path[0] == 0) {
 		// Exit with no error
+		Start_Timer();
 		return true;
 	}
 
 	CAutoLock Lock(mMutex);
+	
+	std::string sXML_File_Path = pszXML_Path;
+	
 
-	Project_Folder(pszPathName);
 	
-	
-	
-	
-	if (Project_Folder().length()) {
-		std::string sProject_Name = Project_Folder();
-		tint32 iPosColon = sProject_Name.find_last_of(':');
+	if (sXML_File_Path.length()) {
+		// find and store project name
+		std::string sProject_Name			= sXML_File_Path;
+		tint32 iPosColon					= sProject_Name.find_last_of(':');
 		sProject_Name.erase(0, iPosColon + 1);
-		Set_Project_Name(sProject_Name);
-		std::string sProjectFolder = Project_Folder();
-		tint32 iEndPos = sProjectFolder.find(Get_Project_Name());
-		tint32 iChars_To_Rempve = Get_Project_Name().size();
-		sProjectFolder.erase(iEndPos, iChars_To_Rempve+1 );
-		Project_Folder(sProjectFolder);
+		Project_Name(sProject_Name);
 		
+		// find and store project folder
+		std::string sProject_Folder			= sXML_File_Path;
+		iPosColon							= sProject_Folder.find_last_of(':');
+		sProject_Folder.erase(iPosColon+1, sProject_Folder.size() );
+		Project_Folder(sProject_Folder);
+		
+		/*
+		std::string sProjectFolder = Project_Folder();
+		tint32 iEndPos = sProjectFolder.find(Project_Name());
+		tint32 iChars_To_Rempve = Project_Name().size();
+		sProjectFolder.erase(iEndPos, iChars_To_Rempve+1 );
+		*/
+		
+		//Project_Folder(sProjectFolder);
 		Read_Project_From_Disk();
 	}
 
+	Start_Timer();
 	return true;
 }
 tbool CKSApplication::MenuFileLoadProject()
@@ -3430,6 +3453,7 @@ tbool CKSApplication::MenuFileLoadProject()
 
 tbool CKSApplication::MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::list<CImportAudioTask*>* plistpImportTasks)
 {
+	/*
 	tint64 iIndex = 0;
 	tint32 iFileInList = -1;
 	mSample_Data_List.clear();
@@ -3757,6 +3781,7 @@ tbool CKSApplication::MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::lis
 	}
 
 	// - not here - UpdateGUIFileList();
+	 */
 	return true;
 } // MenuFileLoadProject_QueueClips
 
@@ -4369,12 +4394,12 @@ tbool CKSApplication::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 			pChunk->Write("\0", 1);
 			pChunk->Write(pTake_Info->sWaveNameR.c_str(), pTake_Info->sWaveNameR.length());
 			pChunk->Write("\0", 1);
-			pChunk->Write(pTake_Info->sOriginalName.c_str(), pTake_Info->sOriginalName.length());
+	//		pChunk->Write(pTake_Info->sOriginalName.c_str(), pTake_Info->sOriginalName.length());
 			pChunk->Write("\0", 1);
-			pChunk->Write(pTake_Info->sOriginalExt.c_str(), pTake_Info->sOriginalExt.length());
+	//		pChunk->Write(pTake_Info->sOriginalExt.c_str(), pTake_Info->sOriginalExt.length());
 			pChunk->Write("\0", 1);
-			pChunk->Write(pTake_Info->bIsOriginalStereo ? "T" : "F", 2);
-			pChunk->Write(pTake_Info->bIsOriginalLossy ? "T" : "F", 2);
+	//		pChunk->Write(pTake_Info->bIsOriginalStereo ? "T" : "F", 2);
+	//		pChunk->Write(pTake_Info->bIsOriginalLossy ? "T" : "F", 2);
 			tchar pszOriginalChannelMask[2];
 			pszOriginalChannelMask[0] = '0' + pTake_Info->iOriginalChannelMask;
 			pszOriginalChannelMask[1] = '\0';
@@ -4475,18 +4500,17 @@ tbool CKSApplication::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 
 tbool CKSApplication::QueueAudioFileImport(const tchar* pszPathName, tbool bAlwaysKeepStereo, tint32 iTrackID /*=-1*/, tint64 iTrackPos /*= -1*/)
 {
+	/*
 	if (IsPlayingOrRecording()) {
 		PlaybackStop();
 	}
 
 	CImportAudioTask* pImportAudioTask = new CImportAudioTask();
-	tbool bDoesWaveAlreadyExist = false;
-	tbool bForceOriginalIsLossy = false;
+
 	CImportAudioTask::EStereoBehavior eBehave = (bAlwaysKeepStereo) ? CImportAudioTask::geStereoDoKeep : CImportAudioTask::geStereoDoAsk;
-	tbool bSuccess = pImportAudioTask->Init( pszPathName, bDoesWaveAlreadyExist, eBehave, bForceOriginalIsLossy);
-	if (iTrackID >= 0) {
-		pImportAudioTask->Init_InsertAsRegionAfterImport(iTrackID, iTrackPos);
-	}
+	tbool bSuccess = pImportAudioTask->Init( pszPathName, false, eBehave, false);
+	
+	
 	if (bSuccess) {
 		mpProgressTasks->Add(pImportAudioTask);
 		Playback_InProgressTask();
@@ -4497,11 +4521,33 @@ tbool CKSApplication::QueueAudioFileImport(const tchar* pszPathName, tbool bAlwa
 		pImportAudioTask->Destroy();
 	}
 	//delete pTask;
+	 
 	return bSuccess;
+	*/
+	return true;
 } // QueueAudioFileImport
+
+tbool CKSApplication::Take_Is_In_Use(std::string sName)
+{
+	/*
+	std::list<CSample_Data*>::iterator itSample_Info = mSample_Data_List.begin();
+	for ( ;itSample_Info != mSample_Data_List.end(); itSample_Info++) {
+		
+		CSample_Data* pSample_Data		=	*itSample_Info;
+		CTake_Data*	pTake_Info			=	pSample_Data->Get_Take_Data();
+		
+		if(stricmp(pTake_Info->sOriginalName, sName) == 0)
+			return true;
+		
+	}
+	 */
+	return false;
+
+}
 
 tbool CKSApplication::IsClipNameInUse(const tchar* pszClipName, const tchar* pszWaveNameL, const tchar* pszWaveNameR, std::string* psDescription)
 {
+	/*
 	const tchar** ppszNames = new const tchar*[4];
 	ppszNames[0] = pszClipName;
 	ppszNames[1] = pszWaveNameL;
@@ -4509,7 +4555,6 @@ tbool CKSApplication::IsClipNameInUse(const tchar* pszClipName, const tchar* psz
 	ppszNames[3] = NULL;
 
 	std::list<CSample_Data*>::iterator itSample_Info = mSample_Data_List.begin();
-	
 	for ( ;itSample_Info != mSample_Data_List.end(); itSample_Info++) {
 		
 		CSample_Data* pSample_Data = *itSample_Info;
@@ -4519,7 +4564,7 @@ tbool CKSApplication::IsClipNameInUse(const tchar* pszClipName, const tchar* psz
 		const tchar* pszName = pSample_Data->sName.c_str();
 		const tchar* pszNameL = pTrack_Info->sWaveNameL.c_str();
 		const tchar* pszNameR = pTrack_Info->sWaveNameR.c_str();
-		const tchar* pszOrgName = pTrack_Info->sOriginalName.c_str();
+//		const tchar* pszOrgName = pTrack_Info->sOriginalName.c_str();
 		tint32 iNewNameIx = 0;
 		for (const tchar* pszNewName = ppszNames[iNewNameIx++]; pszNewName; pszNewName = ppszNames[iNewNameIx++]) {
 			if (
@@ -4537,12 +4582,12 @@ tbool CKSApplication::IsClipNameInUse(const tchar* pszClipName, const tchar* psz
 				return true;
 			}
 		}
-/*		if (bAlwaysStereo) {
+		if (bAlwaysStereo) {
 			bSplit = false;
-		}*/
+		}
 	}
 	delete[] ppszNames;
-
+*/
 	return false;
 } // IsClipNameInUse
 
@@ -4668,7 +4713,7 @@ tbool CKSApplication::OnTimer_CanStop(tint32 iID)
 	switch (iID) {
 		case giTimerID_ProgressTasks:
 			{
-				/*tbool bProgressSuccess_Ignored =*/ DoProgressTasks();
+				DoProgressTasks();
 				if (1) {
 					CAutoLock Lock(mMutex_Progress);
 					if (!IsInProgressTaskState()) {
@@ -4842,68 +4887,78 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 	
 //	pSample_Data->Set_Sample_UUID();
 	
-	if (!pImportInfo->mbStereo) {
+	
+	if (!pImportInfo->Stereo()) {
 		
 		
 		// Stereo, both sides in a single list item
-		pSample_Data->sName					= pImportInfo->msDstNameL;
-		pTake_Info->sWaveNameL				= pImportInfo->msDstNameL;
-		pTake_Info->sWaveNameR				= "";
-		pTake_Info->sOriginalName			= pImportInfo->msClipName;
-		pTake_Info->sOriginalExt			= pImportInfo->msExt;
-		pTake_Info->bIsOriginalStereo		= false;
-		pTake_Info->bIsOriginalLossy		= pImportInfo->mbSrcLossyCompressed;
-		pTake_Info->iOriginalChannelMask	= 0;
-		pTake_Info->bIsStereoInList			= false;
-		pTake_Info->sWavePathNameL			= pImportInfo->msDstPathNameL;
-		pTake_Info->sWavePathNameR			= "";
+		pSample_Data->sName					=	pImportInfo->Name();
+		pTake_Info->sWaveNameL				=	pImportInfo->Name();
+		pTake_Info->sWaveNameR				=	"";
+	//	pTake_Info->sOriginalName			=	pImportInfo->msClipName;
+	//	pTake_Info->sOriginalExt			=	pImportInfo->msExt;
+	//	pTake_Info->bIsOriginalStereo		=	false;
+	//	pTake_Info->bIsOriginalLossy		=	pImportInfo->mbSrcLossyCompressed;
+		pTake_Info->iOriginalChannelMask	=	0;
+		pTake_Info->bIsStereoInList			=	false;
+		pTake_Info->sWavePathNameL			=	pImportInfo->Left_Path();
+		pTake_Info->sWavePathNameR			=	"";
+		pTake_Info->sLeft_Peak_File_Path	=	pImportInfo->Left_Peak_File_Path();
+		pTake_Info->sRight_Peak_File_Path	=	"";
 		mSample_Data_List.push_back(pSample_Data);
 	}
+	
 	else {
 		if (!pImportInfo->mbSplit) {
 			// Stereo, both sides in a single list item
-			pSample_Data->sName = pImportInfo->msClipName;
-			pTake_Info->sWaveNameL = pImportInfo->msDstNameL;
-			pTake_Info->sWaveNameR = pImportInfo->msDstNameR;
-			pTake_Info->sOriginalName = pImportInfo->msClipName;
-			pTake_Info->sOriginalExt = pImportInfo->msExt;
-			pTake_Info->bIsOriginalStereo = true;
-			pTake_Info->bIsOriginalLossy = pImportInfo->mbSrcLossyCompressed;
-			pTake_Info->iOriginalChannelMask = 0x01 | 0x02;
-			pTake_Info->bIsStereoInList = true;
-			pTake_Info->sWavePathNameL = pImportInfo->msDstPathNameL;
-			pTake_Info->sWavePathNameR = pImportInfo->msDstPathNameR;
+			pSample_Data->sName					=	pImportInfo->Name();
+			pTake_Info->sWaveNameL				=	pImportInfo->Left_Name();
+			pTake_Info->sWaveNameR				=	pImportInfo->Right_Name();
+			//pTake_Info->sOriginalName			= pImportInfo->msClipName;
+			//pTake_Info->sOriginalExt			= pImportInfo->msExt;
+			//pTake_Info->bIsOriginalStereo		= true;
+			//pTake_Info->bIsOriginalLossy		= pImportInfo->mbSrcLossyCompressed;
+			pTake_Info->iOriginalChannelMask	=	0x01 | 0x02;
+			pTake_Info->bIsStereoInList			=	true;
+			pTake_Info->sWavePathNameL			=	pImportInfo->Left_Path();
+			pTake_Info->sWavePathNameR			=	pImportInfo->Right_Path();
+			pTake_Info->sLeft_Peak_File_Path	=	pImportInfo->Left_Peak_File_Path();
+			pTake_Info->sRight_Peak_File_Path	=	pImportInfo->Right_Peak_File_Path();
 			mSample_Data_List.push_back(pSample_Data);
 		}
 		else {
 			// Stereo split into two list items
 			// Stereo, left side
-			pSample_Data->sName				= pImportInfo->msDstNameL;
-			pTake_Info->sWaveNameL			= pImportInfo->msDstNameL;
-			pTake_Info->sWaveNameR			= "";
-			pTake_Info->sOriginalName		= pImportInfo->msClipName;
-			pTake_Info->sOriginalExt		= pImportInfo->msExt;
-			pTake_Info->bIsOriginalStereo	= true;
-			pTake_Info->bIsOriginalLossy	= pImportInfo->mbSrcLossyCompressed;
-			pTake_Info->iOriginalChannelMask = 0x01;
-			pTake_Info->bIsStereoInList		= false;
-			pTake_Info->sWavePathNameL		= pImportInfo->msDstPathNameL;
-			pTake_Info->sWavePathNameR		= "";
+			pSample_Data->sName				=	pImportInfo->Name();
+			pTake_Info->sWaveNameL			=	pImportInfo->Left_Name();
+			pTake_Info->sWaveNameR			=	"";
+//			pTake_Info->sOriginalName		=	pImportInfo->msClipName;
+//			pTake_Info->sOriginalExt		=	pImportInfo->msExt;
+//			pTake_Info->bIsOriginalStereo	=	true;
+//			pTake_Info->bIsOriginalLossy	=	pImportInfo->mbSrcLossyCompressed;
+			pTake_Info->iOriginalChannelMask =	0x01;
+			pTake_Info->bIsStereoInList		=	false;
+			pTake_Info->sWavePathNameL		=	pImportInfo->Left_Path();
+			pTake_Info->sWavePathNameR		=	"";
+			pTake_Info->sLeft_Peak_File_Path	=	pImportInfo->Left_Peak_File_Path();
+			pTake_Info->sRight_Peak_File_Path	=	"";
 			mSample_Data_List.push_back(pSample_Data);
 
 			// Stereo, right side
 
-			pSample_Data->sName = pImportInfo->msDstNameR;
-			pTake_Info->sWaveNameL = "";
-			pTake_Info->sWaveNameR = pImportInfo->msDstNameR;
-			pTake_Info->sOriginalName = pImportInfo->msClipName;
-			pTake_Info->sOriginalExt = pImportInfo->msExt;
-			pTake_Info->bIsOriginalStereo = true;
-			pTake_Info->bIsOriginalLossy = pImportInfo->mbSrcLossyCompressed;
+			pSample_Data->sName				=	pImportInfo->Name();
+			pTake_Info->sWaveNameL			=	"";
+			pTake_Info->sWaveNameR			=	pImportInfo->Right_Name();
+//			pTake_Info->sOriginalName		=	pImportInfo->msClipName;
+//			pTake_Info->sOriginalExt		=	pImportInfo->msExt;
+//			pTake_Info->bIsOriginalStereo	=	true;
+//			pTake_Info->bIsOriginalLossy	=	pImportInfo->mbSrcLossyCompressed;
 			pTake_Info->iOriginalChannelMask = 0x02;
-			pTake_Info->bIsStereoInList = false;
-			pTake_Info->sWavePathNameL = "";
-			pTake_Info->sWavePathNameR = pImportInfo->msDstPathNameR;
+			pTake_Info->bIsStereoInList		=	false;
+			pTake_Info->sWavePathNameL		=	"";
+			pTake_Info->sWavePathNameR		=	pImportInfo->Right_Path();
+			pTake_Info->sLeft_Peak_File_Path	=	"";
+			pTake_Info->sRight_Peak_File_Path	=	pImportInfo->Right_Peak_File_Path();
 			mSample_Data_List.push_back(pSample_Data);
 		}
 	}
@@ -4917,24 +4972,24 @@ tbool CKSApplication::OnAudioFileImport()
 	return true;
 } // OnAudioFileImport
 
-void CKSApplication::VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar* pszWavePathR, tbool bForceRewrite)
+void CKSApplication::VerifyCreatePeakFiles(CKSFile_Item* pFile_Item , tbool bForceCreate)
 {
-	tbool bStereo = (*pszWavePathR != '\0');
+	tbool bStereo = pFile_Item->Stereo();
 	
 	// This may take some time
 	CAutoDelete<ge::IWaitCursor> pWaitCursor(ge::IWaitCursor::Create());
 
 	// Create peak files
 #ifdef _Mac_PowerPC
-	std::string sPeakFileL0 = std::string(pszWavePathL) + ".kspk1024_ppc";
-	std::string sPeakFileR0 = std::string(pszWavePathR) + ".kspk1024_ppc";
-	std::string sPeakFileL1 = std::string(pszWavePathL) + ".kspk64_ppc";
-	std::string sPeakFileR1 = std::string(pszWavePathR) + ".kspk64_ppc";
+	std::string sPeakFileL0		=	pFile_Item->Left_Peak_File_Path()	+ ".kspk1024_ppc";
+	std::string sPeakFileR0		=	pFile_Item->Right_Peak_File_Path()	+ ".kspk1024_ppc";
+	std::string sPeakFileL1		=	pFile_Item->Left_Peak_File_Path()	+ ".kspk64_ppc";
+	std::string sPeakFileR1		=	pFile_Item->Right_Peak_File_Path()	+ ".kspk64_ppc";
 #else _Mac_PowerPC
-	std::string sPeakFileL0 = std::string(pszWavePathL) + ".kspk1024";
-	std::string sPeakFileR0 = std::string(pszWavePathR) + ".kspk1024";
-	std::string sPeakFileL1 = std::string(pszWavePathL) + ".kspk64";
-	std::string sPeakFileR1 = std::string(pszWavePathR) + ".kspk64";
+	std::string sPeakFileL0		=	pFile_Item->Left_Peak_File_Path()	+ ".kspk1024";
+	std::string sPeakFileR0		=	pFile_Item->Right_Peak_File_Path()	+ ".kspk1024";
+	std::string sPeakFileL1		=	pFile_Item->Left_Peak_File_Path()	+ ".kspk64";
+	std::string sPeakFileR1		=	pFile_Item->Right_Peak_File_Path()	+ ".kspk64";
 #endif // _Mac_PowerPC
 
 	std::auto_ptr<CWave_File> pWaveFileL(new CWave_File());
@@ -4945,12 +5000,13 @@ void CKSApplication::VerifyCreatePeakFiles(const tchar* pszWavePathL, const tcha
 	IFile* pSrcFileR = 0;
 	tint32 iOffsetR = 0;
 	tint32 iLengthR = 0;
-	tint32 iBitWidthL = 0, iBitWidthR = 0, iChannels_Dummy;
+	tint32 iBitWidthL = 0, iBitWidthR = 0;
+	tint32 iChannels_Dummy;
 	tint32 iByteWidthL, iByteWidthR;
-	if (pWaveFileL->LoadSoundStream(512, pszWavePathL))
-		pWaveFileL->GetStreamInfo(pSrcFileL, iOffsetL, iLengthL, &iBitWidthL, &iChannels_Dummy);
+	if (pWaveFileL->LoadSoundStream(512, pFile_Item->Left_Path().c_str()))
+		pWaveFileL->GetStreamInfo(pSrcFileL, iOffsetL, iLengthL, &iBitWidthL,&iChannels_Dummy);
 	if (bStereo) {
-		if (pWaveFileR->LoadSoundStream(512, pszWavePathR))
+		if (pWaveFileR->LoadSoundStream(512, pFile_Item->Right_Path().c_str()))
 			pWaveFileR->GetStreamInfo(pSrcFileR, iOffsetR, iLengthR, &iBitWidthR, &iChannels_Dummy);
 	}
 	iByteWidthL = iBitWidthL / 8;
@@ -4977,7 +5033,7 @@ void CKSApplication::VerifyCreatePeakFiles(const tchar* pszWavePathL, const tcha
 
 			tint32 iPeakSize = iLengthL / iSize + 1;
 
-			tbool bAnyMissing = bForceRewrite;
+			tbool bAnyMissing = bForceCreate;
 			CAutoDelete<IFile> pPeakTest(IFile::Create());
 			if (!IFile::Exists(sPeakFileL.c_str())) {
 				bAnyMissing = true;
@@ -5090,7 +5146,7 @@ void CKSApplication::VerifyCreatePeakFiles(const tchar* pszWavePathL, const tcha
 
 			tint32 iPeakSize = iLengthL / iSize + 1;
 
-			tbool bAnyMissing = bForceRewrite;
+			tbool bAnyMissing = bForceCreate;
 			CAutoDelete<IFile> pPeakTest(IFile::Create());
 			if ((!IFile::Exists(sPeakFileL.c_str())) || (!IFile::Exists(sPeakFileR.c_str()))) {
 				bAnyMissing = true;
@@ -5792,7 +5848,7 @@ std::string CKSApplication::GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveN
 
 
 
-
+/*
 std::string CKSApplication::GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName)
 {
 	std::string sWavePath = GetFromWaveName_ClipWave(pszWaveName);
@@ -5807,11 +5863,13 @@ std::string CKSApplication::GetFromWaveName_ClipWave_Safe(const tchar* pszWaveNa
 	}
 	return sWavePath;
 } // GetFromWaveName_ClipWave_Safe
+ */
 
+/*
 std::string CKSApplication::GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName) const
 {
-	CSample_Data* pSample_Data = gpDSPEngine->Get_Sample_Data_From_Name(pszWaveName);
-	CTake_Data* pTake_Info	=	pSample_Data->Get_Take_Data();
+	CSample_Data* pSample_Data	=	gpDSPEngine->Get_Sample_Data_From_Name(pszWaveName);
+	CTake_Data* pTake_Info		=	pSample_Data->Get_Take_Data();
 	
 	if ((pTake_Info == NULL) || (!pTake_Info->bIsOriginalLossy))
 		return "";
@@ -5829,6 +5887,8 @@ std::string CKSApplication::GetFromWaveName_ClipComp_Safe(const tchar* pszWaveNa
 
 	return "";
 } // GetFromWaveName_ClipComp_Safe
+
+*/
 
 /*
 CSample_Data* CKSApplication::Get_Sample_Data_From_Name(const tchar* pszListName) const
@@ -5887,7 +5947,7 @@ tuint64 CKSApplication::Get_Sample_Duration_From_Name( const tchar* pszListName)
 tint32 CKSApplication::GetFromListName_ClipWavePathNames(const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed /*= NULL*/) const
 {
 	// obsoleet will be replased with "Set_Wave_Path()"
-	
+	/*
 	CSample_Data* pSample_Data = gpDSPEngine->Get_Sample_Data_From_Name(pszListName);
 	
 	
@@ -5928,7 +5988,7 @@ tint32 CKSApplication::GetFromListName_ClipWavePathNames(const tchar* pszListNam
 			return 1;
 		}
 	}
-
+*/
 	// Not found
 	rsWavePathNameL = "";
 	rsWavePathNameR = "";

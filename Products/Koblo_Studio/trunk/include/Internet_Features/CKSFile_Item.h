@@ -31,6 +31,9 @@ public:
 	//! Destructor
 	virtual ~CKSFile_Item();
 	
+	//! init set name path and extencion from full path
+	tbool Import(std::string sFull_Path);
+	
 	//! set name
 	void Name(std::string sName){msName = sName;};
 	
@@ -43,18 +46,67 @@ public:
 	//! get path
 	std::string Path(){ return msPath;};
 	
+	// ! set source path
+	void Source_Path(std::string sPath){msSource_Path = sPath;};
+	
+	//! get source path
+	std::string Source_Path(){ return msSource_Path;};
+	
+	// ! set destination path
+	void Destination_Path(std::string sPath){msDestination_Path = sPath;};
+	
+	//! get destination path
+	std::string Destination_Path(){ return msDestination_Path;};
+	
+	
+	// ! set path
+	void Extencion(std::string sPath){msExtencion = sPath;};
+	
+	//! get extencion
+	std::string Extencion(){ return msExtencion;};
+	
 	//! set type file or directory
 	void Is_A_Dir(tbool bIs_A_Dir){mbIs_A_Dir = bIs_A_Dir;};
 	
 	//! get type file or directory
 	tbool Is_A_Dir(){ return mbIs_A_Dir;};
+	
+	//! get file name and path for left side
+	std::string  Left_Path();
+	//! get file name and path for right side
+	std::string  Right_Path();
+	
+	//! get file name and path for left side
+	std::string  Left_Name();
+	//! get file name and path for right side
+	std::string  Right_Name();
+	
+	//! get peak file name for left side
+	std::string  Left_Peak_File_Path();
+	//! get peak file name for right side
+	std::string  Right_Peak_File_Path();
+	
+	//! set stereo
+	void Stereo(tbool bStereo){ mbStereo =  bStereo;};
+	
+	//! get stereo
+	tbool Stereo(){ return mbStereo;};
+	
 
 	
 protected:
 	
+	
 	std::string msName;
 	std::string msPath;
+	std::string msExtencion;
+	std::string msSource_Path;
+	std::string msDestination_Path;
 	tbool mbIs_A_Dir;
+	tbool mbStereo;
+	
+	
+	
 	
 	
 };

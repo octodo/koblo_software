@@ -46,7 +46,7 @@ void CKSImportGUIPane::Init()
 	mpImport_File_Browser = new CKS_Import_File_Browser(this, GetGUI());
 	mpImport_File_Browser->SetInfo();
 	mpImport_File_Browser->Init();
-	mpPane->AddControl(mpImport_File_Browser->GetPane(), ge::SPos(8, 39));
+	mpPane->AddControl(mpImport_File_Browser->GetPane(), ge::SPos(9, 39));
 	Create_File_Browser_ScrollBar();
 	
 	//-------------------------------------------------
@@ -54,7 +54,7 @@ void CKSImportGUIPane::Init()
 	mpImport_Files = new CKS_Import_Files(this, GetGUI());
 	mpImport_Files->SetInfo();
 	mpImport_Files->Init();
-	mpPane->AddControl(mpImport_Files->GetPane(), ge::SPos(216, 39));
+	mpPane->AddControl(mpImport_Files->GetPane(), ge::SPos(217, 39));
 	Create_File_ScrollBar();
 
 
@@ -73,6 +73,8 @@ void CKSImportGUIPane::Init()
 	tchar psz[1024];
 	//IFile::GetSystemDirectory(IFile::SystemDirDesktop, psz);
 	gpApplication->GetDefaultProjectFolder(psz);
+	gpApplication->Project_Folder(psz);
+	// movethis to when the inport browser is opened
 	BrowseToDir(std::string(psz));
 
 	gpApplication->SetPreviewCallback(dynamic_cast<CPreviewCallback*>(this));
@@ -90,9 +92,13 @@ void CKSImportGUIPane::Init()
 
 void CKSImportGUIPane::BrowseToDir(const std::string& sPath)
 {
+	
 	msPathNameCur = sPath;
-	mpImport_File_Browser->SetPath(msPathNameCur);
-
+	
+	// Only show dirs and audio files
+	//gpApplication->Check_Extencion(msPathNameCur);
+	mpImport_File_Browser->Build_File_List(msPathNameCur);
+	// update the popup menu
 	if (mpPop) {
 		mpPane->RemoveControl(dynamic_cast<ge::IControl*>(mpPop));
 		// (mo) We need to put this in a list and destroy it later
@@ -103,7 +109,13 @@ void CKSImportGUIPane::BrowseToDir(const std::string& sPath)
 	mpPop = CreatePop(giCtrl_Browser_Popup, IDB_Button_Popup,  mpFile_Browser_Popup, ge::SPos(28, 13), mpPane);
 } // BrowseToDir
 
-
+/*
+tbool CKSImportGUIPane::Is_A_Walid_File(const std::string sPath)
+{
+	tint iPos						=	sPath.find_last_of(".");
+	std::string sExtencion			=	sFull_Path.substr(iPos + 1, sFull_Path.length());
+}
+*/
 void CKSImportGUIPane::ConnectControls()
 {
 
@@ -202,7 +214,7 @@ tbool CKSImportGUIPane::AddFile(std::string sPathName)
 	if (sPathName.size() == 0)
 		return false;
 
-	return mpImport_Files->AddFile(sPathName);
+	return mpImport_Files->Add_File(sPathName);
 } // AddFile
 
 
@@ -218,10 +230,13 @@ void CKSImportGUIPane::Prepare_Popups()
 
 	s = s.substr(1);
 
+	// maximum 64 items in popup
 	std::string psStrings[64];
+	// first item 
 	psStrings[0] = "My Computer";
 	tint32 iStrings = 1;
 
+	//
 	while (s.find_first_of(':') != std::string::npos) {
 		tint32 iPos = s.find_first_of(':');
 
@@ -230,9 +245,9 @@ void CKSImportGUIPane::Prepare_Popups()
 		iStrings++;
 	}
 
+	// build popup
 	mpFile_Browser_Popup.iItemCount = iStrings;
-	tint32 iString;
-	for (iString = 0; iString < iStrings; iString++) {
+	for (tint32 iString = 0; iString < iStrings; iString++) {
 		mpFile_Browser_Popup.pItems[iString] = ge::IPopupMenu::SMenuItem(psStrings[iString].c_str(), iString, NULL);
 	}
 } // Prepare_Popups

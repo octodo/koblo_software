@@ -684,6 +684,8 @@ tbool CFile::Open(const tchar* pszPathName, EOpenFile OpenFile)
 	int i;
 	GetEOF(miRefNum, (long*)&i);
 	miSizeWhenOpened = i;*/
+	
+	std::string sDebug = pszPathName2;
 
 	switch(OpenFile) {
 		case FileRead:
@@ -698,6 +700,7 @@ tbool CFile::Open(const tchar* pszPathName, EOpenFile OpenFile)
 	}
 
 	if (mpHandle == NULL) {
+//		tint32 iDummy = errno;
 		return false;
 	}
 

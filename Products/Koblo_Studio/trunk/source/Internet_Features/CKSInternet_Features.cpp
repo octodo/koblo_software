@@ -185,7 +185,7 @@ void CKSInternet_Features::Set_Branch_UUID(std::string  sUUID )
 void CKSInternet_Features::SetProjectName( const std::string& sName)
 { 
 	msProjectName = sName;
-	gpApplication->Set_Project_Name(sName);
+	gpApplication->Project_Name(sName);
 }
 
 

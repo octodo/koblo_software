@@ -32,9 +32,7 @@ enum ESectionsParms
 	
 	giSectionGlobal	=	0,
 	giSectionGUI,
-//	giSectionAuxMonitor,
-//	giSectionTransport,
-	giSection_First_Track,
+	giSection_First_Track, // 2
 	giSection_Last_Track	= giSection_First_Track + giNumber_Of_Tracks - 1 ,
 	giSection_First_Buss,
 	giSection_Last_Buss		= giSection_First_Buss   + giNumber_Of_Busses - 1,

@@ -158,7 +158,7 @@ void CKSXML_Create_Project::Write_Project_Name(TiXmlElement* pElement)
 	if ( !pElement ) return ;
 	
 	TiXmlNode* pChild = pElement->FirstChild();
-	gpApplication->Set_Project_Name( pChild->Value());
+	gpApplication->Project_Name( pChild->Value());
 }
 
 void CKSXML_Create_Project::Write_Project_Description(TiXmlElement* pElement)

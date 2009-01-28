@@ -45,20 +45,25 @@ public:
 	//! Returns the scroll pane
 	ge::IScrollPane* GetScrollPane(){return mpScrollPane;};
 
-	void SetPath(const std::string& sPath);
+	//! builds the list of files for the file browser
+	void Build_File_List(const std::string& sPath);
 
 	std::string GetSelectedFile();
+	
+	virtual void Update_Interface(std::string sMenu_Items);
 
 protected:
 	CKSImportGUIPane* mpImportGUI;
 
 	ge::IScrollPane* mpScrollPane;
 
-	std::string msPath;
+	std::string msFolder_Path;
 
-	ge::IListBox* mpListBox;
+	ge::IListBox* mpDirectory_Popup;
 	tint32 miLatestGenuineIndex;
 	tint32 miLatestSelectedFile;
+	
+	virtual void Display_File_Info(std::string sName);
 
 
 	std::list<CKSFile_Item> mFile_Items;

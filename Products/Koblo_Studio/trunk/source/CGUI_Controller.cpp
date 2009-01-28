@@ -39,7 +39,7 @@ void CGUI_Controller::Open_Close_Rack_Window()
 
 void CGUI_Controller::Open_Close_Import_Audio_Window()
 {
-	if (gpApplication->Project_Folder().length() == 0) {
+	if (gpApplication->Project_Name().length() == 0) {
 		gpApplication->ShowMessageBox("You must create or load a project before importing audio", "Sorry");
 		return;
 	}

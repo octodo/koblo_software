@@ -28,9 +28,9 @@ public:
 	virtual ~CKSFile_Controller();
 
 	/*! called from the "File:New" menu
-	 \ returns true if sucessfull
+	 \ returns an ESaveMsg
 	 */
-	tbool New_Project();
+	tint32 New_Project();
 	
 	/*! called from the "File:Save project" menu 
 	 \ and from New_Project()
@@ -51,13 +51,24 @@ public:
 	//! set project name
 	void Project_Folder(std::string sFolder){  msProject_Folder = sFolder;};
 	
-	std::string Get_Project_Name(){ return msProject_Name;};
+	std::string Project_Name(){ return msProject_Name;};
 	//! set project name
-	void Set_Project_Name(std::string sName){  msProject_Name = sName;};
+	void Project_Name(std::string sName){  msProject_Name = sName;};
 	
 	//! update project name and folder path
 	//!!! TO DO make private when old fileformat no longer is supported
 	void Update_Project_Name(std::string sNew_Name);
+	
+	// Check if the file path points to an audio file
+	tbool Is_A_Audio_File(std::string sFile);
+	
+	// check if extencion is reconized
+	tbool Check_Extencion(std::string sFile);
+	
+	std::string  Get_Extencion(std::string sFile);
+	
+	//! opens a audio file at the given path and check if it's readable 
+	tbool Readable_Audio(std::string sFile);
 	
 	
 private:	
@@ -72,7 +83,7 @@ private:
 	tbool Create_Project_Folder();
 	
 	//! create a new sample folder inside the project folder
-	tbool Create_Audio_Folder();
+	tbool Create_Audio_Folders();
 	
 	//! create a new midi folder inside the project folder
 	tbool Create_Midi_Folder();
@@ -99,7 +110,7 @@ private:
 	tbool Create_Folders();
 	
 	//! takes care of not owerwriting a project withour a warning
-	tbool Leave_Old_Project();
+	tint32 Save_Before_Close();
 	
 	//! project folder to copy from during save as
 	std::string msCopy_From_Project_Folder;
