@@ -12,34 +12,8 @@ CXloader::CXloader(tbool bIsUploader)
 	meSpecificVerb = VERB_DEFAULT;
 	mbAllowRedirects = true;
 
-	/*
-	// Prepare CURL multi instance
-	{
-		GetLockForMultiInstance();
-		//
-		// Maybe initialize library
-		if (!gbCURLInitialized) {
-			tint32 iInitFlags = CURL_GLOBAL_DEFAULT;
-			//! TODO! Determine if this should be enabled
-			// Maybe we would need to not initialize win32 sockets if
-			// they were already used for IINetUtil? Would be done like this:
-			tbool bIsWin32AlreadyInitialized = false;
-			if (bIsWin32AlreadyInitialized) {
-				// Don't initialize win32 socket stuff again
-				iInitFlags &= (CURL_GLOBAL_ALL - CURL_GLOBAL_WIN32);
-			}
-			CURLcode code = curl_global_init(iInitFlags);
-			gbCURLInitialized = true;
-		}
-		// Maybe create CURL multi instance
-		if (gpCURLMulti == NULL) gpCURLMulti = curl_multi_init();
-		// Hook CURL multi instance
-		giCURLMultiHooks++;
-		//
-		ReleaseLockForMultiInstance();
-	}
-	*/
-
+	miLockLevel_ForReplyBuffer = 0;
+	
 	// Make sure we only close what's been opened
 	mpCURLEasyHandle = NULL;
 	mpFormPost_First = mpFormPost_Last = NULL;
@@ -607,9 +581,9 @@ tbool CXloader::AssembleParams_ForMultiPartForm(EVerbType eVerb)
 		while (itName != mlist_sParamNames.end()) {
 			// Get elements
 			std::string& rsName = *itName;
-			tint32 iNameLen = rsName.length();
+			//tint32 iNameLen = rsName.length();
 			tchar* pcData = *itParamData;
-			tint32 iDataLen = *itDataLen;
+			//tint32 iDataLen = *itDataLen;
 
 			CURLFORMcode rc = (CURLFORMcode)0;
 
@@ -623,6 +597,7 @@ tbool CXloader::AssembleParams_ForMultiPartForm(EVerbType eVerb)
 				return false;
 			}
 
+			/*
 			// Set param contents length
 			rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
 				CURLFORM_BUFFERLENGTH, iDataLen);
@@ -632,6 +607,7 @@ tbool CXloader::AssembleParams_ForMultiPartForm(EVerbType eVerb)
 				SetError(pszErr);
 				return false;
 			}
+			*/
 
 			// Add param contents
 			rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
@@ -824,10 +800,19 @@ size_t CXloader::WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb)
 		return (size_t)(mpfileForReply->Write((tchar*)ptr, uiBytesToWrite));
 	}
 	else {
-		CAutoLock Lock(mMutex_ForReplyBuffer);
+		//CAutoLock Lock(mMutex_ForReplyBuffer);
+		// Get lock
+		while (++miLockLevel_ForReplyBuffer != 1) {
+			miLockLevel_ForReplyBuffer--;
+			ITime::SleepMS(1);
+		}
 
 		CXloader_ReplyChainLink* pLink = new CXloader_ReplyChainLink(ptr, (tuint32)uiBytesToWrite);
 		mlist_pReplyChain.push_back(pLink);
+		
+		// Release lock
+		miLockLevel_ForReplyBuffer--;
+
 		return (size_t)uiBytesToWrite;
 	}
 } // WriteFunction_ForReply
@@ -835,14 +820,20 @@ size_t CXloader::WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb)
 
 void CXloader::ZapReplyBuffer()
 {
-	CAutoLock Lock(mMutex_ForReplyBuffer);
-
+	while (++miLockLevel_ForReplyBuffer != 1) {
+		miLockLevel_ForReplyBuffer--;
+		ITime::SleepMS(1);
+	}
+	
 	std::list<CXloader_ReplyChainLink*>::iterator it = mlist_pReplyChain.begin();
 	for ( ; it != mlist_pReplyChain.end(); it++) {
 		CXloader_ReplyChainLink* pLink = *it;
 		delete pLink;
 	}
 	mlist_pReplyChain.clear();
+	
+	// Release lock
+	miLockLevel_ForReplyBuffer--;
 } // ZapReplyBuffer
 
 
@@ -910,9 +901,6 @@ tbool CXloader::OpenConnection()
 
 	EVerbType eVerb = GetActuallyUsedVerb();
 
-	tint64 iFalse = 0;
-	tint64 iTrue = 1;
-
 	// Assemble URL string
 	std::string sURL = std::string("http://") + msHost;
 	if (miPort != 80) {
@@ -943,14 +931,14 @@ tbool CXloader::OpenConnection()
 		// Set callbacks for upload
 		{
 			// Set callback function for streaming upload file
-			if (!SetOpt(CURLOPT_READFUNCTION, "CURLOPT_READFUNCTION", &Static_ReadFunction_ForUpload))
+			if (!SetOpt(CURLOPT_READFUNCTION, "CURLOPT_READFUNCTION", (void*)(&Static_ReadFunction_ForUpload)))
 				return false;
 			// Set pointer so callback function for streaming upload file can find correct contents
 			if (!SetOpt(CURLOPT_READDATA, "CURLOPT_READDATA", this))
 				return false;
 
 			// Set callback function for seeking upload file
-			if (!SetOpt(CURLOPT_SEEKFUNCTION, "CURLOPT_SEEKFUNCTION", &Static_SeekFunction_ForUpload))
+			if (!SetOpt(CURLOPT_SEEKFUNCTION, "CURLOPT_SEEKFUNCTION", (void*)(&Static_SeekFunction_ForUpload)))
 				return false;
 			// Set pointer so callback function for seeking upload file can find correct contents
 			if (!SetOpt(CURLOPT_SEEKDATA, "CURLOPT_SEEKDATA", this))
@@ -990,7 +978,7 @@ tbool CXloader::OpenConnection()
 	// Setup receiver for reply / download
 	{
 		// Set callback function for saving download file / reply data
-		if (!SetOpt(CURLOPT_WRITEFUNCTION, "CURLOPT_WRITEFUNCTION", &Static_WriteFunction_ForReply))
+		if (!SetOpt(CURLOPT_WRITEFUNCTION, "CURLOPT_WRITEFUNCTION", (void*)(&Static_WriteFunction_ForReply)))
 			return false;
 		// Set pointer so callback function for receiving download / reply can find correct contents
 		if (!SetOpt(CURLOPT_WRITEDATA, "CURLOPT_WRITEDATA", this))
@@ -1186,41 +1174,45 @@ tbool CXloader::GetReplyPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* pi
 	// Get data
 	{
 		// Make sure we're the only thread working on data
-		CAutoLock Lock(mMutex_ForReplyBuffer);
-
-		tchar* pszDst = pszBuffer;
-		tuint32 uiBytesToGet = iBufferSize;
-		while (uiBytesToGet > 0) {
-			if (mlist_pReplyChain.size() > 0) {
-				CXloader_ReplyChainLink* pLink = *(mlist_pReplyChain.begin());
-				tuint32 uiGot = pLink->GetBytes(pszDst, uiBytesToGet);
-				if (uiGot == 0) {
-					// That one's empty
-					delete pLink;
-					mlist_pReplyChain.erase(mlist_pReplyChain.begin());
+		//CAutoLock Lock(mMutex_ForReplyBuffer);
+		// Get lock
+		if (++miLockLevel_ForReplyBuffer == 1) {
+			tchar* pszDst = pszBuffer;
+			tuint32 uiBytesToGet = iBufferSize;
+			while (uiBytesToGet > 0) {
+				if (mlist_pReplyChain.size() > 0) {
+					CXloader_ReplyChainLink* pLink = *(mlist_pReplyChain.begin());
+					tuint32 uiGot = pLink->GetBytes(pszDst, uiBytesToGet);
+					if (uiGot == 0) {
+						// That one's empty
+						delete pLink;
+						mlist_pReplyChain.erase(mlist_pReplyChain.begin());
+					}
+					else {
+						// Remember how much we got
+						uiBytesToGet -= uiGot;
+						pszDst += uiGot;
+						*piPortionSize += uiGot;
+					}
 				}
 				else {
-					// Remember how much we got
-					uiBytesToGet -= uiGot;
-					pszDst += uiGot;
-					*piPortionSize += uiGot;
+					// Not enough buffered data to fill receiver - but it's still a success
+					uiBytesToGet = 0;
 				}
 			}
-			else {
-				// Not enough buffered data to fill receiver - but it's still a success
-				uiBytesToGet = 0;
+			
+			if (mlist_pReplyChain.size() == 0) {
+				// No more data in buffer
+				// Are we done?
+				if (mbIsMultiDone) {
+					// Yes, multi handler already told us before that we're done,
+					// and now all data has been delivered too, so:
+					SetIsDone();
+				}
 			}
 		}
-
-		if (mlist_pReplyChain.size() == 0) {
-			// No more data in buffer
-			// Are we done?
-			if (mbIsMultiDone) {
-				// Yes, multi handler already told us before that we're done,
-				// and now all data has been delivered too, so:
-				SetIsDone();
-			}
-		}
+		// Release lock
+		miLockLevel_ForReplyBuffer--;
 	}
 
 	// Success (and returned all bytes requested)

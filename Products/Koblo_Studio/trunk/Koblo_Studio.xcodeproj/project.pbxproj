@@ -1505,6 +1505,7 @@
 					"$(SRCROOT)/../../../SDK/trunk/STools/projects/OSXXCode/build/Debug",
 				);
 				PRODUCT_NAME = "Koblo Studio";
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)";
 				WRAPPER_EXTENSION = app;
@@ -1551,6 +1552,7 @@
 					"$(SRCROOT)/../../../SDK/trunk/STools/projects/OSXXCode/build/Release",
 				);
 				PRODUCT_NAME = "Koblo Studio";
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 				STRIP_INSTALLED_PRODUCT = YES;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)";
 				WRAPPER_EXTENSION = app;

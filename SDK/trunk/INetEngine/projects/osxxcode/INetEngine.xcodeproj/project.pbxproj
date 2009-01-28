@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		320343FC0EFC07C700CC630E /* CXLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 320343FB0EFC07C600CC630E /* CXLoader.cpp */; };
 		320343FE0EFC07DC00CC630E /* CXloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 320343FD0EFC07DC00CC630E /* CXloader.h */; };
 		320344000EFC07F200CC630E /* IDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 320343FF0EFC07F200CC630E /* IDownloader.h */; };
 		320F4A320F1CB016002639C3 /* IUploader.h in Headers */ = {isa = PBXBuildFile; fileRef = 320F4A310F1CB016002639C3 /* IUploader.h */; };
@@ -16,7 +15,7 @@
 		325EEC8E0F2FA48300CE5083 /* CXloader_MultiWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325EEC8C0F2FA48300CE5083 /* CXloader_MultiWrapper.cpp */; };
 		325EEC910F2FA4C900CE5083 /* CXloader_MultiWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 325EEC8F0F2FA4C900CE5083 /* CXloader_MultiWrapper.h */; };
 		325EEC920F2FA4C900CE5083 /* CXloader_ReplyChainLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 325EEC900F2FA4C900CE5083 /* CXloader_ReplyChainLink.h */; };
-		32EF3A3E0F3086EA0093D0DA /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 325F1CFD0F20CDF0003081D0 /* libcurl.a */; };
+		32F77F390F309F8A0021141C /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F77F380F309F850021141C /* libcurl.a */; };
 		D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
 		E3E010650A4FE70F00857352 /* CINetUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */; };
 		E3E010660A4FE70F00857352 /* CINetUtilMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3E010600A4FE70F00857352 /* CINetUtilMac.cpp */; };
@@ -41,18 +40,11 @@
 			remoteGlobalIDString = D2AAC06E0554671400DB518D;
 			remoteInfo = BaseUtilities;
 		};
-		325F1CFC0F20CDF0003081D0 /* PBXContainerItemProxy */ = {
+		32F77F370F309F850021141C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 325F1CF50F20CDF0003081D0 /* libcurl.xcodeproj */;
+			containerPortal = 32F77F300F309F850021141C /* libcurl.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC046055464E500DB518D;
-			remoteInfo = libcurl;
-		};
-		325F1D000F20CE12003081D0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 325F1CF50F20CDF0003081D0 /* libcurl.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteGlobalIDString = D2AAC046055464E500DB518D /* libcurl.a */;
 			remoteInfo = libcurl;
 		};
 /* End PBXContainerItemProxy section */
@@ -60,7 +52,6 @@
 /* Begin PBXFileReference section */
 		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BaseUtilities.xcodeproj; path = ../../../BaseUtilities/projects/OSXXCode/BaseUtilities.xcodeproj; sourceTree = SOURCE_ROOT; };
-		320343FB0EFC07C600CC630E /* CXLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CXLoader.cpp; path = ../../source/CXLoader.cpp; sourceTree = SOURCE_ROOT; };
 		320343FD0EFC07DC00CC630E /* CXloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CXloader.h; path = ../../include/CXloader.h; sourceTree = SOURCE_ROOT; };
 		320343FF0EFC07F200CC630E /* IDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDownloader.h; path = ../../interface/IDownloader.h; sourceTree = SOURCE_ROOT; };
 		3207B0E90F1788EF00E6ABF3 /* CINetUtilWin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CINetUtilWin.cpp; path = ../../source/CINetUtilWin.cpp; sourceTree = SOURCE_ROOT; };
@@ -71,7 +62,7 @@
 		325EEC8C0F2FA48300CE5083 /* CXloader_MultiWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CXloader_MultiWrapper.cpp; path = ../../source/CXloader_MultiWrapper.cpp; sourceTree = SOURCE_ROOT; };
 		325EEC8F0F2FA4C900CE5083 /* CXloader_MultiWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CXloader_MultiWrapper.h; path = ../../include/CXloader_MultiWrapper.h; sourceTree = SOURCE_ROOT; };
 		325EEC900F2FA4C900CE5083 /* CXloader_ReplyChainLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CXloader_ReplyChainLink.h; path = ../../include/CXloader_ReplyChainLink.h; sourceTree = SOURCE_ROOT; };
-		325F1CF50F20CDF0003081D0 /* libcurl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libcurl.xcodeproj; path = ../../curl/lib/libcurl/libcurl.xcodeproj; sourceTree = SOURCE_ROOT; };
+		32F77F300F309F850021141C /* libcurl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libcurl.xcodeproj; path = ../../curl/lib/libcurl/libcurl.xcodeproj; sourceTree = SOURCE_ROOT; };
 		D2AAC06F0554671400DB518D /* libINetEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libINetEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CINetUtil.cpp; path = ../../source/CINetUtil.cpp; sourceTree = SOURCE_ROOT; };
 		E3E010600A4FE70F00857352 /* CINetUtilMac.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = CINetUtilMac.cpp; path = ../../source/CINetUtilMac.cpp; sourceTree = SOURCE_ROOT; };
@@ -87,7 +78,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2AAC0700554677100DB518D /* Carbon.framework in Frameworks */,
-				32EF3A3E0F3086EA0093D0DA /* libcurl.a in Frameworks */,
+				32F77F390F309F8A0021141C /* libcurl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +96,7 @@
 		0867D691FE84028FC02AAC07 /* DataEngine */ = {
 			isa = PBXGroup;
 			children = (
-				325F1CF50F20CDF0003081D0 /* libcurl.xcodeproj */,
+				32F77F300F309F850021141C /* libcurl.xcodeproj */,
 				0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */,
 				08FB77ACFE841707C02AAC07 /* Source */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
@@ -163,7 +154,6 @@
 				325EEC8C0F2FA48300CE5083 /* CXloader_MultiWrapper.cpp */,
 				3207B0E90F1788EF00E6ABF3 /* CINetUtilWin.cpp */,
 				3207B0EA0F1788EF00E6ABF3 /* ineInternal.cpp */,
-				320343FB0EFC07C600CC630E /* CXLoader.cpp */,
 				E3E0105F0A4FE70F00857352 /* CINetUtil.cpp */,
 				E3E010600A4FE70F00857352 /* CINetUtilMac.cpp */,
 			);
@@ -178,10 +168,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		325F1CF60F20CDF0003081D0 /* Products */ = {
+		32F77F310F309F850021141C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				325F1CFD0F20CDF0003081D0 /* libcurl.a */,
+				32F77F380F309F850021141C /* libcurl.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,7 +211,6 @@
 			);
 			dependencies = (
 				0B8839F808BB499B00095026 /* PBXTargetDependency */,
-				325F1D010F20CE12003081D0 /* PBXTargetDependency */,
 			);
 			name = INetEngine;
 			productName = DataEngine;
@@ -245,8 +234,8 @@
 					ProjectRef = 0B8839F108BB499100095026 /* BaseUtilities.xcodeproj */;
 				},
 				{
-					ProductGroup = 325F1CF60F20CDF0003081D0 /* Products */;
-					ProjectRef = 325F1CF50F20CDF0003081D0 /* libcurl.xcodeproj */;
+					ProductGroup = 32F77F310F309F850021141C /* Products */;
+					ProjectRef = 32F77F300F309F850021141C /* libcurl.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -264,11 +253,11 @@
 			remoteRef = 0B8839F508BB499100095026 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		325F1CFD0F20CDF0003081D0 /* libcurl.a */ = {
+		32F77F380F309F850021141C /* libcurl.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libcurl.a;
-			remoteRef = 325F1CFC0F20CDF0003081D0 /* PBXContainerItemProxy */;
+			remoteRef = 32F77F370F309F850021141C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -280,7 +269,6 @@
 			files = (
 				E3E010650A4FE70F00857352 /* CINetUtil.cpp in Sources */,
 				E3E010660A4FE70F00857352 /* CINetUtilMac.cpp in Sources */,
-				320343FC0EFC07C700CC630E /* CXLoader.cpp in Sources */,
 				325EEC8D0F2FA48300CE5083 /* CXloader.cpp in Sources */,
 				325EEC8E0F2FA48300CE5083 /* CXloader_MultiWrapper.cpp in Sources */,
 			);
@@ -293,11 +281,6 @@
 			isa = PBXTargetDependency;
 			name = BaseUtilities;
 			targetProxy = 0B8839F708BB499B00095026 /* PBXContainerItemProxy */;
-		};
-		325F1D010F20CE12003081D0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = libcurl;
-			targetProxy = 325F1D000F20CE12003081D0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

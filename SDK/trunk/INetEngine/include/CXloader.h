@@ -92,7 +92,8 @@ protected:
 	IFile* mpfileForReply;
 
 	std::list<CXloader_ReplyChainLink*> mlist_pReplyChain;
-	CMutex mMutex_ForReplyBuffer;
+	//CMutex mMutex_ForReplyBuffer;
+	volatile tint32 miLockLevel_ForReplyBuffer;
 	void ZapReplyBuffer();
 
 	tuint64 muiUploadProgress;
