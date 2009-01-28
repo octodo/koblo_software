@@ -21,6 +21,59 @@ CKSFile_Controller::~CKSFile_Controller()
 	
 }
 
+tbool CKSFile_Controller::Open_Project()
+{
+	// msExtendedError = "";
+	CAutoDelete<ge::IOpenDialog> pDlg(ge::IOpenDialog::Create());
+	
+	// Default Name
+	tchar pszDefaultFolder[1024];
+	tchar pszXML_Path[1024];
+	gpApplication->GetDefaultProjectFolder(pszDefaultFolder);
+	
+	pDlg->DoDialog(pszXML_Path, pszDefaultFolder, "*.KSProject", "KS Project (*.KSProject)", "New Project.xml");
+	
+	if (pszXML_Path[0] == 0) {
+		// Exit with no error
+		gpApplication->Start_Timer();
+		return true;
+	}
+	// loading project
+	gpApplication->PlaybackStop();
+	gpApplication->Stop_Timer();
+	// Avoid repeated GUI updates on load
+	gpApplication->SetGUIsReady(false);
+	
+	CAutoLock Lock( gpApplication->GetMutex() );
+	
+	// find and store project name
+	std::string sProject_Name			= pszXML_Path;
+	tint32 iPosColon					= sProject_Name.find_last_of(':');
+	sProject_Name.erase(0, iPosColon + 1);
+	Project_Name(sProject_Name);
+	
+	// find and store project folder
+	std::string sProject_Folder			= pszXML_Path;
+	iPosColon							= sProject_Folder.find_last_of(':');
+	sProject_Folder.erase(iPosColon+1, sProject_Folder.size() );
+	Project_Folder(sProject_Folder);
+	
+	gpApplication->Read_Project_From_Disk();
+	
+	// gui is readdy
+	gpApplication->SetGUIsReady(true);
+	
+	// set windows
+	gpApplication->Update_Windows();
+	
+	// force update now
+	gpApplication->Stack_Tracks();
+	gpApplication->Start_Timer();
+	
+	
+	return true;
+}
+
 tint32 CKSFile_Controller::New_Project()
 {
 	// take care of not owerwriting a project withour  warning

@@ -117,7 +117,7 @@ void CKSInternet_Features::Load_Project(tint32 iProjectID)
 	gpApplication->Reset_Project();
 	
 	// set all internal parameters fro DOM 
-	gpApplication->CKSXML_Parse_DOM_To_Preset();
+//	gpApplication->CKSXML_Parse_DOM_To_Preset();
 }
 
 

@@ -506,37 +506,43 @@ void CKSXML_Write_Project::Write_Loop(TiXmlElement* pParent)
 
 void CKSXML_Write_Project::Write_Windows(TiXmlElement* pParent)
 {
+	tbool bShow;
+	
 	// edit
-	TiXmlElement* pEdit = new TiXmlElement( "edit" );;
+	TiXmlElement* pEdit = new TiXmlElement( "edit" );
 	pParent->LinkEndChild( pEdit );
-	Write_Window_Edit(pEdit);
+	bShow = (gpApplication->GetModule()->GetHost()->IsWindowVisible(giMain_Window) != 0);
+	Write_Window( pEdit, giParamID_Show_Track_Window, bShow);
 	
 	// mix
-	TiXmlElement* pMix = new TiXmlElement( "mix" );;
+	TiXmlElement* pMix = new TiXmlElement( "mix" );
 	pParent->LinkEndChild( pMix );
-	Write_Window_Mix(pMix);
+	bShow = (gpApplication->GetModule()->GetHost()->IsWindowVisible(giMix_Window) != 0);
+	Write_Window( pMix, giParamID_Show_Mix_Window, bShow);
 	
 	// rack
-	TiXmlElement* pRack = new TiXmlElement( "rack" );;
+	TiXmlElement* pRack = new TiXmlElement( "rack" );
 	pParent->LinkEndChild( pRack );
-	Write_Window_Rack(pRack);
+	bShow = (gpApplication->GetModule()->GetHost()->IsWindowVisible(giRack_Window) != 0);
+	Write_Window( pRack, giParamID_Show_AUX_Window, bShow);
 }
 
-void CKSXML_Write_Project::Write_Window_Edit(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Window(TiXmlElement* pParent, tint32 iWindow, tbool bShow)
 {
-	
-//	sprintf(pszBuff, "%d", iVal);
+	char pszBuff [64];
+	tint32 iVal;
 	
 	// show
-	TiXmlElement* pShow = new TiXmlElement( "show" );
-	TiXmlText* pShowTxt = new TiXmlText("on");
+	std::string sText		=	bShow? "on": "off";
+	TiXmlElement* pShow		=	new TiXmlElement( "show");
+	TiXmlText* pShowTxt		=	new TiXmlText(sText.c_str() );
 	pShow->LinkEndChild( pShowTxt );
 	pParent->LinkEndChild( pShow );
 	
 	
 	// layer
-	char pszBuff [64];
-	tint32 iVal = 1;//gpApplication->GetGlobalParm(giParamID_Loop_On, giSectionGlobal);
+	
+	iVal = 1;//gpApplication->GetGlobalParm(iWindow, giSectionGUI);
 	sprintf(pszBuff, "%d", iVal);
 	TiXmlElement* pLayer = new TiXmlElement( "layer" );
 	TiXmlText* pLayerTxt = new TiXmlText(pszBuff);
@@ -556,15 +562,6 @@ void CKSXML_Write_Project::Write_Window_Edit(TiXmlElement* pParent)
 	
 }
 
-void CKSXML_Write_Project::Write_Window_Mix(TiXmlElement* pParent)
-{
-	
-}
-
-void CKSXML_Write_Project::Write_Window_Rack(TiXmlElement* pParent)
-{
-	
-}
 
 void CKSXML_Write_Project::Write_Window_Position(TiXmlElement* pParent, tuint uiPosX, tuint uiPosY)
 {

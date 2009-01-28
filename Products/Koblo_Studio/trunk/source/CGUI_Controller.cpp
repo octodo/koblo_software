@@ -74,6 +74,25 @@ void CGUI_Controller::Show_Hide_Plugins()
 	
 }
 
+void CGUI_Controller::Update_Windows() 
+{
+	// mix window
+	tbool bVisibel	=	gpApplication->GetGlobalParm(giParamID_Show_Mix_Window,  giSectionGlobal);
+	if(bVisibel )
+		gpApplication->GetModule()->GetHost()->ActivateWindow(giMix_Window);
+	else
+		gpApplication->GetModule()->GetHost()->HideWindow(giMix_Window);
+	
+
+	// rack window
+	bVisibel		=	gpApplication->GetGlobalParm(giParamID_Show_AUX_Window,  giSectionGlobal);
+	if(bVisibel )
+		gpApplication->GetModule()->GetHost()->ActivateWindow(giRack_Window);
+	else
+		gpApplication->GetModule()->GetHost()->HideWindow(giRack_Window);
+
+}
+
 
 
 

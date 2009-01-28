@@ -3142,74 +3142,10 @@ tbool CKSApplication::ExportProjectForWeb_Compress(
 
 
 
-tbool CKSApplication::Open_Project()
-{
 
-	/*
-	msExtendedError = "";
-	PlaybackStop();
-	Stop_Timer();
-	*/
-	CAutoDelete<ge::IOpenDialog> pDlg(ge::IOpenDialog::Create());
-	
-	
-	
-	// Default Name
-	tchar pszDefaultFolder[1024];
-	std::string sDefaultName = "";
-	
-	GetDefaultProjectFolder(pszDefaultFolder);
-	
-	if (sDefaultName.length() == 0)
-		sDefaultName = "New Project.xml";
-	
-	tchar pszXML_Path[1024];
-
-//	pDlg->SetBundleBehaviour(1);
-	pDlg->DoDialog(pszXML_Path, pszDefaultFolder, "*.KSProject", "KS Project (*.KSProject)", sDefaultName.c_str());
-	
-	if (pszXML_Path[0] == 0) {
-		// Exit with no error
-		Start_Timer();
-		return true;
-	}
-
-	CAutoLock Lock(mMutex);
-	
-	std::string sXML_File_Path = pszXML_Path;
-	
-
-	
-	if (sXML_File_Path.length()) {
-		// find and store project name
-		std::string sProject_Name			= sXML_File_Path;
-		tint32 iPosColon					= sProject_Name.find_last_of(':');
-		sProject_Name.erase(0, iPosColon + 1);
-		Project_Name(sProject_Name);
-		
-		// find and store project folder
-		std::string sProject_Folder			= sXML_File_Path;
-		iPosColon							= sProject_Folder.find_last_of(':');
-		sProject_Folder.erase(iPosColon+1, sProject_Folder.size() );
-		Project_Folder(sProject_Folder);
-		
-		/*
-		std::string sProjectFolder = Project_Folder();
-		tint32 iEndPos = sProjectFolder.find(Project_Name());
-		tint32 iChars_To_Rempve = Project_Name().size();
-		sProjectFolder.erase(iEndPos, iChars_To_Rempve+1 );
-		*/
-		
-		//Project_Folder(sProjectFolder);
-		Read_Project_From_Disk();
-	}
-
-	Start_Timer();
-	return true;
-}
 tbool CKSApplication::MenuFileLoadProject()
 {
-	
+	/*
 	
 	msExtendedError = "";
 
@@ -3445,7 +3381,7 @@ tbool CKSApplication::MenuFileLoadProject()
 
 	// Start progress
 	Playback_InProgressTask();
-	
+	*/
 	// No error
 	return true;
 } // MenuFileLoadProject
@@ -4884,10 +4820,6 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 	CSample_Data* pSample_Data = new CSample_Data();
 	CTake_Data* pTake_Info = pSample_Data->Get_Take_Data();
 	
-	
-//	pSample_Data->Set_Sample_UUID();
-	
-	
 	if (!pImportInfo->Stereo()) {
 		
 		
@@ -4895,10 +4827,6 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 		pSample_Data->sName					=	pImportInfo->Name();
 		pTake_Info->sWaveNameL				=	pImportInfo->Name();
 		pTake_Info->sWaveNameR				=	"";
-	//	pTake_Info->sOriginalName			=	pImportInfo->msClipName;
-	//	pTake_Info->sOriginalExt			=	pImportInfo->msExt;
-	//	pTake_Info->bIsOriginalStereo		=	false;
-	//	pTake_Info->bIsOriginalLossy		=	pImportInfo->mbSrcLossyCompressed;
 		pTake_Info->iOriginalChannelMask	=	0;
 		pTake_Info->bIsStereoInList			=	false;
 		pTake_Info->sWavePathNameL			=	pImportInfo->Left_Path();
@@ -4914,10 +4842,6 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 			pSample_Data->sName					=	pImportInfo->Name();
 			pTake_Info->sWaveNameL				=	pImportInfo->Left_Name();
 			pTake_Info->sWaveNameR				=	pImportInfo->Right_Name();
-			//pTake_Info->sOriginalName			= pImportInfo->msClipName;
-			//pTake_Info->sOriginalExt			= pImportInfo->msExt;
-			//pTake_Info->bIsOriginalStereo		= true;
-			//pTake_Info->bIsOriginalLossy		= pImportInfo->mbSrcLossyCompressed;
 			pTake_Info->iOriginalChannelMask	=	0x01 | 0x02;
 			pTake_Info->bIsStereoInList			=	true;
 			pTake_Info->sWavePathNameL			=	pImportInfo->Left_Path();
@@ -4932,10 +4856,6 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 			pSample_Data->sName				=	pImportInfo->Name();
 			pTake_Info->sWaveNameL			=	pImportInfo->Left_Name();
 			pTake_Info->sWaveNameR			=	"";
-//			pTake_Info->sOriginalName		=	pImportInfo->msClipName;
-//			pTake_Info->sOriginalExt		=	pImportInfo->msExt;
-//			pTake_Info->bIsOriginalStereo	=	true;
-//			pTake_Info->bIsOriginalLossy	=	pImportInfo->mbSrcLossyCompressed;
 			pTake_Info->iOriginalChannelMask =	0x01;
 			pTake_Info->bIsStereoInList		=	false;
 			pTake_Info->sWavePathNameL		=	pImportInfo->Left_Path();
@@ -4945,14 +4865,9 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 			mSample_Data_List.push_back(pSample_Data);
 
 			// Stereo, right side
-
 			pSample_Data->sName				=	pImportInfo->Name();
 			pTake_Info->sWaveNameL			=	"";
 			pTake_Info->sWaveNameR			=	pImportInfo->Right_Name();
-//			pTake_Info->sOriginalName		=	pImportInfo->msClipName;
-//			pTake_Info->sOriginalExt		=	pImportInfo->msExt;
-//			pTake_Info->bIsOriginalStereo	=	true;
-//			pTake_Info->bIsOriginalLossy	=	pImportInfo->mbSrcLossyCompressed;
 			pTake_Info->iOriginalChannelMask = 0x02;
 			pTake_Info->bIsStereoInList		=	false;
 			pTake_Info->sWavePathNameL		=	"";

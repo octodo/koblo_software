@@ -26,6 +26,9 @@ public:
 
 	//! Destructor
 	virtual ~CKSFile_Controller();
+	
+	//! open project
+	virtual tbool Open_Project();
 
 	/*! called from the "File:New" menu
 	 \ returns an ESaveMsg

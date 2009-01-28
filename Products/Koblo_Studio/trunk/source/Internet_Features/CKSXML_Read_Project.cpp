@@ -125,11 +125,16 @@ void CKSXML_Read_Project::Parse_Project( TiXmlNode* pParent )
 	// if file is empty return
 	if ( !pParent ) return;
 	
+	tbool read = true;
+	
 	TiXmlNode* pChild;
 	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
 	{
-		if(pChild->Type() == TiXmlNode::ELEMENT)
+		if(pChild->Type() == TiXmlNode::ELEMENT && read){
 			Read_Project(pChild);
+			read = false;
+			
+		}
 	}	
 }
 
@@ -139,7 +144,10 @@ void CKSXML_Read_Project::Read_Project(TiXmlNode* pParent)
 	
 	TiXmlAttribute* pAttrib	=	pParent->ToElement()->FirstAttribute();
 	// project uuid
-	gpApplication->Set_Project_UUID( pAttrib->Value() );
+	if(pAttrib) {
+		std::string s =  pAttrib->Value() ;
+		gpApplication->Set_Project_UUID(s);
+	}
 	
 /*
 	// scema
@@ -638,8 +646,9 @@ void CKSXML_Read_Project::Read_Window(TiXmlNode* pParrent, tint32 iWindow)
 void CKSXML_Read_Project::Open_Window(std::string sOn_Off, tint32 iWindow)
 {
 	
-	if (stricmp("off", sOn_Off.c_str()) == 0) 
+	if (stricmp("off", sOn_Off.c_str()) == 0){
 		gpApplication->SetGlobalParm(iWindow, 0,  giSectionGlobal);
+	}
 	
 	else if (stricmp("on", sOn_Off.c_str()) == 0) 
 		gpApplication->SetGlobalParm(iWindow, 1,  giSectionGlobal);
