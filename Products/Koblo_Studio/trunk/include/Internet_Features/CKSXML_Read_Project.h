@@ -28,6 +28,8 @@
  */
 
 class CKSApplication;
+class CSample_Data;
+class CTake_Data;
 //class TiXmlDocument;
 
 
@@ -99,7 +101,7 @@ public:
 	
 	
 	void Read_Sample(TiXmlElement* pElement);
-	void Read_Sample_Take(TiXmlElement* pElement);
+	void Read_Sample_Take(TiXmlElement* pElement, CSample_Data* Sample_Data);
 	void Read_Loop(TiXmlElement* pElement);
 	void Loop_Active(std::string sFades);
 	void Read_Windows(TiXmlElement* pElement);
@@ -137,9 +139,44 @@ public:
 	void Read_Master_Out(TiXmlElement* pElement);
 	void Read_Master_Insert(TiXmlElement* pElement);
 	void Read_Master_Aux_Return(TiXmlElement* pElement);
+	
+	/*! iterates the list of samples
+	\ each sample holds minimum one take
+	\ takes are inspected and downloaded / decompressed if needed
+	*/
+	void Insert_Samples();
+	//! check if take is in the "wave file" folder
+	tbool Is_In_Wave_Files(CTake_Data* pTake_Data);
+	//! check if take is in the" download:OGG Files" folder
+	tbool Is_In_OGG_Files(CTake_Data* pTake_Data);
+	
+	
+	
+	/*! add take to download que
+	\ if a take file isn't in the "wave file" folder or in the "ogg folder"
+	\ it will be added to the download que
+	*/
+	void Add_Take_To_Download_Que(CTake_Data* pTake_Data);
+	
+	/*! add take to decompression que
+	\ this que is excecuted when all missing take files are downloaded
+	*/
+	void Add_Take_To_Decompress_Que(CTake_Data* pTake_Data);
+	
+	/*! add take to import que
+	\ this que is executed when all takes are in the "wave file" folder
+	\ takes from this que is inserted to the list of samples
+	*/
+	void Add_Take_To_Insert_Que(CTake_Data* pTake_Data);
+	
 
 	
 	void Set_Param( TiXmlNode* pParent, tuint uiType, tuint32 uiID, tint32 Section, tfloat fFactor = 1.0f );
+	
+	
+	
+	
+	
 	
 	tbool Check_For_Newer_Revision(tint32 iProject_ID);
 	//! itterate true the project XML file from the root level
@@ -150,6 +187,8 @@ public:
 	void Check_Branch(TiXmlNode* pParent);
 	
 	void Check_Revision(TiXmlElement* pElement);
+	
+	
 	
 
 private:
@@ -164,6 +203,20 @@ private:
 	
 	tuint32 muiNummerator;
 	tuint32 muiDominator;
+	
+	
+	
+	// list of sample files to load
+	std::list<CSample_Data> mSample_Data_List;
+	
+	// list of takes files to load
+	std::list<CTake_Data> mTake_Download_Que;
+	
+	// list of takes files to load
+	std::list<CTake_Data> mTake_Decompress_Que;
+	
+	// list of takes files to load
+	std::list<CTake_Data> mTake_Insert_Que;
 	
 };
 

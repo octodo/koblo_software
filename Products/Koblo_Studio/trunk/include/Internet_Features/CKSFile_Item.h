@@ -59,8 +59,8 @@ public:
 	std::string Destination_Path(){ return msDestination_Path;};
 	
 	
-	// ! set path
-	void Extencion(std::string sPath){msExtencion = sPath;};
+	// !set  extencion
+	void Extencion(std::string sExtencion){msExtencion = sExtencion;};
 	
 	//! get extencion
 	std::string Extencion(){ return msExtencion;};

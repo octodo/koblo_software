@@ -138,17 +138,13 @@ void CKS_Import_Files::RemoveFile()
 void CKS_Import_Files::ImportFiles()
 {
 	/*
-	 if (gpApplication->GetProjDir().length() == 0) {
-	 gpApplication->ShowMessageBox("You must create or load a project before importing audio", "Sorry");
-	 return;
-	 }
-	 */
 	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
 	for (; it != mFile_Items.end(); it++) {
 		CKSFile_Item Info = *it;
 		gpApplication->QueueAudioFileImport(Info.Path().c_str(), false);
 	}
 	ClearFiles();
+	 */
 }
 
 
@@ -158,11 +154,6 @@ void CKS_Import_Files::Import_Audio_Files()
 	
 	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
 	for (; it != mFile_Items.end(); it++) {
-		
-	//	std::string s = "";
-	//	s += (*it).Source_Path();
-		
-		//sprintf("file to import: %s \n", (*it).Source_Path().c_str());
 		
 		Import_Audio_File((*it), false);
 	}
@@ -179,12 +170,7 @@ tbool CKS_Import_Files::Import_Audio_File(CKSFile_Item File_Item, tbool bAlwaysK
 	CImportAudioTask::EStereoBehavior eBehave = (bAlwaysKeepStereo) ? CImportAudioTask::geStereoDoKeep : CImportAudioTask::geStereoDoAsk;
 	
 	tbool bSuccess = pImportAudioTask->Init( File_Item.Source_Path(), false, eBehave, false);
-	
-/* //!!! not supported
-	if (iTrackID >= 0) {
-		pImportAudioTask->Init_InsertAsRegionAfterImport(iTrackID, iTrackPos);
-	}
-*/	
+		
 	if (bSuccess) {
 		gpApplication->mpProgressTasks->Add(pImportAudioTask);
 		gpApplication->Playback_InProgressTask();

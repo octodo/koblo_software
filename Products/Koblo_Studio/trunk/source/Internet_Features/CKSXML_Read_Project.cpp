@@ -751,30 +751,44 @@ void CKSXML_Read_Project::Read_Sample(TiXmlElement* pElement)
 	if ( !pElement ) return ;
 	
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
-	tint32 ival;
+	CSample_Data Sample_Data;
 	
-	// sample id
-	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		;	
+	if(pAttrib) {
+		// set sample uuid
+		Sample_Data.Set_UUID(pAttrib->Value());
+	}
+	
+	
+	
+	
+
+
 	TiXmlNode* pChild;
-	
 	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
 		
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("name", pChild->Value()) == 0) {
-				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
+				/*
+					
+					TiXmlNode* pName = pChild->FirstChild();
+					if(pName) {
+						pText = pName->ToText();
+						if(pText)
+							gpApplication->Set_Sample_Name(pText->Value());
+					}
+				*/
 
 			}
 			else if (stricmp("take", pChild->Value()) == 0) {
-				Read_Sample_Take(pChild->ToElement());
+				Read_Sample_Take(pChild->ToElement(), &Sample_Data);
 
 			}
 		}
 	}
 }
 
-void CKSXML_Read_Project::Read_Sample_Take(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Sample_Take(TiXmlElement* pElement, CSample_Data* Sample_Data)
 {
 	
 	
@@ -1466,6 +1480,51 @@ void CKSXML_Read_Project::Read_Master_Out(TiXmlElement* pElement)
 
 
 
+void CKSXML_Read_Project::Insert_Samples()
+{
+	
+}
+
+tbool CKSXML_Read_Project::Is_In_Wave_Files(CTake_Data* pTake_Data)
+{
+	
+}
+
+
+tbool CKSXML_Read_Project::Is_In_OGG_Files(CTake_Data* pTake_Data)
+{
+	
+}
+
+void CKSXML_Read_Project::Add_Take_To_Download_Que(CTake_Data* pTake_Data)
+{
+	
+}
+
+void CKSXML_Read_Project::Add_Take_To_Decompress_Que(CTake_Data* pTake_Data)
+{
+	
+}
+
+void CKSXML_Read_Project::Add_Take_To_Insert_Que(CTake_Data* pTake_Data)
+{
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void CKSXML_Read_Project::Set_Param( TiXmlNode* pParent, tuint uiType, tuint32 iParamID, tint iSection,  tfloat fFactor)
 {
 	
@@ -1529,6 +1588,12 @@ void CKSXML_Read_Project::Set_Param( TiXmlNode* pParent, tuint uiType, tuint32 i
 
 
 
+
+
+
+
+
+
 tbool CKSXML_Read_Project::Check_For_Newer_Revision(tint32 iProject_ID)
 {
 	mbNew_Revision = false;
@@ -1555,24 +1620,7 @@ void CKSXML_Read_Project::Check_Project( TiXmlNode* pParent )
 void CKSXML_Read_Project::Check_Project_Childs(TiXmlNode* pParent)
 {
 	if ( !pParent ) return ;
-	/*
-	printf("--------------------------  PROJECT ----------------------------\n");
-	TiXmlAttribute* pAttrib	=	pParent->ToElement()->FirstAttribute();
-	tint32 ival;
-	
-	// project ID
-	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "project id =  %d", ival);
-	printf( "\n" );
-	// scema
-	if(pAttrib=pAttrib->Next())
-		printf( "%s: %s", pAttrib->Name(), pAttrib->Value());
-	printf( "\n" );
-	// schema Location 
-	if(pAttrib=pAttrib->Next())
-		printf( "%s: %s", pAttrib->Name(), pAttrib->Value());
-	printf( "\n" );
-	*/
+
 	// parse all childs
 	TiXmlNode* pChild;
 	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 

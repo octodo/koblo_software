@@ -72,22 +72,6 @@ protected:
 
 	ge::IListBox* mpListBox;
 	
-	
-	
-	
-	
-	
-/*
-	struct SItemInfo {
-		std::string sPathName;
-		std::string sName;
-	};
-*/	
-	
-	
-	
-	
-
 	std::list<CKSFile_Item> mFile_Items;
 
 	void UpdateListBox();
