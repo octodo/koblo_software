@@ -67,6 +67,13 @@ public:
 	*/
 	virtual tbool EnableAutoRedirects() = 0;
 
+	//! Tell the downloader whether you want to abort immediately upon error status codes
+	/*!
+		\param bFailOnStatus [in]: True: Abort download immediately if error status is received. False (default, reset by Init(..) ): Error is only reported after all data has been received
+		\return tbool: True upon successfully setting the parameter
+	*/
+	virtual tbool SetFailOnHttpStatus(tbool bFailOnStatus) = 0;
+
 	//! Call this once for each parameter=value set to submit to download location
 	/*!
 		\param pszParamName [in]: Name of parameter. Must be US-ASCII characters and numbers only (a-z, A-Z and 0-9)

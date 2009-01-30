@@ -63,6 +63,16 @@ public:
 	*/
 	virtual tbool SetSpecificVerb(EVerbType eVerb) = 0;
 
+	//! Tell the uploader whether you want to abort immediately upon error status codes
+	/*!
+		\param bFailOnStatus [in]: True: Abort upload-reply immediately if error status is received. False (default, reset by Init(..) ): Error is only reported after all of reply has been received
+		\return tbool: True upon successfully setting the parameter
+	*/
+	virtual tbool SetFailOnHttpStatus(tbool bFailOnStatus) = 0;
+
+	//! ... default true
+	virtual tbool SetStreamingUpload(tbool bUseStreaming) = 0;
+
 	//! By calling this you'll prevent the uploader from following redirect requests. Must be called after Init(..) since that resets this behaviour
 	/*!
 		\return tbool: True upon successfully setting the parameter

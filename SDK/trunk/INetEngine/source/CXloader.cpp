@@ -18,9 +18,6 @@ CXloader::CXloader(tbool bIsUploader)
 	mpCURLEasyHandle = NULL;
 	mpFormPost_First = mpFormPost_Last = NULL;
 	mpSList_ExtraHeaders = NULL;
-	
-	// No longer - will use libCURL instead
-	//Constructor_OSSpecific();
 } // constructor
 
 
@@ -35,27 +32,6 @@ CXloader::~CXloader()
 		curl_easy_cleanup(mpCURLEasyHandle);
 		mpCURLEasyHandle = NULL;
 	}
-	
-	/*
-	// Unhook and maybe release CURL multi instance
-	{
-		GetLockForMultiInstance();
-		//
-		// Unhook CURL multi instance
-		giCURLMultiHooks--;
-		// Maybe release CURL multi instance
-		if (giCURLMultiHooks == 0) {
-			// No more use for instance - release it
-			curl_multi_cleanup(gpCURLMulti);
-			gpCURLMulti = NULL;
-		}
-		//
-		ReleaseLockForMultiInstance();
-	}
-	*/
-
-	// No longer - will use libCURL instead
-	//Destructor_OSSpecific();
 } // destructor
 
 
@@ -106,7 +82,7 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToU
 				&&
 				((c < '0') || (c > '9'))
 				&&
-				(c != '.')
+				((c != '.') && (c != '-'))
 				) {
 				SetError("Not valid url-host");
 				return false;
@@ -126,7 +102,7 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToU
 					&&
 					((c < '0') || (c > '9'))
 					&&
-					(c != '.')
+					((c != '.') && (c != '-'))
 					&&
 					(c != '/')
 					) {
@@ -136,7 +112,7 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToU
 			}
 		}
 	}
-	
+
 	// Verify sanity of port
 	if (iPort <= 0) {
 		SetError("Not a valid port");
@@ -153,7 +129,7 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToU
 	msPage = (pszPage == NULL) ? "" : pszPage;
 	mpfileToUpload = pfileToUpload;
 	msUploadFileParamName =
-		((pszParamName == NULL) || (*pszParamName = '\0'))
+		((pszParamName == NULL) || (*pszParamName == '\0'))
 		? "Upload" : pszParamName;
 	miPort = iPort;
 	msUser = (pszUser == NULL) ? "" : pszUser;
@@ -179,13 +155,18 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToU
 		}
 	}
 
-	mbIsInitialized = true;
 	meMIMEType = MIME_TYPE_NONE;
 	meSpecificVerb = VERB_DEFAULT;
 	mbAllowRedirects = true;
+	mbUseStreamingUpload = true;
 	mpfileForReply = NULL;
-	
+
 	muiUploadProgress = muiReplyProgress = muiReplySize;
+
+	mbFailImmediatelyOnStatus = false;
+	msDelayedStatusError = "";
+
+	mbIsInitialized = true;
 	return true;
 } // Init (for IUploader)
 
@@ -267,8 +248,6 @@ tbool CXloader::SetSpecificVerb(EVerbType eVerb)
 		return false;
 	}
 	
-	tbool bIsUploader = (mpfileToUpload != NULL);
-	
 	switch (eVerb) {
 		case VERB_DEFAULT:
 			meSpecificVerb = eVerb;
@@ -277,7 +256,7 @@ tbool CXloader::SetSpecificVerb(EVerbType eVerb)
 		case VERB_GET:
 		{
 			// Only IDownloader may use GET
-			if (!bIsUploader)
+			if (!mbIsUploader)
 				return true;
 		}
 			break;
@@ -289,7 +268,7 @@ tbool CXloader::SetSpecificVerb(EVerbType eVerb)
 		case VERB_PUT:
 		{
 			// Only IUploader may use PUT
-			if (bIsUploader)
+			if (mbIsUploader)
 				return true;
 		}
 			break;
@@ -376,6 +355,50 @@ tbool CXloader::EnableAutoRedirects()
 { return SetAllowRedirects(true); }
 
 
+tbool CXloader::SetFailOnHttpStatus(tbool bFailOnStatus)
+{
+	if (mbIsFailed) {
+		//SetError("Previous error");
+		return false;
+	}
+	
+	if (!mbIsInitialized) {
+		SetError("Not initialized");
+		return false;
+	}
+	
+	if (mbIsTransfering) {
+		SetError("We can't change http status behaviour as we've already begun transfer");
+		return false;
+	}
+
+	mbFailImmediatelyOnStatus = bFailOnStatus;
+	return true;
+} // SetFailOnHttpStatus
+
+
+tbool CXloader::SetStreamingUpload(tbool bUseStreaming)
+{
+	if (mbIsFailed) {
+		//SetError("Previous error");
+		return false;
+	}
+	
+	if (!mbIsInitialized) {
+		SetError("Not initialized");
+		return false;
+	}
+	
+	if (mbIsTransfering) {
+		SetError("We can't change streaming behaviour as we've already begun transfer");
+		return false;
+	}
+
+	mbUseStreamingUpload = bUseStreaming;
+	return true;
+} // SetStreamingUpload
+
+
 tbool CXloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen)
 {
 	CAutoLock Lock(mMutex_ForParams);
@@ -418,6 +441,36 @@ tbool CXloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, ti
 		}
 	}
 	
+	if (mbIsUploader) {
+		tchar* pszData = "";
+		tint32 iDataLen = 0;
+		// No need to verify data for uploader - it'll eat anything!
+		// Just a special case for NULL pointer
+		if (pcParamData) {
+			pszData = (tchar*)pcParamData;
+			if (iParamDataLen >= 0)
+				iDataLen = iDataLen;
+			else
+				iDataLen = strlen(pszData);
+		}
+		// Add param name and raw value to lists
+		try {
+			mlist_sParamNames.push_back(pszParamName);
+			mlist_iParamDataLen.push_back(iDataLen);
+			mlist_pszParamData.push_back(pszData);
+		}
+		catch (...) {
+			// Unspecified error - probably out of memory
+			return false;
+		}
+
+		// Success
+		return true;
+	}
+
+	
+	// For downloader we must verify and convert to URL-encoded etc.
+
 	// Convert param data to URL-encoded safe string
 	tchar* pszUrlEncoded = NULL;
 	tint32 iUrlEncodedLen = 0;
@@ -445,7 +498,7 @@ tbool CXloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, ti
 	try {
 		mlist_sParamNames.push_back(pszParamName);
 		mlist_iParamDataLen.push_back(iUrlEncodedLen);
-		mlist_pszParamDataUrlEncoded.push_back(pszUrlEncoded);
+		mlist_pszParamData.push_back(pszUrlEncoded);
 	}
 	catch (...) {
 		// Unspecified error - probably out of memory
@@ -458,7 +511,7 @@ tbool CXloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, ti
 } // AddParam
 
 
-tbool CXloader::AssembleParams(EVerbType eVerb)
+tbool CXloader::AssembleParams()
 {
 	CAutoLock Lock(mMutex_ForParams);
 	
@@ -475,20 +528,20 @@ tbool CXloader::AssembleParams(EVerbType eVerb)
 	// Verify sanity of lists
 	tint32 iNames = mlist_sParamNames.size();
 	tint32 iLens = mlist_iParamDataLen.size();
-	tint32 iDatas = mlist_pszParamDataUrlEncoded.size();
+	tint32 iDatas = mlist_pszParamData.size();
 	if ((iNames != iLens) || (iLens != iDatas)) {
 		SetError("List lengths aren't all the same");
 		return false;
 	}
 
 	if (mbIsUploader)
-		return AssembleParams_ForMultiPartForm(eVerb);
+		return AssembleParams_ForMultiPartForm();
 	else
-		return AssembleParams_ForUrlEncoded(eVerb);
+		return AssembleParams_ForUrlEncoded();
 } // AssembleParams
 	
 
-tbool CXloader::AssembleParams_ForUrlEncoded(EVerbType eVerb)
+tbool CXloader::AssembleParams_ForUrlEncoded()
 {
 	// Calculate space needed
 	{
@@ -530,7 +583,7 @@ tbool CXloader::AssembleParams_ForUrlEncoded(EVerbType eVerb)
 		tchar* pszDst = mpszParamsAssembled;
 		std::list<std::string>::iterator itName = mlist_sParamNames.begin();
 		std::list<tint32>::iterator itDataLen = mlist_iParamDataLen.begin();
-		std::list<tchar*>::iterator itParamData = mlist_pszParamDataUrlEncoded.begin();
+		std::list<tchar*>::iterator itParamData = mlist_pszParamData.begin();
 		while (itName != mlist_sParamNames.end()) {
 			// Get elements
 			std::string& rsName = *itName;
@@ -571,64 +624,38 @@ tbool CXloader::AssembleParams_ForUrlEncoded(EVerbType eVerb)
 } // AssembleParams_ForUrlEncoded
 
 
-tbool CXloader::AssembleParams_ForMultiPartForm(EVerbType eVerb)
+tbool CXloader::AssembleParams_ForMultiPartForm()
 {
 	// First add any non-file parameters
 	{
 		std::list<std::string>::iterator itName = mlist_sParamNames.begin();
 		std::list<tint32>::iterator itDataLen = mlist_iParamDataLen.begin();
-		std::list<tchar*>::iterator itParamData = mlist_pszParamDataUrlEncoded.begin();
+		std::list<tchar*>::iterator itParamData = mlist_pszParamData.begin();
 		while (itName != mlist_sParamNames.end()) {
 			// Get elements
 			std::string& rsName = *itName;
-			//tint32 iNameLen = rsName.length();
+			tint32 iNameLen = rsName.length();
 			tchar* pcData = *itParamData;
-			//tint32 iDataLen = *itDataLen;
+			tint32 iDataLen = *itDataLen;
 
 			CURLFORMcode rc = (CURLFORMcode)0;
 
-			// Add param name
+			// Add param
 			rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
-				CURLFORM_PTRNAME, rsName.c_str());
+				CURLFORM_COPYNAME, rsName.c_str(),
+				CURLFORM_NAMELENGTH, iNameLen,
+				CURLFORM_COPYCONTENTS, pcData,
+				CURLFORM_CONTENTSLENGTH, iDataLen,
+				CURLFORM_END
+				);
+
 			if (rc != 0) {
-				tchar pszErr[128];
-				sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_PTRNAME", rc);
+				tchar pszErr[512];
+				sprintf(pszErr, "curl_formadd(..) returned %d for param %s", rc, rsName.c_str());
 				SetError(pszErr);
 				return false;
 			}
 
-			/*
-			// Set param contents length
-			rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
-				CURLFORM_BUFFERLENGTH, iDataLen);
-			if (rc != 0) {
-				tchar pszErr[128];
-				sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_BUFFERLENGTH", rc);
-				SetError(pszErr);
-				return false;
-			}
-			*/
-
-			// Add param contents
-			rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
-				CURLFORM_BUFFERPTR, pcData);
-			if (rc != 0) {
-				tchar pszErr[128];
-				sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_BUFFERPTR", rc);
-				SetError(pszErr);
-				return false;
-			}
-			
-			// Set contents type for param
-			rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
-				CURLFORM_CONTENTTYPE, "application/x-www-form-urlencoded");
-			if (rc != 0) {
-				tchar pszErr[128];
-				sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_CONTENTTYPE", rc);
-				SetError(pszErr);
-				return false;
-			}
-			
 			// Advance to next
 			itName++;
 			itDataLen++;
@@ -637,44 +664,45 @@ tbool CXloader::AssembleParams_ForMultiPartForm(EVerbType eVerb)
 	}
 
 	// Finally add file
-	{
+	if (mpfileToUpload)	{
 		CURLFORMcode rc = (CURLFORMcode)0;
 
-		// Add upload file param name
-		rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
-			CURLFORM_PTRNAME, msUploadFileParamName.c_str());
-		if (rc != 0) {
-			tchar pszErr[128];
-			sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_PTRNAME := upload file param name", rc);
-			SetError(pszErr);
-			return false;
-		}
-
-		// Upload as stream (avoid loading all of file in memory at once)
-		rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last, CURLFORM_STREAM, this);
-		if (rc != 0) {
-			tchar pszErr[128];
-			sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_STREAM", rc);
-			SetError(pszErr);
-			return false;
-		}
-
-		// Inform of total size of file to upload
+		// Add upload file
 		tint32 iTotalSize = (tint32)(mpfileToUpload->GetSizeWhenOpened());
-		rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last, CURLFORM_CONTENTSLENGTH, iTotalSize);
-		if (rc != 0) {
-			tchar pszErr[128];
-			sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_CONTENTSLENGTH", rc);
-			SetError(pszErr);
-			return false;
+		if (mbUseStreamingUpload) {
+			rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
+				CURLFORM_PTRNAME, msUploadFileParamName.c_str(),
+				CURLFORM_NAMELENGTH, msUploadFileParamName.length(),
+				CURLFORM_STREAM, this, // Upload as stream (avoid loading all of file in memory at once)
+				CURLFORM_CONTENTSLENGTH, iTotalSize,
+				CURLFORM_FILENAME, msUploadFileNameAndExtOnly.c_str(),
+				CURLFORM_END
+				);
+		}
+		else {
+			IFileMemory* pMem = dynamic_cast<IFileMemory*>(mpfileToUpload);
+			if (pMem) {
+				SetError("Non-streaming IFileMemory isn't supported yet");
+				return false;
+			}
+			else {
+				tchar pszFilePath[1024];
+				mpfileToUpload->GetPathName(pszFilePath);
+				IFile::PathToOS2(pszFilePath, pszFilePath);
+				rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
+					CURLFORM_PTRNAME, msUploadFileParamName.c_str(),
+					CURLFORM_NAMELENGTH, msUploadFileParamName.length(),
+					CURLFORM_FILE, pszFilePath,
+					CURLFORM_CONTENTSLENGTH, iTotalSize,
+					CURLFORM_FILENAME, msUploadFileNameAndExtOnly.c_str(),
+					CURLFORM_END
+					);
+			}
 		}
 
-		// Set file name for upload
-		rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
-			CURLFORM_FILENAME, msUploadFileNameAndExtOnly.c_str());
 		if (rc != 0) {
 			tchar pszErr[128];
-			sprintf(pszErr, "curl_formadd(..) returned %d for CURLFORM_FILENAME", rc);
+			sprintf(pszErr, "curl_formadd(..) returned %d for file %s", rc, msUploadFileNameAndExtOnly.c_str());
 			SetError(pszErr);
 			return false;
 		}
@@ -690,14 +718,15 @@ void CXloader::WipeParams()
 	
 	mlist_sParamNames.clear();
 	
-	std::list<tchar*>::iterator it = mlist_pszParamDataUrlEncoded.begin();
-	while (it != mlist_pszParamDataUrlEncoded.end()) {
-		tchar* psz = *it;
-		if (psz) delete[] psz;
-		mlist_pszParamDataUrlEncoded.erase(it);
-		it = mlist_pszParamDataUrlEncoded.begin();
+	if (!mbIsUploader) {
+		std::list<tchar*>::iterator it = mlist_pszParamData.begin();
+		while (it != mlist_pszParamData.end()) {
+			tchar* psz = *it;
+			if (psz) delete[] psz;
+			mlist_pszParamData.erase(it);
+			it = mlist_pszParamData.begin();
+		}
 	}
-	
 	mlist_iParamDataLen.clear();
 	
 	if (mpszParamsAssembled) {
@@ -883,9 +912,6 @@ tbool CXloader::SetOpt(CURLoption iOption, const tchar* pszOption, tbool bData, 
 
 tbool CXloader::OpenConnection()
 {
-	// No longer - will use libCURL instead
-	//return OpenConnection_OSSpecific();
-
 	// Get an "easy" handle
 	if (mpCURLEasyHandle == NULL) {
 		mpCURLEasyHandle = curl_easy_init();
@@ -924,10 +950,6 @@ tbool CXloader::OpenConnection()
 	if (mbIsUploader) {
 		// This is an IUploader
 
-		// Signal to use a POST verb + use multi-part form message body + append message body
-		if (!SetOpt(CURLOPT_HTTPPOST, "CURLOPT_HTTPPOST", mpFormPost_First))
-			return false;
-		
 		// Set callbacks for upload
 		{
 			// Set callback function for streaming upload file
@@ -945,6 +967,10 @@ tbool CXloader::OpenConnection()
 				return false;
 		}
 
+		// Signal to use a POST verb + use multi-part form message body + append message body
+		if (!SetOpt(CURLOPT_HTTPPOST, "CURLOPT_HTTPPOST", mpFormPost_First))
+			return false;
+		
 		// To use the PUT verb we must set it explicitly
 		if (eVerb == VERB_PUT) {
 			if (!SetOpt(CURLOPT_CUSTOMREQUEST, "CURLOPT_CUSTOMREQUEST", "PUT", " := \"PUT\""))
@@ -986,16 +1012,16 @@ tbool CXloader::OpenConnection()
 	}
 
 	// Set user for authentication
-	if (msUser.length() > 0) {
-		if (!SetOpt(CURLOPT_USERNAME, "CURLOPT_USERNAME", msUser))
-			return false;
-	}
+	//if (msUser.length() > 0) {
+	if (!SetOpt(CURLOPT_USERNAME, "CURLOPT_USERNAME", msUser))
+		return false;
+	//}
 
 	// Set password for authentication
-	if (msPassword.length() > 0) {
-		if (!SetOpt(CURLOPT_PASSWORD, "CURLOPT_PASSWORD", msPassword))
-			return false;
-	}
+	//if (msPassword.length() > 0) {
+	if (!SetOpt(CURLOPT_PASSWORD, "CURLOPT_PASSWORD", msPassword))
+		return false;
+	//}
 
 	// Set time-out - but not the usual brain-dead way
 	{
@@ -1030,7 +1056,7 @@ tbool CXloader::OpenConnection()
 	}
 
 	// Set MIME for reply (additional header)
-	{ //if (meMIMEType != MIME_TYPE_NONE) {
+	{
 		std::string sAccept = "Accept: ";
 		sAccept += GetMIMEString();
 		mpSList_ExtraHeaders = curl_slist_append(mpSList_ExtraHeaders, sAccept.c_str());
@@ -1039,8 +1065,10 @@ tbool CXloader::OpenConnection()
 	}
 
 	// Make sure we fail on status codes indicating error
-	if (!SetOpt(CURLOPT_FAILONERROR, "CURLOPT_FAILONERROR", true))
-		return false;
+	if (mbFailImmediatelyOnStatus) {
+		if (!SetOpt(CURLOPT_FAILONERROR, "CURLOPT_FAILONERROR", true))
+			return false;
+	}
 
 	// Success
 	return true;
@@ -1049,9 +1077,6 @@ tbool CXloader::OpenConnection()
 
 void CXloader::CloseConnection()
 {
-	// No longer - will use libCURL instead
-	//CloseConnection_OSSpecific();
-	
 	// Remove handle from "multi" handler, effectively kills any transfers
 	if (mpCURLEasyHandle) {
 		std::string sErr;
@@ -1067,8 +1092,6 @@ void CXloader::CloseConnection()
 	}
 
 	ZapReplyBuffer();
-
-	CloseFile_IgnoreError();
 } // CloseConnection
 
 
@@ -1092,49 +1115,13 @@ tbool CXloader::Start(IFile* pfileForDownload /*= NULL*/)
 	}
 
 	CloseConnection();
-	if (!AssembleParams(GetActuallyUsedVerb())) return false;
+	if (!AssembleParams()) return false;
 	if (!OpenConnection()) {
 		CloseConnection();
 		return false;
 	}
 	mpfileForReply = pfileForDownload;
 	SetIsTransfering();
-
-	/*
-	// Start transfer
-	{
-		// Get lock
-		GetLockForMultiInstance();
-
-		// Add easy handle to multi
-		CURLMcode rc = curl_multi_add_handle(gpCURLMulti, mpCURLEasyHandle);
-		if (rc != 0) {
-			tchar pszErr[128];
-			sprintf(pszErr, "curl_multi_add_handle(..) returned %d", rc);
-			SetError(pszErr);
-			// Release lock
-			ReleaseLockForMultiInstance();
-			return false;
-		}
-
-		// Start all 
-		tint32 iRunningHandles_Dummy = 0;
-		do {
-			rc = curl_multi_perform(gpCURLMulti, &iRunningHandles_Dummy);
-		} while (rc == CURLM_CALL_MULTI_PERFORM);
-		if (rc != 0) {
-			tchar pszErr[128];
-			sprintf(pszErr, "curl_multi_perform(..) returned %d", rc);
-			SetError(pszErr);
-			// Release lock
-			ReleaseLockForMultiInstance();
-			return false;
-		}
-
-		// Release lock
-		ReleaseLockForMultiInstance();
-	}
-	*/
 
 	std::string sErr;
 	if (!CXloader_MultiWrapper::Add(this, &sErr)) {
@@ -1174,7 +1161,6 @@ tbool CXloader::GetReplyPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* pi
 	// Get data
 	{
 		// Make sure we're the only thread working on data
-		//CAutoLock Lock(mMutex_ForReplyBuffer);
 		// Get lock
 		if (++miLockLevel_ForReplyBuffer == 1) {
 			tchar* pszDst = pszBuffer;
@@ -1220,41 +1206,6 @@ tbool CXloader::GetReplyPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* pi
 } // GetReplyPortion
 
 
-/*
-tbool CXloader::UploadPortion(tuint64* puiUploadProgress, tchar* pszReplyBuffer, tint32 iReplyBufferSize, tint32* piReplyPortionSize, tuint64* puiReplyTotalSize)
-{
-	*piReplyPortionSize = 0;
-	
-	if (IsFailed()) {
-		//SetError("Previous error");
-		return false;
-	}
-	
-	if (!IsInitialized()) {
-		SetError("Not initialized");
-		return false;
-	}
-	
-	tbool bFirstTime = (!IsTransfering());
-	SetIsTransfering();
-	if (bFirstTime) {
-		CAutoLock Lock(mMutex_Connection);
-		
-		CloseConnection();
-		if (!AssembleParams()) return false;
-		if (!OpenConnection()) {
-			CloseConnection();
-			return false;
-		}
-		// We're alive
-		RefreshAlive();
-	}
-	
-	return DoPortion_OSSpecific(puiUploadProgress, pszReplyBuffer, iReplyBufferSize, piReplyPortionSize, puiReplyTotalSize);
-} // UploadPortion
-*/
-
-
 tbool CXloader::Abort()
 {
 	if (IsTransfering()) {
@@ -1265,8 +1216,6 @@ tbool CXloader::Abort()
 	}
 	
 	WipeParams();
-	
-	CloseFile_IgnoreError();	
 	
 	return true;
 } // Abort
@@ -1299,15 +1248,6 @@ tbool CXloader::GetProgress(tint64* piDownloadProgress, tint64* piDownloadSize)
 } // GetProgress(for IDownloader)
 
 
-void CXloader::CloseFile_IgnoreError()
-{
-	if (mpfileToUpload) {
-		//mpfileToUpload->Destroy(); - will be Destroy'ed from calling app
-		mpfileToUpload = NULL;
-	}
-} // CloseFile_IgnoreError
-
-
 void CXloader::SetIsUninitialized()
 {
 	mbIsInitialized = mbIsTransfering = mbIsMultiDone = mbIsDone = mbIsFailed = false;
@@ -1327,38 +1267,30 @@ void CXloader::SetIsTransfering()
 } // SetIsTransfering
 
 
-void CXloader::SetMultiSaysDone(CURLcode status)
+void CXloader::SetMultiSaysDone(CURLcode code)
 {
 	if (!IsFailed()) {
-		if (status != 0) {
+		// External transfer is done
+		mbIsMultiDone = true;
+		CURLcode rc;
+		tint32 iStatus;
+		rc = curl_easy_getinfo(mpCURLEasyHandle, CURLINFO_RESPONSE_CODE, &iStatus);
+		if (iStatus >= 400) {
+			CAutoLock Lock(mMutex_ForErrors);
+			tchar pszErr[128];
+			sprintf(pszErr, "%s returned status %d", msHost.c_str(), iStatus);
+			msDelayedStatusError = pszErr;
+		}
+		else if (code != 0) {
 			// There's an error
 			tchar pszErr[512];
-			*pszErr = '\0';
-			if (status == CURLE_HTTP_RETURNED_ERROR) {
-				// An error was reported by web server
-				tint32 iResponse = 0;
-				CURLcode rc = curl_easy_getinfo(
-					mpCURLEasyHandle,
-					CURLINFO_RESPONSE_CODE,
-					&iResponse
-					);
-				if ((rc == 0) && (iResponse != 0)) {
-					sprintf(pszErr, "%s responded with error %d", msHost.c_str(), iResponse);
-				}
-			}
-			if (*pszErr == '\0') {
-				// Some other error
-				sprintf(pszErr, "curl_multi_info_read(..) gave status DONE but code %d", status);
-			}
+			sprintf(pszErr, "curl_multi_info_read(..) gave status DONE but code %d", code);
 			SetError(pszErr);
 		}
-		else {
-			// External transfer is done
-			mbIsMultiDone = true;
-			if (mpfileForReply != NULL) {
-				// No internal buffer - set all transfer done
-				SetIsDone();
-			}
+
+		if (mpfileForReply != NULL) {
+			// No internal buffer - set all transfer done
+			SetIsDone();
 		}
 	}
 } // SetMultiSaysDone
@@ -1366,6 +1298,16 @@ void CXloader::SetMultiSaysDone(CURLcode status)
 
 void CXloader::SetIsDone()
 {
+	// First see if we have any delayed errors that we need to report now
+	{
+		CAutoLock Lock(mMutex_ForErrors);
+		if (msDelayedStatusError.length() > 0) {
+			SetError(msDelayedStatusError.c_str());
+			msDelayedStatusError = "";
+			return;
+		}
+	}
+
 	if (!IsFailed()) {
 		mbIsDone = true;
 		mbIsTransfering = false;
@@ -1402,40 +1344,6 @@ tbool CXloader::IsFailed()
 {
 	return mbIsFailed;
 } // IsFailed
-
-
-/*
-void CXloader::RefreshAlive()
-{
-	muiAliveMs = ITime::GetTimeMS();
-} // RefreshAlive
-
-
-tbool CXloader::IsAlive()
-{
-	// (lasse) Are we really needing this? Anyway not used now
-	
-	if ((!mbIsInitialized) || (!mbIsTransfering)) {
-		SetError("Not initialized or not downloading");
-		return false;
-	}
-	
-	if (mbIsFailed) {
-		//SetError("Previously failed");
-		return false;
-	}
-	
-	tuint32 uiElapsedMs = ITime::GetTimeMS() - muiAliveMs;
-	
-	if (muiTimeOutSecs == 0) {
-		// Special case for zero time-out: Actually use 500 ms
-		return (uiElapsedMs < 500);
-	}
-	
-	tuint32 uiSecsElapsed = uiElapsedMs / 1000;
-	return (uiSecsElapsed <= muiTimeOutSecs);
-} // IsAlive
-*/
 
 
 void CXloader::SetError(const tchar* pszError)

@@ -26,6 +26,10 @@ public:
 	//! IDownloader implementation
 	virtual tbool SetSpecificVerb(EVerbType eVerb);
 	//! IDownloader implementation
+	virtual tbool SetFailOnHttpStatus(tbool bFailOnStatus);
+	//! IUploader implementation
+	virtual tbool SetStreamingUpload(tbool bUseStreaming);
+	//! IDownloader implementation
 	virtual tbool DisableAutoRedirects();
 	//! IDownloader implementation
 	virtual tbool EnableAutoRedirects();
@@ -77,22 +81,22 @@ protected:
 
 	tbool mbAllowRedirects;
 	tbool SetAllowRedirects(tbool bAllow);
+
+	tbool mbUseStreamingUpload;
 	
 	std::list<std::string> mlist_sParamNames;
 	std::list<tint32> mlist_iParamDataLen;
-	std::list<tchar*> mlist_pszParamDataUrlEncoded;
+	std::list<tchar*> mlist_pszParamData;
 	tint32 miParamsAssembledLen;
 	tchar* mpszParamsAssembled;
-	tbool AssembleParams(EVerbType eVerb);
+	tbool AssembleParams();
 	void WipeParams();
 	CMutex mMutex_ForParams;
-	void CloseFile_IgnoreError();
 
 	// File for writing reply directly into
 	IFile* mpfileForReply;
 
 	std::list<CXloader_ReplyChainLink*> mlist_pReplyChain;
-	//CMutex mMutex_ForReplyBuffer;
 	volatile tint32 miLockLevel_ForReplyBuffer;
 	void ZapReplyBuffer();
 
@@ -100,30 +104,24 @@ protected:
 	tuint64 muiReplyProgress;
 	tuint64 muiReplySize;
 
-	//volatile tuint32 muiAliveMs;
-	//void RefreshAlive();
-	//tbool IsAlive();
-	
 	std::string msLastError;
 	void SetError(const tchar* pszError);
 	CMutex mMutex_ForErrors;
 
-	
-	//void Constructor_OSSpecific();
-	//void Destructor_OSSpecific();
+	//! If true we never get body of message with error status (default false)
+	tbool mbFailImmediatelyOnStatus;
+	//! Temporary error string used when http status indicates error but we're not done with receival of body
+	std::string msDelayedStatusError;
 
+	
 	CMutex mMutex_Connection;
 	tbool OpenConnection();
-	//tbool OpenConnection_OSSpecific();
 	void CloseConnection();
-	//void CloseConnection_OSSpecific();
-	
-	//tbool DoPortion_OSSpecific(tuint64* puiUploadProgress, tchar* pszReplyBuffer, tint32 iReplyBufferSize, tint32* piReplyPortionSize, tuint64* puiReplyTotalSize);
 	
 	void SetIsUninitialized();
 	void SetIsInitialized();
 	void SetIsTransfering();
-	void SetMultiSaysDone(CURLcode status);
+	void SetMultiSaysDone(CURLcode code);
 	void SetIsDone();
 	void SetIsFailed();
 
@@ -145,8 +143,8 @@ private:
 	curl_httppost* mpFormPost_Last;
 	curl_slist* mpSList_ExtraHeaders;
 	
-	tbool AssembleParams_ForUrlEncoded(EVerbType eVerb);
-	tbool AssembleParams_ForMultiPartForm(EVerbType eVerb);
+	tbool AssembleParams_ForUrlEncoded();
+	tbool AssembleParams_ForMultiPartForm();
 
 	tbool SetOpt(CURLoption iOption, const tchar* pszOption, const void* pData, const tchar* pszExtraInfo = "");
 	tbool SetOpt(CURLoption iOption, const tchar* pszOption, tint32 iData, const tchar* pszExtraInfo = "");
@@ -155,14 +153,4 @@ private:
 	tbool SetOpt(CURLoption iOption, const tchar* pszOption, const std::string& rsData, const tchar* pszExtraInfo = "");
 	tbool SetOpt(CURLoption iOption, const tchar* pszOption, tbool bData, const tchar* pszExtraInfo = "");
 	
-	
-protected:
-	
-#ifdef _WIN32
-//	#include "CXloaderWin.h"
-#endif // _WIN32
-#ifdef _Mac
-//	#include "CXloaderOSX.h"
-#endif // _Mac
-
 };

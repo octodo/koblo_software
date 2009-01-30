@@ -51,6 +51,116 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 	// parse values from project tree in to KS data system
 	Parse_Project( mpDoc );
 
+
+#if (0)
+	// (lasse) very very temporary code: download directly from koblo.com
+
+	// These must be set or it won't work
+#define TEMPUSR "xxx@xxx.com"
+#define TEMPPWD "xxx"
+
+	tchar pszUUID_Proj[128];
+	Gen_UUID(pszUUID_Proj, 128);
+	tchar pszUUID_Branch[128];
+	Gen_UUID(pszUUID_Branch, 128);
+	tchar pszUUID_Sample[128];
+	Gen_UUID(pszUUID_Sample, 128);
+	tchar pszUUID_Take[128];
+	Gen_UUID(pszUUID_Take, 128);
+
+	tbool bProjOK = false;
+	CAutoDelete<ine::IDownloader> pDownloader(ine::IDownloader::Create());
+	if (pDownloader->Init("koblo.com", "/projects.xml", 80, TEMPUSR, TEMPPWD)) {
+		pDownloader->SetReplyMIMEType(ine::MIME_TYPE_XML);
+		pDownloader->AddParam("project[name]", "Short-lived Test 123 (lasse)", -1);
+		pDownloader->AddParam("project[description]", "Temporary project for test only", -1);
+		pDownloader->AddParam("project[license]", "by", -1);
+		pDownloader->AddParam("project[uuid]", pszUUID_Proj, -1);
+		pDownloader->AddParam("branch[uuid]", pszUUID_Branch, -1);
+		CAutoDelete<IFile> pfTest(IFile::Create());
+#ifdef _WIN32
+		tchar* pszTestFile = "C:\\_create-proj-reply.xml";
+#endif // _WIN32
+#ifdef _Mac
+		tchar* pszTestFile = "/_create-proj-reply.xml";
+#endif // _Mac
+		if (pfTest->Open(pszTestFile, IFile::FileCreate)) {
+			if (pDownloader->Start()) {
+				tchar pszBuffer[1024];
+				tint32 iPortionSize = 0;
+				tbool bSuccess, bError;
+				do {
+					ITime::SleepMS(5);
+					pDownloader->GetReplyPortion(pszBuffer, 1024, &iPortionSize);
+					if (iPortionSize > 0) {
+						pfTest->Write(pszBuffer, iPortionSize);
+					}
+					bSuccess = pDownloader->IsDone();
+					bError = pDownloader->IsFailed();
+				} while ((!bSuccess) && (!bError));
+			}
+			if (pDownloader->IsDone()) {
+				bProjOK = true;
+			}
+		}
+		if (pDownloader->IsFailed()) {
+			tchar pszErr[1024];
+			pDownloader->GetError(pszErr, 1024);
+			ge::IWindow::ShowMessageBox(pszErr, "Downloader Error");
+		}
+	}
+
+	if (bProjOK) {
+		CAutoDelete<ine::IUploader> pUploader(ine::IUploader::Create());
+		std::string sPage = std::string("/projects/") + pszUUID_Proj;
+		sPage += "/samples.xml";
+		CAutoDelete<IFile> pfMp3(IFile::Create());
+#ifdef _WIN32
+		tchar* pszMp3File = "C:\\_testhest.mp3";
+#endif // _WIN32
+#ifdef _Mac
+		tchar* pszMp3File = "/_testhest.mp3";
+#endif // _Mac
+		if (!pfMp3->Open(pszMp3File, IFile::FileRead))
+			return;
+		if (pUploader->Init("koblo.com", sPage.c_str(), pfMp3, "mp3[uploaded_data]", 80, TEMPUSR, TEMPPWD)) {
+			pUploader->SetReplyMIMEType(ine::MIME_TYPE_XML);
+			pUploader->SetSpecificVerb(ine::VERB_POST);
+			pUploader->AddParam("sample[uuid]", pszUUID_Sample, -1);
+			pUploader->AddParam("sample[name]", "Short-lived Samle for Test 123 (lasse)", -1);
+			pUploader->AddParam("take[uuid]", pszUUID_Take, -1);
+			pUploader->AddParam("take[description]", "Temporary sample for test only", -1);
+			CAutoDelete<IFile> pfReply(IFile::Create());
+#ifdef _WIN32
+			tchar* pszReplyFile = "C:\\_up-file-reply.xml";
+#endif // _WIN32
+#ifdef _Mac
+			tchar* pszReplyFile = "/_up-file-reply.xml";
+#endif // _Mac
+			if (pfReply->Open(pszReplyFile, IFile::FileCreate)) {
+				if (pUploader->Start(pfReply)) {
+					tbool bSuccess, bError;
+					do {
+						ITime::SleepMS(5);
+						bSuccess = pUploader->IsDone();
+						bError = pUploader->IsFailed();
+					} while ((!bSuccess) && (!bError));
+				}
+				if (pUploader->IsDone()) {
+					bProjOK = true;
+				}
+			}
+		}
+		if (pUploader->IsFailed()) {
+			tchar pszErr[1024];
+			pUploader->GetError(pszErr, 1024);
+			ge::IWindow::ShowMessageBox(pszErr, "Downloader Error");
+		}
+	}
+#endif 
+
+#if (0)
+	// (lasse) very very temporary code: download directly from koblo.com
 	CAutoDelete<ine::IDownloader> pDownloader(ine::IDownloader::Create());
 	if (pDownloader->Init("koblo.com", "/projects/13/branches/1")) {
 		pDownloader->SetReplyMIMEType(ine::MIME_TYPE_XML);
@@ -85,7 +195,7 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 			}
 		}
 	}
-
+#endif // (0)
 
 #if (0)
 	// (lasse) very very temporary code: download directly from koblo.com
