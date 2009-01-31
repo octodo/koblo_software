@@ -24,6 +24,7 @@
 #include "tinyxml.h"
 #include "CKSFile_Controller.h"
 #include "CKSFile_Item.h"
+#include "CImport_TinyXML.h"
 #include "CKSXML_Read_Project.h"
 #include "CKSXML_Write_Project.h"
 #include "CKSXML_Create_Project.h"

@@ -58,7 +58,8 @@ tbool CKSFile_Controller::Open_Project()
 	sProject_Folder.erase(iPosColon+1, sProject_Folder.size() );
 	Project_Folder(sProject_Folder);
 	
-	gpApplication->Read_Project_From_Disk();
+	// read the project file
+	gpApplication->Read_Project_From_Disk(sProject_Folder +  sProject_Name);
 	
 	// gui is readdy
 	gpApplication->SetGUIsReady(true);
@@ -265,31 +266,19 @@ tbool CKSFile_Controller::Create_Plugin_Data_Folder()
 }
 
 //! create a new download folder inside the project folder
-tbool CKSFile_Controller::Create_Download_Folder()
+tbool CKSFile_Controller::Create_OGG_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ":Download";
+	std::string sFolder = gpApplication->Project_Folder() + ":OGG Files";
 	IFile::CreateDirectory(sFolder.c_str());
-	
-	// folder for downloaded ogg files
-	std::string sOggFolder =	sFolder + ":OGG Files";
-	IFile::CreateDirectory(sOggFolder.c_str());
 	// make check here
 	return true;
 }
 
 //! create a new uplaod folder inside the project folder
-tbool CKSFile_Controller::Create_Upload_Folder()
+tbool CKSFile_Controller::Create_MP3_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ":Upload";
+	std::string sFolder = gpApplication->Project_Folder() + ":MP3 Files";
 	IFile::CreateDirectory(sFolder.c_str());
-	
-	// folder for mp3 previews to upload
-	std::string sMP3Folder =	sFolder + ":MP3 Files";
-	IFile::CreateDirectory(sMP3Folder.c_str());
-	
-	// folder for ogg files to upload
-	std::string sOggFolder =	sFolder + ":OGG Files";
-	IFile::CreateDirectory(sOggFolder.c_str());
 	// make check here
 	return true;
 }
@@ -368,11 +357,11 @@ tbool CKSFile_Controller::Create_Folders()
 	// create a plug-in data project folder
 	if(Create_Plugin_Data_Folder() == false ) return false;
 	
-	// create a new download folder
-	if(Create_Download_Folder() == false ) return false;
+	// create a new OGG folder
+	if(Create_OGG_Folder() == false ) return false;
 	
-	// create a new upload folder
-	if(Create_Upload_Folder() == false ) return false;
+	// create a new MP3 folder
+	if(Create_MP3_Folder() == false ) return false;
 	
 	// create a new upload folder
 	if(Create_Wave_Picts_Folder() == false ) return false;
@@ -401,15 +390,15 @@ void CKSFile_Controller::Update_Project_Name(std::string sNew_Name)
 }
 tbool CKSFile_Controller::Is_A_Audio_File(std::string sFile)
 {
-	
+	// obsolete use 
 	return Check_Extencion( Get_Extencion(sFile)  );
 }
 
 tbool CKSFile_Controller::Check_Extencion(std::string sFile)
 {
-	if( sFile.size() == 0)					return false;
+	if( sFile.size() == 0)						return false;
 	// supported extencions
-	if (sFile.compare(".wav") == 0)			return true;
+	if (sFile.compare(".wav") == 0)				return true;
 	else if (sFile.compare(".WAV") == 0)		return true;
 	else if (sFile.compare(".ogg") == 0)		return true;
 	else if (sFile.compare(".OGG") == 0)		return true;

@@ -1,7 +1,6 @@
 
 
-class CTake_Data:
-public virtual CKSUUID
+class CTake_Data: public virtual CKSUUID
 {
 public:
 	//! Constructor
@@ -12,24 +11,7 @@ public:
 
 	
 	
-	//! Name of the left side (or mono) wave file for clip
-	std::string sWaveNameL;
-	//! Name of the right side wave file for clip
-	std::string sWaveNameR;
 	
-	//!!! obsolete
-	/*
-	//! Name of the original from which the clip was imported/decompressed
-	std::string sOriginalName;
-	//! Extension of the original from which the clip was imported/decompressed
-	std::string sOriginalExt;
-	
-	//! This is relevant if unpacking a compressed project - must decompress both mono clips at same time
-	tbool bIsOriginalStereo;
-	
-	//! Is the original lossy compressed?
-	tbool bIsOriginalLossy;
-	 */
 	
 	//! Which stereo channels to map: 1 = left, 2 = right, 3 = both
 	tint32 iOriginalChannelMask;
@@ -59,16 +41,45 @@ public:
 	
 	//! path to the right peak file
 	std::string sRight_Peak_File_Path;
+	
+	//! is the take in stereo
+	std::string Mode(){ return muiChannels ? "stereo": "mono";};
+	
+	void Mode(std::string sMode) { msMode = sMode;};
+	
+	//! get channel name
+	std::string Name(tuint uiChannel);
+	
+	//! set name and how many channels there is in the sampel
+	void Name(std::string sName, tuint32 uiChannels);
+	
+	//! set take number
+	void uiTake(tuint uiTake_Nr){ muiTake_Nr = uiTake_Nr;};
+	
 
 	
 	
 protected:
 	
-
+	//! take name
+	std::string msName;
+	
+	
+	//! Name of the left side (or mono) wave file for clip
+//	std::string sWaveNameL;
+	//! Name of the right side wave file for clip
+//	std::string sWaveNameR;
+	
 	//! description
 	std::string msDescription;
+	//! channels
+	tuint32 muiChannels;
+	//! take_nr
+	tuint32 muiTake_Nr;
 	//! url
 	std::string msURL;
+	//! url
+	std::string msMode;
 	
 	
 	

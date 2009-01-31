@@ -4119,6 +4119,7 @@ tbool CKSApplication::VerifyFolderCreated(std::string sFolderName)
 
 tbool CKSApplication::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 {
+	/*
 	msExtendedError = "";
 	
 	if (msProjectPathName.length() == 0) {
@@ -4428,7 +4429,7 @@ tbool CKSApplication::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 #endif // _WIN32
 
 	}
-		
+	*/
 	// No error
 	return true;
 } // MenuFileSaveProject
@@ -4825,8 +4826,8 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 		
 		// Stereo, both sides in a single list item
 		pSample_Data->sName					=	pImportInfo->Name();
-		pTake_Info->sWaveNameL				=	pImportInfo->Name();
-		pTake_Info->sWaveNameR				=	"";
+		pTake_Info->Name(pImportInfo->Name(),1);
+//		pTake_Info->sWaveNameR				=	"";
 		pTake_Info->iOriginalChannelMask	=	0;
 		pTake_Info->bIsStereoInList			=	false;
 		pTake_Info->sWavePathNameL			=	pImportInfo->Left_Path();
@@ -4837,20 +4838,24 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 	}
 	
 	else {
-		if (!pImportInfo->mbSplit) {
+//		if (!pImportInfo->mbSplit) {
 			// Stereo, both sides in a single list item
-			pSample_Data->sName					=	pImportInfo->Name();
-			pTake_Info->sWaveNameL				=	pImportInfo->Left_Name();
-			pTake_Info->sWaveNameR				=	pImportInfo->Right_Name();
-			pTake_Info->iOriginalChannelMask	=	0x01 | 0x02;
-			pTake_Info->bIsStereoInList			=	true;
-			pTake_Info->sWavePathNameL			=	pImportInfo->Left_Path();
-			pTake_Info->sWavePathNameR			=	pImportInfo->Right_Path();
-			pTake_Info->sLeft_Peak_File_Path	=	pImportInfo->Left_Peak_File_Path();
-			pTake_Info->sRight_Peak_File_Path	=	pImportInfo->Right_Peak_File_Path();
-			mSample_Data_List.push_back(pSample_Data);
+		pSample_Data->sName					=	pImportInfo->Name();
+			
+		pTake_Info->Name(pImportInfo->Name(),2);
+//		pTake_Info->sWaveNameL				=	pImportInfo->Left_Name();
+//		pTake_Info->sWaveNameR				=	pImportInfo->Right_Name();
+		pTake_Info->iOriginalChannelMask	=	0x01 | 0x02;
+		pTake_Info->bIsStereoInList			=	true;
+		pTake_Info->sWavePathNameL			=	pImportInfo->Left_Path();
+		pTake_Info->sWavePathNameR			=	pImportInfo->Right_Path();
+		pTake_Info->sLeft_Peak_File_Path	=	pImportInfo->Left_Peak_File_Path();
+		pTake_Info->sRight_Peak_File_Path	=	pImportInfo->Right_Peak_File_Path();
+		mSample_Data_List.push_back(pSample_Data);
+		/*
 		}
 		else {
+			
 			// Stereo split into two list items
 			// Stereo, left side
 			pSample_Data->sName				=	pImportInfo->Name();
@@ -4875,7 +4880,8 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
 			pTake_Info->sLeft_Peak_File_Path	=	"";
 			pTake_Info->sRight_Peak_File_Path	=	pImportInfo->Right_Peak_File_Path();
 			mSample_Data_List.push_back(pSample_Data);
-		}
+			 
+		}*/
 	}
 
 	UpdateGUIFileList();

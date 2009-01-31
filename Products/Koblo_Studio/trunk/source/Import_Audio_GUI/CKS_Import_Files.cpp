@@ -68,21 +68,7 @@ tbool CKS_Import_Files::Add_File( std::string sPathName)
 		// wrong name or type
 		return false;
 	}
-//	Info.Path(sPathName);
-//	Info.Name(sName);
-/*
-	// Find name only of file
-	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
-	std::string sNameNoExt = sName;
-	tint32 iDotIx = sNameNoExt.find_last_of('.');
-	if (iDotIx >= 0) {
-		sNameNoExt.erase(iDotIx);
-		if (sNameNoExt.length() == 0) {
-			// Can't add the empty string
-			return false;
-		}
-	}
-*/
+
 	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
 	// We can't have several files with the same name - so run thru list first
 	for ( ;it != mFile_Items.end(); it++) {
@@ -93,22 +79,6 @@ tbool CKS_Import_Files::Add_File( std::string sPathName)
 			// Same name - that won't do
 			return false;
 		
-		/*
-		CKSFile_Item& rInfo = *it;
-		
-		std::string sNameNoExt_AlreadyAdded = rInfo.Name();
-		
-		tint32 iDotIx = sNameNoExt_AlreadyAdded.find_last_of('.');
-		
-		if (iDotIx >= 0) {
-			sNameNoExt_AlreadyAdded.erase(iDotIx);
-		}
-		
-
-		if (stricmp(sNameNoExt.c_str(), sNameNoExt_AlreadyAdded.c_str()) == 0) {
-			// Same name - that won't do
-			return false;
-		}*/
 	}
 
 	mFile_Items.push_back(File_Item);
@@ -137,14 +107,7 @@ void CKS_Import_Files::RemoveFile()
 // old version
 void CKS_Import_Files::ImportFiles()
 {
-	/*
-	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
-	for (; it != mFile_Items.end(); it++) {
-		CKSFile_Item Info = *it;
-		gpApplication->QueueAudioFileImport(Info.Path().c_str(), false);
-	}
-	ClearFiles();
-	 */
+
 }
 
 

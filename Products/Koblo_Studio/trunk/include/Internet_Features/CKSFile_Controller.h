@@ -73,6 +73,12 @@ public:
 	//! opens a audio file at the given path and check if it's readable 
 	tbool Readable_Audio(std::string sFile);
 	
+	// get wave file folder
+	std::string Wave_File_Folder(){ return msProject_Folder + ":Wave Files";};
+	
+	// get ogg file folder
+	std::string OGG_File_Folder(){ return msProject_Folder + ":OGG Files";};
+	
 	
 private:	
 	
@@ -95,10 +101,10 @@ private:
 	tbool Create_Plugin_Data_Folder();
 	
 	//! create a new download folder inside the project folder
-	tbool Create_Download_Folder();
+	tbool Create_OGG_Folder();
 	
 	//! create a new uplaod folder inside the project folder
-	tbool Create_Upload_Folder();
+	tbool Create_MP3_Folder();
 	
 	//! create a new uplaod wave pict inside the project folder
 	tbool Create_Wave_Picts_Folder();

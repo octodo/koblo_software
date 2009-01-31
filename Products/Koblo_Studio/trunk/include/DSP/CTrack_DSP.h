@@ -1,6 +1,6 @@
 
 
-class CTrack_DSP
+class CTrack_DSP: public virtual CKSUUID
 {
 public:
 	//! Constructor
@@ -197,7 +197,6 @@ protected:
 	tfloat32 mfPeakMono;
 
 	std::string msRecordingName;
-
 	std::string msRecordingNameDest;
 	
 	

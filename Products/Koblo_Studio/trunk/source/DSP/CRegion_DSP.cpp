@@ -34,7 +34,7 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID,
 		mppSample[1] = new CSample_DSP(mpTake_Data->sWavePathNameR);
 	}
 	
-	msSample_Name = mpSample_Data->Get_Name();
+	msSample_Name = mpSample_Data->Name();
 	
 	if (uiSample_Duration == (tuint64)-1) {
 		muiEndPos = (mppSample[0]->GetLength() - uiSample_Offset) -1;

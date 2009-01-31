@@ -33,7 +33,8 @@ class CTake_Data;
 //class TiXmlDocument;
 
 
-class CKSXML_Read_Project 
+class CKSXML_Read_Project:
+public virtual CImport_TinyXML
 {
 	
 
@@ -46,75 +47,80 @@ public:
 	
 	
 	//! reset project
-	void Reset_Project();
+	virtual void Reset_Project();
 	
-	//! read a olde binary KSProject file
-	void Read_Project_From_Disk();
+
+	 /*! read DAW "Project File.xml" from disk
+	 \param sFile [in]: File part and file name with extencion
+	 \param iBackResID [in]: Background bitmap
+	 */
+	void Read_Project_From_Disk(std::string sFile);
 	
 	//! read a project XML file from Koblo.comin to the tiny xml DOM
-	void Read_Project_XML_To_DOM(tint32 iProjectID);
+	void Read_Latest_Revision_From_Koblo(tint32 iProjectID);
 	
 	//! pass the DOM in to the KS data structure
-	void CKSXML_Parse_DOM_To_Preset();
+	//!!! TO DO rename please look at content
+	virtual void CKSXML_Parse_DOM_To_DAW();
 
-	//! itterate true the project XML file from the root level
-	void Parse_Project( TiXmlNode* pParent );
+	/*! read the  TinyXML DOM file the root level
+	 \ passes one <project> object
+	 */
+	void Pass_The_Project_Tag( TiXmlNode* pParent );
 	
-	//! handle unknown tags
-//	void Ignore_Tag(TiXmlNode* pParent);
-	
-	//! set projet parameters from XML tag <project> in to KS
+	//! Read the  parameters from TinyXML <project> DOM
 	/*!
 	 \param TiXmlNode [in]: TiXmlNode.
 	 */
-	void Read_Project(TiXmlNode* pParent);
+	void Read_Project_Object(TiXmlNode* pParent);
 	
-	//! handle the different ellements at the root level of the xml file sort out comments and the like
+	/*! passes the different TinyXML objects from the root level 
+	\ filter out comments and the like
+	 \param TiXmlNode [in]: TiXmlNode.
+	 */
+	void Parse_Project_Object(TiXmlNode* pParent);
+	
+	//! Read the project name object from the TinyXml object
 	/*!
 	 \param TiXmlNode [in]: TiXmlNode.
 	 */
-	void Parse_Project_Childs(TiXmlNode* pParent);
+	virtual void Read_Project_Name(TiXmlNode* pParent);
 	
-	//! handle the different ellements at the root level of the xml file sort out comments and the like
-	/*!
-	 \param TiXmlNode [in]: TiXmlNode.
-	 */
-	void Read_Project_Name(TiXmlNode* pParent);
-	
-	//! set branch parameters from XML tag <branch> in to KS
-	/*!
+	/*! read the <branch> TinyXML DOM 
 	 \param TiXmlElement [in]: TiXmlElement.
 	 */
-	void Read_Branch(TiXmlElement* pElement);
-	void Read_Settings(TiXmlElement* pElement);
-	void Read_Signature(TiXmlElement* pElement);
-	void Update_Signature();
-	void Read_Edditing(TiXmlElement* pElement);
-	void Read_Tool(std::string sTool);
+	virtual void Read_Branch_Object(TiXmlElement* pElement);
 	
-	void Read_Grid(std::string sGrid);
-	void Read_Snap(std::string sSnap);
-	void Read_View_Waves(std::string sWaves);
-	void Read_View_Fades(std::string sFades);
+	/*! read the <settings> TinyXML DOM 
+	 \param TiXmlElement [in]: TiXmlElement.
+	 */
+	virtual void Read_Settings_Object(TiXmlElement* pElement);
+	
+	/*! read the <signature> TinyXML DOM 
+	 \param TiXmlElement [in]: TiXmlElement.
+	 */
+	virtual void Read_Signature_Object(TiXmlElement* pElement);
+	
+	/*! parse the <editing> TinyXML DOM 
+	 \param TiXmlElement [in]: TiXmlElement.
+	 */
+	virtual void Parse_Edditing_Object(TiXmlElement* pElement);
 	
 	
+	//! read list of sampel from TinyXML DOM
+	void Read_Sample_Object(TiXmlElement* pElement);
+	//! read list of sampel from TinyXML DOM
+	void Read_Take_Object(TiXmlElement* pElement, CSample_Data* Sample_Data);
 	
 	
-	void Read_Sample(TiXmlElement* pElement);
-	void Read_Sample_Take(TiXmlElement* pElement, CSample_Data* Sample_Data);
-	void Read_Loop(TiXmlElement* pElement);
-	void Loop_Active(std::string sFades);
-	void Read_Windows(TiXmlElement* pElement);
-	void Read_Window(TiXmlNode* pChild, tint32 iId);
-	void Open_Window(std::string sOn_Off, tint32 iWindow);
-	void Read_Window_Pos(TiXmlNode* pChild, tint32 iId);
-	void Read_Window_Size(TiXmlNode* pChild, tint32 iId);
-	void Read_Dialogs(TiXmlElement* pElement);
-	void Read_Export_Dialog(TiXmlElement* pElement);
+
 	void Read_Insert(TiXmlElement* pElement);
 	void Read_Insert_Settings(TiXmlElement* pElement);
 	void Read_Insert_Parameter(TiXmlElement* pElement);
-	void Read_Track(TiXmlElement* pElement);
+	
+	
+	
+	void Parse_Track_Object(TiXmlElement* pElement);
 	void Read_Track_Name(TiXmlElement* pElement, tint32 iTrackID);
 	void Read_Track_In(TiXmlElement* pElement, tint32 iTrackID);
 	void Read_Track_Out(TiXmlElement* pElement, tint32 iTrackID);
@@ -141,37 +147,32 @@ public:
 	void Read_Master_Aux_Return(TiXmlElement* pElement);
 	
 	/*! iterates the list of samples
-	\ each sample holds minimum one take
-	\ takes are inspected and downloaded / decompressed if needed
-	*/
-	void Insert_Samples();
+	 \ each sample holds a list of takes with minimum one take
+	 \ determin witch take has to be decompressed / downloaded
+	 \ resoult are stored in the tree lists 
+	 \ mInsert_Que, mDownload_Que and mDecompress_Que
+	 */
+	virtual void Import_Samples();
+	
+	/*! iterates the list of takes
+	 \ takes are inspected and downloaded / decompressed if needed
+	 */
+	 virtual void Import_Takes(CSample_Data Sample_Data);
+	
+	//! inspect one take
+	void Import_Take( CTake_Data* pTake_Data);
+	
 	//! check if take is in the "wave file" folder
-	tbool Is_In_Wave_Files(CTake_Data* pTake_Data);
+	tbool In_Wave_Files( CTake_Data* pTake_Data);
+	
 	//! check if take is in the" download:OGG Files" folder
-	tbool Is_In_OGG_Files(CTake_Data* pTake_Data);
+	tbool In_OGG_Files( CTake_Data* pTake_Data);
 	
-	
-	
-	/*! add take to download que
-	\ if a take file isn't in the "wave file" folder or in the "ogg folder"
-	\ it will be added to the download que
-	*/
-	void Add_Take_To_Download_Que(CTake_Data* pTake_Data);
-	
-	/*! add take to decompression que
-	\ this que is excecuted when all missing take files are downloaded
-	*/
-	void Add_Take_To_Decompress_Que(CTake_Data* pTake_Data);
-	
-	/*! add take to import que
-	\ this que is executed when all takes are in the "wave file" folder
-	\ takes from this que is inserted to the list of samples
-	*/
-	void Add_Take_To_Insert_Que(CTake_Data* pTake_Data);
-	
+	//! check if take is in the folder
+	tbool In_Folder( CTake_Data* pTake_Data, std::string sFolder);
 
-	
-	void Set_Param( TiXmlNode* pParent, tuint uiType, tuint32 uiID, tint32 Section, tfloat fFactor = 1.0f );
+	// Set a parameter in the DAW
+	virtual void Set_DAW_Parameter( TiXmlNode* pParent = NULL, tuint uiType = 0, tuint32 uiID= 0, tint32 Section = 0, tfloat fFactor = 1.0f );
 	
 	
 	
@@ -197,12 +198,12 @@ private:
 	tint32 miTrack_ID;
 	
 	// create TinyXml document
-	TiXmlDocument* mpDoc;
+	TiXmlDocument* mpTinyXMLDoc;
 	
 	tbool mbNew_Revision;
 	
-	tuint32 muiNummerator;
-	tuint32 muiDominator;
+//	tuint32 muiNummerator;
+//	tuint32 muiDominator;
 	
 	
 	
@@ -210,13 +211,13 @@ private:
 	std::list<CSample_Data> mSample_Data_List;
 	
 	// list of takes files to load
-	std::list<CTake_Data> mTake_Download_Que;
+	std::list<CTake_Data*> mDecompress_Que;
 	
 	// list of takes files to load
-	std::list<CTake_Data> mTake_Decompress_Que;
+	std::list<CTake_Data*> mDownload_Que;
 	
 	// list of takes files to load
-	std::list<CTake_Data> mTake_Insert_Que;
+	std::list<CTake_Data*> mInsert_Que;
 	
 };
 

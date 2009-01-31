@@ -221,26 +221,7 @@ tbool CImportAudioTask::Init(std::string sSource_Path, tbool bDoesWaveAlreadyExi
 	if( mFile_Item.Import( sSource_Path ) == false)
 	   return false; 
 	
-//	sprintf(" Source path called from CImportAudioTask::Init %s \n", mFile_Item.Source_Path().c_str());
-	
-	std::string sDebug = mFile_Item.Source_Path();
-	
-	// Build target path
-//	std::string sOldTargetPath = gpApplication->GetProjDir_Clips();
-	
-	
-	// Determine file format and number of channels
-	/*
-	if (bDoesWaveAlreadyExist) {
-		
-		mbDstIsAlreadyThere = true;
-		meCodec = ac::geAudioCodecWave;
-		meSrcQuality = ac::geQualityUnknown;
-		mbSrcLossyCompressed = bForceOriginalIsLossy;
-		mFile_Item.Stereo(eStereoBehavior > geStereoDoAsk);
-		miBitWidth = 0;
-	}
-	 */
+
 	if(true) {
 		mpSrc_File = IFile::Create();
 		if (mpSrc_File == NULL) {
@@ -411,8 +392,8 @@ tbool CImportAudioTask::Open()
 	
 	printf("pathname is : \%s \n", mFile_Item.Path().c_str() );
 
-	std::string sLeft_File_Name = mFile_Item.Destination_Path() + mFile_Item.Name() + "-1.wav";
-	std::string sRight_File_Name = mFile_Item.Destination_Path() + mFile_Item.Name() + "-2.wav";
+	std::string sLeft_File_Name = mFile_Item.Destination_Path() + mFile_Item.Name() + "_0000-1.wav";
+	std::string sRight_File_Name = mFile_Item.Destination_Path() + mFile_Item.Name() + "_0000-2.wav";
 	
 	
 	

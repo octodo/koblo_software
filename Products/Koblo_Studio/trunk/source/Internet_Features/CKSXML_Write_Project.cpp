@@ -558,7 +558,7 @@ void CKSXML_Write_Project::Write_Window(TiXmlElement* pParent, tint32 iWindow, t
 	TiXmlElement* pSize = new TiXmlElement( "size" );;
 	pParent->LinkEndChild( pSize );
 	Write_Window_Size(pSize, 800, 600);
-	Add_Comment(pParent, "the order of tracks is considered an editing setting, and is specified here");
+//	Add_Comment(pParent, "the order of tracks is considered an editing setting, and is specified here");
 	
 }
 
@@ -627,7 +627,7 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 void CKSXML_Write_Project::Write_Sample(TiXmlElement* pParent, CSample_Data* pSample_Data)
 {
 	TiXmlElement* pSample = new TiXmlElement("name" );
-	TiXmlText* pSampleTxt = new TiXmlText(pSample_Data->Get_Name().c_str());
+	TiXmlText* pSampleTxt = new TiXmlText(pSample_Data->Name().c_str());
 	pSample->LinkEndChild( pSampleTxt );
 	pParent->LinkEndChild( pSample );
 
@@ -638,16 +638,23 @@ void CKSXML_Write_Project::Write_Sample(TiXmlElement* pParent, CSample_Data* pSa
 
 void CKSXML_Write_Project::Write_Take(TiXmlElement* pParent, CTake_Data* pTake_Data)
 {
-	// name
+	// uuid
 	TiXmlElement* pTake = new TiXmlElement( "take" );
 	pTake->SetAttribute("uuid", pTake_Data->Get_UUID().c_str());
 	pParent->LinkEndChild( pTake );
+	
 	
 	// description
 	TiXmlElement* pDescription = new TiXmlElement( "description" );
 	TiXmlText* pDescriptionTxt = new TiXmlText(pTake_Data->Get_Description().c_str());
 	pDescription->LinkEndChild( pDescriptionTxt );
 	pTake->LinkEndChild( pDescription );
+	
+	// mode mono/ stereo
+	TiXmlElement* pChannels = new TiXmlElement( "mode" );
+	TiXmlText* pChannelsTxt = new TiXmlText(pTake_Data->Mode().c_str());
+	pChannels->LinkEndChild( pChannelsTxt );
+	pTake->LinkEndChild( pChannels );
 	
 	// url
 	TiXmlElement* pURL = new TiXmlElement( "url" );
@@ -657,9 +664,6 @@ void CKSXML_Write_Project::Write_Take(TiXmlElement* pParent, CTake_Data* pTake_D
 
 }
 
-//----------------------------------------------------------------
-// tracks bus and master
-//----------------------------------------------------------------
 
 void CKSXML_Write_Project::Write_Tracks(TiXmlElement* pParent)
 {
@@ -670,9 +674,12 @@ void CKSXML_Write_Project::Write_Tracks(TiXmlElement* pParent)
 		// id
 		tuint uiTrack = gpApplication->Get_Track_Id(i);
 		
-		// track
+		
+		CTrack_DSP*		pTrack_DSP		=	gpDSPEngine->GetTrack(uiTrack);
+
+		// track uuid
 		TiXmlElement* pTrack = new TiXmlElement( "track" );
-		pTrack->SetAttribute("id",uiTrack);
+		pTrack->SetAttribute("uuid", pTrack_DSP->Get_UUID().c_str());
 		pParent->LinkEndChild( pTrack );
 		
 		// write track data

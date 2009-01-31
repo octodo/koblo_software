@@ -51,17 +51,6 @@ public:
 
 	enum EStereoBehavior { geStereoDoAsk, geStereoDoSplit, geStereoDoKeep };
 
-//	std::string msSrcPathName;
-//	std::string msPathOnly;
-//	std::string msClipName;
-//	std::string msExt;
-
-//	std::string msDstNameL;
-//	std::string msDstNameR;
-
-//	std::string msDstPathName_ForCopy;
-	
-
 
 	ac::EAudioCodec meCodec;
 	ac::EQuality meSrcQuality;
@@ -98,26 +87,10 @@ public:
 	virtual tbool DoWork();
 	virtual tbool IsDone();
 
-	/*
-	//! file name getter function left
-	std::string NameL(){return msImported_File_NameL;};
-	//! file name getter function reigth
-	std::string NameR(){return msImported_File_NameR;};
-	//! file name setter function left
-	void NameL(std::string sFile_Name){msImported_File_NameL = sFile_Name;};
-	//! file name setter function right
-	void NameR(std::string sFile_Name){msImported_File_NameR = sFile_Name;};
-	
-	//! source file name setter function left
-	void Source_File(std::string sFile_Name){msSource_File = sFile_Name;};
-	//! source file name getter function reigth
-	std::string Source_File(){return msSource_File;};
-	*/
-	
 	tbool Stereo(){ return mFile_Item.Stereo();};
 	void Stereo( tbool bStereo) { mFile_Item.Stereo(bStereo);};
 	
-	//! left take name
+	//! take name
 	std::string Name(){ return mFile_Item.Name();};
 	
 	//! left take name
