@@ -4,7 +4,7 @@
 
 CGUI_Controller::CGUI_Controller()
 {
-
+	
 	
 }
 
@@ -37,6 +37,23 @@ void CGUI_Controller::Open_Close_Rack_Window()
 	
 }
 
+void CGUI_Controller::Open_Close_Import_Audio_Window()
+{
+	if (gpApplication->Project_Name().length() == 0) {
+		gpApplication->ShowMessageBox("You must create or load a project before importing audio", "Sorry");
+		return;
+	}
+	
+	
+	tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Import_Window, giSectionGUI) != 0);
+	if(!bTest){
+		gpApplication->SetGlobalParm(giParamID_Show_Import_Window,true, giSectionGUI);
+	}
+	else
+		gpApplication->GetModule()->GetHost()->ActivateWindow(giImport_Audio_Window);
+	
+}
+
 void CGUI_Controller::Select_All_Regions()
 {
 	
@@ -56,3 +73,10 @@ void CGUI_Controller::Show_Hide_Plugins()
 {
 	
 }
+
+
+
+
+
+
+

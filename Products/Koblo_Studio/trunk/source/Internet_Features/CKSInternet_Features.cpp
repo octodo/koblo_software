@@ -10,12 +10,9 @@ CKSXML_Read_Project(),
 CKSUsername_And_Password_Model(),
 mbUpload_Project(false)
 {
-	//!!!TO DO remove this dummy code
-	msProject_Name = "flying pink elephants with umbrellas";
-	msProject_Path	=	"";
-	mpProject_UUID	= new(CKSUUID);
-	mpBranch_UUID	= new(CKSUUID);
-	
+
+	mpProject_UUID = new(CKSUUID);
+	mpBranch_UUID = new(CKSUUID);
 
 }
 
@@ -180,14 +177,21 @@ void CKSInternet_Features::Set_Branch_UUID()
 }
 
 void CKSInternet_Features::Set_Branch_UUID(std::string  sUUID )
+<<<<<<< HEAD:Products/Koblo_Studio/trunk/source/Internet_Features/CKSInternet_Features.cpp
 {
 	mpBranch_UUID->Set_UUID(sUUID);
+=======
+{ 
+	mpBranch_UUID->Set_UUID(sUUID);
+	
+>>>>>>> 9b0ecf96d9ec3adc1055724dd3527dc6e3ef2e0f:Products/Koblo_Studio/trunk/source/Internet_Features/CKSInternet_Features.cpp
 }
 
-
-
-
-
+void CKSInternet_Features::SetProjectName( const std::string& sName)
+{ 
+	msProjectName = sName;
+	gpApplication->Project_Name(sName);
+}
 
 
 

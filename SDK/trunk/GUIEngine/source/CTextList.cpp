@@ -116,7 +116,7 @@ void CTextList::SetText(const tchar* pszText)
 	}
 
 	tint32 iLen = strlen((char*)pszText);
-	tint32 iSize = iLen + 1;
+//	tint32 iSize = iLen + 1;
 	tchar* pszTextOut = NULL;
 	tint32 iNewIndex = FindListIndex(pszText, pszTextOut);
 

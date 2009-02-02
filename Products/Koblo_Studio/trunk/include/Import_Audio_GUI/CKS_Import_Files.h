@@ -45,30 +45,50 @@ public:
 	//! Returns the scroll pane
 	ge::IScrollPane* GetScrollPane(){return mpScrollPane;};
 
-	tbool AddFile(const std::string& sPathName);
+	// When the user press the "Add" button or double click on a file
+	tbool Add_File( std::string sPathName);
 
 	void RemoveFile();
 
+	//! obsolete version
 	void ImportFiles();
 
 	void ClearFiles();
 
-	tint32 GetAddedFiles() { return mItems.size(); };
+	tint32 GetAddedFiles() { return mFile_Items.size(); };
+	
+	
+	
+	//! new version
+	void Import_Audio_Files();
+	
+	//virtual tbool Import_Audio_File(const tchar* pszPathName, tbool bAlwaysKeepStereo, tint32 iTrackID =-1, tint64 iTrackPos = -1);
+	virtual tbool Import_Audio_File(CKSFile_Item File_Item, tbool bAlwaysKeepStereo);
 
 protected:
+	
 	CKSImportGUIPane* mpImportGUI;
-
-//	ge::ILine*		mpLine;
 	ge::IScrollPane* mpScrollPane;
 
 	ge::IListBox* mpListBox;
-
+	
+	
+	
+	
+	
+	
+/*
 	struct SItemInfo {
 		std::string sPathName;
 		std::string sName;
 	};
+*/	
+	
+	
+	
+	
 
-	std::list<SItemInfo> mItems;
+	std::list<CKSFile_Item> mFile_Items;
 
 	void UpdateListBox();
 };

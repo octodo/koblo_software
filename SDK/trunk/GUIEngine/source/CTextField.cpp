@@ -969,7 +969,7 @@ void CTextField::DrawLines(std::string& strIn, const SRect &rUpdate )
 
 	tint iOffset	=	0;
 	tint iOffsetY	=	0;
-	tint iYPos		=	0;
+//	tint iYPos		=	0;
 	std::string outString;
 	tint iLineNr	=	0;
 

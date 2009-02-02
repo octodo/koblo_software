@@ -41,35 +41,35 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID,
 	}
 	
 #ifdef _Mac_PowerPC
-	tchar kpsk1024[] = ".kspk1024_ppc";
-	tchar kpsk64[] = ".kspk64_ppc";
+	tchar kpsk1024[]	= ".kspk1024_ppc";
+	tchar kpsk64[]		= ".kspk64_ppc";
 #else _Mac_PowerPC
-	tchar kpsk1024[] = ".kspk1024";
-	tchar kpsk64[] = ".kspk64";
+	tchar kpsk1024[]	= ".kspk1024";
+	tchar kpsk64[]		= ".kspk64";
 #endif // _Mac_PowerPC
 	
 	
 	
-	std::string sPeakFileName = mpTake_Data->sWavePathNameL + kpsk1024;
-	mppPeakFile[0] = IFile::Create();
+	std::string sPeak_File	= mpTake_Data->sLeft_Peak_File_Path + kpsk1024;
+	mppPeakFile[0]			= IFile::Create();
 	
-	if (!mppPeakFile[0]->Open(sPeakFileName.c_str(), IFile::FileRead)) {
+	if (!mppPeakFile[0]->Open(sPeak_File.c_str(), IFile::FileRead)) {
 		mppPeakFile[0]->Destroy();
 		mppPeakFile[0] = NULL;
 	}
 	
-	sPeakFileName = mpTake_Data->sWavePathNameL + kpsk64;
-	mppPeakFile[1] = IFile::Create();
-	mppPeakFile[1]->Open(sPeakFileName.c_str(), IFile::FileRead);
+	sPeak_File				= mpTake_Data->sLeft_Peak_File_Path + kpsk64;
+	mppPeakFile[1]			= IFile::Create();
+	mppPeakFile[1]->Open(sPeak_File.c_str(), IFile::FileRead);
 	
 	if (miChannels > 1) {
-		sPeakFileName = mpTake_Data->sWavePathNameR + kpsk1024;
-		mppPeakFile[2] = IFile::Create();
-		mppPeakFile[2]->Open(sPeakFileName.c_str(), IFile::FileRead);
+		sPeak_File			= mpTake_Data->sRight_Peak_File_Path + kpsk1024;
+		mppPeakFile[2]		= IFile::Create();
+		mppPeakFile[2]->Open(sPeak_File.c_str(), IFile::FileRead);
 		
-		sPeakFileName = mpTake_Data->sWavePathNameR + kpsk64;
-		mppPeakFile[3] = IFile::Create();
-		mppPeakFile[3]->Open(sPeakFileName.c_str(), IFile::FileRead);
+		sPeak_File = mpTake_Data->sRight_Peak_File_Path + kpsk64;
+		mppPeakFile[3]		= IFile::Create();
+		mppPeakFile[3]->Open(sPeak_File.c_str(), IFile::FileRead);
 	}
 	
 	

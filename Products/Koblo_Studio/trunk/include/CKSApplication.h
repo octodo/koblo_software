@@ -68,7 +68,9 @@ public virtual IBaseDezipperCallback,
 public virtual ITimerCallback_CanStop, 
 public virtual CKSInternet_Features,
 public virtual CKSXML_Create_Sample,
-public virtual CGUI_Controller
+public virtual CGUI_Controller,
+public virtual CKSFile_Controller,
+public virtual CImport_Auido_Controller
 
 // Changes made to VST
 
@@ -132,13 +134,11 @@ public:
 	void UpdateEngineData(tint32 iID, tint32 iValue);
 	void UpdateGUIData(tint32 iID, tint32 iValue);
 	void UpdateCommandData(tint32 iID, tint32 iValue);
-//	void UpdateTrackData(tint32 iID, tint32 iValue);
 	void UpdateTrackData(tint32 iID, tint32 iValue, tint32 iTrack = 0);
 	void UpdateBussData(tint32 iID, tint32 iValue, tint32 iBuss);
 	void UpdateMasterData(tint32 iID, tint32 iValue);
 	void UpdateAUX1Data(tint32 iID, tint32 iValue);
 	void UpdateAUX2Data(tint32 iID, tint32 iValue);
-//	void UpdateAuxMonitorData(tint32 iID, tint32 iValue);
 
 	void DoProcess(tfloat** ppfSamplesOut, const tfloat** ppfSamplesIn, tuint32 iNrOfSamples);
 
@@ -189,10 +189,10 @@ public:
 	virtual tbool MenuFileSaveProject(tbool bOverwriteIcons = false);
 	virtual void MenuFileDistributeMix(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize);
 	virtual void MenuSetupAudio();
-	virtual void MenuFileImportAudio();
+
 	
 
-	virtual void VerifyCreatePeakFiles(const tchar* pszWavePathL, const tchar* pszWavePathR, tbool bForceRewrite);
+	virtual void VerifyCreatePeakFiles(CKSFile_Item* pFile_Item , tbool bForceCreate);
 
 	virtual tbool GenerateMix(ac::EAudioCodec eCodec, ac::EQuality eQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize);
 
@@ -203,7 +203,6 @@ public:
 
 	virtual tbool OnAudioFileImport();
 
-//	virtual tbool DoAudioFileImport(const std::string& sPathName, tbool bDoCopy = true, tbool bAlwaysStereo = false);
 	virtual tbool QueueAudioFileImport(const tchar* pszPathName, tbool bAlwaysKeepStereo, tint32 iTrackID =-1, tint64 iTrackPos = -1);
 
 	virtual tbool CanWaveFilePlay(const std::string& sWaveFilePath, tbool bAllowErrorDialog, tbool bIsMissingFileAnError);
@@ -300,12 +299,26 @@ public:
 	virtual void Set_Selected_Track(tint32 iID){ miSelected_Track = iID;};
 
 
+	std::list<CSample_Data*> Get_Sample_Data_List(){return mSample_Data_List;}
 	std::list<CSample_Data*>::const_iterator Get_Sample_Data_List() const {return mSample_Data_List.begin();}
 	std::list<CSample_Data*>::const_iterator Get_Sample_Data_List_End() const {return mSample_Data_List.end();}
+	
+	//! check if take is in use
+	tbool Take_Is_In_Use(std::string sName);
+	
+	
+	
+	
+	
+	
+	
+	
+	//--------------------------------
+	// Obsolete stuff has to remain until old projects are converted
+	
 	tbool IsClipNameInUse(const tchar* pszClipName, const tchar* pszWaveNameL, const tchar* pszWaveNameR, std::string* psDescription);
 	void AddClipToList(CImportAudioTask* pImportInfo);
 	
-	std::list<CSample_Data*> Get_Sample_Data_List(){return mSample_Data_List;}
 
 	std::string GetProjDir() const {return msProjectFolder;}
 	std::string GetProjDir_Contents() const {return GetProjDir() + "Contents:";}
@@ -319,13 +332,15 @@ public:
 	std::string GetFromWaveName_ClipWaveOld(const tchar* pszWaveName) const;
 	std::string GetFromWaveName_ClipDefaultOgg(const tchar* pszWaveName) const;
 	std::string GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveName) const;
-	std::string GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName);
-	std::string GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName) const;
-//	CSample_Data* Get_Sample_Data_From_Name(const tchar* pszListName) const;
+//	std::string GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName);
+//	std::string GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName) const;
 	tint32 GetFromListName_ClipWavePathNames(const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed = NULL) const;
-//	void Set_Wave_Path( CSample_Data* pSample_Data, const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed = NULL) const;
 	
-//	tuint64 Get_Sample_Duration_From_Name( const tchar* pszListName);
+	
+	
+
+	
+
 	
 	virtual void Stack_Tracks();
 	virtual void Update_Zoom();
@@ -399,8 +414,14 @@ public:
 	
 	virtual void Zoom();
 	
-	std::string Get_Project_Folder(){ return msProject_Folder;};
-	std::string Get_Project_Name(){ return msProject_Name;};
+	tbool Project_Is_Imported(){return mbKSProject_Imported;};
+	
+	//! get extended error
+	std::string Extended_Error(){ return msExtendedError;};
+	//! set extended error
+	void Extended_Error(std::string sError){ msExtendedError = sError;};
+	
+	
 	
 	
 
@@ -448,29 +469,14 @@ protected:
 	
 	CMIDISong mSong;
 	
-/*
-	//! project name
-	std::string msProjectName;
+
 	
-	//! project description
-	std::string msProjectDescription;
 	
-	//! branch name
-	std::string msBranchName;
+
 	
-	//! branch description
-	std::string msBranchDescription;
 	
-*/	
 	
-	//obsoleete
-	std::string msProjectPathName;
-	std::string msProjectFolder;
-	std::string msLastWaveImport;
 	
-	// New ones
-	std::string msProject_Folder;
-	std::string msProject_Name;
 	
 	//! Extended info about last error that happened in a failing method
 	std::string msExtendedError;
@@ -497,9 +503,9 @@ protected:
 	std::list<CSample_Data*> mSample_Data_List;
 
 	virtual void UpdateGUIFileList();
-
+public:
 	void SanitizeProjectFolderPath(std::string& rsProjectFolder, const tchar* pszCorrectExt);
-	
+protected:	
 	tint32 piTrack_Setup[giNumber_Of_Tracks];
 	
 	
@@ -563,6 +569,8 @@ protected:
 	tbool mbZoomFlipFlop;
 	
 	tbool mbTimer;
+	
+	tbool mbKSProject_Imported;
 
 
 	

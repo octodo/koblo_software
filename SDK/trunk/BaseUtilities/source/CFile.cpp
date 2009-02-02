@@ -684,6 +684,8 @@ tbool CFile::Open(const tchar* pszPathName, EOpenFile OpenFile)
 	int i;
 	GetEOF(miRefNum, (long*)&i);
 	miSizeWhenOpened = i;*/
+	
+	std::string sDebug = pszPathName2;
 
 	switch(OpenFile) {
 		case FileRead:
@@ -698,6 +700,7 @@ tbool CFile::Open(const tchar* pszPathName, EOpenFile OpenFile)
 	}
 
 	if (mpHandle == NULL) {
+//		tint32 iDummy = errno;
 		return false;
 	}
 
@@ -959,6 +962,7 @@ tbool IFile::CreateDirectory(const tchar* pszPathName)
 		std::string sPathName2;
 		sPathName2 = sPathName.substr(0, sPathName.size() - 1);
 
+		//!!! Called to many times during startup
 		tint iPos = sPathName2.find_last_of(':');
 		if (iPos != std::string::npos && iPos >= 3) {
 			sPathName2 = sPathName2.substr(0, iPos);

@@ -17,6 +17,8 @@ public:
 	//! Name of the right side wave file for clip
 	std::string sWaveNameR;
 	
+	//!!! obsolete
+	/*
 	//! Name of the original from which the clip was imported/decompressed
 	std::string sOriginalName;
 	//! Extension of the original from which the clip was imported/decompressed
@@ -27,6 +29,7 @@ public:
 	
 	//! Is the original lossy compressed?
 	tbool bIsOriginalLossy;
+	 */
 	
 	//! Which stereo channels to map: 1 = left, 2 = right, 3 = both
 	tint32 iOriginalChannelMask;
@@ -50,28 +53,25 @@ public:
 	
 	//! get the description
 	std::string Get_URL(){ return msURL;};
-/*	
-	// get uuid from CKSUUID object
-	std::string Get_Take_UUID(){ return mpUUID->Get_UUID();};
-	// set a new uuid
-	void Set_Take_UUID(){ mpUUID->Set_UUID();};
-	// set a uuid from a string
-	void Set_Take_UUID(std::string  sUUID ){ mpUUID->Set_UUID(sUUID);};
 	
-*/	
+	//! path to the left peak file
+	std::string sLeft_Peak_File_Path;
 	
+	//! path to the right peak file
+	std::string sRight_Peak_File_Path;
+
 	
 	
 protected:
 	
-//	CKSUUID* mpUUID;
-	
-	//! UUID
-//	std::string msUUID;
+
 	//! description
 	std::string msDescription;
 	//! url
 	std::string msURL;
+	
+	
+	
 };
 
 

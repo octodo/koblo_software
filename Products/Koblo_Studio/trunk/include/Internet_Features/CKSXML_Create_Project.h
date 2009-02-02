@@ -67,22 +67,22 @@ private:
 	/*!
 	 \param TiXmlNode [in]: TiXmlNode.
 	 */
-	void Set_Project_Info(TiXmlNode* pParent);
+	void Write_Project_Info(TiXmlNode* pParent);
 	//! set project name
 	/*!
 	 \param TiXmlNode [in]: TiXmlElement.
 	 */
-	void Set_Project_Name(TiXmlElement* pElement);
+	void Write_Project_Name(TiXmlElement* pElement);
 	//! set project description
 	/*!
 	 \param TiXmlNode [in]: TiXmlElement.
 	 */
-	void Set_Project_Description(TiXmlElement* pElement);
+	void Write_Project_Description(TiXmlElement* pElement);
 	//! set project license
 	/*!
 	 \param TiXmlNode [in]: TiXmlElement.
 	 */
-	void Set_Project_License(TiXmlElement* pElement);
+	void Write_Project_License(TiXmlElement* pElement);
 	
 	
 	

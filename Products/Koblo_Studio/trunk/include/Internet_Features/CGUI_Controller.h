@@ -42,12 +42,13 @@ public:
 	
 	void Open_Close_Mix_Window();
 	void Open_Close_Rack_Window();
+	void Open_Close_Import_Audio_Window();
 	void Select_All_Regions();
 	void Close_Window();
 	void Toggle_Window();
 	void Show_Hide_Plugins();
 	
-private:	
+protected:
 	
 };
 

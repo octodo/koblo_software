@@ -36,7 +36,9 @@ public:
 	tint32 iFiles;
 	IFile* pfWaveL;
 	IFile* pfWaveR;
+	
 	std::string sWaveR;
+	
 	tbool bIsDecompressed;
 	std::string sCompressedOriginal;
 

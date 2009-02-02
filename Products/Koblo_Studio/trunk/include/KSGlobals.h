@@ -214,6 +214,19 @@ enum EWindowIDs
 	
 };
 
+//! windows id's
+enum ESaveMsg
+{
+	giUser_Canceld_Save = 0,
+	giUser_Didn_Save,
+	giUser_Saved_Project,
+	giUser_No_Project_To_Save,
+	giUser_Created_A_New_Project,
+	giUser_Canceld_Create_New_Project
+	
+	
+	
+};
 
 
 //! Pane messasges

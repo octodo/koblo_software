@@ -18,8 +18,8 @@ void CKSXML_Read_Project::Read_Project_From_Disk()
 {
 	
 	
-	std::string sProject_Folder = gpApplication->Get_Project_Folder();
-	std::string sProject_Name	= gpApplication->Get_Project_Name();
+	std::string sProject_Folder = gpApplication->Project_Folder();
+	std::string sProject_Name	= gpApplication->Project_Name();
 	
 	/*
 	for(tint i = 0; i != std::string::npos; i = sProject_Folder.find(":")) {
@@ -51,7 +51,7 @@ void CKSXML_Read_Project::Reset_Project()
 {
 	miTrack_ID	=	0;
 	gpApplication->CleanProject(0);
-	gpApplication->Set_Selected_Track(-1);
+	
 	mpDoc->Clear();
 	
 }
@@ -136,14 +136,12 @@ void CKSXML_Read_Project::Parse_Project( TiXmlNode* pParent )
 void CKSXML_Read_Project::Read_Project(TiXmlNode* pParent)
 {
 	if ( !pParent ) return ;
-	printf("--------------------------  PROJECT ----------------------------\n");
-	TiXmlAttribute* pAttrib	=	pParent->ToElement()->FirstAttribute();
-	tint32 ival;
 	
-	// project ID
-	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "project id =  %d", ival);
-	printf( "\n" );
+	TiXmlAttribute* pAttrib	=	pParent->ToElement()->FirstAttribute();
+	// project uuid
+	gpApplication->Set_Project_UUID( pAttrib->Value() );
+	
+/*
 	// scema
 	if(pAttrib=pAttrib->Next())
 		printf( "%s: %s", pAttrib->Name(), pAttrib->Value());
@@ -152,6 +150,7 @@ void CKSXML_Read_Project::Read_Project(TiXmlNode* pParent)
 	if(pAttrib=pAttrib->Next())
 		printf( "%s: %s", pAttrib->Name(), pAttrib->Value());
 	printf( "\n" );
+*/
 	
 	// parse all childs
 	TiXmlNode* pChild;
@@ -165,44 +164,54 @@ void CKSXML_Read_Project::Read_Project(TiXmlNode* pParent)
 
 void CKSXML_Read_Project::Parse_Project_Childs(TiXmlNode* pParent)
 {
-	if (stricmp("branch", pParent->Value()) == 0) {
-		printf("--------------------------  BRANCH ------------------------------\n");
+	if (stricmp("name", pParent->Value()) == 0)
+		Read_Project_Name(pParent);
+	
+	else if (stricmp("branch", pParent->Value()) == 0) {
 		Read_Branch(pParent->ToElement());
 	}
 	else if (stricmp("settings", pParent->Value()) == 0) {
-		printf("-------------------------  SETTINGS -----------------------------\n");
 		Read_Settings(pParent->ToElement());
 	}
 	else if (stricmp("editing", pParent->Value()) == 0) {
-		printf("--------------------------  EDDITING ---------------------------\n");
 		Read_Edditing(pParent->ToElement());
 	}
 	else if (stricmp("sample", pParent->Value()) == 0) {
-		printf("--------------------------  SAMPLE ----------------------------\n");
 		Read_Sample(pParent->ToElement());
 	}
 	/*
 	else if (stricmp("insert", pParent->Value()) == 0) {
-		printf("--------------------------  INSERT ----------------------------\n");
 		Read_Insert(pParent->ToElement());
 	}
 	 */
 	else if (stricmp("track", pParent->Value()) == 0) {
-		printf("-------------------------  TRACK ------------------------------\n");
 		Read_Track(pParent->ToElement());
 	}
 	else if (stricmp("bus", pParent->Value()) == 0) {
-		printf("--------------------------  BUS -------------------------------\n");
 		Read_Bus(pParent->ToElement());
 	}
 	else if (stricmp("master", pParent->Value()) == 0) {
-		printf("------------------------  MASTER ------------------------------\n");
 		Read_Master(pParent->ToElement());
 	}
+	/*
 	else
 		Ignore_Tag( pParent);
+	*/
+}
+void CKSXML_Read_Project::Read_Project_Name(TiXmlNode* pParent)
+{
+	if ( !pParent ) return;
+	
+	TiXmlNode* pChild = pParent->FirstChild();
+	
+	if ( pChild ){
+		TiXmlText* pText;
+		pText = pChild->ToText();
+		gpApplication->Project_Name(pText->Value());
+	}
 }
 
+/*
 void CKSXML_Read_Project::Ignore_Tag(TiXmlNode* pParent)
 {
 //	printf(".\n");
@@ -215,45 +224,56 @@ void CKSXML_Read_Project::Ignore_Tag(TiXmlNode* pParent)
 		Ignore_Tag( pChild );
 	}
 }
-
+*/
 void CKSXML_Read_Project::Read_Branch(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
+	 // branch uuid
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
-	tint32 ival;
-	
-	// project ID
-	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "branch id =  %d", ival);
-	printf( "\n" );
-	
+	 if(pAttrib)
+		 gpApplication->Set_Branch_UUID( pAttrib->Value() );
+	 
 	TiXmlNode* pChild;
+	TiXmlText* pText;
 	
 	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
 		
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("name", pChild->Value()) == 0) {
-				printf( "branch name:  ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, -1);
-				printf( "\n" );
+				
+				TiXmlNode* pName = pChild->FirstChild();
+				if(pName) {
+					pText = pName->ToText();
+					if(pText)
+						gpApplication->Set_Branch_Name(pText->Value());
+				}
 			}
 			
 			else if (stricmp("description", pChild->Value()) == 0) {
-				printf( "branch description:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, -1);
-				printf( "\n" );
+				
+				
+				TiXmlNode* pSet_Branch_Description = pChild->FirstChild();
+				if(pSet_Branch_Description) {
+					pText = pSet_Branch_Description->ToText();
+					if(pText)
+						gpApplication->Set_Branch_Description(pText->Value());
+				}
 			}
 			
 			else if (stricmp("revision", pChild->Value()) == 0){
-				printf( "branch revision:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, -1);
-				printf( "\n" );
+				
+				TiXmlNode* pSet_Branch_Revision = pChild->FirstChild();
+				if(pSet_Branch_Revision) {
+					std::string sBranch_Revision = pSet_Branch_Revision->Value();
+					gpApplication->Branch_Revision(atoi(sBranch_Revision.c_str()));
+				}
 			}
 		}
 	}
 }
+
 
 void CKSXML_Read_Project::Read_Settings(TiXmlElement* pElement)
 {
@@ -261,47 +281,34 @@ void CKSXML_Read_Project::Read_Settings(TiXmlElement* pElement)
 	
 	
 	TiXmlNode* pChild;
+//	TiXmlNode* pNote;
 	
 	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
 		
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
-			if (stricmp("name", pChild->Value()) == 0) {
-				printf( "project name:  ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, -1);
-				printf( "\n" );
-			}
-			
-			else if (stricmp("description", pChild->Value()) == 0) {
-				printf( "project description:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, -1);
-				printf( "\n" );
-			}
-			else if (stricmp("image", pChild->Value()) == 0){
-				printf( "image link:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, -1);
-				printf( "\n" );
-			}
-			else if (stricmp("samplerate", pChild->Value()) == 0){
-				printf( "samplerate:  ");
-				Set_Param(pChild, giTinyXml_Type_Int,0, -1);
-				printf( "\n" );
-			}
-			else if (stricmp("tempo", pChild->Value()) == 0){
-				printf( "tempo:  ");
-				Set_Param(pChild, giTinyXml_Type_Float, giParamID_KS_Tempo , giSectionGlobal, 10.0f);
-				printf( "\n" );
-			}
-			else if (stricmp("signature", pChild->Value()) == 0){
-				printf( "signature:  ");
-				Read_Signature(pChild->ToElement());
-				printf( "\n" );
+			if (stricmp("samplerate", pChild->Value()) == 0){
+				
+				
+				TiXmlNode* pNote = pChild->FirstChild();
+				if(pNote) {
+					std::string sSample_Rate = pNote->Value();
+					// gpApplication->SetSampleRate(atoi(sSample_Rate.c_str()));
+				}
 				
 			}
+			else if (stricmp("tempo", pChild->Value()) == 0)
+				Set_Param(pChild, giTinyXml_Type_Float, giParamID_KS_Tempo , giSectionGlobal, 10.0f);
+			
+			else if (stricmp("signature", pChild->Value()) == 0){
+				Read_Signature(pChild->ToElement());
+				Update_Signature();
+			}	
+			
 			else if (stricmp("license", pChild->Value()) == 0){
-				printf( "license:  ");
+				//!!! TO DO do somthing here
 				Set_Param(pChild, 0, giTinyXml_Type_String, -1);
-				printf( "\n" );
+
 			}
 		}
 	}
@@ -313,67 +320,68 @@ void CKSXML_Read_Project::Read_Signature(TiXmlElement* pElement)
 	
 	
 	TiXmlNode* pChild;
+	TiXmlNode* pNote;
+	std::string sValue;
 	
 	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
 		
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("numerator", pChild->Value()) == 0) {
-				Update_Signature(pChild->ToElement());
+				
+				pNote				= pChild->FirstChild();
+				if(pNote) {
+					sValue			=	pNote->Value();
+					muiNummerator	=	(atoi(sValue.c_str()));
+				}
 				
 			}
 			if (stricmp("denominator", pChild->Value()) == 0) {
 				
+				pNote				= pChild->FirstChild();
+				if(pNote) {
+					sValue			=	pNote->Value();
+					muiDominator	=	(atoi(sValue.c_str()));
+				}
+				
 			}
 		}
 	}
+
 }
 
-void CKSXML_Read_Project::Update_Signature(TiXmlElement* pParent)
+void CKSXML_Read_Project::Update_Signature()
 {
-	if ( !pParent ) return;
-		
-	TiXmlNode* pChild = pParent->FirstChild();
-	TiXmlText* pText;
-	if ( !pChild ) return;
-		
-		
-	if (  pChild->Type() == TiXmlNode::TEXT )
-	{
-					
-		pText = pChild->ToText();
-		std::string s = pText->Value();
-		tuint uiValue = atoi(s.c_str());
+
+	tuint32 iSignature;
+	tuint32 uiValue		=	muiNummerator * 100;
+	uiValue				+=	muiDominator;
 			
-		tuint32 iSignature; 
-			
-		switch(uiValue){
-			case 2:
-				iSignature = giSignature2_4;
-				break;
-			case 3:
-				iSignature = giSignature3_4;
-				break;
-			case 4:
-				iSignature = giSignature4_4;
-				break;
-			case 6:
-				iSignature = giSignature6_8;
-				break;
-			case 9:
-				iSignature = giSignature9_8;
-				break;
-			case 12:
-				iSignature = giSignature12_8;
-				break;
-			default:
-				iSignature = giSignature4_4;
-					
-					
-		}
-		gpApplication->SetGlobalParm(giParamID_KS_Time_Signature, iSignature, giSectionGlobal);
-		
+	switch(uiValue){
+		case 204:
+			iSignature = giSignature2_4;
+			break;
+		case 304:
+			iSignature = giSignature3_4;
+			break;
+		case 404:
+			iSignature = giSignature4_4;
+			break;
+		case 608:
+			iSignature = giSignature6_8;
+			break;
+		case 908:
+			iSignature = giSignature9_8;
+			break;
+		case 1208:
+			iSignature = giSignature12_8;
+			break;
+		default:
+			iSignature = giSignature4_4;
+				
+				
 	}
+	gpApplication->SetGlobalParm(giParamID_KS_Time_Signature, iSignature, giSectionGlobal);
 
 }
 
@@ -389,65 +397,147 @@ void CKSXML_Read_Project::Read_Edditing(TiXmlElement* pElement)
 		
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
-			if (stricmp("record", pChild->Value()) == 0) {
-				printf( "record:  ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, -1);
-				printf( "\n" );
+			if (stricmp("record", pChild->Value()) == 0) 
+				// never start recording upon load
+				gpApplication->SetRecord(false);
+
+			else if (stricmp("tool", pChild->Value()) == 0) {
+
+				TiXmlNode* pTool = pChild->FirstChild();
+				if(pTool) {
+					std::string sTool = pTool->Value();
+					Read_Tool(sTool);
+				}
+			}
+
+			else if (stricmp("zoom", pChild->Value()) == 0)
+				Set_Param(pChild, giTinyXml_Type_Int,giParamID_Zoom , giSectionGUI );
+			
+			
+			else if (stricmp("grid", pChild->Value()) == 0) {
+				TiXmlNode* pGrid = pChild->FirstChild();
+				if(pGrid) {
+					std::string sGrid = pGrid->Value();
+					Read_Grid(sGrid);
+				}
+			}
+				
+			else if (stricmp("snap", pChild->Value()) == 0){
+				TiXmlNode* pSnap = pChild->FirstChild();
+				if(pSnap) {
+					std::string sSnap = pSnap->Value();
+					Read_Snap(sSnap);
+				}
 			}
 			
-			else if (stricmp("tool", pChild->Value()) == 0) {
-				printf( "tool:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, -1);
-				printf( "\n" );
-			}
-			else if (stricmp("zoom", pChild->Value()) == 0){
-				printf( "zoom:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, -1);
-				printf( "\n" );
-			}
-			else if (stricmp("grid", pChild->Value()) == 0){
-				printf( "grid:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, -1);
-				printf( "\n" );
-			}
-			else if (stricmp("snap", pChild->Value()) == 0){
-				printf( "snap:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, -1);
-				printf( "\n" );
-				
-			}
+			
 			else if (stricmp("waves", pChild->Value()) == 0){
-				printf( "waves:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, -1);
-				printf( "\n" );
 				
+				TiXmlNode* pWaves = pChild->FirstChild();
+				if(pWaves) {
+					std::string sWaves = pWaves->Value();
+					Read_View_Waves(sWaves);
+				}
 			}
+				
 			else if (stricmp("fades", pChild->Value()) == 0){
-				printf( "fades:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, -1);
-				printf( "\n" );
 				
+				TiXmlNode* pFades = pChild->FirstChild();
+				if(pFades) {
+					std::string sFades = pFades->Value();
+					Read_View_Fades(sFades);
+				}
 			}
-			else if (stricmp("loop", pChild->Value()) == 0){
-				printf( "loop:  ");
+			
+			else if (stricmp("loop", pChild->Value()) == 0)
 				Read_Loop(pChild->ToElement());
-			}
-			else if (stricmp("position", pChild->Value()) == 0){
-				printf( "position:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, -1);
-				printf( "\n" );
-			}
-			else if (stricmp("windows", pChild->Value()) == 0){
-				//printf( "windows:  ");
+
+			else if (stricmp("windows", pChild->Value()) == 0)
 				Read_Windows(pChild->ToElement());
-			}
-			else if (stricmp("dialogs", pChild->Value()) == 0){
-				//printf( "windows:  ");
+
+			else if (stricmp("dialogs", pChild->Value()) == 0)
 				Read_Dialogs(pChild->ToElement());
-			}
+
 		}
 	}
 }
+
+void CKSXML_Read_Project::Read_Tool(std::string sTool)
+{
+
+			
+	if (stricmp("hand", sTool.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_Tool_Selected, giTool_Hand,  giSectionGUI);
+	
+	else if (stricmp("trim", sTool.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_Tool_Selected, giTool_Trim,  giSectionGUI);
+	
+	else if (stricmp("select", sTool.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_Tool_Selected, giTool_Select,  giSectionGUI);
+	
+	else if (stricmp("cut", sTool.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_Tool_Selected, giTool_Cut,  giSectionGUI);
+			
+	
+}
+
+void CKSXML_Read_Project::Read_Grid(std::string sGrid)
+{
+	if (stricmp("off", sGrid.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_Grid, 0,  giSectionGUI);
+	
+	else if (stricmp("on", sGrid.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_Grid, 1,  giSectionGUI);
+	
+}
+
+void CKSXML_Read_Project::Read_Snap(std::string sSnap)
+{
+	if (stricmp("1/1", sSnap.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_KS_Snap_To, 32,  giSectionGlobal);
+	
+	else if (stricmp("1/2", sSnap.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_KS_Snap_To, 16,  giSectionGlobal);
+	
+	else if (stricmp("1/4", sSnap.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_KS_Snap_To, 8,  giSectionGlobal);
+	
+	else if (stricmp("1/8", sSnap.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_KS_Snap_To, 4,  giSectionGlobal);
+	
+	else if (stricmp("1/16", sSnap.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_KS_Snap_To, 2,  giSectionGlobal);
+	
+	else if (stricmp("1/32", sSnap.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_KS_Snap_To, 1,  giSectionGlobal);
+	
+	
+
+}
+
+void CKSXML_Read_Project::Read_View_Waves(std::string sWaves)
+{
+	
+	if (stricmp("off", sWaves.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_Show_Waveform, 0,  giSectionGUI);
+	
+	else if (stricmp("on", sWaves.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_Show_Waveform, 1,  giSectionGUI);
+	
+
+}
+
+void CKSXML_Read_Project::Read_View_Fades(std::string sFades)
+{
+	if (stricmp("off", sFades.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_Show_Fade, 0,  giSectionGUI);
+	
+	else if (stricmp("on", sFades.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_Show_Fade, 1,  giSectionGUI);
+	
+}
+
+
 
 void CKSXML_Read_Project::Read_Loop(TiXmlElement* pElement)
 {
@@ -461,22 +551,31 @@ void CKSXML_Read_Project::Read_Loop(TiXmlElement* pElement)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("active", pChild->Value()) == 0) {
-				//printf( "active:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_String, -1);
-				printf( "\n" );
+				TiXmlNode* pActive = pChild->FirstChild();
+				if(pActive) {
+					std::string sActive = pActive->Value();
+					Loop_Active(sActive);
+				}
 			}
-			else if (stricmp("start", pChild->Value()) == 0) {
-				printf( "start:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, -1);
-				printf( "\n" );
-			}
-			else if (stricmp("end", pChild->Value()) == 0) {
-				printf( "end:  ");
-				Set_Param(pChild, 0, giTinyXml_Type_Int, -1);
-				printf( "\n" );
-			}
+			
+			else if (stricmp("start", pChild->Value()) == 0) 
+				Set_Param(pChild, giTinyXml_Type_Int,giParamID_Loop_Start , giSectionGUI );
+
+			else if (stricmp("end", pChild->Value()) == 0) 
+				Set_Param(pChild, giTinyXml_Type_Int,giParamID_Loop_End , giSectionGUI );
+
 		}
 	}
+}
+
+void CKSXML_Read_Project::Loop_Active(std::string sGrid)
+{
+	if (stricmp("off", sGrid.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_Loop_On, 0,  giSectionGlobal);
+	
+	else if (stricmp("on", sGrid.c_str()) == 0) 
+		gpApplication->SetGlobalParm(giParamID_Loop_On, 1,  giSectionGlobal);
+	
 }
 
 void CKSXML_Read_Project::Read_Windows(TiXmlElement* pElement)
@@ -491,22 +590,19 @@ void CKSXML_Read_Project::Read_Windows(TiXmlElement* pElement)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("edit", pChild->Value()) == 0){
-				printf( "---- EDIT WINDOW ----\n");
-				Read_Window(pChild, 0);
+				Read_Window(pChild, giParamID_Show_Track_Window);
 			}
 			if (stricmp("mix", pChild->Value()) == 0){
-				printf( "---- MIX WINDOW ----\n");
-				Read_Window(pChild, 1);
+				Read_Window(pChild, giParamID_Show_Mix_Window);
 			}
 			if (stricmp("rack", pChild->Value()) == 0){
-				printf( "---- RACK WINDOW ----\n");
-				Read_Window(pChild, 3);
+				Read_Window(pChild, giParamID_Show_AUX_Window);
 			}
 		}
 	}
 }
 
-void CKSXML_Read_Project::Read_Window(TiXmlNode* pParrent, tint32 iId)
+void CKSXML_Read_Project::Read_Window(TiXmlNode* pParrent, tint32 iWindow)
 {
 	TiXmlElement* pElement = pParrent->ToElement();
 	
@@ -519,26 +615,36 @@ void CKSXML_Read_Project::Read_Window(TiXmlNode* pParrent, tint32 iId)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("show", pChild->Value()) == 0) {
-				printf("show: ");
-				Set_Param(pChild, giTinyXml_Type_String, 0, -1);
-				printf( "\n" );
+				TiXmlNode* pOn_Off = pChild->FirstChild();
+				if(pOn_Off) {
+					std::string  sOn_Off = pOn_Off->Value();
+					Open_Window( sOn_Off, iWindow);
+				}
 			}
 			else if (stricmp("position", pChild->Value()) == 0){
-				printf( "position:  ");
-				Read_Window_Pos(pChild, iId);
+				Read_Window_Pos(pChild, iWindow);
 			}
 			else if (stricmp("size", pChild->Value()) == 0){
-				printf( "size:  ");
-				Read_Window_Size(pChild, iId);
+				Read_Window_Size(pChild, iWindow);
 			}
 			if (stricmp("layer", pChild->Value()) == 0) {
-				printf("layer: ");
-				Set_Param(pChild, giTinyXml_Type_Int, 0 , -1);
-				printf( "\n" );
+				//;Set_Param(pChild, giTinyXml_Type_Int, 0 , -1);
 			}
 			
 		}
 	}
+}
+
+void CKSXML_Read_Project::Open_Window(std::string sOn_Off, tint32 iWindow)
+{
+	
+	if (stricmp("off", sOn_Off.c_str()) == 0) 
+		gpApplication->SetGlobalParm(iWindow, 0,  giSectionGlobal);
+	
+	else if (stricmp("on", sOn_Off.c_str()) == 0) 
+		gpApplication->SetGlobalParm(iWindow, 1,  giSectionGlobal);
+	
+
 }
 
 void CKSXML_Read_Project::Read_Window_Pos(TiXmlNode* pParrent, tint32 iId)
@@ -554,14 +660,10 @@ void CKSXML_Read_Project::Read_Window_Pos(TiXmlNode* pParrent, tint32 iId)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("x", pChild->Value()) == 0) {
-				printf( "x: ");
 				Set_Param(pChild, 0, giTinyXml_Type_Int, iId);
-				printf( "    ");
 			}
 			else if (stricmp("y", pChild->Value()) == 0) {
-				printf( "y:");
 				Set_Param(pChild, 0, giTinyXml_Type_Int, iId);
-				printf( "\n" );
 			}
 		}
 	}
@@ -580,14 +682,10 @@ void CKSXML_Read_Project::Read_Window_Size(TiXmlNode* pParrent, tint32 iId)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("x", pChild->Value()) == 0) {
-				printf( "x: ");
 				Set_Param(pChild, 0, giTinyXml_Type_Int, iId);
-				printf( "    ");
 			}
 			else if (stricmp("y", pChild->Value()) == 0) {
-				printf( "y:");
 				Set_Param(pChild, 0, giTinyXml_Type_Int, iId);
-				printf( "\n" );
 			}
 		}
 	}
@@ -605,7 +703,6 @@ void CKSXML_Read_Project::Read_Dialogs(TiXmlElement* pElement)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("export", pChild->Value()) == 0){
-				printf( "---- EXPORT DIALOG ----\n");
 				Read_Export_Dialog(pChild->ToElement());
 			}
 		}
@@ -624,24 +721,17 @@ void CKSXML_Read_Project::Read_Export_Dialog(TiXmlElement* pElement)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("type", pChild->Value()) == 0) {
-				printf( "audio type: ");
+
 				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
-				printf( "\n");
 			}
 			else if (stricmp("compression", pChild->Value()) == 0) {
-				printf( "compression: ");
 				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
-				printf( "\n");
 			}
 			else if (stricmp("tail", pChild->Value()) == 0) {
-				printf( "tail: ");
 				Set_Param(pChild, 0, giTinyXml_Type_Int, 0);
-				printf( "\n");
 			}
 			else if (stricmp("normalize", pChild->Value()) == 0) {
-				printf( "normalize: ");
 				Set_Param(pChild, 0, giTinyXml_Type_String, 0);
-				printf( "\n");
 			}
 		}
 	}
@@ -656,8 +746,7 @@ void CKSXML_Read_Project::Read_Sample(TiXmlElement* pElement)
 	
 	// sample id
 	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "sample id =  %d \n", ival);
-	
+		;	
 	TiXmlNode* pChild;
 	
 	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
@@ -665,13 +754,12 @@ void CKSXML_Read_Project::Read_Sample(TiXmlElement* pElement)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("name", pChild->Value()) == 0) {
-				printf( "sample name:  ");
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("take", pChild->Value()) == 0) {
 				Read_Sample_Take(pChild->ToElement());
-				printf( "\n" );
+
 			}
 		}
 	}
@@ -688,7 +776,7 @@ void CKSXML_Read_Project::Read_Sample_Take(TiXmlElement* pElement)
 	
 	// sample id
 	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "take id =  %d \n", ival);
+		;
 	
 	TiXmlNode* pChild;
 	
@@ -697,14 +785,14 @@ void CKSXML_Read_Project::Read_Sample_Take(TiXmlElement* pElement)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("description", pChild->Value()) == 0) {
-				printf( "take description:  ");
+
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("url", pChild->Value()) == 0) {
-				printf( "take url:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Take, 0, 0);
-				printf( "\n" );
+
 			}
 			
 		}
@@ -720,7 +808,7 @@ void CKSXML_Read_Project::Read_Track(TiXmlElement* pElement)
 	
 	// track id
 	if (pAttrib && pAttrib->QueryIntValue(&iTrackID)==TIXML_SUCCESS)   
-		printf( "track id =  %d \n", iTrackID);
+		;
 	
 	
 	// owerwrite
@@ -799,14 +887,14 @@ void CKSXML_Read_Project::Read_Track_In(TiXmlElement* pElement, tint32 iTrackID)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("input", pChild->Value()) == 0) {
-				printf( "input:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Int, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("mode", pChild->Value()) == 0) {
-				printf( "input mode:  ");
+
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("gain", pChild->Value()) == 0) {
 		//		printf( "input gain:  ");
@@ -925,10 +1013,10 @@ void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrac
 	
 	// slot id
 	if (pAttrib->QueryIntValue(&iSlot)==TIXML_SUCCESS) {
-		printf( "insert:%d,  ", iSlot);
+		//printf( "insert:%d,  ", iSlot);
 		// plug-in id
 		if (pAttrib->QueryIntValue(&iPluginId)==TIXML_SUCCESS) {
-			printf( "plug-in id:%d,  ", iPluginId);
+			//printf( "plug-in id:%d,  ", iPluginId);
 			gpApplication->SetGlobalParm(giParam_ChInsert1 + iSlot, iPluginId, giSection_First_Track + uTrack);
 		}
 	}
@@ -937,28 +1025,28 @@ void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrac
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("vendor", pChild->Value()) == 0) {
-				printf( "vendor:  ");
+
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("product", pChild->Value()) == 0) {
-				printf( "product:  ");
+
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("url", pChild->Value()) == 0) {
-				printf( "url:  ");
+
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("bypass", pChild->Value()) == 0) {
-				printf( "bypass:  ");
+
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("settings", pChild->Value()) == 0) {
 				Read_Insert_Settings(pChild->ToElement());
-				printf( "\n" );
+
 			}
 		}
 	}
@@ -1023,12 +1111,12 @@ void CKSXML_Read_Project::Read_Insert_Settings(TiXmlElement* pElement)
 			
 			if (stricmp("parameter", pChild->Value()) == 0) {
 				Read_Insert_Parameter(pChild->ToElement());
-				printf( "\n" );
+
 			}
 			else if (stricmp("chunk", pChild->Value()) == 0) {
-				printf( "chunk url:  ");
+
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
+
 			}
 		}
 	}
@@ -1046,17 +1134,17 @@ void CKSXML_Read_Project::Read_Insert_Parameter(TiXmlElement* pElement)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("name", pChild->Value()) == 0) {
-				printf( "parameter name:  ");
+
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( ", " );
+
 			}
 			else if (stricmp("default", pChild->Value()) == 0) {
-				printf( "default:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
-				printf( ", " );
+
 			}
 			else if (stricmp("value", pChild->Value()) == 0) {
-				printf( "value:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
 			}
 		}
@@ -1069,16 +1157,15 @@ void CKSXML_Read_Project::Read_Track_Region(TiXmlElement* pElement, tint32 iTrac
 	
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
 	tint32 ival;
-	printf( "--------\n", ival);
 	// aux id
 	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "region id:%d   ", ival);
+		;//	printf( "region id:%d   ", ival);
 	
 	if(pAttrib=pAttrib->Next())
 		
 		// aux id
 		if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-			printf( "   take:%d \n", ival);
+			;//printf( "   take:%d \n", ival);
 	
 	TiXmlNode* pChild;
 	
@@ -1087,24 +1174,24 @@ void CKSXML_Read_Project::Read_Track_Region(TiXmlElement* pElement, tint32 iTrac
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("position", pChild->Value()) == 0) {
-				printf( "position:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Int, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("start", pChild->Value()) == 0) {
-				printf( "start:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Int, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("end", pChild->Value()) == 0) {
-				printf( "end:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Int, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("volume", pChild->Value()) == 0) {
-				printf( "volume:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
-				printf( "\n" );
+
 			}
 		}
 	}
@@ -1121,14 +1208,14 @@ void CKSXML_Read_Project::Read_Track_Region_Fade(TiXmlElement* pElement, tint32 
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("in", pChild->Value()) == 0) {
-				printf( "fade in:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Int, 0, 0);
-				//	printf( "\n" );
+
 			}
 			else if (stricmp("out", pChild->Value()) == 0) {
-				printf( "fade out:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Int, 0, 0);
-					printf( "\n" );
+
 			}
 
 		}
@@ -1145,7 +1232,7 @@ void CKSXML_Read_Project::Read_Bus(TiXmlElement* pElement)
 	
 	// sample id
 	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "bus id =  %d \n", ival);
+		;//printf( "bus id =  %d \n", ival);
 	
 	TiXmlNode* pChild;
 	
@@ -1184,39 +1271,39 @@ void CKSXML_Read_Project::Read_Bus_Out(TiXmlElement* pElement)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("out", pChild->Value()) == 0) {
-				printf( "out:  ");
+
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("mode", pChild->Value()) == 0) {
-				printf( "output mode:  ");
+
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("volume", pChild->Value()) == 0) {
-				printf( "output volume:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("pan", pChild->Value()) == 0) {
-				printf( "pan:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("solo", pChild->Value()) == 0) {
-				printf( "solo:  ");
+
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("mute", pChild->Value()) == 0) {
-				printf( "mute:  ");
+
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("arm", pChild->Value()) == 0) {
-				printf( "arm:  ");
+
 				Set_Param(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
+
 			}
 		}
 	}
@@ -1231,7 +1318,7 @@ void CKSXML_Read_Project::Read_Bus_Aux(TiXmlElement* pElement)
 	
 	// aux id
 	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "AUX %d ", ival);
+		;//printf( "AUX %d ", ival);
 	
 	TiXmlNode* pChild;
 	
@@ -1240,9 +1327,9 @@ void CKSXML_Read_Project::Read_Bus_Aux(TiXmlElement* pElement)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("send", pChild->Value()) == 0) {
-				printf( "send:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
-				printf( "\n" );
+
 			}
 		}
 	}
@@ -1257,13 +1344,13 @@ void CKSXML_Read_Project::Read_Bus_Insert(TiXmlElement* pElement)
 	
 	// aux id
 	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "insert slot;%d,  ", ival);
+		;//printf( "insert slot;%d,  ", ival);
 	
 	if(pAttrib=pAttrib->Next())
 		
 		// aux id
 		if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-			printf( "id:%d \n", ival);
+			;//printf( "id:%d \n", ival);
 	
 }
 
@@ -1305,7 +1392,7 @@ void CKSXML_Read_Project::Read_Master_Aux_Return(TiXmlElement* pElement)
 	
 	// aux id
 	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "AUX %d return: ", ival);
+		;//printf( "AUX %d return: ", ival);
 	
 	TiXmlNode* pChild;
 	
@@ -1315,7 +1402,7 @@ void CKSXML_Read_Project::Read_Master_Aux_Return(TiXmlElement* pElement)
 			
 			if (stricmp("volume", pChild->Value()) == 0) {
 				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
-				printf( "\n" );
+
 			}
 		}
 	}
@@ -1330,13 +1417,13 @@ void CKSXML_Read_Project::Read_Master_Insert(TiXmlElement* pElement)
 	
 	// aux id
 	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "insert slot;%d,  ", ival);
+		;//printf( "insert slot;%d,  ", ival);
 	
 	if(pAttrib=pAttrib->Next())
 		
 		// aux id
 		if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-			printf( "id:%d \n", ival);
+			;//printf( "id:%d \n", ival);
 	
 }
 
@@ -1352,14 +1439,14 @@ void CKSXML_Read_Project::Read_Master_Out(TiXmlElement* pElement)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("volume", pChild->Value()) == 0) {
-				printf( "volume:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
-				printf( "\n" );
+
 			}
 			else if (stricmp("pan", pChild->Value()) == 0) {
-				printf( "pan:  ");
+
 				Set_Param(pChild, giTinyXml_Type_Float, 0, 0);
-				printf( "\n" );
+
 			}
 		}
 	}
@@ -1372,6 +1459,7 @@ void CKSXML_Read_Project::Read_Master_Out(TiXmlElement* pElement)
 
 void CKSXML_Read_Project::Set_Param( TiXmlNode* pParent, tuint uiType, tuint32 iParamID, tint iSection,  tfloat fFactor)
 {
+	
 	if ( !pParent ) return;
 	
 	
@@ -1384,9 +1472,10 @@ void CKSXML_Read_Project::Set_Param( TiXmlNode* pParent, tuint uiType, tuint32 i
 	if (  pChild->Type() == TiXmlNode::TEXT )
 	{
 		switch(uiType){
+			
 			case giTinyXml_Type_String:
 				pText = pChild->ToText();
-				printf( "%s", pText->Value() );
+			//	printf( "%s", pText->Value() );
 				break;
 				
 			case giTinyXml_Type_Int:{
@@ -1394,7 +1483,7 @@ void CKSXML_Read_Project::Set_Param( TiXmlNode* pParent, tuint uiType, tuint32 i
 				pText = pChild->ToText();
 				std::string s = pText->Value();
 				tfloat fValue = atoi(s.c_str());
-				printf( "%f", fValue );
+			//	printf( "%f", fValue );
 				
 				if(iSection == -1) return;
 					gpApplication->SetGlobalParm(iParamID, fValue*fFactor, iSection);
@@ -1416,19 +1505,13 @@ void CKSXML_Read_Project::Set_Param( TiXmlNode* pParent, tuint uiType, tuint32 i
 			 }
 			case giTinyXml_Type_Take:{
 				pText = pChild->ToText();
-				printf( "%s", pText->Value() );
+			//	printf( "%s", pText->Value() );
 				
 				break;
 			}
 			default : break;
 		}
 	}
-	/*
-	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
-	{
-		Set_Param( pChild, uiType, iParamID, fFactor);
-	}
-	 */
 	
 }
 

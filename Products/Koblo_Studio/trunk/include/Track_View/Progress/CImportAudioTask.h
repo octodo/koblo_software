@@ -16,6 +16,8 @@
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
 
+//! tasks shown in the progress bar at the top o the endit window
+
 enum EAudioImportOrder {
 	geAudioImport_Start,
 
@@ -41,33 +43,38 @@ enum EAudioImportOrder {
 
 class CImportAudioTask : public CProgressTask {
 public:
+	
+	CImportAudioTask();
+	
+	virtual ~CImportAudioTask();
 
 
 	enum EStereoBehavior { geStereoDoAsk, geStereoDoSplit, geStereoDoKeep };
 
-	std::string msSrcPathName;
-	std::string msPathOnly;
-	std::string msClipName;
-	std::string msExt;
+//	std::string msSrcPathName;
+//	std::string msPathOnly;
+//	std::string msClipName;
+//	std::string msExt;
 
-	std::string msDstNameL;
-	std::string msDstNameR;
-	std::string msDstPathNameL;
-	std::string msDstPathNameR;
-	std::string msDstPathName_ForCopy;
+//	std::string msDstNameL;
+//	std::string msDstNameR;
+
+//	std::string msDstPathName_ForCopy;
+	
+
 
 	ac::EAudioCodec meCodec;
 	ac::EQuality meSrcQuality;
 	tbool mbSrcLossyCompressed;
-	tbool mbStereo;
+//	tbool mbStereo;
 	tbool mbSplit;
 	tint32 miBitWidth;
 
-	IFile* mpfSrc;
+	IFile* mpSrc_File;
 	IDecoder* mpDecoder;
 	tint32 miDecodeIx;
-	IFile* mpfDstL;
-	IFile* mpfDstR;
+	IFile* mpAudio_File_L;
+	IFile* mpAudio_File_R;
 
 	tbool mbDstIsAlreadyThere;
 	tbool mbCopyLossyOriginal;
@@ -78,33 +85,69 @@ public:
 
 	tint32 miAudioImportOrder;
 
-	CImportAudioTask() {
 	
-
-		meCodec = ac::geAudioCodecUndefined;
-
-		mpfSrc = mpfDstL = mpfDstR = NULL;
-		mpDecoder = NULL;
-		miAudioImportOrder = geAudioImport_Start;
-
-		mbDstIsAlreadyThere = false;
-		mbCopyLossyOriginal = false;
-
-		miRegion_TrackID = -1;
-		miRegion_TrackPos = -1;
-		mbDeleteNonLossyOriginal = false;
-	};
-
-	virtual ~CImportAudioTask();
 
 	virtual void Destroy();
 
-	tbool Init( const tchar* pszSrcPath, tbool bDoesWaveAlreadyExist /*= false*/, EStereoBehavior eStereoBehavior /*= geStereoDoAsk*/, tbool bForceOriginalIsLossy /*= false*/);
-	void Init_InsertAsRegionAfterImport(tint32 iTrackID, tint64 iTrackPos);
+	tbool Init( std::string sSource_Path, tbool bDoesWaveAlreadyExist /*= false*/, EStereoBehavior eStereoBehavior /*= geStereoDoAsk*/, tbool bForceOriginalIsLossy /*= false*/);
+//	void Init_InsertAsRegionAfterImport(tint32 iTrackID, tint64 iTrackPos);
 
-	tbool IsOpened() { return (mpfDstL != NULL); };
+	tbool IsOpened() { return (mpAudio_File_L != NULL); };
 	tbool Open();
 
 	virtual tbool DoWork();
 	virtual tbool IsDone();
+
+	/*
+	//! file name getter function left
+	std::string NameL(){return msImported_File_NameL;};
+	//! file name getter function reigth
+	std::string NameR(){return msImported_File_NameR;};
+	//! file name setter function left
+	void NameL(std::string sFile_Name){msImported_File_NameL = sFile_Name;};
+	//! file name setter function right
+	void NameR(std::string sFile_Name){msImported_File_NameR = sFile_Name;};
+	
+	//! source file name setter function left
+	void Source_File(std::string sFile_Name){msSource_File = sFile_Name;};
+	//! source file name getter function reigth
+	std::string Source_File(){return msSource_File;};
+	*/
+	
+	tbool Stereo(){ return mFile_Item.Stereo();};
+	void Stereo( tbool bStereo) { mFile_Item.Stereo(bStereo);};
+	
+	//! left take name
+	std::string Name(){ return mFile_Item.Name();};
+	
+	//! left take name
+	std::string Left_Name(){ return mFile_Item.Left_Name();};
+	//! right take name
+	std::string Right_Name(){ return mFile_Item.Right_Name();};
+	
+	
+	//! left take name
+	std::string Left_Path(){ return mFile_Item.Left_Path();};
+	//! right take name
+	std::string Right_Path(){ return mFile_Item.Right_Path();};
+	
+	//! left peek file path
+	std::string Left_Peak_File_Path(){ return mFile_Item.Left_Peak_File_Path();};
+	//! right peek file path
+	std::string Right_Peak_File_Path(){ return mFile_Item.Right_Peak_File_Path();};
+	
+	
+	
+protected:
+	
+//	std::string msImported_File_NameL;
+//	std::string msImported_File_NameR;
+	
+//	std::string msSource_File;
+	
+	CKSFile_Item mFile_Item;
+	
+	
+	
+//	virtual std::string Get_File_Name_From_Path(std::string sFile_Path);
 };
