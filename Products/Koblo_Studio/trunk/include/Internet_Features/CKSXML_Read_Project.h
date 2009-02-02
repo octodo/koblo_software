@@ -140,7 +140,7 @@ public:
 	/*! iterates the list of takes
 	 \ takes are inspected and downloaded / decompressed if needed
 	 */
-	 virtual void Import_Takes(CSample_Data Sample_Data);
+	 virtual void Import_Takes(CSample_Data* pSample_Data);
 	
 	//! inspect one take
 	void Import_Take( CTake_Data* pTake_Data);
@@ -198,6 +198,12 @@ private:
 	
 	//! decompress one take
 	void Decompress_Take(CTake_Data* Take_Data);
+	
+	//! insert wave files from the mInsert_Que list
+	void Insert_Takes();
+	
+	//! insert wave one file from the mInsert_Que list
+	void Insert_Take(CTake_Data* Take_Data);
 	
 	
 	// list of sample files to load

@@ -3,6 +3,7 @@
 
 CKSFile_Item::CKSFile_Item()
 {
+	Get_UUID();
 	
 } 
 
@@ -17,10 +18,6 @@ tbool CKSFile_Item::Import(std::string sFull_Path)
 	msExtencion		=	msSource_Path	=	sFull_Path;
 	mbIs_A_Dir		=	false;
 	
-	
-	// Build destination path
-	msDestination_Path = gpApplication->Project_Folder() + ":Wave Files:";
-	
 	// Extract the file name from path
 	tint iPos		=	sFull_Path.find_last_of(":");
 	msName			=	sFull_Path.substr(iPos + 1, sFull_Path.length());
@@ -32,7 +29,7 @@ tbool CKSFile_Item::Import(std::string sFull_Path)
 	msName			=	msName.substr(0, iPos);
 	
 	// can not import in to it self
-	if (stricmp( msDestination_Path.c_str(), msPath.c_str()) == 0)
+	if (stricmp( gpApplication->Project_Folder().c_str(), msPath.c_str()) == 0)
 		return false;
 	
 	return gpApplication->Readable_Audio(msSource_Path);
@@ -40,32 +37,40 @@ tbool CKSFile_Item::Import(std::string sFull_Path)
 	
 }
 
+void CKSFile_Item::Load(std::string sName)
+{
+	msName = sName;
+	
 
+}
+
+std::string  CKSFile_Item::Destination_Path()
+{
+	return gpApplication->Project_Folder() + "Wave Files:";
+}
 
 std::string CKSFile_Item::Left_Path()
 {
-	// format xxxx-n xxxx =  take nr   n = channel
-	std::string sNameL = msDestination_Path + msName + "_0000-01.wav";
-	return sNameL;
+	std::string sPathL = gpApplication->Wave_File_Folder() + Get_UUID() + "_01.wav";
+	return sPathL;
 }
 
 std::string  CKSFile_Item::Right_Path()
 {
-	// format xxxx-n xxxx =  take nr   n = channel
-	std::string sNameR = msDestination_Path + msName + "_0000-02.wav";
-	return sNameR;
+	std::string sPathR = gpApplication->Wave_File_Folder() + Get_UUID() + "_02.wav";
+	return sPathR;
 }
 
 
 std::string CKSFile_Item::Left_Name()
 {
-	std::string sNameL = msName + "_0000-01";
+	std::string sNameL = Get_UUID() + "_01";
 	return sNameL;
 }
 
 std::string  CKSFile_Item::Right_Name()
 {
-	std::string sNameR =  msName + "_0000-02";
+	std::string sNameR =  Get_UUID() + "_02";
 	return sNameR;
 }
 
@@ -73,14 +78,14 @@ std::string  CKSFile_Item::Right_Name()
 
 std::string  CKSFile_Item::Left_Peak_File_Path()
 {
-	std::string sNameR = gpApplication->Project_Folder() + ":Wave Picts:" + msName + "_0000-01";
-	return sNameR;
+	std::string sPath = gpApplication->Pict_File_Folder()  + Left_Name();
+	return sPath;
 }
 //! get peak file name for right side
 std::string  CKSFile_Item::Right_Peak_File_Path()
 {
 	if(mbStereo)
-		return  gpApplication->Project_Folder() + ":Wave Picts:" + msName + "_0000-02";
+		return  gpApplication->Pict_File_Folder() + Right_Name();
 	else 
 		return "";
 }

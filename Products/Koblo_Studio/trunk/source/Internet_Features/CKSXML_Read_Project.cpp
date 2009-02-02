@@ -22,6 +22,14 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 	if (pfile->Open(sFile.c_str(), IFile::FileRead)) {
 		// reset/ erase the current DAW project
 		Reset_Project();
+		
+		mSample_Data_List.clear();
+		mDecompress_Que.clear();
+		mDownload_Que.clear();
+		mInsert_Que.clear();
+		
+		mpTinyXMLDoc->Clear();
+		
 		// read project in to char buffer
 		tuint iSize = pfile->GetSizeWhenOpened();
 		char pszProjectXML[iSize];
@@ -38,6 +46,8 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		Download_Takes();
 		// decompress takes
 		Decompress_Takes();
+		
+		Insert_Takes();
 			
 	}
 	
@@ -230,8 +240,10 @@ void CKSXML_Read_Project::Read_Sample_Object(TiXmlElement* pElement)
 				}
 			}
 			else if (stricmp("take", pChild->Value()) == 0) {
+				
 				CTake_Data* pTake_Data		=	Sample_Data.Get_Take_Data();
-				pTake_Data->Name( Sample_Data.Name() );
+				// set take name
+				pTake_Data->Screen_Name( Sample_Data.Name() );
 				
 				Read_Take_Object(pChild->ToElement(), pTake_Data);
 
@@ -865,8 +877,11 @@ void CKSXML_Read_Project::Prepare_Samples()
 
 	std::list<CSample_Data>::iterator it = mSample_Data_List.begin();
 	for (; it != mSample_Data_List.end(); it++) {
-		Import_Takes( (*it) );
+		
+		CSample_Data* pSample_Data = &(*it);
+		Import_Takes( pSample_Data );
 	}
+	
 	
 	
 }
@@ -874,11 +889,11 @@ void CKSXML_Read_Project::Prepare_Samples()
 
 
 
-void CKSXML_Read_Project::Import_Takes(CSample_Data pSample_Data)
+void CKSXML_Read_Project::Import_Takes(CSample_Data* pSample_Data)
 {
 	
 	//! notice only one take pr sample supported at the moment	
-	CTake_Data* pTake_Data = pSample_Data.Get_Take_Data();
+	CTake_Data* pTake_Data = pSample_Data->Get_Take_Data();
 	Import_Take( pTake_Data );
 	
 }
@@ -927,18 +942,19 @@ tbool CKSXML_Read_Project::In_Folder(CTake_Data* pTake_Data, std::string sFolder
 	
 	else if(stricmp( sMode.c_str(),"stereo") == 0)
 		uiChannels = 2;
+
 	
 	
 	switch(uiChannels) {
 		case 1:
 		{	// mono 
-			return gpApplication->Readable_Audio(sFolder + pTake_Data->Name(1));
+			return gpApplication->Readable_Audio(sFolder + pTake_Data->Disk_Name(1) + sExtencion);
 		}
 		case 2:
 		{	// files are split in two
 			tuint In_Wave_Files = 0;
-			In_Wave_Files += gpApplication->Readable_Audio(sFolder + pTake_Data->Name(1) + sExtencion);
-			In_Wave_Files += gpApplication->Readable_Audio(sFolder + pTake_Data->Name(2) + sExtencion);
+			In_Wave_Files += gpApplication->Readable_Audio(sFolder + pTake_Data->Disk_Name(1) + sExtencion);
+			In_Wave_Files += gpApplication->Readable_Audio(sFolder + pTake_Data->Disk_Name(2) + sExtencion);
 			return In_Wave_Files == 2 ? true: false;
 		}
 		default: break;
@@ -986,7 +1002,89 @@ void CKSXML_Read_Project::Decompress_Take(CTake_Data* Take_Data)
 	// do decompression here
 	// decompress to "Wave Files" folder
 	// when compleated add files to insert que:
-	// mInsert_Que.push_back(pTake_Data);
+	// mDecompress_Que.push_back(pTake_Data);
+}
+
+
+void CKSXML_Read_Project::Insert_Takes()
+{
+	/*
+	std::list<CImportAudioTask*>::iterator itImports = listImportTasks.begin();
+	
+	for ( ; itImports != listImportTasks.end(); itImports++) {
+		CImportAudioTask* pTask = *itImports;
+		mpProgressTasks->Add(pTask);
+	}
+	 */
+	/*
+	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
+	for (; it != mFile_Items.end(); it++) {
+		
+		Import_Audio_File((*it), false);
+	}
+//	ClearFiles();
+	 */
+	
+	std::list<CTake_Data*>::iterator it = mInsert_Que.begin();
+	for (; it != mInsert_Que.end(); it++) {
+		Insert_Take( (*it) );
+	}
+	
+	
+}
+
+void CKSXML_Read_Project::Insert_Take(CTake_Data* pTake_Data)
+{
+	std::string sName = pTake_Data->Screen_Name();
+	printf(sName.c_str() );
+	
+	std::string sFolder = gpApplication->Wave_File_Folder();
+	
+	CKSFile_Item File_Item;
+	
+	File_Item.Set_UUID(pTake_Data->Get_UUID() );
+	File_Item.Import(sFolder + sName);
+	
+
+
+	if (gpApplication->IsPlayingOrRecording()) 
+			gpApplication->PlaybackStop();
+	
+	CImportAudioTask* pImportAudioTask = new CImportAudioTask();
+	CImportAudioTask::EStereoBehavior eBehave = CImportAudioTask::geStereoDoAsk;
+	
+	
+	
+//	tbool bSuccess = pImportAudioTask->Init( File_Item.Source_Path(), false, eBehave, false);
+	
+	
+	
+	/*
+	 tbool CKS_Import_Files::Import_Audio_File(CKSFile_Item File_Item, tbool bAlwaysKeepStereo)
+	 {
+	 if (gpApplication->IsPlayingOrRecording())  gpApplication->PlaybackStop();
+	 
+	 
+	 CImportAudioTask* pImportAudioTask = new CImportAudioTask();
+	 
+	 CImportAudioTask::EStereoBehavior eBehave = (bAlwaysKeepStereo) ? CImportAudioTask::geStereoDoKeep : CImportAudioTask::geStereoDoAsk;
+	 
+	 tbool bSuccess = pImportAudioTask->Init( File_Item.Source_Path(), false, eBehave, false);
+	 
+	 if (bSuccess) {
+	 gpApplication->mpProgressTasks->Add(pImportAudioTask);
+	 gpApplication->Playback_InProgressTask();
+	 }
+	 else {
+	 gpApplication->Extended_Error(pImportAudioTask->GetError());
+	 pImportAudioTask->Destroy();
+	 }
+	 
+	 return bSuccess;
+	 }
+	 */
+	
+	
 }
 
 

@@ -212,7 +212,7 @@ tbool CKSFile_Controller::Copy_KSProject_Waves()
 	sCopy_From_Folder += "Contents:Audio:Clips:Decompressed:";
 	
 	
-	std::string sCopy_To_Folder = gpApplication->Project_Folder() + ":Wave Files:";
+	std::string sCopy_To_Folder = gpApplication->Project_Folder() + "Wave Files:";
 	pSearch->Init2((sCopy_From_Folder + "*.wav").c_str());
 	
 	
@@ -241,7 +241,7 @@ tbool CKSFile_Controller::Create_Project_Folder()
 //! create a new sample folder inside the project folder
 tbool CKSFile_Controller::Create_Audio_Folders()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ":Wave Files";
+	std::string sFolder = gpApplication->Project_Folder() + "Wave Files";
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -250,7 +250,7 @@ tbool CKSFile_Controller::Create_Audio_Folders()
 //! create a new midi folder inside the project folder
 tbool CKSFile_Controller::Create_Midi_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ":MIDI FIles";
+	std::string sFolder = gpApplication->Project_Folder() + "MIDI FIles";
 	IFile::CreateDirectory(gpApplication->Project_Folder().c_str());
 	// make check here
 	return true;
@@ -259,7 +259,7 @@ tbool CKSFile_Controller::Create_Midi_Folder()
 //! create a new plug-in data folder inside the project folder
 tbool CKSFile_Controller::Create_Plugin_Data_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ":Plug-In's Settings";
+	std::string sFolder = gpApplication->Project_Folder() + "Plug-In's Settings";
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -268,7 +268,7 @@ tbool CKSFile_Controller::Create_Plugin_Data_Folder()
 //! create a new download folder inside the project folder
 tbool CKSFile_Controller::Create_OGG_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ":OGG Files";
+	std::string sFolder = gpApplication->Project_Folder() + "OGG Files";
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -277,7 +277,7 @@ tbool CKSFile_Controller::Create_OGG_Folder()
 //! create a new uplaod folder inside the project folder
 tbool CKSFile_Controller::Create_MP3_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ":MP3 Files";
+	std::string sFolder = gpApplication->Project_Folder() + "MP3 Files";
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -286,7 +286,7 @@ tbool CKSFile_Controller::Create_MP3_Folder()
 //! create a new uplaod folder inside the project folder
 tbool CKSFile_Controller::Create_Wave_Picts_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + ":Wave Picts";
+	std::string sFolder = gpApplication->Project_Folder() + "Wave Picts";
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -299,7 +299,7 @@ tbool CKSFile_Controller::Create_Project_File()
 {
 	std::string sProject_Name	= gpApplication->Project_Name();
 	std::string sProject_Folder = gpApplication->Project_Folder();
-	std::string sProject		=  sProject_Folder + ":" + sProject_Name + ".xml";
+	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";
 	
 	
 	//"Macintosh HD:User:maxgronlund:MusicMKoblo Studio:XML:jord:ford.xml"
@@ -322,11 +322,11 @@ tbool CKSFile_Controller::Copy_Samples()
 	
 	
 	// copy from project folder
-	std::string sCopy_From_Folder = msCopy_From_Project_Folder + ":Wave Files:";
+	std::string sCopy_From_Folder = msCopy_From_Project_Folder + "Wave Files:";
 	pSearch->Init2((sCopy_From_Folder + "*.wav").c_str());
 	
 	
-	std::string sCopy_To_Folder = gpApplication->Project_Folder() + ":Wave Files:";
+	std::string sCopy_To_Folder = gpApplication->Project_Folder() + "Wave Files:";
 	
 	
 	
@@ -377,7 +377,7 @@ tbool CKSFile_Controller::Create_Folders()
 void CKSFile_Controller::Update_Project_Name(std::string sNew_Name)
 {
 	// set project folder
-	gpApplication->Project_Folder(sNew_Name);
+	gpApplication->Project_Folder(sNew_Name + ":");
 	
 	// set project name
 	std::string sProject_Name = sNew_Name;
@@ -417,11 +417,15 @@ std::string  CKSFile_Controller::Get_Extencion(std::string sFile)
 	
 }
 
-tbool CKSFile_Controller::Readable_Audio(std::string sFile)
+tbool CKSFile_Controller::Readable_Audio(std::string sFile_Path)
 {
+
 	CAutoDelete<IFile> pFile(IFile::Create());
 	
-	if (pFile->Open(sFile.c_str(), IFile::FileRead)) {
+	
+	
+	
+	if (pFile->Open(sFile_Path.c_str(), IFile::FileRead)) {
 		
 		ac::IDecoder* pDec = ac::IDecoder::Create(pFile);
 		

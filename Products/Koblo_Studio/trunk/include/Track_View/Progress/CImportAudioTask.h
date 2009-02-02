@@ -68,8 +68,8 @@ public:
 	tbool mbDstIsAlreadyThere;
 	tbool mbCopyLossyOriginal;
 
-	tint32 miRegion_TrackID;
-	tint64 miRegion_TrackPos;
+//	tint32 miRegion_TrackID;
+//	tint64 miRegion_TrackPos;
 	tbool mbDeleteNonLossyOriginal;
 
 	tint32 miAudioImportOrder;
@@ -78,7 +78,11 @@ public:
 
 	virtual void Destroy();
 
-	tbool Init( std::string sSource_Path, tbool bDoesWaveAlreadyExist /*= false*/, EStereoBehavior eStereoBehavior /*= geStereoDoAsk*/, tbool bForceOriginalIsLossy /*= false*/);
+	tbool Init( std::string sSource_Path, 
+				tbool bDoesWaveAlreadyExist /*= false*/, 
+				EStereoBehavior eStereoBehavior /*= geStereoDoAsk*/, 
+				tbool bForceOriginalIsLossy /*= false*/);
+	
 //	void Init_InsertAsRegionAfterImport(tint32 iTrackID, tint64 iTrackPos);
 
 	tbool IsOpened() { return (mpAudio_File_L != NULL); };
@@ -109,6 +113,8 @@ public:
 	//! right peek file path
 	std::string Right_Peak_File_Path(){ return mFile_Item.Stereo() ? mFile_Item.Right_Peak_File_Path(): "";};
 	
+	std::string Get_UUID(){ return mFile_Item.Get_UUID(); };
+	
 	
 	
 protected:
@@ -120,6 +126,8 @@ protected:
 	
 	CKSFile_Item mFile_Item;
 	
+//	tint32 miRegion_TrackID;
+//	tint64 miRegion_TrackPos;
 	
 	
 //	virtual std::string Get_File_Name_From_Path(std::string sFile_Path);

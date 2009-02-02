@@ -116,19 +116,19 @@ void CKS_Import_Files::Import_Audio_Files()
 	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
 	for (; it != mFile_Items.end(); it++) {
 		
-		Import_Audio_File((*it), false);
+		Import_Audio_File((*it));
 	}
 	ClearFiles();
 }
 
-tbool CKS_Import_Files::Import_Audio_File(CKSFile_Item File_Item, tbool bAlwaysKeepStereo)
+tbool CKS_Import_Files::Import_Audio_File(CKSFile_Item File_Item  )
 {
 	if (gpApplication->IsPlayingOrRecording())  gpApplication->PlaybackStop();
 	
 	
 	CImportAudioTask* pImportAudioTask = new CImportAudioTask();
 	
-	CImportAudioTask::EStereoBehavior eBehave = (bAlwaysKeepStereo) ? CImportAudioTask::geStereoDoKeep : CImportAudioTask::geStereoDoAsk;
+	CImportAudioTask::EStereoBehavior eBehave = CImportAudioTask::geStereoDoAsk;
 	
 	tbool bSuccess = pImportAudioTask->Init( File_Item.Source_Path(), false, eBehave, false);
 		

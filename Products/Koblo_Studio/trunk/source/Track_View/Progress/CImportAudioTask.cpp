@@ -19,8 +19,8 @@ CImportAudioTask::CImportAudioTask() {
 	mbDstIsAlreadyThere = false;
 	mbCopyLossyOriginal = false;
 	
-	miRegion_TrackID = -1;
-	miRegion_TrackPos = -1;
+//	miRegion_TrackID = -1;
+//	miRegion_TrackPos = -1;
 	mbDeleteNonLossyOriginal = false;
 }
 
@@ -168,8 +168,8 @@ tbool CImportAudioTask::Open()
 	
 	printf("pathname is : \%s \n", mFile_Item.Path().c_str() );
 
-	std::string sLeft_File_Name = mFile_Item.Destination_Path() + mFile_Item.Name() + "_0000-01.wav";
-	std::string sRight_File_Name = mFile_Item.Destination_Path() + mFile_Item.Name() + "_0000-02.wav";
+	std::string sLeft_File_Name			= mFile_Item.Left_Path();
+	std::string sRight_File_Name		= mFile_Item.Right_Path();
 	
 	
 	
@@ -313,7 +313,7 @@ tbool CImportAudioTask::DoWork()
 				 */{
 				//	msDstPathName_ForCopy = sCompressedDest + msClipName + msExt;
 					IFile::DeleteFile(mFile_Item.Destination_Path().c_str());
-					if (IFile::CopyFile(mFile_Item.Destination_Path().c_str(), mFile_Item.Path().c_str(), (mFile_Item.Name() + mFile_Item.Extencion()).c_str())) {
+					if (IFile::CopyFile(mFile_Item.Destination_Path().c_str(), mFile_Item.Path().c_str(), (mFile_Item.Get_UUID() + mFile_Item.Extencion()).c_str())) {
 						// Go to next task
 						miAudioImportOrder++;
 					}
@@ -367,14 +367,15 @@ tbool CImportAudioTask::DoWork()
 
 				msProgress = "Peak files done";
 				muiProgressIx = muiProgressTarget = 1;
-
+				/*
 				if (miRegion_TrackID >= 0)
 					miAudioImportOrder++;
 				else {
+				 */
 					// Done
 					miAudioImportOrder = geAudioImport_Region_After;
 					miAudioImportOrder++;
-				}
+				// }
 			}
 			break;
 

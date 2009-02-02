@@ -9,55 +9,57 @@ public:
 	//! Destructor
 	virtual ~CTake_Data();
 
-	
-	
-	
-	
-	//! Which stereo channels to map: 1 = left, 2 = right, 3 = both
-//	tint32 iOriginalChannelMask;
-	
-	//! Is this displayed as a stereo clip in list?
-//	tbool bIsStereoInList;
-	
-	// -------------
-	// Variables below here aren't saved but regenerated upon load
-	std::string sWavePathNameL;
-	std::string sWavePathNameR;
-	
 	//! get the Sample UUID
 	void Set_Description(const std::string& sDescription ){msDescription =  sDescription;};
 	
 	//! get the description
 	std::string Get_Description(){ return msDescription;};
 	
-	//! get the Sample UUID
+	//! get the Sample URL
 	void URL(const std::string& sURL ){ msURL = sURL;};
 	
 	//! get the description
 	std::string URL(){ return msURL;};
 	
-	//! path to the left peak file
-	std::string sLeft_Peak_File_Path;
-	
-	//! path to the right peak file
-	std::string sRight_Peak_File_Path;
-	
 	//! is the take in stereo
 	std::string Mode(){ return msMode;};
 	
+	//! mode stereo and mono
 	void Mode(const std::string& sMode) { msMode = sMode;};
 	
 	//! get channel name
-	std::string Name(tuint uiChannel);
+	std::string Disk_Name(tuint uiChannel);
 	
-	//! set name and how many channels there is in the sampel
-//	void Name(std::string sName, tuint32 uiChannels);
+	//! set screen name
+	void Screen_Name(const std::string& sScreen_Name){ msScreen_Name = sScreen_Name;};
 	
-	//! set name
-	void Name(const std::string& sName){ msName = sName;};
+	//! get screen name
+	std::string Screen_Name(){return msScreen_Name;};
 	
-	//! set take number
-	void uiTake(tuint uiTake_Nr){ muiTake_Nr = uiTake_Nr;};
+	// set left peak file path
+	void Left_Peak_File_Path(std::string sLeft_Peak_File_Path){ msLeft_Peak_File_Path = sLeft_Peak_File_Path;};
+	
+	// get left peak file path
+	std::string Left_Peak_File_Path(){ return msLeft_Peak_File_Path;};
+	
+	// set left peak file path
+	void Right_Peak_File_Path(std::string sRight_Peak_File_Path){ msRight_Peak_File_Path = sRight_Peak_File_Path;};
+	
+	// get left peak file path
+	std::string Right_Peak_File_Path(){ return msRight_Peak_File_Path;};
+	
+	
+	// set left wave file path
+	void Left_Wave_File_Path(std::string sLeft_Wave_File_Path){ msLeft_Wave_File_Path = sLeft_Wave_File_Path;};
+	
+	// get left wave file path
+	std::string Left_Wave_File_Path(){ return msLeft_Wave_File_Path;};
+	
+	// set right wave file path
+	void Right_Wave_File_Path(std::string sRight_Wave_File_Path){ msRight_Wave_File_Path = sRight_Wave_File_Path;};
+	
+	// get right wave file path
+	std::string Right_Wave_File_Path(){ return msRight_Wave_File_Path;};
 	
 
 	
@@ -65,24 +67,27 @@ public:
 protected:
 	
 	//! take name
-	std::string msName;
-	
-	
-	//! Name of the left side (or mono) wave file for clip
-//	std::string sWaveNameL;
-	//! Name of the right side wave file for clip
-//	std::string sWaveNameR;
+	std::string msScreen_Name;
 	
 	//! description
 	std::string msDescription;
-	//! channels
-//	tuint32 muiChannels;
-	//! take_nr
-	tuint32 muiTake_Nr;
+
 	//! url
 	std::string msURL;
 	//! url
 	std::string msMode;
+	
+	//! path to the left peak file
+	std::string msLeft_Peak_File_Path;
+	
+	//! path to the right peak file
+	std::string msRight_Peak_File_Path;
+	
+	//! path to the left peak file
+	std::string msLeft_Wave_File_Path;
+	
+	//! path to the right peak file
+	std::string msRight_Wave_File_Path;
 	
 	
 	

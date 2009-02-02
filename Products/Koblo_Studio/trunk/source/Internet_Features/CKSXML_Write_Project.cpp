@@ -53,7 +53,7 @@ tbool CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	
 	std::string sProject_Name	= gpApplication->Project_Name();
 	std::string sProject_Folder = gpApplication->Project_Folder();
-	std::string sProject		=  sProject_Folder + ":" + sProject_Name + ".xml";
+	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";
 	
 	CAutoDelete<IFile> pfile(IFile::Create());
 	if (pfile->Open(sProject.c_str(), IFile::FileWrite)) {

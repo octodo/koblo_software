@@ -19,6 +19,8 @@
 
 // Base Utilities
 #include "bu.h"
+// UUID
+#include "CKSUUID.h"
 
 // XML File parser
 #include "tinyxml.h"
@@ -120,7 +122,7 @@
 // Sounds
 class CApplication;
 
-#include "CKSUUID.h"
+
 #include "CTake_Data.h"
 #include "CSample_Data.h"
 #include "CSample_DSP.h"

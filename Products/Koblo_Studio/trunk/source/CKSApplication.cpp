@@ -4818,16 +4818,17 @@ tbool CKSApplication::DoProgressTasks()
 
 void CKSApplication::AddClipToList(CImportAudioTask* pImportAudioTask)
 {
-	CSample_Data*	pSample_Data	= new CSample_Data();
-	CTake_Data*		pTake_Data		= pSample_Data->Get_Take_Data();
+	CSample_Data*	pSample_Data		=	new CSample_Data();
+	CTake_Data*		pTake_Data			=	pSample_Data->Get_Take_Data();
+	pTake_Data->Set_UUID(  pImportAudioTask->Get_UUID()  );
 	
 	pSample_Data->sName					=	pImportAudioTask->Name();
-	pTake_Data->Name(pImportAudioTask->Name());
+	pTake_Data->Screen_Name(pImportAudioTask->Name());
 	pTake_Data->Mode( pImportAudioTask->Stereo() ? "stereo": "mono");
-	pTake_Data->sWavePathNameL			=	pImportAudioTask->Left_Path();
-	pTake_Data->sWavePathNameR			=	pImportAudioTask->Right_Path();
-	pTake_Data->sLeft_Peak_File_Path	=	pImportAudioTask->Left_Peak_File_Path();
-	pTake_Data->sRight_Peak_File_Path	=	pImportAudioTask->Right_Peak_File_Path();
+	pTake_Data->Left_Wave_File_Path( pImportAudioTask->Left_Path() );
+	pTake_Data->Right_Wave_File_Path( pImportAudioTask->Right_Path() );
+	pTake_Data->Left_Peak_File_Path	(pImportAudioTask->Left_Peak_File_Path());
+	pTake_Data->Right_Peak_File_Path(pImportAudioTask->Right_Peak_File_Path());
 
 	mSample_Data_List.push_back(pSample_Data);
 
