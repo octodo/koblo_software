@@ -4816,76 +4816,23 @@ tbool CKSApplication::DoProgressTasks()
 	return bWorkSuccess;
 } // DoProgressTasks
 
-void CKSApplication::AddClipToList(CImportAudioTask* pImportInfo)
+void CKSApplication::AddClipToList(CImportAudioTask* pImportAudioTask)
 {
-	CSample_Data* pSample_Data = new CSample_Data();
-	CTake_Data* pTake_Info = pSample_Data->Get_Take_Data();
+	CSample_Data*	pSample_Data	= new CSample_Data();
+	CTake_Data*		pTake_Data		= pSample_Data->Get_Take_Data();
 	
-	if (!pImportInfo->Stereo()) {
-		
-		
-		// Stereo, both sides in a single list item
-		pSample_Data->sName					=	pImportInfo->Name();
-		pTake_Info->Name(pImportInfo->Name(),1);
-//		pTake_Info->sWaveNameR				=	"";
-		pTake_Info->iOriginalChannelMask	=	0;
-		pTake_Info->bIsStereoInList			=	false;
-		pTake_Info->sWavePathNameL			=	pImportInfo->Left_Path();
-		pTake_Info->sWavePathNameR			=	"";
-		pTake_Info->sLeft_Peak_File_Path	=	pImportInfo->Left_Peak_File_Path();
-		pTake_Info->sRight_Peak_File_Path	=	"";
-		mSample_Data_List.push_back(pSample_Data);
-	}
-	
-	else {
-//		if (!pImportInfo->mbSplit) {
-			// Stereo, both sides in a single list item
-		pSample_Data->sName					=	pImportInfo->Name();
-			
-		pTake_Info->Name(pImportInfo->Name(),2);
-//		pTake_Info->sWaveNameL				=	pImportInfo->Left_Name();
-//		pTake_Info->sWaveNameR				=	pImportInfo->Right_Name();
-		pTake_Info->iOriginalChannelMask	=	0x01 | 0x02;
-		pTake_Info->bIsStereoInList			=	true;
-		pTake_Info->sWavePathNameL			=	pImportInfo->Left_Path();
-		pTake_Info->sWavePathNameR			=	pImportInfo->Right_Path();
-		pTake_Info->sLeft_Peak_File_Path	=	pImportInfo->Left_Peak_File_Path();
-		pTake_Info->sRight_Peak_File_Path	=	pImportInfo->Right_Peak_File_Path();
-		mSample_Data_List.push_back(pSample_Data);
-		/*
-		}
-		else {
-			
-			// Stereo split into two list items
-			// Stereo, left side
-			pSample_Data->sName				=	pImportInfo->Name();
-			pTake_Info->sWaveNameL			=	pImportInfo->Left_Name();
-			pTake_Info->sWaveNameR			=	"";
-			pTake_Info->iOriginalChannelMask =	0x01;
-			pTake_Info->bIsStereoInList		=	false;
-			pTake_Info->sWavePathNameL		=	pImportInfo->Left_Path();
-			pTake_Info->sWavePathNameR		=	"";
-			pTake_Info->sLeft_Peak_File_Path	=	pImportInfo->Left_Peak_File_Path();
-			pTake_Info->sRight_Peak_File_Path	=	"";
-			mSample_Data_List.push_back(pSample_Data);
+	pSample_Data->sName					=	pImportAudioTask->Name();
+	pTake_Data->Name(pImportAudioTask->Name());
+	pTake_Data->Mode( pImportAudioTask->Stereo() ? "stereo": "mono");
+	pTake_Data->sWavePathNameL			=	pImportAudioTask->Left_Path();
+	pTake_Data->sWavePathNameR			=	pImportAudioTask->Right_Path();
+	pTake_Data->sLeft_Peak_File_Path	=	pImportAudioTask->Left_Peak_File_Path();
+	pTake_Data->sRight_Peak_File_Path	=	pImportAudioTask->Right_Peak_File_Path();
 
-			// Stereo, right side
-			pSample_Data->sName				=	pImportInfo->Name();
-			pTake_Info->sWaveNameL			=	"";
-			pTake_Info->sWaveNameR			=	pImportInfo->Right_Name();
-			pTake_Info->iOriginalChannelMask = 0x02;
-			pTake_Info->bIsStereoInList		=	false;
-			pTake_Info->sWavePathNameL		=	"";
-			pTake_Info->sWavePathNameR		=	pImportInfo->Right_Path();
-			pTake_Info->sLeft_Peak_File_Path	=	"";
-			pTake_Info->sRight_Peak_File_Path	=	pImportInfo->Right_Peak_File_Path();
-			mSample_Data_List.push_back(pSample_Data);
-			 
-		}*/
-	}
+	mSample_Data_List.push_back(pSample_Data);
 
 	UpdateGUIFileList();
-} // AddClipToList
+} 
 
 tbool CKSApplication::OnAudioFileImport()
 {
@@ -4899,33 +4846,38 @@ void CKSApplication::VerifyCreatePeakFiles(CKSFile_Item* pFile_Item , tbool bFor
 	
 	// This may take some time
 	CAutoDelete<ge::IWaitCursor> pWaitCursor(ge::IWaitCursor::Create());
-
+	
 	// Create peak files
 #ifdef _Mac_PowerPC
 	std::string sPeakFileL0		=	pFile_Item->Left_Peak_File_Path()	+ ".kspk1024_ppc";
-	std::string sPeakFileR0		=	pFile_Item->Right_Peak_File_Path()	+ ".kspk1024_ppc";
 	std::string sPeakFileL1		=	pFile_Item->Left_Peak_File_Path()	+ ".kspk64_ppc";
+	std::string sPeakFileR0		=	pFile_Item->Right_Peak_File_Path()	+ ".kspk1024_ppc";
 	std::string sPeakFileR1		=	pFile_Item->Right_Peak_File_Path()	+ ".kspk64_ppc";
+
 #else _Mac_PowerPC
 	std::string sPeakFileL0		=	pFile_Item->Left_Peak_File_Path()	+ ".kspk1024";
-	std::string sPeakFileR0		=	pFile_Item->Right_Peak_File_Path()	+ ".kspk1024";
 	std::string sPeakFileL1		=	pFile_Item->Left_Peak_File_Path()	+ ".kspk64";
+	std::string sPeakFileR0		=	pFile_Item->Right_Peak_File_Path()	+ ".kspk1024";
 	std::string sPeakFileR1		=	pFile_Item->Right_Peak_File_Path()	+ ".kspk64";
+
 #endif // _Mac_PowerPC
 
 	std::auto_ptr<CWave_File> pWaveFileL(new CWave_File());
 	std::auto_ptr<CWave_File> pWaveFileR(new CWave_File());
 	IFile* pSrcFileL;
-	tint32 iOffsetL = 0;
-	tint32 iLengthL = 0;
-	IFile* pSrcFileR = 0;
-	tint32 iOffsetR = 0;
-	tint32 iLengthR = 0;
-	tint32 iBitWidthL = 0, iBitWidthR = 0;
+	tint32 iOffsetL			= 0;
+	tint32 iLengthL			= 0;
+	IFile* pSrcFileR		= 0;
+	tint32 iOffsetR			= 0;
+	tint32 iLengthR			= 0;
+	tint32 iBitWidthL		= 0, iBitWidthR = 0;
 	tint32 iChannels_Dummy;
 	tint32 iByteWidthL, iByteWidthR;
+	
+	
 	if (pWaveFileL->LoadSoundStream(512, pFile_Item->Left_Path().c_str()))
 		pWaveFileL->GetStreamInfo(pSrcFileL, iOffsetL, iLengthL, &iBitWidthL,&iChannels_Dummy);
+	
 	if (bStereo) {
 		if (pWaveFileR->LoadSoundStream(512, pFile_Item->Right_Path().c_str()))
 			pWaveFileR->GetStreamInfo(pSrcFileR, iOffsetR, iLengthR, &iBitWidthR, &iChannels_Dummy);
@@ -4933,12 +4885,11 @@ void CKSApplication::VerifyCreatePeakFiles(CKSFile_Item* pFile_Item , tbool bFor
 	iByteWidthL = iBitWidthL / 8;
 	iByteWidthR = iBitWidthR / 8;
 
-	if (bStereo == false) {
+	if (!bStereo) {
 		// Mono
 		tint32 iPeakFile;
 		for (iPeakFile = 0; iPeakFile < 2; iPeakFile++) {
 			CAutoDelete<IFile> pPeakFileL(IFile::Create());
-			CAutoDelete<IFile> pPeakFileR(IFile::Create());
 
 			tint32 iSize = 1024;
 			if (iPeakFile == 1) {
@@ -4946,10 +4897,9 @@ void CKSApplication::VerifyCreatePeakFiles(CKSFile_Item* pFile_Item , tbool bFor
 			}
 
 			std::string sPeakFileL = sPeakFileL0;
-			//std::string sPeakFileR = sPeakFileR0;
+
 			if (iPeakFile == 1) {
 				sPeakFileL = sPeakFileL1;
-				//sPeakFileR = sPeakFileR1;
 			}
 
 			tint32 iPeakSize = iLengthL / iSize + 1;
@@ -4991,14 +4941,7 @@ void CKSApplication::VerifyCreatePeakFiles(CKSFile_Item* pFile_Item , tbool bFor
 						tint32 i;
 						tchar* pcWave = pch;					
 						for (i = 0; i < iThisBuffer; i++) {
-							/*
-							const tchar* pSrc2 = ((tchar*)pch) + i * iByteWidth;
-							SSample24 sample = *((SSample24*)pSrc2);
-							tint32 ii = (sample.c << 24) >> 8;
-							ii |= (sample.b << 8);
-							ii |= sample.a;
-							tfloat f = (tfloat)(ii / 8388607.0);
-							*/
+							
 							tint32 i32 = *((tint32*)(pcWave));
 							pcWave += 3;
 							Inplace24to32(i32);
@@ -5013,14 +4956,7 @@ void CKSApplication::VerifyCreatePeakFiles(CKSFile_Item* pFile_Item , tbool bFor
 						tint32 i;
 						tchar* pcWave = pch;					
 						for (i = 0; i < iThisBuffer; i++) {
-							/*
-							const tchar* pSrc2 = ((tchar*)pch) + i * iByteWidth;
-							SSample24 sample = *((SSample24*)pSrc2);
-							tint32 ii = (sample.c << 24) >> 8;
-							ii |= (sample.b << 8);
-							ii |= sample.a;
-							tfloat f = (tfloat)(ii / 8388607.0);
-							*/
+							
 							tint16 i16 = CPSwap(*((tint16*)(pcWave)));
 							pcWave += 2;
 							tfloat32 f = (tfloat32)(i16 / 32767.0);
@@ -5116,14 +5052,7 @@ void CKSApplication::VerifyCreatePeakFiles(CKSFile_Item* pFile_Item , tbool bFor
 					tchar* pcWave = pchL;
 					if (iBitWidthL == 24) {
 						for (i = 0; i < iThisBuffer; i++) {
-							/*
-							const tchar* pSrc2 = ((tchar*)pchL) + i * iByteWidth;
-							SSample24 sample = *((SSample24*)pSrc2);
-							tint32 ii = (sample.c << 24) >> 8;
-							ii |= (sample.b << 8);
-							ii |= sample.a;
-							tfloat f = (tfloat)(ii / 8388607.0);
-							*/
+							
 							tint32 i32 = *((tint32*)(pcWave));
 							pcWave += 3;
 							Inplace24to32(i32);
@@ -5136,14 +5065,7 @@ void CKSApplication::VerifyCreatePeakFiles(CKSFile_Item* pFile_Item , tbool bFor
 					}
 					else { // if (iBitWidthL == 16) {
 						for (i = 0; i < iThisBuffer; i++) {
-							/*
-							const tchar* pSrc2 = ((tchar*)pch) + i * iByteWidth;
-							SSample24 sample = *((SSample24*)pSrc2);
-							tint32 ii = (sample.c << 24) >> 8;
-							ii |= (sample.b << 8);
-							ii |= sample.a;
-							tfloat f = (tfloat)(ii / 8388607.0);
-							*/
+							
 							tint16 i16 = CPSwap(*((tint16*)(pcWave)));
 							pcWave += 2;
 							tfloat32 f = (tfloat32)(i16 / 32767.0);
@@ -5158,14 +5080,7 @@ void CKSApplication::VerifyCreatePeakFiles(CKSFile_Item* pFile_Item , tbool bFor
 					pcWave = pchR;
 					if (iBitWidthR == 24) {
 						for (i = 0; i < iThisBuffer; i++) {
-							/*
-							const tchar* pSrc2 = ((tchar*)pchR) + i * iByteWidth;
-							SSample24 sample = *((SSample24*)pSrc2);
-							tint32 ii = (sample.c << 24) >> 8;
-							ii |= (sample.b << 8);
-							ii |= sample.a;
-							tfloat f = (tfloat)(ii / 8388607.0);
-							*/
+							
 							tint32 i32 = *((tint32*)(pcWave));
 							pcWave += 3;
 							Inplace24to32(i32);
@@ -5178,14 +5093,7 @@ void CKSApplication::VerifyCreatePeakFiles(CKSFile_Item* pFile_Item , tbool bFor
 					}
 					else { // if (iBitWidthR == 16) {
 						for (i = 0; i < iThisBuffer; i++) {
-							/*
-							const tchar* pSrc2 = ((tchar*)pch) + i * iByteWidth;
-							SSample24 sample = *((SSample24*)pSrc2);
-							tint32 ii = (sample.c << 24) >> 8;
-							ii |= (sample.b << 8);
-							ii |= sample.a;
-							tfloat f = (tfloat)(ii / 8388607.0);
-							*/
+							
 							tint16 i16 = CPSwap(*((tint16*)(pcWave)));
 							pcWave += 2;
 							tfloat32 f = (tfloat32)(i16 / 32767.0);

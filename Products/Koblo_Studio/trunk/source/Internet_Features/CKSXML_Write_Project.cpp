@@ -658,7 +658,7 @@ void CKSXML_Write_Project::Write_Take(TiXmlElement* pParent, CTake_Data* pTake_D
 	
 	// url
 	TiXmlElement* pURL = new TiXmlElement( "url" );
-	TiXmlText* pURLTxt = new TiXmlText(pTake_Data->Get_URL().c_str());
+	TiXmlText* pURLTxt = new TiXmlText(pTake_Data->URL().c_str());
 	pURL->LinkEndChild( pURLTxt );
 	pTake->LinkEndChild( pURL );
 
@@ -737,7 +737,7 @@ void CKSXML_Write_Project::Write_Track(TiXmlElement* pParent, tuint uiTrack)
 
 void CKSXML_Write_Project::Write_Track_In(TiXmlElement* pParent, tuint uiTrack)
 {
-	CTrack_DSP*		pTrack_DSP		=	gpDSPEngine->GetTrack(uiTrack);
+//	CTrack_DSP*		pTrack_DSP		=	gpDSPEngine->GetTrack(uiTrack);
 	
 	// input
 	char pszBuff [64];

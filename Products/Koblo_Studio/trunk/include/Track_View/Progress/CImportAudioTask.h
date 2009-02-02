@@ -56,7 +56,7 @@ public:
 	ac::EQuality meSrcQuality;
 	tbool mbSrcLossyCompressed;
 //	tbool mbStereo;
-	tbool mbSplit;
+//	tbool mbSplit;
 	tint32 miBitWidth;
 
 	IFile* mpSrc_File;
@@ -96,18 +96,18 @@ public:
 	//! left take name
 	std::string Left_Name(){ return mFile_Item.Left_Name();};
 	//! right take name
-	std::string Right_Name(){ return mFile_Item.Right_Name();};
+	std::string Right_Name(){ return mFile_Item.Stereo() ? mFile_Item.Right_Name(): "";};
 	
 	
 	//! left take name
 	std::string Left_Path(){ return mFile_Item.Left_Path();};
 	//! right take name
-	std::string Right_Path(){ return mFile_Item.Right_Path();};
+	std::string Right_Path(){ return mFile_Item.Stereo() ? mFile_Item.Right_Path(): "";};
 	
 	//! left peek file path
 	std::string Left_Peak_File_Path(){ return mFile_Item.Left_Peak_File_Path();};
 	//! right peek file path
-	std::string Right_Peak_File_Path(){ return mFile_Item.Right_Peak_File_Path();};
+	std::string Right_Peak_File_Path(){ return mFile_Item.Stereo() ? mFile_Item.Right_Peak_File_Path(): "";};
 	
 	
 	

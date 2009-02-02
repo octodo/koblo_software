@@ -59,8 +59,6 @@ void CKS_Import_Files::HandleMsg(SMsg* pMsg)
 
 tbool CKS_Import_Files::Add_File( std::string sPathName)
 {
-//	tint32 iPos = sPathName.rfind(':');
-//	std::string sName = sPathName.substr(iPos + 1);
 
 	CKSFile_Item File_Item;
 	

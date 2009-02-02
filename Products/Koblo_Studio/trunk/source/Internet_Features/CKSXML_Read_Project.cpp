@@ -5,13 +5,13 @@
 CKSXML_Read_Project::CKSXML_Read_Project()
 {
 	
-	mpTinyXMLDoc = new TiXmlDocument;
+//	mpTinyXMLDoc = new TiXmlDocument;
 	
 }
 
 CKSXML_Read_Project::~CKSXML_Read_Project()
 {
-	delete mpTinyXMLDoc;
+//	delete mpTinyXMLDoc;
 }
 
 void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
@@ -32,7 +32,12 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		Pass_The_Project_Tag( mpTinyXMLDoc );
 		
 		// 
-		Import_Samples();
+		Prepare_Samples();
+		
+		// download takes
+		Download_Takes();
+		// decompress takes
+		Decompress_Takes();
 			
 	}
 	
@@ -114,6 +119,7 @@ void CKSXML_Read_Project::Read_Project_Object(TiXmlNode* pParent)
 
 void CKSXML_Read_Project::Parse_Project_Object(TiXmlNode* pParent)
 {
+	
 	if (stricmp("name", pParent->Value()) == 0)
 		Read_Project_Name(pParent);
 	
@@ -134,6 +140,7 @@ void CKSXML_Read_Project::Parse_Project_Object(TiXmlNode* pParent)
 		Read_Insert(pParent->ToElement());
 	}
 	 */
+	
 	else if (stricmp("track", pParent->Value()) == 0) {
 		Parse_Track_Object(pParent->ToElement());
 	}
@@ -143,8 +150,57 @@ void CKSXML_Read_Project::Parse_Project_Object(TiXmlNode* pParent)
 	else if (stricmp("master", pParent->Value()) == 0) {
 		Read_Master(pParent->ToElement());
 	}
+	 
 }
 
+void CKSXML_Read_Project::Read_Branch_Object(TiXmlElement* pElement)
+{
+	if ( !pElement ) return ;
+	
+	// branch uuid
+	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
+	if(pAttrib)
+		gpApplication->Set_Branch_UUID( pAttrib->Value() );
+	
+	TiXmlNode* pChild;
+	TiXmlText* pText;
+	
+	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
+		
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			
+			if (stricmp("name", pChild->Value()) == 0) {
+				
+				TiXmlNode* pName = pChild->FirstChild();
+				if(pName) {
+					pText = pName->ToText();
+					if(pText)
+						gpApplication->Set_Branch_Name(pText->Value());
+				}
+			}
+			
+			else if (stricmp("description", pChild->Value()) == 0) {
+				
+				
+				TiXmlNode* pSet_Branch_Description = pChild->FirstChild();
+				if(pSet_Branch_Description) {
+					pText = pSet_Branch_Description->ToText();
+					if(pText)
+						gpApplication->Set_Branch_Description(pText->Value());
+				}
+			}
+			
+			else if (stricmp("revision", pChild->Value()) == 0){
+				
+				TiXmlNode* pSet_Branch_Revision = pChild->FirstChild();
+				if(pSet_Branch_Revision) {
+					std::string sBranch_Revision = pSet_Branch_Revision->Value();
+					gpApplication->Branch_Revision(atoi(sBranch_Revision.c_str()));
+				}
+			}
+		}
+	}
+}
 
 void CKSXML_Read_Project::Read_Sample_Object(TiXmlElement* pElement)
 {
@@ -174,7 +230,10 @@ void CKSXML_Read_Project::Read_Sample_Object(TiXmlElement* pElement)
 				}
 			}
 			else if (stricmp("take", pChild->Value()) == 0) {
-				Read_Take_Object(pChild->ToElement(), &Sample_Data);
+				CTake_Data* pTake_Data		=	Sample_Data.Get_Take_Data();
+				pTake_Data->Name( Sample_Data.Name() );
+				
+				Read_Take_Object(pChild->ToElement(), pTake_Data);
 
 			}
 		}
@@ -184,13 +243,10 @@ void CKSXML_Read_Project::Read_Sample_Object(TiXmlElement* pElement)
 	mSample_Data_List.push_back(Sample_Data);
 }
 
-void CKSXML_Read_Project::Read_Take_Object(TiXmlElement* pElement, CSample_Data* Sample_Data)
+void CKSXML_Read_Project::Read_Take_Object(TiXmlElement* pElement, CTake_Data* pTake_Data)
 {
 
 	if ( !pElement ) return ;
-	
-	//!!! notice only one take supported at the moment
-	CTake_Data* pTake_Data		= Sample_Data->Get_Take_Data();
 	
 	// set take uuid
 	TiXmlAttribute* pAttrib		=	pElement->FirstAttribute();
@@ -198,38 +254,44 @@ void CKSXML_Read_Project::Read_Take_Object(TiXmlElement* pElement, CSample_Data*
 		pTake_Data->Set_UUID(pAttrib->Value());   
 
 	TiXmlNode* pChild;
-	TiXmlText* pText;
+	std::string s;
+	
 	
 	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
 		
 		if(pChild->Type() == TiXmlNode::ELEMENT){
-			
+			s = "";
 			if (stricmp("description", pChild->Value()) == 0) {
 				
-				TiXmlNode* pName = pChild->FirstChild();
-				if(pName) {
-					pText = pName->ToText();
-					if(pText)
-						pTake_Data->Set_Description(pText->Value());
+				TiXmlNode* pTake_Description = pChild->FirstChild();
+				if(pTake_Description) {
+					TiXmlText* pText = pTake_Description->ToText();
+					if(pText){
+						s = pText->Value();
+						pTake_Data->Set_Description(s);
+					}
 				}
 			}
-			if (stricmp("mode", pChild->Value()) == 0) {
+			else if (stricmp("mode", pChild->Value()) == 0) {
 				
-				TiXmlNode* pMode = pChild->FirstChild();
-				if(pName) {
-					pText = pMode->ToText();
+				TiXmlNode* pTake_Mode = pChild->FirstChild();
+				if(pTake_Mode) {
+					TiXmlText* pText = pTake_Mode->ToText();
 					if(pText){
-						pTake_Data->Mode(pText->Value());
+						s = pText->Value();
+						pTake_Data->Mode(s);
 					}
-				}	
+				}
 			}
 			else if (stricmp("url", pChild->Value()) == 0) {
 
-				TiXmlNode* pName = pChild->FirstChild();
-				if(pName) {
-					pText = pName->ToText();
-					if(pText)
-						pTake_Data->Set_URL(pText->Value());
+				TiXmlNode* pUrl = pChild->FirstChild();
+				if(pUrl) {
+					TiXmlText* pText = pUrl->ToText();
+					if(pText){
+						s = pText->Value();
+						pTake_Data->URL(s);
+					}
 				}
 			}	
 		}
@@ -487,104 +549,7 @@ void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrac
 	}
 }
 
-void CKSXML_Read_Project::Read_Insert(TiXmlElement* pElement)
-{
-	/*
-	if ( !pElement ) return ;
-	
-	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
-	tint32 ival;
-	
-	// sample id
-	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		printf( "insert id =  %d \n", ival);
-	
-	TiXmlNode* pChild;
-	
-	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
-		
-		if(pChild->Type() == TiXmlNode::ELEMENT){
-			
-			if (stricmp("vendor", pChild->Value()) == 0) {
-				printf( "vendor:  ");
-				Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("product", pChild->Value()) == 0) {
-				printf( "product:  ");
-				Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("url", pChild->Value()) == 0) {
-				printf( "url:  ");
-				Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("bypass", pChild->Value()) == 0) {
-				printf( "bypass:  ");
-				Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
-				printf( "\n" );
-			}
-			else if (stricmp("settings", pChild->Value()) == 0) {
-				Set_Insert_Settings(pChild->ToElement());
-				printf( "\n" );
-			}
-		}
-	}
-	 */
-}
 
-void CKSXML_Read_Project::Read_Insert_Settings(TiXmlElement* pElement)
-{
-	if ( !pElement ) return ;
-	
-	TiXmlNode* pChild;
-	
-	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
-		
-		if(pChild->Type() == TiXmlNode::ELEMENT){
-			
-			if (stricmp("parameter", pChild->Value()) == 0) {
-				Read_Insert_Parameter(pChild->ToElement());
-
-			}
-			else if (stricmp("chunk", pChild->Value()) == 0) {
-
-				Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
-
-			}
-		}
-	}
-}
-
-void CKSXML_Read_Project::Read_Insert_Parameter(TiXmlElement* pElement)
-{
-	if ( !pElement ) return ;
-	
-	
-	TiXmlNode* pChild;
-	
-	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
-		
-		if(pChild->Type() == TiXmlNode::ELEMENT){
-			
-			if (stricmp("name", pChild->Value()) == 0) {
-
-				Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
-
-			}
-			else if (stricmp("default", pChild->Value()) == 0) {
-
-				Set_DAW_Parameter(pChild, giTinyXml_Type_Float, 0, 0);
-
-			}
-			else if (stricmp("value", pChild->Value()) == 0) {
-
-				Set_DAW_Parameter(pChild, giTinyXml_Type_Float, 0, 0);
-			}
-		}
-	}
-}
 
 void CKSXML_Read_Project::Read_Track_Region(TiXmlElement* pElement, tint32 iTrackID)
 {
@@ -888,23 +853,33 @@ void CKSXML_Read_Project::Read_Master_Out(TiXmlElement* pElement)
 }
 
 
-void CKSXML_Read_Project::Import_Samples()
+
+
+
+
+
+void CKSXML_Read_Project::Prepare_Samples()
 {
+
+	
 
 	std::list<CSample_Data>::iterator it = mSample_Data_List.begin();
 	for (; it != mSample_Data_List.end(); it++) {
-
 		Import_Takes( (*it) );
 	}
+	
+	
 }
 
 
-void CKSXML_Read_Project::Import_Takes(CSample_Data Sample_Data)
+
+
+void CKSXML_Read_Project::Import_Takes(CSample_Data pSample_Data)
 {
 	
 	//! notice only one take pr sample supported at the moment	
-	CTake_Data* pTake_Data = Sample_Data.Get_Take_Data();
-	Import_Take(pTake_Data);
+	CTake_Data* pTake_Data = pSample_Data.Get_Take_Data();
+	Import_Take( pTake_Data );
 	
 }
 
@@ -929,7 +904,7 @@ void CKSXML_Read_Project::Import_Take(CTake_Data* pTake)
 tbool CKSXML_Read_Project::In_Wave_Files(CTake_Data* pTake_Data)
 {
 	std::string sFolder = gpApplication->Wave_File_Folder();
-	return In_Folder(	pTake_Data , sFolder );
+	return In_Folder(	pTake_Data , sFolder, ".wav" );
 	
 }
 
@@ -937,58 +912,85 @@ tbool CKSXML_Read_Project::In_Wave_Files(CTake_Data* pTake_Data)
 tbool CKSXML_Read_Project::In_OGG_Files(CTake_Data* pTake_Data)
 {
 	std::string sFolder = gpApplication->OGG_File_Folder();
-	return In_Folder(	pTake_Data , sFolder );
+	return In_Folder(	pTake_Data , sFolder, ".ogg" );
 
 }
 
-tbool CKSXML_Read_Project::In_Folder(CTake_Data* pTake_Data, std::string sFolder)
+tbool CKSXML_Read_Project::In_Folder(CTake_Data* pTake_Data, std::string sFolder, std::string sExtencion)
 {
-	tuint32 uiChannels;
+	tuint32 uiChannels = 0;
 	
-	if(stricmp(		"mono",		pTake_Data->Mode().c_str()) == 0)
+	std::string sMode = pTake_Data->Mode();
+	
+	if(stricmp( 	sMode.c_str(),	"mono"	) == 0)
 		uiChannels = 1;
 	
-	else if(stricmp("stereo",	pTake_Data->Mode().c_str()) == 0)
+	else if(stricmp( sMode.c_str(),"stereo") == 0)
 		uiChannels = 2;
 	
-
 	
 	switch(uiChannels) {
 		case 1:
-		default:
 		{	// mono 
 			return gpApplication->Readable_Audio(sFolder + pTake_Data->Name(1));
 		}
 		case 2:
 		{	// files are split in two
 			tuint In_Wave_Files = 0;
-			In_Wave_Files += gpApplication->Readable_Audio(sFolder + pTake_Data->Name(1));
-			In_Wave_Files += gpApplication->Readable_Audio(sFolder + pTake_Data->Name(2));
+			In_Wave_Files += gpApplication->Readable_Audio(sFolder + pTake_Data->Name(1) + sExtencion);
+			In_Wave_Files += gpApplication->Readable_Audio(sFolder + pTake_Data->Name(2) + sExtencion);
 			return In_Wave_Files == 2 ? true: false;
 		}
+		default: break;
 	}
 	return false;
 }
 
-/*
-void CKSXML_Read_Project::Add_Take_To_Insert_Que(CTake_Data* pTake_Data)
+
+
+
+
+
+
+
+void CKSXML_Read_Project::Download_Takes()
 {
-	
-	mInsert_Que.push_back(pTake_Data);
-	
+	std::list<CTake_Data*>::iterator it = mDownload_Que.begin();
+	for (; it != mDownload_Que.end(); it++) {
+		Download_Take( (*it) );
+	}
 }
 
-void CKSXML_Read_Project::Add_Take_To_Download_Que(CTake_Data* pTake_Data)
+
+void CKSXML_Read_Project::Download_Take(CTake_Data* Take_Data)
 {
-	mDownload_Que.push_back(pTake_Data);
-	
+	std::string sURL = Take_Data->URL();
+	// do download here
+	// download to "OGG Files" folder
+	// when compleated add files to decompressing que:
+	// mDecompress_Que.push_back(pTake_Data);
 }
 
-void CKSXML_Read_Project::Add_Take_To_Decompress_Que(CTake_Data* pTake_Data)
+void CKSXML_Read_Project::Decompress_Takes()
 {
-	mDecompress_Que.push_back(pTake_Data);
+	std::list<CTake_Data*>::iterator it = mDecompress_Que.begin();
+	for (; it != mDecompress_Que.end(); it++) {
+		Decompress_Take( (*it) );
+	}
 }
-*/
+
+
+void CKSXML_Read_Project::Decompress_Take(CTake_Data* Take_Data)
+{
+	std::string sURL = Take_Data->URL();
+	// do decompression here
+	// decompress to "Wave Files" folder
+	// when compleated add files to insert que:
+	// mInsert_Que.push_back(pTake_Data);
+}
+
+
+
 
 
 
@@ -1088,3 +1090,51 @@ void CKSXML_Read_Project::Check_Revision(TiXmlElement* pElement)
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+tbool CKSXML_Read_Project::Insert_Sample()
+{
+	if (gpApplication->IsPlayingOrRecording())  gpApplication->PlaybackStop();
+	
+	
+	CImportAudioTask* pImportAudioTask = new CImportAudioTask();
+	
+	CImportAudioTask::EStereoBehavior eBehave = (bAlwaysKeepStereo) ? CImportAudioTask::geStereoDoKeep : CImportAudioTask::geStereoDoAsk;
+	
+	tbool bSuccess = pImportAudioTask->Init( File_Item.Source_Path(), false, eBehave, false);
+	
+	if (bSuccess) {
+		gpApplication->mpProgressTasks->Add(pImportAudioTask);
+		gpApplication->Playback_InProgressTask();
+	}
+	else {
+		gpApplication->Extended_Error(pImportAudioTask->GetError());
+		pImportAudioTask->Destroy();
+	}
+	
+	return bSuccess;
+}
+*/
+
+
+
+
+
+
+
+

@@ -74,10 +74,10 @@ public:
 	tbool Readable_Audio(std::string sFile);
 	
 	// get wave file folder
-	std::string Wave_File_Folder(){ return msProject_Folder + ":Wave Files";};
+	std::string Wave_File_Folder(){ return msProject_Folder + "Wave Files:";};
 	
 	// get ogg file folder
-	std::string OGG_File_Folder(){ return msProject_Folder + ":OGG Files";};
+	std::string OGG_File_Folder(){ return msProject_Folder + "OGG Files:";};
 	
 	
 private:	

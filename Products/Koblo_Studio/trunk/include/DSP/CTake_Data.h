@@ -14,10 +14,10 @@ public:
 	
 	
 	//! Which stereo channels to map: 1 = left, 2 = right, 3 = both
-	tint32 iOriginalChannelMask;
+//	tint32 iOriginalChannelMask;
 	
 	//! Is this displayed as a stereo clip in list?
-	tbool bIsStereoInList;
+//	tbool bIsStereoInList;
 	
 	// -------------
 	// Variables below here aren't saved but regenerated upon load
@@ -25,16 +25,16 @@ public:
 	std::string sWavePathNameR;
 	
 	//! get the Sample UUID
-	void Set_Description(std::string sDescription ){msDescription =  sDescription;};
+	void Set_Description(const std::string& sDescription ){msDescription =  sDescription;};
 	
 	//! get the description
 	std::string Get_Description(){ return msDescription;};
 	
 	//! get the Sample UUID
-	void Set_URL(std::string sURL ){ msURL = sURL;};
+	void URL(const std::string& sURL ){ msURL = sURL;};
 	
 	//! get the description
-	std::string Get_URL(){ return msURL;};
+	std::string URL(){ return msURL;};
 	
 	//! path to the left peak file
 	std::string sLeft_Peak_File_Path;
@@ -43,15 +43,18 @@ public:
 	std::string sRight_Peak_File_Path;
 	
 	//! is the take in stereo
-	std::string Mode(){ return muiChannels ? "stereo": "mono";};
+	std::string Mode(){ return msMode;};
 	
-	void Mode(std::string sMode) { msMode = sMode;};
+	void Mode(const std::string& sMode) { msMode = sMode;};
 	
 	//! get channel name
 	std::string Name(tuint uiChannel);
 	
 	//! set name and how many channels there is in the sampel
-	void Name(std::string sName, tuint32 uiChannels);
+//	void Name(std::string sName, tuint32 uiChannels);
+	
+	//! set name
+	void Name(const std::string& sName){ msName = sName;};
 	
 	//! set take number
 	void uiTake(tuint uiTake_Nr){ muiTake_Nr = uiTake_Nr;};
@@ -73,7 +76,7 @@ protected:
 	//! description
 	std::string msDescription;
 	//! channels
-	tuint32 muiChannels;
+//	tuint32 muiChannels;
 	//! take_nr
 	tuint32 muiTake_Nr;
 	//! url

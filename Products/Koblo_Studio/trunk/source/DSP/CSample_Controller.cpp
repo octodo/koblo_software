@@ -60,14 +60,14 @@ void CSample_Controller::Set_Wave_Path( CTake_Data* pTake_Info,
 {
 	//CTake_Data* pTake_Info		=	pSample_Data->Get_Take_Data();
 	
-	
-	if (pTake_Info->bIsStereoInList) {
+	std::string sMode				=	pTake_Info->Mode();
+	if (stricmp("stereo", sMode.c_str()) == 0) {
 		// STEREO
 		// Get two streams for stereo channel
 		rsWavePathNameL = pTake_Info->sWavePathNameL;
 		rsWavePathNameR = pTake_Info->sWavePathNameR;
 	}
-	else {
+	else if (stricmp("mono", sMode.c_str()) == 0) {
 		// MONO
 		// Get a single stream for mono channel
 		if (pTake_Info->sWavePathNameL.length()) {

@@ -2,9 +2,14 @@
 
 CTake_Data::CTake_Data()
 {
-	msDescription = "";
-	msURL	=	"";
-	muiTake_Nr	=	0;
+	msDescription			=		"";
+	msURL					=		"";
+	muiTake_Nr				=		0;
+//	muiChannels				=		0;
+	sWavePathNameL			=		"";
+	sWavePathNameR			=		"";
+	sLeft_Peak_File_Path	=		"";
+	sRight_Peak_File_Path	=		"";
 
 }
 
@@ -12,7 +17,7 @@ CTake_Data::~CTake_Data()
 {
 	
 }
-
+/*
 void CTake_Data::Name(std::string sName, tuint uiChannels)
 {
 	
@@ -20,27 +25,30 @@ void CTake_Data::Name(std::string sName, tuint uiChannels)
 	muiChannels		=	uiChannels;
 
 }
-
+*/
 std::string CTake_Data::Name( tuint32 uiChannel)
 {
-	std::string sExencion = "";
+
+	std::string sName;
+	sName				=	msName;
 	
 	
 	// take
 	if(muiTake_Nr > 9999)  muiTake_Nr = 9999;
 	char Char_Buffer[8];
-	sprintf(Char_Buffer, "%04d", muiTake_Nr ); 	
-	sExencion = "_";
-	sExencion = + Char_Buffer;
+//	sprintf(Char_Buffer, "%04d", muiTake_Nr );
+ 	sprintf(Char_Buffer, "%04d", 0 ); // only one take supported for now
+	sName	+= std::string("_");
+	sName	+= std::string(Char_Buffer);
 	
 
 	// channel
-	if(muiTake_Nr > 9999)  muiTake_Nr = 9999;
-	sprintf(Char_Buffer, "%04d", uiChannel ); 	
+	if(uiChannel > 99)  uiChannel = 99;
+	sprintf(Char_Buffer, "%02d", uiChannel ); 	
 	
-	sExencion	+= "-";
-	sExencion	+= Char_Buffer;
+	sName	+= std::string("-");
+	sName	+= std::string(Char_Buffer);
 
-	return sExencion; 
+	return sName; 
 
 }
