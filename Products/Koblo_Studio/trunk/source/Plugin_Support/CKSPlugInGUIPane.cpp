@@ -38,11 +38,11 @@ void CKSPlugInGUIPane::Init()
 	
 	
 	// Top label
-	CreateBitmap(ge::IControl::giNoID, IDB_Back_Plug_File_Browser_Left, ge::SPos(0, 24));
-	ge::IBitmap* pBmp =CreateBitmap(ge::IControl::giNoID, IDB_Back_Plug_File_Browser_Center, ge::SPos(16, 24));
-	pBmp->SetSize(ge::SSize( 365 , 100  ));
+//	CreateBitmap(ge::IControl::giNoID, IDB_Back_Plug_File_Browser_Left, ge::SPos(0, 24));
+//	ge::IBitmap* pBmp =CreateBitmap(ge::IControl::giNoID, IDB_Back_Plug_File_Browser_Center, ge::SPos(16, 24));
+//	pBmp->SetSize(ge::SSize( 365 , 100  ));
 	
-	CreateBitmap(ge::IControl::giNoID, IDB_Back_Plug_File_Browser_Right, ge::SPos(365+16, 24));
+//	CreateBitmap(ge::IControl::giNoID, IDB_Back_Plug_File_Browser_Right, ge::SPos(365+16, 24));
 
 	mpEffectPane = new CKSPlugInEffectPane(this, GetGUI());
 	mpEffectPane->Init();

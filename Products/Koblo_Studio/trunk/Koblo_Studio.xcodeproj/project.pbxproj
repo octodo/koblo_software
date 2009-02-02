@@ -11,7 +11,6 @@
 		0BC71087099CBF520076AEE9 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BC71086099CBF520076AEE9 /* CoreAudio.framework */; };
 		320072BC0ED18FC30035E5A8 /* CKSPreferences.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 320072BB0ED18FC30035E5A8 /* CKSPreferences.cpp */; };
 		324DA49D0DB5F64B00268686 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9504C8FFE6A3BC11CA0CBA /* ApplicationServices.framework */; };
-		324DA49F0DB5F65500268686 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9504CAFFE6A41611CA0CBA /* CoreServices.framework */; };
 		327FB57C0DEED5BC004ACD89 /* CKSMixerGUIPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327FB57B0DEED5BC004ACD89 /* CKSMixerGUIPane.cpp */; };
 		32AB3E1A0D6D90E000DE1FCD /* CBaseDezipper2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32AB3E190D6D90E000DE1FCD /* CBaseDezipper2.cpp */; };
 		32E09DCB0E14C38500FF980B /* libAudioCompress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E09DC20E14BED500FF980B /* libAudioCompress.a */; };
@@ -21,6 +20,7 @@
 		8D0C4E900486CD37000505A6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 20286C2BFDCF999611CA2CEA /* main.cpp */; settings = {ATTRIBUTES = (); }; };
 		8D0C4E920486CD37000505A6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
 		E36358EB0CC4D0B000601597 /* kspiCHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E36358EA0CC4D0B000601597 /* kspiCHost.cpp */; };
+		E3A6368A0F3049E1003A0D84 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9504CAFFE6A41611CA0CBA /* CoreServices.framework */; };
 		E3AC49700DB7984900D70347 /* CKSMixerGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3AC496F0DB7984900D70347 /* CKSMixerGUI.cpp */; };
 		E3ADBE920CD71D6400ABD0DB /* CBasePane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ADBE900CD71D6400ABD0DB /* CBasePane.cpp */; };
 		E3ADBE930CD71D6400ABD0DB /* CBasePaneStd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E3ADBE910CD71D6400ABD0DB /* CBasePaneStd.cpp */; };
@@ -511,9 +511,9 @@
 				FC9D47850CB14636006CEDB6 /* libAudioIOEngine.a in Frameworks */,
 				FC9D47860CB14639006CEDB6 /* libBaseUtilities.a in Frameworks */,
 				324DA49D0DB5F64B00268686 /* ApplicationServices.framework in Frameworks */,
-				324DA49F0DB5F65500268686 /* CoreServices.framework in Frameworks */,
 				32E09DCB0E14C38500FF980B /* libAudioCompress.a in Frameworks */,
 				FC2D347B0EEE8691004DFC3D /* libINetEngine.a in Frameworks */,
+				E3A6368A0F3049E1003A0D84 /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
