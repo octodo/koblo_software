@@ -17,10 +17,6 @@ public:
 
 	//! IDownloader implementation
 	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10);
-	//! IUploader implementation
-	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToUpload, tchar* pszParamName = "Upload", tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10);
-	//! IUploader implementation
-	virtual tbool SetNameOfUploadFile(tchar* pszOverrideName);
 	//! IDownloader implementation
 	virtual tbool SetReplyMIMEType(E_MIME_Type eMIME);
 	//! IDownloader implementation
@@ -35,6 +31,8 @@ public:
 	virtual tbool EnableAutoRedirects();
 	//! IDownloader implementation
 	virtual tbool AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen);
+	//! IUploader implementation
+	virtual tbool AddFileParam(const tchar* pszParamName, IFile* pfileToUpload, tchar* pszDestinationName = NULL, E_MIME_Type eMIME = MIME_TYPE_DEFAULT);
 	//! IDownloader implementation
 	virtual tbool Start(IFile* pfileForDownload = NULL);
 	//! IDownloader implementation
@@ -55,25 +53,32 @@ public:
 	virtual tbool GetError(tchar* pszErrBuff, tint32 iErrBuffSize);
 
 	// Callbacks
-	size_t ReadFunction_ForUpload(void *ptr, size_t size, size_t nmemb);
-	int SeekFunction_ForUpload(curl_off_t offset, int origin);
+	size_t ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, size_t nmemb);
+	//int SeekFunction_ForUpload(IFile* pfile, curl_off_t offset, int origin);
 	size_t WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb);
+
+	struct SUploadStream {
+		CXloader* mpThis;
+		//
+		std::string msParamName;
+		IFile* mpfile;
+		E_MIME_Type meMIME;
+		std::string msNameAndExtOnly;
+	};
 
 protected:
 	tbool mbIsUploader;
 
 	std::string msHost;
 	std::string msPage;
-	IFile* mpfileToUpload;
-	std::string msUploadFileParamName;
-	std::string msUploadFileNameAndExtOnly;
 	tint32 miPort;
 	std::string msUser;
 	std::string msPassword;
 	tuint32 muiTimeOutSecs;
 
-	E_MIME_Type meMIMEType;
-	const tchar* GetMIMEString();
+	E_MIME_Type meReplyMIMEType;
+	const tchar* GetReplyMIMEString();
+	const tchar* GetMIMEString(E_MIME_Type eMIME);
 	
 	EVerbType meSpecificVerb;
 	EVerbType GetActuallyUsedVerb();
@@ -84,6 +89,8 @@ protected:
 
 	tbool mbUseStreamingUpload;
 	
+	std::list<SUploadStream*> mlistUploadFiles;
+
 	std::list<std::string> mlist_sParamNames;
 	std::list<tint32> mlist_iParamDataLen;
 	std::list<tchar*> mlist_pszParamData;
@@ -92,6 +99,7 @@ protected:
 	tbool AssembleParams();
 	void WipeParams();
 	CMutex mMutex_ForParams;
+	tbool VerifyParamName(const tchar* pszParamName);
 
 	// File for writing reply directly into
 	IFile* mpfileForReply;
@@ -101,6 +109,7 @@ protected:
 	void ZapReplyBuffer();
 
 	tuint64 muiUploadProgress;
+	tuint64 muiUploadSize;
 	tuint64 muiReplyProgress;
 	tuint64 muiReplySize;
 

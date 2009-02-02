@@ -53,7 +53,7 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 
 
 #if (0)
-	// (lasse) very very temporary code: download directly from koblo.com
+	// (lasse) very very temporary code: upload to koblo.com
 
 	// These must be set or it won't work
 #define TEMPUSR "xxx@xxx.com"
@@ -115,21 +115,28 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 		std::string sPage = std::string("/projects/") + pszUUID_Proj;
 		sPage += "/samples.xml";
 		CAutoDelete<IFile> pfMp3(IFile::Create());
+		CAutoDelete<IFile> pfExtra(IFile::Create());
 #ifdef _WIN32
 		tchar* pszMp3File = "C:\\_testhest.mp3";
+		tchar* pszExtraFile = "C:\\Aja joepie jee.mp3";
 #endif // _WIN32
 #ifdef _Mac
 		tchar* pszMp3File = "/_testhest.mp3";
+		tchar* pszExtraFile = "/Aja joepie jee.mp3";
 #endif // _Mac
 		if (!pfMp3->Open(pszMp3File, IFile::FileRead))
 			return;
-		if (pUploader->Init("koblo.com", sPage.c_str(), pfMp3, "mp3[uploaded_data]", 80, TEMPUSR, TEMPPWD)) {
+		if (!pfExtra->Open(pszExtraFile, IFile::FileRead))
+			return;
+		if (pUploader->Init("koblo.com", sPage.c_str(), 80, TEMPUSR, TEMPPWD)) {
 			pUploader->SetReplyMIMEType(ine::MIME_TYPE_XML);
 			pUploader->SetSpecificVerb(ine::VERB_POST);
 			pUploader->AddParam("sample[uuid]", pszUUID_Sample, -1);
 			pUploader->AddParam("sample[name]", "Short-lived Samle for Test 123 (lasse)", -1);
 			pUploader->AddParam("take[uuid]", pszUUID_Take, -1);
 			pUploader->AddParam("take[description]", "Temporary sample for test only", -1);
+			pUploader->AddFileParam("mp3[uploaded_data]", pfMp3);
+			pUploader->AddFileParam("audio[uploaded_data]", pfExtra);
 			CAutoDelete<IFile> pfReply(IFile::Create());
 #ifdef _WIN32
 			tchar* pszReplyFile = "C:\\_up-file-reply.xml";

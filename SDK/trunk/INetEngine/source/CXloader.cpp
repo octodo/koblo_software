@@ -4,11 +4,11 @@
 CXloader::CXloader(tbool bIsUploader)
 {
 	mbIsUploader = bIsUploader;
-	mpfileToUpload = mpfileForReply = NULL;
+	mpfileForReply = NULL;
 	mpszParamsAssembled = NULL;
 	miParamsAssembledLen = 0;
 	mbIsInitialized = mbIsTransfering = mbIsFailed = mbIsMultiDone = mbIsDone = false;
-	meMIMEType = MIME_TYPE_NONE;
+	meReplyMIMEType = MIME_TYPE_NONE;
 	meSpecificVerb = VERB_DEFAULT;
 	mbAllowRedirects = true;
 
@@ -54,13 +54,6 @@ void CXloader::Destroy()
 
 
 tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort /*= 80*/, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
-{
-	// Call IUploader code, just without file pointer and param name
-	return Init(pszHost, pszPage, NULL, NULL, iPort, pszUser, pszPassword, iTimeOutSecs);
-} // Init (for IDownloader)
-
-
-tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToUpload, tchar* pszParamName /*= "Upload"*/, tint32 iPort /*= 80*/, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
 {
 	Abort();
 	WipeParams();
@@ -127,71 +120,25 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToU
 	
 	msHost = pszHost;
 	msPage = (pszPage == NULL) ? "" : pszPage;
-	mpfileToUpload = pfileToUpload;
-	msUploadFileParamName =
-		((pszParamName == NULL) || (*pszParamName == '\0'))
-		? "Upload" : pszParamName;
 	miPort = iPort;
 	msUser = (pszUser == NULL) ? "" : pszUser;
 	msPassword = (pszPassword == NULL) ? "" : pszPassword;
 	muiTimeOutSecs = (tuint32)iTimeOutSecs;
 
-	// Extract path and name from upload IFile object
-	msUploadFileNameAndExtOnly = "";
-	if (mpfileToUpload) {
-		tchar pszFilePathName[1024];
-		if ((dynamic_cast<IFileMemory*>(mpfileToUpload)) != NULL) {
-			// This is a memory file - no name
-			sprintf(pszFilePathName, "(no name)");
-		}
-		else {
-			mpfileToUpload->GetPathName(pszFilePathName);
-			tchar* pszColon = strrchr(pszFilePathName, ':');
-			if (pszColon == NULL) {
-				SetError("Internal error: Unexpected format of file path");
-				return false;
-			}
-			msUploadFileNameAndExtOnly = pszColon + 1;
-		}
-	}
-
-	meMIMEType = MIME_TYPE_NONE;
+	meReplyMIMEType = MIME_TYPE_NONE;
 	meSpecificVerb = VERB_DEFAULT;
 	mbAllowRedirects = true;
 	mbUseStreamingUpload = true;
 	mpfileForReply = NULL;
 
-	muiUploadProgress = muiReplyProgress = muiReplySize;
+	muiUploadProgress = muiUploadSize = muiReplyProgress = muiReplySize = 0;
 
 	mbFailImmediatelyOnStatus = false;
 	msDelayedStatusError = "";
 
 	mbIsInitialized = true;
 	return true;
-} // Init (for IUploader)
-
-
-tbool CXloader::SetNameOfUploadFile(tchar* pszOverrideName)
-{
-	if (mbIsFailed) {
-		//SetError("Previous error");
-		return false;
-	}
-	
-	if (!mbIsInitialized) {
-		SetError("Not initialized");
-		return false;
-	}
-	
-	if (mbIsTransfering) {
-		SetError("We can't rename upload file as we've already begun transfer");
-		return false;
-	}
-	
-	// Success
-	msUploadFileNameAndExtOnly = (pszOverrideName == NULL) ? "" : pszOverrideName;
-	return true;
-} // SetNameOfUploadFile
+} // Init
 
 
 tbool CXloader::SetReplyMIMEType(E_MIME_Type eMIME)
@@ -212,14 +159,20 @@ tbool CXloader::SetReplyMIMEType(E_MIME_Type eMIME)
 	}
 	
 	// Success
-	meMIMEType = eMIME;
+	meReplyMIMEType = eMIME;
 	return true;
 } // SetReplyMIMEType
 
 
-const tchar* CXloader::GetMIMEString()
+const tchar* CXloader::GetReplyMIMEString()
 {
-	switch (meMIMEType) {
+	return GetMIMEString(meReplyMIMEType);
+} // GetReplyMIMEString
+
+
+const tchar* CXloader::GetMIMEString(E_MIME_Type eMIME)
+{
+	switch (eMIME) {
 		case MIME_TYPE_TEXT:	return "text/*";
 		case MIME_TYPE_HTML:	return "text/html";
 		case MIME_TYPE_XML:		return "text/xml";
@@ -419,27 +372,8 @@ tbool CXloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, ti
 	}
 	
 	// Verify sanity of param name
-	{
-		if ((pszParamName == NULL) || (*pszParamName == '\0')) {
-			SetError("No param name");
-			return false;
-		}
-		for (tchar* pc = (tchar*)pszParamName; *pc; pc++) {
-			tchar c = *pc;
-			if (
-				((c < 'A') || (c > 'Z'))
-				&&
-				((c < 'a') || (c > 'z'))
-				&&
-				((c < '0') || (c > '9'))
-				&&
-				((c != '_') && (c != '[') && (c != ']'))
-				) {
-				SetError("Not valid paramname");
-				return false;
-			}
-		}
-	}
+	if (!VerifyParamName(pszParamName))
+		return false;
 	
 	if (mbIsUploader) {
 		tchar* pszData = "";
@@ -509,6 +443,98 @@ tbool CXloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, ti
 	// Success
 	return true;
 } // AddParam
+
+
+tbool CXloader::AddFileParam(const tchar* pszParamName, IFile* pfileToUpload, tchar* pszDestinationName /*= NULL*/, E_MIME_Type eMIME /*= MIME_TYPE_DEFAULT*/)
+{
+	CAutoLock Lock(mMutex_ForParams);
+	
+	if (mbIsFailed) {
+		//SetError("Previous error");
+		return false;
+	}
+	
+	if (!mbIsInitialized) {
+		SetError("Not initialized");
+		return false;
+	}
+	
+	if (mbIsTransfering) {
+		SetError("We can't add more parameters as we've already begun transfer");
+		return false;
+	}
+	
+	// Verify sanity of param name
+	if (!VerifyParamName(pszParamName))
+		return false;
+
+	if (!pfileToUpload) {
+		SetError("File to upload is NULL");
+		return false;
+	}
+
+	// Get name of destination file (on upload server)
+	std::string sNameAndExt;
+	if ((pszDestinationName) && (*pszDestinationName)) {
+		// We have a custom name, use that
+		sNameAndExt = pszDestinationName;
+	}
+	else {
+		// Extract path and name from upload IFile object
+		if ((dynamic_cast<IFileMemory*>(pfileToUpload)) != NULL) {
+			// This is a memory file - no name
+			sNameAndExt = "(no name)";
+		}
+		else {
+			tchar pszFilePathName[1024];
+			pfileToUpload->GetPathName(pszFilePathName);
+			tchar* pszColon = strrchr(pszFilePathName, ':');
+			if (pszColon == NULL) {
+				SetError("Internal error: Unexpected format of file path");
+				return false;
+			}
+			sNameAndExt = pszColon + 1;
+		}
+	}
+
+	// Add file to param list
+	SUploadStream* pS = new SUploadStream();
+	pS->mpThis = this;
+	pS->msParamName = pszParamName;
+	pS->mpfile = pfileToUpload;
+	pS->meMIME = eMIME;
+	pS->msNameAndExtOnly = sNameAndExt;
+	mlistUploadFiles.push_back(pS);
+
+	// Success
+	return true;
+} // AddFileParam
+
+
+tbool CXloader::VerifyParamName(const tchar* pszParamName)
+{
+	if ((pszParamName == NULL) || (*pszParamName == '\0')) {
+		SetError("No param name");
+		return false;
+	}
+	for (tchar* pc = (tchar*)pszParamName; *pc; pc++) {
+		tchar c = *pc;
+		if (
+			((c < 'A') || (c > 'Z'))
+			&&
+			((c < 'a') || (c > 'z'))
+			&&
+			((c < '0') || (c > '9'))
+			&&
+			((c != '_') && (c != '[') && (c != ']'))
+			) {
+			SetError("Not valid paramname");
+			return false;
+		}
+	}
+
+	return true;
+} // VerifyParamName
 
 
 tbool CXloader::AssembleParams()
@@ -663,46 +689,67 @@ tbool CXloader::AssembleParams_ForMultiPartForm()
 		}
 	}
 
-	// Finally add file
-	if (mpfileToUpload)	{
-		CURLFORMcode rc = (CURLFORMcode)0;
+	// Finally add file(s)
+	std::list<SUploadStream*>::iterator it = mlistUploadFiles.begin();
+	for ( ; it != mlistUploadFiles.end(); it++) {
+		SUploadStream* pS = *it;
+		//
+		std::string& rsParamName = pS->msParamName;
+		IFile* pfile = pS->mpfile;
+		std::string& rsNameAndExtOnly = pS->msNameAndExtOnly;
+		tint32 iTotalSize = (tint32)(pS->mpfile->GetSizeWhenOpened());
 
-		// Add upload file
-		tint32 iTotalSize = (tint32)(mpfileToUpload->GetSizeWhenOpened());
+		// Array for upload of file
+		curl_forms formsArrayForAdd[10];
+		tint32 iAryIx = 0;
+
+		// Add common data
+		formsArrayForAdd[iAryIx].option = CURLFORM_PTRNAME;
+		formsArrayForAdd[iAryIx++].value = rsParamName.c_str();
+		formsArrayForAdd[iAryIx].option = CURLFORM_FILENAME;
+		formsArrayForAdd[iAryIx++].value = rsNameAndExtOnly.c_str();
+		formsArrayForAdd[iAryIx].option = CURLFORM_CONTENTSLENGTH;
+		formsArrayForAdd[iAryIx++].value = (const char*)iTotalSize;
+		if (pS->meMIME != MIME_TYPE_DEFAULT) {
+			formsArrayForAdd[iAryIx].option = CURLFORM_CONTENTTYPE;
+			formsArrayForAdd[iAryIx++].value = GetMIMEString(pS->meMIME);
+		}
+
+		// Add upload file in correct way
 		if (mbUseStreamingUpload) {
-			rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
-				CURLFORM_PTRNAME, msUploadFileParamName.c_str(),
-				CURLFORM_NAMELENGTH, msUploadFileParamName.length(),
-				CURLFORM_STREAM, this, // Upload as stream (avoid loading all of file in memory at once)
-				CURLFORM_CONTENTSLENGTH, iTotalSize,
-				CURLFORM_FILENAME, msUploadFileNameAndExtOnly.c_str(),
-				CURLFORM_END
-				);
+			// Upload as stream (avoid loading all of file in memory at once)
+			formsArrayForAdd[iAryIx].option = CURLFORM_STREAM;
+			formsArrayForAdd[iAryIx++].value = (const char*)pS;
 		}
 		else {
-			IFileMemory* pMem = dynamic_cast<IFileMemory*>(mpfileToUpload);
+			// Load entire upload file into memory
+			IFileMemory* pMem = dynamic_cast<IFileMemory*>(pS->mpfile);
 			if (pMem) {
 				SetError("Non-streaming IFileMemory isn't supported yet");
 				return false;
 			}
 			else {
+				// Add file path, so CURL can load it itself
 				tchar pszFilePath[1024];
-				mpfileToUpload->GetPathName(pszFilePath);
+				pfile->GetPathName(pszFilePath);
 				IFile::PathToOS2(pszFilePath, pszFilePath);
-				rc = curl_formadd(&mpFormPost_First, &mpFormPost_Last,
-					CURLFORM_PTRNAME, msUploadFileParamName.c_str(),
-					CURLFORM_NAMELENGTH, msUploadFileParamName.length(),
-					CURLFORM_FILE, pszFilePath,
-					CURLFORM_CONTENTSLENGTH, iTotalSize,
-					CURLFORM_FILENAME, msUploadFileNameAndExtOnly.c_str(),
-					CURLFORM_END
-					);
+				formsArrayForAdd[iAryIx].option = CURLFORM_FILE;
+				formsArrayForAdd[iAryIx++].value = pszFilePath;
 			}
 		}
 
+		// Mark end of array
+		formsArrayForAdd[iAryIx].option = CURLFORM_END;
+
+		// Perform addition of array
+		CURLFORMcode rc = curl_formadd(
+			&mpFormPost_First, &mpFormPost_Last,
+			CURLFORM_ARRAY, formsArrayForAdd,
+			CURLFORM_END
+			);
 		if (rc != 0) {
 			tchar pszErr[128];
-			sprintf(pszErr, "curl_formadd(..) returned %d for file %s", rc, msUploadFileNameAndExtOnly.c_str());
+			sprintf(pszErr, "curl_formadd(..) returned %d for file %s", rc, rsNameAndExtOnly.c_str());
 			SetError(pszErr);
 			return false;
 		}
@@ -739,17 +786,23 @@ void CXloader::WipeParams()
 		curl_formfree(mpFormPost_First);
 		mpFormPost_First = mpFormPost_Last = NULL;
 	}
+
+	while (mlistUploadFiles.size()) {
+		SUploadStream* p = mlistUploadFiles.front();
+		delete p;
+		mlistUploadFiles.pop_front();
+	}
 } // WipeParams
 
 
 size_t Static_ReadFunction_ForUpload(void *ptr, size_t size, size_t nmemb, void *stream)
 {
-	CXloader* pUploader = (CXloader*)stream;
-	return pUploader->ReadFunction_ForUpload(ptr, size, nmemb);
+	CXloader::SUploadStream* pS = (CXloader::SUploadStream*)stream;
+	return pS->mpThis->ReadFunction_ForUpload(pS->mpfile, ptr, size, nmemb);
 } // Static_ReadFunction_ForUpload
 
 
-size_t CXloader::ReadFunction_ForUpload(void *ptr, size_t size, size_t nmemb)
+size_t CXloader::ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, size_t nmemb)
 {
 	if (mbIsFailed) {
 		// We can't continue
@@ -758,12 +811,12 @@ size_t CXloader::ReadFunction_ForUpload(void *ptr, size_t size, size_t nmemb)
 
 	tuint64 uiMaxNumberOfBytes = (tuint64)size * (tuint64)nmemb;
 
-	tuint64 uiFileIx = mpfileToUpload->GetCurrentFilePosition();
-	tuint64 uiFileSize = mpfileToUpload->GetSizeWhenOpened();
+	tuint64 uiFileIx = pfile->GetCurrentFilePosition();
+	tuint64 uiFileSize = pfile->GetSizeWhenOpened();
 	tuint64 uiBytesAvailable = uiFileSize - uiFileIx;
 
 	tuint64 uiBytesWanted = (uiBytesAvailable < uiMaxNumberOfBytes) ? uiBytesAvailable : uiMaxNumberOfBytes;
-	tuint64 uiActuallyRead = mpfileToUpload->Read((tchar*)ptr, uiBytesWanted);
+	tuint64 uiActuallyRead = pfile->Read((tchar*)ptr, uiBytesWanted);
 	if (uiActuallyRead != uiBytesWanted) {
 		SetError("Unable to read file for upload");
 		return CURL_READFUNC_ABORT;
@@ -773,30 +826,30 @@ size_t CXloader::ReadFunction_ForUpload(void *ptr, size_t size, size_t nmemb)
 } // ReadFunction_ForUpload
 
 
-int Static_SeekFunction_ForUpload(void *instream, curl_off_t offset, int origin)
-{
-	CXloader* pUploader = (CXloader*)instream;
-	return pUploader->SeekFunction_ForUpload(offset, origin);
-} // Static_SeekFunction_ForUpload
+//int Static_SeekFunction_ForUpload(void *instream, curl_off_t offset, int origin)
+//{
+//	CXloader::SUploadStream* pS = (CXloader::SUploadStream*)instream;
+//	return pS->mpThis->SeekFunction_ForUpload(pS->mpfile, offset, origin);
+//} // Static_SeekFunction_ForUpload
 
 
-int CXloader::SeekFunction_ForUpload(curl_off_t offset, int origin)
-{
-	if (mbIsFailed) {
-		// We can't continue
-		return CURL_READFUNC_ABORT;
-	}
-	tuint64 uiWantedPos = origin;
-	uiWantedPos += offset;
-	tuint64 uiActualPos = mpfileToUpload->Seek(uiWantedPos);
-	if (uiActualPos != uiWantedPos) {
-		SetError("SeekFunction_ForUpload failed");
-		// We can't continue
-		return CURL_READFUNC_ABORT;
-	}
-	// Success
-	return 0;
-} // SeekFunction_ForUpload
+//int CXloader::SeekFunction_ForUpload(IFile* pfile, curl_off_t offset, int origin)
+//{
+//	if (mbIsFailed) {
+//		// We can't continue
+//		return CURL_READFUNC_ABORT;
+//	}
+//	tuint64 uiWantedPos = origin;
+//	uiWantedPos += offset;
+//	tuint64 uiActualPos = pfile->Seek(uiWantedPos);
+//	if (uiActualPos != uiWantedPos) {
+//		SetError("SeekFunction_ForUpload failed");
+//		// We can't continue
+//		return CURL_READFUNC_ABORT;
+//	}
+//	// Success
+//	return 0;
+//} // SeekFunction_ForUpload
 
 
 size_t Static_WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb, void *stream)
@@ -959,12 +1012,14 @@ tbool CXloader::OpenConnection()
 			if (!SetOpt(CURLOPT_READDATA, "CURLOPT_READDATA", this))
 				return false;
 
+			/*
 			// Set callback function for seeking upload file
 			if (!SetOpt(CURLOPT_SEEKFUNCTION, "CURLOPT_SEEKFUNCTION", (void*)(&Static_SeekFunction_ForUpload)))
 				return false;
 			// Set pointer so callback function for seeking upload file can find correct contents
 			if (!SetOpt(CURLOPT_SEEKDATA, "CURLOPT_SEEKDATA", this))
 				return false;
+			*/
 		}
 
 		// Signal to use a POST verb + use multi-part form message body + append message body
@@ -1058,7 +1113,7 @@ tbool CXloader::OpenConnection()
 	// Set MIME for reply (additional header)
 	{
 		std::string sAccept = "Accept: ";
-		sAccept += GetMIMEString();
+		sAccept += GetReplyMIMEString();
 		mpSList_ExtraHeaders = curl_slist_append(mpSList_ExtraHeaders, sAccept.c_str());
 		if (!SetOpt(CURLOPT_HTTPHEADER, "CURLOPT_HTTPHEADER", mpSList_ExtraHeaders))
 			return false;
@@ -1234,7 +1289,7 @@ tbool CXloader::GetProgress(tint64* piUploadProgress, tint64* piUploadSize, tint
 	}
 	
 	if (piUploadProgress) *piUploadProgress = muiUploadProgress;
-	if (piUploadSize) *piUploadSize = (mpfileToUpload) ? mpfileToUpload->GetSizeWhenOpened() : 0;
+	if (piUploadSize) *piUploadSize = max(muiUploadSize, 1);
 	if (piDownloadProgress) *piDownloadProgress = muiReplyProgress;
 	if (piDownloadSize) *piDownloadSize = max(muiReplySize, 1);
 
