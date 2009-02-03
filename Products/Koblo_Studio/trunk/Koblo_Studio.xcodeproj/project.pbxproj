@@ -251,42 +251,42 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = FCD7D1800F384CB6002E6F98 /* jdkmidi.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BFCF4617066341C8004F42F4 /* libjdkmidi.a */;
+			remoteGlobalIDString = BFCF4617066341C8004F42F4;
 			remoteInfo = jdkmidi;
 		};
 		FCD7D18F0F384CB6002E6F98 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FCD7D1800F384CB6002E6F98 /* jdkmidi.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BFCF465B0663423E004F42F4 /* jdkmidi_rewrite_midifile */;
+			remoteGlobalIDString = BFCF465B0663423E004F42F4;
 			remoteInfo = jdkmidi_rewrite_midifile;
 		};
 		FCD7D1910F384CB6002E6F98 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FCD7D1800F384CB6002E6F98 /* jdkmidi.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BF2E0C8A06646D3F0055CCAF /* libjdk_test_show */;
+			remoteGlobalIDString = BF2E0C8A06646D3F0055CCAF;
 			remoteInfo = libjdk_test_show;
 		};
 		FCD7D1930F384CB6002E6F98 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FCD7D1800F384CB6002E6F98 /* jdkmidi.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BFAD140A0AB5ED7600CD5BE0 /* libjdkmidi_test_parse */;
+			remoteGlobalIDString = BFAD140A0AB5ED7600CD5BE0;
 			remoteInfo = libjdkmidi_test_parse;
 		};
 		FCD7D1950F384CB6002E6F98 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FCD7D1800F384CB6002E6F98 /* jdkmidi.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BFAD140C0AB5ED7600CD5BE0 /* libjdkmidi_test_parse */;
+			remoteGlobalIDString = BFAD140C0AB5ED7600CD5BE0;
 			remoteInfo = libjdkmidi_test_sequencer;
 		};
 		FCD7D1970F384CB6002E6F98 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FCD7D1800F384CB6002E6F98 /* jdkmidi.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BFAD14080AB5ED7600CD5BE0 /* libjdkmidi_test_parse */;
+			remoteGlobalIDString = BFAD14080AB5ED7600CD5BE0;
 			remoteInfo = libjdkmidi_test_multitrack1;
 		};
 /* End PBXContainerItemProxy section */
