@@ -36,16 +36,17 @@ public:
 	std::string sName;
 	
 	//! Set sample name
-	void Set_Name( std::string Name){ sName = Name;};
+	void Name( std::string Name){ sName = Name;};
 	//! get sample name
-	std::string Get_Name(){ return sName;};
+	std::string Name(){ return sName;};
 	//! get a pointer to the takes
-	CTake_Data* Get_Take_Data(){ return mpTake_Data;};
+	CTake_Data* Get_Take_Data(){ return &mTake_Data;};
 	
 protected:
 	
 
 	//!!! TO DO turn this in to a stdlist of takes later
-	CTake_Data* mpTake_Data;
+	CTake_Data mTake_Data;
+	
 	
 };

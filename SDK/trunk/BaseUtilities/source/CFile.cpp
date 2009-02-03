@@ -650,42 +650,13 @@ tbool CFile::Open(const tchar* pszPathName, EOpenFile OpenFile)
 	Close();
 
 	tchar pszPathName2[2048];
-/*
-	strcpy(pszPathName2, pszPathName);
-	if (pszPathName2[0] == ':') {
-		// Convert from internal to unix
-		ToUnix(pszPathName2);
-	}
-*/
+
 	PathToOS2(pszPathName, pszPathName2);
 
-/*	FSSpec spec;
-	FileNameToFSSpec((char*)pszPathName, &spec);
-	OSErr err;
-	
-	switch(OpenFile) {
-		case FileRead:
-			err = FSpOpenDF(&spec, SignedByte(fsRdPerm), &miRefNum);
-			break;
-		case FileWrite:
-			err = FSpOpenDF(&spec, SignedByte(fsWrPerm), &miRefNum);
-			break;
-		case FileCreate:
-			err = FSpCreate(&spec, 'KTOS', 'KTOS', 0);
-			err = FSpOpenDF(&spec, SignedByte(fsWrPerm), &miRefNum);
-			break;
-	}
 
-	if (err!=noErr) {
-		miRefNum = -1;
-		return false;
-	}
-
-	int i;
-	GetEOF(miRefNum, (long*)&i);
-	miSizeWhenOpened = i;*/
 	
 	std::string sDebug = pszPathName2;
+	printf(sDebug.c_str());
 
 	switch(OpenFile) {
 		case FileRead:

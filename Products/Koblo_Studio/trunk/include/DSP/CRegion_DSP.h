@@ -101,24 +101,10 @@ public:
 	std::string Get_Region_Take_UUID(){ return mpTake_Data->Get_UUID();};
 	
 	
-	/*
-	
-	// get region uuid
-	std::string Get_Region_UUID(){ return mpUUID->Get_UUID();};
-	// set a new uuid
-	void Set_Region_UUID(){ mpUUID->Set_UUID();};
-	// set a uuid from a string
-	void Set_Region_UUID(std::string  sUUID ){ mpUUID->Set_UUID(sUUID);};
-	// check if the region ID is alreaddy set
-	void Check_Region_UUID(){mpUUID->Check_UUID();};
-	
-*/
+
 	
 		
 protected:
-	
-	//! region uuid
-//	CKSUUID* mpUUID;
 	
 	//! pointer to CSample_Data data object
 	CSample_Data* mpSample_Data;

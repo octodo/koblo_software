@@ -179,12 +179,6 @@ public:
 	virtual tbool MenuFileLoadProject();
 	
 	
-	
-	virtual tbool Open_Project();
-	
-	
-	
-	
 	virtual tbool MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::list<CImportAudioTask*>* plistpImportTasks);
 	virtual tbool MenuFileSaveProject(tbool bOverwriteIcons = false);
 	virtual void MenuFileDistributeMix(ac::EAudioCodec eCodec, tint32 iQuality, tint32 iChannels, tint32 iTailMS, tbool bNormalize);

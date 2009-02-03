@@ -22,19 +22,19 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID,
 //	mpUUID				= new(CKSUUID);
 	
 	
-	if (pTake_Data->sWavePathNameR.size() == 0) {
+	if (pTake_Data->Right_Wave_File_Path().size() == 0) {
 		miChannels = 1;
 		mppSample	= new CSample_DSP*[1];
-		mppSample[0] = new CSample_DSP(mpTake_Data->sWavePathNameL);
+		mppSample[0] = new CSample_DSP(mpTake_Data->Left_Wave_File_Path() );
 	}
 	else {
 		miChannels = 2;
 		mppSample = new CSample_DSP*[2];
-		mppSample[0] = new CSample_DSP(mpTake_Data->sWavePathNameL);
-		mppSample[1] = new CSample_DSP(mpTake_Data->sWavePathNameR);
+		mppSample[0] = new CSample_DSP(mpTake_Data->Left_Wave_File_Path() );
+		mppSample[1] = new CSample_DSP(mpTake_Data->Right_Wave_File_Path() );
 	}
 	
-	msSample_Name = mpSample_Data->Get_Name();
+	msSample_Name = mpSample_Data->Name();
 	
 	if (uiSample_Duration == (tuint64)-1) {
 		muiEndPos = (mppSample[0]->GetLength() - uiSample_Offset) -1;
@@ -50,7 +50,7 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID,
 	
 	
 	
-	std::string sPeak_File	= mpTake_Data->sLeft_Peak_File_Path + kpsk1024;
+	std::string sPeak_File	= mpTake_Data->Left_Peak_File_Path() + kpsk1024;
 	mppPeakFile[0]			= IFile::Create();
 	
 	if (!mppPeakFile[0]->Open(sPeak_File.c_str(), IFile::FileRead)) {
@@ -58,16 +58,16 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID,
 		mppPeakFile[0] = NULL;
 	}
 	
-	sPeak_File				= mpTake_Data->sLeft_Peak_File_Path + kpsk64;
+	sPeak_File				= mpTake_Data->Left_Peak_File_Path() + kpsk64;
 	mppPeakFile[1]			= IFile::Create();
 	mppPeakFile[1]->Open(sPeak_File.c_str(), IFile::FileRead);
 	
 	if (miChannels > 1) {
-		sPeak_File			= mpTake_Data->sRight_Peak_File_Path + kpsk1024;
+		sPeak_File			= mpTake_Data->Right_Peak_File_Path() + kpsk1024;
 		mppPeakFile[2]		= IFile::Create();
 		mppPeakFile[2]->Open(sPeak_File.c_str(), IFile::FileRead);
 		
-		sPeak_File = mpTake_Data->sRight_Peak_File_Path + kpsk64;
+		sPeak_File = mpTake_Data->Right_Peak_File_Path() + kpsk64;
 		mppPeakFile[3]		= IFile::Create();
 		mppPeakFile[3]->Open(sPeak_File.c_str(), IFile::FileRead);
 	}

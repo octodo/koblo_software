@@ -75,9 +75,7 @@ private:
 	void Write_Snap(TiXmlElement* pParent);
 	void Write_Loop(TiXmlElement* pParent);
 	void Write_Windows(TiXmlElement* pParent);
-	void Write_Window_Edit(TiXmlElement* pParent);
-	void Write_Window_Mix(TiXmlElement* pParent);
-	void Write_Window_Rack(TiXmlElement* pParent);
+	void Write_Window(TiXmlElement* pParent, tint32 iWindow, tbool bShow = true);
 	void Write_Window_Position(TiXmlElement* pParent, tuint uiPosX, tuint uiPosY);
 	void Write_Window_Size(TiXmlElement* pParent, tuint uiSizeX, tuint uiSizeY);
 	//! write samples

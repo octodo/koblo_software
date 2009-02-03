@@ -50,12 +50,12 @@ tbool CProgressTaskList::DoWork()
 	tbool bSuccess = false;
 
 	std::list<CProgressTask*>::iterator it = listCProgressTask.begin();
-	CProgressTask* pInfo = *it;
-	bSuccess = pInfo->DoWork();
+	CProgressTask* pProgressTask = *it;
+	bSuccess = pProgressTask->DoWork();
 	if (bSuccess) {
-		if (pInfo->IsDone()) {
+		if (pProgressTask->IsDone()) {
 			// Advance to next task - if any
-			pInfo->Destroy();
+			pProgressTask->Destroy();
 			it++;
 			listCProgressTask.erase(listCProgressTask.begin(), it);
 		}
