@@ -528,13 +528,13 @@ void CTrack_DSP::Start()
 		tint32 iIndex = 0;
 		tbool bFoundIt = false;
 		while (bFoundIt == false) {
-			std::string s = sPathName;
-			std::string sDest = sPathNameDest;
-			std::string sLeft = sPathNameDest;
+			std::string s		= sPathName;
+			std::string sDest	= sPathNameDest;
+			std::string sLeft	= sPathNameDest;
 			tchar psz[32];
 			sprintf(psz, "%d.wav", iIndex);
 			tchar pszLeft[32];
-			sprintf(pszLeft, "%d-1.wav", iIndex);
+			sprintf(pszLeft, "%d_0000-1.wav", iIndex);
 			s += std::string(psz);
 			sDest += std::string(psz);
 			sLeft += std::string(pszLeft);
