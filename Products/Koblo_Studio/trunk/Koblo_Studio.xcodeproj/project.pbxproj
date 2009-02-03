@@ -208,42 +208,42 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BFCF4617066341C8004F42F4 /* libjdkmidi.a */;
+			remoteGlobalIDString = BFCF4617066341C8004F42F4;
 			remoteInfo = jdkmidi;
 		};
 		FC8D7E830F3841AA001AAE88 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BFCF465B0663423E004F42F4 /* jdkmidi_rewrite_midifile */;
+			remoteGlobalIDString = BFCF465B0663423E004F42F4;
 			remoteInfo = jdkmidi_rewrite_midifile;
 		};
 		FC8D7E850F3841AA001AAE88 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BF2E0C8A06646D3F0055CCAF /* libjdk_test_show */;
+			remoteGlobalIDString = BF2E0C8A06646D3F0055CCAF;
 			remoteInfo = libjdk_test_show;
 		};
 		FC8D7E870F3841AA001AAE88 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BFAD140A0AB5ED7600CD5BE0 /* libjdkmidi_test_parse */;
+			remoteGlobalIDString = BFAD140A0AB5ED7600CD5BE0;
 			remoteInfo = libjdkmidi_test_parse;
 		};
 		FC8D7E890F3841AA001AAE88 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BFAD140C0AB5ED7600CD5BE0 /* libjdkmidi_test_parse */;
+			remoteGlobalIDString = BFAD140C0AB5ED7600CD5BE0;
 			remoteInfo = libjdkmidi_test_sequencer;
 		};
 		FC8D7E8B0F3841AA001AAE88 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = BFAD14080AB5ED7600CD5BE0 /* libjdkmidi_test_parse */;
+			remoteGlobalIDString = BFAD14080AB5ED7600CD5BE0;
 			remoteInfo = libjdkmidi_test_multitrack1;
 		};
 		FC9D46870CB13CF4006CEDB6 /* PBXContainerItemProxy */ = {
@@ -365,6 +365,7 @@
 		FC17A2B40F0E1A040083A614 /* CKSUsername_And_Password_Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSUsername_And_Password_Model.h; sourceTree = "<group>"; };
 		FC21D5130F287A31002274A7 /* CMIDI_Sequencer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIDI_Sequencer.h; sourceTree = "<group>"; };
 		FC21D5150F287A67002274A7 /* CMIDI_Sequencer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CMIDI_Sequencer.cpp; sourceTree = "<group>"; };
+		FC22E73C0F384610007ABEF0 /* CImport_TinyXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CImport_TinyXML.h; sourceTree = "<group>"; };
 		FC2D34710EEE868D004DFC3D /* INetEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = INetEngine.xcodeproj; path = ../../../SDK/trunk/INetEngine/projects/osxxcode/INetEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
 		FC31AC930EEFE9D400B3D3B7 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinystr.h; path = ../../../SDK/tinyxml/tinystr.h; sourceTree = SOURCE_ROOT; };
 		FC31AC940EEFE9D400B3D3B7 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinystr.cpp; path = ../../../SDK/tinyxml/tinystr.cpp; sourceTree = SOURCE_ROOT; };
@@ -1053,6 +1054,7 @@
 			isa = PBXGroup;
 			children = (
 				FCA7AA820F2B0E7300359CD5 /* CImport_Auido_Controller.h */,
+				FC22E73C0F384610007ABEF0 /* CImport_TinyXML.h */,
 				FCA8CB400F08F3F60007514D /* CKSExportForWebGUIPane.h */,
 				FCA8CB410F08F3F60007514D /* CKSExportForWebGUI.h */,
 				FCB0EE650F27265000D1C09D /* CKSFile_Controller.h */,
