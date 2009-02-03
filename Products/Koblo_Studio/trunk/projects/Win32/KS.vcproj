@@ -188,11 +188,31 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\..\source\CGUI_Controller.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\Internet_Features\CImport_Auido_Controller.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\Internet_Features\CImport_TinyXML.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\source\CKSApplication.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\source\CKSBaseGUI.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\Internet_Features\CKSFile_Controller.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\Internet_Features\CKSFile_Item.cpp"
 				>
 			</File>
 			<File
@@ -208,11 +228,31 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\source\Internet_Features\CKSUUID.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\MIDI Sequencer\CMIDI_Sequencer.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\source\CParmGlobal.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\source\DSP\CRegion_Controller.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\DSP\CSample_Controller.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\DSP\CSample_Data.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\DSP\CTake_Data.cpp"
 				>
 			</File>
 			<File
@@ -627,6 +667,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\CKSBaseGUI.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\Internet_Features\CKSFile_Controller.h"
 				>
 			</File>
 			<File

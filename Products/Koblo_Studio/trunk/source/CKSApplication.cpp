@@ -1111,7 +1111,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			
 		case ID_FILE_SAVE:
 			try {
-				if (gpApplication->GetProjectFolder().length() == 0) 
+				if (gpApplication->Project_Folder().length() == 0) 
 					gpApplication->ShowMessageBox("No Project to Save", "Sorry");
 				else
 					Save_Project_As_XML_File_To_Disk();
@@ -1210,7 +1210,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			break;
 
 		case ID_EDIT_ADDTRACK:
-			if(Get_Project_Folder().size() == 0)
+			if(Project_Folder().size() == 0)
 			
 			if (GetProjDir().length() == 0) {
 				ShowMessageBox("You must create or load a project before adding tracks", "Sorry");

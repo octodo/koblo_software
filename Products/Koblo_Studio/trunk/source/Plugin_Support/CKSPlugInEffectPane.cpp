@@ -51,6 +51,7 @@ BOOL CALLBACK EnumChild(HWND hwnd, LPARAM lParam)
 }
 #endif	// WIN32
 
+#ifdef _Mac
 static HIObjectClassRef gClass = NULL;
 static EventTypeSpec gClassEvents[] =
 {
@@ -168,7 +169,9 @@ static pascal OSStatus TransparentWindowHandler(EventHandlerCallRef inHandlerCal
 	
 	return status;
 }
+#endif
 
+#ifdef _Mac
 OSStatus MakeWindowTransparent(WindowRef aWindowRef)
 {
 	OSStatus status = paramErr;
@@ -238,6 +241,7 @@ paramErr:
 	
 	return status;
 }
+#endif
 
 void CKSPlugInEffectPane::SetGUI(kspi::IGUI* pGUI)
 {
