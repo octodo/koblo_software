@@ -1111,7 +1111,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			
 		case ID_FILE_SAVE:
 			try {
-				if (gpApplication->Get_Project_Folder().length() == 0) 
+				if (gpApplication->GetProjectFolder().length() == 0) 
 					gpApplication->ShowMessageBox("No Project to Save", "Sorry");
 				else
 					Save_Project_As_XML_File_To_Disk();
