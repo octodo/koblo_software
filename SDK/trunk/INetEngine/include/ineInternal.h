@@ -27,7 +27,8 @@ namespace ine {
 #endif	// _Mac
 
 #include "CINetUtil.h"
-#include "CDownloader.h"
+
+#include "CXloader.h"
 
 
 

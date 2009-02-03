@@ -57,17 +57,22 @@ void CKS_Import_Files::HandleMsg(SMsg* pMsg)
 
 }
 
-tbool CKS_Import_Files::AddFile(const std::string& sPathName)
+tbool CKS_Import_Files::Add_File( std::string sPathName)
 {
-	tint32 iPos = sPathName.rfind(':');
-	std::string sName = sPathName.substr(iPos + 1);
+//	tint32 iPos = sPathName.rfind(':');
+//	std::string sName = sPathName.substr(iPos + 1);
 
-	SItemInfo Info;
-	Info.sPathName = sPathName;
-	Info.sName = sName;
-
+	CKSFile_Item File_Item;
+	
+	if(!File_Item.Import(sPathName) ){
+		// wrong name or type
+		return false;
+	}
+//	Info.Path(sPathName);
+//	Info.Name(sName);
+/*
 	// Find name only of file
-	std::list<SItemInfo>::iterator it = mItems.begin();
+	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
 	std::string sNameNoExt = sName;
 	tint32 iDotIx = sNameNoExt.find_last_of('.');
 	if (iDotIx >= 0) {
@@ -77,23 +82,36 @@ tbool CKS_Import_Files::AddFile(const std::string& sPathName)
 			return false;
 		}
 	}
-
+*/
+	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
 	// We can't have several files with the same name - so run thru list first
-	for ( ;it != mItems.end(); it++) {
-		SItemInfo& rInfo = *it;
-		std::string sNameNoExt_AlreadyAdded = rInfo.sName;
+	for ( ;it != mFile_Items.end(); it++) {
+		
+		CKSFile_Item& rInfo = *it;
+		
+		if (stricmp(File_Item.Name().c_str(), rInfo.Name().c_str()) == 0)
+			// Same name - that won't do
+			return false;
+		
+		/*
+		CKSFile_Item& rInfo = *it;
+		
+		std::string sNameNoExt_AlreadyAdded = rInfo.Name();
+		
 		tint32 iDotIx = sNameNoExt_AlreadyAdded.find_last_of('.');
+		
 		if (iDotIx >= 0) {
 			sNameNoExt_AlreadyAdded.erase(iDotIx);
 		}
+		
 
 		if (stricmp(sNameNoExt.c_str(), sNameNoExt_AlreadyAdded.c_str()) == 0) {
 			// Same name - that won't do
 			return false;
-		}
+		}*/
 	}
 
-	mItems.push_back(Info);
+	mFile_Items.push_back(File_Item);
 
 	UpdateListBox();
 	return true;
@@ -106,35 +124,83 @@ void CKS_Import_Files::RemoveFile()
 		return;
 	}
 
-	std::list<SItemInfo>::iterator it = mItems.begin();
+	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
 	while (iIndex) {
 		iIndex--;
 		it++;
 	}
-	mItems.erase(it);
+	mFile_Items.erase(it);
 
 	UpdateListBox();
 }
 
+// old version
 void CKS_Import_Files::ImportFiles()
 {
-	if (gpApplication->GetProjDir().length() == 0) {
-		gpApplication->ShowMessageBox("You must create or load a project before importing audio", "Sorry");
-		return;
+	/*
+	 if (gpApplication->GetProjDir().length() == 0) {
+	 gpApplication->ShowMessageBox("You must create or load a project before importing audio", "Sorry");
+	 return;
+	 }
+	 */
+	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
+	for (; it != mFile_Items.end(); it++) {
+		CKSFile_Item Info = *it;
+		gpApplication->QueueAudioFileImport(Info.Path().c_str(), false);
 	}
-
-	std::list<SItemInfo>::iterator it = mItems.begin();
-	for (; it != mItems.end(); it++) {
-		SItemInfo Info = *it;
-		gpApplication->QueueAudioFileImport(Info.sPathName.c_str(), false);
-	}
-
 	ClearFiles();
 }
 
+
+// new version
+void CKS_Import_Files::Import_Audio_Files()
+{
+	
+	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
+	for (; it != mFile_Items.end(); it++) {
+		
+	//	std::string s = "";
+	//	s += (*it).Source_Path();
+		
+		//sprintf("file to import: %s \n", (*it).Source_Path().c_str());
+		
+		Import_Audio_File((*it), false);
+	}
+	ClearFiles();
+}
+
+tbool CKS_Import_Files::Import_Audio_File(CKSFile_Item File_Item, tbool bAlwaysKeepStereo)
+{
+	if (gpApplication->IsPlayingOrRecording())  gpApplication->PlaybackStop();
+	
+	
+	CImportAudioTask* pImportAudioTask = new CImportAudioTask();
+	
+	CImportAudioTask::EStereoBehavior eBehave = (bAlwaysKeepStereo) ? CImportAudioTask::geStereoDoKeep : CImportAudioTask::geStereoDoAsk;
+	
+	tbool bSuccess = pImportAudioTask->Init( File_Item.Source_Path(), false, eBehave, false);
+	
+/* //!!! not supported
+	if (iTrackID >= 0) {
+		pImportAudioTask->Init_InsertAsRegionAfterImport(iTrackID, iTrackPos);
+	}
+*/	
+	if (bSuccess) {
+		gpApplication->mpProgressTasks->Add(pImportAudioTask);
+		gpApplication->Playback_InProgressTask();
+	}
+	else {
+		gpApplication->Extended_Error(pImportAudioTask->GetError());
+		pImportAudioTask->Destroy();
+	}
+
+	return bSuccess;
+} 
+
+
 void CKS_Import_Files::ClearFiles()
 {
-	mItems.clear();
+	mFile_Items.clear();
 
 	UpdateListBox();
 }
@@ -143,28 +209,31 @@ void CKS_Import_Files::UpdateListBox()
 {
 	std::string sEnum;
 
-	std::list<SItemInfo>::const_iterator it = mItems.begin();
+	std::list<CKSFile_Item>::const_iterator it = mFile_Items.begin();
 	tbool bFirst = true;
-	for (; it != mItems.end(); it++) {
+	for (; it != mFile_Items.end(); it++) {
 		std::string sName;
-		tbool bFirstOld = bFirst;
-		
-		//!!! Lasse is this a bug ?
+
+		if(bFirst) 
+			bFirst = false;
+		else 
+			sName = "@";
+/*
 		if (bFirst == false) {
 			sName = "@";
 		}
 		bFirst = false;
+*/
+		CKSFile_Item Info = *it;
 
-		SItemInfo Info = *it;
-
-		sName += std::string(Info.sName);
+		sName += std::string(Info.Name());
 
 		sEnum += sName;
 	}
 
 	mpListBox->SetText(sEnum.c_str(), '@');
 
-	tint32 iTextHeight = mItems.size() * 14;
+	tint32 iTextHeight = mFile_Items.size() * 14;
 
 	ge::SSize SizeScroll(200 - giScrollBarSize, iTextHeight);
 	ge::SScrollPos ScrollPos;

@@ -17,7 +17,6 @@ CKSXML_Create_Project::~CKSXML_Create_Project()
 tbool CKSXML_Create_Project::Create_Project_Handshake()
 {
 	
-	
 //-------------- DUMMY CODE HERE --------------------
 	// Read dummy XML file from HD here
 	TiXmlDocument *pDoc		=	new TiXmlDocument();
@@ -34,10 +33,9 @@ tbool CKSXML_Create_Project::Create_Project_Handshake()
 		// print to console
 		printf(xml_str.c_str());
 		
-		
 		Parse_XML(pDoc);
 		return true;
-		
+	
 	}
 	else
 	{
@@ -133,46 +131,46 @@ void CKSXML_Create_Project::Parse_Project_Info(TiXmlNode* pParent)
 	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
 	{
 		if(pChild->Type() == TiXmlNode::ELEMENT)
-			Set_Project_Info(pChild);
+			Write_Project_Info(pChild);
 	}
 }
 
 
-void CKSXML_Create_Project::Set_Project_Info(TiXmlNode* pParent)
+void CKSXML_Create_Project::Write_Project_Info(TiXmlNode* pParent)
 {
 	if (stricmp("name", pParent->Value()) == 0) {
-		Set_Project_Name( pParent->ToElement());
+		Write_Project_Name( pParent->ToElement());
 		
 	}
 	else if (stricmp("description", pParent->Value()) == 0) {
 		//-------------------------  DESCRIPTION -----------------------------
-		Set_Project_Description(pParent->ToElement());
+		Write_Project_Description(pParent->ToElement());
 	}
 	else if (stricmp("license", pParent->Value()) == 0) {
-		//--------------------------  LICESE ---------------------------
-		Set_Project_License(pParent->ToElement());
+		//--------------------------  LICENSE ---------------------------
+		Write_Project_License(pParent->ToElement());
 	}
 	
 }
 
-void CKSXML_Create_Project::Set_Project_Name(TiXmlElement* pElement)
+void CKSXML_Create_Project::Write_Project_Name(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
 	TiXmlNode* pChild = pElement->FirstChild();
-	gpApplication->SetProjectName( pChild->Value());
+	gpApplication->Project_Name( pChild->Value());
 }
 
-void CKSXML_Create_Project::Set_Project_Description(TiXmlElement* pElement)
+void CKSXML_Create_Project::Write_Project_Description(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
 	TiXmlNode* pChild = pElement->FirstChild();
-	gpApplication->SetProjectDescription( pChild->Value());
+	gpApplication->Set_Project_Description( pChild->Value());
 }
 
 
-void CKSXML_Create_Project::Set_Project_License(TiXmlElement* pElement)
+void CKSXML_Create_Project::Write_Project_License(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	

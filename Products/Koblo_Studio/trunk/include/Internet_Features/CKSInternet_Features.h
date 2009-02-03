@@ -27,10 +27,10 @@
 */
 
 class CKSApplication;
+class CKSUUID;
 
 
-
-class CKSInternet_Features 
+class CKSInternet_Features
 : 
 public virtual CKSXML_Create_Project,
 public virtual CKSXML_Write_Project,
@@ -78,34 +78,47 @@ public:
 	//! upload compressed audio file and mp3 preview.
 	void Upload_OGG_And_MP3_File();
 	
+	//***********************************************
+	/*! Obsolete
+	 \ keep for campability with old files
+	*/
 	//!!! To Do call this
-	void SetProjectName( const std::string& sName){ msProject_Name = sName;}
+	void SetProjectName( const std::string& sName);
+	/*{ 
+		msProjectName = sName;
+		gpApplication->Set_Project_Name(sName);
+	};
+	*/
+	//! get the project name
+	std::string GetProjectName(){ return msProjectName;}
 	
-	std::string GetProjectName(){ return msProject_Name;}
+	//! set project path
+	void SetProjectPath( const std::string& sName){ msProjectPath = sName;}
+	
+	std::string GetProjectPath(){ return msProjectPath;}
+	
+	//! project name
+	std::string msProjectName;
+	std::string msProjectPathName;
+	std::string msProjectFolder;
+	std::string msLastWaveImport;
+	std::string msProjectPath;
+
+	
+	//***********************************************
 	
 	
+	void Set_Project_Description( const std::string& sDescription){ msProject_Description = sDescription;}
 	
-	
-	//!!! To Do call this
-	void SetProjectPath( const std::string& sName){ msProject_Path = sName;}
-	
-	std::string GetProjectPath(){ return msProject_Path;}
-	
-	
-	
-	
-	
-	void SetProjectDescription( const std::string& sDescription){ msProjectDescription = sDescription;}
-	
-	std::string Get_Project_Description(){ return msBranchDescription;}
+	std::string Get_Project_Description(){ return msBranch_Description;}
 	
 	void Set_Branch_Name( const std::string& sName){ msBranchName = sName;}
 	
 	std::string Get_Branch_Name(){ return msBranchName;}
 	
-	void Set_Branch_Description( const std::string& sName){ msBranchDescription = sName;}
+	void Set_Branch_Description( const std::string& sName){ msBranch_Description = sName;}
 	
-	std::string Get_Branch_Description(){ return msBranchDescription;}
+	std::string Get_Branch_Description(){ return msBranch_Description;}
 	
 	void Set_User_Name( const std::string& sName){ msUser_Name = sName;}
 	
@@ -124,29 +137,58 @@ public:
 	//! compares the internal data structure to the xml file stroed on disk
 	tbool Project_Has_Changed();
 	
-	//! generates a UUID
-	std::string Get_UUID();
-
+	// set branch revision
+	void Branch_Revision( tuint32 uiBranch_Revision ){ muiBranch_Revision = uiBranch_Revision;};
+	
+	//! get branch revision
+	tuint32 Branch_Revision(  ){ return muiBranch_Revision;};
+	
+	
+		
+	// get uuid from CKSUUID object
+	std::string Get_Project_UUID();
+	// set a new uuid
+	void Set_Project_UUID();
+	// set a uuid from a string
+	void Set_Project_UUID(std::string  sUUID);
+	
+	
+	// get uuid from CKSUUID object
+	std::string Get_Branch_UUID();
+	// set a new uuid
+	void Set_Branch_UUID();
+	// set a uuid from a string
+	void Set_Branch_UUID(std::string sUUID);
+	/*
+	std::string Project_Path(){return msProject_Path;};
+	void Project_Path(std::string sProject_Path){ msProject_Path = sProject_Path;};
+	*/ 
 	
 private:
 
+	// project uuid object
+	CKSUUID* mpProject_UUID;
+	
+	// branch uuid object
+	CKSUUID* mpBranch_UUID;
 	
 	virtual void Open_Project_Edit_Page_On_Koblo();
 	
 	//! project name
-	std::string msProject_Name;
+//	std::string msProject_Name;
 	
-	//! project name
-	std::string msProject_Path;
+	
+	//! project path
+//	std::string msProject_Path;
 	
 	//! project description
-	std::string msProjectDescription;
+	std::string msProject_Description;
 	
 	//! branch name
 	std::string msBranchName;
 	
 	//! branch description
-	std::string msBranchDescription;
+	std::string msBranch_Description;
 	
 	//! if true the users sign in informations is stored in the pref file
 	tbool mbRemember_Me;
@@ -157,11 +199,8 @@ private:
 	//! password description
 	std::string msPassword;
 	
-	
-	
-		
-		
-	
+	tuint32 muiBranch_Revision;
+
 		
 };
 

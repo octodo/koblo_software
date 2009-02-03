@@ -3,24 +3,17 @@
 
 CSample_Data::CSample_Data()
 {
-	mpTake_Data = &msTake_Data;
-	mpTake_Data->Generate_UUID();
+	mpTake_Data = new(CTake_Data);
 	
-	msUUID	=	"";
-	Generate_UUID();
+//	mpUUID	=	new(CKSUUID);
 } 
 
 CSample_Data::~CSample_Data()
 {
+	delete mpTake_Data;
+} 
 
-} // destructor
 
 
 
-void CSample_Data::Generate_UUID()
-{
 
-	if(msUUID.size() == 0)
-		msUUID = gpApplication->Get_UUID();
-
-}

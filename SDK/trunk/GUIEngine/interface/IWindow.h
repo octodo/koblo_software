@@ -281,7 +281,9 @@ public:
 		//! Yes + No + Cancel
 		MsgBoxYesNoCancel,
 		//! Retry + Cancel
-		MsgBoxRetryCancel
+		MsgBoxRetryCancel,
+		//! Split + stereo + cancel
+		MsgBoxSplitStereo
 	};
 
 	//! Enum of return values for message boxes

@@ -71,12 +71,12 @@ void CVST2KSPIGUI::MakeWindow(void* p)
 		GetSize(&iSizeX, &iSizeY);
 		
 		ge::SRect rct(0, 0, iSizeX, iSizeY);
-		mpWindow->MakeWindow(mhWndParent, &rct, false);
+//		mpWindow->MakeWindow(mhWndParent, &rct, false);
 		
 		Initialize();
 		
 		// Make the window visible
-		mpWindow->ShowWindow();
+//		mpWindow->ShowWindow();
 		
 //		mpWindow->InstallKeyboardHook();
 		

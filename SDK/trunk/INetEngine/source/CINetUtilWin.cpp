@@ -158,4 +158,3 @@ void IINetUtil::GetWebFile(const tchar* Parameters, const tchar* pszServer, cons
 	if (Connection != NULL) InternetCloseHandle(Connection);
 	if (Initialize != NULL) InternetCloseHandle(Initialize);
 }
-

@@ -46,6 +46,9 @@ public:
 	//! reset project
 	void Reset_Project();
 	
+	//! read a olde binary KSProject file
+	void Read_Project_From_Disk();
+	
 	//! read a project XML file from Koblo.comin to the tiny xml DOM
 	void Read_Project_XML_To_DOM(tint32 iProjectID);
 	
@@ -56,7 +59,7 @@ public:
 	void Parse_Project( TiXmlNode* pParent );
 	
 	//! handle unknown tags
-	void Ignore_Tag(TiXmlNode* pParent);
+//	void Ignore_Tag(TiXmlNode* pParent);
 	
 	//! set projet parameters from XML tag <project> in to KS
 	/*!
@@ -70,6 +73,12 @@ public:
 	 */
 	void Parse_Project_Childs(TiXmlNode* pParent);
 	
+	//! handle the different ellements at the root level of the xml file sort out comments and the like
+	/*!
+	 \param TiXmlNode [in]: TiXmlNode.
+	 */
+	void Read_Project_Name(TiXmlNode* pParent);
+	
 	//! set branch parameters from XML tag <branch> in to KS
 	/*!
 	 \param TiXmlElement [in]: TiXmlElement.
@@ -77,13 +86,25 @@ public:
 	void Read_Branch(TiXmlElement* pElement);
 	void Read_Settings(TiXmlElement* pElement);
 	void Read_Signature(TiXmlElement* pElement);
-	void Update_Signature(TiXmlElement* pElement);
+	void Update_Signature();
 	void Read_Edditing(TiXmlElement* pElement);
+	void Read_Tool(std::string sTool);
+	
+	void Read_Grid(std::string sGrid);
+	void Read_Snap(std::string sSnap);
+	void Read_View_Waves(std::string sWaves);
+	void Read_View_Fades(std::string sFades);
+	
+	
+	
+	
 	void Read_Sample(TiXmlElement* pElement);
 	void Read_Sample_Take(TiXmlElement* pElement);
 	void Read_Loop(TiXmlElement* pElement);
+	void Loop_Active(std::string sFades);
 	void Read_Windows(TiXmlElement* pElement);
 	void Read_Window(TiXmlNode* pChild, tint32 iId);
+	void Open_Window(std::string sOn_Off, tint32 iWindow);
 	void Read_Window_Pos(TiXmlNode* pChild, tint32 iId);
 	void Read_Window_Size(TiXmlNode* pChild, tint32 iId);
 	void Read_Dialogs(TiXmlElement* pElement);
@@ -129,6 +150,7 @@ public:
 	void Check_Branch(TiXmlNode* pParent);
 	
 	void Check_Revision(TiXmlElement* pElement);
+	
 
 private:
 	
@@ -139,6 +161,9 @@ private:
 	TiXmlDocument* mpDoc;
 	
 	tbool mbNew_Revision;
+	
+	tuint32 muiNummerator;
+	tuint32 muiDominator;
 	
 };
 

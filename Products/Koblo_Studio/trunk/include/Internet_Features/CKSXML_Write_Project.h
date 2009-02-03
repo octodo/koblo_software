@@ -45,7 +45,7 @@ public:
 	
 	std::string Create_License_String();
 	
-	void Save_Project_As_XML_File_To_Disk();
+	tbool Save_Project_As_XML_File_To_Disk();
 	
 	
 	
@@ -72,6 +72,7 @@ private:
 	//! editing settings. these are things that would typically not be moved/merged between branches
 	void Write_Editing(TiXmlElement* pParent);
 	void Write_Tool(TiXmlElement* pParent);
+	void Write_Snap(TiXmlElement* pParent);
 	void Write_Loop(TiXmlElement* pParent);
 	void Write_Windows(TiXmlElement* pParent);
 	void Write_Window_Edit(TiXmlElement* pParent);

@@ -116,6 +116,8 @@ public:
 	void Start();
 
 	void Stop();
+	
+	CKSUUID mUUID;
 
 protected:
 	tbool mbArmed;
@@ -197,6 +199,8 @@ protected:
 	std::string msRecordingName;
 
 	std::string msRecordingNameDest;
+	
+	
 	
 };
 

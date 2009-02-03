@@ -39,6 +39,8 @@ void CInvalidater::Reset()
 {
 	CAutoLock Lock(mMutex);
 
+//	printf("Invalidater Reset\n");
+
 	if (mRectList.size() == miListLen_AtLastGet) {
 		// No extra invalidates have happened since last get
 		// Old behavior
@@ -92,11 +94,15 @@ void CInvalidater::GetInvalidatedRect(SRect& rRect) //const
 
 	miListLen_AtLastGet = mRectList.size();
 	rRect = mRectInvalidated;
+
+//	printf("Invalidater GetRect: %d, %d, %d, %d\n", rRect.iY, rRect.iY, rRect.iCX, rRect.iCY);
 } // GetInvalidatedRect
 
 
 void CInvalidater::InvalidateRect(const SRect &Rect)
 {
+//	printf("Invalidater InvalidateRect: %d, %d, %d, %d\n", Rect.iY, Rect.iY, Rect.iCX, Rect.iCY);
+
 	mbIsAdding = true;
 
 	CAutoLock Lock(mMutex);
@@ -135,7 +141,9 @@ void CInvalidater::_IncludeRect(const SRect& Rect)
 		RectNew.iCY = max(Rect.iCY, mRectInvalidated.iY + mRectInvalidated.iCY - Rect.iY);
 	}
 	mRectInvalidated = RectNew;
-	
+
+//	printf("Invalidater new rect: %d, %d, %d, %d\n", RectNew.iY, RectNew.iY, RectNew.iCX, RectNew.iCY);
+
 	/*
 	if(-147482919 > mRectInvalidated.iX){
 		tuint bob = 5; //!!! TO DO

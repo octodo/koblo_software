@@ -27,6 +27,7 @@ CWindow::~CWindow()
 
 void CWindow::SetPane(IPane* pPane, tbool bResizeToFit)
 {
+	printf("pPane: %d",pPane);
 	mpPane = pPane;
 
 	if (GetPane()) {
@@ -36,10 +37,12 @@ void CWindow::SetPane(IPane* pPane, tbool bResizeToFit)
 #ifdef _Mac
 	// (mo) There's a weird bug in XCode, which stops us from dynamic casting it, even though it should work. Luckily a C-style cast seems to work.
 	CPane* pCPane = (CPane*)(void*)mpPane;
+	CWindow* pWindow = (CWindow*)(void*)this;
 #else	// _Mac
 	CPane* pCPane = dynamic_cast<CPane*>(mpPane);
+	CWindow* pWindow = dynamic_cast<CWindow*>(this);
 #endif	// _Mac
-	pCPane->AddControlsToWindow(dynamic_cast<CWindow*>(this));
+	pCPane->AddControlsToWindow(pWindow);
 
 	mbResizePaneToFit = bResizeToFit;
 

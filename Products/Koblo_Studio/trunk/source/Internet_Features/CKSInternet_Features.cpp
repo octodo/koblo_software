@@ -10,9 +10,10 @@ CKSXML_Read_Project(),
 CKSUsername_And_Password_Model(),
 mbUpload_Project(false)
 {
-	//!!!TO DO remove this dummy code
-	msProject_Name = "flying pink elephants with umbrellas";
-	msProject_Path	=	"";
+
+	mpProject_UUID = new(CKSUUID);
+	mpBranch_UUID = new(CKSUUID);
+
 }
 
 CKSInternet_Features::~CKSInternet_Features()
@@ -150,14 +151,43 @@ tbool CKSInternet_Features::Project_Has_Changed()
 	
 }
 
-std::string CKSInternet_Features::Get_UUID()
-{
-	tchar* pszUUID = new tchar[128];
-	tuint32 uiBuffer_Size = 0;
-	Gen_UUID(pszUUID,  uiBuffer_Size);
-	std::string sUUID = pszUUID;
-	return sUUID;
+std::string CKSInternet_Features::Get_Project_UUID()
+{ 
+	return mpProject_UUID->Get_UUID();
 }
+
+void CKSInternet_Features::Set_Project_UUID()
+{ 
+	mpProject_UUID->Set_UUID();
+}
+
+void CKSInternet_Features::Set_Project_UUID(std::string  sUUID )
+{ 
+	mpProject_UUID->Set_UUID(sUUID);
+}
+
+std::string CKSInternet_Features::Get_Branch_UUID()
+{ 
+	return mpBranch_UUID->Get_UUID();
+}
+
+void CKSInternet_Features::Set_Branch_UUID()
+{ 
+	mpBranch_UUID->Set_UUID();
+}
+
+void CKSInternet_Features::Set_Branch_UUID(std::string  sUUID )
+{ 
+	mpBranch_UUID->Set_UUID(sUUID);
+}
+
+void CKSInternet_Features::SetProjectName( const std::string& sName)
+{ 
+	msProjectName = sName;
+	gpApplication->Project_Name(sName);
+}
+
+
 
 
 
