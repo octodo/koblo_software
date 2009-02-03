@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..\..\..\..\SDK\tinyxml\;..\..\;..\..\include;..\..\include\Export_Audio_GUI;..\..\include\Import_Audio_GUI;..\..\include\Internet_Features;..\..\include\Mix_GUI;..\..\include\Plugin_Support;..\..\include\Project_ID;..\..\include\Rack_GUI_DSP;..\..\include\Setup_GUI;..\..\include\SoloMute;..\..\include\Track_View;..\..\include\Track_View\Progress;..\..\include\Username_And_Password_View;..\..\include\DSP"
+				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..\..\..\..\SDK\tinyxml\;..\..\;..\..\include;..\..\include\Export_Audio_GUI;..\..\include\Import_Audio_GUI;..\..\include\Internet_Features;..\..\include\Mix_GUI;..\..\include\Plugin_Support;..\..\include\Project_ID;..\..\include\Rack_GUI_DSP;..\..\include\Setup_GUI;..\..\include\SoloMute;..\..\include\Track_View;..\..\include\Track_View\Progress;..\..\include\Username_And_Password_View;..\..\include\DSP;&quot;..\..\..\..\..\SDK\libjdkmidi-20051014\trunk\include&quot;;&quot;..\..\include\MIDI Sequencer&quot;"
 				PreprocessorDefinitions="KSPI_IMPORTS;WIN32;_WINDOWS;_DEBUG;_RESOURCE_FILE_HARDLINKED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -122,7 +122,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..\..\..\..\SDK\tinyxml\;..\..\;..\..\include;..\..\include\Export_Audio_GUI;..\..\include\Import_Audio_GUI;..\..\include\Internet_Features;..\..\include\Mix_GUI;..\..\include\Plugin_Support;..\..\include\Project_ID;..\..\include\Rack_GUI_DSP;..\..\include\Setup_GUI;..\..\include\SoloMute;..\..\include\Track_View;..\..\include\Track_View\Progress;..\..\include\Username_And_Password_View;..\..\include\DSP"
+				AdditionalIncludeDirectories="..\..\..\..\..\SDK\trunk\BaseUtilities\interface;..\..\..\..\..\SDK\trunk\AudioIOEngine\interface;..\..\..\..\..\SDK\trunk\BaseClasses\Include;..\..\..\..\..\SDK\trunk\DataEngine\interface;..\..\..\..\..\SDK\trunk\GUIEngine\interface;..\..\..\..\..\SDK\trunk\KSPI\Interface;..\..\..\..\..\SDK\trunk\MIDIIOEngine\interface;..\..\..\..\..\SDK\trunk\STools\interface;..\..\..\..\..\SDK\trunk\AudioCompress\interface;..\..\..\..\..\SDK\trunk\INetEngine\interface;..\..\..\..\..\SDK\tinyxml\;..\..\;..\..\include;..\..\include\Export_Audio_GUI;..\..\include\Import_Audio_GUI;..\..\include\Internet_Features;..\..\include\Mix_GUI;..\..\include\Plugin_Support;..\..\include\Project_ID;..\..\include\Rack_GUI_DSP;..\..\include\Setup_GUI;..\..\include\SoloMute;..\..\include\Track_View;..\..\include\Track_View\Progress;..\..\include\Username_And_Password_View;..\..\include\DSP;&quot;..\..\..\..\..\SDK\libjdkmidi-20051014\trunk\include&quot;;&quot;..\..\include\MIDI Sequencer&quot;"
 				PreprocessorDefinitions="KSPI_IMPORTS;WIN32;_WINDOWS;NDEBUG;_RESOURCE_FILE_HARDLINKED"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
@@ -188,11 +188,31 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\..\source\CGUI_Controller.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\Internet_Features\CImport_Auido_Controller.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\Internet_Features\CImport_TinyXML.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\source\CKSApplication.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\source\CKSBaseGUI.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\Internet_Features\CKSFile_Controller.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\Internet_Features\CKSFile_Item.cpp"
 				>
 			</File>
 			<File
@@ -208,11 +228,31 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\source\Internet_Features\CKSUUID.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\MIDI Sequencer\CMIDI_Sequencer.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\source\CParmGlobal.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\source\DSP\CRegion_Controller.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\DSP\CSample_Controller.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\DSP\CSample_Data.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\DSP\CTake_Data.cpp"
 				>
 			</File>
 			<File
@@ -627,6 +667,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\CKSBaseGUI.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\Internet_Features\CKSFile_Controller.h"
 				>
 			</File>
 			<File

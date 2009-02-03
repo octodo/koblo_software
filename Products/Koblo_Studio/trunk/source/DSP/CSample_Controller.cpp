@@ -60,25 +60,25 @@ void CSample_Controller::Set_Wave_Path( CTake_Data* pTake_Info,
 {
 	//CTake_Data* pTake_Info		=	pSample_Data->Get_Take_Data();
 	
-	
-	if (pTake_Info->bIsStereoInList) {
+	std::string sMode				=	pTake_Info->Mode();
+	if (stricmp("stereo", sMode.c_str()) == 0) {
 		// STEREO
 		// Get two streams for stereo channel
-		rsWavePathNameL = pTake_Info->sWavePathNameL;
-		rsWavePathNameR = pTake_Info->sWavePathNameR;
+		rsWavePathNameL = pTake_Info->Left_Wave_File_Path();
+		rsWavePathNameR = pTake_Info->Right_Wave_File_Path();
 	}
-	else {
+	else if (stricmp("mono", sMode.c_str()) == 0) {
 		// MONO
 		// Get a single stream for mono channel
-		if (pTake_Info->sWavePathNameL.length()) {
+		if (pTake_Info->Left_Wave_File_Path().length()) {
 			// Using left (or only) side of original for mono channel
-			rsWavePathNameL = pTake_Info->sWavePathNameL;
+			rsWavePathNameL = pTake_Info->Left_Wave_File_Path();
 			rsWavePathNameR = "";
 		}
-		else if (pTake_Info->sWavePathNameR.length()) {
+		else if (pTake_Info->Right_Wave_File_Path().length()) {
 			// Using right side of original for mono channel
 			// Note! It *IS* correct to output into *left* side always!
-			rsWavePathNameL = pTake_Info->sWavePathNameR;
+			rsWavePathNameL = pTake_Info->Right_Wave_File_Path();
 			rsWavePathNameR = "";
 		}
 	}	

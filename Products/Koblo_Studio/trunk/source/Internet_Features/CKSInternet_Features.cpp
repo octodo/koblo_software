@@ -83,7 +83,7 @@ void CKSInternet_Features::Download_Project(tint32 iProjectID)
 {
 	
 	// read the project from koblo.com
-	gpApplication->Read_Project_XML_To_DOM(iProjectID);
+	gpApplication->Read_Latest_Revision_From_Koblo(iProjectID);
 	// load the project
 	Load_Project( iProjectID);
 	
@@ -93,7 +93,7 @@ void CKSInternet_Features::Download_Project(tint32 iProjectID)
 void CKSInternet_Features::Update_Project(tint32 iProjectID)
 {
 	// read the project from koblo.com
-	gpApplication->Read_Project_XML_To_DOM(iProjectID);
+	gpApplication->Read_Latest_Revision_From_Koblo(iProjectID);
 	
 	// check version
 	if(gpApplication->Check_For_Newer_Revision(iProjectID))
@@ -117,7 +117,7 @@ void CKSInternet_Features::Load_Project(tint32 iProjectID)
 	gpApplication->Reset_Project();
 	
 	// set all internal parameters fro DOM 
-	gpApplication->CKSXML_Parse_DOM_To_Preset();
+//	gpApplication->CKSXML_Parse_DOM_To_DAW();
 }
 
 
