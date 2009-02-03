@@ -49,7 +49,7 @@ public:
 	
 	
 	
-	// get project folder
+	//! get project folder
 	std::string Project_Folder(){ return msProject_Folder;};
 	//! set project name
 	void Project_Folder(std::string sFolder){  msProject_Folder = sFolder;};

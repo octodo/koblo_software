@@ -94,6 +94,9 @@ public:
 	//! set stereo
 	void Stereo(tbool bStereo){ mbStereo =  bStereo;};
 	
+	//! mode
+	void Mode( std::string sMode );
+	
 	//! get stereo
 	tbool Stereo(){ return mbStereo;};
 	

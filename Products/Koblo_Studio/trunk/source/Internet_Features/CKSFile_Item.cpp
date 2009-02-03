@@ -74,6 +74,12 @@ std::string  CKSFile_Item::Right_Name()
 	return sNameR;
 }
 
+void CKSFile_Item::Mode( std::string sMode)
+{
+	if( stricmp( "stereo", sMode.c_str() ) == 0)			mbStereo = true;
+	else if( stricmp( "mono", sMode.c_str() ) == 0)			mbStereo = false;
+}
+
 
 
 std::string  CKSFile_Item::Left_Peak_File_Path()

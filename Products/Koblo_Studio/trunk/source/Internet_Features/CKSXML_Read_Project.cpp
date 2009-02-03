@@ -32,7 +32,8 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		
 		// read project in to char buffer
 		tuint iSize = pfile->GetSizeWhenOpened();
-		char pszProjectXML[iSize];
+		CAutoBuffer<char> pszProjectXML;
+		pszProjectXML.Allocate(iSize);
 		pfile->Read(pszProjectXML, iSize);
 		// parse pszProjectXML in to TinyXML document
 		mpTinyXMLDoc->Parse(pszProjectXML);
@@ -1035,15 +1036,19 @@ void CKSXML_Read_Project::Insert_Takes()
 
 void CKSXML_Read_Project::Insert_Take(CTake_Data* pTake_Data)
 {
+	std::string sWave_File_Folder = gpApplication->Wave_File_Folder();
 	std::string sName = pTake_Data->Screen_Name();
-	printf(sName.c_str() );
+//	printf(sName.c_str() );
 	
-	std::string sFolder = gpApplication->Wave_File_Folder();
+	
 	
 	CKSFile_Item File_Item;
 	
 	File_Item.Set_UUID(pTake_Data->Get_UUID() );
-	File_Item.Import(sFolder + sName);
+	File_Item.Import(sWave_File_Folder + sName + "_01.wav");
+	File_Item.Mode( "mono" );
+	
+	//pTake_Data->Mode()
 	
 
 
@@ -1055,7 +1060,16 @@ void CKSXML_Read_Project::Insert_Take(CTake_Data* pTake_Data)
 	
 	
 	
-//	tbool bSuccess = pImportAudioTask->Init( File_Item.Source_Path(), false, eBehave, false);
+	tbool bSuccess = pImportAudioTask->Init( sWave_File_Folder, false, eBehave, false);
+	
+	if (bSuccess) {
+		gpApplication->mpProgressTasks->Add(pImportAudioTask);
+		gpApplication->Playback_InProgressTask();
+	}
+	else {
+		gpApplication->Extended_Error(pImportAudioTask->GetError());
+		pImportAudioTask->Destroy();
+	}
 	
 	
 	
