@@ -32,6 +32,9 @@ public:
 	//! Destructor
 	virtual ~CSample_Data();
 	
+	//! copy constructer
+	CSample_Data(const CSample_Data& DataNew);
+	
 	//! Name of clip as seen in the list
 	std::string sName;
 	

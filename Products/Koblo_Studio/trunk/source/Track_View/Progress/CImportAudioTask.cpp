@@ -79,11 +79,11 @@ tbool CImportAudioTask::Init(std::string sSource_Path, tbool bDoesWaveAlreadyExi
 	
 	mpSrc_File = IFile::Create();
 	if (mpSrc_File == NULL) {
-		msExtendedError = std::string("IFile::Create() => NULL for '") + mFile_Item.Name() + "' (out of memory?).";
+		msExtendedError = std::string("IFile::Create() => NULL for '") + mFile_Item.Disk_Name() + "' (out of memory?).";
 		return false;
 	}
 	if (!mpSrc_File->Open(mFile_Item.Source_Path().c_str(), IFile::FileRead)) {
-		msExtendedError = std::string("Can't open file '") + mFile_Item.Name() + "'.";
+		msExtendedError = std::string("Can't open file '") + mFile_Item.Disk_Name() + "'.";
 		return false;
 	}
 	
@@ -94,7 +94,7 @@ tbool CImportAudioTask::Init(std::string sSource_Path, tbool bDoesWaveAlreadyExi
 		if (*pszErrMsgBuff != '\0')
 			msExtendedError = pszErrMsgBuff;
 		else
-			msExtendedError = std::string("Unknown format file '") + mFile_Item.Name() + "'.";
+			msExtendedError = std::string("Unknown format file '") + mFile_Item.Disk_Name() + "'.";
 		return false;
 	}
 	// We have to do a TestFile here - even though it will fail if it causes mp3
@@ -145,7 +145,7 @@ tbool CImportAudioTask::Open()
 	}
 	 
 	
-	if (gpApplication->Take_Is_In_Use(mFile_Item.Name()) ) return false;
+	if (gpApplication->Take_Is_In_Use(mFile_Item.Disk_Name()) ) return false;
 
 /*
 	// Verify that file hasn't already been imported
@@ -240,7 +240,7 @@ tbool CImportAudioTask::DoWork()
 					msProgress = "Decoding";
 				else
 					msProgress = "Importing";
-				msProgress += std::string(" '") + mFile_Item.Name() + "'";
+				msProgress += std::string(" '") + mFile_Item.Disk_Name() + "'";
 				muiProgressIx = 0;
 				muiProgressTarget = mpSrc_File->GetSizeWhenOpened();
 
@@ -339,7 +339,7 @@ tbool CImportAudioTask::DoWork()
 				
 				msProgress = "Creating/verifying peak files";
 				muiProgressIx = 0;
-				muiProgressTarget = (mFile_Item.Name().size()) ? mpSrc_File->GetSizeWhenOpened() : 1;
+				muiProgressTarget = (mFile_Item.Disk_Name().size()) ? mpSrc_File->GetSizeWhenOpened() : 1;
 
 				miAudioImportOrder++;
 			}
@@ -348,10 +348,7 @@ tbool CImportAudioTask::DoWork()
 		case geAudioImport_Peak_Action:
 			{
 				tbool bForceCreate = !mbDstIsAlreadyThere;
-				
-				//gpApplication->VerifyCreatePeakFiles(mFile_Item.Left_Peak_File_Name().c_str(), mFile_Item.Stereo() ? mFile_Item.Right_Peak_File_Name().c_str() : "", bForceCreate);
 				gpApplication->VerifyCreatePeakFiles( &mFile_Item , bForceCreate);
-
 				miAudioImportOrder++;
 			}
 			break;

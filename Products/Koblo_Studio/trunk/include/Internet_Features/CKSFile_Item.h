@@ -40,10 +40,10 @@ public:
 	void Load(std::string sName);
 	
 	//! set name
-	void Name(std::string sName){msName = sName;};
+	void Disk_Name(std::string sName){msDisk_Name = sName;};
 	
 	//! get name
-	std::string Name(){ return msName;};
+	std::string Disk_Name(){ return msDisk_Name;};
 	
 	// ! set path
 	void Path(std::string sPath){msPath = sPath;};
@@ -100,16 +100,22 @@ public:
 	//! get stereo
 	tbool Stereo(){ return mbStereo;};
 	
+	// ! set screen name path
+	void Screen_Name(std::string sScreen_Name){msScreen_Name = sScreen_Name;};
+	
+	//! get screen name path
+	std::string Screen_Name(){ return msScreen_Name;};
+	
 
 	
 protected:
 	
 	
-	std::string msName;
+	std::string msDisk_Name;
+	std::string msScreen_Name;
 	std::string msPath;
 	std::string msExtencion;
 	std::string msSource_Path;
-//	std::string msDestination_Path;
 	tbool mbIs_A_Dir;
 	tbool mbStereo;
 	

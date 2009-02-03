@@ -4,6 +4,7 @@
 CKSFile_Item::CKSFile_Item()
 {
 	Get_UUID();
+	msScreen_Name = "";
 	
 } 
 
@@ -15,18 +16,19 @@ CKSFile_Item::~CKSFile_Item()
 
 tbool CKSFile_Item::Import(std::string sFull_Path)
 {
-	msExtencion		=	msSource_Path	=	sFull_Path;
+	msSource_Path	=	sFull_Path;
+	msExtencion		=	sFull_Path;
 	mbIs_A_Dir		=	false;
 	
 	// Extract the file name from path
 	tint iPos		=	sFull_Path.find_last_of(":");
-	msName			=	sFull_Path.substr(iPos + 1, sFull_Path.length());
+	msDisk_Name		=	sFull_Path.substr(iPos + 1, sFull_Path.length());
 	msPath			=	sFull_Path.substr(0, iPos + 1);
 	iPos			=	msExtencion.find_last_of(".");
 	msExtencion		=	msExtencion.substr(iPos, msExtencion.length());
 	
-	iPos			=	msName.find_last_of(".");
-	msName			=	msName.substr(0, iPos);
+	iPos			=	msDisk_Name.find_last_of(".");
+	msDisk_Name		=	msDisk_Name.substr(0, iPos);
 	
 	// can not import in to it self
 	if (stricmp( gpApplication->Project_Folder().c_str(), msPath.c_str()) == 0)
@@ -37,16 +39,16 @@ tbool CKSFile_Item::Import(std::string sFull_Path)
 	
 }
 
-void CKSFile_Item::Load(std::string sName)
+void CKSFile_Item::Load(std::string sDisk_Name)
 {
-	msName = sName;
+	msDisk_Name = sDisk_Name;
 	
 
 }
 
 std::string  CKSFile_Item::Destination_Path()
 {
-	return gpApplication->Project_Folder() + "Wave Files:";
+	return gpApplication->Wave_File_Folder();
 }
 
 std::string CKSFile_Item::Left_Path()
