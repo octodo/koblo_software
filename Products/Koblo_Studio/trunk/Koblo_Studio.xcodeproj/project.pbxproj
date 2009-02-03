@@ -190,48 +190,6 @@
 			remoteGlobalIDString = D2AAC06E0554671400DB518D;
 			remoteInfo = MIDIIOEngine;
 		};
-		FC21D6F70F292D4E002274A7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC21D6EA0F292D4E002274A7 /* jdkmidi.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BFCF4617066341C8004F42F4;
-			remoteInfo = jdkmidi;
-		};
-		FC21D6F90F292D4E002274A7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC21D6EA0F292D4E002274A7 /* jdkmidi.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BFCF465B0663423E004F42F4;
-			remoteInfo = jdkmidi_rewrite_midifile;
-		};
-		FC21D6FB0F292D4E002274A7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC21D6EA0F292D4E002274A7 /* jdkmidi.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BF2E0C8A06646D3F0055CCAF;
-			remoteInfo = libjdk_test_show;
-		};
-		FC21D6FD0F292D4E002274A7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC21D6EA0F292D4E002274A7 /* jdkmidi.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BFAD140A0AB5ED7600CD5BE0;
-			remoteInfo = libjdkmidi_test_parse;
-		};
-		FC21D6FF0F292D4E002274A7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC21D6EA0F292D4E002274A7 /* jdkmidi.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BFAD140C0AB5ED7600CD5BE0;
-			remoteInfo = libjdkmidi_test_sequencer;
-		};
-		FC21D7010F292D4E002274A7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC21D6EA0F292D4E002274A7 /* jdkmidi.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BFAD14080AB5ED7600CD5BE0;
-			remoteInfo = libjdkmidi_test_multitrack1;
-		};
 		FC2D34790EEE868D004DFC3D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FC2D34710EEE868D004DFC3D /* INetEngine.xcodeproj */;
@@ -245,6 +203,48 @@
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC06E0554671400DB518D;
 			remoteInfo = DataEngine;
+		};
+		FC8D7E810F3841AA001AAE88 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BFCF4617066341C8004F42F4 /* libjdkmidi.a */;
+			remoteInfo = jdkmidi;
+		};
+		FC8D7E830F3841AA001AAE88 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BFCF465B0663423E004F42F4 /* jdkmidi_rewrite_midifile */;
+			remoteInfo = jdkmidi_rewrite_midifile;
+		};
+		FC8D7E850F3841AA001AAE88 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BF2E0C8A06646D3F0055CCAF /* libjdk_test_show */;
+			remoteInfo = libjdk_test_show;
+		};
+		FC8D7E870F3841AA001AAE88 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BFAD140A0AB5ED7600CD5BE0 /* libjdkmidi_test_parse */;
+			remoteInfo = libjdkmidi_test_parse;
+		};
+		FC8D7E890F3841AA001AAE88 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BFAD140C0AB5ED7600CD5BE0 /* libjdkmidi_test_parse */;
+			remoteInfo = libjdkmidi_test_sequencer;
+		};
+		FC8D7E8B0F3841AA001AAE88 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BFAD14080AB5ED7600CD5BE0 /* libjdkmidi_test_parse */;
+			remoteInfo = libjdkmidi_test_multitrack1;
 		};
 		FC9D46870CB13CF4006CEDB6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -365,7 +365,6 @@
 		FC17A2B40F0E1A040083A614 /* CKSUsername_And_Password_Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSUsername_And_Password_Model.h; sourceTree = "<group>"; };
 		FC21D5130F287A31002274A7 /* CMIDI_Sequencer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIDI_Sequencer.h; sourceTree = "<group>"; };
 		FC21D5150F287A67002274A7 /* CMIDI_Sequencer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CMIDI_Sequencer.cpp; sourceTree = "<group>"; };
-		FC21D6EA0F292D4E002274A7 /* jdkmidi.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jdkmidi.xcodeproj; path = "../../../SDK/libjdkmidi-20051014/trunk/build/macosx/jdkmidi.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		FC2D34710EEE868D004DFC3D /* INetEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = INetEngine.xcodeproj; path = ../../../SDK/trunk/INetEngine/projects/osxxcode/INetEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
 		FC31AC930EEFE9D400B3D3B7 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinystr.h; path = ../../../SDK/tinyxml/tinystr.h; sourceTree = SOURCE_ROOT; };
 		FC31AC940EEFE9D400B3D3B7 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinystr.cpp; path = ../../../SDK/tinyxml/tinystr.cpp; sourceTree = SOURCE_ROOT; };
@@ -396,6 +395,7 @@
 		FC68AFC60F13E82700EC15AF /* CRack_Echo_DSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRack_Echo_DSP.h; sourceTree = "<group>"; };
 		FC68AFE20F13E8F000EC15AF /* CRack_Echo_DSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRack_Echo_DSP.cpp; sourceTree = "<group>"; };
 		FC68AFE40F13E90700EC15AF /* CTrack_DSP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_DSP.cpp; sourceTree = "<group>"; };
+		FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jdkmidi.xcodeproj; path = "../../../SDK/libjdkmidi-20051014/trunk/build_lib/macosx/jdkmidi.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		FCA77C2D0F14AAE000C0DB63 /* CWave_File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CWave_File.cpp; sourceTree = "<group>"; };
 		FCA77C380F14AB3A00C0DB63 /* CWave_File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWave_File.h; sourceTree = "<group>"; };
 		FCA77C540F14AF1E00C0DB63 /* CWave_Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWave_Parser.h; sourceTree = "<group>"; };
@@ -614,7 +614,7 @@
 				E3EBB3D00B7C522B00F0A345 /* MIDIIOEngine.xcodeproj */,
 				E3EBB3C80B7C521A00F0A345 /* AudioIOEngine.xcodeproj */,
 				32E09DAD0E14BED500FF980B /* AudioCompress.xcodeproj */,
-				FC21D6EA0F292D4E002274A7 /* jdkmidi.xcodeproj */,
+				FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */,
 				20286C2AFDCF999611CA2CEA /* Sources */,
 				20286C2CFDCF999611CA2CEA /* Resources */,
 				20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */,
@@ -799,19 +799,6 @@
 			path = "source/MIDI Sequencer";
 			sourceTree = "<group>";
 		};
-		FC21D6EB0F292D4E002274A7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				FC21D6F80F292D4E002274A7 /* libjdkmidi.a */,
-				FC21D6FA0F292D4E002274A7 /* jdkmidi_rewrite_midifile */,
-				FC21D6FC0F292D4E002274A7 /* libjdk_test_show */,
-				FC21D6FE0F292D4E002274A7 /* libjdkmidi_test_parse */,
-				FC21D7000F292D4E002274A7 /* libjdkmidi_test_parse */,
-				FC21D7020F292D4E002274A7 /* libjdkmidi_test_parse */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		FC2D34720EEE868D004DFC3D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -831,6 +818,19 @@
 				FC31AC9A0EEFE9ED00B3D3B7 /* tinyxmlerror.cpp */,
 			);
 			name = TinyXml;
+			sourceTree = "<group>";
+		};
+		FC8D7E750F3841AA001AAE88 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FC8D7E820F3841AA001AAE88 /* libjdkmidi.a */,
+				FC8D7E840F3841AA001AAE88 /* jdkmidi_rewrite_midifile */,
+				FC8D7E860F3841AA001AAE88 /* libjdk_test_show */,
+				FC8D7E880F3841AA001AAE88 /* libjdkmidi_test_parse */,
+				FC8D7E8A0F3841AA001AAE88 /* libjdkmidi_test_parse */,
+				FC8D7E8C0F3841AA001AAE88 /* libjdkmidi_test_parse */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		FC9D46840CB13CF4006CEDB6 /* Products */ = {
@@ -1311,8 +1311,8 @@
 					ProjectRef = FC2D34710EEE868D004DFC3D /* INetEngine.xcodeproj */;
 				},
 				{
-					ProductGroup = FC21D6EB0F292D4E002274A7 /* Products */;
-					ProjectRef = FC21D6EA0F292D4E002274A7 /* jdkmidi.xcodeproj */;
+					ProductGroup = FC8D7E750F3841AA001AAE88 /* Products */;
+					ProjectRef = FC8D7E740F3841AA001AAE88 /* jdkmidi.xcodeproj */;
 				},
 				{
 					ProductGroup = FC9D46A90CB13D5C006CEDB6 /* Products */;
@@ -1338,53 +1338,53 @@
 			remoteRef = 32E09DC10E14BED500FF980B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		FC21D6F80F292D4E002274A7 /* libjdkmidi.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libjdkmidi.a;
-			remoteRef = FC21D6F70F292D4E002274A7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FC21D6FA0F292D4E002274A7 /* jdkmidi_rewrite_midifile */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = jdkmidi_rewrite_midifile;
-			remoteRef = FC21D6F90F292D4E002274A7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FC21D6FC0F292D4E002274A7 /* libjdk_test_show */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = libjdk_test_show;
-			remoteRef = FC21D6FB0F292D4E002274A7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FC21D6FE0F292D4E002274A7 /* libjdkmidi_test_parse */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = libjdkmidi_test_parse;
-			remoteRef = FC21D6FD0F292D4E002274A7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FC21D7000F292D4E002274A7 /* libjdkmidi_test_parse */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = libjdkmidi_test_parse;
-			remoteRef = FC21D6FF0F292D4E002274A7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FC21D7020F292D4E002274A7 /* libjdkmidi_test_parse */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = libjdkmidi_test_parse;
-			remoteRef = FC21D7010F292D4E002274A7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		FC2D347A0EEE868D004DFC3D /* libINetEngine.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libINetEngine.a;
 			remoteRef = FC2D34790EEE868D004DFC3D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FC8D7E820F3841AA001AAE88 /* libjdkmidi.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjdkmidi.a;
+			remoteRef = FC8D7E810F3841AA001AAE88 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FC8D7E840F3841AA001AAE88 /* jdkmidi_rewrite_midifile */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = jdkmidi_rewrite_midifile;
+			remoteRef = FC8D7E830F3841AA001AAE88 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FC8D7E860F3841AA001AAE88 /* libjdk_test_show */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = libjdk_test_show;
+			remoteRef = FC8D7E850F3841AA001AAE88 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FC8D7E880F3841AA001AAE88 /* libjdkmidi_test_parse */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = libjdkmidi_test_parse;
+			remoteRef = FC8D7E870F3841AA001AAE88 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FC8D7E8A0F3841AA001AAE88 /* libjdkmidi_test_parse */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = libjdkmidi_test_parse;
+			remoteRef = FC8D7E890F3841AA001AAE88 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FC8D7E8C0F3841AA001AAE88 /* libjdkmidi_test_parse */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = libjdkmidi_test_parse;
+			remoteRef = FC8D7E8B0F3841AA001AAE88 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		FC9D46880CB13CF4006CEDB6 /* libSTools.a */ = {
@@ -1655,7 +1655,7 @@
 					"$(SRCROOT)/../../../SDK/trunk/GUIEngine/projects/OSXXCode/build/Debug",
 					"$(SRCROOT)/../../../SDK/trunk/DataEngine/projects/OSXXCode/build/Debug",
 					"$(SRCROOT)/../../../SDK/trunk/STools/projects/OSXXCode/build/Debug",
-					"$(SRCROOT)/../../../SDK/trunk/libjdkmidi-20051014/trunk/build/macosx/build/Development",
+					"$(SRCROOT)/../../../SDK/trunk/libjdkmidi-20051014/trunk/build/macosx/build_lib/Development",
 				);
 				PRODUCT_NAME = "Koblo Studio";
 				STRIP_INSTALLED_PRODUCT = NO;
