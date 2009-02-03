@@ -34,6 +34,7 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		tuint iSize = pfile->GetSizeWhenOpened();
 		CAutoBuffer<char> pszProjectXML;
 		pszProjectXML.Allocate(iSize);
+
 		pfile->Read(pszProjectXML, iSize);
 		// parse pszProjectXML in to TinyXML document
 		mpTinyXMLDoc->Parse(pszProjectXML);
