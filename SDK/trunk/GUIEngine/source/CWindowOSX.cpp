@@ -148,11 +148,67 @@ OSStatus WindowHandlerProc(EventHandlerCallRef inHandlerCallRef, EventRef inEven
 
 OSErr DragAndDropProc(WindowRef theWindow, void * handlerRefCon, DragRef theDrag);
 
+static HIObjectClassRef gClass = NULL;
+static EventTypeSpec gClassEvents[] =
+{
+{ kEventClassHIObject, kEventHIObjectConstruct },
+{ kEventClassHIObject, kEventHIObjectInitialize },
+{ kEventClassHIObject, kEventHIObjectDestruct },
+{ kEventClassKeyboard, kEventRawKeyDown},
+{ kEventClassKeyboard, kEventRawKeyUp},
+{ kEventClassKeyboard, kEventRawKeyRepeat},
+{ kEventClassMouse,    kEventMouseMoved},
+{ kEventClassMouse,    kEventMouseWheelMoved},
+{ kEventClassControl,  kEventControlBoundsChanged},
+{ kEventClassControl,  kEventControlDraw},
+{ kEventClassControl,  kEventControlSetFocusPart },
+{ kEventClassControl,  kEventControlClick },
+{ kEventClassControl,  kEventControlTrack }
+};
+#define gViewClassID CFSTR("com.koblo.ge.HIView")
+
+static pascal OSStatus ViewClassHandler(EventHandlerCallRef inCaller, EventRef inEvent, void* inRefcon);
+
+static pascal OSStatus ViewClassHandler(EventHandlerCallRef inCaller, EventRef inEvent, void* inRefcon)
+{
+    OSStatus result = eventNotHandledErr;
+
+	return result;
+}
+
 void CWindowOSX::MakeWindow(void* pParent, const SRect* pRect, tbool bInstallEventHandler)
 {
 	mSize = (SSize)(*pRect);
 
 	mWindowRef = (WindowRef)pParent;
+
+/*	HIObjectRegisterSubclass(gViewClassID,
+							 kHIViewClassID,
+							 0,
+							 ViewClassHandler,
+							 GetEventTypeCount(gClassEvents),
+							 gClassEvents,
+							 0,
+							 &gClass);
+ 
+	HIViewRef ViewRef = NULL;
+	EventRef Event = NULL;
+    CreateEvent( NULL, kEventClassHIObject, kEventHIObjectInitialize, GetCurrentEventTime(), 0, &Event);
+	HIRect Bounds;
+    Bounds.origin.x = pRect->iX;
+    Bounds.origin.y = pRect->iY;
+    Bounds.size.width = pRect->iCX;
+    Bounds.size.height = pRect->iCY;
+    SetEventParameter(Event, kEventParamBounds, typeHIRect, sizeof(HIRect), &Bounds);
+    HIObjectCreate(gViewClassID, Event, (HIObjectRef*)&ViewRef);
+    HIViewChangeFeatures(ViewRef, kHIViewAllowsSubviews, 0);
+
+	HIViewRef contentView;
+	if (HIViewFindByID (HIViewGetRoot ((WindowRef)mWindowRef), kHIViewWindowContentID, &contentView) == noErr) {
+		HIViewChangeFeatures(contentView, kHIViewAllowsSubviews, 0);
+        HIViewAddSubview(contentView, ViewRef);
+	}*/
+
 /*	{
 		int	port_offsetX;
 		int port_offsetY;

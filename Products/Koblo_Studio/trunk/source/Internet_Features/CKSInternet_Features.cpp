@@ -179,7 +179,6 @@ void CKSInternet_Features::Set_Branch_UUID()
 void CKSInternet_Features::Set_Branch_UUID(std::string  sUUID )
 { 
 	mpBranch_UUID->Set_UUID(sUUID);
-	
 }
 
 void CKSInternet_Features::SetProjectName( const std::string& sName)

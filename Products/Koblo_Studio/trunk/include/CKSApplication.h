@@ -72,6 +72,8 @@ public virtual CGUI_Controller,
 public virtual CKSFile_Controller,
 public virtual CImport_Auido_Controller
 
+// Changes made to VST
+
 {
 
 public:
