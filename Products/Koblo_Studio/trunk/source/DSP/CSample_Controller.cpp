@@ -21,7 +21,7 @@ CSample_Data* CSample_Controller::Get_Sample_Data_From_Name(const tchar* pszList
 		
 		CSample_Data* pSample_Data = *itSample_Data;
 		
-		if (stricmp(pSample_Data->sName.c_str(), pszListName) == 0)
+		if (stricmp(pSample_Data->Name().c_str(), pszListName) == 0)
 			return pSample_Data;
 	}
 	return NULL;

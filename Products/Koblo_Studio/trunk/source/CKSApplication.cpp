@@ -1763,10 +1763,10 @@ void CKSApplication::ExportAllClips(ac::EAudioCodec eCodec, ac::EQuality eQualit
 		std::list<CExportClipTask*> listpInfo;
 		std::list<CSample_Data*>::const_iterator it = mSample_Data_List.begin();
 		for ( ; it != mSample_Data_List.end(); it++) {
-			CSample_Data* pFileInfo = *it;
-			const tchar* pszClipName = pFileInfo->sName.c_str();
-			CExportClipTask* pClipInfo = new CExportClipTask( pszClipName, 0, (tuint64)-1);
-			listpInfo.insert(listpInfo.end(), pClipInfo);
+			CSample_Data* pSample_Data = *it;
+			const tchar* pszClipName = pSample_Data->Name().c_str();
+			CExportClipTask* pExportClipTask = new CExportClipTask( pszClipName, 0, (tuint64)-1);
+			listpInfo.insert(listpInfo.end(), pExportClipTask);
 		}
 		bSuccess = ExportClipsList(&listpInfo, eCodec, eQuality, iChannels);
 	}
@@ -4822,8 +4822,9 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportAudioTask)
 	CTake_Data*		pTake_Data			=	pSample_Data->Get_Take_Data();
 	pTake_Data->Set_UUID(  pImportAudioTask->Get_UUID()  );
 	
-	pSample_Data->sName					=	pImportAudioTask->Name();
-	pTake_Data->Screen_Name(pImportAudioTask->Name());
+	pSample_Data->Name( pImportAudioTask->Screen_Name() );
+	pTake_Data->Screen_Name(pImportAudioTask->Screen_Name());
+	//pTake_Data->Screen_Name(pImportAudioTask->Disk_Name());
 	pTake_Data->Mode( pImportAudioTask->Stereo() ? "stereo": "mono");
 	pTake_Data->Left_Wave_File_Path( pImportAudioTask->Left_Path() );
 	pTake_Data->Right_Wave_File_Path( pImportAudioTask->Right_Path() );

@@ -69,7 +69,7 @@ void CTrack_Files::HandleMsg(SMsg* pMsg)
 		std::string sText;
 		std::list<CSample_Data*>::const_iterator it = pList->begin();
 		for (; it != pList->end(); it++) {
-			sText += (*it)->sName;
+			sText += (*it)->Name();
 			sText += '@';
 		}
 		sText = sText.substr(0, sText.size() - 1);

@@ -14,7 +14,7 @@ CSample_Data::~CSample_Data()
 CSample_Data::CSample_Data(const CSample_Data& Data_Old)
 {
 
-	sName			=	Data_Old.sName;
+	msName			=	Data_Old.msName;
 	mpTake_Data		=	new CTake_Data;
 	*mpTake_Data	=	*(Data_Old.mpTake_Data);
 

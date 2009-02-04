@@ -79,11 +79,11 @@ tbool CImportAudioTask::Init(std::string sSource_Path, tbool bDoesWaveAlreadyExi
 	
 	mpSrc_File = IFile::Create();
 	if (mpSrc_File == NULL) {
-		msExtendedError = std::string("IFile::Create() => NULL for '") + mFile_Item.Disk_Name() + "' (out of memory?).";
+		msExtendedError = std::string("IFile::Create() => NULL for '") + mFile_Item.Screen_Name() + "' (out of memory?).";
 		return false;
 	}
 	if (!mpSrc_File->Open(mFile_Item.Source_Path().c_str(), IFile::FileRead)) {
-		msExtendedError = std::string("Can't open file '") + mFile_Item.Disk_Name() + "'.";
+		msExtendedError = std::string("Can't open file '") + mFile_Item.Screen_Name() + "'.";
 		return false;
 	}
 	
@@ -94,7 +94,7 @@ tbool CImportAudioTask::Init(std::string sSource_Path, tbool bDoesWaveAlreadyExi
 		if (*pszErrMsgBuff != '\0')
 			msExtendedError = pszErrMsgBuff;
 		else
-			msExtendedError = std::string("Unknown format file '") + mFile_Item.Disk_Name() + "'.";
+			msExtendedError = std::string("Unknown format file '") + mFile_Item.Screen_Name() + "'.";
 		return false;
 	}
 	// We have to do a TestFile here - even though it will fail if it causes mp3
@@ -240,7 +240,8 @@ tbool CImportAudioTask::DoWork()
 					msProgress = "Decoding";
 				else
 					msProgress = "Importing";
-				msProgress += std::string(" '") + mFile_Item.Disk_Name() + "'";
+				msProgress += std::string(" '") + mFile_Item.Screen_Name() + "'";
+				//msProgress += std::string(" '") + mFile_Item.Disk_Name() + "'";
 				muiProgressIx = 0;
 				muiProgressTarget = mpSrc_File->GetSizeWhenOpened();
 

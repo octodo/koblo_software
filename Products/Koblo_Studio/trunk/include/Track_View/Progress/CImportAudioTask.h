@@ -95,7 +95,7 @@ public:
 	void Stereo( tbool bStereo) { mFile_Item.Stereo(bStereo);};
 	
 	//! take name
-	std::string Name(){ return mFile_Item.Disk_Name();};
+	std::string Disk_Name(){ return mFile_Item.Disk_Name();};
 	
 	//! left take name
 	std::string Left_Name(){ return mFile_Item.Left_Name();};

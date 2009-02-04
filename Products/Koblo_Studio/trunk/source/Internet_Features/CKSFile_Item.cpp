@@ -29,6 +29,7 @@ tbool CKSFile_Item::Import(std::string sFull_Path)
 	
 	iPos			=	msDisk_Name.find_last_of(".");
 	msDisk_Name		=	msDisk_Name.substr(0, iPos);
+	msScreen_Name	=	msDisk_Name;
 	
 	// can not import in to it self
 	if (stricmp( gpApplication->Project_Folder().c_str(), msPath.c_str()) == 0)
