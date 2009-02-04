@@ -42,12 +42,10 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="..\..\..\BaseUtilities\interface;..\..\interface;..\..\include;..\..\..\DataEngine\interface;..\..\curl\include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;BUILDING_LIBCURL;CURL_STATICLIB"
 				StringPooling="true"
 				RuntimeLibrary="0"
-				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="ineInternalOS.h"

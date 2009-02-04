@@ -52,12 +52,14 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 	Parse_Project( mpDoc );
 
 
-#if (0)
-	// (lasse) very very temporary code: upload to koblo.com
+#if (1)
+	// (lasse) wawy wawy tempowawy code: upload to koblo.com
 
 	// These must be set or it won't work
 #define TEMPUSR "xxx@xxx.com"
 #define TEMPPWD "xxx"
+#define TEMPMP3 "_testhest.mp3"
+#define TEMPXXX "Aja joepie jee.mp3"
 
 	tchar pszUUID_Proj[128];
 	Gen_UUID(pszUUID_Proj, 128);
@@ -117,12 +119,12 @@ void CKSXML_Read_Project::CKSXML_Parse_DOM_To_Preset()
 		CAutoDelete<IFile> pfMp3(IFile::Create());
 		CAutoDelete<IFile> pfExtra(IFile::Create());
 #ifdef _WIN32
-		tchar* pszMp3File = "C:\\_testhest.mp3";
-		tchar* pszExtraFile = "C:\\Aja joepie jee.mp3";
+		tchar* pszMp3File = "C:\\" TEMPMP3;
+		tchar* pszExtraFile = "C:\\" TEMPXXX;
 #endif // _WIN32
 #ifdef _Mac
-		tchar* pszMp3File = "/_testhest.mp3";
-		tchar* pszExtraFile = "/Aja joepie jee.mp3";
+		tchar* pszMp3File = "/" TEMPMP3;
+		tchar* pszExtraFile = "/" TEMPXXX;
 #endif // _Mac
 		if (!pfMp3->Open(pszMp3File, IFile::FileRead))
 			return;
