@@ -34,7 +34,7 @@ tbool CKSFile_Item::Import(std::string sFull_Path)
 	// can not import in to it self
 	if (stricmp( gpApplication->Project_Folder().c_str(), msPath.c_str()) == 0)
 		return false;
-	
+	// is it a file we do understand
 	return gpApplication->Readable_Audio(msSource_Path);
 	
 	

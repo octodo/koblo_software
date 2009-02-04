@@ -69,10 +69,10 @@ void CImportAudioTask::Destroy()
 } // Destroy
 
 // new one
-tbool CImportAudioTask::Init(std::string sSource_Path, tbool bDoesWaveAlreadyExist , EStereoBehavior eStereoBehavior , tbool bForceOriginalIsLossy )
+tbool CImportAudioTask::Init(CKSFile_Item* pFile_Item /*, tbool bDoesWaveAlreadyExist , EStereoBehavior eStereoBehavior , tbool bForceOriginalIsLossy*/ )
 {
 	// prepare all the different filenames and paths
-	if( mFile_Item.Import( sSource_Path ) == false)
+	if( mFile_Item.Import( pFile_Item->Source_Path() ) == false)
 	   return false; 
 	
 
@@ -82,7 +82,7 @@ tbool CImportAudioTask::Init(std::string sSource_Path, tbool bDoesWaveAlreadyExi
 		msExtendedError = std::string("IFile::Create() => NULL for '") + mFile_Item.Screen_Name() + "' (out of memory?).";
 		return false;
 	}
-	if (!mpSrc_File->Open(mFile_Item.Source_Path().c_str(), IFile::FileRead)) {
+	if (!mpSrc_File->Open(pFile_Item->Source_Path().c_str(), IFile::FileRead)) {
 		msExtendedError = std::string("Can't open file '") + mFile_Item.Screen_Name() + "'.";
 		return false;
 	}

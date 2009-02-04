@@ -1049,7 +1049,13 @@ void CKSXML_Read_Project::Insert_Take(CTake_Data* pTake_Data)
 	//CImportAudioTask::EStereoBehavior eBehave = CImportAudioTask::geStereoDoKeep;
 	//CImportAudioTask::EStereoBehavior eBehave = CImportAudioTask::geStereoDoAsk;
 	
-	tbool bSuccess = pImportAudioTask->Init( sFull_Path, true, CImportAudioTask::geStereoDoKeep, false);
+	CKSFile_Item File_Item;
+	
+	File_Item.Source_Path(sFull_Path);
+	
+	//tbool bSuccess = pImportAudioTask->Init( sFull_Path, true, CImportAudioTask::geStereoDoKeep, false);
+	tbool bSuccess = pImportAudioTask->Init( &File_Item);
+	
 	// overwrite screen name
 	pImportAudioTask->Screen_Name( pTake_Data->Screen_Name() );
 	

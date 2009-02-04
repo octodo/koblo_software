@@ -78,10 +78,10 @@ public:
 
 	virtual void Destroy();
 
-	tbool Init( std::string sSource_Path, 
-				tbool bDoesWaveAlreadyExist /*= false*/, 
-				EStereoBehavior eStereoBehavior /*= geStereoDoAsk*/, 
-				tbool bForceOriginalIsLossy /*= false*/);
+	tbool Init( CKSFile_Item* pFile_Item
+			/*	tbool bDoesWaveAlreadyExist
+				EStereoBehavior eStereoBehavior 
+				tbool bForceOriginalIsLossy */);
 	
 //	void Init_InsertAsRegionAfterImport(tint32 iTrackID, tint64 iTrackPos);
 
