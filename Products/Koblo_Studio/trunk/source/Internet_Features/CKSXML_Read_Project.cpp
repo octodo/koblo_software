@@ -1037,31 +1037,18 @@ void CKSXML_Read_Project::Insert_Takes()
 
 void CKSXML_Read_Project::Insert_Take(CTake_Data* pTake_Data)
 {
-	std::string sWave_File_Folder = gpApplication->Wave_File_Folder();
-	std::string sName = pTake_Data->Screen_Name();
-//	printf(sName.c_str() );
-	
-	
-	
-	CKSFile_Item File_Item;
-	
-	File_Item.Set_UUID(pTake_Data->Get_UUID() );
-	File_Item.Import(sWave_File_Folder + sName + "_01.wav");
-	File_Item.Mode( "mono" );
-	
-	//pTake_Data->Mode()
-	
-
-
-	if (gpApplication->IsPlayingOrRecording()) 
-			gpApplication->PlaybackStop();
-	
 	CImportAudioTask* pImportAudioTask = new CImportAudioTask();
+	pImportAudioTask->Screen_Name( pTake_Data->Screen_Name() );
+	
+	std::string sWave_File_Folder	=	gpApplication->Wave_File_Folder();
+	std::string sFull_Path			=	sWave_File_Folder + pTake_Data->Get_UUID() + "_01.wav";
+	
+	if (gpApplication->IsPlayingOrRecording())  
+		gpApplication->PlaybackStop();
+	
 	CImportAudioTask::EStereoBehavior eBehave = CImportAudioTask::geStereoDoAsk;
 	
-	
-	
-	tbool bSuccess = pImportAudioTask->Init( sWave_File_Folder, false, eBehave, false);
+	tbool bSuccess = pImportAudioTask->Init( sFull_Path, false, eBehave, false);
 	
 	if (bSuccess) {
 		gpApplication->mpProgressTasks->Add(pImportAudioTask);
@@ -1073,32 +1060,7 @@ void CKSXML_Read_Project::Insert_Take(CTake_Data* pTake_Data)
 	}
 	
 	
-	
-	/*
-	 tbool CKS_Import_Files::Import_Audio_File(CKSFile_Item File_Item, tbool bAlwaysKeepStereo)
-	 {
-	 if (gpApplication->IsPlayingOrRecording())  gpApplication->PlaybackStop();
-	 
-	 
-	 CImportAudioTask* pImportAudioTask = new CImportAudioTask();
-	 
-	 CImportAudioTask::EStereoBehavior eBehave = (bAlwaysKeepStereo) ? CImportAudioTask::geStereoDoKeep : CImportAudioTask::geStereoDoAsk;
-	 
-	 tbool bSuccess = pImportAudioTask->Init( File_Item.Source_Path(), false, eBehave, false);
-	 
-	 if (bSuccess) {
-	 gpApplication->mpProgressTasks->Add(pImportAudioTask);
-	 gpApplication->Playback_InProgressTask();
-	 }
-	 else {
-	 gpApplication->Extended_Error(pImportAudioTask->GetError());
-	 pImportAudioTask->Destroy();
-	 }
-	 
-	 return bSuccess;
-	 }
-	 */
-	
+//	File_Item.Source_Path()
 	
 }
 

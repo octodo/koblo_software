@@ -95,7 +95,7 @@ public:
 	void Stereo( tbool bStereo) { mFile_Item.Stereo(bStereo);};
 	
 	//! take name
-	std::string Name(){ return mFile_Item.Name();};
+	std::string Name(){ return mFile_Item.Disk_Name();};
 	
 	//! left take name
 	std::string Left_Name(){ return mFile_Item.Left_Name();};
@@ -113,7 +113,14 @@ public:
 	//! right peek file path
 	std::string Right_Peak_File_Path(){ return mFile_Item.Stereo() ? mFile_Item.Right_Peak_File_Path(): "";};
 	
+	//! get uuid
 	std::string Get_UUID(){ return mFile_Item.Get_UUID(); };
+	
+	//! get screen name
+	std::string Screen_Name(){ return mFile_Item.Screen_Name(); };
+	
+	//! set screen name
+	void Screen_Name(std::string sScreen_Name){ mFile_Item.Screen_Name(sScreen_Name); };
 	
 	
 	

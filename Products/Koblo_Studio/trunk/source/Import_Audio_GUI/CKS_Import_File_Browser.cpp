@@ -60,7 +60,7 @@ void CKS_Import_File_Browser::Build_File_List(const std::string& sPath)
 			std::list<std::string>::iterator itVolumes = listVolumes.begin();
 			for ( ; itVolumes != listVolumes.end(); itVolumes++) {
 				CKSFile_Item File_Item;
-				File_Item.Name(*itVolumes);
+				File_Item.Disk_Name(*itVolumes);
 				File_Item.Is_A_Dir(true);
 				
 				mFile_Items.push_back(File_Item);
@@ -197,7 +197,7 @@ void CKS_Import_File_Browser::EventValueChange(ge::IControl* pControl, tint32 iV
 
 					std::string sPath;
 					sPath = File_Item.Source_Path();
-					sPath += File_Item.Name();
+					sPath += File_Item.Disk_Name();
 					
 					if (bDoubleClick) {
 						mpImportGUI->BrowseToDir(sPath);
@@ -214,7 +214,7 @@ void CKS_Import_File_Browser::EventValueChange(ge::IControl* pControl, tint32 iV
 					}
 					else {
 						// present file info on the gui
-						Display_File_Info(File_Item.Name() + File_Item.Extencion());
+						Display_File_Info(File_Item.Disk_Name() + File_Item.Extencion());
 					}
 				}
 			}
