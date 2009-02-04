@@ -17,6 +17,14 @@ CTake_Data::~CTake_Data()
 	
 }
 
+/*
+CTake_Data CTake_Data::operator=(const CTake_Data& DataNew)
+{
+	return *this;
+}
+*/
+
+
 std::string CTake_Data::Disk_Name( tuint32 uiChannel)
 {
 

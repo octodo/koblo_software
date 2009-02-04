@@ -29,6 +29,8 @@ public:
 	//! Constructor
 	CSample_Data();
 	
+	CSample_Data(const CSample_Data& DataOld);
+
 	//! Destructor
 	virtual ~CSample_Data();
 	
@@ -40,13 +42,13 @@ public:
 	//! get sample name
 	std::string Name(){ return sName;};
 	//! get a pointer to the takes
-	CTake_Data* Get_Take_Data(){ return &mTake_Data;};
+	CTake_Data* Get_Take_Data(){ return mpTake_Data;};
 	
 protected:
 	
 
 	//!!! TO DO turn this in to a stdlist of takes later
-	CTake_Data mTake_Data;
+	CTake_Data* mpTake_Data;
 	
 	
 };

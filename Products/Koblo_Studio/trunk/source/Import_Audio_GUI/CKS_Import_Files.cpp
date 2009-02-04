@@ -73,7 +73,7 @@ tbool CKS_Import_Files::Add_File( std::string sPathName)
 		
 		CKSFile_Item& rInfo = *it;
 		
-		if (stricmp(File_Item.Name().c_str(), rInfo.Name().c_str()) == 0)
+		if (stricmp(File_Item.Disk_Name().c_str(), rInfo.Disk_Name().c_str()) == 0)
 			// Same name - that won't do
 			return false;
 		
@@ -173,7 +173,7 @@ void CKS_Import_Files::UpdateListBox()
 */
 		CKSFile_Item Info = *it;
 
-		sName += std::string(Info.Name());
+		sName += std::string(Info.Disk_Name());
 
 		sEnum += sName;
 	}

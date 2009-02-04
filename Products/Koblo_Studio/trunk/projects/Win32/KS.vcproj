@@ -694,6 +694,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\DSP\CSample_Data.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\DSP\CTake_Data.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\CX3DisplayConverter.h"
 				>
 			</File>

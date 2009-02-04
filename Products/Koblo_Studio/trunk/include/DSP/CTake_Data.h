@@ -8,6 +8,9 @@ public:
 
 	//! Destructor
 	virtual ~CTake_Data();
+	
+	//! Assignment operator
+//	CTake_Data operator=(const CTake_Data&);
 
 	//! get the Sample UUID
 	void Set_Description(const std::string& sDescription ){msDescription =  sDescription;};
