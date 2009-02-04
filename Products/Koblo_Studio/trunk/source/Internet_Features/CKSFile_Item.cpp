@@ -46,12 +46,12 @@ void CKSFile_Item::Load(std::string sDisk_Name)
 	
 
 }
-
+/*
 std::string  CKSFile_Item::Destination_Path()
 {
 	return gpApplication->Wave_File_Folder();
 }
-
+*/
 std::string CKSFile_Item::Left_Path()
 {
 	std::string sPathL = gpApplication->Wave_File_Folder() + Get_UUID() + "_01.wav";

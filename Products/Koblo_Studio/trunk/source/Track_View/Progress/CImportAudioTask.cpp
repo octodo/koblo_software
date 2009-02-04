@@ -313,8 +313,8 @@ tbool CImportAudioTask::DoWork()
 				else
 				 */{
 				//	msDstPathName_ForCopy = sCompressedDest + msClipName + msExt;
-					IFile::DeleteFile(mFile_Item.Destination_Path().c_str());
-					if (IFile::CopyFile(mFile_Item.Destination_Path().c_str(), mFile_Item.Path().c_str(), (mFile_Item.Get_UUID() + mFile_Item.Extencion()).c_str())) {
+					IFile::DeleteFile(gpApplication->Wave_File_Folder().c_str()); //!!! destination path????
+					if (IFile::CopyFile(gpApplication->Wave_File_Folder().c_str(), mFile_Item.Path().c_str(), (mFile_Item.Get_UUID() + mFile_Item.Extencion()).c_str())) {
 						// Go to next task
 						miAudioImportOrder++;
 					}
