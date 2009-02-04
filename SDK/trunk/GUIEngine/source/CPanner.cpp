@@ -317,7 +317,9 @@ tbool CPanner::OnMouse(EMouseMsg MouseMsg, const SPos& posAbsMouse)
 	
 	if (MouseMsg == LeftButtonDblClk) {
 		if (rctAbsArea.Inside(posAbsMouse) == true) {
+			EditBegin();
 			SetToDefaultValue();
+			EditEnd();
 			return true;
 		}
 	}
@@ -359,6 +361,7 @@ tbool CPanner::OnMouse(EMouseMsg MouseMsg, const SPos& posAbsMouse)
 			miMouseMoveCounter = 0;
 			mbFineAdjustLast = GetParentWindow()->FineAdjustPressed();
 			dynamic_cast<CWindow*>(GetParentWindow())->GetMouseFocus(this);
+			EditBegin();
 			return true;
 			// .. Lasse
 		}
@@ -373,6 +376,7 @@ tbool CPanner::OnMouse(EMouseMsg MouseMsg, const SPos& posAbsMouse)
 				MoveHandleAbsPos(posAbsMouse.iX, posAbsMouse.iY);
 				mDragState = PannerDragNormal;
 				dynamic_cast<CWindow*>(GetParentWindow())->ReleaseMouseFocus();
+				EditEnd();
 				return true;
 			}
 		}
@@ -383,6 +387,7 @@ tbool CPanner::OnMouse(EMouseMsg MouseMsg, const SPos& posAbsMouse)
 			dynamic_cast<CWindow*>(GetParentWindow())->ReleaseMouseFocus();
 			GetParentWindow()->SetMousePos(mPosDragStart);
 			GetParentWindow()->ShowMouse();
+			EditEnd();
 			return true;
 		}
 		// .. Lasse

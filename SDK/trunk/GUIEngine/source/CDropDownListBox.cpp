@@ -190,7 +190,9 @@ void CDropDownListBox::EventValueChange(IControl *pSender, tint32 iValueNew)
 			if (iValueNew != -1) {
 				pPopup->SetVisible(false);
 
+				EditBegin();
 				SetValue(iValueNew, true);
+				EditEnd();
 
 				dynamic_cast<CWindow*>(GetParentWindow())->ReleaseMouseFocus();
 				dynamic_cast<CWindow*>(GetParentWindow())->ControlAlwaysOnTopDone();

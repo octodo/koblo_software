@@ -186,7 +186,9 @@ tbool CMultiStateButton::OnMouse(EMouseMsg MouseMsg, const SPos& Pos)
 			}
 			*/
 			if (mbEventMouseUp == false) {
+				EditBegin();
 				SetValue(mpState);
+				EditEnd();
 			}
 			//SetValue(iValue);
 
@@ -209,7 +211,9 @@ tbool CMultiStateButton::OnMouse(EMouseMsg MouseMsg, const SPos& Pos)
 		if (GetRect().Inside(Pos)) {
 			if (mbButtonHit) {
 				if (mbEventMouseUp) {
+					EditBegin();
 					SetValue(mpState);
+					EditEnd();
 				}
 				mbButtonHit = false;
 			}

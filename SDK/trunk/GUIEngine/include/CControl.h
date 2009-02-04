@@ -303,5 +303,11 @@ protected:
 
 	//! Redraws control, if visible
 	virtual void Redraw();
+
+	//! Notifies event listeners
+	virtual void EditBegin();
+
+	//! Notifies event listeners
+	virtual void EditEnd();
 };
 

@@ -28,6 +28,12 @@ public:
 		\param pEventData [in]: Pointer to event data (even specific)
 	*/
 	virtual void EventGeneric(IControl *pSender, void *pEventData) = 0;
+
+	//! Called when the user starts editing control (i.e. clicks mouse down on knob etc.)
+	virtual void EventEditBegin() = 0;
+
+	//! Called when the user stops editing control (i.e. releases mouse after turning knob etc.)
+	virtual void EventEditEnd() = 0;
 };
 
 

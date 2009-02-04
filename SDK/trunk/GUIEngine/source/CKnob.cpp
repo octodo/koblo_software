@@ -107,7 +107,9 @@ tbool CKnob::OnMouse(EMouseMsg MouseMsg, const SPos& Pos)
 
 	if (MouseMsg == LeftButtonDblClk) {
 		if (rctThis.Inside(Pos) == true) {
+			EditBegin();
 			SetToDefaultValue();
+			EditEnd();
 			return true;
 		}
 	}
@@ -128,6 +130,7 @@ tbool CKnob::OnMouse(EMouseMsg MouseMsg, const SPos& Pos)
 			miMouseMoveCounter = 0;
 			mbFineAdjustLast = GetParentWindow()->FineAdjustPressed();
 			dynamic_cast<CWindow*>(GetParentWindow())->GetMouseFocus(this);
+			EditBegin();
 			return true;
 		}
 
@@ -141,6 +144,7 @@ tbool CKnob::OnMouse(EMouseMsg MouseMsg, const SPos& Pos)
 			dynamic_cast<CWindow*>(GetParentWindow())->ReleaseMouseFocus();
 			GetParentWindow()->SetMousePos(mPosDragStart);
 			GetParentWindow()->ShowMouse();
+			EditEnd();
 			return true;
 		}
 	}

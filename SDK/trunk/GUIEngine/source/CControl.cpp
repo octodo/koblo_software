@@ -599,6 +599,24 @@ void CControl::OnTimer()
 	}
 }
 
+void CControl::EditBegin()
+{
+	std::list<IEventReceiver*>::iterator it = mListeners.begin();
+	for (; it != mListeners.end(); it++) {
+		IEventReceiver* pListener = *it;
+		pListener->EventEditBegin();
+	}
+}
+
+void CControl::EditEnd()
+{
+	std::list<IEventReceiver*>::iterator it = mListeners.begin();
+	for (; it != mListeners.end(); it++) {
+		IEventReceiver* pListener = *it;
+		pListener->EventEditEnd();
+	}
+}
+
 // --------------------------------------------------
 	// Drawing primitives
 // --------------------------------------------------

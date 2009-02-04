@@ -156,7 +156,9 @@ void CTextList::SetText(const tchar* pszText)
 
 		// Set value
 		if (iNewIndex!=GetValue()) {
+			EditBegin();
 			SetValue(iNewIndex);
+			EditEnd();
 			bRedraw = true;
 		}
 	}
@@ -392,7 +394,9 @@ tbool CTextList::OnMouse(EMouseMsg MouseMsg, const SPos& Pos)
 					}
 				}
 
+				EditBegin();
 				SetValue(miValueDragStart + iPositionDelta);
+				EditEnd();
 				miEditCurIndex = GetValue();
 				msTextCurEditing = (char*)_GetText(miEditCurIndex);
 				SetText((tchar*)msTextCurEditing.c_str());
