@@ -900,6 +900,25 @@ size_t CXloader::WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb)
 } // WriteFunction_ForReply
 
 
+int Static_ProgressFunction(void* p, double dDownloadSize, double dDownloaded, double dUploadSize, double dUploaded)
+{
+	CXloader* pthis = (CXloader*)p;
+	return pthis->ProgressFunction(dDownloadSize, dDownloaded, dUploadSize, dUploaded);
+} // Static_ProgressFunction
+
+
+int CXloader::ProgressFunction(double dDownloadSize, double dDownloaded, double dUploadSize, double dUploaded)
+{
+	muiUploadProgress	= (tuint64)dUploaded;
+	muiUploadSize		= (tuint64)dUploadSize;
+	muiReplyProgress	= (tuint64)dDownloaded;
+	muiReplySize		= (tuint64)dDownloadSize;
+	
+	// Success
+	return 0;
+} // ProgressFunction
+
+
 void CXloader::ZapReplyBuffer()
 {
 	while (++miLockLevel_ForReplyBuffer != 1) {
@@ -1020,6 +1039,16 @@ tbool CXloader::OpenConnection()
 			if (!SetOpt(CURLOPT_SEEKDATA, "CURLOPT_SEEKDATA", this))
 				return false;
 			*/
+
+			// Set callback function for getting progress info
+			if (!SetOpt(CURLOPT_PROGRESSFUNCTION, "CURLOPT_PROGRESSFUNCTION", (void*)(&Static_ProgressFunction)))
+				return false;
+			// Set pointer so callback function for progress info can find correct contents
+			if (!SetOpt(CURLOPT_PROGRESSDATA, "CURLOPT_PROGRESSDATA", this))
+				return false;
+			// Enable progress info (notice the upside/down bool...)
+			if (!SetOpt(CURLOPT_NOPROGRESS, "CURLOPT_NOPROGRESS", false))
+				return false;
 		}
 
 		// Signal to use a POST verb + use multi-part form message body + append message body
