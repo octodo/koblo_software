@@ -152,6 +152,7 @@ tbool CImportAudioTask::Init(CTake_Data* pTake_Data )
 		return false;
 	}
 	*/
+	/*
 	tchar pszErrMsgBuff[1024];
 	*pszErrMsgBuff = '\0';
 	ac::IDecoder* pDecoder = ac::IDecoder::Create(mpSrc_File, pszErrMsgBuff, 1024);
@@ -170,8 +171,9 @@ tbool CImportAudioTask::Init(CTake_Data* pTake_Data )
 		msExtendedError = std::string("Error testing file: ") + pszErrMsg;
 		return false;
 	}
-	meCodec = pDecoder->GetAudioCodec();
-	mbSrcLossyCompressed = pDecoder->mbIsLossyCompression;
+	 */
+	meCodec = ac::geAudioCodecWave;
+	mbSrcLossyCompressed = false;
 	meSrcQuality = pDecoder->meLowestInputQuality;
 	
 	mFile_Item.Stereo(pDecoder->miLastInputChannels == 2); //
