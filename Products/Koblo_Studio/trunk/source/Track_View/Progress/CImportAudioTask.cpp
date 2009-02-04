@@ -141,18 +141,22 @@ tbool CImportAudioTask::Init(CTake_Data* pTake_Data )
 	*/
 	
 	
-	mpSrc_File = IFile::Create();
-	if (mpSrc_File == NULL) {
-		msExtendedError = std::string("IFile::Create() => NULL for '") + mFile_Item.Screen_Name() + "' (out of memory?).";
+	CAutoDelete<IFile> pfile_L(IFile::Create());
+	CAutoDelete<IFile> pfile_R(IFile::Create());
+	tbool bStereo = (stricmp(pTake_Data->Mode().c_str(), "stereo") == 0);
+	std::string s_L = pTake_Data->Left_Wave_File_Path();
+	std::string s_R = pTake_Data->Right_Wave_File_Path();
+	if (!pfile_L->Open(s_L.c_str(), IFile::FileRead)) {
+		msExtendedError = std::string("Can't open file '") + s_L.c_str() + "'.";
 		return false;
 	}
-	/*
-	if (!mpSrc_File->Open(pFile_Item->Source_Path().c_str(), IFile::FileRead)) {
-		msExtendedError = std::string("Can't open file '") + mFile_Item.Screen_Name() + "'.";
-		return false;
+	if (bStereo) {
+		if (!pfile_R->Open(s_R.c_str(), IFile::FileRead)) {
+			msExtendedError = std::string("Can't open file '") + s_R.c_str() + "'.";
+			return false;
+		}
 	}
-	*/
-	/*
+	
 	tchar pszErrMsgBuff[1024];
 	*pszErrMsgBuff = '\0';
 	ac::IDecoder* pDecoder = ac::IDecoder::Create(mpSrc_File, pszErrMsgBuff, 1024);
@@ -163,29 +167,31 @@ tbool CImportAudioTask::Init(CTake_Data* pTake_Data )
 			msExtendedError = std::string("Unknown format file '") + mFile_Item.Screen_Name() + "'.";
 		return false;
 	}
-	// We have to do a TestFile here - even though it will fail if it causes mp3
-	// LAME engine to be invoked from two different threads
-	if (!pDecoder->TestFile(mpSrc_File)) {
+	if (!pDecoder->TestFile(pfile_L)) {
 		tchar pszErrMsg[1024];
 		pDecoder->GetErrMsg(pszErrMsg, 1024, true);
 		msExtendedError = std::string("Error testing file: ") + pszErrMsg;
 		return false;
 	}
-	 */
+	if (bStereo) {
+		if (!pDecoder->TestFile(pfile_R)) {
+			tchar pszErrMsg[1024];
+			pDecoder->GetErrMsg(pszErrMsg, 1024, true);
+			msExtendedError = std::string("Error testing file: ") + pszErrMsg;
+			return false;
+		}
+	}
 	meCodec = ac::geAudioCodecWave;
 	mbSrcLossyCompressed = false;
 	meSrcQuality = pDecoder->meLowestInputQuality;
+	miBitWidth = (meSrcQuality == ac::geQualityLossless16) ? 16 : 24;
 	
-	mFile_Item.Stereo(pDecoder->miLastInputChannels == 2); //
-	if (mbSrcLossyCompressed)
-		miBitWidth = 24; //pDecoder->miOutputBitWidth;
-	else
-		miBitWidth = (meSrcQuality == ac::geQualityLossless16) ? 16 : 24;
+	mFile_Item.Stereo(bStereo); //
+
 	// First close decoder, so it won't crash later
 	pDecoder->Destroy();
 	pDecoder = NULL;
-	
-	
+		
 	//	mbSplit = false;
 	
 	return true;
