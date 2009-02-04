@@ -1110,17 +1110,21 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			break;
 			
 		case ID_FILE_SAVE:
-			try {
-				if (gpApplication->Project_Folder().length() == 0) 
-					gpApplication->ShowMessageBox("No Project to Save", "Sorry");
-				else
-					Save_Project_As_XML_File_To_Disk();
+if(mbKSProject_Imported){
+			mbKSProject_Imported = false;
+			if (!Save_As()) {
+				LoadSaveErrDlg("Error saving project");
 			}
-			catch (IException* pEx) {
-				// Display reason
-				LoadSaveErrDlg(pEx->GetFullDescription());
-			}
-			break;
+		}
+		else{
+		// Save
+			if (gpApplication->Project_Folder().length() == 0) 
+				ShowMessageBox("No Project to Save", "Sorry");
+		
+			else
+				Save_Project();
+		}
+		break;
 			
 		case ID_FILE_SAVE_AS:
 			try {

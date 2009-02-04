@@ -36,7 +36,7 @@ void CVST2KSPIGUI::GetSize(tuint32* piSizeX, tuint32* piSizeY)
 		mpVSTEffect = dynamic_cast<CVST2KSPIPlugIn*>(GetPlugIn())->GetEffect();
 	}
 
-	ERect* pRect;
+	ERect* pRect = new ERect();
 	mpVSTEffect->dispatcher(mpVSTEffect, effEditGetRect, 0, 0, &pRect, 0.0);
 
 	*piSizeX = pRect->right;

@@ -29,6 +29,8 @@ public:
 	//! Constructor
 	CSample_Data();
 	
+	CSample_Data(const CSample_Data& DataOld);
+
 	//! Destructor
 	virtual ~CSample_Data();
 	
