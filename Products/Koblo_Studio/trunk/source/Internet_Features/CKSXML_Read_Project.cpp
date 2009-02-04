@@ -1046,9 +1046,6 @@ void CKSXML_Read_Project::Insert_Take(CTake_Data* pTake_Data)
 	if (gpApplication->IsPlayingOrRecording())  
 		gpApplication->PlaybackStop();
 	
-	//CImportAudioTask::EStereoBehavior eBehave = CImportAudioTask::geStereoDoKeep;
-	//CImportAudioTask::EStereoBehavior eBehave = CImportAudioTask::geStereoDoAsk;
-	
 	CKSFile_Item File_Item;
 	
 	File_Item.Source_Path(sFull_Path);

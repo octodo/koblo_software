@@ -68,14 +68,14 @@ void CImportAudioTask::Destroy()
 	delete dynamic_cast<CImportAudioTask*>(this);
 } // Destroy
 
-// new one
-tbool CImportAudioTask::Init(CKSFile_Item* pFile_Item /*, tbool bDoesWaveAlreadyExist , EStereoBehavior eStereoBehavior , tbool bForceOriginalIsLossy*/ )
+
+tbool CImportAudioTask::Init(CKSFile_Item* pFile_Item )
 {
 	// prepare all the different filenames and paths
 	if( mFile_Item.Import( pFile_Item->Source_Path() ) == false)
-	   return false; 
+		return false; 
 	
-
+	
 	
 	mpSrc_File = IFile::Create();
 	if (mpSrc_File == NULL) {
@@ -108,7 +108,7 @@ tbool CImportAudioTask::Init(CKSFile_Item* pFile_Item /*, tbool bDoesWaveAlready
 	meCodec = pDecoder->GetAudioCodec();
 	mbSrcLossyCompressed = pDecoder->mbIsLossyCompression;
 	meSrcQuality = pDecoder->meLowestInputQuality;
-
+	
 	mFile_Item.Stereo(pDecoder->miLastInputChannels == 2); //
 	if (mbSrcLossyCompressed)
 		miBitWidth = 24; //pDecoder->miOutputBitWidth;
@@ -119,7 +119,63 @@ tbool CImportAudioTask::Init(CKSFile_Item* pFile_Item /*, tbool bDoesWaveAlready
 	pDecoder = NULL;
 	
 	
-//	mbSplit = false;
+	//	mbSplit = false;
+	
+	return true;
+} // Init
+
+tbool CImportAudioTask::Init(CTake_Data* pTake_Data )
+{
+	/*
+	// prepare all the different filenames and paths
+	if( mFile_Item.Import( pFile_Item->Source_Path() ) == false)
+		return false; 
+	
+	
+	
+	mpSrc_File = IFile::Create();
+	if (mpSrc_File == NULL) {
+		msExtendedError = std::string("IFile::Create() => NULL for '") + mFile_Item.Screen_Name() + "' (out of memory?).";
+		return false;
+	}
+	if (!mpSrc_File->Open(pFile_Item->Source_Path().c_str(), IFile::FileRead)) {
+		msExtendedError = std::string("Can't open file '") + mFile_Item.Screen_Name() + "'.";
+		return false;
+	}
+	
+	tchar pszErrMsgBuff[1024];
+	*pszErrMsgBuff = '\0';
+	ac::IDecoder* pDecoder = ac::IDecoder::Create(mpSrc_File, pszErrMsgBuff, 1024);
+	if (!pDecoder) {
+		if (*pszErrMsgBuff != '\0')
+			msExtendedError = pszErrMsgBuff;
+		else
+			msExtendedError = std::string("Unknown format file '") + mFile_Item.Screen_Name() + "'.";
+		return false;
+	}
+	// We have to do a TestFile here - even though it will fail if it causes mp3
+	// LAME engine to be invoked from two different threads
+	if (!pDecoder->TestFile(mpSrc_File)) {
+		tchar pszErrMsg[1024];
+		pDecoder->GetErrMsg(pszErrMsg, 1024, true);
+		msExtendedError = std::string("Error testing file: ") + pszErrMsg;
+		return false;
+	}
+	meCodec = pDecoder->GetAudioCodec();
+	mbSrcLossyCompressed = pDecoder->mbIsLossyCompression;
+	meSrcQuality = pDecoder->meLowestInputQuality;
+	
+	mFile_Item.Stereo(pDecoder->miLastInputChannels == 2); //
+	if (mbSrcLossyCompressed)
+		miBitWidth = 24; //pDecoder->miOutputBitWidth;
+	else
+		miBitWidth = (meSrcQuality == ac::geQualityLossless16) ? 16 : 24;
+	// First close decoder, so it won't crash later
+	pDecoder->Destroy();
+	pDecoder = NULL;
+	*/
+	
+	//	mbSplit = false;
 	
 	return true;
 } // Init

@@ -78,10 +78,9 @@ public:
 
 	virtual void Destroy();
 
-	tbool Init( CKSFile_Item* pFile_Item
-			/*	tbool bDoesWaveAlreadyExist
-				EStereoBehavior eStereoBehavior 
-				tbool bForceOriginalIsLossy */);
+	tbool Init( CKSFile_Item* pFile_Item);
+	
+	tbool Init( CTake_Data* pTake_Data);
 	
 //	void Init_InsertAsRegionAfterImport(tint32 iTrackID, tint64 iTrackPos);
 
