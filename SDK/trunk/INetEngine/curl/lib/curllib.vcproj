@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8,00"
 	Name="curllib"
-	ProjectGUID="{1CF5E6D2-86C1-4C31-A09F-154D6BE40523}"
+	ProjectGUID="{87EE9DA4-DE1E-4448-8324-183C98DCA588}"
 	RootNamespace="curllib"
 	>
 	<Platforms>
