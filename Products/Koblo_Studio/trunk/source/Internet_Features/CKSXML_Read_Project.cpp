@@ -1039,19 +1039,11 @@ void CKSXML_Read_Project::Insert_Take(CTake_Data* pTake_Data)
 {
 	CImportAudioTask* pImportAudioTask = new CImportAudioTask();
 	
-	
-	std::string sWave_File_Folder	=	gpApplication->Wave_File_Folder();
-	std::string sFull_Path			=	sWave_File_Folder + pTake_Data->Get_UUID() + "_01.wav";
-	
 	if (gpApplication->IsPlayingOrRecording())  
 		gpApplication->PlaybackStop();
 	
-	CKSFile_Item File_Item;
-	
-	File_Item.Source_Path(sFull_Path);
-	
 	//tbool bSuccess = pImportAudioTask->Init( sFull_Path, true, CImportAudioTask::geStereoDoKeep, false);
-	tbool bSuccess = pImportAudioTask->Init( &File_Item);
+	tbool bSuccess = pImportAudioTask->Init( pTake_Data);
 	
 	// overwrite screen name
 	pImportAudioTask->Screen_Name( pTake_Data->Screen_Name() );

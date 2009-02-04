@@ -126,11 +126,19 @@ tbool CImportAudioTask::Init(CKSFile_Item* pFile_Item )
 
 tbool CImportAudioTask::Init(CTake_Data* pTake_Data )
 {
+	mbDstIsAlreadyThere = true;
+	mFile_Item.Set_UUID(pTake_Data->Get_UUID() );
+	mFile_Item.Screen_Name(pTake_Data->Screen_Name() );
+//	mFile_Item.Disk_Name(pTake_Data->Disk_Name() );
+	
+	
+	
+	
 	/*
 	// prepare all the different filenames and paths
 	if( mFile_Item.Import( pFile_Item->Source_Path() ) == false)
 		return false; 
-	
+	*/
 	
 	
 	mpSrc_File = IFile::Create();
@@ -138,11 +146,12 @@ tbool CImportAudioTask::Init(CTake_Data* pTake_Data )
 		msExtendedError = std::string("IFile::Create() => NULL for '") + mFile_Item.Screen_Name() + "' (out of memory?).";
 		return false;
 	}
+	/*
 	if (!mpSrc_File->Open(pFile_Item->Source_Path().c_str(), IFile::FileRead)) {
 		msExtendedError = std::string("Can't open file '") + mFile_Item.Screen_Name() + "'.";
 		return false;
 	}
-	
+	*/
 	tchar pszErrMsgBuff[1024];
 	*pszErrMsgBuff = '\0';
 	ac::IDecoder* pDecoder = ac::IDecoder::Create(mpSrc_File, pszErrMsgBuff, 1024);
@@ -173,7 +182,7 @@ tbool CImportAudioTask::Init(CTake_Data* pTake_Data )
 	// First close decoder, so it won't crash later
 	pDecoder->Destroy();
 	pDecoder = NULL;
-	*/
+	
 	
 	//	mbSplit = false;
 	
