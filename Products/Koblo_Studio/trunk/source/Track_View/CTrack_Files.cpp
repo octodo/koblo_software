@@ -64,14 +64,27 @@ void CTrack_Files::EventGeneric(ge::IControl* pControl, void* pEventData)
 void CTrack_Files::HandleMsg(SMsg* pMsg)
 {
 	if (pMsg->iOpcode == Msg_Update_File_List) {
-		std::list<CSample_Data*>* pList = (std::list<CSample_Data*>*)(pMsg->pDataIn);
+		
+		std::string sText;
+		std::list<CSample_Data>::iterator it = gpApplication->Get_Sample_Data_List_Begin();
+		for ( ; it != gpApplication->Get_Sample_Data_List_End(); it++) {
+			
+			sText += (*it).Name();
+			sText += '@';
+		}
+		
+		
+		/*
+		
+		std::list<CSample_Data>* Sample_Data = (std::list<CSample_Data>*)(pMsg->pDataIn);
 
 		std::string sText;
-		std::list<CSample_Data*>::const_iterator it = pList->begin();
+		std::list<CSample_Data*>::const_iterator it = Sample_Data->begin();
 		for (; it != pList->end(); it++) {
 			sText += (*it)->Name();
 			sText += '@';
 		}
+		 */
 		sText = sText.substr(0, sText.size() - 1);
 
 		ge::IListBox* pListBox = dynamic_cast<ge::IListBox*>(GetControl(giCtrl_File_List));

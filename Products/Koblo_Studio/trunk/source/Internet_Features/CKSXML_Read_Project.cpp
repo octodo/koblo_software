@@ -665,7 +665,7 @@ void CKSXML_Read_Project::Read_Track_Region(TiXmlElement* pElement, tint32 iTrac
 			}
 			else if (stricmp("fade", pChild->Value()) == 0) {
 				
-				Read_Track_Region_Fade(pChild->ToElement());
+				Read_Track_Region_Fade(pChild->ToElement(), &Region_Data);
 				
 			}
 		}
@@ -674,7 +674,7 @@ void CKSXML_Read_Project::Read_Track_Region(TiXmlElement* pElement, tint32 iTrac
 	mRegion_Data_List.push_back(Region_Data);
 }
 
-void CKSXML_Read_Project::Read_Track_Region_Fade(TiXmlElement* pElement)
+void CKSXML_Read_Project::Read_Track_Region_Fade(TiXmlElement* pElement, CRegion_Data* pRegion_Data)
 {
 	if ( !pElement ) return ;
 	
@@ -685,13 +685,25 @@ void CKSXML_Read_Project::Read_Track_Region_Fade(TiXmlElement* pElement)
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("in", pChild->Value()) == 0) {
-
-				Set_DAW_Parameter(pChild, giTinyXml_Type_Int, 0, 0);
+				
+				TiXmlNode* pValue = pChild->FirstChild();
+				
+				if(pValue) {
+					std::string sValue = pValue->Value();
+					tuint uiValue = atoi(sValue.c_str());
+					pRegion_Data->Fade_In_Duration(uiValue);
+				}
 
 			}
 			else if (stricmp("out", pChild->Value()) == 0) {
 
-				Set_DAW_Parameter(pChild, giTinyXml_Type_Int, 0, 0);
+				TiXmlNode* pValue = pChild->FirstChild();
+				
+				if(pValue) {
+					std::string sValue = pValue->Value();
+					tuint uiValue = atoi(sValue.c_str());
+					pRegion_Data->Fade_Out_Duration(uiValue);
+				}
 
 			}
 
@@ -1056,34 +1068,18 @@ void CKSXML_Read_Project::Insert_Regions()
 		if(sName.size() ) {
 		
 
-			
-			tint32 iTrack					=	(*itRegion_Data).Track_ID();
-			tuint64 uiTrack_Pos				=	(*itRegion_Data).Possition();
-			tuint64 uiSample_Offset			=	(*itRegion_Data).Sample_Offset();
-			tuint64 uiSample_Duration		=	(*itRegion_Data).Sample_Duration();
-			tuint64 uiFade_In_Duration		=	0;
-			tuint64 uiFade_Out_Duration		=	0;
-			tfloat32 fVolume				=	(*itRegion_Data).Volume();
 		
 			gpDSPEngine->CreateRegion( sName.c_str(), 
-									  iTrack,
-									  uiTrack_Pos, 
-									  uiSample_Offset,
-									  uiSample_Duration,
-									  uiFade_In_Duration,//(*it).Fade_In_Duration(),
-									  uiFade_Out_Duration,//(*it).Fade_Out_Duration(),
-									  fVolume	);
+									  (*itRegion_Data).Track_ID(),
+									  (*itRegion_Data).Possition(), 
+									  (*itRegion_Data).Sample_Offset(),
+									  (*itRegion_Data).Sample_Duration(),
+									  (*itRegion_Data).Fade_In_Duration(),
+									  (*itRegion_Data).Fade_Out_Duration(),
+									  (*itRegion_Data).Volume()	);
 		}
 		
-		/*
-		 const std::string& sSoundListItemName, 
-		 tint32 iTrack, 
-		 tuint64 uiTrack_Pos, 
-		 tuint64 uiSample_Offset, 
-		 tuint64 uiSample_Duration,
-		 tuint64 uiFade_In_Duration,
-		 tuint64 uiFade_Out_Duration,
-		 tfloat32 fVolume)*/
+		
 		
 		 
 		

@@ -118,7 +118,7 @@ public:
 	//void Read_Track_Aux(TiXmlElement* pElement, tint32 iTrackID);
 	void Read_Track_Insert(TiXmlElement* pElement, tint32 iTrackID);
 	void Read_Track_Region(TiXmlElement* pElement, tint32 iTrackID);
-	void Read_Track_Region_Fade(TiXmlElement* pElement);
+	void Read_Track_Region_Fade(TiXmlElement* pElement, CRegion_Data* pRegion_Data);
 	
 	void Read_Bus(TiXmlElement* pElement);
 	void Read_Bus_Out(TiXmlElement* pElement);

@@ -293,9 +293,9 @@ public:
 	virtual void Set_Selected_Track(tint32 iID){ miSelected_Track = iID;};
 
 
-	std::list<CSample_Data*> Get_Sample_Data_List(){return mSample_Data_List;}
-	std::list<CSample_Data*>::const_iterator Get_Sample_Data_List() const {return mSample_Data_List.begin();}
-	std::list<CSample_Data*>::const_iterator Get_Sample_Data_List_End() const {return mSample_Data_List.end();}
+	std::list<CSample_Data> Get_Sample_Data_List(){return mSample_Data_List;}
+	std::list<CSample_Data>::iterator Get_Sample_Data_List_Begin()  {return mSample_Data_List.begin();}
+	std::list<CSample_Data>::iterator Get_Sample_Data_List_End()  {return mSample_Data_List.end();}
 	
 	//! check if take is in use
 	tbool Take_Is_In_Use(std::string sName);
@@ -495,7 +495,7 @@ protected:
 		std::string sWavePathL, std::string sWavePathR,
 		CSample_Data* pSample_Info, ac::EQuality ePreviousQuality);
 
-	std::list<CSample_Data*> mSample_Data_List;
+	std::list<CSample_Data> mSample_Data_List;
 
 	virtual void UpdateGUIFileList();
 public:
