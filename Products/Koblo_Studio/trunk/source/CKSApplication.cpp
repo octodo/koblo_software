@@ -1110,21 +1110,21 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			break;
 			
 		case ID_FILE_SAVE:
-if(mbKSProject_Imported){
-			mbKSProject_Imported = false;
-			if (!Save_As()) {
-				LoadSaveErrDlg("Error saving project");
+			if(mbKSProject_Imported){
+				mbKSProject_Imported = false;
+				if (!Save_As()) {
+					LoadSaveErrDlg("Error saving project");
+				}
 			}
-		}
-		else{
-		// Save
-			if (gpApplication->Project_Folder().length() == 0) 
-				ShowMessageBox("No Project to Save", "Sorry");
-		
-			else
-				Save_Project();
-		}
-		break;
+			else{
+			// Save
+				if (gpApplication->Project_Folder().length() == 0) 
+					ShowMessageBox("No Project to Save", "Sorry");
+			
+				else
+					Save_Project();
+			}
+			break;
 			
 		case ID_FILE_SAVE_AS:
 			try {
@@ -1135,6 +1135,26 @@ if(mbKSProject_Imported){
 			catch (IException* pEx) {
 				// Display reason
 				LoadSaveErrDlg(pEx->GetFullDescription());
+			}
+			break;
+
+		case ID_FILE_CLOSEPROJECT:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_FILE_REVERTTOSAVED:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_FILE_IMPORTKSPROJECT:
+			{
+				mbKSProject_Imported = true;
+				MenuFileLoadProject();
+				Project_Name("Imported");
 			}
 			break;
 			
@@ -1198,11 +1218,34 @@ if(mbKSProject_Imported){
 			break;
 */
 
-		case ID_EDIT_DELETE:
+		case ID_EDIT_UNDO:
+			{
+				// Nothing here yet
+			}
 			break;
 
-		case ID_EDIT_DUPLICATE:
-			gpDSPEngine->Duplicate_Region();
+		case ID_EDIT_COPYREGION:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_EDIT_CUTSELECTION:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_EDIT_PASTEREGION:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_EDIT_DUPLICATEREGION:
+			{
+				gpDSPEngine->Duplicate_Region();
+			}
 			break;
 
 		case ID_EDIT_INVERSEREGION:
@@ -1235,6 +1278,13 @@ if(mbKSProject_Imported){
 				gpDSPEngine->LoopSelection();
 				CBasePane::SMsg Msg(Msg_Draw_Loop);
 				Send_Msg_To_All_Panes(&Msg);
+			}
+			break;
+
+		case ID_EDIT_LOOP:
+			{
+				tbool bTest = (gpApplication->GetGlobalParm(giParamID_Loop_On, giSectionGlobal) != 0);
+				gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Loop_On, de::IParameterManager::TypeGlobal, giSectionGlobal);
 			}
 			break;
 
@@ -1277,9 +1327,48 @@ if(mbKSProject_Imported){
 			}
 			break;
 
+		case ID_VIEW_ZOOM:
+			{
+				Zoom();
+			}
+			break;
+
+		case ID_VIEW_ZOOMIN:
+			{
+				tint32 iTest = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI) +1;
+				gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+			}
+			break;
+
+		case ID_VIEW_ZOOMOUT:
+			{
+				tint32 iTest = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI) -1;
+				gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+			}
+			break;
+
+		case ID_VIEW_JUMPTOMOUSE:
+			{
+				CBasePane::SMsg Msg(Msg_Go_To_Mouse);
+				Send_Msg_To_All_Panes(&Msg);
+			}
+			break;
+
 		case ID_SETTINGS_AUDIOSETUP:
 			{
 				MenuSetupAudio();
+			}
+			break;
+
+		case ID_SETTINGS_SETUSERNAMEANDPASSWORD:
+			{
+				Open_Username_And_Password_Dialog();
+			}
+			break;
+
+		case ID_SETTINGS_CLEARUSERNAMEANDPASSWORD:
+			{
+				Clear_Username_And_Password();
 			}
 			break;
 
@@ -1288,7 +1377,31 @@ if(mbKSProject_Imported){
 				Set_Project_License();
 			}
 			break;
-			
+
+		case ID_TOOLS_HAND:
+			{
+				gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Hand, giSectionGUI);
+			}
+			break;
+
+		case ID_TOOLS_TRIM:
+			{
+				gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Trim, giSectionGUI);
+			}
+			break;
+
+		case ID_TOOLS_SELECT:
+			{
+				gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Select, giSectionGUI);
+			}
+			break;
+
+		case ID_TOOLS_CUT:
+			{
+				gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Cut, giSectionGUI);
+			}
+			break;
+
 		case ID_APP_EXIT:
 		case IDM_EXIT:
 			::PostQuitMessage(0);
@@ -1542,7 +1655,7 @@ if(mbKSProject_Imported){
 		
 	}
 	//-------------------------------------------
-	// toos Menu
+	// tools Menu
 	//-------------------------------------------
 	else if (s.compare("Tools@Hand") == 0) {
 		gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Hand, giSectionGUI);
