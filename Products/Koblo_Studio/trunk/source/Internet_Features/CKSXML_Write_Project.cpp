@@ -939,7 +939,7 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		pRegion->LinkEndChild( pSample_Duration );
 		
 		// volume
-		tfloat fVolume = pRegion_DSP->Get_Volume();
+		tfloat fVolume = pRegion_DSP->Volume();
 		sprintf(pszBuff, "%f", fVolume);
 		
 		TiXmlElement* pVolume = new TiXmlElement( "volume" );
@@ -952,7 +952,7 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		pRegion->LinkEndChild( pFade );
 		
 		// fade in
-		tuint64 uiFade_In_Duration = pRegion_DSP->Get_Fade_In_Duration();
+		tuint64 uiFade_In_Duration = pRegion_DSP->Fade_In_Duration();
 		sprintf(pszBuff, "%d", uiFade_In_Duration);
 		
 		TiXmlElement* pFade_In_Duration = new TiXmlElement( "in" );
@@ -961,7 +961,7 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		pFade->LinkEndChild( pFade_In_Duration );
 		
 		// fade out
-		tuint64 uiFade_Out_Duration = pRegion_DSP->Get_Fade_Out_Duration();
+		tuint64 uiFade_Out_Duration = pRegion_DSP->Fade_Out_Duration();
 		sprintf(pszBuff, "%d", uiFade_Out_Duration);
 		
 		TiXmlElement* pFade_Out_Duration = new TiXmlElement( "out" );

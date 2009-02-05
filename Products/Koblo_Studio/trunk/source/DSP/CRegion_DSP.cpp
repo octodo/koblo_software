@@ -13,8 +13,8 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID,
 	mpTake_Data			= pTake_Data;
 	muiSample_Offset	= uiSample_Offset;
 	muiEndPos			= uiSample_Offset + uiSample_Duration - 1;
-	muiFadeInLength		= 0;
-	muiFadeOutLength	= 0;
+	muiFade_In_Duration		= 0;
+	muiFade_Out_Duration	= 0;
 	mppPeakFile[0]		= NULL;
 	mppPeakFile[1]		= NULL;
 	mppPeakFile[2]		= NULL;
@@ -34,7 +34,7 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID,
 		mppSample[1] = new CSample_DSP(mpTake_Data->Right_Wave_File_Path() );
 	}
 	
-	msSample_Name = mpSample_Data->Name();
+	msSample_Screen_Name = mpSample_Data->Name();
 	
 	if (uiSample_Duration == (tuint64)-1) {
 		muiEndPos = (mppSample[0]->GetLength() - uiSample_Offset) -1;
@@ -112,14 +112,14 @@ void CRegion_DSP::GetSamples(tfloat32** ppfData, tint32 iSamples)
 	if (miChannels == 1) {
 		mppSample[0]->GetSamples(ppfData[0], iSamples);
 		
-		if (muiFadeInLength) {
-			if (muiSample_Offset + muiFadeInLength > uiPosBufferStart) {
-				tfloat32 fOneDivFadeInLength = 1.0f / muiFadeInLength;
+		if (muiFade_In_Duration) {
+			if (muiSample_Offset + muiFade_In_Duration > uiPosBufferStart) {
+				tfloat32 fOneDivFadeInLength = 1.0f / muiFade_In_Duration;
 				tfloat32* pfData = ppfData[0];
 				
 				tint32 iSamplesToProcess = iSamples;
-				if (iSamplesToProcess > muiSample_Offset + muiFadeInLength - uiPosBufferStart) {
-					iSamplesToProcess = (tint32)(muiSample_Offset + muiFadeInLength  - uiPosBufferStart);
+				if (iSamplesToProcess > muiSample_Offset + muiFade_In_Duration - uiPosBufferStart) {
+					iSamplesToProcess = (tint32)(muiSample_Offset + muiFade_In_Duration  - uiPosBufferStart);
 				}
 				for (iSample = 0; iSample < iSamplesToProcess; iSample++) {
 					tfloat32 fVolume = ((tint32)uiPosBufferStart - muiSample_Offset + iSample) * fOneDivFadeInLength;
@@ -129,9 +129,9 @@ void CRegion_DSP::GetSamples(tfloat32** ppfData, tint32 iSamples)
 				}
 			}
 		}
-		if (muiFadeOutLength) {
-			if (muiEndPos - muiFadeOutLength < uiPosBufferStart + iSamples) {
-				tfloat32 fOneDivFadeOutLength = 1.0f / muiFadeOutLength;
+		if (muiFade_Out_Duration) {
+			if (muiEndPos - muiFade_Out_Duration < uiPosBufferStart + iSamples) {
+				tfloat32 fOneDivFadeOutLength = 1.0f / muiFade_Out_Duration;
 				tfloat32* pfData = ppfData[0];
 				tint32 iSample;
 				tint32 iSamplesToProcess = iSamples;
@@ -153,14 +153,14 @@ void CRegion_DSP::GetSamples(tfloat32** ppfData, tint32 iSamples)
 		mppSample[1]->GetSamples(ppfData[1], iSamples);
 		
 		
-		if (muiFadeInLength) {
-			if ( muiSample_Offset + muiFadeInLength > uiPosBufferStart) {
-				tfloat32 fOneDivFadeInLength = 1.0f / muiFadeInLength;
+		if (muiFade_In_Duration) {
+			if ( muiSample_Offset + muiFade_In_Duration > uiPosBufferStart) {
+				tfloat32 fOneDivFadeInLength = 1.0f / muiFade_In_Duration;
 				tfloat32* pfDataL = ppfData[0];
 				tfloat32* pfDataR = ppfData[1];
 				tint32 iSamplesToProcess = iSamples;
-				if (iSamplesToProcess > muiSample_Offset + muiFadeInLength - uiPosBufferStart) {
-					iSamplesToProcess = (tint32)(muiSample_Offset + muiFadeInLength  - uiPosBufferStart);
+				if (iSamplesToProcess > muiSample_Offset + muiFade_In_Duration - uiPosBufferStart) {
+					iSamplesToProcess = (tint32)(muiSample_Offset + muiFade_In_Duration  - uiPosBufferStart);
 				}
 				for (iSample = 0; iSample < iSamplesToProcess; iSample++) {
 					// apply fade in volume
@@ -174,9 +174,9 @@ void CRegion_DSP::GetSamples(tfloat32** ppfData, tint32 iSamples)
 			}
 		}
 		
-		if (muiFadeOutLength) {
-			if (muiEndPos - muiFadeOutLength < uiPosBufferStart + iSamples) {
-				tfloat32 fOneDivFadeOutLength = 1.0f / muiFadeOutLength;
+		if (muiFade_Out_Duration) {
+			if (muiEndPos - muiFade_Out_Duration < uiPosBufferStart + iSamples) {
+				tfloat32 fOneDivFadeOutLength = 1.0f / muiFade_Out_Duration;
 				tfloat32* pfDataL = ppfData[0];
 				tfloat32* pfDataR = ppfData[1];
 				tint32 iSample;

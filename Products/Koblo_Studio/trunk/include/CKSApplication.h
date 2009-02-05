@@ -312,6 +312,7 @@ public:
 	
 	tbool IsClipNameInUse(const tchar* pszClipName, const tchar* pszWaveNameL, const tchar* pszWaveNameR, std::string* psDescription);
 	void AddClipToList(CImportAudioTask* pImportInfo);
+	void AddClipToList(CTake_Data* pTake_Data);
 	
 
 	std::string GetProjDir() const {return msProjectFolder;}

@@ -39,30 +39,38 @@ public:
 	//! get screen name
 	std::string Screen_Name(){return msScreen_Name;};
 	
-	// set left peak file path
+	//! set left peak file path
 	void Left_Peak_File_Path(std::string sLeft_Peak_File_Path){ msLeft_Peak_File_Path = sLeft_Peak_File_Path;};
 	
-	// get left peak file path
+	//! get left peak file path
 	std::string Left_Peak_File_Path(){ return msLeft_Peak_File_Path;};
 	
-	// set left peak file path
+	//! set left peak file path
 	void Right_Peak_File_Path(std::string sRight_Peak_File_Path){ msRight_Peak_File_Path = sRight_Peak_File_Path;};
 	
-	// get left peak file path
+	//! get left peak file path
 	std::string Right_Peak_File_Path(){ return msRight_Peak_File_Path;};
 	
 	
-	// set left wave file path
+	//! set left wave file path
 	void Left_Wave_File_Path(std::string sLeft_Wave_File_Path){ msLeft_Wave_File_Path = sLeft_Wave_File_Path;};
 	
 	// get left wave file path
 	std::string Left_Wave_File_Path(){ return msLeft_Wave_File_Path;};
 	
-	// set right wave file path
+	//! set right wave file path
 	void Right_Wave_File_Path(std::string sRight_Wave_File_Path){ msRight_Wave_File_Path = sRight_Wave_File_Path;};
 	
-	// get right wave file path
+	//! get right wave file path
 	std::string Right_Wave_File_Path(){ return msRight_Wave_File_Path;};
+	
+	//! check if take is in a given folder
+	tbool In_Folder(std::string sFolder, std::string sExtencion);
+	
+	/*! check it the wave form pict files are in the "Pict Files" folder
+	\ if they are store the path
+	*/
+	tbool Needs_Pict_Files();
 	
 
 	

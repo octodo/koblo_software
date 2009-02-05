@@ -4830,11 +4830,38 @@ void CKSApplication::AddClipToList(CImportAudioTask* pImportAudioTask)
 	pTake_Data->Right_Wave_File_Path( pImportAudioTask->Right_Path() );
 	pTake_Data->Left_Peak_File_Path	(pImportAudioTask->Left_Peak_File_Path());
 	pTake_Data->Right_Peak_File_Path(pImportAudioTask->Right_Peak_File_Path());
+	
 
 	mSample_Data_List.push_back(pSample_Data);
-
+//	delete pSample_Data;
+	
 	UpdateGUIFileList();
-} 
+}
+
+void CKSApplication::AddClipToList(CTake_Data* pTake_Data_Input)
+{
+	
+	CSample_Data*	pSample_Data		=	new CSample_Data();
+	CTake_Data*		pTake_Data			=	pSample_Data->Get_Take_Data();
+	pTake_Data->Set_UUID(  pTake_Data_Input->Get_UUID()  );
+	
+	pSample_Data->Name( pTake_Data_Input->Screen_Name() );
+	pTake_Data->Screen_Name(pTake_Data_Input->Screen_Name());
+	pTake_Data->Mode( pTake_Data_Input->Mode() );
+	pTake_Data->Left_Wave_File_Path( pTake_Data_Input->Left_Wave_File_Path() );
+	pTake_Data->Right_Wave_File_Path( pTake_Data_Input->Right_Wave_File_Path() );
+	pTake_Data->Left_Peak_File_Path	(pTake_Data_Input->Left_Peak_File_Path());
+	pTake_Data->Right_Peak_File_Path(pTake_Data_Input->Right_Peak_File_Path());
+	
+
+	
+	
+	mSample_Data_List.push_back(pSample_Data);
+//	delete pSample_Data;
+	
+	UpdateGUIFileList();
+	 
+}
 
 tbool CKSApplication::OnAudioFileImport()
 {

@@ -30,7 +30,8 @@
 class CKSApplication;
 class CSample_Data;
 class CTake_Data;
-//class TiXmlDocument;
+class CRegion_Data;
+
 
 
 class CKSXML_Read_Project:
@@ -117,7 +118,7 @@ public:
 	//void Read_Track_Aux(TiXmlElement* pElement, tint32 iTrackID);
 	void Read_Track_Insert(TiXmlElement* pElement, tint32 iTrackID);
 	void Read_Track_Region(TiXmlElement* pElement, tint32 iTrackID);
-	void Read_Track_Region_Fade(TiXmlElement* pElement, tint32 iTrackID);
+	void Read_Track_Region_Fade(TiXmlElement* pElement);
 	
 	void Read_Bus(TiXmlElement* pElement);
 	void Read_Bus_Out(TiXmlElement* pElement);
@@ -144,18 +145,7 @@ public:
 	
 	//! inspect one take
 	void Import_Take( CTake_Data* pTake_Data);
-	
-	//! check if take is in the "wave file" folder
-	tbool In_Wave_Files( CTake_Data* pTake_Data);
-	
-	//! check if take is in the" download:OGG Files" folder
-	tbool In_OGG_Files( CTake_Data* pTake_Data);
-	
-	//! check if take is in the folder
-	tbool In_Folder( CTake_Data* pTake_Data, std::string sFolder, std::string sExtencion);
 
-	// Set a parameter in the DAW
-//	virtual void Set_DAW_Parameter( TiXmlNode* pParent = NULL, tuint uiType = 0, tuint32 uiID= 0, tint32 Section = 0, tfloat fFactor = 1.0f );
 	
 	
 	
@@ -177,7 +167,7 @@ public:
 private:
 	
 	
-	tint32 miTrack_ID;
+//	tint32 miTrack_ID;
 	
 	// create TinyXml document
 //	TiXmlDocument* mpTinyXMLDoc;
@@ -199,24 +189,43 @@ private:
 	//! decompress one take
 	void Decompress_Take(CTake_Data* Take_Data);
 	
+	//! create pict files
+	void Create_Pict_Files();
+	
+	//! create pict file
+	void Create_Pict_File(CTake_Data* Take_Data);
+	
 	//! insert wave files from the mInsert_Que list
 	void Insert_Takes();
 	
-	//! insert wave one file from the mInsert_Que list
-	void Insert_Take(CTake_Data* Take_Data);
+	// insert regions
+	void Insert_Regions();
 	
 	
-	// list of sample files to load
+	
+	//1 list of sample files to load
 	std::list<CSample_Data> mSample_Data_List;
 	
-	// list of takes files to decompress
+	//1 list of takes files to decompress
 	std::list<CTake_Data*> mDecompress_Que;
 	
-	// list of takes files to download
+	//1 list of takes files to download
 	std::list<CTake_Data*> mDownload_Que;
 	
-	// list of takes files to load
+	//1 list of takes files to load
 	std::list<CTake_Data*> mInsert_Que;
+	
+	//1 list of takes files that needs pict files
+	std::list<CTake_Data*> mCreate_Pict_File_Que;
+	
+	
+	//1 list of regions to insert when all wav files and pict files are readdy
+	std::list<CRegion_Data> mRegion_Data_List;
+	
+	std::string Get_Take_Screen_Name(std::string sUUID);
+	
+	tuint32 muiTrack;
+	
 	
 };
 

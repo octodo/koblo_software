@@ -44,6 +44,9 @@ public:
 	//! get a pointer to the takes
 	CTake_Data* Get_Take_Data(){ return mpTake_Data;};
 	
+	//! finds a take from an given UUID
+	CTake_Data* Get_Take_Data(std::string sUUID);
+	
 protected:
 	
 	//! name of clip as seen in the list

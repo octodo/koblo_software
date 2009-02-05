@@ -128,6 +128,7 @@ class CApplication;
 #include "CSample_DSP.h"
 #include "CSample_Controller.h"
 #include "CRegion_Controller.h"
+#include "CRegion_Data.h"
 #include "CImport_Auido_Controller.h"
 #include "CRegion_DSP.h"
 

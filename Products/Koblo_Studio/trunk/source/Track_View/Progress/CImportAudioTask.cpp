@@ -239,7 +239,7 @@ tbool CImportAudioTask::Open()
 	mpAudio_File_L = IFile::Create();
 	mpAudio_File_R = IFile::Create();
 	
-	printf("pathname is : \%s \n", mFile_Item.Path().c_str() );
+//	printf("pathname is : \%s \n", mFile_Item.Path().c_str() );
 
 	std::string sLeft_File_Name			= mFile_Item.Left_Path();
 	std::string sRight_File_Name		= mFile_Item.Right_Path();
