@@ -376,16 +376,19 @@ tbool CXloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, ti
 		return false;
 	
 	if (mbIsUploader) {
-		tchar* pszData = "";
+		tchar* pszData = NULL;
 		tint32 iDataLen = 0;
 		// No need to verify data for uploader - it'll eat anything!
 		// Just a special case for NULL pointer
 		if (pcParamData) {
-			pszData = (tchar*)pcParamData;
 			if (iParamDataLen >= 0)
 				iDataLen = iDataLen;
 			else
-				iDataLen = strlen(pszData);
+				iDataLen = strlen(pcParamData);
+			// Copy to a buffer we own (so we don't need to rely on calling app keeping data around)
+			pszData = new tchar[iDataLen + 1];
+			memcpy(pszData, pcParamData, iDataLen);
+			pszData[iDataLen] = '\0';
 		}
 		// Add param name and raw value to lists
 		try {
@@ -775,6 +778,15 @@ void CXloader::WipeParams()
 		}
 	}
 	mlist_iParamDataLen.clear();
+	
+	while (mlist_pszParamData.size() > 0) {
+		tchar* pszData = mlist_pszParamData.front();
+		mlist_pszParamData.pop_front();
+		if (pszData) {
+			delete[] pszData;
+			pszData = NULL;
+		}
+	}
 	
 	if (mpszParamsAssembled) {
 		delete[] mpszParamsAssembled;

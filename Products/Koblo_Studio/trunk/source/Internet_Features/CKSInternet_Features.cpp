@@ -152,7 +152,7 @@ void CKSInternet_Features::On_Menu_Upload_Project()
 	}
 	
 	if (bProjOK) {
-		CAutoDelete<ine::IUploader> pUploader(ine::IUploader::Create());
+		//CAutoDelete<ine::IUploader> pUploader(ine::IUploader::Create());
 		std::string sPage = std::string("/projects/") + pszUUID_Proj;
 		sPage += "/samples.xml";
 		CAutoDelete<IFileMemory> pfUpReply(IFileMemory::Create());
