@@ -60,6 +60,8 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		
 		// insert regions
 		Insert_Regions();
+		
+		gpDSPEngine->Deselect_All_Tracks();
 			
 	}
 	

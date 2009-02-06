@@ -1054,6 +1054,8 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 	// hide export window
 	SetGlobalParm(giParamID_Show_Export_Window,	0,		giSectionGUI);
 	
+	
+	
 } // CleanProject
 
 

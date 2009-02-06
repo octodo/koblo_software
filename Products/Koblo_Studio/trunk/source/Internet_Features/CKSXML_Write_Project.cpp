@@ -610,7 +610,6 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 {
 	Add_Comment(pParent, "samples and their takes. only used takes are listed. a sample can be included that's not used on any track");
 	
-//	std::list<CSample_Data*> pSample_Data_List = gpApplication->Get_Sample_Data_List();
 	std::list<CSample_Data>::iterator  itSample_Data = gpApplication->Get_Sample_Data_List_Begin();
 	
 	for (; itSample_Data != gpApplication->Get_Sample_Data_List_End(); itSample_Data++) {

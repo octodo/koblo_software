@@ -361,6 +361,8 @@ public:
 	void CloseWindow(void* pWnd);
 
 	tfloat64 GetPixelPrSample(){ return mfPixelPrSample;};
+	
+	//! get samples pr pixel
 	tfloat64 GetSamplesPrPixel(){ return mfSamplesPrPixel;};
 
 	de::IParameterManager* GetParmMan() {return mpParmMan;}
@@ -535,10 +537,13 @@ protected:
 
 	CMutex mMutexMeter;
 	
+	
 	tfloat64 mfPixelPrSample;
+	
 	tfloat64 mfSamplesPrPixel;
 	
 	tfloat mfGrid_In_Samples;
+	
 	tfloat32 mfTempo;
 	
 

@@ -63,6 +63,7 @@ void CKSInternet_Features::On_Menu_Update_Project()
 
 void CKSInternet_Features::On_Menu_Upload_Project()
 {
+	
 	mbUpload_Project = true;
 	
 	if(Get_User_Name_And_Password()){
@@ -72,9 +73,11 @@ void CKSInternet_Features::On_Menu_Upload_Project()
 	   Open_Username_And_Password_Dialog();
 	}
 	
+	gpApplication->Prepare_Sampels_For_Upload();
+	
 	
 	// (lasse) very temporary code - forces linking of libcurl (only way to determine if it links)
-#if (1)
+#if (0)
 	// (lasse) wawy wawy tempowawy code: upload to koblo.com
 	
 	// These must be set or it won't work
