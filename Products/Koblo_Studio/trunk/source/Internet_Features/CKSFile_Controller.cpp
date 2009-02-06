@@ -294,6 +294,7 @@ tbool CKSFile_Controller::Create_Wave_Picts_Folder()
 
 
 
+
 //! create a new project file
 tbool CKSFile_Controller::Create_Project_File()
 {
@@ -315,6 +316,9 @@ tbool CKSFile_Controller::Create_Project_File()
 	}
 	return false;
 }
+
+
+
 
 tbool CKSFile_Controller::Copy_Samples()
 {
@@ -363,9 +367,8 @@ tbool CKSFile_Controller::Create_Folders()
 	// create a new MP3 folder
 	if(Create_MP3_Folder() == false ) return false;
 	
-	// create a new upload folder
+	// create a new wave pict folder
 	if(Create_Wave_Picts_Folder() == false ) return false;
-
 	
 	// create a new project file
 	if( Create_Project_File() == false ) return false;
@@ -388,6 +391,8 @@ void CKSFile_Controller::Update_Project_Name(std::string sNew_Name)
 
 	
 }
+
+/*
 tbool CKSFile_Controller::Is_A_Audio_File(std::string sFile)
 {
 	// obsolete use 
@@ -408,7 +413,7 @@ tbool CKSFile_Controller::Check_Extencion(std::string sFile)
 	return false;
 	
 }
-
+*/
 std::string  CKSFile_Controller::Get_Extencion(std::string sFile)
 {
 	tint iPos	=	sFile.find_last_of('.');
@@ -419,25 +424,32 @@ std::string  CKSFile_Controller::Get_Extencion(std::string sFile)
 
 tbool CKSFile_Controller::Readable_Audio(std::string sFile_Path)
 {
-
+	
 	CAutoDelete<IFile> pFile(IFile::Create());
-	
-	
 	
 	
 	if (pFile->Open(sFile_Path.c_str(), IFile::FileRead)) {
 		
 		ac::IDecoder* pDec = ac::IDecoder::Create(pFile);
 		
-		
-		
-
 		if (pDec) {
 			
 			tbool bReturn = pDec->TestFile(pFile);
 			pDec->Destroy();
 			return  bReturn;
 		}
+	}
+	return false;
+}
+
+
+tbool CKSFile_Controller::Is_A_File(std::string sFile_Path)
+{
+	
+	CAutoDelete<IFile> pFile(IFile::Create());
+	
+	if (pFile->Open(sFile_Path.c_str(), IFile::FileRead)) {
+		return true;
 	}
 	return false;
 }

@@ -71,7 +71,7 @@ void  CRegion_Controller::Get_Region_Info(SRegionInfo& RegionInfo, tuint32 uiReg
 void CRegion_Controller::Set_Region_Volume(tuint32 uiRegionID, tfloat32 fVolume)
 { 
 	Prepare(uiRegionID);
-	mpRegion_DSP->Set_Volume(fVolume);	
+	mpRegion_DSP->Volume(fVolume);	
 	
 }
 
@@ -85,8 +85,8 @@ void CRegion_Controller::Cut_Region(tuint32 uiTrack, tuint32 uiRegionID, tuint64
 	tuint64 uiSample_Offset				=	mpRegion_DSP->Get_Sample_Offset();
 	tuint64 uiSample_Duration			=	mpRegion_DSP->Get_Duration();
 
-	tfloat32 fVolume					=	mpRegion_DSP->Get_Volume();
-	tuint64 uiFade_Out_Duration			=	mpRegion_DSP->Get_Fade_Out_Duration();
+	tfloat32 fVolume					=	mpRegion_DSP->Volume();
+	tuint64 uiFade_Out_Duration			=	mpRegion_DSP->Fade_Out_Duration();
 	
 	// trim end of curent region
 	mpTrack_DSP->Resize_Region(uiRegionID, uiTrack_Pos, uiSample_Offset, uiCutPos-1);
@@ -117,7 +117,7 @@ void CRegion_Controller::Trim_Region(tuint32 uiTrack, tuint32 uiRegionID, tbool 
 	
 	// trim start
 	if(bStart){
-		tint64 iFade_In_Duration	=	mpRegion_DSP->Get_Fade_In_Duration();
+		tint64 iFade_In_Duration	=	mpRegion_DSP->Fade_In_Duration();
 		
 		// prevent sample offset being less than 0
 		if(iSample_Offset + iDelta < 0 ) iDelta = -iSample_Offset;
@@ -129,7 +129,7 @@ void CRegion_Controller::Trim_Region(tuint32 uiTrack, tuint32 uiRegionID, tbool 
 	}
 	// trim end
 	else{
-		tint64 iFade_Out_Duration	=	mpRegion_DSP->Get_Fade_Out_Duration();
+		tint64 iFade_Out_Duration	=	mpRegion_DSP->Fade_Out_Duration();
 		tint64 iSample_Duration				=	mpRegion_DSP->Get_Sample_Duration();
 		
 		
@@ -160,14 +160,14 @@ void CRegion_Controller::Duplicate_Region()
 			Get_Region_Info( RegionInfo, uiRegionID);
 			CTrack_DSP*		pTrack_DSP			=	gpDSPEngine->GetTrack(RegionInfo.uiTrack);
 			CRegion_DSP*	pRegion_DSP			=	pTrack_DSP->GetRegion_DSP(uiRegionID);
-			std::string sSample_Name				=	pRegion_DSP->Get_Sample_Name();
+			std::string sSample_Name			=	pRegion_DSP->Get_Sample_Name();
 			tuint64 uiPossition					=	pTrack_DSP->Get_Region_Pos(uiRegionID);	
 			tuint64 uiDuration					=	pRegion_DSP->Get_Duration();
 			tuint64 uiSample_Offset				=	pRegion_DSP->Get_Sample_Offset();
 			
-			tuint64	uiFade_In_Duration			=	pRegion_DSP->Get_Fade_In_Duration();
-			tuint64	uiFade_Out_Duration			=	pRegion_DSP->Get_Fade_Out_Duration();
-			tfloat32 fVolume					=	pRegion_DSP->Get_Volume();
+			tuint64	uiFade_In_Duration			=	pRegion_DSP->Fade_In_Duration();
+			tuint64	uiFade_Out_Duration			=	pRegion_DSP->Fade_Out_Duration();
+			tfloat32 fVolume					=	pRegion_DSP->Volume();
 
 			
 			// Create new region
@@ -209,9 +209,9 @@ void CRegion_Controller::Copy_Region()
 			mpRegion_Clipboard[0].uiDuration				=	pRegion_DSP->Get_Duration();
 			mpRegion_Clipboard[0].uiSample_Offset			=	pRegion_DSP->Get_Sample_Offset();
 			mpRegion_Clipboard[0].uiPossition				=	pTrack_DSP->Get_Region_Pos(uiRegionID) + mpRegion_Clipboard[0].uiDuration;	
-			mpRegion_Clipboard[0].uiFade_In_Duration		=	pRegion_DSP->Get_Fade_In_Duration();
-			mpRegion_Clipboard[0].uiFade_Out_Duration		=	pRegion_DSP->Get_Fade_Out_Duration();
-			mpRegion_Clipboard[0].fVolume					=	pRegion_DSP->Get_Volume();
+			mpRegion_Clipboard[0].uiFade_In_Duration		=	pRegion_DSP->Fade_In_Duration();
+			mpRegion_Clipboard[0].uiFade_Out_Duration		=	pRegion_DSP->Fade_Out_Duration();
+			mpRegion_Clipboard[0].fVolume					=	pRegion_DSP->Volume();
 			
 
 			return;
@@ -262,18 +262,18 @@ tuint64 CRegion_Controller::Fade_In(tuint32 uiRegionID, tuint64 uiFadeInLength)
 { 
 	Prepare(uiRegionID);
 	tuint64 uiSoundDuraion				=	mpRegion_DSP->Get_Duration();
-	tuint64 uiFadeOutLength				=	mpRegion_DSP->Get_Fade_Out_Duration();
+	tuint64 uiFadeOutLength				=	mpRegion_DSP->Fade_Out_Duration();
 	
 	if(uiFadeInLength > uiSoundDuraion)
 		uiFadeInLength = uiSoundDuraion;
 	
 	if( uiFadeInLength + uiFadeOutLength > uiSoundDuraion){
 		uiFadeOutLength = uiSoundDuraion - uiFadeInLength;
-		mpRegion_DSP->Set_Fade_Out_Duration(uiFadeOutLength);
+		mpRegion_DSP->Fade_Out_Duration(uiFadeOutLength);
 	}
 	
 	
-	mpRegion_DSP->Set_Fade_In_Duration(uiFadeInLength);
+	mpRegion_DSP->Fade_In_Duration(uiFadeInLength);
 	return uiFadeInLength;
 	
 }
@@ -282,17 +282,17 @@ tuint64 CRegion_Controller::Fade_Out(tuint32 uiRegionID, tuint64 uiFadeOutLength
 { 
 	Prepare(uiRegionID);
 	tuint64 uiSoundDuraion				=	mpRegion_DSP->Get_Duration();
-	tuint64 uiFadeInLength				=	mpRegion_DSP->Get_Fade_In_Duration();
+	tuint64 uiFadeInLength				=	mpRegion_DSP->Fade_In_Duration();
 	
 	if(uiFadeOutLength > uiSoundDuraion)
 		uiFadeOutLength = uiSoundDuraion;
 	
 	if(uiFadeOutLength + uiFadeInLength > uiSoundDuraion){
 		uiFadeInLength = uiSoundDuraion - uiFadeOutLength;
-		mpRegion_DSP->Set_Fade_In_Duration(uiFadeInLength);
+		mpRegion_DSP->Fade_In_Duration(uiFadeInLength);
 	}
 	
-	mpRegion_DSP->Set_Fade_Out_Duration(uiFadeOutLength);
+	mpRegion_DSP->Fade_Out_Duration(uiFadeOutLength);
 	
 	return uiFadeOutLength;
 }
@@ -306,10 +306,10 @@ void CRegion_Controller::Move_Region(tuint32 uiRegionID, tint32 iTrack, tuint64 
 	std::string sClipName				=	mpRegion_DSP->Get_Sample_Name();
 	tuint64 uiSample_Offset				=	mpRegion_DSP->Get_Sample_Offset();
 	tuint64 uiSample_Duration			=	mpRegion_DSP->Get_Duration();
-	tuint64 uiFade_In_Duration			=	mpRegion_DSP->Get_Fade_In_Duration();
-	tuint64 uiFade_Out_Duration			=	mpRegion_DSP->Get_Fade_Out_Duration();
+	tuint64 uiFade_In_Duration			=	mpRegion_DSP->Fade_In_Duration();
+	tuint64 uiFade_Out_Duration			=	mpRegion_DSP->Fade_Out_Duration();
 	
-	tfloat32 fVolume					=	mpRegion_DSP->Get_Volume();
+	tfloat32 fVolume					=	mpRegion_DSP->Volume();
 	
 	gpDSPEngine->Delete_Region(miTrack, uiRegionID);
 	
@@ -385,9 +385,9 @@ tbool CRegion_Controller::SaveTrackRegionDataToChunk(tint32 iTrack, IChunk* pChu
 			tuint64 uiStart = pRegion_DSP->Get_Sample_Offset();
 			tuint64 uiDurat = pRegion_DSP->Get_Duration();
 			//
-			tuint64 uiFadeIn = pRegion_DSP->Get_Fade_In_Duration();
-			tuint64 uiFadeOut = pRegion_DSP->Get_Fade_Out_Duration();
-			tfloat32 fVolume = pRegion_DSP->Get_Volume();
+			tuint64 uiFadeIn = pRegion_DSP->Fade_In_Duration();
+			tuint64 uiFadeOut = pRegion_DSP->Fade_Out_Duration();
+			tfloat32 fVolume = pRegion_DSP->Volume();
 			tuint64 uiVol1000000 = Float2Int(fVolume * (tuint64)1000000);
 			
 			tchar pszBuff[1024];
@@ -607,9 +607,9 @@ SRegion_Drawing_Info CRegion_Controller::Get_Region_Drawing_Info(tuint iRegionID
 		info.uiSound_Start		=	mpRegion_DSP->Get_Sample_Offset();
 		info.uiSound_Duration	=	mpRegion_DSP->Get_Duration();
 		info.uiTrack_Start		=	mRegionInfo.uiStartPos;
-		info.uiFade_In			=	mpRegion_DSP->Get_Fade_In_Duration();
-		info.uiFade_Out			=	mpRegion_DSP->Get_Fade_Out_Duration();
-		info.fRegion_Volume		=	mpRegion_DSP->Get_Volume();
+		info.uiFade_In			=	mpRegion_DSP->Fade_In_Duration();
+		info.uiFade_Out			=	mpRegion_DSP->Fade_Out_Duration();
+		info.fRegion_Volume		=	mpRegion_DSP->Volume();
 	}
 	else {
 		info.uiSound_Start		=	0;

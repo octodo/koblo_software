@@ -128,6 +128,7 @@ class CApplication;
 #include "CSample_DSP.h"
 #include "CSample_Controller.h"
 #include "CRegion_Controller.h"
+#include "CRegion_Data.h"
 #include "CImport_Auido_Controller.h"
 #include "CRegion_DSP.h"
 
@@ -161,6 +162,7 @@ class CPlugInManager;
 #include  "CKSExportForWebGUIPane.h"
 #include  "CKSSetupGUIPane.h"
 #include  "CKSSetupGUI.h"
+#include  "CPreset_Data.h"
 
 // Username and Password
 #include  "CKSUsername_And_Password_Pane.h"

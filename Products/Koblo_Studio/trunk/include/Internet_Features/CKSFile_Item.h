@@ -61,7 +61,7 @@ public:
 //	void Destination_Path(std::string sPath){msDestination_Path = sPath;};
 	
 	//! get destination path
-	std::string Destination_Path();
+//	std::string Destination_Path();
 	
 	
 	// !set  extencion

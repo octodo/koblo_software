@@ -437,8 +437,8 @@ void CTrack::Handle_Mouse_Drop(ge::SPos Pos)
 {
 	mpTrack_Player2->Deselect_Regions();
 	
-	ge::IWindow::SDragAndDropInfo Info;
-	GetWindow()->GetDragAndDropInfo(Info);
+	ge::IWindow::SDragAndDropInfo DragAndDropInfo;
+	GetWindow()->GetDragAndDropInfo(DragAndDropInfo);
 	// Get Track pos
 	ge::SPos panePos;
 	mpPane->GetPos(panePos);
@@ -449,14 +449,14 @@ void CTrack::Handle_Mouse_Drop(ge::SPos Pos)
 	tfloat64 fSamples_Pr_Pixel	=	gpApplication->GetSamplesPrPixel();
 	tuint64 uiSamplePos			=	gpApplication->SnapToGrid(iPixel_Pos * fSamples_Pr_Pixel);
 
-	if (Info.pOrigin->GetID() == giCtrl_File_List) {
+	if (DragAndDropInfo.pOrigin->GetID() == giCtrl_File_List) {
 		// Drag and drop operation from file list. Add region
 		// List item *display name* is in Info.psz
-		gpDSPEngine->CreateRegion(Info.psz, miTrackID, uiSamplePos, 0);
+		gpDSPEngine->CreateRegion(DragAndDropInfo.psz, miTrackID, uiSamplePos, 0);
 	}
 	else if(Find_Tool() == giTool_Hand) {
 		// Drag and drop operation from region (region was moved)
-		tuint32 uiID = strtoul(Info.psz, NULL, 0);
+		tuint32 uiID = strtoul(DragAndDropInfo.psz, NULL, 0);
 		gpDSPEngine->Move_Region(uiID, miTrackID, uiSamplePos);
 	}
 	Set_Selection_Size_And_Pos();

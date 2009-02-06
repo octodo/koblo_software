@@ -681,28 +681,6 @@ void CImport_TinyXML::Read_Insert_Parameter(TiXmlElement* pElement)
 	}
 }
 
-/*
-void CImport_TinyXML::Add_Take_To_Insert_Que(CTake_Data* pTake_Data)
-{
-	
-	mInsert_Que.push_back(pTake_Data);
-	
-}
-
-void CImport_TinyXML::Add_Take_To_Download_Que(CTake_Data* pTake_Data)
-{
-	mDownload_Que.push_back(pTake_Data);
-	
-}
-
-void CImport_TinyXML::Add_Take_To_Decompress_Que(CTake_Data* pTake_Data)
-{
-	mDecompress_Que.push_back(pTake_Data);
-}
-*/
-
-
-
 
 
 
