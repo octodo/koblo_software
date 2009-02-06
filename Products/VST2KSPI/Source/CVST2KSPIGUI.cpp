@@ -10,7 +10,8 @@ CVST2KSPIGUI::CVST2KSPIGUI(CVST2KSPIPlugIn* pPlugIn, de::IParameterManager* pPar
 	mpTopPane(NULL),
 	mbDemoDialogShown(false), mbUnauthorizedDialogShown(false),
 	CBasePane(NULL, this),
-	mpVSTEffect(NULL)
+	mpVSTEffect(NULL),
+	mbWindowMade(false)
 {
 }
 
@@ -81,6 +82,8 @@ void CVST2KSPIGUI::MakeWindow(void* p)
 //		mpWindow->InstallKeyboardHook();
 		
 //		mpWindow->AcquireKeyboardInput();
+
+		mbWindowMade = true;
 	}
 	catch(IException* pException) {
 		const tchar* psz = pException->GetFullDescription();
@@ -138,7 +141,9 @@ void CVST2KSPIGUI::GetName(tchar* psz)
 void CVST2KSPIGUI::OnTimer()
 {
 //	CBaseGUI::OnTimer();
-	mpVSTEffect->dispatcher(mpVSTEffect, effEditIdle, 0, 0, 0, 0.0);
+	if (mbWindowMade) {
+		mpVSTEffect->dispatcher(mpVSTEffect, effEditIdle, 0, 0, 0, 0.0);
+	}
 }
 
 void CVST2KSPIGUI::OnAbout()

@@ -208,6 +208,7 @@ void CVST2KSPIModule::DoScanDirectory(const std::string& sPathName)
 	}
 }
 
+#ifdef WIN32
 extern "C" LONG SHRegGetValue(          HKEY hkey,
     LPCTSTR pszSubKey,
     LPCTSTR pszValue,
@@ -216,6 +217,7 @@ extern "C" LONG SHRegGetValue(          HKEY hkey,
     LPVOID pvData,
     LPDWORD pcbData
 );
+#endif
 
 void CVST2KSPIModule::Init()
 {

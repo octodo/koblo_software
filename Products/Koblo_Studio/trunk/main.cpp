@@ -744,6 +744,18 @@ int main(int argc, char* argv[])
 	gpDSPEngine->CloseAudioDevice_Output();
 #endif // WIN32
 
+	gpGUITrackEdit->Destroy();
+	gpSplashGUI->Destroy();
+	gpGUIMixer->Destroy();
+	gpGUIAUX->Destroy();
+	gpGUIExport->Destroy();
+	gpGUIExportForWeb->Destroy();
+	gpGUIImport->Destroy();
+	gpGUISetup->Destroy();
+	gpGUIProjectID->Destroy();
+	gpGUISignIn->Destroy();
+	gpPlugIn->Destroy();
+
 	return 0;
 //    return err;
 }
