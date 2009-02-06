@@ -806,9 +806,9 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 	if(ruiSample_Duration == (tuint64)-1)
 		ruiSample_Duration = pRegion->Get_Sample_Duration();
 		
-	pRegion->Set_Fade_In_Duration(uiFadeInLength);
-	pRegion->Set_Fade_Out_Duration(uiFadeOutLength);
-	pRegion->Set_Volume(fRegionVolume);
+	pRegion->Fade_In_Duration( uiFadeInLength );
+	pRegion->Fade_Out_Duration(uiFadeOutLength);
+	pRegion->Volume(fRegionVolume);
 		
 	Delete_Selection(giTrim,uiTrack_Pos, ruiSample_Duration);
 	
@@ -918,8 +918,8 @@ void CTrack_DSP::Resize_Region(tuint32 uiID, tuint64 iTrack_Pos, tuint64 iSample
 		
 		if ((*it)->pRegion->GetID() == uiID) {
 		
-			tuint64 uiFadeInLength	=	(*it)->pRegion->Get_Fade_In_Duration();
-			tuint64 uiFadeOutLength	=	(*it)->pRegion->Get_Fade_Out_Duration();
+			tuint64 uiFadeInLength	=	(*it)->pRegion->Fade_In_Duration();
+			tuint64 uiFadeOutLength	=	(*it)->pRegion->Fade_Out_Duration();
 			tuint64 uiOldDuration	=	(*it)->pRegion->Get_Duration();
 			tuint64 uiNewDuration	=	iSample_Duration;
 			//---------------------
@@ -954,8 +954,8 @@ void CTrack_DSP::Resize_Region(tuint32 uiID, tuint64 iTrack_Pos, tuint64 iSample
 			
 			(*it)->pRegion->SetStartPos(iSample_Offset);
 			(*it)->pRegion->SetDuration(uiNewDuration);
-			(*it)->pRegion->Set_Fade_In_Duration(uiFadeInLength);
-			(*it)->pRegion->Set_Fade_Out_Duration(uiFadeOutLength);
+			(*it)->pRegion->Fade_In_Duration(uiFadeInLength);
+			(*it)->pRegion->Fade_Out_Duration(uiFadeOutLength);
 			(*it)->uiTrack_Pos = iTrack_Pos;
 			Update_Regions_For_Playback();
 			return;
@@ -1192,8 +1192,8 @@ void CTrack_DSP::Delete_Selection(tint32 iCmd, tuint64 uiSelection_Pos, tuint64 
 		tuint64 uiRegion_End				=	uiRegion_Pos + uiSample_Duration - 1;
 		tuint64 uiSample_Offset				=	pRegion_DSP->Get_Sample_Offset();
 		tuint64 uiSelection_End				=	uiSelection_Pos + uiSelection_Duration;
-		tfloat32 fVolume					=	pRegion_DSP->Get_Volume();
-		tuint uiFade_Out_Duration			=	pRegion_DSP->Get_Fade_Out_Duration();
+		tfloat32 fVolume					=	pRegion_DSP->Volume();
+		tuint uiFade_Out_Duration			=	pRegion_DSP->Fade_Out_Duration();
 		
 
 		// Prevent feedback on new fade in regions

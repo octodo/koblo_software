@@ -49,7 +49,7 @@ void CKSXML_Create_Sample::Create_Sample_On_Koblo()
 		// parse XML file in to TinyXml object tree
 		doc.Parse(pszBuff);
 		
-		printf(pszBuff);
+	//	printf(pszBuff);
 		
 	}
 	ine::IINetUtil::ReleaseBuffer(&pszBuff);

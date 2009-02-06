@@ -13,16 +13,16 @@ CSample_Controller::~CSample_Controller()
 
 CSample_Data* CSample_Controller::Get_Sample_Data_From_Name(const tchar* pszListName) const
 {
-	std::list<CSample_Data*> pSample_Data_List = gpApplication->Get_Sample_Data_List();
-	std::list<CSample_Data*>::iterator  itSample_Data = pSample_Data_List.begin();
+//	std::list<CSample_Data*> pSample_Data_List = gpApplication->Get_Sample_Data_List();
+	std::list<CSample_Data>::iterator  itSample_Data = gpApplication->Get_Sample_Data_List_Begin();
 	
 	
-	for (; itSample_Data != pSample_Data_List.end(); itSample_Data++) {
+	for (; itSample_Data != gpApplication->Get_Sample_Data_List_End(); itSample_Data++) {
 		
-		CSample_Data* pSample_Data = *itSample_Data;
+//		CSample_Data* pSample_Data = &(*itSample_Data);
 		
-		if (stricmp(pSample_Data->sName.c_str(), pszListName) == 0)
-			return pSample_Data;
+		if (stricmp((*itSample_Data).Name().c_str(), pszListName) == 0)
+			return &(*itSample_Data);
 	}
 	return NULL;
 } 

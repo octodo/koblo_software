@@ -1878,12 +1878,12 @@ void CKSApplication::ExportAllClips(ac::EAudioCodec eCodec, ac::EQuality eQualit
 	}
 	else {
 		std::list<CExportClipTask*> listpInfo;
-		std::list<CSample_Data*>::const_iterator it = mSample_Data_List.begin();
-		for ( ; it != mSample_Data_List.end(); it++) {
-			CSample_Data* pFileInfo = *it;
-			const tchar* pszClipName = pFileInfo->sName.c_str();
-			CExportClipTask* pClipInfo = new CExportClipTask( pszClipName, 0, (tuint64)-1);
-			listpInfo.insert(listpInfo.end(), pClipInfo);
+		std::list<CSample_Data>::iterator it = Get_Sample_Data_List_Begin();
+		for ( ; it != Get_Sample_Data_List_End(); it++) {
+			CSample_Data* pSample_Data = &(*it);
+			const tchar* pszClipName = pSample_Data->Name().c_str();
+			CExportClipTask* pExportClipTask = new CExportClipTask( pszClipName, 0, (tuint64)-1);
+			listpInfo.insert(listpInfo.end(), pExportClipTask);
 		}
 		bSuccess = ExportClipsList(&listpInfo, eCodec, eQuality, iChannels);
 	}
@@ -4935,22 +4935,55 @@ tbool CKSApplication::DoProgressTasks()
 
 void CKSApplication::AddClipToList(CImportAudioTask* pImportAudioTask)
 {
-	CSample_Data*	pSample_Data		=	new CSample_Data();
-	CTake_Data*		pTake_Data			=	pSample_Data->Get_Take_Data();
+	CSample_Data	Sample_Data;
+	CTake_Data*		pTake_Data			=	Sample_Data.Get_Take_Data();
 	pTake_Data->Set_UUID(  pImportAudioTask->Get_UUID()  );
 	
-	pSample_Data->sName					=	pImportAudioTask->Name();
-	pTake_Data->Screen_Name(pImportAudioTask->Name());
+	Sample_Data.Name( pImportAudioTask->Screen_Name() );
+	pTake_Data->Screen_Name(pImportAudioTask->Screen_Name());
 	pTake_Data->Mode( pImportAudioTask->Stereo() ? "stereo": "mono");
 	pTake_Data->Left_Wave_File_Path( pImportAudioTask->Left_Path() );
 	pTake_Data->Right_Wave_File_Path( pImportAudioTask->Right_Path() );
 	pTake_Data->Left_Peak_File_Path	(pImportAudioTask->Left_Peak_File_Path());
 	pTake_Data->Right_Peak_File_Path(pImportAudioTask->Right_Peak_File_Path());
+	
 
-	mSample_Data_List.push_back(pSample_Data);
-
+	mSample_Data_List.push_back(Sample_Data);
+	
+	//!!! why does this leak has to stay
+	// if i delete pSample_Date I chrash!!
+//	delete Sample_Data;
+	
 	UpdateGUIFileList();
-} 
+}
+
+void CKSApplication::AddClipToList(CTake_Data* pTake_Data_Input)
+{
+	
+	CSample_Data	Sample_Data;
+	CTake_Data*		pTake_Data			=	Sample_Data.Get_Take_Data();
+	pTake_Data->Set_UUID(  pTake_Data_Input->Get_UUID()  );
+	
+	Sample_Data.Name( pTake_Data_Input->Screen_Name() );
+	pTake_Data->Screen_Name(pTake_Data_Input->Screen_Name());
+	pTake_Data->Mode( pTake_Data_Input->Mode() );
+	pTake_Data->Left_Wave_File_Path( pTake_Data_Input->Left_Wave_File_Path() );
+	pTake_Data->Right_Wave_File_Path( pTake_Data_Input->Right_Wave_File_Path() );
+	pTake_Data->Left_Peak_File_Path	(pTake_Data_Input->Left_Peak_File_Path());
+	pTake_Data->Right_Peak_File_Path(pTake_Data_Input->Right_Peak_File_Path());
+	
+
+	
+	
+	mSample_Data_List.push_back(Sample_Data);
+	
+	//!!! why does this leak has to stay
+	// if i delete pSample_Date I chrash!!
+//	delete pSample_Data;
+	
+	UpdateGUIFileList();
+	 
+}
 
 tbool CKSApplication::OnAudioFileImport()
 {

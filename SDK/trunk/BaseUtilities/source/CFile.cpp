@@ -655,8 +655,8 @@ tbool CFile::Open(const tchar* pszPathName, EOpenFile OpenFile)
 
 
 	
-	std::string sDebug = pszPathName2;
-	printf(sDebug.c_str());
+//	std::string sDebug = pszPathName2;
+//	printf(sDebug.c_str());
 
 	switch(OpenFile) {
 		case FileRead:

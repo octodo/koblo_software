@@ -27,6 +27,10 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		mDecompress_Que.clear();
 		mDownload_Que.clear();
 		mInsert_Que.clear();
+		mCreate_Pict_File_Que.clear();
+		mRegion_Data_List.clear();
+		
+		muiTrack	=	0;
 		
 		mpTinyXMLDoc->Clear();
 		
@@ -49,7 +53,13 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		// decompress takes
 		Decompress_Takes();
 		
+		// create pictfiles
+		
+		// insert takes 
 		Insert_Takes();
+		
+		// insert regions
+		Insert_Regions();
 			
 	}
 	
@@ -155,6 +165,7 @@ void CKSXML_Read_Project::Parse_Project_Object(TiXmlNode* pParent)
 	
 	else if (stricmp("track", pParent->Value()) == 0) {
 		Parse_Track_Object(pParent->ToElement());
+		
 	}
 	else if (stricmp("bus", pParent->Value()) == 0) {
 		Read_Bus(pParent->ToElement());
@@ -317,6 +328,8 @@ void CKSXML_Read_Project::Parse_Track_Object(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
+	
+	
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
 	tint32 iTrackID;
 	
@@ -380,7 +393,8 @@ void CKSXML_Read_Project::Parse_Track_Object(TiXmlElement* pElement)
 		}
 	}
 	
-	miTrack_ID++;
+	muiTrack++;
+
 }
 void CKSXML_Read_Project::Read_Track_Name(TiXmlElement* pElement, tint32 iTrackID)
 {
@@ -569,55 +583,98 @@ void CKSXML_Read_Project::Read_Track_Region(TiXmlElement* pElement, tint32 iTrac
 {
 	if ( !pElement ) return ;
 	
+	CRegion_Data Region_Data;
+	
+	Region_Data.Track_ID(muiTrack);
+	
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
-	// (lasse) using an uninitialized variable is illegal for windows visual studio!
-	/*
-	tint32 ival;
-	*/
-	static tint32 ival = 0;
-	// .. (lasse)
-	//printf( "--------\n", ival);
-	// aux id
-	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-		;//	printf( "region id:%d   ", ival);
+
+	// set region uuid
+	if(pAttrib)	{
+		Region_Data.Set_UUID(pAttrib->Value());
+	}
 	
-	if(pAttrib=pAttrib->Next())
-		
-		// aux id
-		if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
-			;//printf( "   take:%d \n", ival);
-	
+
 	TiXmlNode* pChild;
 	
 	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
 		
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
+			if (stricmp("sample", pChild->Value()) == 0) {
+				
+				TiXmlNode* pValue = pChild->FirstChild();
+				
+				if(pValue) {
+					Region_Data.Sample_UUID(pValue->Value());
+				}
+			}
+			
+			if (stricmp("take", pChild->Value()) == 0) {
+				
+				TiXmlNode* pValue = pChild->FirstChild();
+				
+				if(pValue) {
+					Region_Data.Take_UUID(pValue->Value());
+				}
+			}
+			
 			if (stricmp("position", pChild->Value()) == 0) {
+				
+				TiXmlNode* pValue = pChild->FirstChild();
+				
+				if(pValue) {
+					std::string sValue = pValue->Value();
+					tuint uiValue = atoi(sValue.c_str());
+					Region_Data.Possition(uiValue);
+				}
+			}
+			
+			else if (stricmp("offset", pChild->Value()) == 0) {
 
-				Set_DAW_Parameter(pChild, giTinyXml_Type_Int, 0, 0);
+				TiXmlNode* pValue = pChild->FirstChild();
+				
+				if(pValue) {
+					std::string sValue = pValue->Value();
+					tuint uiValue = atoi(sValue.c_str());
+					Region_Data.Sample_Offset(uiValue);
+				}
 
 			}
-			else if (stricmp("start", pChild->Value()) == 0) {
+			else if (stricmp("duration", pChild->Value()) == 0) {
 
-				Set_DAW_Parameter(pChild, giTinyXml_Type_Int, 0, 0);
-
-			}
-			else if (stricmp("end", pChild->Value()) == 0) {
-
-				Set_DAW_Parameter(pChild, giTinyXml_Type_Int, 0, 0);
+				TiXmlNode* pValue = pChild->FirstChild();
+				
+				if(pValue) {
+					std::string sValue = pValue->Value();
+					tuint uiValue = atoi(sValue.c_str());
+					Region_Data.Sample_Duration(uiValue);
+				}
 
 			}
 			else if (stricmp("volume", pChild->Value()) == 0) {
-
-				Set_DAW_Parameter(pChild, giTinyXml_Type_Float, 0, 0);
-
+				
+				TiXmlNode* pValue = pChild->FirstChild();
+				
+				if(pValue) {
+					std::string sValue = pValue->Value();
+					tfloat32 fValue = atof(sValue.c_str());
+					Region_Data.Volume(fValue);
+				}
+				
+			}
+			else if (stricmp("fade", pChild->Value()) == 0) {
+				
+				Read_Track_Region_Fade(pChild->ToElement(), &Region_Data);
+				
 			}
 		}
 	}
+	
+	mRegion_Data_List.push_back(Region_Data);
 }
 
-void CKSXML_Read_Project::Read_Track_Region_Fade(TiXmlElement* pElement, tint32 iTrackID)
+void CKSXML_Read_Project::Read_Track_Region_Fade(TiXmlElement* pElement, CRegion_Data* pRegion_Data)
 {
 	if ( !pElement ) return ;
 	
@@ -628,13 +685,25 @@ void CKSXML_Read_Project::Read_Track_Region_Fade(TiXmlElement* pElement, tint32 
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("in", pChild->Value()) == 0) {
-
-				Set_DAW_Parameter(pChild, giTinyXml_Type_Int, 0, 0);
+				
+				TiXmlNode* pValue = pChild->FirstChild();
+				
+				if(pValue) {
+					std::string sValue = pValue->Value();
+					tuint uiValue = atoi(sValue.c_str());
+					pRegion_Data->Fade_In_Duration(uiValue);
+				}
 
 			}
 			else if (stricmp("out", pChild->Value()) == 0) {
 
-				Set_DAW_Parameter(pChild, giTinyXml_Type_Int, 0, 0);
+				TiXmlNode* pValue = pChild->FirstChild();
+				
+				if(pValue) {
+					std::string sValue = pValue->Value();
+					tuint uiValue = atoi(sValue.c_str());
+					pRegion_Data->Fade_Out_Duration(uiValue);
+				}
 
 			}
 
@@ -881,20 +950,13 @@ void CKSXML_Read_Project::Read_Master_Out(TiXmlElement* pElement)
 void CKSXML_Read_Project::Prepare_Samples()
 {
 
-	
-
 	std::list<CSample_Data>::iterator it = mSample_Data_List.begin();
 	for (; it != mSample_Data_List.end(); it++) {
 		
 		CSample_Data* pSample_Data = &(*it);
 		Import_Takes( pSample_Data );
 	}
-	
-	
-	
 }
-
-
 
 
 void CKSXML_Read_Project::Import_Takes(CSample_Data* pSample_Data)
@@ -910,11 +972,16 @@ void CKSXML_Read_Project::Import_Take(CTake_Data* pTake)
 {
 	
 	// check if take is in Wave folder
-	if( In_Wave_Files(pTake) ) 
+	if( pTake->In_Folder(gpApplication->Wave_File_Folder(), ".wav") ){
+		// add take to insert que
 		mInsert_Que.push_back(pTake);
-	
-	// if the take is in the "OGG Folder"
-	else if( In_OGG_Files(pTake) )
+		// check if the pict files is in the folder
+		if(pTake->Needs_Pict_Files() )
+			mCreate_Pict_File_Que.push_back(pTake);
+			
+	}
+	// check if the take is in the "OGG Folder"
+	else if( pTake->In_Folder(gpApplication->OGG_File_Folder(), ".ogg") )
 		mDecompress_Que.push_back(pTake);
 
 	// add take to the download que
@@ -923,57 +990,6 @@ void CKSXML_Read_Project::Import_Take(CTake_Data* pTake)
 
 	
 }
-
-tbool CKSXML_Read_Project::In_Wave_Files(CTake_Data* pTake_Data)
-{
-	std::string sFolder = gpApplication->Wave_File_Folder();
-	return In_Folder(	pTake_Data , sFolder, ".wav" );
-	
-}
-
-
-tbool CKSXML_Read_Project::In_OGG_Files(CTake_Data* pTake_Data)
-{
-	std::string sFolder = gpApplication->OGG_File_Folder();
-	return In_Folder(	pTake_Data , sFolder, ".ogg" );
-
-}
-
-tbool CKSXML_Read_Project::In_Folder(CTake_Data* pTake_Data, std::string sFolder, std::string sExtencion)
-{
-	tuint32 uiChannels = 0;
-	
-	std::string sMode = pTake_Data->Mode();
-	
-	if(stricmp( 	sMode.c_str(),	"mono"	) == 0)
-		uiChannels = 1;
-	
-	else if(stricmp( sMode.c_str(),"stereo") == 0)
-		uiChannels = 2;
-
-	
-	
-	switch(uiChannels) {
-		case 1:
-		{	// mono 
-			return gpApplication->Readable_Audio(sFolder + pTake_Data->Disk_Name(1) + sExtencion);
-		}
-		case 2:
-		{	// files are split in two
-			tuint In_Wave_Files = 0;
-			In_Wave_Files += gpApplication->Readable_Audio(sFolder + pTake_Data->Disk_Name(1) + sExtencion);
-			In_Wave_Files += gpApplication->Readable_Audio(sFolder + pTake_Data->Disk_Name(2) + sExtencion);
-			return In_Wave_Files == 2 ? true: false;
-		}
-		default: break;
-	}
-	return false;
-}
-
-
-
-
-
 
 
 
@@ -1014,65 +1030,80 @@ void CKSXML_Read_Project::Decompress_Take(CTake_Data* Take_Data)
 }
 
 
+
+void CKSXML_Read_Project::Create_Pict_Files()
+{
+	std::list<CTake_Data*>::iterator it = mCreate_Pict_File_Que.begin();
+	for (; it != mCreate_Pict_File_Que.end(); it++) {
+		Create_Pict_File( (*it) );
+	}
+	
+}
+
+void CKSXML_Read_Project::Create_Pict_File(CTake_Data* Take_Data)
+{
+	//!!! TO DO make code that creates missing pict files here
+}
+
+
 void CKSXML_Read_Project::Insert_Takes()
 {
-	/*
-	std::list<CImportAudioTask*>::iterator itImports = listImportTasks.begin();
-	
-	for ( ; itImports != listImportTasks.end(); itImports++) {
-		CImportAudioTask* pTask = *itImports;
-		mpProgressTasks->Add(pTask);
-	}
-	 */
-	/*
-	std::list<CKSFile_Item>::iterator it = mFile_Items.begin();
-	for (; it != mFile_Items.end(); it++) {
-		
-		Import_Audio_File((*it), false);
-	}
-//	ClearFiles();
-	 */
-	
+
 	std::list<CTake_Data*>::iterator it = mInsert_Que.begin();
 	for (; it != mInsert_Que.end(); it++) {
-		Insert_Take( (*it) );
-	}
-	
+		gpApplication->AddClipToList( (*it) );
+	}	
 	
 }
 
-void CKSXML_Read_Project::Insert_Take(CTake_Data* pTake_Data)
+void CKSXML_Read_Project::Insert_Regions()
 {
-	CImportAudioTask* pImportAudioTask = new CImportAudioTask();
-	pImportAudioTask->Screen_Name( pTake_Data->Screen_Name() );
-	
-	std::string sWave_File_Folder	=	gpApplication->Wave_File_Folder();
-	std::string sFull_Path			=	sWave_File_Folder + pTake_Data->Get_UUID() + "_01.wav";
-	
-	if (gpApplication->IsPlayingOrRecording())  
-		gpApplication->PlaybackStop();
-	
-	CImportAudioTask::EStereoBehavior eBehave = CImportAudioTask::geStereoDoAsk;
-	
-	tbool bSuccess = pImportAudioTask->Init( sFull_Path, false, eBehave, false);
-	
-	if (bSuccess) {
-		gpApplication->mpProgressTasks->Add(pImportAudioTask);
-		gpApplication->Playback_InProgressTask();
+	std::list<CRegion_Data>::iterator itRegion_Data = mRegion_Data_List.begin();
+	for (; itRegion_Data != mRegion_Data_List.end(); itRegion_Data++) {
+		
+		std::string uuid = (*itRegion_Data).Take_UUID() ;
+		
+		std::string sName = Get_Take_Screen_Name( uuid );
+		
+		if(sName.size() ) {
+		
+
+		
+			gpDSPEngine->CreateRegion( sName.c_str(), 
+									  (*itRegion_Data).Track_ID(),
+									  (*itRegion_Data).Possition(), 
+									  (*itRegion_Data).Sample_Offset(),
+									  (*itRegion_Data).Sample_Duration(),
+									  (*itRegion_Data).Fade_In_Duration(),
+									  (*itRegion_Data).Fade_Out_Duration(),
+									  (*itRegion_Data).Volume()	);
+		}
+		
+		
+		
+		 
+		
 	}
-	else {
-		gpApplication->Extended_Error(pImportAudioTask->GetError());
-		pImportAudioTask->Destroy();
-	}
 	
-	
-//	File_Item.Source_Path()
 	
 }
 
-
-
-
+std::string CKSXML_Read_Project::Get_Take_Screen_Name(std::string sUUID)
+{
+	
+	
+	std::list<CSample_Data>::iterator it = mSample_Data_List.begin();
+	for (; it != mSample_Data_List.end(); it++) {
+		
+		
+		CTake_Data* pTake_Data = (*it).Get_Take_Data(sUUID);
+		
+		if(pTake_Data)
+			return pTake_Data->Screen_Name();
+	}
+	
+	return "";
+}
 
 
 
@@ -1175,42 +1206,6 @@ void CKSXML_Read_Project::Check_Revision(TiXmlElement* pElement)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-tbool CKSXML_Read_Project::Insert_Sample()
-{
-	if (gpApplication->IsPlayingOrRecording())  gpApplication->PlaybackStop();
-	
-	
-	CImportAudioTask* pImportAudioTask = new CImportAudioTask();
-	
-	CImportAudioTask::EStereoBehavior eBehave = (bAlwaysKeepStereo) ? CImportAudioTask::geStereoDoKeep : CImportAudioTask::geStereoDoAsk;
-	
-	tbool bSuccess = pImportAudioTask->Init( File_Item.Source_Path(), false, eBehave, false);
-	
-	if (bSuccess) {
-		gpApplication->mpProgressTasks->Add(pImportAudioTask);
-		gpApplication->Playback_InProgressTask();
-	}
-	else {
-		gpApplication->Extended_Error(pImportAudioTask->GetError());
-		pImportAudioTask->Destroy();
-	}
-	
-	return bSuccess;
-}
-*/
 
 
 
