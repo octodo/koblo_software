@@ -86,6 +86,9 @@ public:
 	// get ogg file folder
 	std::string OGG_File_Folder(){ return msProject_Folder + "OGG Files:";};
 	
+	// get mp3 file folder
+	std::string Mp3_File_Folder(){ return msProject_Folder + "MP3 Files:";};
+	
 	// get ogg file folder
 	std::string Pict_File_Folder(){ return msProject_Folder + "Wave Picts:";};
 	

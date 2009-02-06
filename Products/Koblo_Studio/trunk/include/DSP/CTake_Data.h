@@ -16,16 +16,16 @@ public:
 	void Set_Description(const std::string& sDescription ){msDescription =  sDescription;};
 	
 	//! get the description
-	std::string Get_Description(){ return msDescription;};
+	std::string Get_Description() const { return msDescription;};
 	
 	//! get the Sample URL
 	void URL(const std::string& sURL ){ msURL = sURL;};
 	
 	//! get the description
-	std::string URL(){ return msURL;};
+	std::string URL() const { return msURL;};
 	
 	//! is the take in stereo
-	std::string Mode(){ return msMode;};
+	std::string Mode() const { return msMode;};
 	
 	//! mode stereo and mono
 	void Mode(const std::string& sMode) { msMode = sMode;};
@@ -37,7 +37,7 @@ public:
 	void Screen_Name(const std::string& sScreen_Name){ msScreen_Name = sScreen_Name;};
 	
 	//! get screen name
-	std::string Screen_Name(){return msScreen_Name;};
+	std::string Screen_Name() const {return msScreen_Name;};
 	
 	//! set left peak file path
 	void Left_Peak_File_Path(std::string sLeft_Peak_File_Path){ msLeft_Peak_File_Path = sLeft_Peak_File_Path;};
@@ -56,13 +56,13 @@ public:
 	void Left_Wave_File_Path(std::string sLeft_Wave_File_Path){ msLeft_Wave_File_Path = sLeft_Wave_File_Path;};
 	
 	// get left wave file path
-	std::string Left_Wave_File_Path(){ return msLeft_Wave_File_Path;};
+	std::string Left_Wave_File_Path() const { return msLeft_Wave_File_Path;};
 	
 	//! set right wave file path
 	void Right_Wave_File_Path(std::string sRight_Wave_File_Path){ msRight_Wave_File_Path = sRight_Wave_File_Path;};
 	
 	//! get right wave file path
-	std::string Right_Wave_File_Path(){ return msRight_Wave_File_Path;};
+	std::string Right_Wave_File_Path() const { return msRight_Wave_File_Path;};
 	
 	//! check if take is in a given folder
 	tbool In_Folder(std::string sFolder, std::string sExtencion);

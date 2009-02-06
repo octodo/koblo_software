@@ -29,7 +29,7 @@ class CExportClipTask : public CProgressTask {
 public:
 	std::string sScreenName;
 
-	CKSFile_Item mFileItem;
+	//CKSFile_Item mFileItem;
 	tuint64 muiStartIx;
 	tuint64 muiDuration;
 
@@ -75,7 +75,7 @@ public:
 	virtual ~CExportClipTask();
 	virtual void Destroy();
 
-	tbool Init(const CKSFile_Item* pItem_Input, const tchar* pszFilePathDst, ac::EAudioCodec eCodecDst, ac::EQuality eQuality, tuint64 uiStartIx = 0, tuint64 uiDuration = (tuint64)-1);
+	tbool Init(const CTake_Data* pTake_Input, const tchar* pszFilePathDst, ac::EAudioCodec eCodecDst, ac::EQuality eQuality, tuint64 uiStartIx = 0, tuint64 uiDuration = (tuint64)-1);
 	
 	virtual tbool DoWork();
 	virtual tbool IsDone();

@@ -479,6 +479,8 @@ void CKSFile_Controller::Prepare_Take_For_Upload(CTake_Data* Take_Data)
 		mOGG_Compress_Que.push_back(Take_Data);
 		muiMissing_Files++;
 	}
+
+	sFile_Path = Mp3_File_Folder() + Take_Data->Get_UUID();
 	
 	// check if file alreaddy is in mp3 folder
 	if( !Readable_Audio(sFile_Path + ".mp3") )
@@ -488,16 +490,46 @@ void CKSFile_Controller::Prepare_Take_For_Upload(CTake_Data* Take_Data)
 	}
 }
 
-//! secure all mp3 files are in the ogg file folder
+
 void CKSFile_Controller::Prepare_OGG_File()
 {
-	
+	std::list<CTake_Data*>::iterator it = mOGG_Compress_Que.begin();
+	for ( ; it != mOGG_Compress_Que.end(); it++) {
+		CTake_Data* pTake = *it;
+		std::string sOgg = OGG_File_Folder() + pTake->Get_UUID() + ".ogg";
+		CExportClipTask* pTask = new CExportClipTask();
+		if (pTask->Init(pTake, sOgg.c_str(), ac::geAudioCodecVorbis, ac::geQualityDefault)) {
+			// Add task to task list
+			CAutoLock Lock(gpApplication->mMutex_Progress);
+			gpApplication->mpProgressTasks->Add(pTask);
+		}
+		else {
+			// We can't add this anyway - what to do?
+			delete pTask;
+			pTask = NULL;
+		}
+	}
 }
 
-//! secure all mp3 files are in the ogg file folder
+
 void CKSFile_Controller::Prepare_MP3_File()
 {
-	
+	std::list<CTake_Data*>::iterator it = mMp3_Compress_Que.begin();
+	for ( ; it != mMp3_Compress_Que.end(); it++) {
+		CTake_Data* pTake = *it;
+		std::string sMp3 = Mp3_File_Folder() + pTake->Get_UUID() + ".mp3";
+		CExportClipTask* pTask = new CExportClipTask();
+		if (pTask->Init(pTake, sMp3.c_str(), ac::geAudioCodecLame, ac::geQualityLow)) {
+			// Add task to task list
+			CAutoLock Lock(gpApplication->mMutex_Progress);
+			gpApplication->mpProgressTasks->Add(pTask);
+		}
+		else {
+			// We can't add this anyway - what to do?
+			delete pTask;
+			pTask = NULL;
+		}
+	}
 }
 
 

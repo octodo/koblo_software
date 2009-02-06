@@ -51,13 +51,15 @@ void CExportClipTask::constructor_helper(ac::EAudioCodec eCodecDst, tuint64 uiSt
 } // constructor_helper
 
 
-tbool CExportClipTask::Init(const CKSFile_Item* pItem_Input, const tchar* pszFilePathDst, ac::EAudioCodec eCodecDst, ac::EQuality eQuality, tuint64 uiStartIx /*= 0*/, tuint64 uiDuration /*= (tuint64)-1*/)
+tbool CExportClipTask::Init(const CTake_Data* pTake_Input, const tchar* pszFilePathDst, ac::EAudioCodec eCodecDst, ac::EQuality eQuality, tuint64 uiStartIx /*= 0*/, tuint64 uiDuration /*= (tuint64)-1*/)
 {
-	mFileItem = *pItem_Input;
-	sScreenName = mFileItem.Screen_Name();
-	std::string sWaveL = mFileItem.Left_Path();
-	std::string sWaveR = mFileItem.Right_Path();
-	tbool bStereo = mFileItem.Stereo();
+	//mFileItem = *pTake_Input;
+	sScreenName = pTake_Input->Screen_Name();
+	std::string sWaveL = pTake_Input->Left_Wave_File_Path();
+	std::string sWaveR = pTake_Input->Right_Wave_File_Path();
+	//tbool bStereo = pTake_Input->Stereo();
+	std::string sMode = pTake_Input->Mode();
+	tbool bStereo = (stricmp(sMode.c_str(), "stereo") == 0);
 	iChannels = (bStereo) ? 2 : 1;
 	if (!pfWaveL->Open(sWaveL.c_str(), IFile::FileRead)) {
 		msExtendedError = "Can't read-open file:\n  " + sWaveL;
@@ -119,10 +121,22 @@ tbool CExportClipTask::DoWork()
 				if (bDoEncode) {
 					mpEncoder = ac::IEncoder::Create(meCodecDst);
 
-					if (meCodecDst == ac::geAudioCodecWave)
-						msProgress = "Exporting";
-					else
-						msProgress = "Compressing";
+					switch (meCodecDst)
+					{
+						case ac::geAudioCodecWave:
+							msProgress = "Exporting";
+							break;
+						case ac::geAudioCodecLame:
+							msProgress = "Making mp3";
+							break;
+						case ac::geAudioCodecVorbis:
+							msProgress = "Making ogg";
+							break;
+						default:
+							// Huh?
+							msProgress = "Making ???";
+							break;
+					}
 				}
 				if (bDoCopy)
 					msProgress = "Copying";
