@@ -849,3 +849,13 @@ void CBasePane::Redraw_Pane_Rect()
 	mpPane->Redraw(Rct);
 
 }
+
+void CBasePane::EventEditBegin()
+{
+}
+
+void CBasePane::EventEditEnd()
+{
+}
+
+

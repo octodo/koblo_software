@@ -8,12 +8,6 @@
 #include "geInternalOS.h"
 
 
-// Lasse says: Michael! Sk, sk, sk!
-// This approach is now *exterminated*, since is produced weird errors when more than 100 controls were created!
-//const tuint guiDotID1 = 100;
-// .. Lasse
-
-
 CEQDisplay::CEQDisplay()
 	: muiNrOfBands(0), mpCallback(NULL), mpfBufferCurveBand(NULL), mpfBufferCurveTotal(NULL),
 	mpDrawPrimitives(NULL),

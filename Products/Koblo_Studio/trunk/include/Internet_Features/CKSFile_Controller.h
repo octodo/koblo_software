@@ -16,6 +16,10 @@
 // along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 class CMIDI_Sequencer;
+class CSample_Data;
+class CTake_Data;
+
+
 
 class CKSFile_Controller
 {
@@ -87,6 +91,29 @@ public:
 	
 	// get plug-in settings folder
 	std::string Plugin_Settings_Folder(){ return msProject_Folder + "Plug-In's Settings:";};
+	
+	
+	
+	
+	
+	//! itterate all samples in the mSample_Data_List
+	virtual void Prepare_Sampels_For_Upload();
+	
+	//! check one sample from the mSample_Data_List
+	virtual void Prepare_Sampel_For_Upload(CSample_Data* pSample_Data);
+	
+	/*! find the oog and mp3 file in the "OGG Files" and the "MP3 Files" folders 
+	\ if there is no ogg / mp3 file the name of the file is stored in the mOGG_Compress_Que
+	 */
+	virtual void Prepare_Take_For_Upload(CTake_Data* Take_Data);
+	
+	//! secure all mp3 files are in the ogg file folder
+	virtual void Prepare_OGG_File();
+	
+	//! secure all mp3 files are in the ogg file folder
+	virtual void Prepare_MP3_File();
+	
+	tbool Validate_Files_For_Upload();
 
 	
 private:	
@@ -146,6 +173,17 @@ private:
 	tbool Copy_KSProject_Waves();
 	
 	CMIDI_Sequencer* mpMIDI_Sequencer;
+	 
+	 
+	// list of takes files to compress as OGG
+	std::list<CTake_Data*> mOGG_Compress_Que;
+	
+	// list of takes files to compress as mp3
+	std::list<CTake_Data*> mMp3_Compress_Que;
+	
+	//! missing files
+	tuint32 muiMissing_Files;
+	
 	
 	
 	

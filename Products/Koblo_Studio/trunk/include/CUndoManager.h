@@ -15,26 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
 
-
-/*! \class CEventReceiver
- * \brief Empty default implementation of IEventReceiver
-*/
-class CEventReceiver : public virtual IEventReceiver
+class CUndoManager
 {
 public:
-	//! IEventReceiver override
-	virtual void EventValueChange(IControl *pSender, tint32 iValueNew);
+	CUndoManager();
 
-	//! IEventReceiver override
-	virtual void EventGeneric(IControl *pSender, void *pEventData);
+	~CUndoManager();
 
-	//! IEventReceiver override
-	virtual void EventEditBegin();
+	struct SUndoState {
+		std::list<CUndoEvent> Events;
 
-	//! IEventReceiver override
-	virtual void EventEditEnd();
+		//! Standard constructor with 1 event
+		SUndoState(const CUndoEvent& Event) {
+			Events.push_back(Event);
+		}
+	};
+
+	virtual void AddUndoState(const SUndoState& State);
+
+	virtual void Undo();
+
+protected:
+
+	std::list<SUndoState> mUndoStates;
 };
-
-
-
-

@@ -781,9 +781,13 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 	
 	
 	CSample_Data* pSample_Data	= gpDSPEngine->Get_Sample_Data_From_Name(sSample_Name.c_str());
-	CTake_Data* pTake_Data		= pSample_Data->Get_Take_Data();
 	
 	if(pSample_Data == NULL) return NULL;
+	
+	
+	CTake_Data* pTake_Data		= pSample_Data->Get_Take_Data();
+	
+	
 	
 	std::string sWavePathNameL;
 	std::string sWavePathNameR;

@@ -47,6 +47,8 @@ public:
 	void KSPI_CALL MakeWindow(void* p);
 
 protected:
+	tbool mbWindowMade;
+
 	AEffect* mpVSTEffect;
 
 	//! Top pane

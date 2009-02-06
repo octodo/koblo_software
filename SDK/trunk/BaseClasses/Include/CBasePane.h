@@ -91,6 +91,12 @@ public:
 	//! Redraw the Pane rest
 	virtual void Redraw_Pane_Rect();
 
+	//! IEventReceiver
+	virtual void EventEditBegin();
+
+	//! IEventReceiver
+	virtual void EventEditEnd();
+
 protected:
 	static CAutoDelete<IUniqueID> gpPaneIDs;
 

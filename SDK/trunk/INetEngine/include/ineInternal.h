@@ -19,6 +19,9 @@ namespace k2s {
 
 namespace ine {
 
+// libcurl for system independent internet access
+#include "curl/curl.h"
+
 #ifdef WIN32
 #include <wininet.h>
 #endif	// WIN32
@@ -28,6 +31,8 @@ namespace ine {
 
 #include "CINetUtil.h"
 
+#include "CXloader_MultiWrapper.h"
+#include "CXloader_ReplyChainLink.h"
 #include "CXloader.h"
 
 

@@ -63,9 +63,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib winmm.lib wininet.lib version.lib shlwapi.lib"
+				AdditionalDependencies="odbc32.lib odbccp32.lib winmm.lib wininet.lib version.lib shlwapi.lib Ws2_32.lib Wldap32.lib"
 				OutputFile="$(OutDir)\Koblo Studio.exe"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="libcmt"
 				GenerateDebugInformation="true"
@@ -142,7 +143,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib winmm.lib wininet.lib version.lib shlwapi.lib"
+				AdditionalDependencies="odbc32.lib odbccp32.lib winmm.lib wininet.lib version.lib shlwapi.lib Ws2_32.lib Wldap32.lib"
 				OutputFile="$(OutDir)\Koblo Studio.exe"
 				LinkIncremental="1"
 				IgnoreAllDefaultLibraries="false"
@@ -253,6 +254,14 @@
 			</File>
 			<File
 				RelativePath="..\..\source\DSP\CTake_Data.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\CUndoEvent.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\CUndoManager.cpp"
 				>
 			</File>
 			<File
@@ -691,6 +700,22 @@
 			</File>
 			<File
 				RelativePath="..\..\include\CParmGlobal.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\DSP\CSample_Data.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\DSP\CTake_Data.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\CUndoEvent.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\CUndoManager.h"
 				>
 			</File>
 			<File

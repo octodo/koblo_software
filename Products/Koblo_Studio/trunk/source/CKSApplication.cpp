@@ -323,14 +323,14 @@ void CKSApplication::AddParameters()
 		AddGlobalParm(i, giParam_ChAUX4, 0, 31622, 0);
 		AddGlobalParm(i, giParam_ChAUX5, 0, 31622, 0);
 		AddGlobalParm(i, giParam_ChAUX6, 0, 31622, 0);
-		AddGlobalParm(i, giParam_ChInsert1, 0, (tint32)(((tuint32)1 << 31) - 1), 0);
-		AddGlobalParm(i, giParam_ChInsert2, 0, (tint32)(((tuint32)1 << 31) - 1), 0);
-		AddGlobalParm(i, giParam_ChInsert3, 0, (tint32)(((tuint32)1 << 31) - 1), 0);
-		AddGlobalParm(i, giParam_ChInsert4, 0, (tint32)(((tuint32)1 << 31) - 1), 0);
-		AddGlobalParm(i, giParam_ChInsert5, 0, (tint32)(((tuint32)1 << 31) - 1), 0);
-		AddGlobalParm(i, giParam_ChInsert6, 0, (tint32)(((tuint32)1 << 31) - 1), 0);
-		AddGlobalParm(i, giParam_ChInsert7, 0, (tint32)(((tuint32)1 << 31) - 1), 0);
-		AddGlobalParm(i, giParam_ChInsert8, 0, (tint32)(((tuint32)1 << 31) - 1), 0);
+		AddGlobalParm(i, giParam_ChInsert1, (tint32)0x80000000, (tint32)(((tuint32)1 << 31) - 1), 0);
+		AddGlobalParm(i, giParam_ChInsert2, (tint32)0x80000000, (tint32)(((tuint32)1 << 31) - 1), 0);
+		AddGlobalParm(i, giParam_ChInsert3, (tint32)0x80000000, (tint32)(((tuint32)1 << 31) - 1), 0);
+		AddGlobalParm(i, giParam_ChInsert4, (tint32)0x80000000, (tint32)(((tuint32)1 << 31) - 1), 0);
+		AddGlobalParm(i, giParam_ChInsert5, (tint32)0x80000000, (tint32)(((tuint32)1 << 31) - 1), 0);
+		AddGlobalParm(i, giParam_ChInsert6, (tint32)0x80000000, (tint32)(((tuint32)1 << 31) - 1), 0);
+		AddGlobalParm(i, giParam_ChInsert7, (tint32)0x80000000, (tint32)(((tuint32)1 << 31) - 1), 0);
+		AddGlobalParm(i, giParam_ChInsert8, (tint32)0x80000000, (tint32)(((tuint32)1 << 31) - 1), 0);
 		AddGlobalParm(i, giParam_ChInsert1File, 0, 1, 1);
 		AddGlobalParm(i, giParam_ChInsert2File, 0, 1, 1);
 		AddGlobalParm(i, giParam_ChInsert3File, 0, 1, 1);
@@ -1054,6 +1054,8 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 	// hide export window
 	SetGlobalParm(giParamID_Show_Export_Window,	0,		giSectionGUI);
 	
+	
+	
 } // CleanProject
 
 
@@ -1110,15 +1112,19 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			break;
 			
 		case ID_FILE_SAVE:
-			try {
-				if (gpApplication->Project_Folder().length() == 0) 
-					gpApplication->ShowMessageBox("No Project to Save", "Sorry");
-				else
-					Save_Project_As_XML_File_To_Disk();
+			if(mbKSProject_Imported){
+				mbKSProject_Imported = false;
+				if (!Save_As()) {
+					LoadSaveErrDlg("Error saving project");
+				}
 			}
-			catch (IException* pEx) {
-				// Display reason
-				LoadSaveErrDlg(pEx->GetFullDescription());
+			else{
+			// Save
+				if (gpApplication->Project_Folder().length() == 0) 
+					ShowMessageBox("No Project to Save", "Sorry");
+			
+				else
+					Save_Project();
 			}
 			break;
 			
@@ -1131,6 +1137,26 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			catch (IException* pEx) {
 				// Display reason
 				LoadSaveErrDlg(pEx->GetFullDescription());
+			}
+			break;
+
+		case ID_FILE_CLOSEPROJECT:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_FILE_REVERTTOSAVED:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_FILE_IMPORTKSPROJECT:
+			{
+				mbKSProject_Imported = true;
+				MenuFileLoadProject();
+				Project_Name("Imported");
 			}
 			break;
 			
@@ -1194,11 +1220,34 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			break;
 */
 
-		case ID_EDIT_DELETE:
+		case ID_EDIT_UNDO:
+			{
+				// Nothing here yet
+			}
 			break;
 
-		case ID_EDIT_DUPLICATE:
-			gpDSPEngine->Duplicate_Region();
+		case ID_EDIT_COPYREGION:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_EDIT_CUTSELECTION:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_EDIT_PASTEREGION:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_EDIT_DUPLICATEREGION:
+			{
+				gpDSPEngine->Duplicate_Region();
+			}
 			break;
 
 		case ID_EDIT_INVERSEREGION:
@@ -1231,6 +1280,13 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 				gpDSPEngine->LoopSelection();
 				CBasePane::SMsg Msg(Msg_Draw_Loop);
 				Send_Msg_To_All_Panes(&Msg);
+			}
+			break;
+
+		case ID_EDIT_LOOP:
+			{
+				tbool bTest = (gpApplication->GetGlobalParm(giParamID_Loop_On, giSectionGlobal) != 0);
+				gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Loop_On, de::IParameterManager::TypeGlobal, giSectionGlobal);
 			}
 			break;
 
@@ -1273,9 +1329,48 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			}
 			break;
 
+		case ID_VIEW_ZOOM:
+			{
+				Zoom();
+			}
+			break;
+
+		case ID_VIEW_ZOOMIN:
+			{
+				tint32 iTest = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI) +1;
+				gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+			}
+			break;
+
+		case ID_VIEW_ZOOMOUT:
+			{
+				tint32 iTest = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI) -1;
+				gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+			}
+			break;
+
+		case ID_VIEW_JUMPTOMOUSE:
+			{
+				CBasePane::SMsg Msg(Msg_Go_To_Mouse);
+				Send_Msg_To_All_Panes(&Msg);
+			}
+			break;
+
 		case ID_SETTINGS_AUDIOSETUP:
 			{
 				MenuSetupAudio();
+			}
+			break;
+
+		case ID_SETTINGS_SETUSERNAMEANDPASSWORD:
+			{
+				Open_Username_And_Password_Dialog();
+			}
+			break;
+
+		case ID_SETTINGS_CLEARUSERNAMEANDPASSWORD:
+			{
+				Clear_Username_And_Password();
 			}
 			break;
 
@@ -1284,7 +1379,31 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 				Set_Project_License();
 			}
 			break;
-			
+
+		case ID_TOOLS_HAND:
+			{
+				gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Hand, giSectionGUI);
+			}
+			break;
+
+		case ID_TOOLS_TRIM:
+			{
+				gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Trim, giSectionGUI);
+			}
+			break;
+
+		case ID_TOOLS_SELECT:
+			{
+				gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Select, giSectionGUI);
+			}
+			break;
+
+		case ID_TOOLS_CUT:
+			{
+				gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Cut, giSectionGUI);
+			}
+			break;
+
 		case ID_APP_EXIT:
 		case IDM_EXIT:
 			::PostQuitMessage(0);
@@ -1538,7 +1657,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 		
 	}
 	//-------------------------------------------
-	// toos Menu
+	// tools Menu
 	//-------------------------------------------
 	else if (s.compare("Tools@Hand") == 0) {
 		gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Hand, giSectionGUI);

@@ -41,6 +41,12 @@ public:
 	//! IEventReceiver override
 	virtual void EventGeneric(ge::IControl* pSender, void* pEventData) {}
 
+	//! IEventReceiver override
+	virtual void EventEditBegin() {}
+
+	//! IEventReceiver override
+	virtual void EventEditEnd() {}
+
 protected:
 	//! Pointer to GUI
 	CBaseGUI* mpGUI;	

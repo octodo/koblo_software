@@ -35,17 +35,22 @@ public:
 	//! copy constructer
 	CSample_Data(const CSample_Data& DataNew);
 	
-	
-	
 	//! Set sample name
 	void Name( std::string Name){ msName = Name;};
+	
 	//! get sample name
 	std::string Name(){ return msName;};
+	
 	//! get a pointer to the takes
 	CTake_Data* Get_Take_Data(){ return mpTake_Data;};
 	
 	//! finds a take from an given UUID
 	CTake_Data* Get_Take_Data(std::string sUUID);
+	
+	//! finds a take from an given UUID
+	CTake_Data* Get_Take_Data(tuint32 uiTake);
+	
+	tuint32 Number_Of_Takes(){ return muiTakes;};
 	
 protected:
 	
@@ -54,6 +59,8 @@ protected:
 	
 	//!!! TO DO turn this in to a stdlist of takes later
 	CTake_Data* mpTake_Data;
+	
+	tuint32 muiTakes;
 	
 	
 };

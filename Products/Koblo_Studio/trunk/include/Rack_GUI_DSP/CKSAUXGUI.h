@@ -36,6 +36,10 @@ public:
 	virtual void EventValueChange(ge::IControl *pSender, tint32 iValueNew);
 	//! IEventReceiver override
 	virtual void EventGeneric(ge::IControl *pSender, void *pEventData);
+	//! IEventReceiver override
+	virtual void EventEditBegin() {}
+	//! IEventReceiver override
+	virtual void EventEditEnd() {}
 
 	//! IContextCallback override
 	virtual void GetName(tchar* psz);

@@ -52,6 +52,8 @@ CBaseGUI::~CBaseGUI()
 		mpPresetBackground->Destroy();
 	}
 
+	delete GetPane();
+
 	if (mpWindow) {
 		mpWindow->Destroy();
 	}
@@ -61,8 +63,6 @@ CBaseGUI::~CBaseGUI()
 	if (mpContext) {
 		mpContext->Destroy();
 	}
-
-//	delete GetPane();
 }
 
 void CBaseGUI::PreCreate()

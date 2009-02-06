@@ -1137,7 +1137,9 @@ void CText::StopEditing(tbool bOK)
 		else {
 			SetText((tchar*)(msTextCurEditing.c_str()));
 		}
+		EditBegin();
 		this->NotifyGeneric((void*)(msTextCurEditing.c_str()));
+		EditEnd();
 	}
 
 	if (mDragState==MouseDragDragging) {

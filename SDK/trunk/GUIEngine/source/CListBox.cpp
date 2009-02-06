@@ -154,12 +154,16 @@ tbool CListBox::OnMouse(EMouseMsg MouseMsg, const SPos& Pos)
 				strcpy(Info.psz, it->c_str());
 				GetParentWindow()->SetDragAndDropInfo(Info);
 
+				EditBegin();
 				SetValue(iIndex);
+				EditEnd();
 
 				return true;
 			}
 			else {
+				EditBegin();
 				SetValue(-1);
+				EditEnd();
 			}
 		}
 	}
@@ -193,7 +197,9 @@ tbool CListBox::OnMouse(EMouseMsg MouseMsg, const SPos& Pos)
 				// Use same value as ordinary operation
 				iValue = GetValue();
 			}
+			EditBegin();
 			SetValue(iValue);
+			EditEnd();
 		}
 	}
 

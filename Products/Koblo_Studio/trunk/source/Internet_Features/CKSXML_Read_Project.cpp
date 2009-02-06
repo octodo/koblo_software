@@ -60,6 +60,8 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		
 		// insert regions
 		Insert_Regions();
+		
+		gpDSPEngine->Deselect_All_Tracks();
 			
 	}
 	
@@ -116,7 +118,7 @@ void CKSXML_Read_Project::Pass_The_Project_Tag( TiXmlNode* pParent )
 			read = false;
 			
 		}
-	}	
+	}
 }
 
 void CKSXML_Read_Project::Read_Project_Object(TiXmlNode* pParent)

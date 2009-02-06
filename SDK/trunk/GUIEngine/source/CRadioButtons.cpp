@@ -78,7 +78,9 @@ void CRadioButtons::EventValueChange(IControl *pSender, tint32 iValueNew)
 {
 	// If the value is not 1 it means the button was not turned on, so we need to turn it back on
 	if (iValueNew != 1) {
+		EditBegin();
 		pSender->SetValue(1);
+		EditEnd();
 	}
 	else {
 		// The value was 1, so the button was turned on.
@@ -90,7 +92,9 @@ void CRadioButtons::EventValueChange(IControl *pSender, tint32 iValueNew)
 			it++;
 		}
 
+		EditBegin();
 		SetValue(iIndex, true);
+		EditEnd();
 	}
 }
 

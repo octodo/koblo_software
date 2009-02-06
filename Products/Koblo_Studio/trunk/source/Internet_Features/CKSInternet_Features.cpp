@@ -63,6 +63,7 @@ void CKSInternet_Features::On_Menu_Update_Project()
 
 void CKSInternet_Features::On_Menu_Upload_Project()
 {
+	
 	mbUpload_Project = true;
 	
 	if(Get_User_Name_And_Password()){
@@ -71,6 +72,133 @@ void CKSInternet_Features::On_Menu_Upload_Project()
 	else{
 	   Open_Username_And_Password_Dialog();
 	}
+	
+	gpApplication->Prepare_Sampels_For_Upload();
+	
+	
+	// (lasse) very temporary code - forces linking of libcurl (only way to determine if it links)
+#if (0)
+	// (lasse) wawy wawy tempowawy code: upload to koblo.com
+	
+	// These must be set or it won't work
+#define TEMPUSR "xxx@xxx.com"
+#define TEMPPWD "xxx"
+#define TEMPMP3 "_testhest.mp3"
+#define TEMPXXX "Aja joepie jee.mp3"
+	
+	CAutoDelete<IFile> pfMp3(IFile::Create());
+	CAutoDelete<IFile> pfExtra(IFile::Create());
+#ifdef _WIN32
+	tchar* pszMp3File = "C:\\" TEMPMP3;
+	tchar* pszExtraFile = "C:\\" TEMPXXX;
+#endif // _WIN32
+#ifdef _Mac
+	tchar* pszMp3File = "/" TEMPMP3;
+	tchar* pszExtraFile = "/" TEMPXXX;
+#endif // _Mac
+	if (!pfMp3->Open(pszMp3File, IFile::FileRead))
+		return;
+	if (!pfExtra->Open(pszExtraFile, IFile::FileRead))
+		return;
+	
+	tchar pszUUID_Proj[128];
+	Gen_UUID(pszUUID_Proj, 128);
+	tchar pszUUID_Branch[128];
+	Gen_UUID(pszUUID_Branch, 128);
+	tchar pszUUID_Sample[128];
+	Gen_UUID(pszUUID_Sample, 128);
+	tchar pszUUID_Take[128];
+	Gen_UUID(pszUUID_Take, 128);
+	
+	tbool bProjOK = false;
+	CAutoDelete<ine::IUploader> pUploader(ine::IUploader::Create());
+	if (pUploader->Init("koblo.com", "/projects.xml", 80, TEMPUSR, TEMPPWD)) {
+		pUploader->SetReplyMIMEType(ine::MIME_TYPE_XML);
+		pUploader->AddParam("project[name]", "Short-lived Test 123 (lasse)", -1);
+		pUploader->AddParam("project[description]", "Temporary project for test only", -1);
+		pUploader->AddParam("project[license]", "by", -1);
+		pUploader->AddParam("project[uuid]", pszUUID_Proj, -1);
+		pUploader->AddParam("branch[uuid]", pszUUID_Branch, -1);
+		CAutoDelete<IFileMemory> pfCreateReply(IFileMemory::Create());
+		if (pfCreateReply->Open(IFile::FileCreate)) {
+			// Call the Start() method without a reply file - this is for testing buffered reply
+			if (pUploader->Start()) {
+				tchar pszBuffer[1024];
+				tint32 iPortionSize = 0;
+				tbool bSuccess, bError;
+				do {
+					ITime::SleepMS(5);
+					pUploader->GetReplyPortion(pszBuffer, 1024, &iPortionSize);
+					if (iPortionSize > 0) {
+						pfCreateReply->Write(pszBuffer, iPortionSize);
+					}
+					bSuccess = pUploader->IsDone();
+					bError = pUploader->IsFailed();
+				} while ((!bSuccess) && (!bError));
+			}
+			if (pUploader->IsDone()) {
+				bProjOK = true;
+			}
+		}
+		if (pUploader->IsFailed()) {
+			tchar pszErr[1024];
+			pUploader->GetError(pszErr, 1024);
+			std::string sErr = pszErr;
+			tuint64 uiSize = pfCreateReply->GetMemorySize();
+			if (uiSize > 1) {
+				sErr += "\n\n";
+				std::string sExtra = std::string((tchar*)(pfCreateReply->GetMemoryPtr()), uiSize);
+				sErr += sExtra;
+			}
+			ge::IWindow::ShowMessageBox(sErr.c_str(), "Uploader Error");
+		}
+	}
+	
+	if (bProjOK) {
+		//CAutoDelete<ine::IUploader> pUploader(ine::IUploader::Create());
+		std::string sPage = std::string("/projects/") + pszUUID_Proj;
+		sPage += "/samples.xml";
+		CAutoDelete<IFileMemory> pfUpReply(IFileMemory::Create());
+		if (pfUpReply->Open(IFile::FileCreate)) {
+			if (pUploader->Init("koblo.com", sPage.c_str(), 80, TEMPUSR, TEMPPWD)) {
+				pUploader->SetReplyMIMEType(ine::MIME_TYPE_XML);
+				pUploader->SetSpecificVerb(ine::VERB_POST);
+				pUploader->AddParam("sample[uuid]", pszUUID_Sample, -1);
+				pUploader->AddParam("sample[name]", "Short-lived Samle for Test 123 (lasse)", -1);
+				pUploader->AddParam("take[uuid]", pszUUID_Take, -1);
+				pUploader->AddParam("take[description]", "Temporary sample for test only", -1);
+				pUploader->AddFileParam("mp3[uploaded_data]", pfMp3);
+				pUploader->AddFileParam("audio[uploaded_data]", pfExtra);
+				// Call Start(..) with a file - this for testing direct file reply
+				if (pUploader->Start(pfUpReply)) {
+					CAutoDelete<ge::IWaitCursor> pWaitCursor(ge::IWaitCursor::Create());
+					
+					tbool bSuccess, bError;
+					do {
+						ITime::SleepMS(5);
+						bSuccess = pUploader->IsDone();
+						bError = pUploader->IsFailed();
+					} while ((!bSuccess) && (!bError));
+				}
+				if (pUploader->IsDone()) {
+					bProjOK = true;
+				}
+			}
+			if (pUploader->IsFailed()) {
+				tchar pszErr[1024];
+				pUploader->GetError(pszErr, 1024);
+				std::string sErr = pszErr;
+				tuint64 uiSize = pfUpReply->GetMemorySize();
+				if (uiSize > 1) {
+					sErr += "\n\n";
+					std::string sExtra = std::string((tchar*)(pfUpReply->GetMemoryPtr()), uiSize);
+					sErr += sExtra;
+				}
+				ge::IWindow::ShowMessageBox(sErr.c_str(), "Uploader Error");
+			}
+		}
+	}
+#endif 
 }
 
 void CKSInternet_Features::On_Menu_Commit_Project()
@@ -172,7 +300,7 @@ std::string CKSInternet_Features::Get_Branch_UUID()
 }
 
 void CKSInternet_Features::Set_Branch_UUID()
-{ 
+{
 	mpBranch_UUID->Set_UUID();
 }
 

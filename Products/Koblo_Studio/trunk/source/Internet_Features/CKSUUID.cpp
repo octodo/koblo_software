@@ -28,7 +28,8 @@ void CKSUUID::Generate_UUID()
 {
 	
 	tchar* pszUUID = new tchar[128];
-	tuint32 uiBuffer_Size = 0;
+	*pszUUID = '\0';
+	tuint32 uiBuffer_Size = 128;
 	
 	Gen_UUID(pszUUID, uiBuffer_Size);
 	msUUID = pszUUID;

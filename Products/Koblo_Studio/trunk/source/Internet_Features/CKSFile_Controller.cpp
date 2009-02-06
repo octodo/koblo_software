@@ -392,28 +392,6 @@ void CKSFile_Controller::Update_Project_Name(std::string sNew_Name)
 	
 }
 
-/*
-tbool CKSFile_Controller::Is_A_Audio_File(std::string sFile)
-{
-	// obsolete use 
-	return Check_Extencion( Get_Extencion(sFile)  );
-}
-
-tbool CKSFile_Controller::Check_Extencion(std::string sFile)
-{
-	if( sFile.size() == 0)						return false;
-	// supported extencions
-	if (sFile.compare(".wav") == 0)				return true;
-	else if (sFile.compare(".WAV") == 0)		return true;
-	else if (sFile.compare(".ogg") == 0)		return true;
-	else if (sFile.compare(".OGG") == 0)		return true;
-	else if (sFile.compare(".mp3") == 0)		return true;
-	else if (sFile.compare(".MP3") == 0)		return true;
-	
-	return false;
-	
-}
-*/
 std::string  CKSFile_Controller::Get_Extencion(std::string sFile)
 {
 	tint iPos	=	sFile.find_last_of('.');
@@ -453,6 +431,85 @@ tbool CKSFile_Controller::Is_A_File(std::string sFile_Path)
 	}
 	return false;
 }
+
+
+
+
+
+//! itterate all samples in the mSample_Data_List
+void CKSFile_Controller::Prepare_Sampels_For_Upload()
+{
+	// clear que's
+	mOGG_Compress_Que.clear();
+	mMp3_Compress_Que.clear();
+	muiMissing_Files	=	0;
+
+	
+	std::list<CSample_Data>::iterator  itSample_Data = gpApplication->Get_Sample_Data_List_Begin();
+	
+	for (; itSample_Data != gpApplication->Get_Sample_Data_List_End(); itSample_Data++) {
+		
+		Prepare_Sampel_For_Upload( &(*itSample_Data) );
+	}
+}
+
+//! check one sample from the mSample_Data_List
+void CKSFile_Controller::Prepare_Sampel_For_Upload(CSample_Data* pSample_Data)
+{
+	tuint32 uiTakes =  pSample_Data->Number_Of_Takes();
+	
+	for(tuint32 i= 0; i< uiTakes; i++ ){
+		CTake_Data* pTake_Data = pSample_Data->Get_Take_Data(i);
+		
+		Prepare_Take_For_Upload( pTake_Data );
+	}
+}
+
+
+/*! find the oog and mp3 file in the "OGG Files" and the "MP3 Files" folders 
+ \ if there is no ogg / mp3 file the name of the file is stored in the mOGG_Compress_Que
+ */
+void CKSFile_Controller::Prepare_Take_For_Upload(CTake_Data* Take_Data)
+{
+	std::string sFile_Path = OGG_File_Folder() + Take_Data->Get_UUID();
+	
+	// check if file alreaddy is in ogg folder
+	if( !Readable_Audio(sFile_Path + ".ogg") )
+	{
+		mOGG_Compress_Que.push_back(Take_Data);
+		muiMissing_Files++;
+	}
+	
+	// check if file alreaddy is in mp3 folder
+	if( !Readable_Audio(sFile_Path + ".mp3") )
+	{
+		mMp3_Compress_Que.push_back(Take_Data);
+		muiMissing_Files++;
+	}
+}
+
+//! secure all mp3 files are in the ogg file folder
+void CKSFile_Controller::Prepare_OGG_File()
+{
+	
+}
+
+//! secure all mp3 files are in the ogg file folder
+void CKSFile_Controller::Prepare_MP3_File()
+{
+	
+}
+
+
+tbool CKSFile_Controller::Validate_Files_For_Upload()
+{
+	if(muiMissing_Files == 0) return true;
+	
+	return false;
+	
+}
+
+
 
 
 
