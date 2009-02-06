@@ -1,5 +1,13 @@
+
+/*! \class CXloader
+ * \brief Implements IUploader and IDownloader
+ *
+ * Supplies more complex and buffered method for posting/putting web-data
+ * (lasse)
+*/
 class CXloader : public virtual IDownloader, public virtual IUploader
 {
+	friend class CXloader_MultiWrapper;
 public:
 	CXloader(tbool bIsUploader);
 	virtual ~CXloader();
@@ -9,20 +17,32 @@ public:
 
 	//! IDownloader implementation
 	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10);
-	//! IUploader implementation
-	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, IFile* pfileToUpload, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10);
 	//! IDownloader implementation
 	virtual tbool SetReplyMIMEType(E_MIME_Type eMIME);
 	//! IDownloader implementation
 	virtual tbool SetSpecificVerb(EVerbType eVerb);
 	//! IDownloader implementation
-	virtual tbool AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen);
-	//! IDownloader implementation
-	virtual tbool DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize);
+	virtual tbool SetFailOnHttpStatus(tbool bFailOnStatus);
 	//! IUploader implementation
-	virtual tbool UploadPortion(tuint64* puiUploadProgress, tchar* pszReplyBuffer, tint32 iReplyBufferSize, tint32* piReplyPortionSize, tuint64* puiReplyTotalSize);
+	virtual tbool SetStreamingUpload(tbool bUseStreaming);
+	//! IDownloader implementation
+	virtual tbool DisableAutoRedirects();
+	//! IDownloader implementation
+	virtual tbool EnableAutoRedirects();
+	//! IDownloader implementation
+	virtual tbool AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen);
+	//! IUploader implementation
+	virtual tbool AddFileParam(const tchar* pszParamName, IFile* pfileToUpload, tchar* pszDestinationName = NULL, E_MIME_Type eMIME = MIME_TYPE_DEFAULT);
+	//! IDownloader implementation
+	virtual tbool Start(IFile* pfileForDownload = NULL);
+	//! IDownloader implementation
+	virtual tbool GetReplyPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize);
 	//! IDownloader implementation
 	virtual tbool Abort();
+	//! IUploader implementation
+	virtual tbool GetProgress(tint64* piUploadProgress, tint64* piUploadSize, tint64* piDownloadProgress, tint64* piDownloadSize);
+	//! IDownloader implementation
+	virtual tbool GetProgress(tint64* piDownloadProgress, tint64* piDownloadSize);
 
 	//! IDownloader implementation
 	virtual tbool IsDone();
@@ -30,63 +50,91 @@ public:
 	virtual tbool IsFailed();
 
 	//! IDownloader implementation
-	virtual tbool GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize);
+	virtual tbool GetError(tchar* pszErrBuff, tint32 iErrBuffSize);
+
+	// Callbacks
+	size_t ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, size_t nmemb);
+	//int SeekFunction_ForUpload(IFile* pfile, curl_off_t offset, int origin);
+	size_t WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb);
+	int ProgressFunction(double dDownloadSize, double dDownloaded, double dUploadSize, double dUploaded);
+
+	struct SUploadStream {
+		CXloader* mpThis;
+		//
+		std::string msParamName;
+		IFile* mpfile;
+		E_MIME_Type meMIME;
+		std::string msNameAndExtOnly;
+	};
 
 protected:
 	tbool mbIsUploader;
-	
+
 	std::string msHost;
 	std::string msPage;
-	IFile* mpfileToUpload;
 	tint32 miPort;
 	std::string msUser;
 	std::string msPassword;
 	tuint32 muiTimeOutSecs;
-	
-	E_MIME_Type meMIMEType;
-	const tchar* GetMIMEString();
+
+	E_MIME_Type meReplyMIMEType;
+	const tchar* GetReplyMIMEString();
+	const tchar* GetMIMEString(E_MIME_Type eMIME);
 	
 	EVerbType meSpecificVerb;
-	EVerbType GetVerb(EVerbType eVerbDefault);
-	const tchar* GetVerbString(EVerbType eVerbDefault);
+	EVerbType GetActuallyUsedVerb();
+	const tchar* GetVerbString(EVerbType eVerb);
+
+	tbool mbAllowRedirects;
+	tbool SetAllowRedirects(tbool bAllow);
+
+	tbool mbUseStreamingUpload;
 	
+	std::list<SUploadStream*> mlistUploadFiles;
+
 	std::list<std::string> mlist_sParamNames;
 	std::list<tint32> mlist_iParamDataLen;
-	std::list<tchar*> mlist_pszParamDataUrlEncoded;
+	std::list<tchar*> mlist_pszParamData;
 	tint32 miParamsAssembledLen;
 	tchar* mpszParamsAssembled;
 	tbool AssembleParams();
 	void WipeParams();
 	CMutex mMutex_ForParams;
-	void CloseFile_IgnoreError();
+	tbool VerifyParamName(const tchar* pszParamName);
 
-	
-	volatile tuint32 muiAliveMs;
-	void RefreshAlive();
-	tbool IsAlive();
-	
+	// File for writing reply directly into
+	IFile* mpfileForReply;
+
+	std::list<CXloader_ReplyChainLink*> mlist_pReplyChain;
+	volatile tint32 miLockLevel_ForReplyBuffer;
+	void ZapReplyBuffer();
+
+	tuint64 muiUploadProgress;
+	tuint64 muiUploadSize;
+	tuint64 muiReplyProgress;
+	tuint64 muiReplySize;
+
 	std::string msLastError;
 	void SetError(const tchar* pszError);
 	CMutex mMutex_ForErrors;
 
-	
-	void Constructor_OSSpecific();
-	void Destructor_OSSpecific();
+	//! If true we never get body of message with error status (default false)
+	tbool mbFailImmediatelyOnStatus;
+	//! Temporary error string used when http status indicates error but we're not done with receival of body
+	std::string msDelayedStatusError;
 
+	
 	CMutex mMutex_Connection;
 	tbool OpenConnection();
-	tbool OpenConnection_OSSpecific();
 	void CloseConnection();
-	void CloseConnection_OSSpecific();
-	
-	tbool DoPortion_OSSpecific(tuint64* puiUploadProgress, tchar* pszReplyBuffer, tint32 iReplyBufferSize, tint32* piReplyPortionSize, tuint64* puiReplyTotalSize);
 	
 	void SetIsUninitialized();
 	void SetIsInitialized();
 	void SetIsTransfering();
+	void SetMultiSaysDone(CURLcode code);
 	void SetIsDone();
 	void SetIsFailed();
-	
+
 	tbool IsInitialized();
 	tbool IsTransfering();
 	
@@ -95,16 +143,24 @@ private:
 	volatile tbool mbIsInitialized;
 	volatile tbool mbIsTransfering;
 	volatile tbool mbIsFailed;
+	volatile tbool mbIsMultiDone;
 	volatile tbool mbIsDone;
-	
-	
-protected:
-	
-#ifdef _WIN32
-	#include "CXloaderWin.h"
-#endif // _WIN32
-#ifdef _Mac
-	#include "CXloaderOSX.h"
-#endif // _Mac
 
+	tchar mpszErrorBuffer[CURL_ERROR_SIZE];
+
+	CURL* mpCURLEasyHandle;
+	curl_httppost* mpFormPost_First;
+	curl_httppost* mpFormPost_Last;
+	curl_slist* mpSList_ExtraHeaders;
+	
+	tbool AssembleParams_ForUrlEncoded();
+	tbool AssembleParams_ForMultiPartForm();
+
+	tbool SetOpt(CURLoption iOption, const tchar* pszOption, const void* pData, const tchar* pszExtraInfo = "");
+	tbool SetOpt(CURLoption iOption, const tchar* pszOption, tint32 iData, const tchar* pszExtraInfo = "");
+	tbool SetOpt(CURLoption iOption, const tchar* pszOption, tuint32 uiData, const tchar* pszExtraInfo = "");
+	tbool SetOpt(CURLoption iOption, const tchar* pszOption, const tchar* pszData, const tchar* pszExtraInfo = "");
+	tbool SetOpt(CURLoption iOption, const tchar* pszOption, const std::string& rsData, const tchar* pszExtraInfo = "");
+	tbool SetOpt(CURLoption iOption, const tchar* pszOption, tbool bData, const tchar* pszExtraInfo = "");
+	
 };

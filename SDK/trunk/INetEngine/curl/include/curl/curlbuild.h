@@ -114,6 +114,7 @@
 #  include <sys/types.h>
 #endif
 
+// (lasse) This part modified
 /* Configure process defines this to 1 when it finds out that system */
 /* header file stdint.h must be included by the external interface.  */
 #define CURL_PULL_STDINT_H 1
@@ -123,6 +124,7 @@
 #	endif // _WIN32
 #endif
 
+// (lasse) This part modified
 /* Configure process defines this to 1 when it finds out that system  */
 /* header file inttypes.h must be included by the external interface. */
 #define CURL_PULL_INTTYPES_H 1
@@ -135,6 +137,7 @@
 /* The size of `long', as computed by sizeof. */
 #define CURL_SIZEOF_LONG 4
 
+// (lasse) This part modified
 /* Signed integral data type used for curl_off_t. */
 #ifdef _WIN32
 #	define CURL_TYPEOF_CURL_OFF_T __int64
@@ -145,14 +148,29 @@
 /* Data type definition of curl_off_t. */
 typedef CURL_TYPEOF_CURL_OFF_T curl_off_t;
 
+// (lasse) This part modified
 /* curl_off_t formatting string directive without "%" conversion specifier. */
-#define CURL_FORMAT_CURL_OFF_T "lld"
+#ifdef _WIN32
+#	define CURL_FORMAT_CURL_OFF_T "I64d"
+#else _WIN32
+#	define CURL_FORMAT_CURL_OFF_T "lld"
+#endif // #else _WIN32
 
+// (lasse) This part modified
 /* unsigned curl_off_t formatting string without "%" conversion specifier. */
-#define CURL_FORMAT_CURL_OFF_TU "llu"
+#ifdef _WIN32
+#	define CURL_FORMAT_CURL_OFF_TU "I64u"
+#else _WIN32
+#	define CURL_FORMAT_CURL_OFF_TU "llu"
+#endif // #else _WIN32
 
+// (lasse) This part modified
 /* curl_off_t formatting string directive with "%" conversion specifier. */
-#define CURL_FORMAT_OFF_T "%lld"
+#ifdef _WIN32
+#	define CURL_FORMAT_OFF_T "%I64d"
+#else _WIN32
+#	define CURL_FORMAT_OFF_T "%lld"
+#endif // #else _WIN32
 
 /* The size of `curl_off_t', as computed by sizeof. */
 #define CURL_SIZEOF_CURL_OFF_T 8

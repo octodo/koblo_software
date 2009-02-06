@@ -106,7 +106,7 @@ void CKSXML_Read_Project::Pass_The_Project_Tag( TiXmlNode* pParent )
 			read = false;
 			
 		}
-	}	
+	}
 }
 
 void CKSXML_Read_Project::Read_Project_Object(TiXmlNode* pParent)
@@ -570,7 +570,13 @@ void CKSXML_Read_Project::Read_Track_Region(TiXmlElement* pElement, tint32 iTrac
 	if ( !pElement ) return ;
 	
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
+	// (lasse) using an uninitialized variable is illegal for windows visual studio!
+	/*
 	tint32 ival;
+	*/
+	static tint32 ival = 0;
+	// .. (lasse)
+	//printf( "--------\n", ival);
 	// aux id
 	if (pAttrib->QueryIntValue(&ival)==TIXML_SUCCESS)    
 		;//	printf( "region id:%d   ", ival);

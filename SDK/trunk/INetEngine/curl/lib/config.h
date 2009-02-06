@@ -33,6 +33,8 @@
 
 /* to disable LDAP */
 /* #undef CURL_DISABLE_LDAP */
+// (lasse):
+#define CURL_DISABLE_LDAP 1
 
 /* to disable LDAPS */
 #define CURL_DISABLE_LDAPS 1
@@ -353,7 +355,7 @@
 #define HAVE_LIBSSL 1
 
 /* if zlib is available */
-#define HAVE_LIBZ 1
+// (lasse) #define HAVE_LIBZ 1
 
 /* Define to 1 if you have the <limits.h> header file. */
 #define HAVE_LIMITS_H 1
@@ -864,7 +866,7 @@
 #define USE_OPENSSL 1
 
 /* if SSL is enabled */
-#define USE_SSLEAY 1
+// (lasse) #define USE_SSLEAY 1
 
 /* Define to 1 if you are building a Windows target without large file
    support. */

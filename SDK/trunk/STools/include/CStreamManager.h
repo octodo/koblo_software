@@ -45,14 +45,20 @@ protected:
 	ITimer* mpTimer;
 
 	//! List of streams
-	std::list<IStream*> mStreams;
+	//std::list<IStream*> mStreams;
+	//! Streams that are currently being services by stream-manager
+	IStream** mppStreamsArray;
+	//! Number of streams in stream-manager array
+	tint32 miStreamsArrayLen;
+	//! Streams that are newly allocated but haven't yet been added to the handler
+	std::list<IStream*> mlistpStreams_ToBeAdded;
+	CMutex mMutex_ForStreams_ToBeAdded;
+	//! Streams that have been marked for deletion but haven't yet been removed from the handler
+	std::list<IStream*> mlistpStreams_ToBeDeleted;
+	CMutex mMutex_ForStreams_ToBeDeleted;
+	//! House-keeping: Add and remove streams (that have been marked for such operation) from handler
+	void StreamsArrayHouseKeeping();
 
-	//! Array of booleans, to keep track of which streams are currently in use.
-	tbool* mabStreamInUse;
-	CMutex mMutex_ForStreamIxInUse;
-	tbool IsStreamIxInUse(tint32 iIx);
-	void SetStreamIxInUse(tint32 iIx, tbool bInUse);
-	
 	//! Whether sound has stuttered resently
 	volatile tbool mbStutter;
 };

@@ -41,21 +41,17 @@ void CImport_TinyXML::CKSXML_Parse_DOM_To_DAW()
 		tchar* pszTestFile = "/testhest.mp3";
 #endif // _Mac
 		if (pfTest->Open(pszTestFile, IFile::FileCreate)) {
-			tchar pszBuffer[1024];
-			tint32 iPortionSize = 0;
-			tuint64 iTotalSize = 0;
-			while (pDownloader->DownloadPortion(pszBuffer, 1024, &iPortionSize, &iTotalSize)) {
-				if (pDownloader->IsDone()) {
-					// Done
-					break;
-				}
-				if (iPortionSize > 0) {
-					pfTest->Write(pszBuffer, iPortionSize);
+			if (pDownloader->Start(pfTest)) {
+				tbool bDone = false;
+				tbool bFailed = false;
+				while (!bDone && !bFailed) {
+					bDone = pDownloader->IsDone();
+					bFailed = pDownloader->IsFailed();
 				}
 			}
 			if (pDownloader->IsFailed()) {
 				tchar pszErr[1024];
-				pDownloader->GetLatestError(pszErr, 1024);
+				pDownloader->GetError(pszErr, 1024);
 				ge::IWindow::ShowMessageBox(pszErr, "Downloader Error");
 			}
 		}
