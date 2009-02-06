@@ -85,6 +85,9 @@ public:
 	// get ogg file folder
 	std::string Pict_File_Folder(){ return msProject_Folder + "Wave Picts:";};
 	
+	// get plug-in settings folder
+	std::string Plugin_Settings_Folder(){ return msProject_Folder + "Plug-In's Settings:";};
+
 	
 private:	
 	
@@ -112,8 +115,11 @@ private:
 	//! create a new uplaod folder inside the project folder
 	tbool Create_MP3_Folder();
 	
-	//! create a new uplaod wave pict inside the project folder
+	//! create a new "wave pict" folder inside the project folder
 	tbool Create_Wave_Picts_Folder();
+	
+	//! create a new "plug-in settings" folder inside the project folder
+	tbool Create_Plugin_Settings_Folder();
 	
 	//! create a new project file
 	tbool Create_Project_File();

@@ -30,6 +30,7 @@
 
 class CSample_Data;
 class CTake_Data;
+class CPreset_Data;
 
 class CKSXML_Write_Project
 {
@@ -46,6 +47,11 @@ public:
 	std::string Create_License_String();
 	
 	tbool Save_Project_As_XML_File_To_Disk();
+	
+	
+	
+	
+	
 	
 	
 	
@@ -99,6 +105,10 @@ private:
 	void Write_Busses(TiXmlElement* pParent);
 	void Write_Bus(TiXmlElement* pParent, tuint uiID);
 	void Write_Bus_Out(TiXmlElement* pParent, tuint uiID);
+	
+	
+	//! create a new plug-in settings file
+	tbool Create_Plugin_Setting(CPreset_Data* pPreset_Data);
 
 	
 	

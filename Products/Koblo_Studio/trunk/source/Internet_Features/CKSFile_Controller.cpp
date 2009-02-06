@@ -294,6 +294,7 @@ tbool CKSFile_Controller::Create_Wave_Picts_Folder()
 
 
 
+
 //! create a new project file
 tbool CKSFile_Controller::Create_Project_File()
 {
@@ -315,6 +316,9 @@ tbool CKSFile_Controller::Create_Project_File()
 	}
 	return false;
 }
+
+
+
 
 tbool CKSFile_Controller::Copy_Samples()
 {
@@ -363,9 +367,8 @@ tbool CKSFile_Controller::Create_Folders()
 	// create a new MP3 folder
 	if(Create_MP3_Folder() == false ) return false;
 	
-	// create a new upload folder
+	// create a new wave pict folder
 	if(Create_Wave_Picts_Folder() == false ) return false;
-
 	
 	// create a new project file
 	if( Create_Project_File() == false ) return false;

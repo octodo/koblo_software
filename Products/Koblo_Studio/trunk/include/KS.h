@@ -162,6 +162,7 @@ class CPlugInManager;
 #include  "CKSExportForWebGUIPane.h"
 #include  "CKSSetupGUIPane.h"
 #include  "CKSSetupGUI.h"
+#include  "CPreset_Data.h"
 
 // Username and Password
 #include  "CKSUsername_And_Password_Pane.h"

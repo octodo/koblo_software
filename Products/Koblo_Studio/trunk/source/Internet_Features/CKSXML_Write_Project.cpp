@@ -841,13 +841,14 @@ void CKSXML_Write_Project::Write_Track_Inserts(TiXmlElement* pParent, tuint uiTr
 void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert)
 {
 	
+	
+
 	// output
 //	char pszBuff [64];
 	tint32 iInsertId = gpApplication->GetGlobalParm(giParam_ChInsert1 + uiInsert, giSection_First_Track + uiTrack);
 	
 	if(iInsertId){
-		
-		
+		CPreset_Data Preset_Data;
 		// in
 		TiXmlElement* pInsert = new TiXmlElement( "insert" );
 		pParent->LinkEndChild( pInsert );
@@ -872,8 +873,10 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		pProduct->LinkEndChild( pProductTxt );
 		pInsert->LinkEndChild( pProduct );
 		
-
+		Create_Plugin_Setting( &Preset_Data);
 	}
+	
+	 
 }
 
 void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTrack)
@@ -1132,3 +1135,24 @@ void CKSXML_Write_Project::Add_Comment( TiXmlElement* pParent, std::string str)
 	
 }
 
+tbool CKSXML_Write_Project::Create_Plugin_Setting(CPreset_Data* pPreset_Data)
+{
+	
+
+
+	std::string sPlug_in_Setting		=	gpApplication->Plugin_Settings_Folder() + pPreset_Data->Get_UUID() + ".ksprst";
+	
+	
+	
+	CAutoDelete<IFile> pfPlug_In_Setting(IFile::Create());
+	pfPlug_In_Setting->Open(sPlug_in_Setting.c_str(), IFile::FileCreate);
+	
+	//pPeakFileL->Write((const tchar*)pfPeak, iPeakSize * sizeof(tfloat32));
+	
+	
+	if (pfPlug_In_Setting) {
+		return true;
+	}
+	 
+	return false;
+}
