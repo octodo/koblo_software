@@ -143,7 +143,7 @@ tbool CImportAudioTask::Init(CTake_Data* pTake_Data )
 	
 	CAutoDelete<IFile> pfile_L(IFile::Create());
 	CAutoDelete<IFile> pfile_R(IFile::Create());
-	tbool bStereo = (stricmp(pTake_Data->Mode().c_str(), "stereo") == 0);
+	tbool bStereo = pTake_Data->Channels() == 2;
 	std::string s_L = pTake_Data->Left_Wave_File_Path();
 	std::string s_R = pTake_Data->Right_Wave_File_Path();
 	if (!pfile_L->Open(s_L.c_str(), IFile::FileRead)) {

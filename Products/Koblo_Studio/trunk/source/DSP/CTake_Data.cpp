@@ -47,14 +47,8 @@ tbool CTake_Data::In_Folder(std::string sFolder, std::string sExtencion)
 {
 	tbool bOK = false;
 	
-	tuint32 uiChannels = 0;
-	if(stricmp( 	msMode.c_str(),	"mono"	) == 0)
-		uiChannels = 1;
 	
-	else if(stricmp( msMode.c_str(),"stereo") == 0)
-		uiChannels = 2;
-	
-	switch(uiChannels) {
+	switch(Channels()) {
 		case 1:
 		{	// mono 
 			msLeft_Wave_File_Path = sFolder + Disk_Name(1) + sExtencion;
@@ -98,19 +92,11 @@ tbool CTake_Data::Needs_Pict_Files()
 #endif // _Mac_PowerPC
 	
 	
-	
-	
 	tbool bOK			= true;
 	tuint uiTest;
 	
-	tuint32 uiChannels = 0;
-	if(stricmp( 	msMode.c_str(),	"mono"	) == 0)
-		uiChannels = 1;
 	
-	else if(stricmp( msMode.c_str(),"stereo") == 0)
-		uiChannels = 2;
-	
-	switch(uiChannels) {
+	switch(  Channels() ) {
 		case 1:
 		{	// mono 
 			msLeft_Peak_File_Path = gpApplication->Pict_File_Folder() + Disk_Name(1);
@@ -138,7 +124,18 @@ tbool CTake_Data::Needs_Pict_Files()
 	return bOK;
 }
 
-
+tuint32 CTake_Data::Channels()
+{
+	tuint32 uiChannels = 0;
+	if(stricmp( 	msMode.c_str(),	"mono"	) == 0)
+		uiChannels = 1;
+	
+	else if(stricmp( msMode.c_str(),"stereo") == 0)
+		uiChannels = 2;
+	
+	return uiChannels;
+	
+}
 
 
 

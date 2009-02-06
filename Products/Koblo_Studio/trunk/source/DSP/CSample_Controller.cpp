@@ -53,33 +53,38 @@ tuint64 CSample_Controller::Get_Sample_Duration_From_Name( const tchar* pszListN
 	
 }
 
-void CSample_Controller::Set_Wave_Path( CTake_Data* pTake_Info, 
+void CSample_Controller::Set_Wave_Path( CTake_Data* pTake_Data, 
 									   const tchar* pszListName, 
 									   std::string& rsWavePathNameL,
 									   std::string& rsWavePathNameR ) const
 {
-	//CTake_Data* pTake_Info		=	pSample_Data->Get_Take_Data();
-	
-	std::string sMode				=	pTake_Info->Mode();
-	if (stricmp("stereo", sMode.c_str()) == 0) {
-		// STEREO
-		// Get two streams for stereo channel
-		rsWavePathNameL = pTake_Info->Left_Wave_File_Path();
-		rsWavePathNameR = pTake_Info->Right_Wave_File_Path();
-	}
-	else if (stricmp("mono", sMode.c_str()) == 0) {
-		// MONO
-		// Get a single stream for mono channel
-		if (pTake_Info->Left_Wave_File_Path().length()) {
-			// Using left (or only) side of original for mono channel
-			rsWavePathNameL = pTake_Info->Left_Wave_File_Path();
-			rsWavePathNameR = "";
+
+	switch( pTake_Data->Channels() ){
+		
+		case 1:{
+			// MONO
+			// Get a single stream for mono channel
+			if (pTake_Data->Left_Wave_File_Path().length()) {
+				// Using left (or only) side of original for mono channel
+				rsWavePathNameL = pTake_Data->Left_Wave_File_Path();
+				rsWavePathNameR = "";
+			}
+			else if (pTake_Data->Right_Wave_File_Path().length()) {
+				// Using right side of original for mono channel
+				// Note! It *IS* correct to output into *left* side always!
+				rsWavePathNameL = pTake_Data->Right_Wave_File_Path();
+				rsWavePathNameR = "";
+			}
+			break;
 		}
-		else if (pTake_Info->Right_Wave_File_Path().length()) {
-			// Using right side of original for mono channel
-			// Note! It *IS* correct to output into *left* side always!
-			rsWavePathNameL = pTake_Info->Right_Wave_File_Path();
-			rsWavePathNameR = "";
+		case 2:
+		{
+			// STEREO
+			// Get two streams for stereo channel
+			rsWavePathNameL = pTake_Data->Left_Wave_File_Path();
+			rsWavePathNameR = pTake_Data->Right_Wave_File_Path();
+			break;
 		}
+		default: break;
 	}	
 }

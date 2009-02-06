@@ -480,6 +480,8 @@ void CKSFile_Controller::Prepare_Take_For_Upload(CTake_Data* Take_Data)
 		muiMissing_Files++;
 	}
 	
+	sFile_Path = MP3_File_Folder() + Take_Data->Get_UUID();
+	
 	// check if file alreaddy is in mp3 folder
 	if( !Readable_Audio(sFile_Path + ".mp3") )
 	{
@@ -489,23 +491,52 @@ void CKSFile_Controller::Prepare_Take_For_Upload(CTake_Data* Take_Data)
 }
 
 //! secure all mp3 files are in the ogg file folder
-void CKSFile_Controller::Prepare_OGG_File()
+void CKSFile_Controller::Compress_OGG_File()
 {
+	std::list<CTake_Data*>::iterator  itTake_Data = mOGG_Compress_Que.begin();
 	
+	for (; itTake_Data != mOGG_Compress_Que.end(); itTake_Data++) {
+		
+		// mono
+		CKSFile_Item File_Item;
+		// Set source name
+		File_Item.Set_UUID((*itTake_Data)->Get_UUID());
+	//	File_Item.Disk_Name( (*itTake_Data)->Disk_Name(i)  );
+		File_Item.Screen_Name(  (*itTake_Data)->Screen_Name()  );
+		File_Item.Path( Wave_File_Folder()  );
+	//	File_Item.Source_Path( Wave_File_Folder() + (*itTake_Data)->Disk_Name(i) + ".wav"  );
+		File_Item.Extencion(".wav");
+		File_Item.Stereo(false);
+		
+		
+		CExportClipTask ExportClipTask;
+		
+		ExportClipTask.Init( &File_Item, Wave_File_Folder().c_str(), ac::geAudioCodecVorbis, ac::geQualityInsane);
+				
+			
+		
+	}
 }
 
 //! secure all mp3 files are in the ogg file folder
-void CKSFile_Controller::Prepare_MP3_File()
+void CKSFile_Controller::Compress_MP3_File()
 {
+	std::list<CTake_Data*>::iterator  itTake_Data = mMp3_Compress_Que.begin();
+	
+	for (; itTake_Data != mMp3_Compress_Que.end(); itTake_Data++) {
+		
+		(*itTake_Data);
+	}
 	
 }
 
 
 tbool CKSFile_Controller::Validate_Files_For_Upload()
 {
-	if(muiMissing_Files == 0) return true;
+	Prepare_Sampels_For_Upload();
 	
-	return false;
+	return muiMissing_Files == 0 ? true : false;
+	
 	
 }
 

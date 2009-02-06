@@ -551,17 +551,8 @@ tbool CImport_TinyXML::In_OGG_Files(CTake_Data* pTake_Data)
 
 tbool CImport_TinyXML::In_Folder(CTake_Data* pTake_Data, std::string sFolder)
 {
-	tuint32 uiChannels;
 	
-	if(stricmp(		"mono",		pTake_Data->Mode().c_str()) == 0)
-		uiChannels = 1;
-	
-	else if(stricmp("stereo",	pTake_Data->Mode().c_str()) == 0)
-		uiChannels = 2;
-	
-
-	
-	switch(uiChannels) {
+	switch( pTake_Data->Channels()) {
 		case 1:
 		default:
 		{	// mono 

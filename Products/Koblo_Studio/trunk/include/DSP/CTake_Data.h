@@ -72,6 +72,8 @@ public:
 	*/
 	tbool Needs_Pict_Files();
 	
+	tuint32 Channels();
+	
 
 	
 	

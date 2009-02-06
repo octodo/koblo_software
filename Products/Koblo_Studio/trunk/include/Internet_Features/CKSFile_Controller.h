@@ -86,6 +86,9 @@ public:
 	// get ogg file folder
 	std::string OGG_File_Folder(){ return msProject_Folder + "OGG Files:";};
 	
+	// get mp3 file folder
+	std::string MP3_File_Folder(){ return msProject_Folder + "MP3 Files:";};
+	
 	// get ogg file folder
 	std::string Pict_File_Folder(){ return msProject_Folder + "Wave Picts:";};
 	
@@ -108,10 +111,10 @@ public:
 	virtual void Prepare_Take_For_Upload(CTake_Data* Take_Data);
 	
 	//! secure all mp3 files are in the ogg file folder
-	virtual void Prepare_OGG_File();
+	virtual void Compress_OGG_File();
 	
 	//! secure all mp3 files are in the ogg file folder
-	virtual void Prepare_MP3_File();
+	virtual void Compress_MP3_File();
 	
 	tbool Validate_Files_For_Upload();
 
