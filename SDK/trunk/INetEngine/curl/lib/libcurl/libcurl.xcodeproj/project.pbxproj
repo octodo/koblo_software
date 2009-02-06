@@ -73,6 +73,7 @@
 		325F1CCB0F20C93C003081D0 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 325F1CCA0F20C93C003081D0 /* config.h */; };
 		325F1CD20F20C9A3003081D0 /* setup_once.h in Headers */ = {isa = PBXBuildFile; fileRef = 325F1CD10F20C9A3003081D0 /* setup_once.h */; };
 		325F1CDB0F20CB2A003081D0 /* _lasse_test.c in Sources */ = {isa = PBXBuildFile; fileRef = 325F1CDA0F20CB2A003081D0 /* _lasse_test.c */; };
+		32747E8B0F3C2D1000AF0A21 /* Kernel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32747E8A0F3C2D1000AF0A21 /* Kernel.framework */; };
 		32EF22C90F2FC9FB0093D0DA /* curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 32EF22BE0F2FC9FB0093D0DA /* curl.h */; };
 		32EF22CA0F2FC9FB0093D0DA /* curlbuild.h in Headers */ = {isa = PBXBuildFile; fileRef = 32EF22BF0F2FC9FB0093D0DA /* curlbuild.h */; };
 		32EF22CB0F2FC9FB0093D0DA /* curlrules.h in Headers */ = {isa = PBXBuildFile; fileRef = 32EF22C10F2FC9FB0093D0DA /* curlrules.h */; };
@@ -142,7 +143,6 @@
 		32EF234A0F2FCAF60093D0DA /* transfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 32EF23290F2FCAF60093D0DA /* transfer.h */; };
 		32EF234B0F2FCAF60093D0DA /* url.h in Headers */ = {isa = PBXBuildFile; fileRef = 32EF232A0F2FCAF60093D0DA /* url.h */; };
 		32EF234C0F2FCAF60093D0DA /* urldata.h in Headers */ = {isa = PBXBuildFile; fileRef = 32EF232B0F2FCAF60093D0DA /* urldata.h */; };
-		32EF36260F3053230093D0DA /* Kernel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32EF36250F3053230093D0DA /* Kernel.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -215,6 +215,7 @@
 		325F1CCA0F20C93C003081D0 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = ../config.h; sourceTree = SOURCE_ROOT; };
 		325F1CD10F20C9A3003081D0 /* setup_once.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = setup_once.h; path = ../setup_once.h; sourceTree = SOURCE_ROOT; };
 		325F1CDA0F20CB2A003081D0 /* _lasse_test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = _lasse_test.c; path = ../_lasse_test.c; sourceTree = SOURCE_ROOT; };
+		32747E8A0F3C2D1000AF0A21 /* Kernel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kernel.framework; path = System/Library/Frameworks/Kernel.framework; sourceTree = SDKROOT; };
 		32EF22BE0F2FC9FB0093D0DA /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = curl.h; path = ../../include/curl/curl.h; sourceTree = SOURCE_ROOT; };
 		32EF22BF0F2FC9FB0093D0DA /* curlbuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = curlbuild.h; path = ../../include/curl/curlbuild.h; sourceTree = SOURCE_ROOT; };
 		32EF22C10F2FC9FB0093D0DA /* curlrules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = curlrules.h; path = ../../include/curl/curlrules.h; sourceTree = SOURCE_ROOT; };
@@ -285,7 +286,6 @@
 		32EF23290F2FCAF60093D0DA /* transfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = transfer.h; path = ../transfer.h; sourceTree = SOURCE_ROOT; };
 		32EF232A0F2FCAF60093D0DA /* url.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = url.h; path = ../url.h; sourceTree = SOURCE_ROOT; };
 		32EF232B0F2FCAF60093D0DA /* urldata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = urldata.h; path = ../urldata.h; sourceTree = SOURCE_ROOT; };
-		32EF36250F3053230093D0DA /* Kernel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kernel.framework; path = System/Library/Frameworks/Kernel.framework; sourceTree = SDKROOT; };
 		D2AAC046055464E500DB518D /* libcurl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcurl.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -294,7 +294,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32EF36260F3053230093D0DA /* Kernel.framework in Frameworks */,
+				32747E8B0F3C2D1000AF0A21 /* Kernel.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +304,7 @@
 		08FB7794FE84155DC02AAC07 /* libcurl */ = {
 			isa = PBXGroup;
 			children = (
-				32EF36250F3053230093D0DA /* Kernel.framework */,
+				32747E8A0F3C2D1000AF0A21 /* Kernel.framework */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				C6A0FF2B0290797F04C91782 /* Documentation */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
@@ -716,9 +716,11 @@
 				);
 				INFOPLIST_FILE = ../libcurl.plist;
 				INSTALL_PATH = /usr/local/lib;
+				ONLY_ACTIVE_ARCH = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = curl;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
+				SDKROOT = macosx10.4;
 				SKIP_INSTALL = YES;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 			};
@@ -744,6 +746,7 @@
 				INFOPLIST_FILE = ../libcurl.plist;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = curl;
+				SDKROOT = macosx10.4;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 			};
 			name = Release;

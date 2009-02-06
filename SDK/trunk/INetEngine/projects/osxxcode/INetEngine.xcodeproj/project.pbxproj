@@ -44,7 +44,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 32F77F300F309F850021141C /* libcurl.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC046055464E500DB518D /* libcurl.a */;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
 			remoteInfo = libcurl;
 		};
 /* End PBXContainerItemProxy section */
@@ -288,10 +288,7 @@
 		0B77317808A634BB004B30F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
+				ARCHS = "$(NATIVE_ARCH)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -311,6 +308,7 @@
 				LIBRARY_STYLE = STATIC;
 				PREBINDING = NO;
 				PRODUCT_NAME = INetEngine;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				ZERO_LINK = NO;
 			};
 			name = Debug;
@@ -343,6 +341,7 @@
 				LIBRARY_STYLE = STATIC;
 				PREBINDING = NO;
 				PRODUCT_NAME = INetEngine;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				ZERO_LINK = NO;
 			};
 			name = Release;
