@@ -515,7 +515,9 @@ void CPopupMenu::SetInlineIconBitmap(IBitmapResource* pBitmap, tint32 iFrames)
 void CPopupMenu::EventValueChange(IControl* /*pSender*/, tint32 iValueNew)
 {
 	// A sub menu reported a value change, so report it
+	EditBegin();
 	SetValue(iValueNew, true);
+	EditEnd();
 }
 
 tint32 CPopupMenu::GetMouseOverItem(SPos Pos)
@@ -848,7 +850,9 @@ tbool CPopupMenu::OnMouse(EMouseMsg MouseMsg, const SPos& Pos)
 			mbDisregardFirstMouseUp = false;
 		else if (iSelected != -1) {
 			// Left button was released over one of the selections
+			EditBegin();
 			SetValue(mItems.pItems[iSelected].iValue);
+			EditEnd();
 			// Lasse: Added 2006-10-30
 			return true;
 			// ., Lasse

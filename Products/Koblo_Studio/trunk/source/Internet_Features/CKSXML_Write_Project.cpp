@@ -53,7 +53,7 @@ tbool CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	
 	std::string sProject_Name	= gpApplication->Project_Name();
 	std::string sProject_Folder = gpApplication->Project_Folder();
-	std::string sProject		=  sProject_Folder + ":" + sProject_Name + ".xml";
+	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";
 	
 	CAutoDelete<IFile> pfile(IFile::Create());
 	if (pfile->Open(sProject.c_str(), IFile::FileWrite)) {
@@ -506,37 +506,43 @@ void CKSXML_Write_Project::Write_Loop(TiXmlElement* pParent)
 
 void CKSXML_Write_Project::Write_Windows(TiXmlElement* pParent)
 {
+	tbool bShow;
+	
 	// edit
-	TiXmlElement* pEdit = new TiXmlElement( "edit" );;
+	TiXmlElement* pEdit = new TiXmlElement( "edit" );
 	pParent->LinkEndChild( pEdit );
-	Write_Window_Edit(pEdit);
+	bShow = (gpApplication->GetModule()->GetHost()->IsWindowVisible(giMain_Window) != 0);
+	Write_Window( pEdit, giParamID_Show_Track_Window, bShow);
 	
 	// mix
-	TiXmlElement* pMix = new TiXmlElement( "mix" );;
+	TiXmlElement* pMix = new TiXmlElement( "mix" );
 	pParent->LinkEndChild( pMix );
-	Write_Window_Mix(pMix);
+	bShow = (gpApplication->GetModule()->GetHost()->IsWindowVisible(giMix_Window) != 0);
+	Write_Window( pMix, giParamID_Show_Mix_Window, bShow);
 	
 	// rack
-	TiXmlElement* pRack = new TiXmlElement( "rack" );;
+	TiXmlElement* pRack = new TiXmlElement( "rack" );
 	pParent->LinkEndChild( pRack );
-	Write_Window_Rack(pRack);
+	bShow = (gpApplication->GetModule()->GetHost()->IsWindowVisible(giRack_Window) != 0);
+	Write_Window( pRack, giParamID_Show_AUX_Window, bShow);
 }
 
-void CKSXML_Write_Project::Write_Window_Edit(TiXmlElement* pParent)
+void CKSXML_Write_Project::Write_Window(TiXmlElement* pParent, tint32 iWindow, tbool bShow)
 {
-	
-//	sprintf(pszBuff, "%d", iVal);
+	char pszBuff [64];
+	tint32 iVal;
 	
 	// show
-	TiXmlElement* pShow = new TiXmlElement( "show" );
-	TiXmlText* pShowTxt = new TiXmlText("on");
+	std::string sText		=	bShow? "on": "off";
+	TiXmlElement* pShow		=	new TiXmlElement( "show");
+	TiXmlText* pShowTxt		=	new TiXmlText(sText.c_str() );
 	pShow->LinkEndChild( pShowTxt );
 	pParent->LinkEndChild( pShow );
 	
 	
 	// layer
-	char pszBuff [64];
-	tint32 iVal = 1;//gpApplication->GetGlobalParm(giParamID_Loop_On, giSectionGlobal);
+	
+	iVal = 1;//gpApplication->GetGlobalParm(iWindow, giSectionGUI);
 	sprintf(pszBuff, "%d", iVal);
 	TiXmlElement* pLayer = new TiXmlElement( "layer" );
 	TiXmlText* pLayerTxt = new TiXmlText(pszBuff);
@@ -552,19 +558,10 @@ void CKSXML_Write_Project::Write_Window_Edit(TiXmlElement* pParent)
 	TiXmlElement* pSize = new TiXmlElement( "size" );;
 	pParent->LinkEndChild( pSize );
 	Write_Window_Size(pSize, 800, 600);
-	Add_Comment(pParent, "the order of tracks is considered an editing setting, and is specified here");
+//	Add_Comment(pParent, "the order of tracks is considered an editing setting, and is specified here");
 	
 }
 
-void CKSXML_Write_Project::Write_Window_Mix(TiXmlElement* pParent)
-{
-	
-}
-
-void CKSXML_Write_Project::Write_Window_Rack(TiXmlElement* pParent)
-{
-	
-}
 
 void CKSXML_Write_Project::Write_Window_Position(TiXmlElement* pParent, tuint uiPosX, tuint uiPosY)
 {
@@ -630,7 +627,7 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 void CKSXML_Write_Project::Write_Sample(TiXmlElement* pParent, CSample_Data* pSample_Data)
 {
 	TiXmlElement* pSample = new TiXmlElement("name" );
-	TiXmlText* pSampleTxt = new TiXmlText(pSample_Data->Get_Name().c_str());
+	TiXmlText* pSampleTxt = new TiXmlText(pSample_Data->Name().c_str());
 	pSample->LinkEndChild( pSampleTxt );
 	pParent->LinkEndChild( pSample );
 
@@ -641,10 +638,11 @@ void CKSXML_Write_Project::Write_Sample(TiXmlElement* pParent, CSample_Data* pSa
 
 void CKSXML_Write_Project::Write_Take(TiXmlElement* pParent, CTake_Data* pTake_Data)
 {
-	// name
+	// uuid
 	TiXmlElement* pTake = new TiXmlElement( "take" );
 	pTake->SetAttribute("uuid", pTake_Data->Get_UUID().c_str());
 	pParent->LinkEndChild( pTake );
+	
 	
 	// description
 	TiXmlElement* pDescription = new TiXmlElement( "description" );
@@ -652,17 +650,20 @@ void CKSXML_Write_Project::Write_Take(TiXmlElement* pParent, CTake_Data* pTake_D
 	pDescription->LinkEndChild( pDescriptionTxt );
 	pTake->LinkEndChild( pDescription );
 	
+	// mode mono/ stereo
+	TiXmlElement* pChannels = new TiXmlElement( "mode" );
+	TiXmlText* pChannelsTxt = new TiXmlText(pTake_Data->Mode().c_str());
+	pChannels->LinkEndChild( pChannelsTxt );
+	pTake->LinkEndChild( pChannels );
+	
 	// url
 	TiXmlElement* pURL = new TiXmlElement( "url" );
-	TiXmlText* pURLTxt = new TiXmlText(pTake_Data->Get_URL().c_str());
+	TiXmlText* pURLTxt = new TiXmlText(pTake_Data->URL().c_str());
 	pURL->LinkEndChild( pURLTxt );
 	pTake->LinkEndChild( pURL );
 
 }
 
-//----------------------------------------------------------------
-// tracks bus and master
-//----------------------------------------------------------------
 
 void CKSXML_Write_Project::Write_Tracks(TiXmlElement* pParent)
 {
@@ -673,9 +674,12 @@ void CKSXML_Write_Project::Write_Tracks(TiXmlElement* pParent)
 		// id
 		tuint uiTrack = gpApplication->Get_Track_Id(i);
 		
-		// track
+		
+		CTrack_DSP*		pTrack_DSP		=	gpDSPEngine->GetTrack(uiTrack);
+
+		// track uuid
 		TiXmlElement* pTrack = new TiXmlElement( "track" );
-		pTrack->SetAttribute("id",uiTrack);
+		pTrack->SetAttribute("uuid", pTrack_DSP->Get_UUID().c_str());
 		pParent->LinkEndChild( pTrack );
 		
 		// write track data
@@ -733,7 +737,7 @@ void CKSXML_Write_Project::Write_Track(TiXmlElement* pParent, tuint uiTrack)
 
 void CKSXML_Write_Project::Write_Track_In(TiXmlElement* pParent, tuint uiTrack)
 {
-	CTrack_DSP*		pTrack_DSP		=	gpDSPEngine->GetTrack(uiTrack);
+//	CTrack_DSP*		pTrack_DSP		=	gpDSPEngine->GetTrack(uiTrack);
 	
 	// input
 	char pszBuff [64];

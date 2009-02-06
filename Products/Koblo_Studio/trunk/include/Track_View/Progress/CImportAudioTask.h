@@ -51,23 +51,12 @@ public:
 
 	enum EStereoBehavior { geStereoDoAsk, geStereoDoSplit, geStereoDoKeep };
 
-//	std::string msSrcPathName;
-//	std::string msPathOnly;
-//	std::string msClipName;
-//	std::string msExt;
-
-//	std::string msDstNameL;
-//	std::string msDstNameR;
-
-//	std::string msDstPathName_ForCopy;
-	
-
 
 	ac::EAudioCodec meCodec;
 	ac::EQuality meSrcQuality;
 	tbool mbSrcLossyCompressed;
 //	tbool mbStereo;
-	tbool mbSplit;
+//	tbool mbSplit;
 	tint32 miBitWidth;
 
 	IFile* mpSrc_File;
@@ -79,8 +68,8 @@ public:
 	tbool mbDstIsAlreadyThere;
 	tbool mbCopyLossyOriginal;
 
-	tint32 miRegion_TrackID;
-	tint64 miRegion_TrackPos;
+//	tint32 miRegion_TrackID;
+//	tint64 miRegion_TrackPos;
 	tbool mbDeleteNonLossyOriginal;
 
 	tint32 miAudioImportOrder;
@@ -89,7 +78,11 @@ public:
 
 	virtual void Destroy();
 
-	tbool Init( std::string sSource_Path, tbool bDoesWaveAlreadyExist /*= false*/, EStereoBehavior eStereoBehavior /*= geStereoDoAsk*/, tbool bForceOriginalIsLossy /*= false*/);
+	tbool Init( std::string sSource_Path, 
+				tbool bDoesWaveAlreadyExist /*= false*/, 
+				EStereoBehavior eStereoBehavior /*= geStereoDoAsk*/, 
+				tbool bForceOriginalIsLossy /*= false*/);
+	
 //	void Init_InsertAsRegionAfterImport(tint32 iTrackID, tint64 iTrackPos);
 
 	tbool IsOpened() { return (mpAudio_File_L != NULL); };
@@ -98,43 +91,36 @@ public:
 	virtual tbool DoWork();
 	virtual tbool IsDone();
 
-	/*
-	//! file name getter function left
-	std::string NameL(){return msImported_File_NameL;};
-	//! file name getter function reigth
-	std::string NameR(){return msImported_File_NameR;};
-	//! file name setter function left
-	void NameL(std::string sFile_Name){msImported_File_NameL = sFile_Name;};
-	//! file name setter function right
-	void NameR(std::string sFile_Name){msImported_File_NameR = sFile_Name;};
-	
-	//! source file name setter function left
-	void Source_File(std::string sFile_Name){msSource_File = sFile_Name;};
-	//! source file name getter function reigth
-	std::string Source_File(){return msSource_File;};
-	*/
-	
 	tbool Stereo(){ return mFile_Item.Stereo();};
 	void Stereo( tbool bStereo) { mFile_Item.Stereo(bStereo);};
 	
-	//! left take name
-	std::string Name(){ return mFile_Item.Name();};
+	//! take name
+	std::string Name(){ return mFile_Item.Disk_Name();};
 	
 	//! left take name
 	std::string Left_Name(){ return mFile_Item.Left_Name();};
 	//! right take name
-	std::string Right_Name(){ return mFile_Item.Right_Name();};
+	std::string Right_Name(){ return mFile_Item.Stereo() ? mFile_Item.Right_Name(): "";};
 	
 	
 	//! left take name
 	std::string Left_Path(){ return mFile_Item.Left_Path();};
 	//! right take name
-	std::string Right_Path(){ return mFile_Item.Right_Path();};
+	std::string Right_Path(){ return mFile_Item.Stereo() ? mFile_Item.Right_Path(): "";};
 	
 	//! left peek file path
 	std::string Left_Peak_File_Path(){ return mFile_Item.Left_Peak_File_Path();};
 	//! right peek file path
-	std::string Right_Peak_File_Path(){ return mFile_Item.Right_Peak_File_Path();};
+	std::string Right_Peak_File_Path(){ return mFile_Item.Stereo() ? mFile_Item.Right_Peak_File_Path(): "";};
+	
+	//! get uuid
+	std::string Get_UUID(){ return mFile_Item.Get_UUID(); };
+	
+	//! get screen name
+	std::string Screen_Name(){ return mFile_Item.Screen_Name(); };
+	
+	//! set screen name
+	void Screen_Name(std::string sScreen_Name){ mFile_Item.Screen_Name(sScreen_Name); };
 	
 	
 	
@@ -147,6 +133,8 @@ protected:
 	
 	CKSFile_Item mFile_Item;
 	
+//	tint32 miRegion_TrackID;
+//	tint64 miRegion_TrackPos;
 	
 	
 //	virtual std::string Get_File_Name_From_Path(std::string sFile_Path);

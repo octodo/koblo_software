@@ -105,7 +105,9 @@ tbool CSlider::OnMouse(EMouseMsg MouseMsg, const SPos& Pos)
 
 	if (MouseMsg == LeftButtonDblClk) {
 		if (rctThis.Inside(Pos) == true) {
+			EditBegin();
 			SetToDefaultValue();
+			EditEnd();
 			return true;
 		}
 	}
@@ -126,6 +128,7 @@ tbool CSlider::OnMouse(EMouseMsg MouseMsg, const SPos& Pos)
 			mMouseMoved = SSize(0, 0);
 			miMouseMoveCounter = 0;
 			dynamic_cast<CWindow*>(GetParentWindow())->GetMouseFocus(this);
+			EditBegin();
 			return true;
 		}
 
@@ -143,6 +146,7 @@ tbool CSlider::OnMouse(EMouseMsg MouseMsg, const SPos& Pos)
 			dynamic_cast<CWindow*>(GetParentWindow())->ReleaseMouseFocus();
 			GetParentWindow()->SetMousePos(SPos(mPosDragStart.iX, mPosDragStart.iY + iDelta));
 			GetParentWindow()->ShowMouse();
+			EditEnd();
 			return true;
 		}
 	}

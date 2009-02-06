@@ -208,6 +208,15 @@ void CVST2KSPIModule::DoScanDirectory(const std::string& sPathName)
 	}
 }
 
+extern "C" LONG SHRegGetValue(          HKEY hkey,
+    LPCTSTR pszSubKey,
+    LPCTSTR pszValue,
+    INT srrfFlags,
+    LPDWORD pdwType,
+    LPVOID pvData,
+    LPDWORD pcbData
+);
+
 void CVST2KSPIModule::Init()
 {
 /*	short sVolRef;
@@ -219,7 +228,37 @@ void CVST2KSPIModule::Init()
 	sPlugInPath += std::string("Library:Audio:Plug-Ins:VST:");*/
 	// Note: This is hardcoded, and needs to change
 #ifdef WIN32
-	std::string sPlugInPath(":C:VSTPlugIns:");
+	tchar psz[1024];
+	memset(psz, 0, 1024);
+	DWORD dwSize = 1024;
+
+	HKEY hKey;
+	::RegOpenKeyEx(HKEY_LOCAL_MACHINE,
+		"SOFTWARE\\VST",
+		0,
+		KEY_QUERY_VALUE,
+		&hKey);
+
+	LONG lRet = ::RegQueryValueEx(hKey,
+		"VSTPluginsPath",
+		NULL,
+		NULL,
+		(LPBYTE)psz,
+		&dwSize);
+
+	::RegCloseKey(hKey);
+
+	std::string sPlugInPath;
+	if (lRet == ERROR_SUCCESS) {
+		sPlugInPath = std::string(psz);
+		sPlugInPath[1] = sPlugInPath[0];
+		sPlugInPath[0] = ':';
+		sPlugInPath[2] = ':';
+		sPlugInPath += ":";
+	}
+	else {
+		sPlugInPath = std::string(":C:VSTPlugIns:");
+	}
 	DoScanDirectory(sPlugInPath);
 #else	// WIN32
 //	std::string sPlugInPath(":Macintosh HD:Library:Audio:Plug-Ins:VST:");

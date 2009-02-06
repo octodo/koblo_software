@@ -19,7 +19,7 @@
 /*! \class CEQDisplay
  * \brief Implementation of IEQDisplay
 */
-class CEQDisplay : public virtual IEQDisplay, public virtual CPane, public virtual IEventReceiver
+class CEQDisplay : public virtual IEQDisplay, public virtual CPane, public virtual CEventReceiver
 {
 public:
 	//! Constructor

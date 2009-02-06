@@ -16,3 +16,13 @@ void CEventReceiver::EventGeneric(IControl* /*pSender*/, void* /*pEventData*/)
 {
 }
 
+void CEventReceiver::EventEditBegin()
+{
+}
+
+void CEventReceiver::EventEditEnd()
+{
+}
+
+
+

@@ -1119,7 +1119,9 @@ void CTextField::StopEditing(tbool bOK)
 	if (bOK) {
 		SetText((tchar*)(msTextCurEditing.c_str()));
 
+		EditBegin();
 		this->NotifyGeneric((void*)(msTextCurEditing.c_str()));
+		EditEnd();
 	}
 
 	GetParentWindow()->ReleaseMouseFocus();

@@ -21,7 +21,9 @@
  *  holds sample info 
  */
 
-class CKSFile_Item
+
+
+class CKSFile_Item:  public virtual CKSUUID
 {
 	
 public:
@@ -34,11 +36,14 @@ public:
 	//! init set name path and extencion from full path
 	tbool Import(std::string sFull_Path);
 	
+	//! init set name path and extencion name
+	void Load(std::string sName);
+	
 	//! set name
-	void Name(std::string sName){msName = sName;};
+	void Disk_Name(std::string sName){msDisk_Name = sName;};
 	
 	//! get name
-	std::string Name(){ return msName;};
+	std::string Disk_Name(){ return msDisk_Name;};
 	
 	// ! set path
 	void Path(std::string sPath){msPath = sPath;};
@@ -53,14 +58,14 @@ public:
 	std::string Source_Path(){ return msSource_Path;};
 	
 	// ! set destination path
-	void Destination_Path(std::string sPath){msDestination_Path = sPath;};
+//	void Destination_Path(std::string sPath){msDestination_Path = sPath;};
 	
 	//! get destination path
-	std::string Destination_Path(){ return msDestination_Path;};
+	std::string Destination_Path();
 	
 	
-	// ! set path
-	void Extencion(std::string sPath){msExtencion = sPath;};
+	// !set  extencion
+	void Extencion(std::string sExtencion){msExtencion = sExtencion;};
 	
 	//! get extencion
 	std::string Extencion(){ return msExtencion;};
@@ -89,19 +94,28 @@ public:
 	//! set stereo
 	void Stereo(tbool bStereo){ mbStereo =  bStereo;};
 	
+	//! mode
+	void Mode( std::string sMode );
+	
 	//! get stereo
 	tbool Stereo(){ return mbStereo;};
+	
+	// ! set screen name path
+	void Screen_Name(std::string sScreen_Name){msScreen_Name = sScreen_Name;};
+	
+	//! get screen name path
+	std::string Screen_Name(){ return msScreen_Name;};
 	
 
 	
 protected:
 	
 	
-	std::string msName;
+	std::string msDisk_Name;
+	std::string msScreen_Name;
 	std::string msPath;
 	std::string msExtencion;
 	std::string msSource_Path;
-	std::string msDestination_Path;
 	tbool mbIs_A_Dir;
 	tbool mbStereo;
 	

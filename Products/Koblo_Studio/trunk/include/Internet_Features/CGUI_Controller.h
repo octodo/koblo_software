@@ -47,6 +47,7 @@ public:
 	void Close_Window();
 	void Toggle_Window();
 	void Show_Hide_Plugins();
+	virtual void Update_Windows();
 	
 protected:
 	

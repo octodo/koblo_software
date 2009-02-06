@@ -27,6 +27,12 @@ public:
 
 	//! IEventReceiver override
 	virtual void EventGeneric(IControl *pSender, void *pEventData);
+
+	//! IEventReceiver override
+	virtual void EventEditBegin();
+
+	//! IEventReceiver override
+	virtual void EventEditEnd();
 };
 
 
