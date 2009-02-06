@@ -8,6 +8,77 @@ const tint32 iMaxToProcess = 0x10000;
 #endif
 
 
+CExportClipTask::CExportClipTask( const tchar* pszClipName, tuint64 uiStartIx, tuint64 uiDuration)
+{
+	sScreenName = pszClipName;
+
+	constructor_helper(ac::geAudioCodecUndefined, uiStartIx, uiDuration);
+} // constructor
+
+CExportClipTask::CExportClipTask()
+{
+	constructor_helper(ac::geAudioCodecUndefined, 0, (tuint64)-1);
+} // constructor
+
+
+void CExportClipTask::constructor_helper(ac::EAudioCodec eCodecDst, tuint64 uiStartIx, tuint64 uiDuration)
+{
+	muiStartIx = uiStartIx;
+	muiDuration = uiDuration;
+	
+	mpcSilence = NULL;
+	
+	iFiles = 0;
+	pfWaveL = IFile::Create();
+	pfWaveR = IFile::Create();
+	bIsDecompressed = false;
+	
+	eCodecOfOriginal = ac::geAudioCodecUndefined;
+	eQualityOfOriginal = eQualityOfCompressed = ac::geQualityUnknown;
+	iChannels = iSampleRate = 0;
+	
+	bDoEncode = bDoCopy = bSuccess = false;
+	pConcatenateNextTask = NULL;
+	
+	miActionOrder = geExportClip_Before;
+	mpfDst = NULL;
+	miChannelsDst = -1;
+	mpEncoder = NULL;
+	meCodecDst = eCodecDst;
+	meQualityDst = ac::geQualityUnknown;
+	muiCurrEncodeIx = uiStartIx;
+	muiSamplesNeeded = uiDuration;
+} // constructor_helper
+
+
+tbool CExportClipTask::Init(const CKSFile_Item* pItem_Input, const tchar* pszFilePathDst, ac::EAudioCodec eCodecDst, ac::EQuality eQuality, tuint64 uiStartIx /*= 0*/, tuint64 uiDuration /*= (tuint64)-1*/)
+{
+	mFileItem = *pItem_Input;
+	sScreenName = mFileItem.Screen_Name();
+	std::string sWaveL = mFileItem.Left_Path();
+	std::string sWaveR = mFileItem.Right_Path();
+	tbool bStereo = mFileItem.Stereo();
+	iChannels = (bStereo) ? 2 : 1;
+	if (!pfWaveL->Open(sWaveL.c_str(), IFile::FileRead)) {
+		msExtendedError = "Can't read-open file:\n  " + sWaveL;
+		return false;
+	}
+	if ((bStereo) && (!pfWaveR->Open(sWaveL.c_str(), IFile::FileRead))) {
+		msExtendedError = "Can't read-open file:\n  " + sWaveR;
+		return false;
+	}
+	sOut = pszFilePathDst;
+	meCodecDst = eCodecDst;
+	meQualityDst = eQuality;
+	bDoEncode = true;
+	bDoCopy = false;
+	bSuccess = false;
+	muiStartIx = uiStartIx;
+	muiDuration = uiDuration;
+	return true;
+} // Init
+
+
 CExportClipTask::~CExportClipTask()
 {
 	tbool bAbort = false;
@@ -59,7 +130,7 @@ tbool CExportClipTask::DoWork()
 					msProgress += " silent bit";
 				}
 				else {
-					msProgress += std::string(" '") + sClipName + "'";
+					msProgress += std::string(" '") + sScreenName + "'";
 					muiProgressIx = 0;
 					muiProgressTarget = muiDuration - muiStartIx;
 				}
@@ -263,7 +334,7 @@ tbool CExportClipTask::DoCopy()
 		gpApplication->GetProjDir_Clips().c_str(),
 		sDestNameAndExt.c_str())
 	) {
-		msExtendedError = std::string("Unable to copy compressed file for clip: ") + sClipName;
+		msExtendedError = std::string("Unable to copy compressed file for clip: ") + sScreenName;
 		bError = true;
 	}
 

@@ -2283,9 +2283,9 @@ tbool CKSApplication::ExportClipsList_WarnQuality(
 				else {
 					// Add warning
 					iWarnings++;
-					sWarningClipLast = pInfo->sClipName;
+					sWarningClipLast = pInfo->sScreenName;
 					eQualityClipLast = pInfo->eQualityOfOriginal;
-					sWarningLast = std::string(" - ") + pInfo->sClipName + "\n";
+					sWarningLast = std::string(" - ") + pInfo->sScreenName + "\n";
 					if (iWarnings < 10)
 						sWarnings += sWarningLast;
 					else
@@ -2402,7 +2402,7 @@ tbool CKSApplication::ExportClipsList_SelectDestination(std::list<CExportClipTas
 
 		std::string sDefaultName;
 		if (pInfo->sDestName_Concatenate.empty())
-			sDefaultName = pInfo->sClipName + kpszExt;
+			sDefaultName = pInfo->sScreenName + kpszExt;
 		else
 			sDefaultName = pInfo->sDestName_Concatenate + kpszExt;
 
@@ -2439,7 +2439,7 @@ tbool CKSApplication::ExportClipsList_SelectDestination(std::list<CExportClipTas
 				CExportClipTask* pInfo = *it;
 				pInfo->sDestFolder = pszDestinationFolder;
 				if (pInfo->sDestName_Concatenate.empty())
-					pInfo->sDestNameAndExt = pInfo->sClipName + kpszExt;
+					pInfo->sDestNameAndExt = pInfo->sScreenName + kpszExt;
 				else
 					pInfo->sDestNameAndExt = pInfo->sDestName_Concatenate + kpszExt;
 				if (IFile::Exists((pInfo->sDestFolder + pInfo->sDestNameAndExt).c_str())) {

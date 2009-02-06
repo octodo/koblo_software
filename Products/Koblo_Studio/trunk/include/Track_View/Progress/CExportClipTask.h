@@ -27,9 +27,9 @@ enum EExportClipOrder {
 
 class CExportClipTask : public CProgressTask {
 public:
+	std::string sScreenName;
 
-
-	std::string sClipName;
+	CKSFile_Item mFileItem;
 	tuint64 muiStartIx;
 	tuint64 muiDuration;
 
@@ -37,7 +37,6 @@ public:
 	IFile* pfWaveL;
 	IFile* pfWaveR;
 	
-	std::string sWaveR;
 	
 	tbool bIsDecompressed;
 	std::string sCompressedOriginal;
@@ -68,41 +67,16 @@ public:
 	tuint64 muiCurrEncodeIx;
 	tuint64 muiSamplesNeeded;
 
-	CExportClipTask( const tchar* pszClipName, tuint64 uiStartIx, tuint64 uiDuration)
-	{
-		
-
-		sClipName = pszClipName;
-		muiStartIx = uiStartIx;
-		muiDuration = uiDuration;
-
-		mpcSilence = NULL;
-
-		iFiles = 0;
-		pfWaveL = IFile::Create();
-		pfWaveR = IFile::Create();
-		bIsDecompressed = false;
-
-		eCodecOfOriginal = ac::geAudioCodecUndefined;
-		eQualityOfOriginal = eQualityOfCompressed = ac::geQualityUnknown;
-		iChannels = iSampleRate = 0;
-
-		bDoEncode = bDoCopy = bSuccess = false;
-		pConcatenateNextTask = NULL;
-
-		miActionOrder = geExportClip_Before;
-		mpfDst = NULL;
-		miChannelsDst = -1;
-		mpEncoder = NULL;
-		meCodecDst = ac::geAudioCodecUndefined;
-		meQualityDst = ac::geQualityUnknown;
-		muiCurrEncodeIx = uiStartIx;
-		muiSamplesNeeded = uiDuration;
-	} // constructor
+	// Old constructor (should be deleted some time later)
+	CExportClipTask(const tchar* pszClipName, tuint64 uiStartIx, tuint64 uiDuration);
+	// New constructor - use with Init(..)
+	CExportClipTask();
 
 	virtual ~CExportClipTask();
 	virtual void Destroy();
 
+	tbool Init(const CKSFile_Item* pItem_Input, const tchar* pszFilePathDst, ac::EAudioCodec eCodecDst, ac::EQuality eQuality, tuint64 uiStartIx = 0, tuint64 uiDuration = (tuint64)-1);
+	
 	virtual tbool DoWork();
 	virtual tbool IsDone();
 
@@ -116,5 +90,7 @@ protected:
 
 	tbool IsSilence()
 	{ return (iFiles == 0); };
+	
+	void constructor_helper(ac::EAudioCodec eCodecDst, tuint64 uiStartIx, tuint64 uiDuration);
 
 }; // CExportClipTask
