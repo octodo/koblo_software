@@ -19,12 +19,12 @@ CPanner::CPanner() : mpBmpBack(NULL), mpKnobX(NULL), mpKnobY(NULL), mpBmpHndl(NU
 
 CPanner::~CPanner()
 {
-	if (mpKnobX)
+/*	if (mpKnobX)
 		mpKnobX->Destroy();
 	if (mpKnobY)
 		mpKnobY->Destroy();
 	if (mpBmpHndl)
-		mpBmpHndl->Destroy();
+		mpBmpHndl->Destroy();*/
 }
 
 IPanner* IPanner::Create()

@@ -12,6 +12,12 @@ CTrack_Editor_View::CTrack_Editor_View( de::IParameterManager* pParmMan)
 
 CTrack_Editor_View::~CTrack_Editor_View()
 {
+	if (mpPlay_Head_Timer) {
+		mpPlay_Head_Timer->Stop();
+	}
+	if (mpTimerMeters) {
+		mpTimerMeters->Stop();
+	}
 }
 
 void CTrack_Editor_View::Destroy()

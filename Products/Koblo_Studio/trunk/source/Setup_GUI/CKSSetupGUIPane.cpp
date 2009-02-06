@@ -12,7 +12,7 @@ CKSSetupGUIPane::CKSSetupGUIPane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 
 CKSSetupGUIPane::~CKSSetupGUIPane()
 {
-	if (mpPopupMenuAudioDevices) {
+/*	if (mpPopupMenuAudioDevices) {
 		mpPopupMenuAudioDevices->Destroy();
 		mpPopupMenuAudioDevices = NULL;
 	}
@@ -23,7 +23,7 @@ CKSSetupGUIPane::~CKSSetupGUIPane()
 	if (mpPopupMenuAudioBuffs) {
 		mpPopupMenuAudioBuffs->Destroy();
 		mpPopupMenuAudioBuffs = NULL;
-	}
+	}*/
 }
 
 void CKSSetupGUIPane::Init()
