@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 
 enum EExportClipOrder {
@@ -29,13 +29,13 @@ class CExportClipTask : public CProgressTask {
 public:
 	std::string sScreenName;
 
-	CKSFile_Item mFileItem;
+	//CKSFile_Item mFileItem;
 	tuint64 muiStartIx;
 	tuint64 muiDuration;
 
-	tint32 iFiles;
-	IFile* pfWaveL;
-	IFile* pfWaveR;
+	tint32 miFiles;
+	IFile* mpLeft_Wave_File;
+	IFile* mpRight_Wave_File;
 	
 	
 	tbool bIsDecompressed;
@@ -44,8 +44,8 @@ public:
 	ac::EAudioCodec eCodecOfOriginal;
 	ac::EQuality eQualityOfOriginal;
 	ac::EQuality eQualityOfCompressed;
-	tint32 iChannels;
-	tint32 iSampleRate;
+	tint32 miChannels;
+	tint32 miSampleRate;
 
 	tchar* mpcSilence;
 
@@ -58,8 +58,8 @@ public:
 	CExportClipTask* pConcatenateNextTask;
 
 	tint32 miActionOrder;
-	std::string sOut;
-	IFile* mpfDst;
+	std::string msDestinatin_File;
+	IFile* mpfDestinatin_File;
 	tint32 miChannelsDst;
 	ac::EAudioCodec meCodecDst;
 	ac::EQuality meQualityDst;
@@ -75,7 +75,7 @@ public:
 	virtual ~CExportClipTask();
 	virtual void Destroy();
 
-	tbool Init(const CKSFile_Item* pItem_Input, const tchar* pszFilePathDst, ac::EAudioCodec eCodecDst, ac::EQuality eQuality, tuint64 uiStartIx = 0, tuint64 uiDuration = (tuint64)-1);
+	tbool Init(const CTake_Data* pTake_Input, const tchar* pszFilePathDst, ac::EAudioCodec eCodecDst, ac::EQuality eQuality, tuint64 uiStartIx = 0, tuint64 uiDuration = (tuint64)-1);
 	
 	virtual tbool DoWork();
 	virtual tbool IsDone();
@@ -89,7 +89,7 @@ protected:
 	tbool DoCopy();
 
 	tbool IsSilence()
-	{ return (iFiles == 0); };
+	{ return (miFiles == 0); };
 	
 	void constructor_helper(ac::EAudioCodec eCodecDst, tuint64 uiStartIx, tuint64 uiDuration);
 

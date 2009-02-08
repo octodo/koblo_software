@@ -1070,7 +1070,7 @@ void CKSXML_Read_Project::Insert_Regions()
 		if(sName.size() ) {
 		
 
-		
+
 			gpDSPEngine->CreateRegion( sName.c_str(), 
 									  (*itRegion_Data).Track_ID(),
 									  (*itRegion_Data).Possition(), 
@@ -1080,11 +1080,7 @@ void CKSXML_Read_Project::Insert_Regions()
 									  (*itRegion_Data).Fade_Out_Duration(),
 									  (*itRegion_Data).Volume()	);
 		}
-		
-		
-		
-		 
-		
+
 	}
 	
 	

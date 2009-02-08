@@ -436,7 +436,7 @@ tbool CKSFile_Controller::Is_A_File(std::string sFile_Path)
 
 
 
-//! itterate all samples in the mSample_Data_List
+
 void CKSFile_Controller::Prepare_Sampels_For_Upload()
 {
 	// clear que's
@@ -453,7 +453,7 @@ void CKSFile_Controller::Prepare_Sampels_For_Upload()
 	}
 }
 
-//! check one sample from the mSample_Data_List
+
 void CKSFile_Controller::Prepare_Sampel_For_Upload(CSample_Data* pSample_Data)
 {
 	tuint32 uiTakes =  pSample_Data->Number_Of_Takes();
@@ -461,14 +461,28 @@ void CKSFile_Controller::Prepare_Sampel_For_Upload(CSample_Data* pSample_Data)
 	for(tuint32 i= 0; i< uiTakes; i++ ){
 		CTake_Data* pTake_Data = pSample_Data->Get_Take_Data(i);
 		
+		//if( Validate_Take(pTake_Data) )
 		Prepare_Take_For_Upload( pTake_Data );
 	}
 }
 
+tbool CKSFile_Controller::Validate_Take(CTake_Data* pTake_Data)
+{
 
-/*! find the oog and mp3 file in the "OGG Files" and the "MP3 Files" folders 
- \ if there is no ogg / mp3 file the name of the file is stored in the mOGG_Compress_Que
- */
+	if( pTake_Data->Channels() == 2 ){
+		return Readable_Audio(pTake_Data->Left_Wave_File_Path());
+	}
+	else{
+		tuint uiTest =	Readable_Audio(pTake_Data->Left_Wave_File_Path());
+		uiTest		+=	Readable_Audio(pTake_Data->Right_Wave_File_Path());
+		return uiTest == 2 ? true: false;
+	}
+	
+	return false;
+}
+
+
+
 void CKSFile_Controller::Prepare_Take_For_Upload(CTake_Data* Take_Data)
 {
 	std::string sFile_Path = OGG_File_Folder() + Take_Data->Get_UUID();
@@ -479,6 +493,8 @@ void CKSFile_Controller::Prepare_Take_For_Upload(CTake_Data* Take_Data)
 		mOGG_Compress_Que.push_back(Take_Data);
 		muiMissing_Files++;
 	}
+
+//	sFile_Path = Mp3_File_Folder() + Take_Data->Get_UUID();
 	
 	sFile_Path = MP3_File_Folder() + Take_Data->Get_UUID();
 	
@@ -490,51 +506,57 @@ void CKSFile_Controller::Prepare_Take_For_Upload(CTake_Data* Take_Data)
 	}
 }
 
-//! secure all mp3 files are in the ogg file folder
 void CKSFile_Controller::Compress_OGG_File()
 {
-	std::list<CTake_Data*>::iterator  itTake_Data = mOGG_Compress_Que.begin();
-	
-	for (; itTake_Data != mOGG_Compress_Que.end(); itTake_Data++) {
+	std::list<CTake_Data*>::iterator it = mOGG_Compress_Que.begin();
+	for ( ; it != mOGG_Compress_Que.end(); it++) {
+		CTake_Data* pTake_Data = *it;
+		std::string sOgg = OGG_File_Folder() + pTake_Data->Get_UUID() + ".ogg";
 		
-		// mono
-		CKSFile_Item File_Item;
-		// Set source name
-		File_Item.Set_UUID((*itTake_Data)->Get_UUID());
-	//	File_Item.Disk_Name( (*itTake_Data)->Disk_Name(i)  );
-		File_Item.Screen_Name(  (*itTake_Data)->Screen_Name()  );
-		File_Item.Path( Wave_File_Folder()  );
-	//	File_Item.Source_Path( Wave_File_Folder() + (*itTake_Data)->Disk_Name(i) + ".wav"  );
-		File_Item.Extencion(".wav");
-		File_Item.Stereo(false);
+		CExportClipTask* pExportClipTask = new CExportClipTask(); //!!! when is this task deleted??
 		
-		
-		CExportClipTask ExportClipTask;
-		
-		ExportClipTask.Init( &File_Item, Wave_File_Folder().c_str(), ac::geAudioCodecVorbis, ac::geQualityInsane);
-				
+		if (pExportClipTask->Init(pTake_Data, sOgg.c_str(), ac::geAudioCodecVorbis, ac::geQualityDefault)) {
+			// Add task to task list
+			CAutoLock Lock(gpApplication->mMutex_Progress);
+			gpApplication->mpProgressTasks->Add(pExportClipTask);
 			
-		
+			gpApplication->Playback_InProgressTask();
+			
+		}
+		else {
+			// We can't add this anyway - what to do?
+			delete pExportClipTask;
+			pTake_Data = NULL;
+		}
 	}
 }
 
-//! secure all mp3 files are in the ogg file folder
+
 void CKSFile_Controller::Compress_MP3_File()
 {
-	std::list<CTake_Data*>::iterator  itTake_Data = mMp3_Compress_Que.begin();
-	
-	for (; itTake_Data != mMp3_Compress_Que.end(); itTake_Data++) {
-		
-		(*itTake_Data);
+	std::list<CTake_Data*>::iterator it = mMp3_Compress_Que.begin();
+	for ( ; it != mMp3_Compress_Que.end(); it++) {
+		CTake_Data* pTake = *it;
+		std::string sMp3 = MP3_File_Folder() + pTake->Get_UUID() + ".mp3";
+		CExportClipTask* pTask = new CExportClipTask();
+		if (pTask->Init(pTake, sMp3.c_str(), ac::geAudioCodecLame, ac::geQualityLow)) {
+			// Add task to task list
+			CAutoLock Lock(gpApplication->mMutex_Progress);
+			gpApplication->mpProgressTasks->Add(pTask);
+		}
+		else {
+			// We can't add this anyway - what to do?
+			delete pTask;
+			pTask = NULL;
+		}
 	}
-	
+
 }
 
 
 tbool CKSFile_Controller::Validate_Files_For_Upload()
 {
 	Prepare_Sampels_For_Upload();
-	
 	return muiMissing_Files == 0 ? true : false;
 	
 	

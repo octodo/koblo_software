@@ -19,7 +19,7 @@ CRegion_DSP::CRegion_DSP(tint32 iUniqueID,
 	mppPeakFile[1]		= NULL;
 	mppPeakFile[2]		= NULL;
 	mppPeakFile[3]		= NULL;
-//	mpUUID				= new(CKSUUID);
+
 	
 	
 	if (pTake_Data->Right_Wave_File_Path().size() == 0) {

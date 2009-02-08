@@ -128,7 +128,7 @@ tbool CKS_Import_Files::Import_Audio_File(CKSFile_Item File_Item  )
 	
 	CImportAudioTask* pImportAudioTask = new CImportAudioTask();
 	
-	CImportAudioTask::EStereoBehavior eBehave = CImportAudioTask::geStereoDoAsk;
+//	CImportAudioTask::EStereoBehavior eBehave = CImportAudioTask::geStereoDoAsk;
 	
 	//tbool bSuccess = pImportAudioTask->Init( File_Item.Source_Path(), false, eBehave, false);
 	tbool bSuccess = pImportAudioTask->Init( &File_Item);

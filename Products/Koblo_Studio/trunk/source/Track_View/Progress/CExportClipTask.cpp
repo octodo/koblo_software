@@ -28,53 +28,63 @@ void CExportClipTask::constructor_helper(ac::EAudioCodec eCodecDst, tuint64 uiSt
 	
 	mpcSilence = NULL;
 	
-	iFiles = 0;
-	pfWaveL = IFile::Create();
-	pfWaveR = IFile::Create();
+	miFiles = 0;
+	mpLeft_Wave_File = IFile::Create();
+	mpRight_Wave_File = IFile::Create();
 	bIsDecompressed = false;
 	
 	eCodecOfOriginal = ac::geAudioCodecUndefined;
 	eQualityOfOriginal = eQualityOfCompressed = ac::geQualityUnknown;
-	iChannels = iSampleRate = 0;
+	miChannels  = 0;
+	miSampleRate = gpApplication->GetSampleRate();
 	
 	bDoEncode = bDoCopy = bSuccess = false;
 	pConcatenateNextTask = NULL;
 	
-	miActionOrder = geExportClip_Before;
-	mpfDst = NULL;
-	miChannelsDst = -1;
-	mpEncoder = NULL;
-	meCodecDst = eCodecDst;
-	meQualityDst = ac::geQualityUnknown;
-	muiCurrEncodeIx = uiStartIx;
-	muiSamplesNeeded = uiDuration;
+	miActionOrder			= geExportClip_Before;
+	mpfDestinatin_File		= NULL;
+	miChannelsDst			= -1;
+	mpEncoder				= NULL;
+	meCodecDst				= eCodecDst;
+	meQualityDst			= ac::geQualityUnknown;
+	muiCurrEncodeIx			= uiStartIx;
+	muiSamplesNeeded		= uiDuration;
 } // constructor_helper
 
 
-tbool CExportClipTask::Init(const CKSFile_Item* pItem_Input, const tchar* pszFilePathDst, ac::EAudioCodec eCodecDst, ac::EQuality eQuality, tuint64 uiStartIx /*= 0*/, tuint64 uiDuration /*= (tuint64)-1*/)
+tbool CExportClipTask::Init(const CTake_Data* pTake_Data, const tchar* pszFilePathDst, ac::EAudioCodec eCodecDst, ac::EQuality eQuality, tuint64 uiStartIx /*= 0*/, tuint64 uiDuration /*= (tuint64)-1*/)
 {
-	mFileItem = *pItem_Input;
-	sScreenName = mFileItem.Screen_Name();
-	std::string sWaveL = mFileItem.Left_Path();
-	std::string sWaveR = mFileItem.Right_Path();
-	tbool bStereo = mFileItem.Stereo();
+
+	sScreenName							= pTake_Data->Screen_Name();
+	std::string sLeft_Wave_File_Path	= pTake_Data->Left_Wave_File_Path();
+	std::string sRight_Wave_File_Path	= pTake_Data->Right_Wave_File_Path();
+	
+/*	//tbool bStereo = pTake_Input->Stereo();
+	std::string sMode = pTake_Input->Mode();
+	tbool bStereo = (stricmp(sMode.c_str(), "stereo") == 0);
 	iChannels = (bStereo) ? 2 : 1;
-	if (!pfWaveL->Open(sWaveL.c_str(), IFile::FileRead)) {
-		msExtendedError = "Can't read-open file:\n  " + sWaveL;
+*/	
+	miChannels = pTake_Data->Channels();
+	
+
+	if (!mpLeft_Wave_File->Open(sLeft_Wave_File_Path.c_str(), IFile::FileRead)) {
+		msExtendedError = "Can't read-open file:\n  " + sLeft_Wave_File_Path;
 		return false;
 	}
-	if ((bStereo) && (!pfWaveR->Open(sWaveL.c_str(), IFile::FileRead))) {
-		msExtendedError = "Can't read-open file:\n  " + sWaveR;
+	if ( ( miChannels == 2) && (!mpRight_Wave_File->Open(sRight_Wave_File_Path.c_str(), IFile::FileRead))) {
+		msExtendedError = "Can't read-open file:\n  " + sRight_Wave_File_Path;
 		return false;
 	}
-	sOut = pszFilePathDst;
-	meCodecDst = eCodecDst;
-	meQualityDst = eQuality;
-	bDoEncode = true;
-	bDoCopy = false;
-	bSuccess = false;
-	muiStartIx = uiStartIx;
-	muiDuration = uiDuration;
+
+	msDestinatin_File	=	pszFilePathDst;
+	meCodecDst			=	eCodecDst;
+	meQualityDst		=	eQuality;
+	bDoEncode			=	true;
+	bDoCopy				=	false;
+	bSuccess			=	false;
+	muiStartIx			=	uiStartIx;
+	muiDuration			=	uiDuration;
+	miFiles				=	miChannels; //!!! right?
 	return true;
 } // Init
 
@@ -89,15 +99,15 @@ CExportClipTask::~CExportClipTask()
 	}
 
 	if (bAbort) {
-		if (mpfDst) {
-			DeleteDstFile(mpfDst);
-			mpfDst->Destroy();
-			mpfDst = NULL;
+		if (mpfDestinatin_File) {
+			DeleteDstFile(mpfDestinatin_File);
+			mpfDestinatin_File->Destroy();
+			mpfDestinatin_File = NULL;
 		}
 	}
 
-	pfWaveL->Destroy();
-	pfWaveR->Destroy();
+	mpLeft_Wave_File->Destroy();
+	mpRight_Wave_File->Destroy();
 } // destructor
 
 
@@ -114,15 +124,27 @@ tbool CExportClipTask::DoWork()
 	switch (miActionOrder) {
 		case geExportClip_Before:
 			{
-				sOut = sDestFolder + sDestNameAndExt;
+		//		msDestinatin_File = sDestFolder + sDestNameAndExt;
 
 				if (bDoEncode) {
 					mpEncoder = ac::IEncoder::Create(meCodecDst);
 
-					if (meCodecDst == ac::geAudioCodecWave)
-						msProgress = "Exporting";
-					else
-						msProgress = "Compressing";
+					switch (meCodecDst)
+					{
+						case ac::geAudioCodecWave:
+							msProgress = "Exporting";
+							break;
+						case ac::geAudioCodecLame:
+							msProgress = "Making mp3";
+							break;
+						case ac::geAudioCodecVorbis:
+							msProgress = "Making ogg";
+							break;
+						default:
+							// Huh?
+							msProgress = "Making ???";
+							break;
+					}
 				}
 				if (bDoCopy)
 					msProgress = "Copying";
@@ -178,16 +200,16 @@ tbool CExportClipTask::DoEncode_FirstTimeHere()
 {
 	tbool bError = false;
 
-	mpfDst = IFile::Create();
-	if ((mpfDst == NULL) || (!mpfDst->Open(sOut.c_str(), IFile::FileCreate))) {
-		msExtendedError = std::string("Unable to create file:\n  ") + sOut;
+	mpfDestinatin_File = IFile::Create();
+	if ((mpfDestinatin_File == NULL) || (!mpfDestinatin_File->Open(msDestinatin_File.c_str(), IFile::FileCreate))) {
+		msExtendedError = std::string("Unable to create file:\n  ") + msDestinatin_File;
 		bError = true;
 	}
 	else {
 		if (mpEncoder) {
 			if (miChannelsDst < 1)
-				miChannelsDst = iChannels;
-			if (!mpEncoder->Init(mpfDst, meQualityDst, miChannelsDst)) {
+				miChannelsDst = miChannels;
+			if (!mpEncoder->Init(mpfDestinatin_File, meQualityDst, miChannelsDst)) {
 				tchar pszErr[1024];
 				mpEncoder->GetErrMsg(pszErr, 1024, true);
 				msExtendedError = pszErr;
@@ -219,7 +241,7 @@ tbool CExportClipTask::DoEncode()
 {
 	tbool bError = false;
 
-	if (mpfDst == NULL) {
+	if (mpfDestinatin_File == NULL) {
 		// First time here
 		bError = !DoEncode_FirstTimeHere();
 	}
@@ -241,11 +263,11 @@ tbool CExportClipTask::DoEncode()
 				iWantsToProcess = (tint32)muiSamplesNeeded;
 
 			tbool bPartSuccess = false;
-			switch (iFiles) {
+			switch (miFiles) {
 				case 0: // silence
 					{
 						tint64 iOF_Dummy = 0;
-						bPartSuccess = mpEncoder->SetRawMode(true, 1, false, 24, iSampleRate);
+						bPartSuccess = mpEncoder->SetRawMode(true, 1, false, 24, miSampleRate);
 						if (bPartSuccess) {
 							tint32 iBytes = iWantsToProcess * (24 / 8);
 							bPartSuccess = mpEncoder->ProcessRaw(mpcSilence, NULL, iBytes, &iOF_Dummy);
@@ -256,12 +278,12 @@ tbool CExportClipTask::DoEncode()
 					break;
 				case 1: // mono
 					bPartSuccess = mpEncoder->Process(
-						pfWaveL,
+						mpLeft_Wave_File,
 						(tint32)muiCurrEncodeIx, iWantsToProcess, &iActuallyProcessed);
 					break;
 				default: // stereo
 					bPartSuccess = mpEncoder->Process(
-						pfWaveL, pfWaveR,
+						mpLeft_Wave_File, mpRight_Wave_File,
 						(tint32)muiCurrEncodeIx, iWantsToProcess, &iActuallyProcessed);
 					break;
 			}
@@ -297,9 +319,9 @@ tbool CExportClipTask::DoEncode()
 			// Transfer encoder and other stuff to next clip (we don't close them)
 			pConcatenateNextTask->mpEncoder = mpEncoder;
 			mpEncoder = NULL;
-			pConcatenateNextTask->mpfDst = mpfDst;
-			mpfDst = NULL;
-			pConcatenateNextTask->sOut = sOut;
+			pConcatenateNextTask->mpfDestinatin_File = mpfDestinatin_File;
+			mpfDestinatin_File = NULL;
+			pConcatenateNextTask->msDestinatin_File = msDestinatin_File;
 		}
 		else {
 			// We're done - close encoder and other stuff
@@ -314,8 +336,8 @@ tbool CExportClipTask::DoEncode()
 				mpEncoder->Destroy();
 				mpEncoder = NULL;
 
-				mpfDst->Destroy();
-				mpfDst = NULL;
+				mpfDestinatin_File->Destroy();
+				mpfDestinatin_File = NULL;
 			}
 		}
 	}

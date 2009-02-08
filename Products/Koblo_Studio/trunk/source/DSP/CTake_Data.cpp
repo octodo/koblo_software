@@ -25,6 +25,14 @@ CTake_Data CTake_Data::operator=(const CTake_Data& DataNew)
 */
 
 
+void CTake_Data::Mode(const std::string& sMode) 
+{	
+	msMode = sMode;
+	
+	muiChannels = Get_Channels_From_Mode();
+}
+
+
 std::string CTake_Data::Disk_Name( tuint32 uiChannel)
 {
 
@@ -48,7 +56,7 @@ tbool CTake_Data::In_Folder(std::string sFolder, std::string sExtencion)
 	tbool bOK = false;
 	
 	
-	switch(Channels()) {
+	switch(muiChannels) {
 		case 1:
 		{	// mono 
 			msLeft_Wave_File_Path = sFolder + Disk_Name(1) + sExtencion;
@@ -124,7 +132,7 @@ tbool CTake_Data::Needs_Pict_Files()
 	return bOK;
 }
 
-tuint32 CTake_Data::Channels()
+tuint32 CTake_Data::Get_Channels_From_Mode()
 {
 	tuint32 uiChannels = 0;
 	if(stricmp( 	msMode.c_str(),	"mono"	) == 0)

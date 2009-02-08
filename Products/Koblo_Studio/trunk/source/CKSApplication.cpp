@@ -2132,18 +2132,18 @@ tbool CKSApplication::ExportClipsList(std::list<CExportClipTask*>* plistpInfo, a
 				itStart++;
 			}
 			else {
-				tint32 iChannelsMax_ForConcat = (*itStart)->iChannels;
+				tint32 iChannelsMax_ForConcat = (*itStart)->miChannels;
 				std::list<CExportClipTask*>::iterator itNextStart = itStart;
 				itNextStart++;
 				for ( ; (itNextStart != plistpInfo->end()) && (bConcatenateLast); bConcatenateLast = ((*itNextStart)->pConcatenateNextTask != NULL), itNextStart++) {
 					CExportClipTask* pInfo = *itNextStart;
-					if (pInfo->iChannels > iChannelsMax_ForConcat) {
-						iChannelsMax_ForConcat = pInfo->iChannels;
+					if (pInfo->miChannels > iChannelsMax_ForConcat) {
+						iChannelsMax_ForConcat = pInfo->miChannels;
 					}
 				}
 
 				// Enforce same = highest number of output channels for concatenation
-				(*itStart)->iChannels = iChannelsMax_ForConcat;
+				(*itStart)->miChannels = iChannelsMax_ForConcat;
 
 				// Go to next concatenation - if any
 				itStart = itNextStart;
@@ -2268,7 +2268,7 @@ tbool CKSApplication::ExportClipsList_WarnQuality(
 				&&
 				(eQuality == pInfo->eQualityOfCompressed)
 				&&
-				((iChannels < 1) || (iChannels == pInfo->iChannels))
+				((iChannels < 1) || (iChannels == pInfo->miChannels))
 			) {
 				// Use original compressed file directly
 				pInfo->bDoCopy = true;

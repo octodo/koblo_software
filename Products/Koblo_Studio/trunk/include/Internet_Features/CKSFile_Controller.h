@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 class CMIDI_Sequencer;
 class CSample_Data;
@@ -88,6 +88,7 @@ public:
 	
 	// get mp3 file folder
 	std::string MP3_File_Folder(){ return msProject_Folder + "MP3 Files:";};
+
 	
 	// get ogg file folder
 	std::string Pict_File_Folder(){ return msProject_Folder + "Wave Picts:";};
@@ -117,6 +118,9 @@ public:
 	virtual void Compress_MP3_File();
 	
 	tbool Validate_Files_For_Upload();
+	
+	// validate that a take acutually is readable auido file/ files
+	tbool Validate_Take(CTake_Data* Take_Data);
 
 	
 private:	

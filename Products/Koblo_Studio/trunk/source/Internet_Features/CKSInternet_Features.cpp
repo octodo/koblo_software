@@ -75,6 +75,12 @@ void CKSInternet_Features::On_Menu_Upload_Project()
 	
 	gpApplication->Prepare_Sampels_For_Upload();
 	
+	gpApplication->Compress_OGG_File();
+	
+	gpApplication->Compress_MP3_File();
+	
+
+	
 	
 	// (lasse) very temporary code - forces linking of libcurl (only way to determine if it links)
 #if (0)
