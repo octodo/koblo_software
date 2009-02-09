@@ -193,27 +193,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\Internet_Features\CImport_Auido_Controller.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\Internet_Features\CImport_TinyXML.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\source\CKSApplication.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\source\CKSBaseGUI.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\Internet_Features\CKSFile_Controller.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\Internet_Features\CKSFile_Item.cpp"
 				>
 			</File>
 			<File
@@ -226,10 +210,6 @@
 			</File>
 			<File
 				RelativePath="..\..\source\CKSSplashScreen.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\Internet_Features\CKSUUID.cpp"
 				>
 			</File>
 			<File
@@ -336,6 +316,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\source\DSP\CRegion_Data.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\DSP\CRegion_DSP.cpp"
 					>
 				</File>
@@ -392,6 +376,14 @@
 				Name="Internet_Features"
 				>
 				<File
+					RelativePath="..\..\source\Internet_Features\CImport_Auido_Controller.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Internet_Features\CImport_TinyXML.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\Internet_Features\CKSExportForWebGUI.cpp"
 					>
 				</File>
@@ -400,11 +392,23 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\source\Internet_Features\CKSFile_Controller.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Internet_Features\CKSFile_Item.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\Internet_Features\CKSInternet_Features.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\source\Internet_Features\CKSUsername_And_Password_Model.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Internet_Features\CKSUUID.cpp"
 					>
 				</File>
 				<File
@@ -421,6 +425,10 @@
 				</File>
 				<File
 					RelativePath="..\..\source\Internet_Features\CKSXML_Write_Project.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Internet_Features\CPreset_Data.cpp"
 					>
 				</File>
 			</Filter>
@@ -679,10 +687,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\Internet_Features\CKSFile_Controller.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\include\CKSModule.h"
 				>
 			</File>
@@ -806,6 +810,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\include\DSP\CRegion_Data.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\include\DSP\CRegion_DSP.h"
 					>
 					<FileConfiguration
@@ -926,6 +934,18 @@
 				Name="Internet_Features"
 				>
 				<File
+					RelativePath="..\..\include\Internet_Features\CGUI_Controller.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CImport_Auido_Controller.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CImport_TinyXML.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\include\Internet_Features\CKSExportForWebGUI.h"
 					>
 				</File>
@@ -934,11 +954,23 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\include\Internet_Features\CKSFile_Controller.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CKSFile_Item.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\include\Internet_Features\CKSInternet_Features.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\include\Internet_Features\CKSUsername_And_Password_Model.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CKSUUID.h"
 					>
 				</File>
 				<File
@@ -955,6 +987,10 @@
 				</File>
 				<File
 					RelativePath="..\..\include\Internet_Features\CKSXML_Write_Project.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CPreset_Data.h"
 					>
 				</File>
 			</Filter>
