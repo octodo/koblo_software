@@ -16,6 +16,18 @@ CPlugInManager::CPlugInManager()
 
 CPlugInManager::~CPlugInManager()
 {
+	std::map<tint32, SLoadedPlugInInfo>::iterator it = mPlugInMap.begin();
+	for (; it != mPlugInMap.end(); it++) {
+		SLoadedPlugInInfo* pInfo = &(it->second);
+		
+		if (pInfo->bGUILoaded) {
+			pInfo->pPlugInGUI->CloseWindow();
+		}
+		
+		pInfo->pPlugIn->Stop();
+		pInfo->pPlugIn->DeInitialize();
+		pInfo->pPlugIn->Destroy();
+	}
 }
 
 void CPlugInManager::Init()
