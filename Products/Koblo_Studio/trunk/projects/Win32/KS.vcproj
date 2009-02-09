@@ -658,6 +658,10 @@
 						RelativePath="..\..\source\Track_View\Progress\CProgressTaskList.cpp"
 						>
 					</File>
+					<File
+						RelativePath="..\..\source\Track_View\Progress\CUploadTask.cpp"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter
@@ -1230,6 +1234,10 @@
 					</File>
 					<File
 						RelativePath="..\..\include\Track_View\Progress\CProgressTaskList.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\include\Track_View\Progress\CUploadTask.h"
 						>
 					</File>
 				</Filter>
