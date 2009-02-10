@@ -9,7 +9,7 @@ CTake_Data::CTake_Data()
 	msLeft_Peak_File_Path	=		"";
 	msRight_Peak_File_Path	=		"";
 
-
+	mpUUID_ForSample = NULL;
 }
 
 CTake_Data::~CTake_Data()
@@ -86,6 +86,18 @@ tbool CTake_Data::In_Folder(std::string sFolder, std::string sExtencion)
 	}
 	return bOK;
 }
+
+
+std::string CTake_Data::GetOggFilePath()
+{
+	return gpApplication->Project_Ogg_Folder() + Get_UUID() + ".ogg";
+} // GetOggFilePath
+
+std::string CTake_Data::GetMp3FilePath()
+{
+	return gpApplication->Project_Mp3_Folder() + Get_UUID() + ".mp3";
+} // GetMp3FilePath
+
 
 tbool CTake_Data::Needs_Pict_Files()
 {

@@ -31,9 +31,13 @@ enum EUploadOrder {
 	geUpload_Commit_Action,
 	geUpload_Commit_After,
 
-	geUpload_Take_Before,
-	geUpload_Take_Action,
-	geUpload_Take_After,
+	geUpload_Take_Verify_Before,
+	geUpload_Take_Verify_Action,
+	geUpload_Take_Verify_After,
+
+	geUpload_Take_Upload_Before,
+	geUpload_Take_Upload_Action,
+	geUpload_Take_Upload_After,
 
 	geUpload_Done
 }; // EUploadOrder
@@ -50,41 +54,82 @@ public:
 	virtual void Destroy();
 
 	tbool Init_NewProject(
+		const tchar* pszUser, const tchar* pszPassword,
 		CKSUUID* pProjUUID, const tchar* pszProjName, const tchar* pszProjDesc, const tchar* pszProjLicenseCode,
 		CKSUUID* pBranchUUID,
-		IFile* pfileProj,
-		std::list<CTake_Data*> listpTakes);
-
-	tbool Init_Commit(
-		CKSUUID* pProjUUID,
-		CKSUUID* pBranchUUID,
-		IFile* pfileProj, const tchar* pszCommitDesc,
-		std::list<CTake_Data*> listpTakes);
+		CKSUUID* pCommitUUID, IFile* pfileCommit,
+		std::list<CTake_Data*>* plistpTakes);
 
 	tbool Init_NewBranch(
+		const tchar* pszUser, const tchar* pszPassword,
 		CKSUUID* pProjUUID,
+		CKSUUID* pBranchUUID_Original,
 		CKSUUID* pBranchUUID, const tchar* pszBranchName, const tchar* pszBranchDesc, const tchar* pszBranchLicenseCode,
-		IFile* pfileProj,
-		std::list<CTake_Data*> listpTakes);
+		CKSUUID* pCommitUUID, IFile* pfileCommit,
+		std::list<CTake_Data*>* plistpTakes);
+
+	tbool Init_Commit(
+		const tchar* pszUser, const tchar* pszPassword,
+		CKSUUID* pProjUUID,
+		CKSUUID* pBranchUUID,
+		CKSUUID* pCommitUUID, IFile* pfileCommit, const tchar* pszCommitDesc,
+		std::list<CTake_Data*>* plistpTakes);
 
 	virtual tbool DoWork();
 	virtual tbool IsDone();
 
 protected:
-	tbool DoNewProject_Before() { return true; };
-	tbool DoNewProject_Action() { return true; };
-	tbool DoNewProject_After() { return true; };
+	tbool DoNewProject_Before();
+	tbool DoNewProject_Action(tbool* pbDone);
+	tbool DoNewProject_After();
 
-	tbool DoNewBranch_Before() { return true; };
-	tbool DoNewBranch_Action() { return true; };
-	tbool DoNewBranch_After() { return true; };
+	tbool DoNewBranch_Before();
+	tbool DoNewBranch_Action(tbool* pbDone);
+	tbool DoNewBranch_After();
 
-	tbool DoCommit_Before() { return true; };
-	tbool DoCommit_Action() { return true; };
-	tbool DoCommit_After() { return true; };
+	tbool DoCommit_Before();
+	tbool DoCommit_Action(tbool* pbDone);
+	tbool DoCommit_After(tbool* pbDone);
 
-	tbool DoTake_Before() { return true; };
-	tbool DoTake_Action() { return true; };
-	tbool DoTake_After() { return true; };
+	tbool DoTake_Verify_Before();
+	tbool DoTake_Verify_Action(tbool* pbDone);
+	tbool DoTake_Verify_After(tbool* pbSkipThis, tbool* pbAllDone);
 
+	tbool DoTake_Upload_Before();
+	tbool DoTake_Upload_Action(tbool* pbDone);
+	tbool DoTake_Upload_After(tbool* pbAllDone);
+
+	std::string msUser;
+	std::string msPassword;
+
+	std::string msProjectUUID;
+	std::string msProjectName;
+	std::string msProjectDescription;
+	std::string msProjectLicense;
+
+	std::string msBranchUUID_Old;
+	std::string msBranchUUID;
+	std::string msBranchName;
+	std::string msBranchDescription;
+	std::string msBranchLicense;
+
+	std::string msCommitUUID;
+	IFile* mpfileCommitXML;
+	std::string msCommitDescription;
+	//
+	tint32 miCommit_ReplyNb;
+
+	CTake_Data* mpTakeCurr;
+	IFile* mpfileMp3;
+	IFile* mpfileOgg;
+	std::list<CTake_Data*> mlistpTakes;
+	tbool Init_Helper(std::list<CTake_Data*>* plistpTakes);
+
+	ine::IUploader* mpUploader;
+	IFileMemory* mpfileReply_Uploader;
+
+	ine::IDownloader* mpDownloader_VerifySample;
+	IFileMemory* mpfileReply_VerifySample;
+	ine::IDownloader* mpDownloader_VerifyTake;
+	IFileMemory* mpfileReply_VerifyTake;
 }; // CExportClipTask

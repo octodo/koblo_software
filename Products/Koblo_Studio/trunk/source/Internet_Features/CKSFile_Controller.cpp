@@ -268,7 +268,7 @@ tbool CKSFile_Controller::Create_Plugin_Data_Folder()
 //! create a new download folder inside the project folder
 tbool CKSFile_Controller::Create_OGG_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + "OGG Files";
+	std::string sFolder = gpApplication->Project_Ogg_Folder();
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;
@@ -277,7 +277,7 @@ tbool CKSFile_Controller::Create_OGG_Folder()
 //! create a new uplaod folder inside the project folder
 tbool CKSFile_Controller::Create_MP3_Folder()
 {
-	std::string sFolder = gpApplication->Project_Folder() + "MP3 Files";
+	std::string sFolder = gpApplication->Project_Mp3_Folder();
 	IFile::CreateDirectory(sFolder.c_str());
 	// make check here
 	return true;

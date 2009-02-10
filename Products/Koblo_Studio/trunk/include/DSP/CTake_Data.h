@@ -8,9 +8,25 @@ public:
 
 	//! Destructor
 	virtual ~CTake_Data();
-	
+
 	//! Assignment operator
 //	CTake_Data operator=(const CTake_Data&);
+
+	//! Get the UUID for the sample that "owns" this take
+	std::string GetUUID_ForOwningSample()
+	{ return (mpUUID_ForSample != NULL) ? mpUUID_ForSample->Get_UUID() : Get_UUID(); };
+	
+	//! Set the UUID for the sample that "owns" this take
+	void SetUUID_ForOwningSample(CKSUUID* pUUID)
+	{ mpUUID_ForSample = pUUID; };
+
+	//! Get the name of the sample that "owns" this take
+	std::string GetName_ForOwningSample()
+	{ return (msName_ForSample.length() > 0) ? msName_ForSample : msDescription; };
+
+	//! Set the name of the sample that "owns" this take
+	void SetName_ForOwningSample(const tchar* pszName)
+	{ msName_ForSample = pszName; };
 
 	//! get the Sample UUID
 	void Set_Description(const std::string& sDescription ){msDescription =  sDescription;};
@@ -72,6 +88,8 @@ public:
 	*/
 	tbool Needs_Pict_Files();
 	
+	std::string GetMp3FilePath();
+	std::string GetOggFilePath();
 	
 	
 	tuint32 Channels() {return muiChannels; };
@@ -85,6 +103,11 @@ protected:
 	
 	//! take name
 	std::string msScreen_Name;
+
+	//! The UUID for the sample that "owns" this take
+	CKSUUID* mpUUID_ForSample;
+	//! The name of the sample that "owns" this take
+	std::string msName_ForSample;
 	
 	//! description
 	std::string msDescription;

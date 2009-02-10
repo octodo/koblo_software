@@ -233,10 +233,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\DSP\CTake_Data.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\source\CUndoEvent.cpp"
 				>
 			</File>
@@ -325,6 +321,10 @@
 				</File>
 				<File
 					RelativePath="..\..\source\DSP\CSample_DSP.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\DSP\CTake_Data.cpp"
 					>
 				</File>
 				<File
