@@ -90,12 +90,12 @@ tbool CTake_Data::In_Folder(std::string sFolder, std::string sExtencion)
 
 std::string CTake_Data::GetOggFilePath()
 {
-	return gpApplication->Project_Ogg_Folder() + Get_UUID() + ".ogg";
+	return gpApplication->OGG_File_Folder() + Get_UUID() + ".ogg";
 } // GetOggFilePath
 
 std::string CTake_Data::GetMp3FilePath()
 {
-	return gpApplication->Project_Mp3_Folder() + Get_UUID() + ".mp3";
+	return gpApplication->MP3_File_Folder() + Get_UUID() + ".mp3";
 } // GetMp3FilePath
 
 

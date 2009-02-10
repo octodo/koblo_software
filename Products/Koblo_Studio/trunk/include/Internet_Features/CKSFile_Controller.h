@@ -66,10 +66,6 @@ public:
 	//!!! TO DO make private when old fileformat no longer is supported
 	void Update_Project_Name(std::string sNew_Name);
 
-	//! get folder for ogg files
-	std::string Project_Ogg_Folder() { return msProject_Folder + "OGG Files:"; };
-	//! get folder for mp3 files
-	std::string Project_Mp3_Folder() { return msProject_Folder + "MP3 Files:"; };
 /*	
 	// Check if the file path points to an audio file
 	tbool Is_A_Audio_File(std::string sFile);
