@@ -128,11 +128,14 @@ public:
 	//! Breaks an ongoing upload operation and releases internal buffers. It's OK to call from different thread.
 	virtual tbool Abort() = 0;
 
-	//! Returns True if download has been succesfully completed
+	//! Returns True if upload has been succesfully completed
 	virtual tbool IsDone() = 0;
 
-	//! Returns True if download has failed and can't continue
+	//! Returns True if upload has failed and can't continue
 	virtual tbool IsFailed() = 0;
+
+	//! Returns True if upload has either completed successfully or failed
+	virtual tbool IsFinished() = 0;
 
 	//! Returns pointer to human readable error description
 	/*!
@@ -141,6 +144,9 @@ public:
 		\return: True upon function success (check buffer to see error - if "" then no error exists)
 	*/
 	virtual tbool GetError(tchar* pszErrBuff, tint32 iErrBuffSize) = 0;
+
+	//! Get the http status code for upload. Is set when transaction is done or failed. Use with care!
+	virtual tint32 GetHttpStatusCode() = 0;
 };
 
 #endif // _ine_i_uploader

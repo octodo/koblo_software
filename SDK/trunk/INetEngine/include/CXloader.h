@@ -48,9 +48,13 @@ public:
 	virtual tbool IsDone();
 	//! IDownloader implementation
 	virtual tbool IsFailed();
+	//! IDownloader implementation
+	virtual tbool IsFinished();
 
 	//! IDownloader implementation
 	virtual tbool GetError(tchar* pszErrBuff, tint32 iErrBuffSize);
+	//! IDownloader implementation
+	virtual tint32 GetHttpStatusCode() { return miHttpStatus; };
 
 	// Callbacks
 	size_t ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, size_t nmemb);
@@ -113,6 +117,8 @@ protected:
 	tuint64 muiUploadSize;
 	tuint64 muiReplyProgress;
 	tuint64 muiReplySize;
+
+	tint32 miHttpStatus;
 
 	std::string msLastError;
 	void SetError(const tchar* pszError);

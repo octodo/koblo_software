@@ -116,6 +116,9 @@ public:
 	//! Returns True if download has failed and can't continue
 	virtual tbool IsFailed() = 0;
 
+	//! Returns True if download has either completed successfully or failed
+	virtual tbool IsFinished() = 0;
+
 	//! Returns pointer to human readable error description
 	/*!
 		\param pszErrBuff [out]: Receives a copy of the latest error description
@@ -123,6 +126,9 @@ public:
 		\return: True upon function success (check buffer to see error - if "" then no error exists)
 	*/
 	virtual tbool GetError(tchar* pszErrBuff, tint32 iErrBuffSize) = 0;
+
+	//! Get the http status code for download. Is set when transaction is done or failed. Use with care!
+	virtual tint32 GetHttpStatusCode() = 0;
 };
 
 #endif // _ine_i_downloader

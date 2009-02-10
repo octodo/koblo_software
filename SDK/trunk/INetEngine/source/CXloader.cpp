@@ -132,6 +132,7 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort /*
 	mpfileForReply = NULL;
 
 	muiUploadProgress = muiUploadSize = muiReplyProgress = muiReplySize = 0;
+	miHttpStatus = 0;
 
 	mbFailImmediatelyOnStatus = false;
 	msDelayedStatusError = "";
@@ -1319,12 +1320,7 @@ tbool CXloader::Abort()
 
 tbool CXloader::GetProgress(tint64* piUploadProgress, tint64* piUploadSize, tint64* piDownloadProgress, tint64* piDownloadSize)
 {
-	if (IsFailed()) {
-		//SetError("Previous error");
-		return false;
-	}
-	
-	if (!IsInitialized()) {
+	if ((!IsFailed()) && (!IsInitialized())) {
 		SetError("Not initialized");
 		return false;
 	}
@@ -1440,6 +1436,12 @@ tbool CXloader::IsFailed()
 {
 	return mbIsFailed;
 } // IsFailed
+
+
+tbool CXloader::IsFinished()
+{
+	return mbIsDone || mbIsFailed;
+} // IsFinished
 
 
 void CXloader::SetError(const tchar* pszError)
