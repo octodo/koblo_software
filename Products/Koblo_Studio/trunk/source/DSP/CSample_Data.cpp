@@ -3,7 +3,7 @@
 
 CSample_Data::CSample_Data()
 {
-	mpTake_Data = new(CTake_Data);
+	mpTake_Data = new CTake_Data(this);
 	muiTakes	=	1;
 } 
 
@@ -19,7 +19,7 @@ CSample_Data::CSample_Data(const CSample_Data& Data_Old)
 	msName			=	Data_Old.msName;
 	muiTakes		=	Data_Old.muiTakes;
 
-	mpTake_Data		=	new CTake_Data;
+	mpTake_Data		=	new CTake_Data(this);
 	*mpTake_Data	=	*(Data_Old.mpTake_Data);
 }
 

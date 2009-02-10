@@ -1,10 +1,12 @@
 
+// Forward definition
+class CSample_Data;
 
 class CTake_Data: public virtual CKSUUID
 {
 public:
 	//! Constructor
-	CTake_Data();
+	CTake_Data(CSample_Data* pSampleThatOwnsThis);
 
 	//! Destructor
 	virtual ~CTake_Data();
@@ -13,20 +15,10 @@ public:
 //	CTake_Data operator=(const CTake_Data&);
 
 	//! Get the UUID for the sample that "owns" this take
-	std::string GetUUID_ForOwningSample()
-	{ return (mpUUID_ForSample != NULL) ? mpUUID_ForSample->Get_UUID() : Get_UUID(); };
+	std::string GetUUID_ForOwningSample();
 	
-	//! Set the UUID for the sample that "owns" this take
-	void SetUUID_ForOwningSample(CKSUUID* pUUID)
-	{ mpUUID_ForSample = pUUID; };
-
 	//! Get the name of the sample that "owns" this take
-	std::string GetName_ForOwningSample()
-	{ return (msName_ForSample.length() > 0) ? msName_ForSample : msDescription; };
-
-	//! Set the name of the sample that "owns" this take
-	void SetName_ForOwningSample(const tchar* pszName)
-	{ msName_ForSample = pszName; };
+	std::string GetName_ForOwningSample();
 
 	//! get the Sample UUID
 	void Set_Description(const std::string& sDescription ){msDescription =  sDescription;};
@@ -100,14 +92,12 @@ public:
 	
 	
 protected:
-	
+
+	//! The sample that "owns" this take
+	CSample_Data* mpOwningSample;
+
 	//! take name
 	std::string msScreen_Name;
-
-	//! The UUID for the sample that "owns" this take
-	CKSUUID* mpUUID_ForSample;
-	//! The name of the sample that "owns" this take
-	std::string msName_ForSample;
 	
 	//! description
 	std::string msDescription;

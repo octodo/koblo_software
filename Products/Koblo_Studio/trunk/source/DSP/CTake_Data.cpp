@@ -1,6 +1,6 @@
 #include "KSOS.h"
 
-CTake_Data::CTake_Data()
+CTake_Data::CTake_Data(CSample_Data* pSampleThatOwnsThis)
 {
 	msDescription			=		"";
 	msURL					=		"";
@@ -9,7 +9,7 @@ CTake_Data::CTake_Data()
 	msLeft_Peak_File_Path	=		"";
 	msRight_Peak_File_Path	=		"";
 
-	mpUUID_ForSample = NULL;
+	mpOwningSample = pSampleThatOwnsThis;
 }
 
 CTake_Data::~CTake_Data()
@@ -23,6 +23,17 @@ CTake_Data CTake_Data::operator=(const CTake_Data& DataNew)
 	return *this;
 }
 */
+
+
+std::string CTake_Data::GetUUID_ForOwningSample()
+{
+	return mpOwningSample->Get_UUID();
+}
+
+std::string CTake_Data::GetName_ForOwningSample()
+{
+	return mpOwningSample->Name();
+}
 
 
 void CTake_Data::Mode(const std::string& sMode) 
