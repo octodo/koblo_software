@@ -7,13 +7,13 @@ CKSFile_Controller::CKSFile_Controller()
 {
 	msProject_Name = "";
 	
-	mpMIDI_Sequencer = new(CMIDI_Sequencer);
+//	mpMIDI_Sequencer = new(CMIDI_Sequencer);
 	
-	char pszInFile[1024];
-	char pszOutFile[1024];
+//	char pszInFile[1024];
+//	char pszOutFile[1024];
 	
 	
-	mpMIDI_Sequencer->Init( pszInFile, pszOutFile);
+//	mpMIDI_Sequencer->Init( pszInFile, pszOutFile);
 }
 
 CKSFile_Controller::~CKSFile_Controller()
@@ -298,8 +298,8 @@ tbool CKSFile_Controller::Create_Wave_Picts_Folder()
 //! create a new project file
 tbool CKSFile_Controller::Create_Project_File()
 {
-	std::string sProject_Name	= gpApplication->Project_Name();
-	std::string sProject_Folder = gpApplication->Project_Folder();
+	std::string sProject_Name	=	gpApplication->Project_Name();
+	std::string sProject_Folder =	gpApplication->Project_Folder();
 	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";
 	
 	
@@ -435,132 +435,6 @@ tbool CKSFile_Controller::Is_A_File(std::string sFile_Path)
 
 
 
-
-
-void CKSFile_Controller::Prepare_Sampels_For_Upload()
-{
-	// clear que's
-	mOGG_Compress_Que.clear();
-	mMp3_Compress_Que.clear();
-	muiMissing_Files	=	0;
-
-	
-	std::list<CSample_Data>::iterator  itSample_Data = gpApplication->Get_Sample_Data_List_Begin();
-	
-	for (; itSample_Data != gpApplication->Get_Sample_Data_List_End(); itSample_Data++) {
-		
-		Prepare_Sampel_For_Upload( &(*itSample_Data) );
-	}
-}
-
-
-void CKSFile_Controller::Prepare_Sampel_For_Upload(CSample_Data* pSample_Data)
-{
-	tuint32 uiTakes =  pSample_Data->Number_Of_Takes();
-	
-	for(tuint32 i= 0; i< uiTakes; i++ ){
-		CTake_Data* pTake_Data = pSample_Data->Get_Take_Data(i);
-		
-		//if( Validate_Take(pTake_Data) )
-		Prepare_Take_For_Upload( pTake_Data );
-	}
-}
-
-tbool CKSFile_Controller::Validate_Take(CTake_Data* pTake_Data)
-{
-
-	if( pTake_Data->Channels() == 2 ){
-		return Readable_Audio(pTake_Data->Left_Wave_File_Path());
-	}
-	else{
-		tuint uiTest =	Readable_Audio(pTake_Data->Left_Wave_File_Path());
-		uiTest		+=	Readable_Audio(pTake_Data->Right_Wave_File_Path());
-		return uiTest == 2 ? true: false;
-	}
-	
-	return false;
-}
-
-
-
-void CKSFile_Controller::Prepare_Take_For_Upload(CTake_Data* Take_Data)
-{
-	std::string sFile_Path = OGG_File_Folder() + Take_Data->Get_UUID();
-	
-	// check if file alreaddy is in ogg folder
-	if( !Readable_Audio(sFile_Path + ".ogg") )
-	{
-		mOGG_Compress_Que.push_back(Take_Data);
-		muiMissing_Files++;
-	}
-
-//	sFile_Path = Mp3_File_Folder() + Take_Data->Get_UUID();
-	
-	sFile_Path = MP3_File_Folder() + Take_Data->Get_UUID();
-	
-	// check if file alreaddy is in mp3 folder
-	if( !Readable_Audio(sFile_Path + ".mp3") )
-	{
-		mMp3_Compress_Que.push_back(Take_Data);
-		muiMissing_Files++;
-	}
-}
-
-void CKSFile_Controller::Compress_OGG_File()
-{
-	std::list<CTake_Data*>::iterator it = mOGG_Compress_Que.begin();
-	for ( ; it != mOGG_Compress_Que.end(); it++) {
-		CTake_Data* pTake_Data = *it;
-		std::string sOgg = OGG_File_Folder() + pTake_Data->Get_UUID() + ".ogg";
-		
-		CExportClipTask* pExportClipTask = new CExportClipTask(); //!!! when is this task deleted??
-		
-		if (pExportClipTask->Init(pTake_Data, sOgg.c_str(), ac::geAudioCodecVorbis, ac::geQualityDefault)) {
-			// Add task to task list
-			CAutoLock Lock(gpApplication->mMutex_Progress);
-			gpApplication->mpProgressTasks->Add(pExportClipTask);
-			
-			gpApplication->Playback_InProgressTask();
-			
-		}
-		else {
-			// We can't add this anyway - what to do?
-			delete pExportClipTask;
-			pTake_Data = NULL;
-		}
-	}
-}
-
-
-void CKSFile_Controller::Compress_MP3_File()
-{
-	std::list<CTake_Data*>::iterator it = mMp3_Compress_Que.begin();
-	for ( ; it != mMp3_Compress_Que.end(); it++) {
-		CTake_Data* pTake = *it;
-		std::string sMp3 = MP3_File_Folder() + pTake->Get_UUID() + ".mp3";
-		CExportClipTask* pTask = new CExportClipTask();
-		if (pTask->Init(pTake, sMp3.c_str(), ac::geAudioCodecLame, ac::geQualityLow)) {
-			// Add task to task list
-			CAutoLock Lock(gpApplication->mMutex_Progress);
-			gpApplication->mpProgressTasks->Add(pTask);
-		}
-		else {
-			// We can't add this anyway - what to do?
-			delete pTask;
-			pTask = NULL;
-		}
-	}
-
-}
-
-
-tbool CKSFile_Controller::Validate_Files_For_Upload()
-{
-	Prepare_Sampels_For_Upload();
-	return muiMissing_Files == 0 ? true : false;
-	
-	
-}
 
 
 

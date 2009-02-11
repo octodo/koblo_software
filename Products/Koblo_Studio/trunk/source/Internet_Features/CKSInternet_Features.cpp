@@ -21,10 +21,6 @@ CKSInternet_Features::~CKSInternet_Features()
 	
 }
 
-
-
-
-
 void CKSInternet_Features::On_Menu_Download_Project()
 {
 	tbool bNoProjectID = (gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal) == -1);
@@ -64,23 +60,20 @@ void CKSInternet_Features::On_Menu_Update_Project()
 void CKSInternet_Features::On_Menu_Upload_Project()
 {
 	
-	mbUpload_Project = true;
+	
 	
 	if(Get_User_Name_And_Password()){
 		
+		gpApplication->Upload_Project();
 	}
 	else{
-	   Open_Username_And_Password_Dialog();
+		// after pressing OK the project will be uploaded
+		mbUpload_Project = true;
+		Open_Username_And_Password_Dialog();
 	}
 	
-	gpApplication->Prepare_Sampels_For_Upload();
-	
-	gpApplication->Compress_OGG_File();
-	
-	gpApplication->Compress_MP3_File();
 	
 
-	
 	
 	// (lasse) very temporary code - forces linking of libcurl (only way to determine if it links)
 #if (0)
@@ -209,7 +202,7 @@ void CKSInternet_Features::On_Menu_Upload_Project()
 
 void CKSInternet_Features::On_Menu_Commit_Project()
 {
-	Upload_Project();
+	gpApplication->Upload_Project();
 }
 
 
@@ -255,13 +248,13 @@ void CKSInternet_Features::Load_Project(tint32 iProjectID)
 }
 
 
-
-void CKSInternet_Features::Upload_Project()
+/*
+void CKSInternet_Features::CKSUsername_And_Password_Controller()
 {
 	tint32 iProject_ID = gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);	
 	gpApplication->Upload_Project_As_XML_File_To_Koblo( iProject_ID);
 }
-
+*/
 void CKSInternet_Features::Open_Project_Edit_Page_On_Koblo()
 {
 	tint32 iProjectID = gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
