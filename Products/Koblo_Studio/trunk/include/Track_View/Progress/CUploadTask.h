@@ -16,37 +16,11 @@
 // along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 
-enum EUploadOrder {
-	geUpload_Uninitialized,
-
-	geUpload_NewProject_Before,
-	geUpload_NewProject_Action,
-	geUpload_NewProject_After,
-
-	geUpload_NewBranch_Before,
-	geUpload_NewBranch_Action,
-	geUpload_NewBranch_After,
-
-	geUpload_Commit_Before,
-	geUpload_Commit_Action,
-	geUpload_Commit_After,
-
-	geUpload_Take_Verify_Before,
-	geUpload_Take_Verify_Action,
-	geUpload_Take_Verify_After,
-
-	geUpload_Take_Upload_Before,
-	geUpload_Take_Upload_Action,
-	geUpload_Take_Upload_After,
-
-	geUpload_Done
-}; // EUploadOrder
-
-
 class CUploadTask : public CProgressTask {
 public:
 	tbool bSuccess;
 
+	// State machine "enum" (it's an int to allow for ++ )
 	tint32 miActionOrder;
 
 	CUploadTask();
@@ -79,25 +53,31 @@ public:
 	virtual tbool IsDone();
 
 protected:
+	tbool DoBranch_PreVerify_Before();
+	tbool DoBranch_PreVerify_Action(tbool* pbActionDone);
+	tbool DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbMoreTakes);
+
+	tint32 miActionAfter_Branch_PreVerify;
+
 	tbool DoNewProject_Before();
-	tbool DoNewProject_Action(tbool* pbDone);
-	tbool DoNewProject_After();
+	tbool DoNewProject_Action(tbool* pbActionDone);
+	tbool DoNewProject_After(tbool* pbNoTakes);
 
 	tbool DoNewBranch_Before();
-	tbool DoNewBranch_Action(tbool* pbDone);
-	tbool DoNewBranch_After();
+	tbool DoNewBranch_Action(tbool* pbActionDone);
+	tbool DoNewBranch_After(tbool* pbNoTakes);
 
-	tbool DoCommit_Before();
-	tbool DoCommit_Action(tbool* pbDone);
-	tbool DoCommit_After(tbool* pbDone);
-
-	tbool DoTake_Verify_Before();
-	tbool DoTake_Verify_Action(tbool* pbDone);
-	tbool DoTake_Verify_After(tbool* pbSkipThis, tbool* pbAllDone);
+	tbool DoTake_PreVerify_Before();
+	tbool DoTake_PreVerify_Action(tbool* pbActionDone);
+	tbool DoTake_PreVerify_After(tbool* pbSkipThisTake, tbool* pbNoMoreTakes);
 
 	tbool DoTake_Upload_Before();
-	tbool DoTake_Upload_Action(tbool* pbDone);
-	tbool DoTake_Upload_After(tbool* pbAllDone);
+	tbool DoTake_Upload_Action(tbool* pbActionDone);
+	tbool DoTake_Upload_After(tbool* pbNoMoreTakes);
+
+	tbool DoCommit_Before();
+	tbool DoCommit_Action(tbool* pbActionDone);
+	tbool DoCommit_After();
 
 	std::string msUser;
 	std::string msPassword;
@@ -119,11 +99,11 @@ protected:
 	//
 	tint32 miCommit_ReplyNb;
 
+	std::list<CTake_Data*> mlistpTakes;
+	tbool Init_Helper(std::list<CTake_Data*>* plistpTakes);
 	CTake_Data* mpTakeCurr;
 	IFile* mpfileMp3;
 	IFile* mpfileOgg;
-	std::list<CTake_Data*> mlistpTakes;
-	tbool Init_Helper(std::list<CTake_Data*>* plistpTakes);
 
 	ine::IUploader* mpUploader;
 	IFileMemory* mpfileReply_Uploader;
@@ -132,4 +112,7 @@ protected:
 	IFileMemory* mpfileReply_VerifySample;
 	ine::IDownloader* mpDownloader_VerifyTake;
 	IFileMemory* mpfileReply_VerifyTake;
+
+	ine::IDownloader* mpDownloader_VerifyBranch;
+	IFileMemory* mpfileReply_VerifyBranch;
 }; // CExportClipTask
