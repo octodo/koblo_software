@@ -66,7 +66,7 @@ public:
 	// Load project
 	void Load_Project(tint32 iProjectID);
 	//! upload project to koblo.com
-	void Upload_Project();
+//	void CKSUsername_And_Password_Controller();
 	
 	//! prepare wave files for upload
 	void Compress_Wave_File(std::string sSample);

@@ -42,7 +42,6 @@ mpPlugInManager(NULL),
 mbAreGUIsReady(false),
 mbRecord(false),
 mbTimer(false),
-
 CKSXML_Create_Project(),
 CKSXML_Read_Project(),
 CKSXML_Write_Project(),

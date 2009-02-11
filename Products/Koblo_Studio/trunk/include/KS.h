@@ -25,6 +25,7 @@
 // XML File parser
 #include "tinyxml.h"
 #include "CKSFile_Controller.h"
+#include "CKSUpload_Controller.h"
 #include "CKSFile_Item.h"
 #include "CImport_TinyXML.h"
 #include "CKSXML_Read_Project.h"
@@ -32,7 +33,7 @@
 #include "CKSXML_Create_Project.h"
 #include "CKSXML_Create_Sample.h"
 
-#include "CKSUsername_And_Password_Model.h"
+#include "CKSUsername_And_Password_Controller.h"
 #include "CKSInternet_Features.h"
 
 

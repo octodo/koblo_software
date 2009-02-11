@@ -64,19 +64,19 @@ void CTrack_AUX_Insert::Init()
 	piIDs[ge::IPopupMenu::BitmapBottom]			= IDB_PopupBorder;
 	
 	
-	CPlugInManager* pPlugManager = gpApplication->GetPlugInManager();
-	tint32 iPlugInCount = pPlugManager->GetNrOfPlugIns();
+	CPlugInManager* pPlugManager	= gpApplication->GetPlugInManager();
+	tint32 iPlugInCount				= pPlugManager->GetNrOfPlugIns();
 	ge::IPopupMenu::SMenuItemList List;
 	List.iItemCount = iPlugInCount + 1;
 	tint32 iPlugIn;
 	for (iPlugIn = 0; iPlugIn < iPlugInCount; iPlugIn++) {
-		CPlugInManager::SPlugInInfo* pInfo = pPlugManager->GetPlugInInfo(iPlugIn);
+		CPlugInManager::SPlugInInfo* pPlugInInfo = pPlugManager->GetPlugInInfo(iPlugIn);
 		
 		
-		std::string s  = pInfo->sProductName;
+		std::string s  = pPlugInInfo->sProductName;
 		tint32* pi = new tint32[2];
-		pi[0] = pInfo->uiCompanyID;
-		pi[1] = pInfo->uiProductID;
+		pi[0] = pPlugInInfo->uiCompanyID;
+		pi[1] = pPlugInInfo->uiProductID;
 		List.pItems[iPlugIn + 1] = ge::IPopupMenu::SMenuItem(s.c_str(), iPlugIn + 1, NULL, NULL, -1, 0, (void*)pi);
 	}
 	tint32* pi = new tint32[2];
