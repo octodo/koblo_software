@@ -65,14 +65,8 @@ public:
 	//! update project name and folder path
 	//!!! TO DO make private when old fileformat no longer is supported
 	void Update_Project_Name(std::string sNew_Name);
-
-/*	
-	// Check if the file path points to an audio file
-	tbool Is_A_Audio_File(std::string sFile);
 	
-	// check if extencion is reconized
-	tbool Check_Extencion(std::string sFile);
-*/	
+	//! get part of string after last "."
 	std::string  Get_Extencion(std::string sFile);
 	
 	//! opens a audio file at the given path and check if it's readable 

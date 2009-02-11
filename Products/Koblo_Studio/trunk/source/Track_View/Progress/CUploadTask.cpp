@@ -6,7 +6,7 @@ CUploadTask::CUploadTask()
 {
 	miActionOrder = 0;
 
-	mpfileCommitXML = NULL;
+	mpFileCommitXML = NULL;
 
 	mpDownloader_VerifySample = NULL;
 	mpfileReply_VerifySample = NULL;
@@ -78,13 +78,51 @@ void CUploadTask::Destroy()
 	delete dynamic_cast<CUploadTask*>(this);
 } // Destroy
 
+tbool CUploadTask::Init_NewProject( std::list<CTake_Data*>* pUpload_Que )
+{
+	if (miActionOrder != 0) {
+		msExtendedError = "Double initialization";
+		return false;
+	}
+	
+	msUser					=	gpApplication->Get_User_Name();
+	msPassword				=	gpApplication->Get_Password();
+	msProjectUUID			=	gpApplication->Get_Project_UUID();
+	msProjectName			=	gpApplication->GetProjectName();
+	msProjectDescription	=	"NA";
+	msProjectLicense		=	"cc";
+	msBranchUUID			=	gpApplication->Get_Branch_UUID();
+	msCommitUUID			=	gpApplication->Get_Commit_UUID();
+	
+	std::string sProject_File = gpApplication->Project_Folder() + gpApplication->Project_Name() + ".xml";
+	CAutoDelete<IFile> pFile(IFile::Create());
+	if (pFile->Open(sProject_File.c_str(), IFile::FileRead)) {
+		mpFileCommitXML			=	pFile;
+	}
+	else return false;
+	
+	msCommitDescription		= "Initial Version";
+	
+	if (!Init_Helper(pUpload_Que))
+		return false;
+	
+	miActionOrder = geUpload_NewProject_Before;
+	return true;
+} // Init_NewProject
+
+
 
 tbool CUploadTask::Init_NewProject(
-	const tchar* pszUser, const tchar* pszPassword,
-	CKSUUID* pProjUUID, const tchar* pszProjName, const tchar* pszProjDesc, const tchar* pszProjLicenseCode,
-	CKSUUID* pBranchUUID,
-	CKSUUID* pCommitUUID, IFile* pfileCommit,
-	std::list<CTake_Data*>* plistpTakes)
+								   const tchar* pszUser, 
+								   const tchar* pszPassword,
+								   CKSUUID* pProjUUID, 
+								   const tchar* pszProjName,
+								   const tchar* pszProjDesc, 
+								   const tchar* pszProjLicenseCode,
+								   CKSUUID* pBranchUUID,
+								   CKSUUID* pCommitUUID, 
+								   IFile* pFileCommit,
+								   std::list<CTake_Data*>* plistpTakes)
 {
 	if (miActionOrder != 0) {
 		msExtendedError = "Double initialization";
@@ -106,7 +144,7 @@ tbool CUploadTask::Init_NewProject(
 	// not used: msBranchLicense			= pszBranchLicenseCode;
 
 	msCommitUUID			= pCommitUUID->Get_UUID();
-	mpfileCommitXML			= pfileCommit;
+	mpFileCommitXML			= pFileCommit;
 	msCommitDescription		= "Initial Version";
 
 	if (!Init_Helper(plistpTakes))
@@ -145,7 +183,7 @@ tbool CUploadTask::Init_NewBranch(
 	msBranchLicense			= pszBranchLicenseCode;
 
 	msCommitUUID			= pCommitUUID->Get_UUID();
-	mpfileCommitXML			= pfileCommit;
+	mpFileCommitXML			= pfileCommit;
 	msCommitDescription		= "Initial Copy";
 
 	if (!Init_Helper(plistpTakes))
@@ -183,7 +221,7 @@ tbool CUploadTask::Init_Commit(
 	// not used: msBranchLicense			= pszBranchLicenseCode;
 
 	msCommitUUID			= pCommitUUID->Get_UUID();
-	mpfileCommitXML			= pfileCommit;
+	mpFileCommitXML			= pfileCommit;
 	msCommitDescription		= pszCommitDesc;
 
 	if (!Init_Helper(plistpTakes))
@@ -491,7 +529,7 @@ tbool CUploadTask::DoCommit_Before()
 		||
 		(!mpUploader->AddParam("commit[description]", msCommitDescription.c_str(), -1))
 		||
-		(!mpUploader->AddFileParam("commit[markup]", mpfileCommitXML))
+		(!mpUploader->AddFileParam("commit[markup]", mpFileCommitXML))
 		||
 		(!mpUploader->Start(mpfileReply_Uploader))
 	) {

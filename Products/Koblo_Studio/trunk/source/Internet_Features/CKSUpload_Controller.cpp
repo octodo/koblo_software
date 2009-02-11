@@ -31,6 +31,17 @@ void CKSUpload_Controller::Upload_Project()
 	
 	gpApplication->Compress_OGG_File();
 	gpApplication->Compress_MP3_File();
+	
+
+/*
+	CUploadTask UploadTask;
+	UploadTask.Init_NewProject( &mUpload_Que);
+	
+	// Add task to task list
+	CAutoLock Lock(gpApplication->mMutex_Progress);
+	gpApplication->mpProgressTasks->Add(&UploadTask);
+	gpApplication->Playback_InProgressTask();
+*/	
 }
 
 
@@ -115,7 +126,6 @@ void CKSUpload_Controller::Compress_OGG_File()
 			// Add task to task list
 			CAutoLock Lock(gpApplication->mMutex_Progress);
 			gpApplication->mpProgressTasks->Add(pExportClipTask);
-			
 			gpApplication->Playback_InProgressTask();
 			
 		}

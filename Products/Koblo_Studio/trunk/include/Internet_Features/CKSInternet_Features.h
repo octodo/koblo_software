@@ -146,23 +146,32 @@ public:
 	
 		
 	// get uuid from CKSUUID object
-	std::string Get_Project_UUID();
-	// set a new uuid
-	void Set_Project_UUID();
-	// set a uuid from a string
-	void Set_Project_UUID(std::string  sUUID);
+	std::string Get_Project_UUID(){ return mpProject_UUID->Get_UUID();};
 	
+	// set a new uuid
+	void Set_Project_UUID(){mpProject_UUID->Set_UUID();};
+	
+	// set a uuid from a string
+	void Set_Project_UUID(std::string  sUUID){ mpProject_UUID->Set_UUID(sUUID);};
 	
 	// get uuid from CKSUUID object
-	std::string Get_Branch_UUID();
+	std::string Get_Branch_UUID(){ return mpBranch_UUID->Get_UUID();};
+	
 	// set a new uuid
-	void Set_Branch_UUID();
+	void Set_Branch_UUID(){ mpBranch_UUID->Set_UUID();};
+	
 	// set a uuid from a string
-	void Set_Branch_UUID(std::string sUUID);
-	/*
-	std::string Project_Path(){return msProject_Path;};
-	void Project_Path(std::string sProject_Path){ msProject_Path = sProject_Path;};
-	*/ 
+	void Set_Branch_UUID(std::string sUUID){ mpBranch_UUID->Set_UUID(sUUID);};
+	
+	// set a new uuid
+	void Set_Commit_UUID(){ mpCommit_UUID->Set_UUID();};
+	
+	// set a uuid from a string
+	void Set_Commit_UUID(std::string sUUID){ mpCommit_UUID->Set_UUID(sUUID);};
+	
+	// get uuid from CKSUUID object
+	std::string Get_Commit_UUID(){ return mpCommit_UUID->Get_UUID();};
+ 
 	
 private:
 
@@ -171,6 +180,9 @@ private:
 	
 	// branch uuid object
 	CKSUUID* mpBranch_UUID;
+	
+	// branch uuid object
+	CKSUUID* mpCommit_UUID;
 	
 	virtual void Open_Project_Edit_Page_On_Koblo();
 	

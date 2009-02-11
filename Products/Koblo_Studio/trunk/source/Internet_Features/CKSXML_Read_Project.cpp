@@ -18,8 +18,8 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 {
 
 	// read project in to 
-	CAutoDelete<IFile> pfile(IFile::Create());
-	if (pfile->Open(sFile.c_str(), IFile::FileRead)) {
+	CAutoDelete<IFile> pFile(IFile::Create());
+	if (pFile->Open(sFile.c_str(), IFile::FileRead)) {
 		// reset/ erase the current DAW project
 		Reset_Project();
 		
@@ -35,11 +35,11 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		mpTinyXMLDoc->Clear();
 		
 		// read project in to char buffer
-		tuint iSize = pfile->GetSizeWhenOpened();
+		tuint iSize = pFile->GetSizeWhenOpened();
 		CAutoBuffer<char> pszProjectXML;
 		pszProjectXML.Allocate(iSize);
 
-		pfile->Read(pszProjectXML, iSize);
+		pFile->Read(pszProjectXML, iSize);
 		// parse pszProjectXML in to TinyXML document
 		mpTinyXMLDoc->Parse(pszProjectXML);
 		// Iterate mpTinyXMLDoc in To DAW data structure

@@ -54,11 +54,18 @@ public:
 	virtual void Destroy();
 
 	tbool Init_NewProject(
-		const tchar* pszUser, const tchar* pszPassword,
-		CKSUUID* pProjUUID, const tchar* pszProjName, const tchar* pszProjDesc, const tchar* pszProjLicenseCode,
-		CKSUUID* pBranchUUID,
-		CKSUUID* pCommitUUID, IFile* pfileCommit,
-		std::list<CTake_Data*>* plistpTakes);
+						  const tchar* pszUser, 
+						  const tchar* pszPassword,
+						  CKSUUID* pProjUUID, 
+						  const tchar* pszProjName, 
+						  const tchar* pszProjDesc, 
+						  const tchar* pszProjLicenseCode,
+						  CKSUUID* pBranchUUID,
+						  CKSUUID* pCommitUUID, 
+						  IFile* pFileCommit,
+						  std::list<CTake_Data*>* plistpTakes);
+	
+	tbool Init_NewProject( std::list<CTake_Data*>* pUpload_Que);
 
 	tbool Init_NewBranch(
 		const tchar* pszUser, const tchar* pszPassword,
@@ -114,7 +121,7 @@ protected:
 	std::string msBranchLicense;
 
 	std::string msCommitUUID;
-	IFile* mpfileCommitXML;
+	IFile* mpFileCommitXML;
 	std::string msCommitDescription;
 	//
 	tint32 miCommit_ReplyNb;

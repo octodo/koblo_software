@@ -13,6 +13,7 @@ mbUpload_Project(false)
 
 	mpProject_UUID = new(CKSUUID);
 	mpBranch_UUID = new(CKSUUID);
+	mpCommit_UUID = new CKSUUID;
 
 }
 
@@ -276,36 +277,6 @@ tbool CKSInternet_Features::Project_Has_Changed()
 	return sInternal.compare(sOn_Disk) != 0 ; 
 
 	
-}
-
-std::string CKSInternet_Features::Get_Project_UUID()
-{ 
-	return mpProject_UUID->Get_UUID();
-}
-
-void CKSInternet_Features::Set_Project_UUID()
-{ 
-	mpProject_UUID->Set_UUID();
-}
-
-void CKSInternet_Features::Set_Project_UUID(std::string  sUUID )
-{ 
-	mpProject_UUID->Set_UUID(sUUID);
-}
-
-std::string CKSInternet_Features::Get_Branch_UUID()
-{ 
-	return mpBranch_UUID->Get_UUID();
-}
-
-void CKSInternet_Features::Set_Branch_UUID()
-{
-	mpBranch_UUID->Set_UUID();
-}
-
-void CKSInternet_Features::Set_Branch_UUID(std::string  sUUID )
-{ 
-	mpBranch_UUID->Set_UUID(sUUID);
 }
 
 void CKSInternet_Features::SetProjectName( const std::string& sName)
