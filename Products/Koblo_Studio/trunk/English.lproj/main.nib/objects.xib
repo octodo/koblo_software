@@ -3,18 +3,17 @@
   <object name="rootObject" class="NSCustomObject" id="1">
   </object>
   <array count="23" name="allObjects">
-    <object class="IBCarbonRootControl" id="267">
-      <string name="bounds">0 0 244 319 </string>
-    </object>
     <object class="IBCarbonWindow" id="166">
       <boolean name="hasCollapseBox">FALSE</boolean>
       <boolean name="hasHorizontalZoom">FALSE</boolean>
       <boolean name="hasVerticalZoom">FALSE</boolean>
+      <boolean name="compositing">TRUE</boolean>
       <boolean name="isConstrained">FALSE</boolean>
       <int name="themeBrush">15</int>
       <int name="windowPosition">1</int>
       <string name="title">Koblo Studio</string>
       <object name="rootControl" class="IBCarbonRootControl" id="167">
+        <string name="viewFrame">0 0 999 679 </string>
         <string name="bounds">0 0 679 999 </string>
       </object>
       <string name="windowRect">44 0 723 999 </string>
@@ -22,9 +21,28 @@
       <int name="WindowMinWidth">999</int>
       <int name="WindowMinHeight">499</int>
     </object>
-    <object class="IBCarbonMenu" id="29">
-      <string name="title">main</string>
-      <string name="name">_NSMainMenu</string>
+    <object class="IBCarbonWindow" id="263">
+      <boolean name="hasCloseBox">FALSE</boolean>
+      <boolean name="hasCollapseBox">FALSE</boolean>
+      <boolean name="hasHorizontalZoom">FALSE</boolean>
+      <boolean name="isResizable">FALSE</boolean>
+      <boolean name="hasVerticalZoom">FALSE</boolean>
+      <boolean name="isConstrained">FALSE</boolean>
+      <int name="carbonWindowClass">5</int>
+      <int name="windowPosition">4</int>
+      <string name="title">Import</string>
+      <object name="rootControl" class="IBCarbonRootControl" id="264">
+        <string name="bounds">0 0 423 423 </string>
+      </object>
+      <string name="windowRect">135 182 558 605 </string>
+      <string name="ScreenRectAtEncodeTime">57 0 1178 1920 </string>
+      <int name="WindowMaxWidth">423</int>
+      <int name="WindowMaxHeight">423</int>
+      <int name="WindowMinWidth">423</int>
+      <int name="WindowMinHeight">423</int>
+    </object>
+    <object class="IBCarbonRootControl" id="249">
+      <string name="bounds">0 0 374 623 </string>
     </object>
     <object class="IBCarbonWindow" id="257">
       <boolean name="hasCloseBox">FALSE</boolean>
@@ -44,106 +62,30 @@
       <int name="WindowMinWidth">386</int>
       <int name="WindowMinHeight">242</int>
     </object>
-    <object class="IBCarbonRootControl" id="246">
-      <string name="bounds">0 0 381 985 </string>
-    </object>
-    <reference idRef="167"/>
-    <object class="IBCarbonWindow" id="251">
-      <boolean name="hasCollapseBox">FALSE</boolean>
-      <boolean name="hasHorizontalZoom">FALSE</boolean>
-      <boolean name="isResizable">FALSE</boolean>
-      <boolean name="hasVerticalZoom">FALSE</boolean>
-      <boolean name="isConstrained">FALSE</boolean>
-      <int name="windowPosition">4</int>
-      <string name="title">Koblo Studio AUX</string>
-      <object name="rootControl" class="IBCarbonRootControl" id="252">
-        <string name="bounds">0 0 297 577 </string>
-      </object>
-      <string name="windowRect">282 29 579 606 </string>
-      <string name="ScreenRectAtEncodeTime">4 0 1028 1680 </string>
-      <int name="WindowMaxWidth">577</int>
-      <int name="WindowMaxHeight">297</int>
-      <int name="WindowMinWidth">574</int>
-      <int name="WindowMinHeight">297</int>
-    </object>
-    <object class="IBCarbonRootControl" id="249">
-      <string name="bounds">0 0 374 623 </string>
-    </object>
-    <object class="IBCarbonWindow" id="266">
-      <boolean name="hasCloseBox">FALSE</boolean>
-      <boolean name="hasCollapseBox">FALSE</boolean>
-      <boolean name="hasHorizontalZoom">FALSE</boolean>
-      <boolean name="isResizable">FALSE</boolean>
-      <boolean name="hasVerticalZoom">FALSE</boolean>
-      <boolean name="isConstrained">FALSE</boolean>
-      <int name="carbonWindowClass">5</int>
-      <int name="windowPosition">4</int>
-      <string name="title">Setup</string>
-      <reference name="rootControl" idRef="267"/>
-      <string name="windowRect">195 249 439 568 </string>
-      <string name="ScreenRectAtEncodeTime">57 0 1178 1920 </string>
-      <int name="WindowMaxWidth">319</int>
-      <int name="WindowMaxHeight">244</int>
-      <int name="WindowMinWidth">319</int>
-      <int name="WindowMinHeight">24</int>
-    </object>
-    <object class="IBCarbonRootControl" id="273">
-      <string name="bounds">0 0 181 244 </string>
-    </object>
-    <object class="IBCarbonWindow" id="272">
-      <boolean name="hasCollapseBox">FALSE</boolean>
-      <boolean name="hasHorizontalZoom">FALSE</boolean>
-      <boolean name="isResizable">FALSE</boolean>
-      <boolean name="hasVerticalZoom">FALSE</boolean>
-      <boolean name="isConstrained">FALSE</boolean>
-      <int name="windowPosition">4</int>
-      <string name="title">Sign In</string>
-      <reference name="rootControl" idRef="273"/>
-      <string name="windowRect">246 442 427 686 </string>
-      <string name="ScreenRectAtEncodeTime">0 4 1178 1920 </string>
-      <int name="WindowMaxWidth">244</int>
-      <int name="WindowMaxHeight">181</int>
-      <int name="WindowMinWidth">244</int>
-      <int name="WindowMinHeight">181</int>
-    </object>
-    <object class="IBCarbonWindow" id="248">
-      <boolean name="hasCollapseBox">FALSE</boolean>
-      <boolean name="hasHorizontalZoom">FALSE</boolean>
-      <boolean name="isResizable">FALSE</boolean>
-      <boolean name="hasVerticalZoom">FALSE</boolean>
-      <boolean name="isConstrained">FALSE</boolean>
-      <int name="carbonWindowClass">5</int>
-      <int name="windowPosition">1</int>
-      <string name="title"></string>
-      <reference name="rootControl" idRef="249"/>
-      <string name="windowRect">282 29 656 652 </string>
-      <string name="ScreenRectAtEncodeTime">4 0 1028 1680 </string>
-    </object>
     <object class="IBCarbonRootControl" id="261">
       <string name="bounds">0 0 581 540 </string>
     </object>
-    <object class="IBCarbonRootControl" id="264">
-      <string name="bounds">0 0 423 423 </string>
-    </object>
-    <object class="IBCarbonWindow" id="269">
+    <object class="IBCarbonWindow" id="245">
       <boolean name="hasCollapseBox">FALSE</boolean>
       <boolean name="hasHorizontalZoom">FALSE</boolean>
-      <boolean name="isResizable">FALSE</boolean>
       <boolean name="hasVerticalZoom">FALSE</boolean>
       <boolean name="isConstrained">FALSE</boolean>
       <int name="windowPosition">4</int>
-      <string name="title">Project ID</string>
-      <object name="rootControl" class="IBCarbonRootControl" id="270">
-        <string name="bounds">0 0 102 244 </string>
+      <string name="title">Mixer</string>
+      <object name="rootControl" class="IBCarbonRootControl" id="246">
+        <string name="bounds">0 0 381 985 </string>
       </object>
-      <string name="windowRect">246 442 348 686 </string>
-      <string name="ScreenRectAtEncodeTime">0 4 1178 1920 </string>
-      <int name="WindowMaxWidth">397</int>
-      <int name="WindowMaxHeight">102</int>
-      <int name="WindowMinWidth">244</int>
-      <int name="WindowMinHeight">102</int>
+      <string name="windowRect">482 0 863 985 </string>
+      <string name="ScreenRectAtEncodeTime">57 0 1178 1920 </string>
+      <int name="WindowMaxWidth">1882</int>
+      <int name="WindowMaxHeight">381</int>
+      <int name="WindowMinWidth">276</int>
+      <int name="WindowMinHeight">381</int>
     </object>
-    <reference idRef="270"/>
+    <reference idRef="264"/>
+    <object class="IBCarbonRootControl" id="270">
+      <string name="bounds">0 0 102 244 </string>
+    </object>
     <object class="IBCarbonWindow" id="254">
       <boolean name="hasCollapseBox">FALSE</boolean>
       <boolean name="hasHorizontalZoom">FALSE</boolean>
@@ -164,41 +106,6 @@
       <int name="WindowMinWidth">397</int>
       <int name="WindowMinHeight">124</int>
     </object>
-    <reference idRef="252"/>
-    <object class="IBCarbonWindow" id="263">
-      <boolean name="hasCloseBox">FALSE</boolean>
-      <boolean name="hasCollapseBox">FALSE</boolean>
-      <boolean name="hasHorizontalZoom">FALSE</boolean>
-      <boolean name="isResizable">FALSE</boolean>
-      <boolean name="hasVerticalZoom">FALSE</boolean>
-      <boolean name="isConstrained">FALSE</boolean>
-      <int name="carbonWindowClass">5</int>
-      <int name="windowPosition">4</int>
-      <string name="title">Import</string>
-      <reference name="rootControl" idRef="264"/>
-      <string name="windowRect">135 182 558 605 </string>
-      <string name="ScreenRectAtEncodeTime">57 0 1178 1920 </string>
-      <int name="WindowMaxWidth">423</int>
-      <int name="WindowMaxHeight">423</int>
-      <int name="WindowMinWidth">423</int>
-      <int name="WindowMinHeight">423</int>
-    </object>
-    <object class="IBCarbonWindow" id="245">
-      <boolean name="hasCollapseBox">FALSE</boolean>
-      <boolean name="hasHorizontalZoom">FALSE</boolean>
-      <boolean name="hasVerticalZoom">FALSE</boolean>
-      <boolean name="isConstrained">FALSE</boolean>
-      <int name="windowPosition">4</int>
-      <string name="title">Mixer</string>
-      <reference name="rootControl" idRef="246"/>
-      <string name="windowRect">482 0 863 985 </string>
-      <string name="ScreenRectAtEncodeTime">57 0 1178 1920 </string>
-      <int name="WindowMaxWidth">1882</int>
-      <int name="WindowMaxHeight">381</int>
-      <int name="WindowMinWidth">276</int>
-      <int name="WindowMinHeight">381</int>
-    </object>
-    <reference idRef="258"/>
     <object class="IBCarbonWindow" id="260">
       <boolean name="hasCloseBox">FALSE</boolean>
       <boolean name="hasCollapseBox">FALSE</boolean>
@@ -216,32 +123,127 @@
       <int name="WindowMinWidth">540</int>
       <int name="WindowMinHeight">581</int>
     </object>
+    <object class="IBCarbonWindow" id="266">
+      <boolean name="hasCloseBox">FALSE</boolean>
+      <boolean name="hasCollapseBox">FALSE</boolean>
+      <boolean name="hasHorizontalZoom">FALSE</boolean>
+      <boolean name="isResizable">FALSE</boolean>
+      <boolean name="hasVerticalZoom">FALSE</boolean>
+      <boolean name="isConstrained">FALSE</boolean>
+      <int name="carbonWindowClass">5</int>
+      <int name="windowPosition">4</int>
+      <string name="title">Setup</string>
+      <object name="rootControl" class="IBCarbonRootControl" id="267">
+        <string name="bounds">0 0 244 319 </string>
+      </object>
+      <string name="windowRect">195 249 439 568 </string>
+      <string name="ScreenRectAtEncodeTime">57 0 1178 1920 </string>
+      <int name="WindowMaxWidth">319</int>
+      <int name="WindowMaxHeight">244</int>
+      <int name="WindowMinWidth">319</int>
+      <int name="WindowMinHeight">24</int>
+    </object>
+    <object class="IBCarbonWindow" id="251">
+      <boolean name="hasCollapseBox">FALSE</boolean>
+      <boolean name="hasHorizontalZoom">FALSE</boolean>
+      <boolean name="isResizable">FALSE</boolean>
+      <boolean name="hasVerticalZoom">FALSE</boolean>
+      <boolean name="isConstrained">FALSE</boolean>
+      <int name="windowPosition">4</int>
+      <string name="title">Koblo Studio AUX</string>
+      <object name="rootControl" class="IBCarbonRootControl" id="252">
+        <string name="bounds">0 0 297 577 </string>
+      </object>
+      <string name="windowRect">282 29 579 606 </string>
+      <string name="ScreenRectAtEncodeTime">4 0 1028 1680 </string>
+      <int name="WindowMaxWidth">577</int>
+      <int name="WindowMaxHeight">297</int>
+      <int name="WindowMinWidth">574</int>
+      <int name="WindowMinHeight">297</int>
+    </object>
+    <reference idRef="252"/>
     <reference idRef="255"/>
+    <reference idRef="167"/>
+    <object class="IBCarbonWindow" id="269">
+      <boolean name="hasCollapseBox">FALSE</boolean>
+      <boolean name="hasHorizontalZoom">FALSE</boolean>
+      <boolean name="isResizable">FALSE</boolean>
+      <boolean name="hasVerticalZoom">FALSE</boolean>
+      <boolean name="isConstrained">FALSE</boolean>
+      <int name="windowPosition">4</int>
+      <string name="title">Project ID</string>
+      <reference name="rootControl" idRef="270"/>
+      <string name="windowRect">246 442 348 686 </string>
+      <string name="ScreenRectAtEncodeTime">0 4 1178 1920 </string>
+      <int name="WindowMaxWidth">397</int>
+      <int name="WindowMaxHeight">102</int>
+      <int name="WindowMinWidth">244</int>
+      <int name="WindowMinHeight">102</int>
+    </object>
+    <object class="IBCarbonWindow" id="248">
+      <boolean name="hasCollapseBox">FALSE</boolean>
+      <boolean name="hasHorizontalZoom">FALSE</boolean>
+      <boolean name="isResizable">FALSE</boolean>
+      <boolean name="hasVerticalZoom">FALSE</boolean>
+      <boolean name="isConstrained">FALSE</boolean>
+      <int name="carbonWindowClass">5</int>
+      <int name="windowPosition">1</int>
+      <string name="title"></string>
+      <reference name="rootControl" idRef="249"/>
+      <string name="windowRect">282 29 656 652 </string>
+      <string name="ScreenRectAtEncodeTime">4 0 1028 1680 </string>
+    </object>
+    <object class="IBCarbonWindow" id="272">
+      <boolean name="hasCollapseBox">FALSE</boolean>
+      <boolean name="hasHorizontalZoom">FALSE</boolean>
+      <boolean name="isResizable">FALSE</boolean>
+      <boolean name="hasVerticalZoom">FALSE</boolean>
+      <boolean name="isConstrained">FALSE</boolean>
+      <int name="windowPosition">4</int>
+      <string name="title">Sign In</string>
+      <object name="rootControl" class="IBCarbonRootControl" id="273">
+        <string name="bounds">0 0 181 244 </string>
+      </object>
+      <string name="windowRect">246 442 427 686 </string>
+      <string name="ScreenRectAtEncodeTime">0 4 1178 1920 </string>
+      <int name="WindowMaxWidth">244</int>
+      <int name="WindowMaxHeight">181</int>
+      <int name="WindowMinWidth">244</int>
+      <int name="WindowMinHeight">181</int>
+    </object>
+    <reference idRef="267"/>
+    <reference idRef="273"/>
+    <reference idRef="258"/>
+    <reference idRef="246"/>
+    <object class="IBCarbonMenu" id="29">
+      <string name="title">main</string>
+      <string name="name">_NSMainMenu</string>
+    </object>
   </array>
   <array count="23" name="allParents">
-    <reference idRef="266"/>
     <reference idRef="1"/>
-    <reference idRef="1"/>
-    <reference idRef="1"/>
-    <reference idRef="245"/>
-    <reference idRef="166"/>
     <reference idRef="1"/>
     <reference idRef="248"/>
     <reference idRef="1"/>
-    <reference idRef="272"/>
-    <reference idRef="1"/>
-    <reference idRef="1"/>
     <reference idRef="260"/>
-    <reference idRef="263"/>
     <reference idRef="1"/>
+    <reference idRef="263"/>
     <reference idRef="269"/>
     <reference idRef="1"/>
+    <reference idRef="1"/>
+    <reference idRef="1"/>
+    <reference idRef="1"/>
     <reference idRef="251"/>
-    <reference idRef="1"/>
-    <reference idRef="1"/>
-    <reference idRef="257"/>
-    <reference idRef="1"/>
     <reference idRef="254"/>
+    <reference idRef="166"/>
+    <reference idRef="1"/>
+    <reference idRef="1"/>
+    <reference idRef="1"/>
+    <reference idRef="266"/>
+    <reference idRef="272"/>
+    <reference idRef="257"/>
+    <reference idRef="245"/>
+    <reference idRef="1"/>
   </array>
   <dictionary count="13" name="nameTable">
     <string>AUXWnd</string>
