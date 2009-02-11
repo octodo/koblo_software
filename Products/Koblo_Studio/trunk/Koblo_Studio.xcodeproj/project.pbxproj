@@ -13,6 +13,7 @@
 		324DA49D0DB5F64B00268686 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9504C8FFE6A3BC11CA0CBA /* ApplicationServices.framework */; };
 		327FB57C0DEED5BC004ACD89 /* CKSMixerGUIPane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327FB57B0DEED5BC004ACD89 /* CKSMixerGUIPane.cpp */; };
 		32AB3E1A0D6D90E000DE1FCD /* CBaseDezipper2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32AB3E190D6D90E000DE1FCD /* CBaseDezipper2.cpp */; };
+		32B66EDD0F40552400FC987A /* CUploadTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32B66EDC0F40552400FC987A /* CUploadTask.cpp */; };
 		32E09DCB0E14C38500FF980B /* libAudioCompress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E09DC20E14BED500FF980B /* libAudioCompress.a */; };
 		7C771DB40CAA4E9A00A78C4E /* CSoloMuteContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C771DB20CAA4E9A00A78C4E /* CSoloMuteContainer.cpp */; };
 		7C771DB50CAA4E9A00A78C4E /* CSoloMuteState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C771DB30CAA4E9A00A78C4E /* CSoloMuteState.cpp */; };
@@ -305,6 +306,8 @@
 		327FB57F0DEED5BC004ACD89 /* CKSMixerGUIPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSMixerGUIPane.h; path = include/Mix_GUI/CKSMixerGUIPane.h; sourceTree = "<group>"; };
 		32AB3E180D6D90CB00DE1FCD /* CBaseDezipper2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBaseDezipper2.h; path = ../../../SDK/trunk/BaseClasses/Include/CBaseDezipper2.h; sourceTree = SOURCE_ROOT; };
 		32AB3E190D6D90E000DE1FCD /* CBaseDezipper2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CBaseDezipper2.cpp; path = ../../../SDK/trunk/BaseClasses/Source/CBaseDezipper2.cpp; sourceTree = SOURCE_ROOT; };
+		32B66EDB0F4054E100FC987A /* CUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CUploadTask.h; sourceTree = "<group>"; };
+		32B66EDC0F40552400FC987A /* CUploadTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CUploadTask.cpp; sourceTree = "<group>"; };
 		32E09DAD0E14BED500FF980B /* AudioCompress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AudioCompress.xcodeproj; path = ../../../SDK/trunk/AudioCompress/projects/OSXXCode/AudioCompress.xcodeproj; sourceTree = SOURCE_ROOT; };
 		4A9504C8FFE6A3BC11CA0CBA /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		4A9504CAFFE6A41611CA0CBA /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -1207,6 +1210,7 @@
 		FCF9542E0F125849005147D1 /* Progress */ = {
 			isa = PBXGroup;
 			children = (
+				32B66EDC0F40552400FC987A /* CUploadTask.cpp */,
 				FCF9542F0F125849005147D1 /* CAfterImportTask.cpp */,
 				FCF954300F125849005147D1 /* CExportClipTask.cpp */,
 				FCF954310F125849005147D1 /* CExportDSPTask.cpp */,
@@ -1251,6 +1255,7 @@
 		FCF954740F12590F005147D1 /* Progress */ = {
 			isa = PBXGroup;
 			children = (
+				32B66EDB0F4054E100FC987A /* CUploadTask.h */,
 				FCF954750F12590F005147D1 /* CAfterImportTask.h */,
 				FCF954760F12590F005147D1 /* CExportClipTask.h */,
 				FCF954770F12590F005147D1 /* CExportDSPTask.h */,
@@ -1575,6 +1580,7 @@
 				FCD7D19E0F384D0D002E6F98 /* CImport_TinyXML.cpp in Sources */,
 				FC0DA1B70F3AC14600EB58D9 /* CRegion_Data.cpp in Sources */,
 				FCFCB62C0F3C398400F136F1 /* CPreset_Data.cpp in Sources */,
+				32B66EDD0F40552400FC987A /* CUploadTask.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

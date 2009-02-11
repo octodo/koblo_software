@@ -6,7 +6,7 @@ CRegion_Data::CRegion_Data()
 
 } 
 
-CRegion_Data::~CSample_Data()
+CRegion_Data::~CRegion_Data()
 {
 
 } 

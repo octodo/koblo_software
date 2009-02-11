@@ -1,6 +1,6 @@
 #include "KSOS.h"
 
-CTake_Data::CTake_Data()
+CTake_Data::CTake_Data(CSample_Data* pSampleThatOwnsThis)
 {
 	msDescription			=		"";
 	msURL					=		"";
@@ -9,7 +9,7 @@ CTake_Data::CTake_Data()
 	msLeft_Peak_File_Path	=		"";
 	msRight_Peak_File_Path	=		"";
 
-
+	mpOwningSample = pSampleThatOwnsThis;
 }
 
 CTake_Data::~CTake_Data()
@@ -23,6 +23,17 @@ CTake_Data CTake_Data::operator=(const CTake_Data& DataNew)
 	return *this;
 }
 */
+
+
+std::string CTake_Data::GetUUID_ForOwningSample()
+{
+	return mpOwningSample->Get_UUID();
+}
+
+std::string CTake_Data::GetName_ForOwningSample()
+{
+	return mpOwningSample->Name();
+}
 
 
 void CTake_Data::Mode(const std::string& sMode) 
@@ -86,6 +97,18 @@ tbool CTake_Data::In_Folder(std::string sFolder, std::string sExtencion)
 	}
 	return bOK;
 }
+
+
+std::string CTake_Data::GetOggFilePath()
+{
+	return gpApplication->OGG_File_Folder() + Get_UUID() + ".ogg";
+} // GetOggFilePath
+
+std::string CTake_Data::GetMp3FilePath()
+{
+	return gpApplication->MP3_File_Folder() + Get_UUID() + ".mp3";
+} // GetMp3FilePath
+
 
 tbool CTake_Data::Needs_Pict_Files()
 {

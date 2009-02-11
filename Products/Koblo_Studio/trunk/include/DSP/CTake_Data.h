@@ -1,16 +1,24 @@
 
+// Forward definition
+class CSample_Data;
 
 class CTake_Data: public virtual CKSUUID
 {
 public:
 	//! Constructor
-	CTake_Data();
+	CTake_Data(CSample_Data* pSampleThatOwnsThis);
 
 	//! Destructor
 	virtual ~CTake_Data();
-	
+
 	//! Assignment operator
 //	CTake_Data operator=(const CTake_Data&);
+
+	//! Get the UUID for the sample that "owns" this take
+	std::string GetUUID_ForOwningSample();
+	
+	//! Get the name of the sample that "owns" this take
+	std::string GetName_ForOwningSample();
 
 	//! get the Sample UUID
 	void Set_Description(const std::string& sDescription ){msDescription =  sDescription;};
@@ -72,6 +80,8 @@ public:
 	*/
 	tbool Needs_Pict_Files();
 	
+	std::string GetMp3FilePath();
+	std::string GetOggFilePath();
 	
 	
 	tuint32 Channels() {return muiChannels; };
@@ -82,7 +92,10 @@ public:
 	
 	
 protected:
-	
+
+	//! The sample that "owns" this take
+	CSample_Data* mpOwningSample;
+
 	//! take name
 	std::string msScreen_Name;
 	

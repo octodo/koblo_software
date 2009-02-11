@@ -57,7 +57,7 @@ public:
 	std::string Project_Folder(){ return msProject_Folder;};
 	//! set project name
 	void Project_Folder(std::string sFolder){  msProject_Folder = sFolder;};
-	
+
 	std::string Project_Name(){ return msProject_Name;};
 	//! set project name
 	void Project_Name(std::string sName){  msProject_Name = sName;};
@@ -65,6 +65,7 @@ public:
 	//! update project name and folder path
 	//!!! TO DO make private when old fileformat no longer is supported
 	void Update_Project_Name(std::string sNew_Name);
+
 /*	
 	// Check if the file path points to an audio file
 	tbool Is_A_Audio_File(std::string sFile);
