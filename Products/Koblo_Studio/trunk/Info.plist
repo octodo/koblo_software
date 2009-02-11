@@ -14,7 +14,7 @@
 			<key>CFBundleTypeIconFile</key>
 			<string>com.Koblo.KS</string>
 			<key>CFBundleTypeName</key>
-			<string>Koblo Project</string>
+			<string>xml</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSTypeIsPackage</key>

@@ -1166,6 +1166,38 @@ OSStatus MouseHandlerProc(EventHandlerCallRef inHandlerCallRef, EventRef inEvent
 			SPos Pos(pt.h, pt.v);
 			((CWindowOSX*)inUserData)->OnMouseHook(MouseMove, Pos);
 		}
+		case kEventMouseWheelMoved:
+        {
+            OSStatus status;
+            UInt32 modifiers;
+            EventMouseWheelAxis axis;
+            SInt32 delta;
+            
+            status = GetEventParameter( inEvent, kEventParamKeyModifiers, typeUInt32, 
+									   NULL, sizeof(modifiers), NULL, &modifiers );
+      //      ASSERT_NO_ERR(status);
+			
+            status = GetEventParameter( inEvent, kEventParamMouseWheelAxis, 
+									   typeMouseWheelAxis, NULL, sizeof(axis), NULL, &axis );
+    //        ASSERT_NO_ERR(status);
+			
+            status = GetEventParameter( inEvent, kEventParamMouseWheelDelta, 
+									   typeLongInteger, NULL, sizeof(delta), NULL, &delta );
+     //       ASSERT_NO_ERR(status);
+			
+            if ( axis == kEventMouseWheelAxisY )
+            {
+                SInt32 deltaPixels = 40 * delta;
+				
+                if (modifiers & optionKey)
+                    deltaPixels *= 10;
+				
+       //         this->ScrollVertically( -deltaPixels );
+         //       result = noErr;
+            }
+            break;
+        }
+			
 		return noErr;
 //		return eventNotHandledErr;
 	}

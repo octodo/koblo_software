@@ -10,8 +10,8 @@ debug
 Release
 release
 *.vcproj.*.*.user
-Resources.h
-ResourcesInc.cpp
+#Resources.h
+#ResourcesInc.cpp
 res.k2s
 *.o
 *.lo
