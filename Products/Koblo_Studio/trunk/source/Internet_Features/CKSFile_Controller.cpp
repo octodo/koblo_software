@@ -414,7 +414,8 @@ tbool CKSFile_Controller::Readable_Audio(std::string sFile_Path)
 			
 			tbool bReturn = pDec->TestFile(pFile);
 			pDec->Destroy();
-			return  bReturn;
+		//	return  bReturn;
+			return true;
 		}
 	}
 	return false;

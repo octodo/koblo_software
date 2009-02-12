@@ -33,7 +33,7 @@ void CKSUpload_Controller::Upload_Project()
 	gpApplication->Compress_MP3_File();
 	
 
-//*
+
 	//!!! TODO: Verify this is ok?
 	std::string sProjectXmlFile = gpApplication->Project_Folder();
 	sProjectXmlFile += gpApplication->Project_Name() + ".xml";
@@ -55,7 +55,7 @@ void CKSUpload_Controller::Upload_Project()
 	CAutoLock Lock(gpApplication->mMutex_Progress);
 	gpApplication->mpProgressTasks->Add(pUploadTask);
 	gpApplication->Playback_InProgressTask();
-//*/	
+
 }
 
 
