@@ -14,6 +14,8 @@ public:
 	//! Assignment operator
 //	CTake_Data operator=(const CTake_Data&);
 
+	void SetOwningSample(CSample_Data* p) { mpOwningSample = p; };
+
 	//! Get the UUID for the sample that "owns" this take
 	std::string GetUUID_ForOwningSample();
 	

@@ -44,9 +44,10 @@ void CKSUpload_Controller::Upload_Project()
 		gpApplication->Get_User_Name().c_str(), gpApplication->Get_Password().c_str(),
 
 		gpApplication->Get_Project_UUID().c_str(),
-		gpApplication->GetProjectName().c_str(),
-		"n/a", // project description
-		"sa", // license
+		(gpApplication->Project_Name()
+		+" - dummy project, will be deleted soon").c_str(),
+		"no description", // project description
+		"by", // license
 		gpApplication->Get_Branch_UUID().c_str(),
 		gpApplication->Get_Commit_UUID().c_str(), sProjectXmlFile.c_str(),
 		&mUpload_Que);
