@@ -291,6 +291,7 @@ enum EPaneMsg
 	Msg_Set_Grid,
 	MsgUpdateAudioGUI,
 	MsgSign_Out,
+	Msg_Load_Login,
 	Msg_Do_Delete,
 };
 

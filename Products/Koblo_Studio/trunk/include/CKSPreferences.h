@@ -105,11 +105,36 @@ public:
 }; // CKSPrefs_2
 
 
+//! Login info
+class CKSPrefs_3 {
+public:
+	CKSPrefs_3() {
+		mcbKeepInfo = (tchar)false;
+		*mpszUser = '\0';
+		*mpszPass = '\0';
+	}
+	
+	tbool IsSane();
+
+	tbool Load(IFile* pFile);
+	tbool Save(IFile* pFile);
+
+	tchar mcbKeepInfo;
+	tchar mpszUser[512];
+	tchar mpszPass[512];
+}; // CKSPrefs_3
+
 //! 
 class CKSPreferences {
 public:
-	static void LoadAll(SKSPrefs_1* pPrefs_1, CKSPrefs_2* pPrefs_2);
-	static void SaveAll(SKSPrefs_1* pPrefs_1, CKSPrefs_2* pPrefs_2);
+	static void LoadAll(
+		SKSPrefs_1* pPrefs_1,
+		CKSPrefs_2* pPrefs_2,
+		CKSPrefs_3* pPrefs_3);
+	static void SaveAll(
+		SKSPrefs_1* pPrefs_1,
+		CKSPrefs_2* pPrefs_2,
+		CKSPrefs_3* pPrefs_3);
 
 protected:
 	static void GetPrefsFileName(std::string& rsPrefsFileName);

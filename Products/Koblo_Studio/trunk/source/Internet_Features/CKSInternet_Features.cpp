@@ -161,6 +161,28 @@ void CKSInternet_Features::SetProjectName( const std::string& sName)
 	gpApplication->Project_Name(sName);
 }
 
+void CKSInternet_Features::Set_User_Name( const std::string& sName)
+{
+	msUser_Name = sName;
+	strncpy(gpDSPEngine->mPrefs_3.mpszUser, sName.c_str(), 511);
+	//gpDSPEngine->SavePrefs();
+}
+	
+
+void CKSInternet_Features::Set_Password( const std::string& sPassword)
+{
+	msPassword = sPassword;
+	strncpy(gpDSPEngine->mPrefs_3.mpszPass, sPassword.c_str(), 511);
+	//gpDSPEngine->SavePrefs();
+}
+
+
+void CKSInternet_Features::Set_Remember_Me(tbool bRemember_Me)
+{
+	mbRemember_Me = bRemember_Me;
+	gpDSPEngine->mPrefs_3.mcbKeepInfo = (tchar)bRemember_Me;
+	//gpDSPEngine->SavePrefs();
+}
 
 
 

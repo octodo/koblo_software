@@ -369,7 +369,12 @@ public:
 	SKSPrefs_1 mPrefs_1;
 	//! Audio preferences - mainly about input
 	CKSPrefs_2 mPrefs_2;
+	//! Login preferences
+	CKSPrefs_3 mPrefs_3;
 
+	void LoadPrefs();
+	void SavePrefs();
+	
 	tuint64 GetLoopEnd(){return muiLoopEnd;};
 
 	tbool IsTrackMuted(tint32 iTrack)
@@ -471,9 +476,6 @@ protected:
 
 	virtual void KillAudioManagers();
 
-	void LoadPrefs();
-	void SavePrefs();
-	
 //	STrackSelectionInfo mpTrackSelectionInfo[giNumber_Of_Tracks];
 	tint32 miSelectedTrack;
 	
