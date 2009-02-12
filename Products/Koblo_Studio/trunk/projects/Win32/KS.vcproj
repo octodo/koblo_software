@@ -404,7 +404,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\Internet_Features\CKSUsername_And_Password_Model.cpp"
+					RelativePath="..\..\source\Internet_Features\CKSUpload_Controller.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Internet_Features\CKSUsername_And_Password_Controller.cpp"
 					>
 				</File>
 				<File
@@ -970,7 +974,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\include\Internet_Features\CKSUsername_And_Password_Model.h"
+					RelativePath="..\..\include\Internet_Features\CKSUpload_Controller.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CKSUsername_And_Password_Controller.h"
 					>
 				</File>
 				<File

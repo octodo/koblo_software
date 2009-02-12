@@ -42,7 +42,6 @@ mpPlugInManager(NULL),
 mbAreGUIsReady(false),
 mbRecord(false),
 mbTimer(false),
-
 CKSXML_Create_Project(),
 CKSXML_Read_Project(),
 CKSXML_Write_Project(),
@@ -1028,6 +1027,8 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 	UpdateGUIFileList();
 	miPreviousLicenseNb = -1;
 	Set_Selected_Track(-1);
+	
+	Set_Branch_Name("");
 	
 	
 	for (tint32 i = 0; i < giNumber_Of_Tracks; i++) {

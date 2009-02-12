@@ -31,7 +31,7 @@ std::string CKSXML_Write_Project::Get_Internal_Data_As_XML()
 
 tbool CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 {
-	TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
+	TiXmlDeclaration* decl	=	new TiXmlDeclaration( "1.0", "UTF-8", "" );
 	TiXmlDocument *pDoc		=	new TiXmlDocument("koblo_doc");
 	pDoc->LinkEndChild( decl );
 	
@@ -855,7 +855,6 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		pInsert->SetAttribute("id", iInsertId);
 		
 		CPlugInManager* pPlugManager = gpApplication->GetPlugInManager();
-		//CPlugInManager::SPlugInInfo* pInfo = pPlugManager->GetPlugInInfo(0);
 		
 		std::string s = pPlugManager->GetPlugInVendor(iInsertId);
 		std::string u = pPlugManager->GetPlugInName(iInsertId);
@@ -876,6 +875,30 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 	}
 	
 	 
+}
+
+tbool CKSXML_Write_Project::Create_Plugin_Setting(CPreset_Data* pPreset_Data)
+{
+
+	std::string sPlug_in_Setting		=	gpApplication->Plugin_Settings_Folder() + pPreset_Data->Get_UUID() + ".ksprst";
+/*
+	// missing code 
+	std::string sFileName			= gpApplication->GetProjectName() + ".xml";
+	std::string sProject_Name		= gpApplication->Project_Name();
+	std::string sProject_Folder		= gpApplication->Project_Folder();
+	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";
+	
+	CAutoDelete<IFile> pfile(IFile::Create());
+	if (pfile->Open(sProject.c_str(), IFile::FileWrite)) {
+		pfile->Write(xml_str.c_str(), xml_str.length());
+		return true;
+	}
+	
+	if (pfPlug_In_Setting) {
+		return true;
+	}
+*/	
+	return false;
 }
 
 void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTrack)
@@ -1134,24 +1157,3 @@ void CKSXML_Write_Project::Add_Comment( TiXmlElement* pParent, std::string str)
 	
 }
 
-tbool CKSXML_Write_Project::Create_Plugin_Setting(CPreset_Data* pPreset_Data)
-{
-	
-
-
-	std::string sPlug_in_Setting		=	gpApplication->Plugin_Settings_Folder() + pPreset_Data->Get_UUID() + ".ksprst";
-	
-	
-	
-	CAutoDelete<IFile> pfPlug_In_Setting(IFile::Create());
-	pfPlug_In_Setting->Open(sPlug_in_Setting.c_str(), IFile::FileCreate);
-	
-	//pPeakFileL->Write((const tchar*)pfPeak, iPeakSize * sizeof(tfloat32));
-	
-	
-	if (pfPlug_In_Setting) {
-		return true;
-	}
-	 
-	return false;
-}

@@ -127,7 +127,7 @@ void CKSUsername_And_Password_Model::On_Username_And_Password_OK()
 	Save_User_Name_And_Password();
 	// Called when the user presses "Ok" in the sign in dialog
 	// if this function was called because the user wanted to upload a project and was not signed in
-	if(gpApplication->mbUpload_Project && gpApplication->Create_Project_Handshake()){
+	if(gpApplication->mbUpload_Project){
 		gpApplication->mbUpload_Project = false;
 		gpApplication->Upload_Project();
 	}

@@ -28,25 +28,32 @@ public:
 	virtual void Destroy();
 
 	tbool Init_NewProject(
-		const tchar* pszUser, const tchar* pszPassword,
-		const tchar* pszProjUUID, const tchar* pszProjName, const tchar* pszProjDesc, const tchar* pszProjLicenseCode,
-		const tchar* pszBranchUUID,
-		const tchar* pszCommitUUID, const tchar* pszfileCommit,
-		std::list<CTake_Data*>* plistpTakes);
+						  const tchar* pszUser, 
+						  const tchar* pszPassword,
+						  CKSUUID* pProjUUID, 
+						  const tchar* pszProjName, 
+						  const tchar* pszProjDesc, 
+						  const tchar* pszProjLicenseCode,
+						  CKSUUID* pBranchUUID,
+						  CKSUUID* pCommitUUID, 
+						  IFile* pFileCommit,
+						  std::list<CTake_Data*>* plistpTakes);
+	
+	tbool Init_NewProject( std::list<CTake_Data*>* pUpload_Que);
 
 	tbool Init_NewBranch(
 		const tchar* pszUser, const tchar* pszPassword,
-		const tchar* pszProjUUID,
-		const tchar* pszBranchUUID_Original,
-		const tchar* pszBranchUUID, const tchar* pszBranchName, const tchar* pszBranchDesc, const tchar* pszBranchLicenseCode,
-		const tchar* pszCommitUUID, const tchar* pszfileCommit,
+		CKSUUID* pProjUUID,
+		CKSUUID* pBranchUUID_Original,
+		CKSUUID* pBranchUUID, const tchar* pszBranchName, const tchar* pszBranchDesc, const tchar* pszBranchLicenseCode,
+		CKSUUID* pCommitUUID, IFile* pfileCommit,
 		std::list<CTake_Data*>* plistpTakes);
 
 	tbool Init_Commit(
 		const tchar* pszUser, const tchar* pszPassword,
-		const tchar* pszProjUUID,
-		const tchar* pszBranchUUID,
-		const tchar* pszCommitUUID, const tchar* pszfileCommit, const tchar* pszCommitDesc,
+		CKSUUID* pProjUUID,
+		CKSUUID* pBranchUUID,
+		CKSUUID* pCommitUUID, IFile* pfileCommit, const tchar* pszCommitDesc,
 		std::list<CTake_Data*>* plistpTakes);
 
 	virtual tbool DoWork();
@@ -94,8 +101,7 @@ protected:
 	std::string msBranchLicense;
 
 	std::string msCommitUUID;
-	std::string msFileCommitXML;
-	IFile* mpfileCommitXML;
+	IFile* mpFileCommitXML;
 	std::string msCommitDescription;
 	//
 	tint32 miCommit_ReplyNb;

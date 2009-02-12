@@ -65,14 +65,8 @@ public:
 	//! update project name and folder path
 	//!!! TO DO make private when old fileformat no longer is supported
 	void Update_Project_Name(std::string sNew_Name);
-
-/*	
-	// Check if the file path points to an audio file
-	tbool Is_A_Audio_File(std::string sFile);
 	
-	// check if extencion is reconized
-	tbool Check_Extencion(std::string sFile);
-*/	
+	//! get part of string after last "."
 	std::string  Get_Extencion(std::string sFile);
 	
 	//! opens a audio file at the given path and check if it's readable 
@@ -97,31 +91,7 @@ public:
 	// get plug-in settings folder
 	std::string Plugin_Settings_Folder(){ return msProject_Folder + "Plug-In's Settings:";};
 	
-	
-	
-	
-	
-	//! itterate all samples in the mSample_Data_List
-	virtual void Prepare_Sampels_For_Upload();
-	
-	//! check one sample from the mSample_Data_List
-	virtual void Prepare_Sampel_For_Upload(CSample_Data* pSample_Data);
-	
-	/*! find the oog and mp3 file in the "OGG Files" and the "MP3 Files" folders 
-	\ if there is no ogg / mp3 file the name of the file is stored in the mOGG_Compress_Que
-	 */
-	virtual void Prepare_Take_For_Upload(CTake_Data* Take_Data);
-	
-	//! secure all mp3 files are in the ogg file folder
-	virtual void Compress_OGG_File();
-	
-	//! secure all mp3 files are in the ogg file folder
-	virtual void Compress_MP3_File();
-	
-	tbool Validate_Files_For_Upload();
-	
-	// validate that a take acutually is readable auido file/ files
-	tbool Validate_Take(CTake_Data* Take_Data);
+
 
 	
 private:	
@@ -180,18 +150,10 @@ private:
 	// copy waves from old KSProject file
 	tbool Copy_KSProject_Waves();
 	
-	CMIDI_Sequencer* mpMIDI_Sequencer;
+//	CMIDI_Sequencer* mpMIDI_Sequencer;
 	 
 	 
-	// list of takes files to compress as OGG
-	std::list<CTake_Data*> mOGG_Compress_Que;
-	
-	// list of takes files to compress as mp3
-	std::list<CTake_Data*> mMp3_Compress_Que;
-	
-	//! missing files
-	tuint32 muiMissing_Files;
-	
+
 	
 	
 	

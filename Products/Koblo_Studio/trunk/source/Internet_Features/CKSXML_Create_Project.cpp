@@ -14,6 +14,7 @@ CKSXML_Create_Project::~CKSXML_Create_Project()
 	
 }
 
+/*
 tbool CKSXML_Create_Project::Create_Project_Handshake()
 {
 	
@@ -44,19 +45,19 @@ tbool CKSXML_Create_Project::Create_Project_Handshake()
 	}
 	
 	// shell script to create new project on koblo.com
-	/*
+	
 	 curl http://koblo.com/projects.xml -u \
 	 "usere@mail.com:password" \
 	 -F "project[name]=Gazzell blond dear" \
 	 -F "project[description]=a animal tribute" \
 	 -F "project[license]=by-sa" \
 	 -i
-	 */
+	 
 	
 	
 //-------------- REAL CODE HERE --------------------
 	
-/*	
+	
 	
 	tbool bReturnValue = false;
  
@@ -93,9 +94,10 @@ tbool CKSXML_Create_Project::Create_Project_Handshake()
 	ine::IINetUtil::ReleaseBuffer(&pszBuff);
  
 	return bReturnValue;
-*/ 
+
 	
 }
+*/
 
 void CKSXML_Create_Project::Parse_XML( TiXmlNode* pParent )
 {

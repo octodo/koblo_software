@@ -97,7 +97,8 @@ void* CContextOSX::CreateMainWindow(SSize /*Size*/, tint32 /*iWindowsOnly_MenuRe
     OSStatus                    err;
     static const EventTypeSpec    kAppEvents[] =
     {
-        { kEventClassCommand, kEventCommandProcess }
+        { kEventClassCommand, kEventCommandProcess },
+		{ kCoreEventClass, kAEOpenDocuments }
     };
 
     // Create a Nib reference, passing the name of the nib file (without the .nib extension).
@@ -115,28 +116,31 @@ void* CContextOSX::CreateMainWindow(SSize /*Size*/, tint32 /*iWindowsOnly_MenuRe
 //                                    GetEventTypeCount( kAppEvents ), kAppEvents,
 //                                    0, NULL );
 
-	WindowRef              gpNexsynWindow;
-    err = CreateWindowFromNib( sNibRef, CFSTR("MainWindow"), &gpNexsynWindow );
+	WindowRef              gpWindow;
+    err = CreateWindowFromNib( sNibRef, CFSTR("MainWindow"), &gpWindow );
 
     // Position new windows in a staggered arrangement on the main screen
-    RepositionWindow( gpNexsynWindow, NULL, kWindowCascadeOnMainScreen );
+    RepositionWindow( gpWindow, NULL, kWindowCascadeOnMainScreen );
     
     // The window was created hidden, so show it
-//    ShowWindow( gpNexsynWindow );
+//    ShowWindow( gpWindow );
 
 	::InvalMenuBar();
 	::DrawMenuBar();
 
 	// Install application event handler
     InstallApplicationEventHandler( NewEventHandlerUPP( AppEventHandler ),
-                                    GetEventTypeCount( kAppEvents ), kAppEvents,
-                                    this, NULL );
+                                    GetEventTypeCount( kAppEvents ), 
+								   kAppEvents,
+                                    this, 
+								   NULL );
+	
 
-	InstallWindowEventHandler(gpNexsynWindow, GetWindowEventHandlerUPP(),
+	InstallWindowEventHandler(gpWindow, GetWindowEventHandlerUPP(),
 		GetEventTypeCount(kWindowEvents), kWindowEvents,
-		gpNexsynWindow, NULL);
+		gpWindow, NULL);
 
-	return (void*)gpNexsynWindow;
+	return (void*)gpWindow;
 }
 
 void CContextOSX::ShowWindow(void* pWnd, tbool bShow)
@@ -271,44 +275,35 @@ static OSStatus AppEventHandler(EventHandlerCallRef inCaller, EventRef inEvent, 
                 case kEventCommandProcess:
 					CContextOSX* pContext = (CContextOSX*)inRefcon;
 					pContext->OnMenuEventHandler(cmd.source.menu.menuItemIndex, (tint32)cmd.source.menu.menuRef);
- /*                   switch ( cmd.commandID )
-                    {
-                        case kHICommandNew:
-                            result = HandleNew();
-                            break;
-
-                        default:
-						{
-							int iIndex = cmd.source.menu.menuItemIndex;
-							if (cmd.source.menu.menuRef == refAudioDevice) {
-								OnMenuAudioDevice(iIndex);
-							}
-							else if (cmd.source.menu.menuRef == refAudioSampleRate) {
-								OnMenuAudioSampleRate(iIndex);
-							}
-							else if (cmd.source.menu.menuRef == refAudioBufferSize) {
-								OnMenuAudioBufferSize(iIndex);
-							}
-							else if (cmd.source.menu.menuRef == refMIDI) {
-								OnMenuMIDIDevice(iIndex);
-							}
-							else if (cmd.source.menu.menuRef == refWindows) {
-								OnMenuWindows(iIndex);
-							}
-							else if (cmd.source.menu.menuRef == refFile) {
-								OnMenuFile(iIndex);
-							}
-						}
-                        break;
-                    }
-                    break;*/
-					
+							
             }
             break;
+
         }
+		case kCoreEventClass:
+		{
+			HICommandExtended cmd;
+            verify_noerr( GetEventParameter( inEvent, kEventParamDirectObject, typeHICommand, NULL, sizeof( cmd ), NULL, &cmd ) );
             
-        default:
-            break;
+            switch ( GetEventKind( inEvent ) )
+            {
+                case kAEOpenDocuments:{
+					
+					tuint32 ui = 0;
+					ui++;
+					break;	
+				}
+				case kAEOpenApplication:{
+					
+					tuint32 ui = 0;
+					ui++;
+					break;	
+				}
+			}
+		}
+		
+		  
+        default:  break;
     }
     
     return result;
