@@ -38,9 +38,12 @@ class CKSXML_Write_Project
 public:
 	
 	CKSXML_Write_Project();
+	
 	~CKSXML_Write_Project();
+	
 	//! get the internal data as a xml text string
 	std::string Get_Internal_Data_As_XML();
+	
 	//! write the XML file to Koblo.com
 	void Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID);
 	
@@ -69,41 +72,68 @@ private:
  */
 	//! Root of TinyXML DOM
 	void Write_Project(TiXmlDocument* doc);
+	
 	//! information about the branch
 	void Write_Branch(TiXmlElement* pParent);
+	
 	//! overall project settings
 	void Write_Settings(TiXmlElement* pParent);
+	
 	void Write_Signature(TiXmlElement* pParent);
+	
 	void Write_License(TiXmlElement* pParent);
+	
 	//! editing settings. these are things that would typically not be moved/merged between branches
 	void Write_Editing(TiXmlElement* pParent);
+	
 	void Write_Tool(TiXmlElement* pParent);
+	
 	void Write_Snap(TiXmlElement* pParent);
+	
 	void Write_Loop(TiXmlElement* pParent);
+	
 	void Write_Windows(TiXmlElement* pParent);
+	
 	void Write_Window(TiXmlElement* pParent, tint32 iWindow, tbool bShow = true);
+	
 	void Write_Window_Position(TiXmlElement* pParent, tuint uiPosX, tuint uiPosY);
+	
 	void Write_Window_Size(TiXmlElement* pParent, tuint uiSizeX, tuint uiSizeY);
+	
+	
 	//! write samples
 	void Write_Samples(TiXmlElement* pParent);
+	
 	void Write_Sample(TiXmlElement* pParent, CSample_Data* pSample_Data);
+	
 	void Write_Take(TiXmlElement* pParent, CTake_Data* pTake_Data);
+	
 	//! tracks
 	void Write_Tracks(TiXmlElement* pParent);
+	
 	void Write_Track(TiXmlElement* pParent, tuint uiTrack);
+	
 	void Write_Track_In(TiXmlElement* pParent, tuint uiTrack);
+	
 	void Write_Track_Out(TiXmlElement* pParent, tuint uiTrack);
+	
 	void Write_Track_Inserts(TiXmlElement* pParent, tuint uiTrack);
+	
 	void Write_Track_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert);
+	
 	void Write_Track_Regions(TiXmlElement* pParent, tuint uiTrack);
 
 
 	//! AUX
 	void Write_AUXs(TiXmlElement* pParent, tuint uiTrack);
+	
 	void Write_AUX(TiXmlElement* pParent, tuint uiTrack, tuint iAux); 
+	
 	//! bus
 	void Write_Busses(TiXmlElement* pParent);
+	
 	void Write_Bus(TiXmlElement* pParent, tuint uiID);
+	
 	void Write_Bus_Out(TiXmlElement* pParent, tuint uiID);
 	
 	

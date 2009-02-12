@@ -1028,6 +1028,8 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 	miPreviousLicenseNb = -1;
 	Set_Selected_Track(-1);
 	
+	Set_Branch_Name("");
+	
 	
 	for (tint32 i = 0; i < giNumber_Of_Tracks; i++) {
 		// reorder all tracks, so they are straight forward (GUI position)
