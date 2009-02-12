@@ -60,6 +60,15 @@ CUploadTask::CUploadTask()
 
 CUploadTask::~CUploadTask()
 {
+	if (mpDownloader_VerifyBranch) {
+		delete mpDownloader_VerifyBranch;
+		mpDownloader_VerifyBranch = NULL;
+	}
+	if (mpfileReply_VerifyBranch) {
+		delete mpfileReply_VerifyBranch;
+		mpfileReply_VerifyBranch = NULL;
+	}
+	//
 	if (mpUploader) {
 		delete mpUploader;
 		mpUploader = NULL;
@@ -148,7 +157,7 @@ tbool CUploadTask::Init_NewProject(
 		return false;
 
 	miActionOrder					= geUpload_Branch_PreVerify_Before;
-	miActionAfter_Branch_PreVerify	= geUpload_NewProject_Before;
+	miAction_Branch_PreVerify_WhereToGoNow	= geUpload_NewProject_Before;
 	return true;
 } // Init_NewProject
 
@@ -188,7 +197,7 @@ tbool CUploadTask::Init_NewBranch(
 		return false;
 
 	miActionOrder					= geUpload_Branch_PreVerify_Before;
-	miActionAfter_Branch_PreVerify	= geUpload_NewBranch_Before;
+	miAction_Branch_PreVerify_WhereToGoNow	= geUpload_NewBranch_Before;
 	return true;
 } // Init_NewBranch
 
@@ -284,7 +293,7 @@ tbool CUploadTask::DoWork()
 			// Where to go?
 			if (!bAlreadyThere) {
 				// Brand new project or branch - go ahead
-				miActionOrder = miActionAfter_Branch_PreVerify;
+				miActionOrder = miAction_Branch_PreVerify_WhereToGoNow;
 			}
 			else {
 				// Skip create project/branch
@@ -308,7 +317,6 @@ tbool CUploadTask::DoWork()
 			if (bActionDone) miActionOrder++;
 			break;
 		case geUpload_NewProject_After:
-			//!!! TODO: Important!!!! Remember that we've created project!
 			bSuccess = DoNewProject_After(&bNoMoreTakes);
 			// Where to go?
 			if (bNoMoreTakes) {
@@ -330,7 +338,6 @@ tbool CUploadTask::DoWork()
 			if (bActionDone) miActionOrder++;
 			break;
 		case geUpload_NewBranch_After:
-			//!!! TODO: Important!!!! Remember that we've created branch!
 			bSuccess = DoNewBranch_After(&bNoMoreTakes);
 			// Where to go?
 			if (bNoMoreTakes) {
@@ -380,7 +387,6 @@ tbool CUploadTask::DoWork()
 			if (bActionDone) miActionOrder++;
 			break;
 		case geUpload_Take_Upload_After:
-			//!!! TODO: Important!!!! Remember that we've got a url for take!
 			bSuccess = DoTake_Upload_After(&bNoMoreTakes);
 			// Where to go?
 			if (bNoMoreTakes) {
@@ -503,6 +509,8 @@ tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTa
 
 		// We came here because we didn't know branch existed - fix that
 		//!!! TODO: Important!!! We must save info that branch exists!
+		// We do this by setting branch-name of application to "trunk" or input branch name
+		// ..... something here
 
 		if (mlistpTakes.size() == 0) {
 			// No takes to upload
@@ -544,6 +552,11 @@ tbool CUploadTask::DoNewProject_Before()
 		msExtendedError += pszErr;
 		return false;
 	}
+
+	muiProgressIx = 0;
+	muiProgressTarget = 1;
+	msProgress = std::string("Creating project");
+
 	return true;
 } // DoNewProject_Before
 
@@ -577,6 +590,10 @@ tbool CUploadTask::DoNewProject_Action(tbool* pbActionDone)
 
 tbool CUploadTask::DoNewProject_After(tbool* pbNoTakes)
 {
+	//!!! TODO: Important!!!! Remember that we've created project!
+	// We do this by setting branch-name of application to "trunk"
+	// ..... something here
+
 	if (mlistpTakes.size() == 0) {
 		// No takes to upload - we're done
 		*pbNoTakes = true;
@@ -615,6 +632,11 @@ tbool CUploadTask::DoNewBranch_Before()
 		msExtendedError += pszErr;
 		return false;
 	}
+
+	muiProgressIx = 0;
+	muiProgressTarget = 1;
+	msProgress = std::string("Creating branch");
+
 	return true;
 } // DoNewBranch_Before
 
@@ -648,6 +670,10 @@ tbool CUploadTask::DoNewBranch_Action(tbool* pbActionDone)
 
 tbool CUploadTask::DoNewBranch_After(tbool* pbNoTakes)
 {
+	//!!! TODO: Important!!!! Remember that we've created project!
+	// We do this by setting branch-name of application to input branch name
+	// ..... something here
+
 	if (mlistpTakes.size() == 0) {
 		// No takes to upload - we're done
 		*pbNoTakes = true;
@@ -784,6 +810,9 @@ tbool CUploadTask::DoTake_PreVerify_After(tbool* pbSkipThisTake, tbool* pbNoMore
 
 		// We came here because we didn't have URL for take - fix that
 		//!!! TODO: Important!!! We must save url of take!
+		// Do this by calling setter function on gpApplication
+		// ..... something here
+
 
 		if (mlistpTakes.size() == 0) {
 			// No more takes
@@ -927,6 +956,10 @@ tbool CUploadTask::DoTake_Upload_Action(tbool* pbActionDone)
 
 tbool CUploadTask::DoTake_Upload_After(tbool* pbNoMoreTakes)
 {
+	//!!! TODO: Important!!!! Remember that we've got a url for take!
+	// Do this by calling setter function on gpApplication
+	// ..... something here
+
 	if (mlistpTakes.size() == 0) {
 		// No more takes
 		*pbNoMoreTakes = true;
@@ -962,6 +995,11 @@ tbool CUploadTask::DoCommit_Before()
 		msExtendedError += pszErr;
 		return false;
 	}
+
+	muiProgressIx = 0;
+	muiProgressTarget = 1;
+	msProgress = std::string("Committing project xml");
+
 	return true;
 } // DoCommit_Before
 

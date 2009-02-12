@@ -57,7 +57,7 @@ protected:
 	tbool DoBranch_PreVerify_Action(tbool* pbActionDone);
 	tbool DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbMoreTakes);
 
-	tint32 miActionAfter_Branch_PreVerify;
+	tint32 miAction_Branch_PreVerify_WhereToGoNow;
 
 	tbool DoNewProject_Before();
 	tbool DoNewProject_Action(tbool* pbActionDone);
