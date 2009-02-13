@@ -115,7 +115,7 @@ void CKSUpload_Controller::Prepare_Take_For_Upload(CTake_Data* pTake_Data)
 tbool CKSUpload_Controller::Validate_Take(CTake_Data* pTake_Data)
 {
 
-	if( pTake_Data->Channels() == 2 ){
+	if( pTake_Data->Channels() == 1 ){
 		return gpApplication->Readable_Audio(pTake_Data->Left_Wave_File_Path());
 	}
 	else{
