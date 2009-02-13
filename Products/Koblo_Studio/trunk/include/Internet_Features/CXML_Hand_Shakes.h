@@ -30,15 +30,21 @@ public:
 	
 	virtual ~CXML_Hand_Shakes();
 	
-	tbool Set_Take_URL(std::string sTake_Url);
+	tbool Set_Take_URL(std::string sTake_Info);
 
 
 	
 
 protected:
+	
+	/*! read the  Take DOM file 
+	 */
+	void Pass_Take_URL( TiXmlNode* pParent );
+	
 
+	
 	//  TinyXml document
-	TiXmlDocument* mpTinyXMLDoc;
+	TiXmlDocument* mpXMLHand_Shake;
 	
 };
 

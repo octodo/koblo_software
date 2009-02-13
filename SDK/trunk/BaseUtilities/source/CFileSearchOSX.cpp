@@ -67,7 +67,7 @@ void CFileSearchOSX::Init(const tchar* pszPathName)
 				}
 			}
 			else {
-				if (c == ':') {
+				if (c == ':') { // replace ":" with "\"
 					c = '/';
 					iLastSlashIx = iCpySrcIx;
 				}
@@ -134,6 +134,9 @@ tbool CFileSearchOSX::Init2(const tchar* pszPathAndMask, tchar* pszErrMsgBuff /*
 		}
 		else {
 			//std::cout << "Internal: " << pszInternalFormat << "\n";
+			printf("\n*************************************\n internal format: ");
+			printf(pszInternalFormat);
+				   
 			Init(pszInternalFormat);
 		}
 	}

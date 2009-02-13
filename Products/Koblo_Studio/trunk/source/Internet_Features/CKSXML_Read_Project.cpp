@@ -40,9 +40,11 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		pszProjectXML.Allocate(iSize);
 
 		pFile->Read(pszProjectXML, iSize);
-		// parse pszProjectXML in to TinyXML document
+		
+		// parse pszProjectXML in to a TinyXML DOM
 		mpTinyXMLDoc->Parse(pszProjectXML);
-		// Iterate mpTinyXMLDoc in To DAW data structure
+		
+		// pass the TinyXML DOM in to the DAW data structure
 		Pass_The_Project_Tag( mpTinyXMLDoc );
 		
 		// 
