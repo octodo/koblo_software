@@ -151,13 +151,15 @@ CDSP::~CDSP()
 void CDSP::LoadPrefs()
 {
 	CKSPreferences::LoadAll(&mPrefs_1, &mPrefs_2, &mPrefs_3);
+
 	if (gpApplication) {
 		// Set user and password
 		gpApplication->Set_User_Name(mPrefs_3.mpszUser);
 		gpApplication->Set_Password(mPrefs_3.mpszPass);
 		gpApplication->Set_Remember_Me(mPrefs_3.mcbKeepInfo != 0);
-		// Update login dalog
-		CBasePane::SMsg msg(Msg_Load_Login);
+
+		// Let all panes know we have preferences now
+		CBasePane::SMsg msg(Msg_LoadPrefs_Done);
 		gpApplication->Send_Msg_To_All_Panes(&msg);
 	}
 } // LoadPrefs

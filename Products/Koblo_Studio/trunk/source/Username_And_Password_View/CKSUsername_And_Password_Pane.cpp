@@ -101,7 +101,7 @@ void CKSUsername_And_Password_Pane::SendMsgFromTop(SMsg* pMsg)
 			mpPassword_Txt->SetText("");
 			break;
 		}
-		case Msg_Load_Login:
+		case Msg_LoadPrefs_Done:
 			{
 				mpRemember_Me_Button->SetValue(gpDSPEngine->mPrefs_3.mcbKeepInfo);
 				mpUser_Name_Txt->SetText(gpDSPEngine->mPrefs_3.mpszUser);
