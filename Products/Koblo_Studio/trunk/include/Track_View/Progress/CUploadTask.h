@@ -124,4 +124,6 @@ protected:
 
 	ine::IDownloader* mpDownloader_VerifyCommit;
 	IFileMemory* mpfileReply_VerifyCommit;
+
+	tbool SetTakeURL(IFileMemory* pfile);
 }; // CExportClipTask

@@ -535,10 +535,10 @@ tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTa
 			tchar pszErr[1024];
 			mpDownloader_VerifyBranch->GetError(pszErr, 1024);
 			msExtendedError = std::string("Verify branch failed:\n") + pszErr;
-			tuint64 uiReplySize = mpfileReply_VerifyBranch->GetMemorySize();
-			if (uiReplySize > 1) {
+			tint32 iReplySize = (tint32)mpfileReply_VerifyBranch->GetMemorySize();
+			if (iReplySize > 1) {
 				msExtendedError += "\n\n";
-				msExtendedError += std::string((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr(), uiReplySize));
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr()), iReplySize);
 			}
 			return false;
 		}
@@ -606,10 +606,10 @@ tbool CUploadTask::DoNewProject_Action(tbool* pbActionDone)
 		tchar pszErr[1024];
 		mpUploader->GetError(pszErr, 1024);
 		msExtendedError = std::string("Create project failed:\n") + pszErr;
-		tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
-		if (uiReplySize > 1) {
+		tint32 iReplySize = (tint32)mpfileReply_Uploader->GetMemorySize();
+		if (iReplySize > 1) {
 			msExtendedError += "\n\n";
-			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), uiReplySize);
+			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), iReplySize);
 		}
 		return false;
 	}
@@ -687,10 +687,10 @@ tbool CUploadTask::DoNewBranch_Action(tbool* pbActionDone)
 		tchar pszErr[1024];
 		mpUploader->GetError(pszErr, 1024);
 		msExtendedError = std::string("Create branch failed:\n") + pszErr;
-		tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
-		if (uiReplySize > 1) {
+		tint32 iReplySize = (tint32)mpfileReply_Uploader->GetMemorySize();
+		if (iReplySize > 1) {
 			msExtendedError += "\n\n";
-			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), uiReplySize);
+			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), iReplySize);
 		}
 		return false;
 	}
@@ -838,10 +838,10 @@ tbool CUploadTask::DoTake_PreVerify_After(tbool* pbSkipThisTake, tbool* pbNoMore
 			tchar pszErr[1024];
 			mpDownloader_VerifyTake->GetError(pszErr, 1024);
 			msExtendedError = std::string("Verify take failed:\n") + pszErr;
-			tuint64 uiReplySize = mpfileReply_VerifyTake->GetMemorySize();
-			if (uiReplySize > 1) {
+			tint32 iReplySize = (tint32)mpfileReply_VerifyTake->GetMemorySize();
+			if (iReplySize > 1) {
 				msExtendedError += "\n\n";
-				msExtendedError += std::string((tchar*)(mpfileReply_VerifyTake->GetMemoryPtr()), uiReplySize);
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifyTake->GetMemoryPtr()), iReplySize);
 			}
 			return false;
 		}
@@ -852,9 +852,8 @@ tbool CUploadTask::DoTake_PreVerify_After(tbool* pbSkipThisTake, tbool* pbNoMore
 		*pbSkipThisTake = true;
 
 		// We came here because we didn't have URL for take - fix that
-		//!!! TODO: Important!!! We must save url of take!
-		// Do this by calling setter function on gpApplication
-		// ..... something here
+		if (!SetTakeURL(mpfileReply_Uploader))
+			return false;
 
 		if (mlistpTakes.size() == 0) {
 			// No more takes
@@ -876,10 +875,10 @@ tbool CUploadTask::DoTake_Upload_Before()
 			tchar pszErr[1024];
 			mpDownloader_VerifySample->GetError(pszErr, 1024);
 			msExtendedError = std::string("Verify sample failed:\n") + pszErr;
-			tuint64 uiReplySize = mpfileReply_VerifySample->GetMemorySize();
-			if (uiReplySize > 1) {
+			tint32 iReplySize = (tint32)mpfileReply_VerifySample->GetMemorySize();
+			if (iReplySize > 1) {
 				msExtendedError += "\n\n";
-				msExtendedError += std::string((tchar*)(mpfileReply_VerifySample->GetMemoryPtr()), uiReplySize);
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifySample->GetMemoryPtr()), iReplySize);
 			}
 			return false;
 		}
@@ -989,10 +988,10 @@ tbool CUploadTask::DoTake_Upload_Action(tbool* pbActionDone)
 		tchar pszErr[1024];
 		mpUploader->GetError(pszErr, 1024);
 		msExtendedError = std::string("Upload of take failed:\n") + pszErr;
-		tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
-		if (uiReplySize > 1) {
+		tint32 iReplySize = (tint32)mpfileReply_Uploader->GetMemorySize();
+		if (iReplySize > 1) {
 			msExtendedError += "\n\n";
-			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), uiReplySize);
+			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), iReplySize);
 		}
 		return false;
 	}
@@ -1013,22 +1012,8 @@ tbool CUploadTask::DoTake_Upload_Action(tbool* pbActionDone)
 
 tbool CUploadTask::DoTake_Upload_After(tbool* pbNoMoreTakes)
 {
-	//!!! TODO: Important!!!! Remember that we've got a url for take!
-	tbool bSavedUrl = false;
-	tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
-	if (uiReplySize > 1) {
-		std::string sURL_xml(
-			(tchar*)(mpfileReply_Uploader->GetMemoryPtr()),
-			(tint32)uiReplySize);
-		tint32 iDummy = 0;
-		// Do this by calling setter function on gpApplication
-		// ..... something here
-	}
-	if (!bSavedUrl) {
-		// That didn't work
-		// ..... something here
-		// return false;
-	}
+	if (!SetTakeURL(mpfileReply_Uploader))
+		return false;
 
 	if (mlistpTakes.size() == 0) {
 		// No more takes
@@ -1103,10 +1088,10 @@ tbool CUploadTask::DoCommit_PreVerify_After(tbool* pbAlreadyThere)
 			tchar pszErr[1024];
 			mpDownloader_VerifyCommit->GetError(pszErr, 1024);
 			msExtendedError = std::string("Verify commit failed:\n") + pszErr;
-			tuint64 uiReplySize = mpfileReply_VerifyCommit->GetMemorySize();
-			if (uiReplySize > 1) {
+			tint32 iReplySize = (tint32)mpfileReply_VerifyCommit->GetMemorySize();
+			if (iReplySize > 1) {
 				msExtendedError += "\n\n";
-				msExtendedError += std::string((tchar*)(mpfileReply_VerifyCommit->GetMemoryPtr()), uiReplySize);
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifyCommit->GetMemoryPtr()), iReplySize);
 			}
 			return false;
 		}
@@ -1192,10 +1177,10 @@ tbool CUploadTask::DoCommit_Upload_Action(tbool* pbActionDone)
 		tchar pszErr[1024];
 		mpUploader->GetError(pszErr, 1024);
 		msExtendedError = std::string("Commit of project file failed:\n") + pszErr;
-		tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
-		if (uiReplySize > 1) {
+		tint32 iReplySize = (tint32)mpfileReply_Uploader->GetMemorySize();
+		if (iReplySize > 1) {
 			msExtendedError += "\n\n";
-			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), uiReplySize);
+			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), iReplySize);
 		}
 		return false;
 	}
@@ -1223,11 +1208,29 @@ tbool CUploadTask::DoCommit_Upload_After()
 			(const tchar*)mpfileReply_Uploader->GetMemoryPtr(),
 			iSize);
 
+		tint32 iDummy = 0;
 		//!!! TODO: Set commit number by calling a setter function on gpApplication
 		// .... something here
 	}
 
 	return true;
 } // DoCommit_Upload_After
+
+
+tbool CUploadTask::SetTakeURL(IFileMemory* pfile)
+{
+	tint32 iSize = (tint32)pfile->GetMemorySize();
+	std::string sXML((tchar*)pfile->GetMemoryPtr(), iSize);
+
+	// Call setter function on application
+	//!!! TODO: Implement below!
+#if (0)
+	if (!gpApplication->Set_Take_URL(sXML)) {
+		msExtendedError = "Error getting URL for uploaded take";
+		return false;
+	}
+#endif
+	return true;
+} // SetTakeURL
 
 
