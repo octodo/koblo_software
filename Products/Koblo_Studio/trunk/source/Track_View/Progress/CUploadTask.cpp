@@ -164,7 +164,7 @@ tbool CUploadTask::Init_NewProject(
 
 	// not used: msBranchUUID_Old		= pBranchUUID_Original->Get_UUID();
 	msBranchUUID			= pszBranchUUID;
-	// not used: msBranchName			= pszBranchName;
+	msBranchName			= "trunk";
 	// not used: msBranchDescription		= pszBranchDesc;
 	// not used: msBranchLicense			= pszBranchLicenseCode;
 
@@ -549,9 +549,7 @@ tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTa
 		*pbAlreadyThere = true;
 
 		// We came here because we didn't know branch existed - fix that
-		//!!! TODO: Important!!! We must save info that branch exists!
-		// We do this by setting branch-name of application to "trunk" or input branch name
-		// ..... something here
+		gpApplication->Set_Branch_Name(msBranchName);
 
 		if (mlistpTakes.size() == 0) {
 			// No takes to upload
@@ -632,9 +630,9 @@ tbool CUploadTask::DoNewProject_Action(tbool* pbActionDone)
 
 tbool CUploadTask::DoNewProject_After(tbool* pbNoTakes)
 {
-	//!!! TODO: Important!!!! Remember that we've created project!
+	// Remember that we've created project!
 	// We do this by setting branch-name of application to "trunk"
-	// ..... something here
+	gpApplication->Set_Branch_Name(msBranchName);
 
 	if (mlistpTakes.size() == 0) {
 		// No takes to upload - we're done
@@ -713,9 +711,9 @@ tbool CUploadTask::DoNewBranch_Action(tbool* pbActionDone)
 
 tbool CUploadTask::DoNewBranch_After(tbool* pbNoTakes)
 {
-	//!!! TODO: Important!!!! Remember that we've created project!
+	// Remember that we've created project!
 	// We do this by setting branch-name of application to input branch name
-	// ..... something here
+	gpApplication->Set_Branch_Name(msBranchName);
 
 	if (mlistpTakes.size() == 0) {
 		// No takes to upload - we're done
@@ -857,7 +855,6 @@ tbool CUploadTask::DoTake_PreVerify_After(tbool* pbSkipThisTake, tbool* pbNoMore
 		//!!! TODO: Important!!! We must save url of take!
 		// Do this by calling setter function on gpApplication
 		// ..... something here
-
 
 		if (mlistpTakes.size() == 0) {
 			// No more takes
@@ -1017,8 +1014,21 @@ tbool CUploadTask::DoTake_Upload_Action(tbool* pbActionDone)
 tbool CUploadTask::DoTake_Upload_After(tbool* pbNoMoreTakes)
 {
 	//!!! TODO: Important!!!! Remember that we've got a url for take!
-	// Do this by calling setter function on gpApplication
-	// ..... something here
+	tbool bSavedUrl = false;
+	tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
+	if (uiReplySize > 1) {
+		std::string sURL_xml(
+			(tchar*)(mpfileReply_Uploader->GetMemoryPtr()),
+			(tint32)uiReplySize);
+		tint32 iDummy = 0;
+		// Do this by calling setter function on gpApplication
+		// ..... something here
+	}
+	if (!bSavedUrl) {
+		// That didn't work
+		// ..... something here
+		// return false;
+	}
 
 	if (mlistpTakes.size() == 0) {
 		// No more takes
@@ -1085,8 +1095,8 @@ tbool CUploadTask::DoCommit_PreVerify_Action(tbool* pbActionDone)
 
 tbool CUploadTask::DoCommit_PreVerify_After(tbool* pbAlreadyThere)
 {
-	tbool bBranchThere = mpDownloader_VerifyCommit->IsDone();
-	if (!bBranchThere) {
+	tbool bCommitThere = mpDownloader_VerifyCommit->IsDone();
+	if (!bCommitThere) {
 		// Status 404 means "page not there" - that's ok ..
 		if (mpDownloader_VerifyCommit->GetHttpStatusCode() != 404) {
 			// .. but this on the other hand is an unexpected error
@@ -1102,13 +1112,13 @@ tbool CUploadTask::DoCommit_PreVerify_After(tbool* pbAlreadyThere)
 		}
 	}
 
-	if (bBranchThere) {
+	if (bCommitThere) {
 		// Commit has already been uploaded
 		*pbAlreadyThere = true;
 
 		// We came here because we didn't know commit existed - fix that
 		//!!! TODO: Important!!! We must save info that commit exists!
-		// How do we do that?
+		// How do we do that? Maybe it's not important?
 		// ..... something here
 	}
 

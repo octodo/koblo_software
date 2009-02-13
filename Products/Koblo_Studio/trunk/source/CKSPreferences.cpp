@@ -122,13 +122,34 @@ tbool CKSPrefs_2::Save(IFile* pFile)
 
 tbool CKSPrefs_3::IsSane()
 {
-	if (mcbKeepInfo == 0) {
+	if (mcbKeepInfo == (tchar)false) {
 		return ((*mpszUser == '\0') && (*mpszPass == '\0'));
 	}
 
-	if (strnlen(mpszUser, 513) >= 512)
+	if (mcbKeepInfo != (tchar)true)
 		return false;
-	if (strnlen(mpszPass, 513) >= 512)
+
+	tbool bFoundZero = false;
+	tchar* psz = mpszUser;
+	tint32 i;
+	for (i = 0; i < 512; i++, psz++) {
+		if (*psz == '\0') {
+			bFoundZero = true;
+			break;
+		}
+	}
+	if (!bFoundZero)
+		return false;
+
+	bFoundZero = false;
+	psz = mpszPass;
+	for (i = 0; i < 512; i++, psz++) {
+		if (*psz == '\0') {
+			bFoundZero = true;
+			break;
+		}
+	}
+	if (!bFoundZero)
 		return false;
 
 	return true;

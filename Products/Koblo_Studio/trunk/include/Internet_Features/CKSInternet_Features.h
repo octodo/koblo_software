@@ -112,9 +112,9 @@ public:
 	
 	std::string Get_Project_Description(){ return msBranch_Description;}
 	
-	void Set_Branch_Name( const std::string& sName){ msBranchName = sName;}
+	void Set_Branch_Name( const std::string& sName);
 	
-	std::string Get_Branch_Name(){ return msBranchName;}
+	std::string Get_Branch_Name();
 	
 	void Set_Branch_Description( const std::string& sName){ msBranch_Description = sName;}
 	
@@ -138,10 +138,10 @@ public:
 	tbool Project_Has_Changed();
 	
 	// set branch revision
-	void Branch_Revision( tuint32 uiBranch_Revision ){ muiBranch_Revision = uiBranch_Revision;};
+	void Branch_Revision( tuint32 uiBranch_Revision );
 	
 	//! get branch revision
-	tuint32 Branch_Revision(  ){ return muiBranch_Revision;};
+	tuint32 Branch_Revision(  );
 	
 	
 		
@@ -192,6 +192,9 @@ private:
 	
 	//! project path
 //	std::string msProject_Path;
+
+	//! This mutex must be taken before doing anything with variables that CUploadTask may change
+	CMutex mMutex_ForCUploadTask_CallBack;
 	
 	//! project description
 	std::string msProject_Description;

@@ -58,7 +58,8 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort /*
 	Abort();
 	WipeParams();
 	ZapReplyBuffer();
-	mbIsInitialized = false;
+	//mbIsInitialized = false;
+	SetIsUninitialized();
 	
 	// Verify sanity of host
 	{
