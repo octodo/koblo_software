@@ -42,11 +42,6 @@ tbool CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	pDoc->Accept(&printer);
 	std::string xml_str =  printer.CStr();
 	
-	// print xml_str to console
-//	printf(xml_str.c_str());
-	
-	//------------------ MISSING CODE ----------------------------
-
 	// missing code 
 	std::string sFileName = gpApplication->GetProjectName() + ".xml";
 	

@@ -1493,19 +1493,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			else
 				Save_Project();
 		}
-			
-		
-		/*
-		try {
-			if (!MenuFileSaveProject()) {
-				LoadSaveErrDlg("Error saving project");
-			}
-		}
-		catch (IException* pEx) {
-			// Display reason
-			LoadSaveErrDlg(pEx->GetFullDescription());
-		}
-		 */
+
 	}
 	else if (s.compare("File@Save Project As") == 0) {
 		// Save
@@ -1514,14 +1502,6 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			if (!Save_As()) {
 				LoadSaveErrDlg("Error saving project");
 			}
-			 
-			/*
-			
-			if (!MenuFileSaveProjectAs()) {
-				LoadSaveErrDlg("Error saving project");
-			}
-			 */
-			 
 		}
 		catch (IException* pEx) {
 			// Display reason

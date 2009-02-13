@@ -100,6 +100,7 @@
 		FCD7D19E0F384D0D002E6F98 /* CImport_TinyXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCD7D19D0F384D0D002E6F98 /* CImport_TinyXML.cpp */; };
 		FCE6BB680F42B97D00F7F74B /* CKSUpload_Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCE6BB670F42B97D00F7F74B /* CKSUpload_Controller.cpp */; };
 		FCE6BD590F42F05F00F7F74B /* CUploadTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCE6BD580F42F05F00F7F74B /* CUploadTask.cpp */; };
+		FCEA096C0F45BFA200A5199B /* CXML_Hand_Shakes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEA096B0F45BFA200A5199B /* CXML_Hand_Shakes.cpp */; };
 		FCEF56D80DC086F2000AD4FE /* CMix_AUX_Insert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEF56D50DC086F2000AD4FE /* CMix_AUX_Insert.cpp */; };
 		FCEF56D90DC086F2000AD4FE /* CMix_Scroll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEF56D60DC086F2000AD4FE /* CMix_Scroll.cpp */; };
 		FCEF56DA0DC086F2000AD4FE /* CMix_Channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCEF56D70DC086F2000AD4FE /* CMix_Channel.cpp */; };
@@ -487,6 +488,8 @@
 		FCE6BB760F42B99200F7F74B /* CKSUpload_Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSUpload_Controller.h; sourceTree = "<group>"; };
 		FCE6BD570F42F02200F7F74B /* CUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CUploadTask.h; sourceTree = "<group>"; };
 		FCE6BD580F42F05F00F7F74B /* CUploadTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CUploadTask.cpp; sourceTree = "<group>"; };
+		FCEA096B0F45BFA200A5199B /* CXML_Hand_Shakes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CXML_Hand_Shakes.cpp; sourceTree = "<group>"; };
+		FCEA096D0F45BFB700A5199B /* CXML_Hand_Shakes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXML_Hand_Shakes.h; sourceTree = "<group>"; };
 		FCEF56CC0DC0866E000AD4FE /* CMix_AUX_Insert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_AUX_Insert.h; path = include/Mix_GUI/CMix_AUX_Insert.h; sourceTree = "<group>"; };
 		FCEF56CD0DC0866E000AD4FE /* CMix_Scroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_Scroll.h; path = include/Mix_GUI/CMix_Scroll.h; sourceTree = "<group>"; };
 		FCEF56CE0DC0866E000AD4FE /* CMix_Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMix_Channel.h; path = include/Mix_GUI/CMix_Channel.h; sourceTree = "<group>"; };
@@ -1067,6 +1070,7 @@
 				FCD244580F44979800BA1E2F /* CKSXML_Read_Project.h */,
 				FCBBC4D20F0683E6003201E4 /* CKSXML_Write_Project.h */,
 				FCFCB62F0F3C39E200F136F1 /* CPreset_Data.h */,
+				FCEA096D0F45BFB700A5199B /* CXML_Hand_Shakes.h */,
 			);
 			name = File_Features;
 			path = include/Internet_Features;
@@ -1089,6 +1093,7 @@
 				FCBBC4D80F06842C003201E4 /* CKSXML_Read_Project.cpp */,
 				FCBBC4D90F06842C003201E4 /* CKSXML_Write_Project.cpp */,
 				FCFCB62B0F3C398400F136F1 /* CPreset_Data.cpp */,
+				FCEA096B0F45BFA200A5199B /* CXML_Hand_Shakes.cpp */,
 			);
 			name = File_Features;
 			path = source/Internet_Features;
@@ -1574,6 +1579,7 @@
 				FCFCB62C0F3C398400F136F1 /* CPreset_Data.cpp in Sources */,
 				FCE6BB680F42B97D00F7F74B /* CKSUpload_Controller.cpp in Sources */,
 				FCE6BD590F42F05F00F7F74B /* CUploadTask.cpp in Sources */,
+				FCEA096C0F45BFA200A5199B /* CXML_Hand_Shakes.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

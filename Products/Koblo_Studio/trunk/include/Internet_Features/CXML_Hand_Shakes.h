@@ -22,34 +22,23 @@
  *  trim start and end \
  */
 
-class CSample_DSP:
+class CXML_Hand_Shakes:
 public virtual CKSUUID
 {
 public:
-	CSample_DSP(const std::string& sPathName);
+	CXML_Hand_Shakes();
 	
-	virtual ~CSample_DSP();
+	virtual ~CXML_Hand_Shakes();
+	
+	tbool Set_Take_URL(std::string sTake_Url);
 
-	tuint64 GetLength() {return muiLength;}
 
-	void GetSamples(tfloat32* pfData, tint32 iSamples) {mpStream->GetSamples(pfData, iSamples); muiPos += iSamples;}
-
-	const std::string& GetPathName() const {return msPathName;}
-
-	void SetPos(tuint64 uiPos) {mpStream->SetPosition(uiPos); muiPos = uiPos;}
-
-	tuint64 GetPos() const {return muiPos;}
 	
 
 protected:
-	tuint64 muiPos;
 
-	std::string msPathName;
-
-	tuint64 muiLength;
-	
-	st::IStream* mpStream;
-	
+	//  TinyXml document
+	TiXmlDocument* mpTinyXMLDoc;
 	
 };
 

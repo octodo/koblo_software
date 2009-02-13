@@ -15,6 +15,7 @@ CKSUpload_Controller::~CKSUpload_Controller()
 
 void CKSUpload_Controller::Upload_Project()
 {
+	
 	// clear que's
 	mOGG_Compress_Que.clear();
 	mMp3_Compress_Que.clear();
@@ -35,22 +36,24 @@ void CKSUpload_Controller::Upload_Project()
 
 
 	//!!! TODO: Verify this is ok?
+	// secure xml file is uptodate
+	gpApplication->Save_Project_As_XML_File_To_Disk();
 	std::string sProjectXmlFile = gpApplication->Project_Folder();
 	sProjectXmlFile += gpApplication->Project_Name() + ".xml";
 
 	// Make task for first-time upload
 	CUploadTask* pUploadTask = new CUploadTask();
 	pUploadTask->Init_NewProject(
-		gpApplication->Get_User_Name().c_str(), gpApplication->Get_Password().c_str(),
+								 gpApplication->Get_User_Name().c_str(),
+								 gpApplication->Get_Password().c_str(),
 
-		gpApplication->Get_Project_UUID().c_str(),
-		(gpApplication->Project_Name()
-		+" - dummy project, will be deleted soon").c_str(),
-		"no description", // project description
-		"by", // license
-		gpApplication->Get_Branch_UUID().c_str(),
-		gpApplication->Get_Commit_UUID().c_str(), sProjectXmlFile.c_str(),
-		&mUpload_Que);
+								 gpApplication->Get_Project_UUID().c_str(),
+								 (gpApplication->Project_Name() +" - dummy project, will be deleted soon").c_str(),
+								 "no description", // project description
+								 "by", // license
+								 gpApplication->Get_Branch_UUID().c_str(),
+								 gpApplication->Get_Commit_UUID().c_str(), sProjectXmlFile.c_str(),
+								 &mUpload_Que);
 	
 	// Add task to task list
 	CAutoLock Lock(gpApplication->mMutex_Progress);

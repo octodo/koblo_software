@@ -166,16 +166,7 @@ public:
 
 private:
 	
-	
-//	tint32 miTrack_ID;
-	
-	// create TinyXml document
-//	TiXmlDocument* mpTinyXMLDoc;
-	
 	tbool mbNew_Revision;
-	
-//	tuint32 muiNummerator;
-//	tuint32 muiDominator;
 	
 	//! iterate the list of takes to download
 	void Download_Takes();

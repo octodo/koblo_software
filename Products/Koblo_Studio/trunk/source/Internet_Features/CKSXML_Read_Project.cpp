@@ -5,13 +5,13 @@
 CKSXML_Read_Project::CKSXML_Read_Project()
 {
 	
-//	mpTinyXMLDoc = new TiXmlDocument;
+
 	
 }
 
 CKSXML_Read_Project::~CKSXML_Read_Project()
 {
-//	delete mpTinyXMLDoc;
+
 }
 
 void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)

@@ -32,6 +32,7 @@
 #include "CKSXML_Write_Project.h"
 #include "CKSXML_Create_Project.h"
 #include "CKSXML_Create_Sample.h"
+#include "CXML_Hand_Shakes.h"
 
 #include "CKSUsername_And_Password_Controller.h"
 #include "CKSInternet_Features.h"
