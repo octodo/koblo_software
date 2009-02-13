@@ -26,9 +26,13 @@ enum EUploadOrder {
 	geUpload_Take_Upload_Action,
 	geUpload_Take_Upload_After,
 
-	geUpload_Commit_Before,
-	geUpload_Commit_Action,
-	geUpload_Commit_After,
+	geUpload_Commit_PreVerify_Before,
+	geUpload_Commit_PreVerify_Action,
+	geUpload_Commit_PreVerify_After,
+
+	geUpload_Commit_Upload_Before,
+	geUpload_Commit_Upload_Action,
+	geUpload_Commit_Upload_After,
 
 	geUpload_Done
 }; // EUploadOrder
@@ -39,6 +43,8 @@ CUploadTask::CUploadTask()
 	miActionOrder = 0;
 
 	mpfileCommitXML = NULL;
+	mpDownloader_VerifyCommit = NULL;
+	mpfileReply_VerifyCommit = NULL;
 
 	mpDownloader_VerifySample = NULL;
 	mpfileReply_VerifySample = NULL;
@@ -96,6 +102,15 @@ CUploadTask::~CUploadTask()
 		mpfileReply_VerifyTake = NULL;
 	}
 	//
+	if (mpDownloader_VerifyCommit) {
+		mpDownloader_VerifyCommit->Destroy();
+		mpDownloader_VerifyCommit = NULL;
+	}
+	if (mpfileReply_VerifyCommit) {
+		mpfileReply_VerifyCommit->Destroy();
+		mpfileReply_VerifyCommit = NULL;
+	}
+	//
 	std::list<CTake_Data*>::iterator it = mlistpTakes.begin();
 	for ( ; it != mlistpTakes.end(); it++) {
 		CTake_Data* pTake = *it;
@@ -149,7 +164,7 @@ tbool CUploadTask::Init_NewProject(
 
 	// not used: msBranchUUID_Old		= pBranchUUID_Original->Get_UUID();
 	msBranchUUID			= pszBranchUUID;
-	// not used: msBranchName			= pszBranchName;
+	msBranchName			= "trunk";
 	// not used: msBranchDescription		= pszBranchDesc;
 	// not used: msBranchLicense			= pszBranchLicenseCode;
 
@@ -245,7 +260,7 @@ tbool CUploadTask::Init_Commit(
 	}
 	else {
 		// No takes - go directly to commit project xml
-		miActionOrder = geUpload_Commit_Before;
+		miActionOrder = geUpload_Commit_PreVerify_Before;
 	}
 	return true;
 } // Init_Commit
@@ -303,7 +318,7 @@ tbool CUploadTask::DoWork()
 				// Skip create project/branch
 				if (bNoMoreTakes) {
 					// No takes - go to commit project xml
-					miActionOrder = geUpload_Commit_Before;
+					miActionOrder = geUpload_Commit_PreVerify_Before;
 				}
 				else {
 					// Go to upload takes and then commit project xml
@@ -325,7 +340,7 @@ tbool CUploadTask::DoWork()
 			// Where to go?
 			if (bNoMoreTakes) {
 				// Jump to commit project.xml
-				miActionOrder = geUpload_Commit_Before;
+				miActionOrder = geUpload_Commit_PreVerify_Before;
 			}
 			else {
 				// Upload takes
@@ -346,7 +361,7 @@ tbool CUploadTask::DoWork()
 			// Where to go?
 			if (bNoMoreTakes) {
 				// Jump to commit project.xml
-				miActionOrder = geUpload_Commit_Before;
+				miActionOrder = geUpload_Commit_PreVerify_Before;
 			}
 			else {
 				// Upload takes
@@ -373,7 +388,7 @@ tbool CUploadTask::DoWork()
 				// Take is already there
 				if (bNoMoreTakes) {
 					// No more takes - go to commit project xml
-					miActionOrder = geUpload_Commit_Before;
+					miActionOrder = geUpload_Commit_PreVerify_Before;
 				}
 				else {
 					// Go to next take
@@ -403,16 +418,37 @@ tbool CUploadTask::DoWork()
 			}
 			break;
 
-		case geUpload_Commit_Before:
-			bSuccess = DoCommit_Before();
+		case geUpload_Commit_PreVerify_Before:
+			bSuccess = DoCommit_PreVerify_Before();
 			miActionOrder++;
 			break;
-		case geUpload_Commit_Action:
-			bSuccess = DoCommit_Action(&bActionDone);
+		case geUpload_Commit_PreVerify_Action:
+			bSuccess = DoCommit_PreVerify_Action(&bActionDone);
 			if (bActionDone) miActionOrder++;
 			break;
-		case geUpload_Commit_After:
-			bSuccess = DoCommit_After();
+		case geUpload_Commit_PreVerify_After:
+			bSuccess = DoCommit_PreVerify_After(&bAlreadyThere);
+			// Where to go?
+			if (!bAlreadyThere) {
+				// Brand new commit - go ahead
+				miActionOrder++;
+			}
+			else {
+				// Skip upload commit - we're done
+				miActionOrder = geUpload_Done;
+			}
+			break;
+
+		case geUpload_Commit_Upload_Before:
+			bSuccess = DoCommit_Upload_Before();
+			miActionOrder++;
+			break;
+		case geUpload_Commit_Upload_Action:
+			bSuccess = DoCommit_Upload_Action(&bActionDone);
+			if (bActionDone) miActionOrder++;
+			break;
+		case geUpload_Commit_Upload_After:
+			bSuccess = DoCommit_Upload_After();
 			miActionOrder++;
 			break;
 
@@ -444,6 +480,7 @@ tbool CUploadTask::DoBranch_PreVerify_Before()
 	mpfileReply_VerifyBranch = IFileMemory::Create();
 	if (mpfileReply_VerifyBranch == NULL)
 		return false;
+	mpfileReply_VerifyBranch->Open(IFile::FileCreate);
 
 	if (mpDownloader_VerifyBranch == NULL)
 		mpDownloader_VerifyBranch = ine::IDownloader::Create();
@@ -501,7 +538,7 @@ tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTa
 			tuint64 uiReplySize = mpfileReply_VerifyBranch->GetMemorySize();
 			if (uiReplySize > 1) {
 				msExtendedError += "\n\n";
-				msExtendedError += (tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr());
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr(), uiReplySize));
 			}
 			return false;
 		}
@@ -512,9 +549,7 @@ tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTa
 		*pbAlreadyThere = true;
 
 		// We came here because we didn't know branch existed - fix that
-		//!!! TODO: Important!!! We must save info that branch exists!
-		// We do this by setting branch-name of application to "trunk" or input branch name
-		// ..... something here
+		gpApplication->Set_Branch_Name(msBranchName);
 
 		if (mlistpTakes.size() == 0) {
 			// No takes to upload
@@ -534,6 +569,7 @@ tbool CUploadTask::DoNewProject_Before()
 		mpfileReply_Uploader = NULL;
 	}
 	mpfileReply_Uploader = IFileMemory::Create();
+	mpfileReply_Uploader->Open(IFile::FileCreate);
 
 	if (
 		(!mpUploader->Init("koblo.com", "/projects.xml", 80, msUser.c_str(), msPassword.c_str()))
@@ -573,7 +609,7 @@ tbool CUploadTask::DoNewProject_Action(tbool* pbActionDone)
 		tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
 		if (uiReplySize > 1) {
 			msExtendedError += "\n\n";
-			msExtendedError += (tchar*)(mpfileReply_Uploader->GetMemoryPtr());
+			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), uiReplySize);
 		}
 		return false;
 	}
@@ -594,9 +630,9 @@ tbool CUploadTask::DoNewProject_Action(tbool* pbActionDone)
 
 tbool CUploadTask::DoNewProject_After(tbool* pbNoTakes)
 {
-	//!!! TODO: Important!!!! Remember that we've created project!
+	// Remember that we've created project!
 	// We do this by setting branch-name of application to "trunk"
-	// ..... something here
+	gpApplication->Set_Branch_Name(msBranchName);
 
 	if (mlistpTakes.size() == 0) {
 		// No takes to upload - we're done
@@ -615,6 +651,7 @@ tbool CUploadTask::DoNewBranch_Before()
 		mpfileReply_Uploader = NULL;
 	}
 	mpfileReply_Uploader = IFileMemory::Create();
+	mpfileReply_Uploader->Open(IFile::FileCreate);
 
 	std::string sURI = std::string("/branches/") + msBranchUUID_Old + "branch.xml";
 	if (
@@ -653,7 +690,7 @@ tbool CUploadTask::DoNewBranch_Action(tbool* pbActionDone)
 		tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
 		if (uiReplySize > 1) {
 			msExtendedError += "\n\n";
-			msExtendedError += (tchar*)(mpfileReply_Uploader->GetMemoryPtr());
+			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), uiReplySize);
 		}
 		return false;
 	}
@@ -674,9 +711,9 @@ tbool CUploadTask::DoNewBranch_Action(tbool* pbActionDone)
 
 tbool CUploadTask::DoNewBranch_After(tbool* pbNoTakes)
 {
-	//!!! TODO: Important!!!! Remember that we've created project!
+	// Remember that we've created project!
 	// We do this by setting branch-name of application to input branch name
-	// ..... something here
+	gpApplication->Set_Branch_Name(msBranchName);
 
 	if (mlistpTakes.size() == 0) {
 		// No takes to upload - we're done
@@ -715,6 +752,8 @@ tbool CUploadTask::DoTake_PreVerify_Before()
 	mpfileReply_VerifyTake = IFileMemory::Create();
 	if ((mpfileReply_VerifySample == NULL) || (mpfileReply_VerifyTake == NULL))
 		return false;
+	mpfileReply_VerifySample->Open(IFile::FileCreate);
+	mpfileReply_VerifyTake->Open(IFile::FileCreate);
 
 	if (mpDownloader_VerifySample == NULL)
 		mpDownloader_VerifySample = ine::IDownloader::Create();
@@ -802,7 +841,7 @@ tbool CUploadTask::DoTake_PreVerify_After(tbool* pbSkipThisTake, tbool* pbNoMore
 			tuint64 uiReplySize = mpfileReply_VerifyTake->GetMemorySize();
 			if (uiReplySize > 1) {
 				msExtendedError += "\n\n";
-				msExtendedError += (tchar*)(mpfileReply_VerifyTake->GetMemoryPtr());
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifyTake->GetMemoryPtr()), uiReplySize);
 			}
 			return false;
 		}
@@ -816,7 +855,6 @@ tbool CUploadTask::DoTake_PreVerify_After(tbool* pbSkipThisTake, tbool* pbNoMore
 		//!!! TODO: Important!!! We must save url of take!
 		// Do this by calling setter function on gpApplication
 		// ..... something here
-
 
 		if (mlistpTakes.size() == 0) {
 			// No more takes
@@ -841,7 +879,7 @@ tbool CUploadTask::DoTake_Upload_Before()
 			tuint64 uiReplySize = mpfileReply_VerifySample->GetMemorySize();
 			if (uiReplySize > 1) {
 				msExtendedError += "\n\n";
-				msExtendedError += (tchar*)(mpfileReply_VerifySample->GetMemoryPtr());
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifySample->GetMemoryPtr()), uiReplySize);
 			}
 			return false;
 		}
@@ -877,6 +915,7 @@ tbool CUploadTask::DoTake_Upload_Before()
 		mpfileReply_Uploader = NULL;
 	}
 	mpfileReply_Uploader = IFileMemory::Create();
+	mpfileReply_Uploader->Open(IFile::FileCreate);
 
 	tbool bInitError = false;
 	if (bSampleThere) {
@@ -953,7 +992,7 @@ tbool CUploadTask::DoTake_Upload_Action(tbool* pbActionDone)
 		tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
 		if (uiReplySize > 1) {
 			msExtendedError += "\n\n";
-			msExtendedError += (tchar*)(mpfileReply_Uploader->GetMemoryPtr());
+			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), uiReplySize);
 		}
 		return false;
 	}
@@ -975,8 +1014,21 @@ tbool CUploadTask::DoTake_Upload_Action(tbool* pbActionDone)
 tbool CUploadTask::DoTake_Upload_After(tbool* pbNoMoreTakes)
 {
 	//!!! TODO: Important!!!! Remember that we've got a url for take!
-	// Do this by calling setter function on gpApplication
-	// ..... something here
+	tbool bSavedUrl = false;
+	tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
+	if (uiReplySize > 1) {
+		std::string sURL_xml(
+			(tchar*)(mpfileReply_Uploader->GetMemoryPtr()),
+			(tint32)uiReplySize);
+		tint32 iDummy = 0;
+		// Do this by calling setter function on gpApplication
+		// ..... something here
+	}
+	if (!bSavedUrl) {
+		// That didn't work
+		// ..... something here
+		// return false;
+	}
 
 	if (mlistpTakes.size() == 0) {
 		// No more takes
@@ -986,7 +1038,95 @@ tbool CUploadTask::DoTake_Upload_After(tbool* pbNoMoreTakes)
 } // DoTake_Upload_After
 
 
-tbool CUploadTask::DoCommit_Before()
+tbool CUploadTask::DoCommit_PreVerify_Before()
+{
+	if (mpfileReply_VerifyCommit) {
+		// Release file - it was from previous transfer
+		mpfileReply_VerifyCommit->Destroy();
+		mpfileReply_VerifyCommit = NULL;
+	}
+	mpfileReply_VerifyCommit = IFileMemory::Create();
+	if (mpfileReply_VerifyCommit == NULL)
+		return false;
+	mpfileReply_VerifyCommit->Open(IFile::FileCreate);
+
+	if (mpDownloader_VerifyCommit == NULL)
+		mpDownloader_VerifyCommit = ine::IDownloader::Create();
+	if (mpDownloader_VerifyCommit == NULL)
+		return false;
+
+	std::string sURI = std::string("/commits/") + msCommitUUID + ".xml";
+	if ((!mpDownloader_VerifyCommit->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
+		||
+		(!mpDownloader_VerifyCommit->Start(mpfileReply_VerifyCommit))
+	) {
+		tchar pszErr[1024];
+		mpDownloader_VerifyCommit->GetError(pszErr, 1024);
+		msExtendedError = std::string("Init+start of verify-commit failed:\n") + pszErr;
+		return false;
+	}
+
+	muiProgressIx = 0;
+	muiProgressTarget = 1;
+	msProgress = std::string("Looking up commit");
+
+	return true;
+} // DoCommit_PreVerify_Before
+
+tbool CUploadTask::DoCommit_PreVerify_Action(tbool* pbActionDone)
+{
+	tint64 iVerifyCommit_Progress = 0;
+	tint64 iVerifyCommit_Total = 1;
+	if (!mpDownloader_VerifyCommit->GetProgress(&iVerifyCommit_Progress, &iVerifyCommit_Total)) {
+		tchar pszErr[1024];
+		mpDownloader_VerifyCommit->GetError(pszErr, 1024);
+		msExtendedError = pszErr;
+		return false;
+	}
+
+	muiProgressIx = (tuint64)(iVerifyCommit_Progress);
+	muiProgressTarget = (tuint64)(iVerifyCommit_Total);
+
+	// We don't care for the actual status of the download - we test that later
+	*pbActionDone = mpDownloader_VerifyCommit->IsFinished();
+
+	return true;
+} // DoCommit_PreVerify_Action
+
+tbool CUploadTask::DoCommit_PreVerify_After(tbool* pbAlreadyThere)
+{
+	tbool bCommitThere = mpDownloader_VerifyCommit->IsDone();
+	if (!bCommitThere) {
+		// Status 404 means "page not there" - that's ok ..
+		if (mpDownloader_VerifyCommit->GetHttpStatusCode() != 404) {
+			// .. but this on the other hand is an unexpected error
+			tchar pszErr[1024];
+			mpDownloader_VerifyCommit->GetError(pszErr, 1024);
+			msExtendedError = std::string("Verify commit failed:\n") + pszErr;
+			tuint64 uiReplySize = mpfileReply_VerifyCommit->GetMemorySize();
+			if (uiReplySize > 1) {
+				msExtendedError += "\n\n";
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifyCommit->GetMemoryPtr()), uiReplySize);
+			}
+			return false;
+		}
+	}
+
+	if (bCommitThere) {
+		// Commit has already been uploaded
+		*pbAlreadyThere = true;
+
+		// We came here because we didn't know commit existed - fix that
+		//!!! TODO: Important!!! We must save info that commit exists!
+		// How do we do that? Maybe it's not important?
+		// ..... something here
+	}
+
+	return true;
+} // DoCommit_PreVerify_After
+
+
+tbool CUploadTask::DoCommit_Upload_Before()
 {
 	if (mpfileCommitXML) {
 		// Previously used - close
@@ -998,6 +1138,19 @@ tbool CUploadTask::DoCommit_Before()
 		msExtendedError = std::string("Error read-opening project xml file:\n  ") + msFileCommitXML;
 		return false;
 	}
+	tint32 iSizeXML = (tint32)mpfileCommitXML->GetSizeWhenOpened();
+	tchar* pszXml = new tchar[iSizeXML + 1];
+	if (pszXml == NULL) {
+		// memory
+		return false;
+	}
+	if (mpfileCommitXML->Read(pszXml, iSizeXML) != iSizeXML) {
+		msExtendedError = std::string("Error reading file:\n  ") + msFileCommitXML;
+		delete[] pszXml;
+		return false;
+	}
+	msCommitXML = std::string(pszXml, iSizeXML);
+	delete[] pszXml;
 
 	if (mpfileReply_Uploader) {
 		// Previously used - close
@@ -1005,6 +1158,7 @@ tbool CUploadTask::DoCommit_Before()
 		mpfileReply_Uploader = NULL;
 	}
 	mpfileReply_Uploader = IFileMemory::Create();
+	mpfileReply_Uploader->Open(IFile::FileCreate);
 
 	std::string sURI = std::string("/branches/") + msBranchUUID + "/commits.xml";
 	if (
@@ -1014,7 +1168,7 @@ tbool CUploadTask::DoCommit_Before()
 		||
 		(!mpUploader->AddParam("commit[description]", msCommitDescription.c_str(), -1))
 		||
-		(!mpUploader->AddFileParam("commit[markup]", mpfileCommitXML))
+		(!mpUploader->AddParam("commit[markup]", msCommitXML.c_str(), iSizeXML))
 		||
 		(!mpUploader->Start(mpfileReply_Uploader))
 	) {
@@ -1030,9 +1184,9 @@ tbool CUploadTask::DoCommit_Before()
 	msProgress = std::string("Committing project xml");
 
 	return true;
-} // DoCommit_Before
+} // DoCommit_Upload_Before
 
-tbool CUploadTask::DoCommit_Action(tbool* pbActionDone)
+tbool CUploadTask::DoCommit_Upload_Action(tbool* pbActionDone)
 {
 	if (mpUploader->IsFailed()) {
 		tchar pszErr[1024];
@@ -1041,7 +1195,7 @@ tbool CUploadTask::DoCommit_Action(tbool* pbActionDone)
 		tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
 		if (uiReplySize > 1) {
 			msExtendedError += "\n\n";
-			msExtendedError += (tchar*)(mpfileReply_Uploader->GetMemoryPtr());
+			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), uiReplySize);
 		}
 		return false;
 	}
@@ -1058,12 +1212,22 @@ tbool CUploadTask::DoCommit_Action(tbool* pbActionDone)
 		*pbActionDone = true;
 
 	return true;
-} // DoCommit_Action
+} // DoCommit_Upload_Action
 
-tbool CUploadTask::DoCommit_After()
+tbool CUploadTask::DoCommit_Upload_After()
 {
-	// Nothing here now
+	// Get commit number
+	tint32 iSize = (tint32)mpfileReply_Uploader->GetMemorySize();
+	if (iSize > 1) {
+		std::string sCommitReply(
+			(const tchar*)mpfileReply_Uploader->GetMemoryPtr(),
+			iSize);
+
+		//!!! TODO: Set commit number by calling a setter function on gpApplication
+		// .... something here
+	}
+
 	return true;
-} // DoCommit_After
+} // DoCommit_Upload_After
 
 

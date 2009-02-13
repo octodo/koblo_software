@@ -75,9 +75,13 @@ protected:
 	tbool DoTake_Upload_Action(tbool* pbActionDone);
 	tbool DoTake_Upload_After(tbool* pbNoMoreTakes);
 
-	tbool DoCommit_Before();
-	tbool DoCommit_Action(tbool* pbActionDone);
-	tbool DoCommit_After();
+	tbool DoCommit_PreVerify_Before();
+	tbool DoCommit_PreVerify_Action(tbool* pbActionDone);
+	tbool DoCommit_PreVerify_After(tbool* pbAlreadyThere);
+
+	tbool DoCommit_Upload_Before();
+	tbool DoCommit_Upload_Action(tbool* pbActionDone);
+	tbool DoCommit_Upload_After();
 
 	std::string msUser;
 	std::string msPassword;
@@ -96,6 +100,7 @@ protected:
 	std::string msCommitUUID;
 	std::string msFileCommitXML;
 	IFile* mpfileCommitXML;
+	std::string msCommitXML;
 	std::string msCommitDescription;
 	//
 	tint32 miCommit_ReplyNb;
@@ -116,4 +121,7 @@ protected:
 
 	ine::IDownloader* mpDownloader_VerifyBranch;
 	IFileMemory* mpfileReply_VerifyBranch;
+
+	ine::IDownloader* mpDownloader_VerifyCommit;
+	IFileMemory* mpfileReply_VerifyCommit;
 }; // CExportClipTask
