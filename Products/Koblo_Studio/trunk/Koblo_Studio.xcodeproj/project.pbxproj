@@ -472,7 +472,6 @@
 		FCBBC1CE0F064A10003201E4 /* CKSProject_ID_GUI_Pane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSProject_ID_GUI_Pane.cpp; sourceTree = "<group>"; };
 		FCBBC1DC0F064ADA003201E4 /* CKSProject_ID_GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSProject_ID_GUI.h; sourceTree = "<group>"; };
 		FCBBC1DD0F064ADA003201E4 /* CKSProject_ID_GUI_Pane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSProject_ID_GUI_Pane.h; sourceTree = "<group>"; };
-		FCBBC4D10F0683E6003201E4 /* CKSXML_Read_Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Read_Project.h; sourceTree = "<group>"; };
 		FCBBC4D20F0683E6003201E4 /* CKSXML_Write_Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Write_Project.h; sourceTree = "<group>"; };
 		FCBBC4D80F06842C003201E4 /* CKSXML_Read_Project.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSXML_Read_Project.cpp; sourceTree = "<group>"; };
 		FCBBC4D90F06842C003201E4 /* CKSXML_Write_Project.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSXML_Write_Project.cpp; sourceTree = "<group>"; };
@@ -480,8 +479,7 @@
 		FCBBC54F0F0689B3003201E4 /* CKSInternet_Features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSInternet_Features.h; sourceTree = "<group>"; };
 		FCC44A960E80CF0200F5310F /* CKSSetupGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSSetupGUI.cpp; sourceTree = "<group>"; };
 		FCC44A970E80CF0200F5310F /* CKSSetupGUIPane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CKSSetupGUIPane.cpp; sourceTree = "<group>"; };
-		FCC44A9B0E80CF4600F5310F /* CKSSetupGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSSetupGUI.h; sourceTree = "<group>"; };
-		FCC44A9C0E80CF4600F5310F /* CKSSetupGUIPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSSetupGUIPane.h; sourceTree = "<group>"; };
+		FCD244580F44979800BA1E2F /* CKSXML_Read_Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSXML_Read_Project.h; sourceTree = "<group>"; };
 		FCD7D1800F384CB6002E6F98 /* jdkmidi.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jdkmidi.xcodeproj; path = "../../../SDK/libjdkmidi-20051014/trunk/build_lib/macosx/jdkmidi.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		FCD7D19C0F384CEC002E6F98 /* CImport_TinyXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CImport_TinyXML.h; sourceTree = "<group>"; };
 		FCD7D19D0F384D0D002E6F98 /* CImport_TinyXML.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CImport_TinyXML.cpp; sourceTree = "<group>"; };
@@ -713,7 +711,6 @@
 				FCBBC1DB0F064ADA003201E4 /* Project_ID */,
 				FCA8CB4F0F08F4090007514D /* Plugin_Support */,
 				FCA8CB560F08F41F0007514D /* Rack_GUI_DSP */,
-				FCC44A9A0E80CF4600F5310F /* Setup_GUI */,
 				FCA8CB5B0F08F42E0007514D /* Setup_GUI */,
 				7C771DB60CAA4EC200A78C4E /* SoloMute */,
 				FCF9545D0F12590F005147D1 /* Track_View */,
@@ -1067,7 +1064,7 @@
 				FC53BAF70F24C95E004385FB /* CKSUUID.h */,
 				FCA8CBD00F09064F0007514D /* CKSXML_Create_Project.h */,
 				FCA8CCDB0F091D440007514D /* CKSXML_Create_Sample.h */,
-				FCBBC4D10F0683E6003201E4 /* CKSXML_Read_Project.h */,
+				FCD244580F44979800BA1E2F /* CKSXML_Read_Project.h */,
 				FCBBC4D20F0683E6003201E4 /* CKSXML_Write_Project.h */,
 				FCFCB62F0F3C39E200F136F1 /* CPreset_Data.h */,
 			);
@@ -1105,16 +1102,6 @@
 			);
 			name = Setup_GUI;
 			path = source/Setup_GUI;
-			sourceTree = "<group>";
-		};
-		FCC44A9A0E80CF4600F5310F /* Setup_GUI */ = {
-			isa = PBXGroup;
-			children = (
-				FCC44A9B0E80CF4600F5310F /* CKSSetupGUI.h */,
-				FCC44A9C0E80CF4600F5310F /* CKSSetupGUIPane.h */,
-			);
-			name = Setup_GUI;
-			path = include/Setup_GUI;
 			sourceTree = "<group>";
 		};
 		FCD7D1810F384CB6002E6F98 /* Products */ = {

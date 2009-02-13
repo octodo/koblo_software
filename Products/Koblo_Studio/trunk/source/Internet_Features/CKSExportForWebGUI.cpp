@@ -22,7 +22,7 @@ void CKSExportForWebGUI::Destroy()
 void CKSExportForWebGUI::GetSize(tuint32* piSizeX, tuint32* piSizeY)
 {
 	*piSizeX = 541;
-	*piSizeY = 582;
+	*piSizeY = 477;
 }
 
 void CKSExportForWebGUI::Initialize()
@@ -38,8 +38,8 @@ void CKSExportForWebGUI::Initialize()
 	ConnectControls();
 
 //#ifdef WIN32
-	mpContext->SetMinWindowSize(mpWindow, ge::SSize(541,582));
-	mpContext->SetMaxWindowSize(mpWindow, ge::SSize(541,582));
+	mpContext->SetMinWindowSize(mpWindow, ge::SSize(541,477));
+	mpContext->SetMaxWindowSize(mpWindow, ge::SSize(541,477));
 //#endif // WIN32
 
 

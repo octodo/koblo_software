@@ -137,12 +137,12 @@ void CKSExportForWebGUIPane::Init()
 	Prepare_Popups();
 	
 	// Compression
-	ge::IDropDownListBox* pPop = CreatePop( giCtrl_Export_Compression_Popup, IDB_Button_Popup,  mpCompression_Popup, ge::SPos(364, 521-74), mpPane);
-	pPop->SetValue(meQuality);
+//	ge::IDropDownListBox* pPop = CreatePop( giCtrl_Export_Compression_Popup, IDB_Button_Popup,  mpCompression_Popup, ge::SPos(364, 521-74), mpPane);
+//	pPop->SetValue(meQuality);
 												
 	// Cancel / Export
-	CreateButton(giCtrl_Cancel_ExportForWeb, IDB_Button_Cancel, ge::SPos(402, 550-74), false);
-	CreateButton(giCtrl_ExportForWeb, IDB_Button_Export, ge::SPos(402+68, 550-74), false);
+	CreateButton(giCtrl_Cancel_ExportForWeb, IDB_Button_Cancel, ge::SPos(402, 447), false);
+	CreateButton(giCtrl_ExportForWeb, IDB_Button_Export, ge::SPos(402+68, 447), false);
 	
 	mpLicense =CreateBitmapVU(ge::IControl::giNoID, IDB_License, ge::SPos(27, 368-74), 6);
 	mpLicense->SetFrame(0);
@@ -221,11 +221,13 @@ void CKSExportForWebGUIPane::EventValueChange(ge::IControl* pControl, tint32 iVa
 			mpLicense->SetFrame(iValueNew);
 			break;
 		}
+			/*
 		case giCtrl_Export_Compression_Popup:{
 				
 			meQuality = (ac::EQuality)iValueNew;
 			break;
 		}
+			 */
 			
 	}
 	
@@ -284,6 +286,7 @@ void CKSExportForWebGUIPane::UpdateGUIData(tint32 iID, tint32 iValue)
 
 void CKSExportForWebGUIPane::Prepare_Popups()
 {
+	/*
 	tint32 iFirstQ, iLastQ, iDefaultQ;
 	CAutoDelete<ac::IEncoder> pEnc(ac::IEncoder::Create(ac::geAudioCodecVorbis));
 	pEnc->GetQualityRange(&iFirstQ, &iLastQ, &iDefaultQ);
@@ -306,6 +309,7 @@ void CKSExportForWebGUIPane::Prepare_Popups()
 		sprintf(pszLine, "%d/%d kbps (%s)", iKBPS_Stereo, iKBPS_Mono, pszQName);
 		mpCompression_Popup.pItems[iIx++] = ge::IPopupMenu::SMenuItem(pszLine, iQ, NULL);
 	}
+	 */
 } // Prepare_Popups
 
 

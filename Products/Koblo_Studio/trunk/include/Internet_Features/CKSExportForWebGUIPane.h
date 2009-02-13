@@ -52,7 +52,7 @@ protected:
 	
 	tbool mbIsVisible;
 	
-	ge::IPopupMenu::SMenuItemList mpCompression_Popup;
+//	ge::IPopupMenu::SMenuItemList mpCompression_Popup;
 	
 	virtual void Prepare_Popups();
 	
