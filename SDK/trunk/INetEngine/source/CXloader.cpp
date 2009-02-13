@@ -384,7 +384,7 @@ tbool CXloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, ti
 		// Just a special case for NULL pointer
 		if (pcParamData) {
 			if (iParamDataLen >= 0)
-				iDataLen = iDataLen;
+				iDataLen = iParamDataLen;
 			else
 				iDataLen = strlen(pcParamData);
 			// Copy to a buffer we own (so we don't need to rely on calling app keeping data around)

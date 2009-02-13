@@ -100,6 +100,7 @@ protected:
 	std::string msCommitUUID;
 	std::string msFileCommitXML;
 	IFile* mpfileCommitXML;
+	std::string msCommitXML;
 	std::string msCommitDescription;
 	//
 	tint32 miCommit_ReplyNb;

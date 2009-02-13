@@ -538,7 +538,7 @@ tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTa
 			tuint64 uiReplySize = mpfileReply_VerifyBranch->GetMemorySize();
 			if (uiReplySize > 1) {
 				msExtendedError += "\n\n";
-				msExtendedError += (tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr());
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr(), uiReplySize));
 			}
 			return false;
 		}
@@ -609,7 +609,7 @@ tbool CUploadTask::DoNewProject_Action(tbool* pbActionDone)
 		tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
 		if (uiReplySize > 1) {
 			msExtendedError += "\n\n";
-			msExtendedError += (tchar*)(mpfileReply_Uploader->GetMemoryPtr());
+			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), uiReplySize);
 		}
 		return false;
 	}
@@ -690,7 +690,7 @@ tbool CUploadTask::DoNewBranch_Action(tbool* pbActionDone)
 		tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
 		if (uiReplySize > 1) {
 			msExtendedError += "\n\n";
-			msExtendedError += (tchar*)(mpfileReply_Uploader->GetMemoryPtr());
+			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), uiReplySize);
 		}
 		return false;
 	}
@@ -841,7 +841,7 @@ tbool CUploadTask::DoTake_PreVerify_After(tbool* pbSkipThisTake, tbool* pbNoMore
 			tuint64 uiReplySize = mpfileReply_VerifyTake->GetMemorySize();
 			if (uiReplySize > 1) {
 				msExtendedError += "\n\n";
-				msExtendedError += (tchar*)(mpfileReply_VerifyTake->GetMemoryPtr());
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifyTake->GetMemoryPtr()), uiReplySize);
 			}
 			return false;
 		}
@@ -879,7 +879,7 @@ tbool CUploadTask::DoTake_Upload_Before()
 			tuint64 uiReplySize = mpfileReply_VerifySample->GetMemorySize();
 			if (uiReplySize > 1) {
 				msExtendedError += "\n\n";
-				msExtendedError += (tchar*)(mpfileReply_VerifySample->GetMemoryPtr());
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifySample->GetMemoryPtr()), uiReplySize);
 			}
 			return false;
 		}
@@ -992,7 +992,7 @@ tbool CUploadTask::DoTake_Upload_Action(tbool* pbActionDone)
 		tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
 		if (uiReplySize > 1) {
 			msExtendedError += "\n\n";
-			msExtendedError += (tchar*)(mpfileReply_Uploader->GetMemoryPtr());
+			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), uiReplySize);
 		}
 		return false;
 	}
@@ -1106,7 +1106,7 @@ tbool CUploadTask::DoCommit_PreVerify_After(tbool* pbAlreadyThere)
 			tuint64 uiReplySize = mpfileReply_VerifyCommit->GetMemorySize();
 			if (uiReplySize > 1) {
 				msExtendedError += "\n\n";
-				msExtendedError += (tchar*)(mpfileReply_VerifyCommit->GetMemoryPtr());
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifyCommit->GetMemoryPtr()), uiReplySize);
 			}
 			return false;
 		}
@@ -1138,6 +1138,19 @@ tbool CUploadTask::DoCommit_Upload_Before()
 		msExtendedError = std::string("Error read-opening project xml file:\n  ") + msFileCommitXML;
 		return false;
 	}
+	tint32 iSizeXML = (tint32)mpfileCommitXML->GetSizeWhenOpened();
+	tchar* pszXml = new tchar[iSizeXML + 1];
+	if (pszXml == NULL) {
+		// memory
+		return false;
+	}
+	if (mpfileCommitXML->Read(pszXml, iSizeXML) != iSizeXML) {
+		msExtendedError = std::string("Error reading file:\n  ") + msFileCommitXML;
+		delete[] pszXml;
+		return false;
+	}
+	msCommitXML = std::string(pszXml, iSizeXML);
+	delete[] pszXml;
 
 	if (mpfileReply_Uploader) {
 		// Previously used - close
@@ -1155,7 +1168,7 @@ tbool CUploadTask::DoCommit_Upload_Before()
 		||
 		(!mpUploader->AddParam("commit[description]", msCommitDescription.c_str(), -1))
 		||
-		(!mpUploader->AddFileParam("commit[markup]", mpfileCommitXML))
+		(!mpUploader->AddParam("commit[markup]", msCommitXML.c_str(), iSizeXML))
 		||
 		(!mpUploader->Start(mpfileReply_Uploader))
 	) {
@@ -1182,7 +1195,7 @@ tbool CUploadTask::DoCommit_Upload_Action(tbool* pbActionDone)
 		tuint64 uiReplySize = mpfileReply_Uploader->GetMemorySize();
 		if (uiReplySize > 1) {
 			msExtendedError += "\n\n";
-			msExtendedError += (tchar*)(mpfileReply_Uploader->GetMemoryPtr());
+			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), uiReplySize);
 		}
 		return false;
 	}
