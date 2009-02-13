@@ -1220,16 +1220,16 @@ tbool CUploadTask::DoCommit_Upload_After()
 tbool CUploadTask::SetTakeURL(IFileMemory* pfile)
 {
 	tint32 iSize = (tint32)pfile->GetMemorySize();
-	if (iSize < 10) {
-		msExtendedError = "No xml reply for take upload";
-		return false;
-	}
-
 	std::string sXML((tchar*)pfile->GetMemoryPtr(), iSize);
 
 	// Call setter function on application
-	//return gpApplication->Set_Take_URL(sXML);
-	//!!! TODO: Implement above!
+	//!!! TODO: Implement below!
+#if (0)
+	if (!gpApplication->Set_Take_URL(sXML)) {
+		msExtendedError = "Error getting URL for uploaded take";
+		return false;
+	}
+#endif
 	return true;
 } // SetTakeURL
 
