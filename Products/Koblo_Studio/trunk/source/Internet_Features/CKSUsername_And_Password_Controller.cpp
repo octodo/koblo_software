@@ -90,6 +90,7 @@ void CKSUsername_And_Password_Model::Clear_Username_And_Password()
 	gpApplication->Set_Remember_Me(false);
 	gpApplication->Set_User_Name("");
 	gpApplication->Set_Password("");
+	gpDSPEngine->SavePrefs();
 	// send message to sign in dialog 
 	CBasePane::SMsg Msg(MsgSign_Out);
 	gpApplication->Send_Msg_To_All_Panes(&Msg);

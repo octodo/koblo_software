@@ -1365,18 +1365,90 @@ void CXloader::SetMultiSaysDone(CURLcode code)
 		// External transfer is done
 		mbIsMultiDone = true;
 		CURLcode rc;
-		tint32 iStatus;
-		rc = curl_easy_getinfo(mpCURLEasyHandle, CURLINFO_RESPONSE_CODE, &iStatus);
-		if (iStatus >= 400) {
+		rc = curl_easy_getinfo(mpCURLEasyHandle, CURLINFO_RESPONSE_CODE, &miHttpStatus);
+		if (miHttpStatus >= 400) {
 			CAutoLock Lock(mMutex_ForErrors);
 			tchar pszErr[128];
-			sprintf(pszErr, "%s returned status %d", msHost.c_str(), iStatus);
+			sprintf(pszErr, "%s returned status %d", msHost.c_str(), miHttpStatus);
 			msDelayedStatusError = pszErr;
 		}
 		else if (code != 0) {
 			// There's an error
+			tchar* p = "(unknown)";
+			switch (code) {
+				case CURLE_UNSUPPORTED_PROTOCOL: p = "CURLE_UNSUPPORTED_PROTOCOL"; break;
+				case CURLE_FAILED_INIT: p = "CURLE_FAILED_INIT"; break;
+				case CURLE_URL_MALFORMAT: p = "CURLE_URL_MALFORMAT"; break;
+				case CURLE_COULDNT_RESOLVE_PROXY: p = "CURLE_COULDNT_RESOLVE_PROXY"; break;
+				case CURLE_COULDNT_RESOLVE_HOST: p = "CURLE_COULDNT_RESOLVE_HOST"; break;
+				case CURLE_COULDNT_CONNECT: p = "CURLE_COULDNT_CONNECT"; break;
+				case CURLE_FTP_WEIRD_SERVER_REPLY: p = "CURLE_FTP_WEIRD_SERVER_REPLY"; break;
+				case CURLE_REMOTE_ACCESS_DENIED: p = "CURLE_REMOTE_ACCESS_DENIED"; break;
+				case CURLE_FTP_WEIRD_PASS_REPLY: p = "CURLE_FTP_WEIRD_PASS_REPLY"; break;
+				case CURLE_FTP_WEIRD_PASV_REPLY: p = "CURLE_FTP_WEIRD_PASV_REPLY"; break;
+				case CURLE_FTP_WEIRD_227_FORMAT: p = "CURLE_FTP_WEIRD_227_FORMAT"; break;
+				case CURLE_FTP_CANT_GET_HOST: p = "CURLE_FTP_CANT_GET_HOST"; break;
+				case CURLE_FTP_COULDNT_SET_TYPE: p = "CURLE_FTP_COULDNT_SET_TYPE"; break;
+				case CURLE_PARTIAL_FILE: p = "CURLE_PARTIAL_FILE"; break;
+				case CURLE_FTP_COULDNT_RETR_FILE: p = "CURLE_FTP_COULDNT_RETR_FILE"; break;
+				case CURLE_QUOTE_ERROR: p = "CURLE_QUOTE_ERROR"; break;
+				case CURLE_HTTP_RETURNED_ERROR: p = "CURLE_HTTP_RETURNED_ERROR"; break;
+				case CURLE_WRITE_ERROR: p = "CURLE_WRITE_ERROR"; break;
+				case CURLE_UPLOAD_FAILED: p = "CURLE_UPLOAD_FAILED"; break;
+				case CURLE_READ_ERROR: p = "CURLE_READ_ERROR"; break;
+				case CURLE_OUT_OF_MEMORY: p = "CURLE_OUT_OF_MEMORY"; break;
+				case CURLE_OPERATION_TIMEDOUT: p = "CURLE_OPERATION_TIMEDOUT"; break;
+				case CURLE_FTP_PORT_FAILED: p = "CURLE_FTP_PORT_FAILED"; break;
+				case CURLE_FTP_COULDNT_USE_REST: p = "CURLE_FTP_COULDNT_USE_REST"; break;
+				case CURLE_RANGE_ERROR: p = "CURLE_RANGE_ERROR"; break;
+				case CURLE_HTTP_POST_ERROR: p = "CURLE_HTTP_POST_ERROR"; break;
+				case CURLE_SSL_CONNECT_ERROR: p = "CURLE_SSL_CONNECT_ERROR"; break;
+				case CURLE_BAD_DOWNLOAD_RESUME: p = "CURLE_BAD_DOWNLOAD_RESUME"; break;
+				case CURLE_FILE_COULDNT_READ_FILE: p = "CURLE_FILE_COULDNT_READ_FILE"; break;
+				case CURLE_LDAP_CANNOT_BIND: p = "CURLE_LDAP_CANNOT_BIND"; break;
+				case CURLE_LDAP_SEARCH_FAILED: p = "CURLE_LDAP_SEARCH_FAILED"; break;
+				case CURLE_FUNCTION_NOT_FOUND: p = "CURLE_FUNCTION_NOT_FOUND"; break;
+				case CURLE_ABORTED_BY_CALLBACK: p = "CURLE_ABORTED_BY_CALLBACK"; break;
+				case CURLE_BAD_FUNCTION_ARGUMENT: p = "CURLE_BAD_FUNCTION_ARGUMENT"; break;
+				case CURLE_INTERFACE_FAILED: p = "CURLE_INTERFACE_FAILED"; break;
+				case CURLE_TOO_MANY_REDIRECTS: p = "CURLE_TOO_MANY_REDIRECTS"; break;
+				case CURLE_UNKNOWN_TELNET_OPTION: p = "CURLE_UNKNOWN_TELNET_OPTION"; break;
+				case CURLE_TELNET_OPTION_SYNTAX: p = "CURLE_TELNET_OPTION_SYNTAX"; break;
+				case CURLE_PEER_FAILED_VERIFICATION: p = "CURLE_PEER_FAILED_VERIFICATION"; break;
+				case CURLE_GOT_NOTHING: p = "CURLE_GOT_NOTHING"; break;
+				case CURLE_SSL_ENGINE_NOTFOUND: p = "CURLE_SSL_ENGINE_NOTFOUND"; break;
+				case CURLE_SSL_ENGINE_SETFAILED: p = "CURLE_SSL_ENGINE_SETFAILED"; break;
+				case CURLE_SEND_ERROR: p = "CURLE_SEND_ERROR"; break;
+				case CURLE_RECV_ERROR: p = "CURLE_RECV_ERROR"; break;
+				case CURLE_SSL_CERTPROBLEM: p = "CURLE_SSL_CERTPROBLEM"; break;
+				case CURLE_SSL_CIPHER: p = "CURLE_SSL_CIPHER"; break;
+				case CURLE_SSL_CACERT: p = "CURLE_SSL_CACERT"; break;
+				case CURLE_BAD_CONTENT_ENCODING: p = "CURLE_BAD_CONTENT_ENCODING"; break;
+				case CURLE_LDAP_INVALID_URL: p = "CURLE_LDAP_INVALID_URL"; break;
+				case CURLE_FILESIZE_EXCEEDED: p = "CURLE_FILESIZE_EXCEEDED"; break;
+				case CURLE_USE_SSL_FAILED: p = "CURLE_USE_SSL_FAILED"; break;
+				case CURLE_SEND_FAIL_REWIND: p = "CURLE_SEND_FAIL_REWIND"; break;
+				case CURLE_SSL_ENGINE_INITFAILED: p = "CURLE_SSL_ENGINE_INITFAILED"; break;
+				case CURLE_LOGIN_DENIED: p = "CURLE_LOGIN_DENIED"; break;
+				case CURLE_TFTP_NOTFOUND: p = "CURLE_TFTP_NOTFOUND"; break;
+				case CURLE_TFTP_PERM: p = "CURLE_TFTP_PERM"; break;
+				case CURLE_REMOTE_DISK_FULL: p = "CURLE_REMOTE_DISK_FULL"; break;
+				case CURLE_TFTP_ILLEGAL: p = "CURLE_TFTP_ILLEGAL"; break;
+				case CURLE_TFTP_UNKNOWNID: p = "CURLE_TFTP_UNKNOWNID"; break;
+				case CURLE_REMOTE_FILE_EXISTS: p = "CURLE_REMOTE_FILE_EXISTS"; break;
+				case CURLE_TFTP_NOSUCHUSER: p = "CURLE_TFTP_NOSUCHUSER"; break;
+				case CURLE_CONV_FAILED: p = "CURLE_CONV_FAILED"; break;
+				case CURLE_CONV_REQD: p = "CURLE_CONV_REQD"; break;
+				case CURLE_SSL_CACERT_BADFILE: p = "CURLE_SSL_CACERT_BADFILE"; break;
+				case CURLE_REMOTE_FILE_NOT_FOUND: p = "CURLE_REMOTE_FILE_NOT_FOUND"; break;
+				case CURLE_SSH: p = "CURLE_SSH"; break;
+				case CURLE_SSL_SHUTDOWN_FAILED: p = "CURLE_SSL_SHUTDOWN_FAILED"; break;
+				case CURLE_AGAIN: p = "CURLE_AGAIN"; break;
+				case CURLE_SSL_CRL_BADFILE: p = "CURLE_SSL_CRL_BADFILE"; break;
+				case CURLE_SSL_ISSUER_ERROR: p = "CURLE_SSL_ISSUER_ERROR"; break;
+ 			}
 			tchar pszErr[512];
-			sprintf(pszErr, "curl_multi_info_read(..) gave status DONE but code %d", code);
+			sprintf(pszErr, "curl_multi_info_read(..) gave status DONE but code %d %s", code, p);
 			SetError(pszErr);
 		}
 

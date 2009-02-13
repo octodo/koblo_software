@@ -150,13 +150,24 @@ CDSP::~CDSP()
 
 void CDSP::LoadPrefs()
 {
-	CKSPreferences::LoadAll(&mPrefs_1, &mPrefs_2);
+	CKSPreferences::LoadAll(&mPrefs_1, &mPrefs_2, &mPrefs_3);
+
+	if (gpApplication) {
+		// Set user and password
+		gpApplication->Set_User_Name(mPrefs_3.mpszUser);
+		gpApplication->Set_Password(mPrefs_3.mpszPass);
+		gpApplication->Set_Remember_Me(mPrefs_3.mcbKeepInfo != 0);
+
+		// Let all panes know we have preferences now
+		CBasePane::SMsg msg(Msg_LoadPrefs_Done);
+		gpApplication->Send_Msg_To_All_Panes(&msg);
+	}
 } // LoadPrefs
 
 
 void CDSP::SavePrefs()
 {
-	CKSPreferences::SaveAll(&mPrefs_1, &mPrefs_2);
+	CKSPreferences::SaveAll(&mPrefs_1, &mPrefs_2, &mPrefs_3);
 } // SavePrefs
 
 

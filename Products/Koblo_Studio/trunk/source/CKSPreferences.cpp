@@ -120,7 +120,52 @@ tbool CKSPrefs_2::Save(IFile* pFile)
 } // CKSPrefs_2::Save
 
 
-void CKSPreferences::LoadAll(SKSPrefs_1* pPrefs_1, CKSPrefs_2* pPrefs_2)
+tbool CKSPrefs_3::IsSane()
+{
+	if (mcbKeepInfo == 0) {
+		return ((*mpszUser == '\0') && (*mpszPass == '\0'));
+	}
+
+	if (strnlen(mpszUser, 513) >= 512)
+		return false;
+	if (strnlen(mpszPass, 513) >= 512)
+		return false;
+
+	return true;
+} // CKSPrefs_3::IsSane
+
+
+tbool CKSPrefs_3::Load(IFile* pFile)
+{
+	tint32 iActualRead = (tint32)pFile->Read((tchar*)this, sizeof(*this));
+	if (iActualRead == sizeof(*this)) {
+		tbool bIsStructSane = IsSane();
+		if (bIsStructSane) {
+			return true;
+		}
+	}
+
+	return false;
+} // CKSPrefs_3::Load
+
+
+tbool CKSPrefs_3::Save(IFile* pFile)
+{
+	if (!IsSane())
+		return false;
+
+	if (mcbKeepInfo == 0) {
+		// Zero out user and pass before saving
+		memset(mpszUser, '\0', 512);
+		memset(mpszPass, '\0', 512);
+	}
+	tint64 iActuallyWritten = pFile->Write((tchar*)this, sizeof(*this));
+
+	return (iActuallyWritten == sizeof(*this));
+} // CKSPrefs_3::Save
+
+
+void CKSPreferences::LoadAll(SKSPrefs_1* pPrefs_1, CKSPrefs_2* pPrefs_2, CKSPrefs_3* pPrefs_3)
 {
 	std::string sPathName;
 	GetPrefsFileName(sPathName);
@@ -148,10 +193,19 @@ void CKSPreferences::LoadAll(SKSPrefs_1* pPrefs_1, CKSPrefs_2* pPrefs_2)
 	}
 	if (pPrefs_2)
 		*pPrefs_2 = prefsTemp_2;
+
+	// Load login info
+	CKSPrefs_3 prefsTemp_3;
+	if (!prefsTemp_3.Load(pFile)) {
+		// Error
+		return;
+	}
+	if (pPrefs_3)
+		*pPrefs_3 = prefsTemp_3;
 } // CKSPreferences::LoadAll
 
 
-void CKSPreferences::SaveAll(SKSPrefs_1* pPrefs_1, CKSPrefs_2* pPrefs_2)
+void CKSPreferences::SaveAll(SKSPrefs_1* pPrefs_1, CKSPrefs_2* pPrefs_2, CKSPrefs_3* pPrefs_3)
 {
 	std::string sPathName;
 	GetPrefsFileName(sPathName);
@@ -176,6 +230,15 @@ void CKSPreferences::SaveAll(SKSPrefs_1* pPrefs_1, CKSPrefs_2* pPrefs_2)
 		return;
 	}
 	if (!pPrefs_2->Save(pFile)) {
+		// error
+		return;
+	}
+
+	if (pPrefs_3 == NULL) {
+		// Huh?
+		return;
+	}
+	if (!pPrefs_3->Save(pFile)) {
 		// error
 		return;
 	}

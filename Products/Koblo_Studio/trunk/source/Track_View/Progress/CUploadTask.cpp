@@ -61,38 +61,38 @@ CUploadTask::CUploadTask()
 CUploadTask::~CUploadTask()
 {
 	if (mpDownloader_VerifyBranch) {
-		delete mpDownloader_VerifyBranch;
+		mpDownloader_VerifyBranch->Destroy();
 		mpDownloader_VerifyBranch = NULL;
 	}
 	if (mpfileReply_VerifyBranch) {
-		delete mpfileReply_VerifyBranch;
+		mpfileReply_VerifyBranch->Destroy();
 		mpfileReply_VerifyBranch = NULL;
 	}
 	//
 	if (mpUploader) {
-		delete mpUploader;
+		mpUploader->Destroy();
 		mpUploader = NULL;
 	}
 	if (mpfileReply_Uploader) {
-		delete mpfileReply_Uploader;
+		mpfileReply_Uploader->Destroy();
 		mpfileReply_Uploader = NULL;
 	}
 	//
 	if (mpDownloader_VerifySample) {
-		delete mpDownloader_VerifySample;
+		mpDownloader_VerifySample->Destroy();
 		mpDownloader_VerifySample = NULL;
 	}
 	if (mpfileReply_VerifySample) {
-		delete mpfileReply_VerifySample;
+		mpfileReply_VerifySample->Destroy();
 		mpfileReply_VerifySample = NULL;
 	}
 	//
 	if (mpDownloader_VerifyTake) {
-		delete mpDownloader_VerifyTake;
+		mpDownloader_VerifyTake->Destroy();
 		mpDownloader_VerifyTake = NULL;
 	}
 	if (mpfileReply_VerifyTake) {
-		delete mpfileReply_VerifyTake;
+		mpfileReply_VerifyTake->Destroy();
 		mpfileReply_VerifyTake = NULL;
 	}
 	//
@@ -107,15 +107,15 @@ CUploadTask::~CUploadTask()
 		mpTakeCurr = NULL;
 	}
 	if (mpfileMp3) {
-		delete mpfileMp3;
+		mpfileMp3->Destroy();
 		mpfileMp3 = NULL;
 	}
 	if (mpfileOgg) {
-		delete mpfileOgg;
+		mpfileOgg->Destroy();
 		mpfileOgg = NULL;
 	}
 	if (mpfileCommitXML) {
-		delete mpfileCommitXML;
+		mpfileCommitXML->Destroy();
 		mpfileCommitXML = NULL;
 	}
 } // destructor
@@ -155,7 +155,7 @@ tbool CUploadTask::Init_NewProject(
 
 	msCommitUUID			= pszCommitUUID;
 	msFileCommitXML			= pszfileCommit;
-	msCommitDescription		= "Initial Version";
+	msCommitDescription		= "Initial commit of project xml";
 
 	if (!Init_Helper(plistpTakes))
 		return false;
@@ -195,7 +195,7 @@ tbool CUploadTask::Init_NewBranch(
 
 	msCommitUUID			= pszCommitUUID;
 	msFileCommitXML			= pszfileCommit;
-	msCommitDescription		= "Initial Copy";
+	msCommitDescription		= "Initial commit of project xml";
 
 	if (!Init_Helper(plistpTakes))
 		return false;
@@ -438,7 +438,7 @@ tbool CUploadTask::DoBranch_PreVerify_Before()
 {
 	if (mpfileReply_VerifyBranch) {
 		// Release file - it was from previous transfer
-		delete mpfileReply_VerifyBranch;
+		mpfileReply_VerifyBranch->Destroy();
 		mpfileReply_VerifyBranch = NULL;
 	}
 	mpfileReply_VerifyBranch = IFileMemory::Create();
@@ -530,7 +530,7 @@ tbool CUploadTask::DoNewProject_Before()
 {
 	if (mpfileReply_Uploader) {
 		// Previously used - close
-		delete mpfileReply_Uploader;
+		mpfileReply_Uploader->Destroy();
 		mpfileReply_Uploader = NULL;
 	}
 	mpfileReply_Uploader = IFileMemory::Create();
@@ -611,7 +611,7 @@ tbool CUploadTask::DoNewBranch_Before()
 {
 	if (mpfileReply_Uploader) {
 		// Previously used - close
-		delete mpfileReply_Uploader;
+		mpfileReply_Uploader->Destroy();
 		mpfileReply_Uploader = NULL;
 	}
 	mpfileReply_Uploader = IFileMemory::Create();
@@ -703,12 +703,12 @@ tbool CUploadTask::DoTake_PreVerify_Before()
 
 	if (mpfileReply_VerifySample) {
 		// Release file - it was from previous transfer
-		delete mpfileReply_VerifySample;
+		mpfileReply_VerifySample->Destroy();
 		mpfileReply_VerifySample = NULL;
 	}
 	if (mpfileReply_VerifyTake) {
 		// Release file - it was from previous transfer
-		delete mpfileReply_VerifyTake;
+		mpfileReply_VerifyTake->Destroy();
 		mpfileReply_VerifyTake = NULL;
 	}
 	mpfileReply_VerifySample = IFileMemory::Create();
@@ -848,11 +848,11 @@ tbool CUploadTask::DoTake_Upload_Before()
 	}
 
 	if (mpfileOgg) {
-		delete mpfileOgg;
+		mpfileOgg->Destroy();
 		mpfileOgg = NULL;
 	}
 	if (mpfileMp3) {
-		delete mpfileMp3;
+		mpfileMp3->Destroy();
 		mpfileMp3 = NULL;
 	}
 	mpfileOgg = IFile::Create();
@@ -870,6 +870,13 @@ tbool CUploadTask::DoTake_Upload_Before()
 		msExtendedError = std::string("Can't read-open file:\n") + sMp3;
 		return false;
 	}
+
+	if (mpfileReply_Uploader) {
+		// Previously used - close
+		mpfileReply_Uploader->Destroy();
+		mpfileReply_Uploader = NULL;
+	}
+	mpfileReply_Uploader = IFileMemory::Create();
 
 	tbool bInitError = false;
 	if (bSampleThere) {
@@ -896,6 +903,8 @@ tbool CUploadTask::DoTake_Upload_Before()
 		std::string sURI = std::string("/projects/");
 		sURI += msProjectUUID;
 		sURI += "/samples.xml";
+		std::string sDescription = mpTakeCurr->Get_Description();
+		if (sDescription.length() == 0) sDescription = "No description";
 		if (
 			(!mpUploader->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
 			||
@@ -905,7 +914,7 @@ tbool CUploadTask::DoTake_Upload_Before()
 			||
 			(!mpUploader->AddParam("take[uuid]", mpTakeCurr->Get_UUID().c_str(), -1))
 			||
-			(!mpUploader->AddParam("take[description]", mpTakeCurr->Get_Description().c_str(), -1))
+			(!mpUploader->AddParam("take[description]", sDescription.c_str(), -1))
 			||
 			(!mpUploader->AddFileParam("audio[uploaded_data]", mpfileOgg))
 			||
@@ -913,6 +922,11 @@ tbool CUploadTask::DoTake_Upload_Before()
 		) {
 			bInitError = true;
 		}
+	}
+
+	if (!bInitError) {
+		if (!mpUploader->Start(mpfileReply_Uploader))
+			bInitError = true;
 	}
 
 	if (bInitError) {
@@ -976,7 +990,7 @@ tbool CUploadTask::DoCommit_Before()
 {
 	if (mpfileCommitXML) {
 		// Previously used - close
-		delete mpfileCommitXML;
+		mpfileCommitXML->Destroy();
 		mpfileCommitXML = NULL;
 	}
 	mpfileCommitXML = IFile::Create();
@@ -987,12 +1001,12 @@ tbool CUploadTask::DoCommit_Before()
 
 	if (mpfileReply_Uploader) {
 		// Previously used - close
-		delete mpfileReply_Uploader;
+		mpfileReply_Uploader->Destroy();
 		mpfileReply_Uploader = NULL;
 	}
 	mpfileReply_Uploader = IFileMemory::Create();
 
-	std::string sURI = std::string("/branches/") + msBranchUUID + "commits.xml";
+	std::string sURI = std::string("/branches/") + msBranchUUID + "/commits.xml";
 	if (
 		(!mpUploader->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
 		||

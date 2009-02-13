@@ -120,15 +120,15 @@ public:
 	
 	std::string Get_Branch_Description(){ return msBranch_Description;}
 	
-	void Set_User_Name( const std::string& sName){ msUser_Name = sName;}
+	void Set_User_Name( const std::string& sName);
 	
 	std::string Get_User_Name(){ return msUser_Name;}
 	
-	void Set_Password( const std::string& sPassword){ msPassword = sPassword;}
+	void Set_Password( const std::string& sPassword);
 	
 	std::string Get_Password(){ return msPassword;}
 	
-	void Set_Remember_Me(tbool bRemember_Me){ mbRemember_Me = bRemember_Me;}
+	void Set_Remember_Me(tbool bRemember_Me);
 	
 	tbool Get_Remember_Me(){ return mbRemember_Me;}
 	

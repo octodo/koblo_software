@@ -20,7 +20,10 @@ CSample_Data::CSample_Data(const CSample_Data& Data_Old)
 	muiTakes		=	Data_Old.muiTakes;
 
 	mpTake_Data		=	new CTake_Data(this);
+	// This copies contents but unfortunately overwrites link to this sample
 	*mpTake_Data	=	*(Data_Old.mpTake_Data);
+	// We need to set again, because it's overwritten by previous line
+	mpTake_Data->SetOwningSample(this);
 }
 
 

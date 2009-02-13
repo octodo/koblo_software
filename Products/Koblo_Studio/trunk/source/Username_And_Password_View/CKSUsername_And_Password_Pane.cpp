@@ -101,6 +101,13 @@ void CKSUsername_And_Password_Pane::SendMsgFromTop(SMsg* pMsg)
 			mpPassword_Txt->SetText("");
 			break;
 		}
+		case Msg_LoadPrefs_Done:
+			{
+				mpRemember_Me_Button->SetValue(gpDSPEngine->mPrefs_3.mcbKeepInfo);
+				mpUser_Name_Txt->SetText(gpDSPEngine->mPrefs_3.mpszUser);
+				mpPassword_Txt->SetText(gpDSPEngine->mPrefs_3.mpszPass);
+			}
+			break;
 	}
 }
 
@@ -141,6 +148,8 @@ void CKSUsername_And_Password_Pane::EventValueChange(ge::IControl* pControl, tin
 			// password
 			mpPassword_Txt->GetText(pszTxt);
 			gpApplication->Set_Password(pszTxt);
+			// Save to preferences
+			gpDSPEngine->SavePrefs();
 			// save sign in info, commit project if needed
 			gpApplication->On_Username_And_Password_OK();
 			
