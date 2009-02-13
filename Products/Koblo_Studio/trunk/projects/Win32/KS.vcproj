@@ -435,6 +435,10 @@
 					RelativePath="..\..\source\Internet_Features\CPreset_Data.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\source\Internet_Features\CXML_Hand_Shakes.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Mix_GUI"
@@ -1003,6 +1007,10 @@
 				</File>
 				<File
 					RelativePath="..\..\include\Internet_Features\CPreset_Data.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\Internet_Features\CXML_Hand_Shakes.h"
 					>
 				</File>
 			</Filter>
