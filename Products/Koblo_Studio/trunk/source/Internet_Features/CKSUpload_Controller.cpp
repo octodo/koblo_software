@@ -52,13 +52,17 @@ void CKSUpload_Controller::Upload_Project()
 								 "no description", // project description
 								 "by", // license
 								 gpApplication->Get_Branch_UUID().c_str(),
-								 gpApplication->Get_Commit_UUID().c_str(), sProjectXmlFile.c_str(),
+								 gpApplication->Get_Commit_UUID().c_str(), 
+								 sProjectXmlFile.c_str(),
 								 &mUpload_Que);
-	
+
 	// Add task to task list
 	CAutoLock Lock(gpApplication->mMutex_Progress);
 	gpApplication->mpProgressTasks->Add(pUploadTask);
 	gpApplication->Playback_InProgressTask();
+	
+	
+	gpApplication->Test_Hand_Shakes();
 
 }
 

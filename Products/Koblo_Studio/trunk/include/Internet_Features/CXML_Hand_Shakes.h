@@ -31,6 +31,8 @@ public:
 	virtual ~CXML_Hand_Shakes();
 	
 	tbool Set_Take_URL(std::string sTake_Info);
+	
+	virtual void Test_Hand_Shakes();
 
 
 	

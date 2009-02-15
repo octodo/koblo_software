@@ -35,7 +35,8 @@ class CKSInternet_Features
 public virtual CKSXML_Create_Project,
 public virtual CKSXML_Write_Project,
 public virtual CKSXML_Read_Project,
-public virtual CKSUsername_And_Password_Model
+public virtual CKSUsername_And_Password_Model,
+public virtual CXML_Hand_Shakes
 
 //public virtual CKSXML_Create_Sample
 {

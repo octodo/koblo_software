@@ -13,6 +13,7 @@ CXML_Hand_Shakes::~CXML_Hand_Shakes()
 
 tbool CXML_Hand_Shakes::Set_Take_URL(std::string sTake_Info)
 {
+	
 	// clear TinyXML document
 	mpXMLHand_Shake->Clear();
 	
@@ -28,7 +29,7 @@ tbool CXML_Hand_Shakes::Set_Take_URL(std::string sTake_Info)
 	// pass the TinyXML DOM in to the DAW data structure
 	Pass_Take_URL( mpXMLHand_Shake );
 	
-	
+
 	
 	return true;
 }
@@ -38,18 +39,47 @@ void CXML_Hand_Shakes::Pass_Take_URL( TiXmlNode* pParent )
 	// if file is empty return
 	if ( !pParent ) return;
 	
-	// if there is multiply <project> tags only read the first one
-	tbool read = true;
-	
 	TiXmlNode* pChild;
 	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
 	{
-		if(pChild->Type() == TiXmlNode::ELEMENT && read){
+		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
-			read = false;
+			if (stricmp("url", pChild->Value()) == 0){
+				
+				TiXmlNode* pChild = pChild->FirstChild();
+				
+				if ( pChild ){
+					TiXmlText* pText;
+					pText = pChild->ToText();
+					gpApplication->Project_Name(pText->Value());
+				}
+			}
 			
 		}
 	}
+}
+
+
+void CXML_Hand_Shakes::Test_Hand_Shakes()
+{
+	std::string sPath = gpApplication->Project_Folder() + "takeinfo.xml";
+	
+	// read project in to 
+	CAutoDelete<IFile> pFile(IFile::Create());
+	if (pFile->Open(sPath.c_str(), IFile::FileRead)) {
+		
+		// read project in to char buffer
+		tuint iSize = pFile->GetSizeWhenOpened();
+		CAutoBuffer<char> pszsTake_Info;
+		pszsTake_Info.Allocate(iSize);
+		
+		pFile->Read(pszsTake_Info, iSize);
+		
+		// parse pszProjectXML in to a TinyXML DOM
+		mpXMLHand_Shake->Parse(pszsTake_Info);
+		
+	}
+
 }
 
 
@@ -57,20 +87,5 @@ void CXML_Hand_Shakes::Pass_Take_URL( TiXmlNode* pParent )
 
 
 
-/*
-
-<?xml version="1.0" encoding="UTF-8"?>
- <take uuid="131">
-	<sample uuid="af012d9d-0eeb-437e-b3a1-20751c09e542"/>
-	<description>No description</description>
-	<url>http://assets.koblo.com/mp3s/132/8861a75a-6cfe-442b-8a5d-e618ffb32b0a.mp3</url>
-	
-	<author id="16">
-		<name>Coffee Z-Z-Zombie</name>
-	</author>
- </take>
 
 
-
-
-*/
