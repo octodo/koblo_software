@@ -572,6 +572,8 @@ protected:
 	tbool mbTimer;
 	
 	tbool mbKSProject_Imported;
+	
+	CMutex mMutex;
 
 
 	

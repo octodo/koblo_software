@@ -28,11 +28,16 @@ public:
 	virtual void Destroy();
 
 	tbool Init_NewProject(
-		const tchar* pszUser, const tchar* pszPassword,
-		const tchar* pszProjUUID, const tchar* pszProjName, const tchar* pszProjDesc, const tchar* pszProjLicenseCode,
-		const tchar* pszBranchUUID,
-		const tchar* pszCommitUUID, const tchar* pszfileCommit,
-		std::list<CTake_Data*>* plistpTakes);
+						  const tchar* pszUser, 
+						  const tchar* pszPassword,
+						  const tchar* pszProjUUID, 
+						  const tchar* pszProjName, 
+						  const tchar* pszProjDesc, 
+						  const tchar* pszProjLicenseCode,
+						  const tchar* pszBranchUUID,
+						  const tchar* pszCommitUUID, 
+						  const tchar* pszfileCommit,
+						  std::list<CTake_Data*>* plistpTakes);
 
 	tbool Init_NewBranch(
 		const tchar* pszUser, const tchar* pszPassword,

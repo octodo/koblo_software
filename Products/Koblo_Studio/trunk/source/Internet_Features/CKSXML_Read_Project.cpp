@@ -313,7 +313,7 @@ void CKSXML_Read_Project::Read_Take_Object(TiXmlElement* pElement, CTake_Data* p
 				}
 			}
 			else if (stricmp("url", pChild->Value()) == 0) {
-
+				
 				TiXmlNode* pUrl = pChild->FirstChild();
 				if(pUrl) {
 					TiXmlText* pText = pUrl->ToText();
@@ -322,7 +322,19 @@ void CKSXML_Read_Project::Read_Take_Object(TiXmlElement* pElement, CTake_Data* p
 						pTake_Data->URL(s);
 					}
 				}
-			}	
+			}
+			
+			else if (stricmp("mp3", pChild->Value()) == 0) {
+				
+				TiXmlNode* pMp3_Url = pChild->FirstChild();
+				if(pMp3_Url) {
+					TiXmlText* pText = pMp3_Url->ToText();
+					if(pText){
+						s = pText->Value();
+						pTake_Data->MP3_URL(s);
+					}
+				}
+			}
 		}
 	}
 }
@@ -513,24 +525,7 @@ void CKSXML_Read_Project::Read_Track_Arm(TiXmlNode* pParent, tint32 iTrackID)
 	else if(stricmp("off", pChild->Value()) == 0)
 		gpApplication->SetGlobalParm(giParam_ChArm, 0, giSection_First_Track+ iTrackID);
 }
-/*
 
-void CKSXML_Read_Project::Read_Track_Aux(TiXmlNode* pParent, tint32 iTrackID)
-{
-	TiXmlNode* pChild = pParent->FirstChild();
-	
-	TiXmlAttribute* pAttrib	=	pChild->FirstAttribute();
-		tint32 iAux = -1;
-	
-	// aux id
-	if (pAttrib && pAttrib->QueryIntValue(&iAux)!=TIXML_SUCCESS)    
-		return;
-	
-
-	Set_DAW_Parameter(pElement, giTinyXml_Type_Float, giParam_ChAUX1 + iAux, giSection_First_Track + iTrackID, 10000.0f);
-
-}
-*/
 
 void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrack)
 {
@@ -614,7 +609,7 @@ void CKSXML_Read_Project::Read_Track_Region(TiXmlElement* pElement, tint32 iTrac
 				}
 			}
 			
-			if (stricmp("take", pChild->Value()) == 0) {
+			else if(stricmp("take", pChild->Value()) == 0) {
 				
 				TiXmlNode* pValue = pChild->FirstChild();
 				
@@ -623,7 +618,7 @@ void CKSXML_Read_Project::Read_Track_Region(TiXmlElement* pElement, tint32 iTrac
 				}
 			}
 			
-			if (stricmp("position", pChild->Value()) == 0) {
+			else if(stricmp("position", pChild->Value()) == 0) {
 				
 				TiXmlNode* pValue = pChild->FirstChild();
 				
@@ -634,7 +629,7 @@ void CKSXML_Read_Project::Read_Track_Region(TiXmlElement* pElement, tint32 iTrac
 				}
 			}
 			
-			else if (stricmp("offset", pChild->Value()) == 0) {
+			else if(stricmp("offset", pChild->Value()) == 0) {
 
 				TiXmlNode* pValue = pChild->FirstChild();
 				
@@ -645,7 +640,7 @@ void CKSXML_Read_Project::Read_Track_Region(TiXmlElement* pElement, tint32 iTrac
 				}
 
 			}
-			else if (stricmp("duration", pChild->Value()) == 0) {
+			else if(stricmp("duration", pChild->Value()) == 0) {
 
 				TiXmlNode* pValue = pChild->FirstChild();
 				
@@ -1088,10 +1083,16 @@ void CKSXML_Read_Project::Insert_Regions()
 	
 }
 
-std::string CKSXML_Read_Project::Get_Take_Screen_Name(std::string sUUID)
+std::string CKSXML_Read_Project::Get_Take_Screen_Name(std::string sTake_UUID)
 {
+	CTake_Data* pTake_Data = Get_Take(sTake_UUID);
 	
+	if(pTake_Data)
+		return pTake_Data->Screen_Name();
 	
+	return "";
+	
+	/*
 	std::list<CSample_Data>::iterator it = mSample_Data_List.begin();
 	for (; it != mSample_Data_List.end(); it++) {
 		
@@ -1101,35 +1102,23 @@ std::string CKSXML_Read_Project::Get_Take_Screen_Name(std::string sUUID)
 		if(pTake_Data)
 			return pTake_Data->Screen_Name();
 	}
-	
 	return "";
+	 */
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+CTake_Data* CKSXML_Read_Project::Get_Take(std::string sTake_UUID)
+{
+	
+	std::list<CSample_Data>::iterator it = gpApplication->Get_Sample_Data_List_Begin();
+	for (; it != gpApplication->Get_Sample_Data_List_End(); it++) {
+		
+		CTake_Data* pTake_Data = (*it).Get_Take_Data(sTake_UUID);
+		
+		if(pTake_Data)
+			return pTake_Data;
+	}
+	return NULL;
+}
 
 tbool CKSXML_Read_Project::Check_For_Newer_Revision(tint32 iProject_ID)
 {

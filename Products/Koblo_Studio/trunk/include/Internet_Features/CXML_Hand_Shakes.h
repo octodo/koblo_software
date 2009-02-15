@@ -30,7 +30,7 @@ public:
 	
 	virtual ~CXML_Hand_Shakes();
 	
-	tbool Set_Take_URL(std::string sTake_Info);
+	tbool Set_Take_Handshake(std::string sTake_Info);
 	
 	virtual void Test_Hand_Shakes();
 
@@ -39,14 +39,47 @@ public:
 
 protected:
 	
-	/*! read the  Take DOM file 
-	 */
-	void Pass_Take_URL( TiXmlNode* pParent );
+	//**************** Take Handshake passer *****************
+	//! read the  Take DOM file 
+	void Set_Take_Info( TiXmlNode* pParent );
 	
-
+	//! read the  Take tag file 
+	void Pass_Take_Tags( TiXmlNode* pParent );
+	
+	//! read the  Take tag file 
+	void Pass_Take_Tag( TiXmlNode* pParent );
+	
+	//! read the  take sample tag 
+	void Pass_Take_Sample( TiXmlNode* pParent );
+	
+	//! read the  take description tag 
+	void Pass_Take_Description( TiXmlNode* pParent );
+	
+	//! read the  take audio/ ogg url tag 
+	void Pass_Take_Audio( TiXmlNode* pParent );
+	
+	//! read the  take audio/ mp3 url tag 
+	void Pass_Take_MP3( TiXmlNode* pParent );
+	
+	//! read the  take Author tag 
+	void Pass_Take_Author( TiXmlNode* pParent );
+	
+	std::string msTake_UUID;
+	
+	std::string msTake_Audio_URL;
+	
+	std::string msTake_MP3_URL;
+	
+	virtual void Update_Take_Data();
+	
+	//**************** Take Handshake passer *****************
+	
+	std::string msSampleUUID;
 	
 	//  TinyXml document
 	TiXmlDocument* mpXMLHand_Shake;
+	
+	CMutex mHands_Shake_Mutex;
 	
 };
 

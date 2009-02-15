@@ -655,6 +655,12 @@ void CKSXML_Write_Project::Write_Take(TiXmlElement* pParent, CTake_Data* pTake_D
 	TiXmlText* pURLTxt = new TiXmlText(pTake_Data->URL().c_str());
 	pURL->LinkEndChild( pURLTxt );
 	pTake->LinkEndChild( pURL );
+	
+	// mp3
+	TiXmlElement* pMp3_URL = new TiXmlElement( "mp3" );
+	TiXmlText* pMp3_URLTxt = new TiXmlText(pTake_Data->MP3_URL().c_str());
+	pMp3_URL->LinkEndChild( pMp3_URLTxt );
+	pTake->LinkEndChild( pMp3_URL );
 
 }
 

@@ -162,7 +162,7 @@ public:
 	void Check_Revision(TiXmlElement* pElement);
 	
 	
-	
+	CTake_Data* Get_Take(std::string sTake_UUID);
 
 private:
 	

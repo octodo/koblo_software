@@ -28,11 +28,21 @@ public:
 	//! get the description
 	std::string Get_Description() const { return msDescription;};
 	
-	//! get the Sample URL
+	//! set take URL
 	void URL(const std::string& sURL ){ msURL = sURL;};
 	
-	//! get the description
+	//! get take url
 	std::string URL() const { return msURL;};
+	
+	
+	//! set mp3 URL
+	void MP3_URL(const std::string& sMP3_URL ){ msMP3_URL = sMP3_URL;};
+	
+	//! get mp3 url
+	std::string MP3_URL() const { return msMP3_URL;};
+	
+	
+	
 	
 	//! is the take in stereo
 	std::string Mode() const { return msMode;};
@@ -85,9 +95,10 @@ public:
 	std::string GetMp3FilePath();
 	std::string GetOggFilePath();
 	
-	
+	//! get channels in take
 	tuint32 Channels() {return muiChannels; };
 	
+	//! get channels in take
 	tuint32 Channels() const {return muiChannels; };
 	
 
@@ -104,8 +115,11 @@ protected:
 	//! description
 	std::string msDescription;
 
-	//! url
+	//! take url
 	std::string msURL;
+	
+	//! mp3 url
+	std::string msMP3_URL;
 	
 	//! stereo / mono
 	std::string msMode;

@@ -847,7 +847,7 @@ tbool CUploadTask::DoTake_PreVerify_After(tbool* pbSkipThisTake, tbool* pbNoMore
 		}
 	}
 
-	if (bTakeThere) {
+	if (bTakeThere && mpfileReply_Uploader) {
 		// Take has already been uploaded
 		*pbSkipThisTake = true;
 
@@ -1208,7 +1208,7 @@ tbool CUploadTask::DoCommit_Upload_After()
 			(const tchar*)mpfileReply_Uploader->GetMemoryPtr(),
 			iSize);
 
-		tint32 iDummy = 0;
+//		tint32 iDummy = 0;
 		//!!! TODO: Set commit number by calling a setter function on gpApplication
 		// .... something here
 	}
@@ -1224,8 +1224,8 @@ tbool CUploadTask::SetTakeURL(IFileMemory* pfile)
 
 	// Call setter function on application
 	//!!! TODO: Implement below!
-#if (0)
-	if (!gpApplication->Set_Take_URL(sXML)) {
+#if (1)
+	if (!gpApplication->Set_Take_Handshake(sXML)) {
 		msExtendedError = "Error getting URL for uploaded take";
 		return false;
 	}

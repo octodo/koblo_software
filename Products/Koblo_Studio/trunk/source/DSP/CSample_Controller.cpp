@@ -47,10 +47,7 @@ tuint64 CSample_Controller::Get_Sample_Duration_From_Name( const tchar* pszListN
 	delete(mpSample);
 	
 	return uiDuration;
-	
-	
 		
-	
 }
 
 void CSample_Controller::Set_Wave_Path( CTake_Data* pTake_Data, 
@@ -88,3 +85,9 @@ void CSample_Controller::Set_Wave_Path( CTake_Data* pTake_Data,
 		default: break;
 	}	
 }
+
+
+
+
+
+

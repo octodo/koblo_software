@@ -62,7 +62,7 @@ void CKSUpload_Controller::Upload_Project()
 	gpApplication->Playback_InProgressTask();
 	
 	
-	gpApplication->Test_Hand_Shakes();
+//	gpApplication->Test_Hand_Shakes();
 
 }
 
