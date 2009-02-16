@@ -111,9 +111,10 @@ void CSaveAsDialogOSX::DoDialog(tchar* pszPathNameOut, const tchar* pszPathName,
 				NavDisposeReply(&reply);
 	
 				strcpy((char*)pszPathNameOut, (const char*)psz);
+				//printf("\npszPathName_Temp=%s\n", pszPathName_Temp);
 				// Find out if we need to add extension
 				tbool bAddExt = false;
-				const tchar* pszExt = (const char*)(pszFileType + 1);
+				const tchar* pszExt = (*pszFileType) ? (const char*)(pszFileType + 1) : "";
 				tint32 iLenExt = strlen(pszExt);
 				tint32 iLenPath = strlen(pszPathNameOut);
 				tint32 iExtIndex = iLenPath - iLenExt;
@@ -127,9 +128,9 @@ void CSaveAsDialogOSX::DoDialog(tchar* pszPathNameOut, const tchar* pszPathName,
 				}
 				if (bAddExt) {
 					strcat((char*)pszPathNameOut, pszExt);
+					//printf("\npszPathName_Temp=%s\n", pszPathName_Temp);
 				}
 
-				//IFile::PathFromOS(pszPathNameOut);
 				IFile::PathFromOS2(pszPathNameOut, pszPathNameOut);
 			}
 		}
