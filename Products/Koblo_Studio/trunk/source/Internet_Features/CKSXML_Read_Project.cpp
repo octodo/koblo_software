@@ -89,8 +89,14 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 	
 	// read latst revision
 	std::string str;
-	char psz[128];
-	sprintf(psz, "/branches/%d/revisions/latest.xml", iProjectID);
+	char psz[256];
+	
+	sprintf(psz, "/branches/%d/latest/markup.xml", iProjectID);
+	
+//	curl http://koblo.com/branches/168/latest/markup.xml
+	
+	
+	
 	str = psz;
 	
 	tchar* pszBuff = NULL;

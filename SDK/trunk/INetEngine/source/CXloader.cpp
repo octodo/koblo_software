@@ -1135,7 +1135,7 @@ tbool CXloader::OpenConnection()
 	}
 
 	// Set "get connected" time-out at 3 seconds (that's quite enough even for slow analogue modems)
-	if (!SetOpt(CURLOPT_CONNECTTIMEOUT, "CURLOPT_CONNECTTIMEOUT", 3))
+	if (!SetOpt(CURLOPT_CONNECTTIMEOUT, "CURLOPT_CONNECTTIMEOUT", 13))
 		return false;
 
 	// Maybe set auto-redirect
