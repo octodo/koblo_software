@@ -28,10 +28,11 @@ void CSaveAsDialogOSX::Destroy()
 
 void CSaveAsDialogOSX::DoDialog(tchar* pszPathNameOut, const tchar* pszPathName, const tchar* pszFileType, const tchar* /*pszFileTypeDescription*/, const tchar* pszDefaultName)
 {
+	//!!! why does i got the extencion "%f" in the release build?????
 	tchar pszTmp[1024];
 	
 	IFile::PathFromOS2(pszPathName, pszTmp, true);
-	std::string sPathName((const char*)pszTmp + 1);
+	std::string sMusic_Koblo((const char*)pszTmp + 1);
 
 	pszPathNameOut[0] = 0;
 
@@ -62,7 +63,7 @@ void CSaveAsDialogOSX::DoDialog(tchar* pszPathNameOut, const tchar* pszPathName,
 
 	// Convert to pascal string, and add file name
 	char pszPascal[256];
-	strcpy((char*)&(pszPascal[1]), sPathName.c_str());
+	strcpy((char*)&(pszPascal[1]), sMusic_Koblo.c_str());
 	if (pszDefaultName) {
 		// If an extension is included in default-name (i.e. Windows style) we must remove it to avoid double extensions on OS X
 		tbool bRemovedExt = false;

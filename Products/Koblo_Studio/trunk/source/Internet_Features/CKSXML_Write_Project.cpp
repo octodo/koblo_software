@@ -43,12 +43,16 @@ tbool CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	std::string xml_str =  printer.CStr();
 	
 	// missing code 
-	std::string sFileName = gpApplication->GetProjectName() + ".xml";
+//	std::string sFileName = gpApplication->Project_Name() + ".xml";
 	
-	
+	printf("Save_Project_As_XML_File_To_Disk()\n");
 	std::string sProject_Name	= gpApplication->Project_Name();
 	std::string sProject_Folder = gpApplication->Project_Folder();
 	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";
+	
+	printf("sProject_Name = %s \n", sProject_Name.c_str());
+	printf("sProject_Folder = %s \n", sProject_Folder.c_str());
+	printf("sProject = %s \n", sProject.c_str());
 	
 	CAutoDelete<IFile> pfile(IFile::Create());
 	if (pfile->Open(sProject.c_str(), IFile::FileWrite)) {
@@ -75,7 +79,7 @@ void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectI
 	//------------------- DUMMY CODE ----------------------
 	
 	// print to console
-	printf(xml_str.c_str());
+//	printf(xml_str.c_str());
 	
 	// write file to disk
 	pDoc->SaveFile("xml_doc.xml");

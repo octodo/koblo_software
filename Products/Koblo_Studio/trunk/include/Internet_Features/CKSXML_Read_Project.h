@@ -166,6 +166,8 @@ public:
 
 private:
 	
+	virtual void Prepare_For_XML();
+	
 	tbool mbNew_Revision;
 	
 	//! iterate the list of takes to download
@@ -194,23 +196,23 @@ private:
 	
 	
 	
-	//1 list of sample files to load
+	//! list of sample files to load
 	std::list<CSample_Data> mSample_Data_List;
 	
-	//1 list of takes files to decompress
+	//! list of takes files to decompress
 	std::list<CTake_Data*> mDecompress_Que;
 	
-	//1 list of takes files to download
+	//! list of takes files to download
 	std::list<CTake_Data*> mDownload_Que;
 	
-	//1 list of takes files to load
+	//! list of takes files to load
 	std::list<CTake_Data*> mInsert_Que;
 	
-	//1 list of takes files that needs pict files
+	//! list of takes files that needs pict files
 	std::list<CTake_Data*> mCreate_Pict_File_Que;
 	
 	
-	//1 list of regions to insert when all wav files and pict files are readdy
+	//! list of regions to insert when all wav files and pict files are readdy
 	std::list<CRegion_Data> mRegion_Data_List;
 	
 	std::string Get_Take_Screen_Name(std::string sUUID);

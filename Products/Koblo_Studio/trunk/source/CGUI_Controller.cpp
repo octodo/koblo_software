@@ -18,7 +18,7 @@ void CGUI_Controller::Open_Close_Mix_Window()
 	//!!! sugestion ; change code so if the window is open and not in front bring it to front
 	
 	tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Mix_Window, giSectionGUI) != 0);
-	tbool bReallyVisible = gpApplication->GetModule()->GetHost()->IsWindowVisible(giMix_Window) == 0 ? false : true;
+	tbool bReallyVisible = gpApplication->GetModule()->GetHost()->IsWindowVisible(giMix_Window) != 0 ;
 	if (bTest != bReallyVisible) {
 		gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Show_Mix_Window, de::IParameterManager::TypeGlobal, giSectionGUI);
 	}
@@ -77,7 +77,7 @@ void CGUI_Controller::Show_Hide_Plugins()
 void CGUI_Controller::Update_Windows() 
 {
 	// mix window
-	tbool bVisibel	=	gpApplication->GetGlobalParm(giParamID_Show_Mix_Window,  giSectionGlobal);
+	tbool bVisibel	=	gpApplication->GetGlobalParm(giParamID_Show_Mix_Window,  giSectionGUI);
 	if(bVisibel )
 		gpApplication->GetModule()->GetHost()->ActivateWindow(giMix_Window);
 	else
@@ -85,7 +85,7 @@ void CGUI_Controller::Update_Windows()
 	
 
 	// rack window
-	bVisibel		=	gpApplication->GetGlobalParm(giParamID_Show_AUX_Window,  giSectionGlobal);
+	bVisibel		=	gpApplication->GetGlobalParm(giParamID_Show_AUX_Window,  giSectionGUI);
 	if(bVisibel )
 		gpApplication->GetModule()->GetHost()->ActivateWindow(giRack_Window);
 	else

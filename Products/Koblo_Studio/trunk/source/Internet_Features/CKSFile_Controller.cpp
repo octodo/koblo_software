@@ -86,9 +86,12 @@ tint32 CKSFile_Controller::New_Project()
 	tchar pszDefault_Folder[1024];
 	gpApplication->GetDefaultProjectFolder(pszDefault_Folder);
 
+	
 	tchar pszProject_Folder[1024];
 	CAutoDelete<ge::ISaveAsDialog> pDlg(ge::ISaveAsDialog::Create());
 	pDlg->DoDialog(pszProject_Folder, pszDefault_Folder, "", "", "New Project");
+	std::string sProject_Folder = pszProject_Folder;
+
 	
 	// user canceled operation
 	if (pszProject_Folder[0] == 0)
@@ -97,8 +100,10 @@ tint32 CKSFile_Controller::New_Project()
 	// clean project
 	gpApplication->CleanProject(giDefault_Number_Of_Tracks);
 	
+	
+	
 	// update path's and names for files and folders
-	Update_Project_Name(pszProject_Folder);
+	Update_Project_Name(sProject_Folder);
 	
 	// create new folders for the project
 	Create_Folders();
@@ -143,6 +148,7 @@ tint32 CKSFile_Controller::Save_Before_Close()
 
 tbool CKSFile_Controller::Save_Project()
 {
+	printf("Save_Project()\n");
 	gpApplication->Save_Project_As_XML_File_To_Disk();
 	return true;
 	
@@ -387,6 +393,8 @@ void CKSFile_Controller::Update_Project_Name(std::string sNew_Name)
 	tint iPos = sProject_Name.find_last_of(':');
 	sProject_Name = sProject_Name.substr(iPos + 1, sProject_Name.size());
 	gpApplication->Project_Name(sProject_Name);
+	
+	printf( "Update_Project_Name : %s \n", sProject_Name.c_str() );
 	
 
 	

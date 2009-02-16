@@ -263,8 +263,8 @@ void CKSApplication::AddParameters()
 	AddGlobalParm(giSectionGlobal, giParamID_Info_Radio_Button, 0, 4, 0);
 	AddGlobalParm(giSectionGlobal, giParamID_Info_Verify_Rights, 0, 1, 0);
 	AddGlobalParm(giSectionGlobal, giParamID_Loop_On, 0, 1, 0);
-	AddGlobalParm(giSectionGlobal, giParamID_Loop_Start, 0, 0x7FFFFFFF, 44100);
-	AddGlobalParm(giSectionGlobal, giParamID_Loop_End, 0, 0x7FFFFFFF, 44100*5);
+	AddGlobalParm(giSectionGlobal, giParamID_Loop_Start, 0, 0x7FFFFFFF, 0);
+	AddGlobalParm(giSectionGlobal, giParamID_Loop_End, 0, 0x7FFFFFFF, 44100*4);
 	AddGlobalParm(giSectionGlobal, giParamID_KS_Snap_To, 0, 32, 4);
 	AddGlobalParm(giSectionGlobal, giParamID_Project_ID, -1, 0x7FFFFFFF, -1);
 	AddGlobalParm(giSectionGlobal, giParamID_Branch_ID, -1, 0x7FFFFFFF, -1);
@@ -551,6 +551,7 @@ void CKSApplication::UpdateEngineData(tint32 iParamID, tint32 iValue)
 			case giParamID_KS_Tempo:{
 			
 				mfTempo = (tfloat32)iValue/ 10.0f;
+				break;
 			}
 			case giParamID_Loop_Start:{
 				gpDSPEngine->Set_Loop_Start(iValue);
@@ -928,9 +929,23 @@ void CKSApplication::OnLoad(const std::string& sPathName)
 	Stack_Tracks();
 } // OnLoad
 
+std::string CKSApplication::Default_Project_Folder()
+{
+	
+	tchar pszDefaultFolder[1024];
+	IFile::GetSystemDirectory(IFile::SystemDirMyMusic, pszDefaultFolder);
+/*	strcat(pszPathName, "Koblo Studio:");
+	IFile::CreateDirectory(pszPathName);
+*/	
+	
+	std::string s;
+	
+	return s;
+}
 
 void CKSApplication::GetDefaultProjectFolder(tchar* pszPathName)
 {
+
 	IFile::GetSystemDirectory(IFile::SystemDirMyMusic, pszPathName);
 	strcat(pszPathName, "Koblo Studio:");
 	IFile::CreateDirectory(pszPathName);
@@ -944,6 +959,7 @@ void CKSApplication::GetDefaultProjectFolder(tchar* pszPathName)
 		IFile::PathFromOS2("/", pszPathName);
 #endif // _Mac
 	}
+	
 } // GetDefaultProjectFolder
 
 
@@ -4209,8 +4225,12 @@ void CKSApplication::DeleteFileThatOccupiesFolderName(std::string sFolderName)
 tbool CKSApplication::VerifyFolderCreated(std::string sFolderName)
 {
 	tbool bIsFolder;
+	
+//	printf("\n \n           +++++++++  pszDefault_Folder = %s ++++++++++++ \n \n", pszDefault_Folder);
+	
+	
 	if ((!IFile::Exists(sFolderName.c_str(), &bIsFolder)) || (!bIsFolder)) {
-		msExtendedError = "Couldn't create folder:\n" + sFolderName;
+		msExtendedError = "++Couldn't create folder:\n" + sFolderName;
 		return false;
 	}
 	return true;

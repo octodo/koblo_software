@@ -14,6 +14,20 @@ CKSXML_Read_Project::~CKSXML_Read_Project()
 
 }
 
+void CKSXML_Read_Project::Prepare_For_XML()
+{
+	mSample_Data_List.clear();
+	mDecompress_Que.clear();
+	mDownload_Que.clear();
+	mInsert_Que.clear();
+	mCreate_Pict_File_Que.clear();
+	mRegion_Data_List.clear();
+	
+	muiTrack	=	0;
+	
+	mpTinyXMLDoc->Clear();
+}
+
 void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 {
 
@@ -23,16 +37,7 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		// reset/ erase the current DAW project
 		Reset_Project();
 		
-		mSample_Data_List.clear();
-		mDecompress_Que.clear();
-		mDownload_Que.clear();
-		mInsert_Que.clear();
-		mCreate_Pict_File_Que.clear();
-		mRegion_Data_List.clear();
-		
-		muiTrack	=	0;
-		
-		mpTinyXMLDoc->Clear();
+		Prepare_For_XML();
 		
 		// read project in to char buffer
 		tuint iSize = pFile->GetSizeWhenOpened();
@@ -79,8 +84,8 @@ void CKSXML_Read_Project::Reset_Project()
 */
 void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 {
-	// cleanup old tinyxml dom
-	mpTinyXMLDoc->Clear();
+	Reset_Project();
+	Prepare_For_XML();
 	
 	// read latst revision
 	std::string str;
@@ -93,11 +98,32 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 	ine::IINetUtil::GetWebFile(NULL, "koblo.com", str.c_str(), &iOutLen, &pszBuff);
 	
 	if ((pszBuff) && (iOutLen > 0)) {
+		
+		printf(pszBuff);
 
 		// parse XML file in to TinyXml object tree
 		mpTinyXMLDoc->Parse(pszBuff);
 		
-		//printf(pszBuff);
+		// pass the TinyXML DOM in to the DAW data structure
+		Pass_The_Project_Tag( mpTinyXMLDoc );
+		
+		// 
+		Prepare_Samples();
+		
+		// download takes
+		Download_Takes();
+		// decompress takes
+		Decompress_Takes();
+		
+		// create pictfiles
+		
+		// insert takes 
+		Insert_Takes();
+		
+		// insert regions
+		Insert_Regions();
+		
+		gpDSPEngine->Deselect_All_Tracks();
 	}
 	ine::IINetUtil::ReleaseBuffer(&pszBuff);
 	
@@ -379,7 +405,7 @@ void CKSXML_Read_Project::Parse_Track_Object(TiXmlElement* pElement)
 			
 			else if (stricmp("in", pChild->Value()) == 0) {
 				Read_Track_In(pChild->ToElement(),  iTrackID);
-				printf( "\n" );
+			//	printf( "\n" );
 			}
 			else if (stricmp("out", pChild->Value()) == 0) {
 				Read_Track_Out(pChild->ToElement(),  iTrackID);

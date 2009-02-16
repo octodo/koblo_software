@@ -147,6 +147,11 @@ public:
 	virtual void UpdateAllGUI();
 	
 	virtual void GetDefaultProjectFolder(tchar* pszPathName);
+	
+	std::string Default_Project_Folder();
+	
+	
+	
 	virtual void GetTempFolder(tchar* pszPathName);
 	virtual void DeleteFileThatOccupiesFolderName(std::string sFolderName);
 	virtual tbool VerifyFolderCreated(std::string sFolderName);

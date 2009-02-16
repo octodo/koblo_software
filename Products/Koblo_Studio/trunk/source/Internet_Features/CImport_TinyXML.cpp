@@ -359,10 +359,10 @@ void CImport_TinyXML::Read_Loop_Object(TiXmlElement* pElement)
 			}
 			
 			else if (stricmp("start", pChild->Value()) == 0) 
-				Set_DAW_Parameter(pChild, giTinyXml_Type_Int,giParamID_Loop_Start , giSectionGUI );
+				Set_DAW_Parameter(pChild, giTinyXml_Type_Int,giParamID_Loop_Start , giSectionGlobal );
 
 			else if (stricmp("end", pChild->Value()) == 0) 
-				Set_DAW_Parameter(pChild, giTinyXml_Type_Int,giParamID_Loop_End , giSectionGUI );
+				Set_DAW_Parameter(pChild, giTinyXml_Type_Int,giParamID_Loop_End , giSectionGlobal );
 
 		}
 	}
@@ -431,11 +431,11 @@ void CImport_TinyXML::Open_Window(std::string sOn_Off, tint32 iWindow)
 {
 	
 	if (stricmp("off", sOn_Off.c_str()) == 0){
-		gpApplication->SetGlobalParm(iWindow, 0,  giSectionGlobal);
+		gpApplication->SetGlobalParm(iWindow, 0,  giSectionGUI);
 	}
 	
 	else if (stricmp("on", sOn_Off.c_str()) == 0) 
-		gpApplication->SetGlobalParm(iWindow, 1,  giSectionGlobal);
+		gpApplication->SetGlobalParm(iWindow, 1,  giSectionGUI);
 	
 
 }
