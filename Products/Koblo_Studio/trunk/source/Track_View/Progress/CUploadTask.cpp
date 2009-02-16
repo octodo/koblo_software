@@ -847,12 +847,13 @@ tbool CUploadTask::DoTake_PreVerify_After(tbool* pbSkipThisTake, tbool* pbNoMore
 		}
 	}
 
-	if (bTakeThere && mpfileReply_Uploader) {
+	// (lasse) no! if (bTakeThere && mpfileReply_Uploader) {
+	if (bTakeThere) {
 		// Take has already been uploaded
 		*pbSkipThisTake = true;
 
 		// We came here because we didn't have URL for take - fix that
-		if (!SetTakeURL(mpfileReply_Uploader))
+		if (!SetTakeURL(mpfileReply_VerifyTake))
 			return false;
 
 		if (mlistpTakes.size() == 0) {
