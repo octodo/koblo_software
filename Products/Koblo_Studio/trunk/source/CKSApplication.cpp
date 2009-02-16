@@ -1101,7 +1101,8 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	tint32 iResourceID = *((tint32*)pszString);
 	switch (iResourceID) {
 		case ID_FILE_OPEN:
-			if (!MenuFileLoadProject()) {
+			//if (!MenuFileLoadProject()) {
+			if (!Open_Project()) {
 				LoadSaveErrDlg("Error loading project");
 			}
 			break;

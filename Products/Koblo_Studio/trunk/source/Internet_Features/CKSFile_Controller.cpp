@@ -31,7 +31,7 @@ tbool CKSFile_Controller::Open_Project()
 	tchar pszXML_Path[1024];
 	gpApplication->GetDefaultProjectFolder(pszDefaultFolder);
 	
-	pDlg->DoDialog(pszXML_Path, pszDefaultFolder, "*.KSProject", "KS Project (*.KSProject)", "New Project.xml");
+	pDlg->DoDialog(pszXML_Path, pszDefaultFolder, "*.xml", "KS Project (*.xml)", "New Project.xml");
 	
 	if (pszXML_Path[0] == 0) {
 		// Exit with no error

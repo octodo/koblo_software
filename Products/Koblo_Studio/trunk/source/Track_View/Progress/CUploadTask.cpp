@@ -727,7 +727,7 @@ tbool CUploadTask::DoNewBranch_After(tbool* pbNoTakes)
 tbool CUploadTask::DoTake_PreVerify_Before()
 {
 	if (mlistpTakes.size() == 0) {
-		msExtendedError = "Internal error: No upload takes in list";
+		msExtendedError = "Internal error: Where did upload takes in list go?";
 		return false;
 	}
 	if (mpTakeCurr) {
@@ -1226,7 +1226,7 @@ tbool CUploadTask::SetTakeURL(IFileMemory* pfile)
 	//!!! TODO: Implement below!
 #if (1)
 	if (!gpApplication->Set_Take_Handshake(sXML)) {
-		msExtendedError = "Error getting URL for uploaded take";
+		msExtendedError = "Error parsing/setting URL for uploaded take";
 		return false;
 	}
 #endif
