@@ -77,6 +77,10 @@ void CKS_Import_File_Browser::Build_File_List(const std::string& sPath)
 			msFolder_Path += ":\\";
 		}
 #endif // _WIN32
+#ifdef _Mac
+		// For OS X we must add folder delimiter chars or it won't work
+		msFolder_Path = std::string(":") + msFolder_Path + ":";
+#endif // _Mac
 	}
 	// prepare check if files in folder
 	CAutoDelete<IFileSearch> pSearch(IFileSearch::Create());

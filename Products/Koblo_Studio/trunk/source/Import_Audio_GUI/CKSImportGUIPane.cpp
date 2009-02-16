@@ -228,7 +228,9 @@ void CKSImportGUIPane::Prepare_Popups()
 {
 	std::string s(msPathNameCur);
 
-	s = s.substr(1);
+	if (s.find_first_of(':') == 0) {
+		s = s.substr(1);
+	}
 
 	// maximum 64 items in popup
 	std::string psStrings[64];
@@ -242,6 +244,10 @@ void CKSImportGUIPane::Prepare_Popups()
 
 		psStrings[iStrings] = s.substr(0, iPos);
 		s = s.substr(iPos + 1);
+		iStrings++;
+	}
+	if (s.length() > 0) {
+		psStrings[iStrings] = s;
 		iStrings++;
 	}
 
