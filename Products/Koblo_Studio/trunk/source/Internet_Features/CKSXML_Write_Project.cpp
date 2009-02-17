@@ -68,6 +68,7 @@ tbool CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 
 void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID)
 {
+	/*
 	TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
 	TiXmlDocument *pDoc		=	new TiXmlDocument("koblo_doc");
 	pDoc->LinkEndChild( decl );
@@ -96,19 +97,11 @@ void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectI
 	char psz[128];
 	sprintf(psz, "branches/%d/revisions", iProject_ID);
 	std::string str = psz;
-	/*
-	 curl -u "user@koblo.com:password" \
-	 -F "commit[description]= Track names added" \
-	 -F "commit[markup]=</Users/maxgronlund/Documents/Koblo_Software/Products/Koblo_Studio/trunk/build/Debug/xml_doc.xml" \
-	 http://koblo.com/branches/1/revisions.xml
-	 */
-/*
-	tchar* pszBuff = NULL;
-	tint32 iOutLen = 0;
-	ine::IINetUtil::GetWebFile("userid=name.com&password=pswrd", "koblo.com", str.c_str(), &iOutLen, &pszBuff);
-*/
+	*/
 
 }
+
+
 
 void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 {
@@ -121,11 +114,9 @@ void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 	TiXmlElement* pProject = new TiXmlElement( "project" );
 
 	
+	// only store attribute if alreaddy set.
 	pProject->SetAttribute("uuid", gpApplication->Get_Project_UUID().c_str());
-/*	
-	pProject->SetAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
-	pProject->SetAttribute("xsi:noNamespaceSchemaLocation","http://koblo.com/schemas/koblo_project.xsd");
- */
+
 	pDoc->LinkEndChild( pProject );
 	
 	// name

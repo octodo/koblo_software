@@ -47,6 +47,8 @@ public:
 	//! write the XML file to Koblo.com
 	void Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID);
 	
+	
+	
 	std::string Create_License_String();
 	
 	tbool Save_Project_As_XML_File_To_Disk();
@@ -105,6 +107,19 @@ private:
 	void Write_Samples(TiXmlElement* pParent);
 	
 	void Write_Sample(TiXmlElement* pParent, CSample_Data* pSample_Data);
+	
+	
+	
+	
+	
+	//! write samples
+//	void Write_Samples(TiXmlElement* pParent);
+	
+//	void Write_Sample(TiXmlElement* pParent, CSample_Data* pSample_Data);
+	
+	
+	
+	
 	
 	void Write_Take(TiXmlElement* pParent, CTake_Data* pTake_Data);
 	

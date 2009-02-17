@@ -33,20 +33,32 @@ void CKSUpload_Controller::Upload_Project()
 	gpApplication->Compress_OGG_File();
 	gpApplication->Compress_MP3_File();
 	
+	
+	tint iProjectID = gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
+	
+	if(iProjectID == -1)
+		Upload_New_Project();
+	else
+		Upload_Existing_Project();
+	
+//	gpApplication->Test_Hand_Shakes();
 
+}
 
-	//!!! TODO: Verify this is ok?
-	// secure xml file is uptodate
+void CKSUpload_Controller::Upload_New_Project()
+{
+	gpApplication->Set_UUID();
+	
 	gpApplication->Save_Project_As_XML_File_To_Disk();
 	std::string sProjectXmlFile = gpApplication->Project_Folder();
 	sProjectXmlFile += gpApplication->Project_Name() + ".xml";
-
+	
 	// Make task for first-time upload
 	CUploadTask* pUploadTask = new CUploadTask();
 	pUploadTask->Init_NewProject(
 								 gpApplication->Get_User_Name().c_str(),
 								 gpApplication->Get_Password().c_str(),
-
+								 
 								 gpApplication->Get_Project_UUID().c_str(),
 								 (gpApplication->Project_Name() +" - dummy project, will be deleted soon").c_str(),
 								 "no description", // project description
@@ -55,15 +67,45 @@ void CKSUpload_Controller::Upload_Project()
 								 gpApplication->Get_Commit_UUID().c_str(), 
 								 sProjectXmlFile.c_str(),
 								 &mUpload_Que);
-
+	
 	// Add task to task list
 	CAutoLock Lock(gpApplication->mMutex_Progress);
 	gpApplication->mpProgressTasks->Add(pUploadTask);
 	gpApplication->Playback_InProgressTask();
-	
-	
-//	gpApplication->Test_Hand_Shakes();
+}
 
+void CKSUpload_Controller::Upload_Existing_Project()
+{
+	gpApplication->Set_Commit_UUID();
+	
+	gpApplication->Save_Project_As_XML_File_To_Disk();
+	std::string sProjectXmlFile = gpApplication->Project_Folder();
+	sProjectXmlFile += gpApplication->Project_Name() + ".xml";
+	
+
+	
+	// Make task for first-time upload
+	CUploadTask* pUploadTask = new CUploadTask();
+	pUploadTask->Init_Commit(
+							 gpApplication->Get_User_Name().c_str(),
+							gpApplication->Get_Password().c_str(),
+								 
+							gpApplication->Get_Project_UUID().c_str(),
+							gpApplication->Get_Branch_UUID().c_str(),
+							gpApplication->Get_Commit_UUID().c_str(), 
+							sProjectXmlFile.c_str(),
+							"next commit",
+							&mUpload_Que);
+	
+	// Add task to task list
+	CAutoLock Lock(gpApplication->mMutex_Progress);
+	gpApplication->mpProgressTasks->Add(pUploadTask);
+	gpApplication->Playback_InProgressTask();
+}
+
+void CKSUpload_Controller::XML_Upload_Compleated()
+{
+	gpApplication->Save_Project_As_XML_File_To_Disk();
 }
 
 

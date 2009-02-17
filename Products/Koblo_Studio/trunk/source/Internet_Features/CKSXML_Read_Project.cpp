@@ -68,7 +68,9 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		// insert regions
 		Insert_Regions();
 		
-		gpDSPEngine->Deselect_All_Tracks();
+		CBasePane::SMsg Msg;
+		Msg = Msg_Deselect_Regions;
+		gpApplication->Send_Msg_To_All_Panes(&Msg);
 			
 	}
 	
@@ -91,11 +93,10 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 	std::string str;
 	char psz[256];
 	
+	//if the project is uploaded
+	gpApplication->Get_Project_UUID().c_str();
+	
 	sprintf(psz, "/branches/%d/latest/markup.xml", iProjectID);
-	
-//	curl http://koblo.com/branches/168/latest/markup.xml
-	
-	
 	
 	str = psz;
 	
@@ -129,7 +130,11 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 		// insert regions
 		Insert_Regions();
 		
-		gpDSPEngine->Deselect_All_Tracks();
+		//gpDSPEngine->Deselect_All_Tracks();
+		
+		CBasePane::SMsg Msg;
+		Msg = Msg_Deselect_Regions;
+		gpApplication->Send_Msg_To_All_Panes(&Msg);
 	}
 	ine::IINetUtil::ReleaseBuffer(&pszBuff);
 	
@@ -160,7 +165,7 @@ void CKSXML_Read_Project::Read_Project_Object(TiXmlNode* pParent)
 	if ( !pParent ) return ;
 	
 	TiXmlAttribute* pAttrib	=	pParent->ToElement()->FirstAttribute();
-	// set project uuid
+	//  project uuid
 	if(pAttrib) {
 		std::string sProjectUUID =  pAttrib->Value() ;
 		gpApplication->Set_Project_UUID(sProjectUUID);

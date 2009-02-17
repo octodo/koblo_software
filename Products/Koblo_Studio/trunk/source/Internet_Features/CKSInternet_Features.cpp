@@ -24,9 +24,10 @@ CKSInternet_Features::~CKSInternet_Features()
 
 void CKSInternet_Features::On_Menu_Download_Project()
 {
-	tbool bNoProjectID = (gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal) == -1);
+	//tint32 iProject_Id = gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
+	
 	// if no project id is set
-	if(bNoProjectID){
+	//if(iProject_Id == -1){
 		
 		// Open the project id dialog
 		tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Projec_ID_Window, giSectionGUI) != 0);
@@ -35,10 +36,10 @@ void CKSInternet_Features::On_Menu_Download_Project()
 		}
 		else
 			gpApplication->GetModule()->GetHost()->ActivateWindow(giProject_ID_Window);
-	}
-	else{
-		gpApplication->LoadSaveErrDlg("You cant overwrite this project! Try update project instead");
-	}
+	//}
+	//else{
+	//	gpApplication->Download_Project(iProject_Id);
+//	}
 } 
 
 
@@ -88,9 +89,7 @@ void CKSInternet_Features::Download_Project(tint32 iProjectID)
 	
 	// read the project from koblo.com
 	gpApplication->Read_Latest_Revision_From_Koblo(iProjectID);
-	// load the project
-	Load_Project( iProjectID);
-	
+
 	
 }
 
@@ -98,7 +97,8 @@ void CKSInternet_Features::Update_Project(tint32 iProjectID)
 {
 	// read the project from koblo.com
 	gpApplication->Read_Latest_Revision_From_Koblo(iProjectID);
-	
+
+	/*
 	// check version
 	if(gpApplication->Check_For_Newer_Revision(iProjectID))
 	{
@@ -109,6 +109,7 @@ void CKSInternet_Features::Update_Project(tint32 iProjectID)
 		
 		gpApplication->LoadSaveErrDlg("No newer revision on server!");
 	}
+	 */
 	
 }
 
