@@ -293,6 +293,7 @@ enum EPaneMsg
 	MsgSign_Out,
 	Msg_LoadPrefs_Done,
 	Msg_Do_Delete,
+	Msg_Deselect_Regions,
 };
 
 // Track Editor

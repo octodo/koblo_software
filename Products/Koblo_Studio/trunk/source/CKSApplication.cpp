@@ -4824,7 +4824,7 @@ tbool CKSApplication::OnTimer_CanStop(tint32 iID)
 					ParamRec.cancelText = nil;
 					ParamRec.otherText = nil;
 					DialogRef DlgRef;
-				/*	
+					
 					//OSStatus osStat = ::CreateStandardAlert(kAlertPlainAlert, strCaption, strError, &ParamRec, &DlgRef);
 					OSStatus osStat = ::CreateStandardSheet(kAlertPlainAlert, strCaption, strError, &ParamRec, NULL, &DlgRef);
 					if (osStat == 0) {
@@ -4842,7 +4842,7 @@ tbool CKSApplication::OnTimer_CanStop(tint32 iID)
 						//DialogItemIndex hit;
 						//::RunStandardAlert(DlgRef, NULL, &hit);
 					}
-				*/
+				
 					
 #endif // _Mac
 					

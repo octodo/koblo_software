@@ -46,8 +46,14 @@ public:
 	//! Destructor
 	virtual ~CKSUpload_Controller();
 	
-	//! itterate all samples in the mSample_Data_List
+	//! upload project
 	virtual void Upload_Project();
+	
+	//! upload new project
+	virtual void Upload_New_Project();
+	
+	//! upload excisting project
+	virtual void Upload_Existing_Project();
 	
 	//! check one sample from the mSample_Data_List
 	virtual void Prepare_Sampel_For_Upload(CSample_Data* pSample_Data);
@@ -66,6 +72,9 @@ public:
 	
 	// validate that a take acutually is readable auido file/ files
 	tbool Validate_Take(CTake_Data* pTake_Data);
+	
+	// called when the xml file is uploaded to koblo.com
+	void XML_Upload_Compleated();
 	
 	
 

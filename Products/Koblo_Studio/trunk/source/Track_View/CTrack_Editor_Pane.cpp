@@ -753,6 +753,7 @@ void CTrack_Editor_Pane::SendMsgFromTop(SMsg* pMsg)
 		case Msg_Go_To_Mouse:
 		case Msg_Progress:
 		case Msg_Set_Grid:
+		case Msg_Deselect_Regions:
 		{
 			SendMsg(pMsg);
 			break;

@@ -225,7 +225,9 @@ tbool CUploadTask::Init_Commit(
 	const tchar* pszUser, const tchar* pszPassword,
 	const tchar* pszProjUUID,
 	const tchar* pszBranchUUID,
-	const tchar* pszCommitUUID, const tchar* pszfileCommit, const tchar* pszCommitDesc,
+	const tchar* pszCommitUUID, 
+							   const tchar* pszfileCommit, 
+							   const tchar* pszCommitDesc,
 	std::list<CTake_Data*>* plistpTakes)
 {
 	if (miActionOrder != 0) {
