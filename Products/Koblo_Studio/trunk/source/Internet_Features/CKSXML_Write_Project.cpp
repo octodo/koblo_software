@@ -31,6 +31,10 @@ std::string CKSXML_Write_Project::Get_Internal_Data_As_XML()
 
 tbool CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 {
+	// (lasse) Take lock to avoid non-thread-safe behaviour (would crash)
+	CAutoLock Lock(gpApplication->mMutex_ForUpAndDownloadTask_CallBack);
+
+
 	TiXmlDeclaration* decl	=	new TiXmlDeclaration( "1.0", "UTF-8", "" );
 	TiXmlDocument *pDoc		=	new TiXmlDocument("koblo_doc");
 	pDoc->LinkEndChild( decl );

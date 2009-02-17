@@ -164,25 +164,25 @@ void CKSInternet_Features::SetProjectName( const std::string& sName)
 
 void CKSInternet_Features::Set_Branch_Name( const std::string& sName)
 {
-	CAutoLock Lock(mMutex_ForCUploadTask_CallBack);
+	CAutoLock Lock(mMutex_ForUpAndDownloadTask_CallBack);
 	msBranchName = sName;
 }
 	
 std::string CKSInternet_Features::Get_Branch_Name()
 {
-	CAutoLock Lock(mMutex_ForCUploadTask_CallBack);
+	CAutoLock Lock(mMutex_ForUpAndDownloadTask_CallBack);
 	return msBranchName;
 }
 	
 void CKSInternet_Features::Branch_Revision( tuint32 uiBranch_Revision )
 {
-	CAutoLock Lock(mMutex_ForCUploadTask_CallBack);
+	CAutoLock Lock(mMutex_ForUpAndDownloadTask_CallBack);
 	muiBranch_Revision = uiBranch_Revision;
 }
 	
 tuint32 CKSInternet_Features::Branch_Revision(  )
 {
-	CAutoLock Lock(mMutex_ForCUploadTask_CallBack);
+	CAutoLock Lock(mMutex_ForUpAndDownloadTask_CallBack);
 	return muiBranch_Revision;
 }
 

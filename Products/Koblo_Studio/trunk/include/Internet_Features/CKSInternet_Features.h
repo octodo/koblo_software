@@ -173,6 +173,11 @@ public:
 	// get uuid from CKSUUID object
 	std::string Get_Commit_UUID(){ return mpCommit_UUID->Get_UUID();};
  
+
+	// (lasse) important: mutex for callback
+	//! This mutex must be taken before doing anything with variables or files that CUploadTask and CDownloadTask may change
+	CMutex mMutex_ForUpAndDownloadTask_CallBack;
+	
 	
 private:
 
@@ -194,9 +199,6 @@ private:
 	//! project path
 //	std::string msProject_Path;
 
-	//! This mutex must be taken before doing anything with variables that CUploadTask may change
-	CMutex mMutex_ForCUploadTask_CallBack;
-	
 	//! project description
 	std::string msProject_Description;
 	
