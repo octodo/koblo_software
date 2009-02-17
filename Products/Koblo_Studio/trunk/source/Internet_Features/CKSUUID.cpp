@@ -18,7 +18,7 @@ void CKSUUID::Check_UUID()
 }
 
 
-std::string CKSUUID::Get_UUID( )
+std::string CKSUUID::Get_UUID()
 {
 	Check_UUID();
 	return msUUID;
@@ -34,4 +34,16 @@ void CKSUUID::Generate_UUID()
 	Gen_UUID(pszUUID, uiBuffer_Size);
 	msUUID = pszUUID;
 	
+}
+
+tbool CKSUUID::UUID_Is_Set()
+{
+	return  msUUID.size() != 0;
+}
+
+std::string CKSUUID::Get_New_UUID()
+{
+	Clear_UUID();
+	return Get_UUID();
+	 
 }

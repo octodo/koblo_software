@@ -149,6 +149,12 @@ public:
 	// get uuid from CKSUUID object
 	std::string Get_Project_UUID(){ return mpProject_UUID->Get_UUID();};
 	
+	// check if project uuid is set
+	tbool Project_UUID_Is_Set(){ return mpProject_UUID->UUID_Is_Set();};
+	
+	// check if project uuid is set
+	void Clear_Project_UUID(){  mpProject_UUID->Clear_UUID();};
+	
 	// set a new uuid
 	void Set_Project_UUID(){mpProject_UUID->Set_UUID();};
 	
@@ -172,6 +178,12 @@ public:
 	
 	// get uuid from CKSUUID object
 	std::string Get_Commit_UUID(){ return mpCommit_UUID->Get_UUID();};
+	
+	// get new uuid from CKSUUID object
+	std::string Get_New_Commit_UUID(){ return mpCommit_UUID->Get_New_UUID();};
+	
+	// set a new commit uuid
+	void Set_New_Commit_UUID(){ mpCommit_UUID->Get_New_UUID();};
  
 
 	// (lasse) important: mutex for callback

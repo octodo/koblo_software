@@ -115,7 +115,8 @@ void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 
 	
 	// only store attribute if alreaddy set.
-	pProject->SetAttribute("uuid", gpApplication->Get_Project_UUID().c_str());
+	if( gpApplication->Project_UUID_Is_Set() )
+		pProject->SetAttribute("uuid", gpApplication->Get_Project_UUID().c_str());
 
 	pDoc->LinkEndChild( pProject );
 	

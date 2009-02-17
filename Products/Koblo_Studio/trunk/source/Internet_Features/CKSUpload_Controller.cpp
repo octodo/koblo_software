@@ -21,6 +21,10 @@ void CKSUpload_Controller::Upload_Project()
 	mMp3_Compress_Que.clear();
 	mUpload_Que.clear();
 	
+	gpApplication->Set_Commit_UUID();
+	// save project to secure resent edits is stored
+	gpApplication->Save_Project_As_XML_File_To_Disk();
+	
 
 	std::list<CSample_Data>::iterator  itSample_Data = gpApplication->Get_Sample_Data_List_Begin();
 	
@@ -28,17 +32,14 @@ void CKSUpload_Controller::Upload_Project()
 		Prepare_Sampel_For_Upload( &(*itSample_Data) );
 	}
 	
+	// propare ogg and mp3 files
 	gpApplication->Compress_OGG_File();
 	gpApplication->Compress_MP3_File();
 	
-	
-	tint iProjectID = gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
-	
-	
-	if(iProjectID == -1)
-		Upload_New_Project();
-	else
-		Upload_Existing_Project();
+	// if the project has a UUID it has been uploaded to koblo.com
+	gpApplication->Project_UUID_Is_Set() ? Upload_Existing_Project() : Upload_New_Project();
+
+	gpApplication->Save_Project_As_XML_File_To_Disk();
 	
 //	gpApplication->Test_Hand_Shakes();
 
@@ -46,9 +47,8 @@ void CKSUpload_Controller::Upload_Project()
 
 void CKSUpload_Controller::Upload_New_Project()
 {
-	gpApplication->Set_UUID();
 	
-	gpApplication->Save_Project_As_XML_File_To_Disk();
+	// get path to project file
 	std::string sProjectXmlFile = gpApplication->Project_Folder();
 	sProjectXmlFile += gpApplication->Project_Name() + ".xml";
 	
@@ -57,7 +57,6 @@ void CKSUpload_Controller::Upload_New_Project()
 	pUploadTask->Init_NewProject(
 								 gpApplication->Get_User_Name().c_str(),
 								 gpApplication->Get_Password().c_str(),
-								 
 								 gpApplication->Get_Project_UUID().c_str(),
 								 (gpApplication->Project_Name() +" - dummy project, will be deleted soon").c_str(),
 								 "no description", // project description
@@ -75,23 +74,18 @@ void CKSUpload_Controller::Upload_New_Project()
 
 void CKSUpload_Controller::Upload_Existing_Project()
 {
-	gpApplication->Set_Commit_UUID();
-	
-	gpApplication->Save_Project_As_XML_File_To_Disk();
 	std::string sProjectXmlFile = gpApplication->Project_Folder();
 	sProjectXmlFile += gpApplication->Project_Name() + ".xml";
 	
 
-	
 	// Make task for first-time upload
 	CUploadTask* pUploadTask = new CUploadTask();
 	pUploadTask->Init_Commit(
 							 gpApplication->Get_User_Name().c_str(),
 							gpApplication->Get_Password().c_str(),
-								 
 							gpApplication->Get_Project_UUID().c_str(),
 							gpApplication->Get_Branch_UUID().c_str(),
-							gpApplication->Get_Commit_UUID().c_str(), 
+							gpApplication->Get_New_Commit_UUID().c_str(), 
 							sProjectXmlFile.c_str(),
 							"next commit",
 							&mUpload_Que);
@@ -102,8 +96,9 @@ void CKSUpload_Controller::Upload_Existing_Project()
 	gpApplication->Playback_InProgressTask();
 }
 
-void CKSUpload_Controller::XML_Upload_Compleated()
+void CKSUpload_Controller::Online_Project_Upload_Failed()
 {
+	gpApplication->Clear_Project_UUID();
 	gpApplication->Save_Project_As_XML_File_To_Disk();
 }
 

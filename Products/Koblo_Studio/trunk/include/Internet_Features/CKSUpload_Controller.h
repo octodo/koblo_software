@@ -73,8 +73,11 @@ public:
 	// validate that a take acutually is readable auido file/ files
 	tbool Validate_Take(CTake_Data* pTake_Data);
 	
-	// called when the xml file is uploaded to koblo.com
-	void XML_Upload_Compleated();
+	// called when the a new project is created on koblo.com
+	void Online_Project_Created();
+	
+	// called if the project upload to koblo.com failde
+	void Online_Project_Upload_Failed();
 	
 	
 
