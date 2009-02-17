@@ -98,6 +98,9 @@ void CKSUpload_Controller::Upload_Existing_Project()
 
 void CKSUpload_Controller::Online_Project_Upload_Failed()
 {
+	// Take lock (thread-safe)
+	CAutoLock Lock(gpApplication->mMutex_ForUpAndDownloadTask_CallBack);
+
 	gpApplication->Clear_Project_UUID();
 	gpApplication->Save_Project_As_XML_File_To_Disk();
 }

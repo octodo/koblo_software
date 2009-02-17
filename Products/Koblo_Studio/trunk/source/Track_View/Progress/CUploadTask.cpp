@@ -613,6 +613,12 @@ tbool CUploadTask::DoNewProject_Action(tbool* pbActionDone)
 			msExtendedError += "\n\n";
 			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), iReplySize);
 		}
+
+		// We must clear UUID for project as it didn't work - otherwise we'll
+		// think it succeeded and next commit will fail when opening project
+		// in koblo studio later...
+		gpApplication->Online_Project_Upload_Failed();
+
 		return false;
 	}
 
