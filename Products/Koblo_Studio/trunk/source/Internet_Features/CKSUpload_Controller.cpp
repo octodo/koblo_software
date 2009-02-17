@@ -22,11 +22,9 @@ void CKSUpload_Controller::Upload_Project()
 	mUpload_Que.clear();
 	
 
-	
 	std::list<CSample_Data>::iterator  itSample_Data = gpApplication->Get_Sample_Data_List_Begin();
 	
 	for (; itSample_Data != gpApplication->Get_Sample_Data_List_End(); itSample_Data++) {
-		
 		Prepare_Sampel_For_Upload( &(*itSample_Data) );
 	}
 	
@@ -35,6 +33,7 @@ void CKSUpload_Controller::Upload_Project()
 	
 	
 	tint iProjectID = gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
+	
 	
 	if(iProjectID == -1)
 		Upload_New_Project();
