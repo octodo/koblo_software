@@ -55,6 +55,29 @@ VstIntPtr VSTCALLBACK audioMasterCallbackModule(AEffect* effect, VstInt32 opcode
 
 		case audioMasterIdle:
 			return 0;
+
+		case audioMasterGetVendorString:
+			strcpy((char*)ptr, "Koblo");
+			return 1;
+
+		case audioMasterGetProductString:
+			strcpy((char*)ptr, "Studio");
+			return 1;
+
+		case audioMasterCanDo:
+		{
+			char* psz = (char*)ptr;
+			if (strcmp(psz, "supplyIdle") == 0) {
+				return 0;
+			}
+			if (strcmp(psz, "sendVstMidiEvent") == 0) {
+				return 1;
+			}
+			if (strcmp(psz, "sendVstTimeInfo") == 0) {
+				return 1;
+			}
+		}
+			return 0;
 	}
 
 	return 0;
@@ -184,6 +207,7 @@ void CVST2KSPIModule::DoScanDirectory(const std::string& sPathName)
 				pEffect = mainFunc(audioMasterCallbackModule);
 				// Note: Call setSampleRate and setBlockSize also (part of initialization sequence).
 				pEffect->dispatcher(pEffect, effOpen, 0, 0, 0, 0.0);
+//				int iVersion = pEffect->dispatcher(pEffect, effGetVstVersion, 0, 0, 0, 0.0);
 				
 				// We don't really need the name now, but we want to just try something to see if it crashes. Would be better to get some info about VST version and required host VST version.
 				char pszProductName[1042];

@@ -102,12 +102,6 @@ void CInvalidater::GetInvalidatedRect(SRect& rRect) //const
 void CInvalidater::InvalidateRect(const SRect &Rect)
 {
 //	printf("Invalidater InvalidateRect: %d, %d, %d, %d\n", Rect.iY, Rect.iY, Rect.iCX, Rect.iCY);
-
-	static int a = 0;
-	if (a++ == 50000) {
-		__asm int 3;
-	}
-
 	mbIsAdding = true;
 
 	CAutoLock Lock(mMutex);

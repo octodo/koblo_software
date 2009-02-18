@@ -1,5 +1,10 @@
 #include "KSOS.h"
 
+int a(int* array[], long newCount) {
+	int* temp=new int[newCount];
+	delete *array;
+	*array=temp;
+}
 
 CKSPlugInEffectPane::CKSPlugInEffectPane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 	: CBasePane(pPaneParent, pGUI),
@@ -270,9 +275,10 @@ void CKSPlugInEffectPane::SetGUI(kspi::IGUI* pGUI)
 	bnds.right = uiPlugSizeX;
 	bnds.bottom = uiPlugSizeY;
 
-	::CreateNewWindow(kOverlayWindowClass, kWindowNoShadowAttribute | kWindowStandardHandlerAttribute, &bnds, &mWindowRef);
+//	::CreateNewWindow(kOverlayWindowClass, kWindowNoShadowAttribute | kWindowStandardHandlerAttribute, &bnds, &mWindowRef);
 //	::CreateNewWindow(kFloatingWindowClass, kWindowNoShadowAttribute | kWindowStandardHandlerAttribute, &bnds, &mWindowRef);
-//	::CreateNewWindow(kOverlayWindowClass, kWindowCompositingAttribute | kWindowNoShadowAttribute | kWindowStandardHandlerAttribute, &bnds, &mWindowRef);
+	::CreateNewWindow(kOverlayWindowClass, kWindowCompositingAttribute | kWindowNoShadowAttribute | kWindowStandardHandlerAttribute, &bnds, &mWindowRef);
+//	mWindowRef = RefParent;
 
 /*	static int a = 0;
 	if (a++ == 0) {
@@ -284,9 +290,9 @@ void CKSPlugInEffectPane::SetGUI(kspi::IGUI* pGUI)
 			gClassEvents,
 			0,
 			&gClass);
-	}
+	}*/
 
-	OSErr err;
+/*	OSErr err;
 	HIViewRef ViewRef = NULL;
 	EventRef Event = NULL;
 	err = ::CreateEvent( NULL, kEventClassHIObject, kEventHIObjectInitialize, GetCurrentEventTime(), 0, &Event);
@@ -303,9 +309,30 @@ void CKSPlugInEffectPane::SetGUI(kspi::IGUI* pGUI)
 	if (HIViewFindByID (HIViewGetRoot ((WindowRef)RefParent), kHIViewWindowContentID, &contentView) == noErr) {
 		err = ::HIViewChangeFeatures(contentView, kHIViewAllowsSubviews, 0);
 		err = ::HIViewAddSubview(contentView, ViewRef);
-	}
+	}*/
 
-	mWindowRef = ;*/
+//	mWindowRef = ;
+
+	// HIViewFindByID(...) ???
+/*	ControlRef parentView = NULL;
+	::GetRootControl(/*RefParent*//*mWindowRef, &parentView);
+
+	OSErr err;
+	HIViewRef ViewRef = NULL;
+	EventRef Event = NULL;
+	err = ::CreateEvent( NULL, kEventClassHIObject, kEventHIObjectInitialize, GetCurrentEventTime(), 0, &Event);
+	HIRect Bounds;
+	Bounds.origin.x = 0;
+	Bounds.origin.y = 0;
+	Bounds.size.width = uiPlugSizeX;
+	Bounds.size.height = uiPlugSizeY;
+    err = ::SetEventParameter(Event, kEventParamBounds, typeHIRect, sizeof( HIRect ), &Bounds);
+    err = ::HIObjectCreate(gViewClassID, Event, (HIObjectRef*)&ViewRef);
+    err = ::HIViewChangeFeatures(ViewRef, kHIViewAllowsSubviews, 0);
+    HIViewChangeFeatures((HIViewRef)/*RefParent*//*mWindowRef, kHIViewAllowsSubviews, 0);
+//	err = ::HIViewAddSubview((HIViewRef)parentView/*RefParent*//*mWindowRef*//*, ViewRef);
+//	err = ::EmbedControl(ViewRef, (HIViewRef)/*RefParent*//*mWindowRef);
+	err = ::HIViewSetVisible(ViewRef, true);*/
 
 	Rect r;
 	::GetWindowBounds(RefParent, kWindowContentRgn, &r);
@@ -346,6 +373,29 @@ void CKSPlugInEffectPane::SetGUI(kspi::IGUI* pGUI)
 	::ShowWindow(mWindowRef);
 
 //	::DebugPrintWindowGroup(WindowGroup);
+
+/*	WindowRef window;
+	Rect r = {0,0,300,200};
+	WindowAttributes attributes = kWindowStandardHandlerAttribute | kWindowCloseBoxAttribute | kWindowCollapseBoxAttribute | kWindowCompositingAttribute | kWindowAsyncDragAttribute;
+	CreateNewWindow (kDocumentWindowClass, attributes, &r, &window);
+
+//	short *rect = 0;
+//	vstEffect->dispatch (effEditGetRect, 0, 0, &rect);
+//	vstEffect->dispatch (effEditOpen, 0, 0, window);
+	pGUI->MakeWindow((void*)window);
+	HIViewRef contentView;
+	HIViewFindByID (HIViewGetRoot (window), kHIViewWindowContentID, &contentView);
+	HIViewRef plugView = HIViewGetFirstSubview (contentView);
+	HIRect plugOriginalBounds;
+	HIViewGetBounds (plugView, &plugOriginalBounds);
+//	setWindowSize (plugOriginalBounds.size.width, plugOriginalBounds.size.height);
+//	HIViewSetFrame(windowContentView, &plugOriginalBounds);
+	 ::GetWindowBounds(window, kWindowContentRgn, &r);
+	 r.right = r.left + plugOriginalBounds.size.width;
+	 r.top += iY;
+	 r.bottom = r.top + plugOriginalBounds.size.height;
+	 ::SetWindowBounds(window, kWindowContentRgn, &r);
+	ShowWindow (window);*/
 
 	pGUI->MakeWindow((void*)mWindowRef);
 
