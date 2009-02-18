@@ -107,18 +107,15 @@ tbool CDownloadTask::Init_DownloadXML(
 } // Init_DownloadXML
 
 
-tbool CDownloadTask::Init_Update(
-	const tchar* pszUser,
-	const tchar* pszPassword,
-	std::list<CTake_Data*>* plistpTakes)
+tbool CDownloadTask::Init_Update(std::list<CTake_Data*>* plistpTakes)
 {
 	if (miActionOrder != 0) {
 		msExtendedError = "Double initialization";
 		return false;
 	}
 
-	msUser					= pszUser;
-	msPassword				= pszPassword;
+	msUser					= "";//pszUser;
+	msPassword				= "";//pszPassword;
 
 	if (!Init_Helper(plistpTakes))
 		return false;
@@ -319,7 +316,7 @@ tbool CDownloadTask::DoTake_Download_Before()
 
 	std::string sURL = mpTakeCurr->URL();
 	if (
-		(!mpDownloader->Init(sURL.c_str(), msUser.c_str(), msPassword.c_str()))
+		(!mpDownloader->Init(sURL.c_str(), "", ""))
 		||
 		(!mpDownloader->Start(mpfileOgg))
 	) {

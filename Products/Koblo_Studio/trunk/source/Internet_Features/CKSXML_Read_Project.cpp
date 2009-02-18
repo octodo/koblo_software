@@ -51,6 +51,9 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		
 		// pass the TinyXML DOM in to the DAW data structure
 		Pass_The_Project_Tag( mpTinyXMLDoc );
+
+		// Make sure folders are there
+		gpApplication->Create_Folders();
 		
 		// 
 		Prepare_Samples();
@@ -96,7 +99,7 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 	//if the project is uploaded
 	gpApplication->Get_Project_UUID().c_str();
 	
-	sprintf(psz, "/branches/%d/latest/markup.xml", iProjectID);
+	sprintf(psz, "/projects/%d/trunk/latest/markup.xml", iProjectID);
 	
 	str = psz;
 	
@@ -114,6 +117,108 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 		// pass the TinyXML DOM in to the DAW data structure
 		Pass_The_Project_Tag( mpTinyXMLDoc );
 		
+		CAutoDelete<ge::ISaveAsDialog> pDlg(ge::ISaveAsDialog::Create());
+		pDlg->SetBundleBehaviour(1);
+
+		tchar pszDestination[1024];
+		*pszDestination = '\0';
+
+		tchar pszDefaultFolder[1024];
+		gpApplication->GetDefaultProjectFolder(pszDefaultFolder);
+		std::string sDefaultPathName = std::string(pszDefaultFolder) + gpApplication->Project_Name();
+		pDlg->DoDialog(pszDestination, sDefaultPathName.c_str(), "*.xml", "Koblo Studio Project", gpApplication->Project_Name().c_str());
+		if (*pszDestination == '\0') {
+			// User cancelled - clean
+			Reset_Project();
+			Prepare_For_XML();
+		}
+		else {
+			// Save project xml and open it - will cause samples to be downloaded
+			tbool bError = false;
+			tbool bIsFolder;
+			tbool bExists = IFile::Exists(pszDestination, &bIsFolder);
+			if (!bExists) {
+				// This is a new destination. It will become a folder.
+
+				// If the dialog attached a ".xml" to name we must remove it.
+				tint32 iLen = strlen(pszDestination);
+				if (iLen > 4) {
+					tint32 iExtIx = iLen - 4;
+					tchar* pszExt = pszDestination + iExtIx;
+#ifdef _WIN32
+					tint32 iXmlExtCmp = stricmp(pszExt, ".xml");
+#endif // _WIN32
+#ifdef _Mac
+					tint32 iXmlExtCmp = strcasecmp(pszExt, ".xml");
+#endif // _Mac
+					if (iXmlExtCmp == 0) {
+						// There is a ".xml" ending. Remove it
+						*pszExt = '\0';
+					}
+				}
+
+				// Create this folder (doesn't matter if it's there already)
+				IFile::CreateDirectory(pszDestination);
+
+				bExists = IFile::Exists(pszDestination, &bIsFolder);
+				if (!bExists || !bIsFolder) {
+					// It's a file - we wanted a folder
+					bError = true;
+				}
+			}
+
+			// Write xml project file
+			if (!bError) {
+				if (bIsFolder) {
+					// We must attach a project xml file to path
+					std::string sBranchName = gpApplication->Get_Branch_Name();
+					if (sBranchName.length() == 0)
+						sBranchName = "Trunk";
+					std::string sToAttach = std::string(":") + sBranchName + ".xml";
+					strcat(pszDestination, sToAttach.c_str());
+				}
+				else {
+					tint32 iXmlExtCmp = -1;
+					tint32 iLen = strlen(pszDestination);
+					if (iLen > 4) {
+						tint32 iExtIx = iLen - 4;
+						tchar* pszExt = pszDestination + iExtIx;
+#ifdef _WIN32
+						iXmlExtCmp = stricmp(pszExt, ".xml");
+#endif // _WIN32
+#ifdef _Mac
+						iXmlExtCmp = strcasecmp(pszExt, ".xml");
+#endif // _Mac
+					}
+					if (iXmlExtCmp != 0) {
+						// There is no ".xml" ending. Attach it
+						tchar* pszAfter = pszDestination + iLen;
+						strcpy(pszAfter, ".xml");
+					}
+				}
+
+				// Attempt to write xml file
+				CAutoDelete<IFile> pfileXML(IFile::Create());
+				if (!pfileXML->Open(pszDestination, IFile::FileCreate)) {
+					bError = true;
+				}
+				if (!pfileXML->Write(pszBuff, iOutLen)) {
+					bError = true;
+				}
+			}
+
+			// Load xml project file
+			if (!bError) {
+				Read_Project_From_Disk(pszDestination);
+			}
+
+			// Report any error
+			if (bError) {
+				gpApplication->Extended_Error("Error saving downloaded project");
+			}
+		}
+
+/* (lasse) this is no longer needed
 		// 
 		Prepare_Samples();
 		
@@ -135,6 +240,8 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 		CBasePane::SMsg Msg;
 		Msg = Msg_Deselect_Regions;
 		gpApplication->Send_Msg_To_All_Panes(&Msg);
+*/
+
 	}
 	ine::IINetUtil::ReleaseBuffer(&pszBuff);
 	
@@ -1021,8 +1128,11 @@ void CKSXML_Read_Project::Import_Take(CTake_Data* pTake)
 		mDecompress_Que.push_back(pTake);
 
 	// add take to the download que
-	else
+	else {
 		mDownload_Que.push_back(pTake);
+		// ... and to decompress queue
+		mDecompress_Que.push_back(pTake);
+	}
 
 	
 }
@@ -1031,20 +1141,36 @@ void CKSXML_Read_Project::Import_Take(CTake_Data* pTake)
 
 void CKSXML_Read_Project::Download_Takes()
 {
+	CDownloadTask* pTask = new CDownloadTask();
+	tbool bInitOK = pTask->Init_Update(&mDownload_Que);
+	if (bInitOK) {
+		CAutoLock Lock(gpApplication->mMutex_Progress);
+		gpApplication->mpProgressTasks->Add(pTask);
+		gpApplication->Playback_InProgressTask();
+	}
+	else {
+		gpApplication->Extended_Error("hest");
+		pTask->Destroy();
+	}
+
+	/* (lasse) not needed
 	std::list<CTake_Data*>::iterator it = mDownload_Que.begin();
 	for (; it != mDownload_Que.end(); it++) {
 		Download_Take( (*it) );
 	}
+	*/
 }
 
 
 void CKSXML_Read_Project::Download_Take(CTake_Data* Take_Data)
 {
+	/* (lasse) not needed
 	std::string sURL = Take_Data->URL();
 	// do download here
 	// download to "OGG Files" folder
 	// when compleated add files to decompressing que:
 	// mDecompress_Que.push_back(pTake_Data);
+	*/
 }
 
 void CKSXML_Read_Project::Decompress_Takes()
@@ -1058,11 +1184,25 @@ void CKSXML_Read_Project::Decompress_Takes()
 
 void CKSXML_Read_Project::Decompress_Take(CTake_Data* Take_Data)
 {
-	std::string sURL = Take_Data->URL();
+	// (lasse) no - std::string sURL = Take_Data->URL();
 	// do decompression here
 	// decompress to "Wave Files" folder
 	// when compleated add files to insert que:
 	// mDecompress_Que.push_back(pTake_Data);
+
+	CImportAudioTask* pTask = new CImportAudioTask();
+	tbool bInitOK = pTask->Init(Take_Data);
+	if (bInitOK) {
+		CAutoLock Lock(gpApplication->mMutex_Progress);
+		gpApplication->mpProgressTasks->Add(pTask);
+		gpApplication->Playback_InProgressTask();
+	}
+	else {
+		std::string sErr = pTask->GetError();
+		ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
+		gpApplication->Extended_Error(sErr);
+		pTask->Destroy();
+	}
 }
 
 

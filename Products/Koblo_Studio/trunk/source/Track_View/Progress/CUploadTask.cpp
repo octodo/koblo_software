@@ -164,7 +164,7 @@ tbool CUploadTask::Init_NewProject(
 
 	// not used: msBranchUUID_Old		= pBranchUUID_Original->Get_UUID();
 	msBranchUUID			= pszBranchUUID;
-	msBranchName			= "trunk";
+	msBranchName			= "Trunk";
 	// not used: msBranchDescription		= pszBranchDesc;
 	// not used: msBranchLicense			= pszBranchLicenseCode;
 

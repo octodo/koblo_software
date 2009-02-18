@@ -23,7 +23,7 @@ class CTake_Data;
 
 class CKSFile_Controller
 {
-	
+friend class CKSXML_Read_Project;	
 public:
 	//! Constructor
 	CKSFile_Controller();
