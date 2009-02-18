@@ -40,7 +40,7 @@ void CKSPlugInGUI::Initialize()
 
 void CKSPlugInGUI::ConnectControls()
 {
-	dynamic_cast <CKSPlugInGUIPane*>( GetPane())->ConnectControls();
+//	dynamic_cast <CKSPlugInGUIPane*>( GetPane())->ConnectControls();
 }
 
 void CKSPlugInGUI::SetGUI(kspi::IGUI* pGUI)
@@ -68,6 +68,10 @@ void CKSPlugInGUI::GetName(tchar* psz)
 void CKSPlugInGUI::OnTimer()
 {
 	CBaseGUI::OnTimer();
+
+#ifdef _Mac
+	mpWindow->OnTimer();
+#endif
 }
 
 tbool CKSPlugInGUI::WindowClosed(void* pWnd)

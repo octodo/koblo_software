@@ -842,13 +842,20 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 {
 	
 	
-
-	// output
-//	char pszBuff [64];
 	tint32 iInsertId = gpApplication->GetGlobalParm(giParam_ChInsert1 + uiInsert, giSection_First_Track + uiTrack);
 	
 	if(iInsertId){
 		CPreset_Data Preset_Data;
+		
+		Preset_Data.Insert_Track(uiTrack);
+		Preset_Data.Insert_Slot(uiInsert);
+		// uuid
+		// check if insert data alreaddy has a UUID
+		
+		
+		
+		
+		/*
 		// in
 		TiXmlElement* pInsert = new TiXmlElement( "insert" );
 		pParent->LinkEndChild( pInsert );
@@ -872,7 +879,22 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		pProduct->LinkEndChild( pProductTxt );
 		pInsert->LinkEndChild( pProduct );
 		
-		Create_Plugin_Setting( &Preset_Data);
+		
+
+		// check if preset file alreaddy is in "Plug-In's Settings" folder
+		
+		
+		TiXmlElement* pUUID = new TiXmlElement( "uuid" );
+		TiXmlText* pUUIDTxt = new TiXmlText(u.c_str());
+		pUUID->LinkEndChild( pUUIDTxt );
+		pInsert->LinkEndChild( pUUID );
+		
+		//Create_Plugin_Setting( &Preset_Data);
+		 
+		 
+		 */
+		
+		Preset_Data_List.push_back(Preset_Data);
 	}
 	
 	 
@@ -882,13 +904,13 @@ tbool CKSXML_Write_Project::Create_Plugin_Setting(CPreset_Data* pPreset_Data)
 {
 
 	std::string sPlug_in_Setting		=	gpApplication->Plugin_Settings_Folder() + pPreset_Data->Get_UUID() + ".ksprst";
-/*
+
 	// missing code 
 	std::string sFileName			= gpApplication->GetProjectName() + ".xml";
 	std::string sProject_Name		= gpApplication->Project_Name();
 	std::string sProject_Folder		= gpApplication->Project_Folder();
 	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";
-	
+/*	
 	CAutoDelete<IFile> pfile(IFile::Create());
 	if (pfile->Open(sProject.c_str(), IFile::FileWrite)) {
 		pfile->Write(xml_str.c_str(), xml_str.length());

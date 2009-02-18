@@ -507,53 +507,71 @@ void CTrack_DSP::Start()
 	ASSERT(mpFileRecording == NULL);
 
 	if (mbArmed && gpApplication->IsRecording()) {
+		
 		std::string sChannelName = gpApplication->GetChannelName(miTrack);
 		if (sChannelName.size() == 0) {
 			tchar psz[32];
 			sprintf(psz, "Track %d", miTrack + 1);
 			sChannelName = std::string(psz);
 		}
-
-		std::string sPathNameDest = gpApplication->GetProjDir_Audio();
-		sPathNameDest += "Clips:";
-		sPathNameDest += "Recording_";
-		sPathNameDest += sChannelName;
-		sPathNameDest += "_";
-
-		std::string sPathName = gpApplication->GetProjDir_Audio();
+		
+		// Generates a UUID
+		tchar* pszUUID = new tchar[128];
+		*pszUUID = '\0';
+		tuint32 uiBuffer_Size = 128;
+		Gen_UUID(pszUUID, uiBuffer_Size);
+	 	
+		// parth for recording
+		std::string sFile_Name_Path_On_Disk = gpApplication->Wave_File_Folder();
+		sFile_Name_Path_On_Disk += pszUUID;
+		/*
+		sFile_Name_Path_On_Disk += "Recording_";
+		sFile_Name_Path_On_Disk += sChannelName;
+		sFile_Name_Path_On_Disk += "_";
+		 */
+		std::string sPathName	= gpApplication->Wave_File_Folder();
+		//sPathName += pszUUID;
+		
 		sPathName += "Recording_";
 		sPathName += sChannelName;
 		sPathName += "_";
 		
+		
+		
 		tint32 iIndex = 0;
 		tbool bFoundIt = false;
+		
 		while (bFoundIt == false) {
 			std::string s		= sPathName;
-			std::string sDest	= sPathNameDest;
-			std::string sLeft	= sPathNameDest;
+			std::string sDest	= sFile_Name_Path_On_Disk;
+			std::string sLeft	= sFile_Name_Path_On_Disk;
 			tchar psz[32];
-			sprintf(psz, "%d.wav", iIndex);
+			sprintf(psz, ".wav", iIndex);
 			tchar pszLeft[32];
-			sprintf(pszLeft, "%d_0000-1.wav", iIndex);
+			sprintf(pszLeft, "%dXXXXXXXXX_01.wav", iIndex);
 			s += std::string(psz);
 			sDest += std::string(psz);
 			sLeft += std::string(pszLeft);
+			
+			// Create files to store recording in
 			CAutoDelete<IFile> pFile(IFile::Create());
 			if (pFile->Open(sDest.c_str(), IFile::FileRead) == false) {
 				if (pFile->Open(sLeft.c_str(), IFile::FileRead) == false) {
 					// File didn't exist, so use file name
 					bFoundIt = true;
 					sPathName = s;
-					sPathNameDest = sDest;
+					sFile_Name_Path_On_Disk = sDest;
 				}
 			}
 
 			iIndex++;
 		}
 
-		msRecordingName = sPathName;
-		msRecordingNameDest = sPathNameDest;
+		msRecordingName				= sPathName;
+//		msFile_Name_Path_On_Disk	= sFile_Name_Path_On_Disk;
 		sPathName += ".tmp";
+		
+		// create temp file for recording
 		mpFileRecording = IFile::Create();
 		mpFileRecording->Open(sPathName.c_str(), IFile::FileCreate);
 		mfPeakMono = mfPeak = 1.0f / 32;

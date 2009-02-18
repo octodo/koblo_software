@@ -87,30 +87,69 @@ void CKSXML_Read_Project::Reset_Project()
 	
 }
 */
-void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
+void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(std::string sProject_UUID )
 {
+	
 	Reset_Project();
 	Prepare_For_XML();
 	
 	// read latst revision
-	std::string str;
+	std::string sProject;
+	char psz[256];
+	
+	sprintf(psz, "/projects/%s/trunk/latest/markup.xml", sProject_UUID.c_str() );
+	sProject = psz;
+	
+	Read_Project_From_Koblo( sProject );
+	
+	
+}	
+	
+void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
+{
+	
+	// get the project uuid from koblo.com
+	
+	// look in file to see if there is a path for the project folder on disk
+	
+	// if there is one store the project file in the "branches" folder
+	
+	// 
+	
+	Reset_Project();
+	Prepare_For_XML();
+	
+	// read latst revision
+	std::string sProject;
 	char psz[256];
 	
 	//if the project is uploaded
 	gpApplication->Get_Project_UUID().c_str();
 	
-	sprintf(psz, "/projects/%d/trunk/latest/markup.xml", iProjectID);
+	//curl koblo.com/branches/176/latest/markup.xml
 	
-	str = psz;
+	//sprintf(psz, "/branches/%d/latest/markup.xml", iProjectID);
+	sprintf(psz, "/projects/%d/trunk/latest/markup.xml", iProjectID);
+	sProject = psz;
+	
+	Read_Project_From_Koblo( sProject );
+	
+		
+	
+	
+}
+
+void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
+{
 	
 	tchar* pszBuff = NULL;
 	tint32 iOutLen = 0;
-	ine::IINetUtil::GetWebFile(NULL, "koblo.com", str.c_str(), &iOutLen, &pszBuff);
+	ine::IINetUtil::GetWebFile(NULL, "koblo.com", sProject.c_str(), &iOutLen, &pszBuff);
 	
 	if ((pszBuff) && (iOutLen > 0)) {
 		
 		printf(pszBuff);
-
+		
 		// parse XML file in to TinyXml object tree
 		mpTinyXMLDoc->Parse(pszBuff);
 		
@@ -245,7 +284,11 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 	}
 	ine::IINetUtil::ReleaseBuffer(&pszBuff);
 	
+	
+	
 }
+
+
 
 
 void CKSXML_Read_Project::Pass_The_Project_Tag( TiXmlNode* pParent )

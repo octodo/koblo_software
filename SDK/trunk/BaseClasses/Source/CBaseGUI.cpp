@@ -52,6 +52,7 @@ CBaseGUI::~CBaseGUI()
 		mpPresetBackground->Destroy();
 	}
 
+	//!!! when called from a VST plug-in KS chras here
 	delete GetPane();
 
 	if (mpWindow) {

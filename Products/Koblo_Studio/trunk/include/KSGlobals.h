@@ -294,6 +294,7 @@ enum EPaneMsg
 	Msg_LoadPrefs_Done,
 	Msg_Do_Delete,
 	Msg_Deselect_Regions,
+	MSG_Redraw_Track_Editor,
 };
 
 // Track Editor

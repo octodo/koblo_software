@@ -51,6 +51,10 @@ public:
 	 */
 	tbool Save_As();
 	
+	/*! called from the "File:Close Project" menu 
+	 */
+	tbool Close_Project();
+	
 	
 	
 	//! get project folder

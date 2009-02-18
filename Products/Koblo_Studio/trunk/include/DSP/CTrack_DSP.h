@@ -197,7 +197,7 @@ protected:
 	tfloat32 mfPeakMono;
 
 	std::string msRecordingName;
-	std::string msRecordingNameDest;
+	std::string msFile_Name_Path_On_Disk;
 	
 	
 	

@@ -24,23 +24,41 @@ CKSInternet_Features::~CKSInternet_Features()
 
 void CKSInternet_Features::On_Menu_Download_Project()
 {
-	//tint32 iProject_Id = gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
 	
-	// if no project id is set
-	//if(iProject_Id == -1){
-		
-		// Open the project id dialog
-		tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Projec_ID_Window, giSectionGUI) != 0);
-		if(!bTest){
-			gpApplication->SetGlobalParm(giParamID_Show_Projec_ID_Window,true, giSectionGUI);
+	// if project is open
+	if(gpApplication->Project_Name().length() != 0 ) {
+
+		// and project has a uuid
+		if (gpApplication->Project_UUID_Is_Set() ) 
+		{
+			// download from koblo.com
+			gpApplication->Read_Latest_Revision_From_Koblo( gpApplication->Get_Project_UUID() );
 		}
 		else
-			gpApplication->GetModule()->GetHost()->ActivateWindow(giProject_ID_Window);
-	//}
-	//else{
-	//	gpApplication->Download_Project(iProject_Id);
-//	}
+		{
+			// close project
+			if( gpApplication->Close_Project() != giUser_Canceld_Save ) {
+				Ask_For_Project_ID();
+			}	
+		}
+	}
+	else {
+		// if no project is open ask for a project id
+		Ask_For_Project_ID();
+	}
+		
 } 
+
+void CKSInternet_Features::Ask_For_Project_ID()
+{
+	// Open the project id dialog
+	tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Projec_ID_Window, giSectionGUI) != 0);
+	if(!bTest){
+		gpApplication->SetGlobalParm(giParamID_Show_Projec_ID_Window,true, giSectionGUI);
+	}
+	else
+		gpApplication->GetModule()->GetHost()->ActivateWindow(giProject_ID_Window);
+}
 
 
 void CKSInternet_Features::On_Menu_Update_Project()
@@ -86,7 +104,6 @@ void CKSInternet_Features::On_Menu_Commit_Project()
 
 void CKSInternet_Features::Download_Project(tint32 iProjectID)
 {
-	
 	// read the project from koblo.com
 	gpApplication->Read_Latest_Revision_From_Koblo(iProjectID);
 

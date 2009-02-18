@@ -763,6 +763,11 @@ void CTrack_Editor_Pane::SendMsgFromTop(SMsg* pMsg)
 			SetScrollPosToLoopStart();
 			break;
 		}
+		case MSG_Redraw_Track_Editor:
+		{
+			Redraw_Track_Editor();
+			break;
+		}
 
 		case Msg_Update_Track_Selection:
 		{
