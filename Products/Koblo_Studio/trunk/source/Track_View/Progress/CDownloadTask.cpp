@@ -317,6 +317,7 @@ tbool CDownloadTask::DoTake_Download_Before()
 		return false;
 	}
 
+#ifdef _WIN32
 	std::string sURL = mpTakeCurr->URL();
 	tchar pszURL_Lower[1024];
 	strncpy(pszURL_Lower, sURL.c_str(), 1023);
@@ -347,7 +348,36 @@ tbool CDownloadTask::DoTake_Download_Before()
 			sHost = sHost.substr(7);
 		}
 	}
-
+#endif // _WIN32
+#ifdef _Mac
+	std::string sURL = mpTakeCurr->URL();
+	const tchar* pszSlash = strchr(sURL.c_str(), '/');
+	tint32 iHTTPIx = strncasecmp(sURL.c_str(), "http://", 7);
+	std::string sHost, sURI;
+	if (pszSlash == NULL) {
+		// There is no document/URI after host/server
+		sURI = "/";
+		if (iHTTPIx != 0) {
+			// Doesn't start with "http://"
+			sHost = sURL;
+		}
+		else {
+			// Skip "http://"
+			sHost = sURL.substr(7);
+		}
+	}
+	else {
+		// First extract document/URI part of URL
+		sURI = pszSlash;
+		tint32 iHostPartLen = sURL.length() - sURI.length();
+		sHost = sURL.substr(0, iHostPartLen);
+		if (iHTTPIx == 0) {
+			// Remove "http://"
+			sHost = sHost.substr(7);
+		}
+	}
+#endif //_Mac
+	
 	if (
 		(!mpDownloader->Init(sHost.c_str(), sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
 		||
