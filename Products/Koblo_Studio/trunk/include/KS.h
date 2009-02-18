@@ -220,6 +220,7 @@ class CPlugInManager;
 #include "CImportAudioTask.h"
 #include "CAfterImportTask.h"
 #include "CUploadTask.h"
+#include "CDownloadTask.h"
 #include "CProgressTaskList.h"
 
 
