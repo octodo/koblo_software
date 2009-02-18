@@ -318,39 +318,8 @@ tbool CDownloadTask::DoTake_Download_Before()
 	}
 
 	std::string sURL = mpTakeCurr->URL();
-	const tchar* pszSlash = strchr(sURL.c_str(), '/');
-#ifdef _WIN32
-	tint32 iHTTPCmp = strnicmp(sURL.c_str(), "http://", 7);
-#endif // _WIN32	
-#ifdef _Mac
-	tint32 iHTTPCmp = strncasecmp(sURL.c_str(), "http://", 7);
-#endif // _Mac
-	std::string sHost, sURI;
-	if (pszSlash == NULL) {
-		// There is no document/URI after host/server
-		sURI = "/";
-		if (iHTTPCmp != 0) {
-			// Doesn't start with "http://"
-			sHost = sURL;
-		}
-		else {
-			// Skip "http://"
-			sHost = sURL.substr(7);
-		}
-	}
-	else {
-		// First extract document/URI part of URL
-		sURI = pszSlash;
-		tint32 iHostPartLen = sURL.length() - sURI.length();
-		sHost = sURL.substr(0, iHostPartLen);
-		if (iHTTPCmp == 0) {
-			// Remove "http://"
-			sHost = sHost.substr(7);
-		}
-	}
-	
 	if (
-		(!mpDownloader->Init(sHost.c_str(), sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
+		(!mpDownloader->Init(sURL.c_str(), msUser.c_str(), msPassword.c_str()))
 		||
 		(!mpDownloader->Start(mpfileOgg))
 	) {

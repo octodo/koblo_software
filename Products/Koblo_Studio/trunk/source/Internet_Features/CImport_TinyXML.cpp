@@ -29,33 +29,6 @@ void CImport_TinyXML::CKSXML_Parse_DOM_To_DAW()
 	//	parse values from project tree in to KS data system
 	//	Parse_Project( mpTinyXMLDoc );
 
-	// (lasse) very very temporary code: download directly from koblo.com
-	CAutoDelete<ine::IDownloader> pDownloader(ine::IDownloader::Create());
-	if (pDownloader->Init("assets.koblo.com", "/mp3s/7/short2.mp3")) {
-		pDownloader->SetReplyMIMEType(ine::MIME_TYPE_MP3);
-		CAutoDelete<IFile> pfTest(IFile::Create());
-#ifdef _WIN32
-		tchar* pszTestFile = "C:\\testhest.mp3";
-#endif // _WIN32
-#ifdef _Mac
-		tchar* pszTestFile = "/testhest.mp3";
-#endif // _Mac
-		if (pfTest->Open(pszTestFile, IFile::FileCreate)) {
-			if (pDownloader->Start(pfTest)) {
-				tbool bDone = false;
-				tbool bFailed = false;
-				while (!bDone && !bFailed) {
-					bDone = pDownloader->IsDone();
-					bFailed = pDownloader->IsFailed();
-				}
-			}
-			if (pDownloader->IsFailed()) {
-				tchar pszErr[1024];
-				pDownloader->GetError(pszErr, 1024);
-				ge::IWindow::ShowMessageBox(pszErr, "Downloader Error");
-			}
-		}
-	}
 }
 
 void CImport_TinyXML::Read_Project_Name(TiXmlNode* pParent)
