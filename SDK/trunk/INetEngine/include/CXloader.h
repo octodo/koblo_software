@@ -84,6 +84,7 @@ protected:
 	tint32 miPort;
 	std::string msUser;
 	std::string msPassword;
+	tbool mbUseAuthentication;
 	tuint32 muiTimeOutSecs;
 
 	E_MIME_Type meReplyMIMEType;

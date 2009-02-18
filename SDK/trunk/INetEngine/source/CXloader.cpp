@@ -4,6 +4,8 @@
 CXloader::CXloader(tbool bIsUploader)
 {
 	mbIsUploader = bIsUploader;
+	mbUseAuthentication = false;
+
 	mpfileForReply = NULL;
 	mpszParamsAssembled = NULL;
 	miParamsAssembledLen = 0;
@@ -55,13 +57,13 @@ void CXloader::Destroy()
 
 tbool CXloader::Init(const tchar* pszFullURL, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
 {
-	SetIsFullBlownURL(false);
+	SetIsFullBlownURL(true);
 	return _Init(pszFullURL, NULL, NULL, 0, pszUser, pszPassword, iTimeOutSecs);
 } // Init
 
 tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
 {
-	SetIsFullBlownURL(true);
+	SetIsFullBlownURL(false);
 	return _Init(NULL, pszHost, pszPage, iPort, pszUser, pszPassword, iTimeOutSecs);
 } // Init
 
@@ -1043,6 +1045,17 @@ tbool CXloader::SetOpt(CURLoption iOption, const tchar* pszOption, tbool bData, 
 
 tbool CXloader::OpenConnection()
 {
+	// We must first check to see if we need to kill previous authentication
+	tbool bUseAuthentication_ThisTime = ((msUser.length() > 0) || (msPassword.length() > 0));
+	if (mbUseAuthentication && !bUseAuthentication_ThisTime) {
+		// We have to kill the "easy" handle to reset authentication
+		if (mpCURLEasyHandle) {
+			curl_easy_cleanup(mpCURLEasyHandle);
+			mpCURLEasyHandle = NULL;
+		}
+	}
+	mbUseAuthentication = bUseAuthentication_ThisTime;
+
 	// Get an "easy" handle
 	if (mpCURLEasyHandle == NULL) {
 		mpCURLEasyHandle = curl_easy_init();
@@ -1078,6 +1091,9 @@ tbool CXloader::OpenConnection()
 	}
 
 	// Set URL
+#ifdef _DEBUG
+	std::string sTest = msURL;
+#endif // _DEBUG
 	if (!SetOpt(CURLOPT_URL, "CURLOPT_URL", msURL)) {
 		AppendError((std::string("Unable to set URL:  ") + msURL).c_str());
 		return false;
@@ -1160,17 +1176,15 @@ tbool CXloader::OpenConnection()
 			return false;
 	}
 
-	// Set user for authentication
-	//if (msUser.length() > 0) {
-	if (!SetOpt(CURLOPT_USERNAME, "CURLOPT_USERNAME", msUser))
-		return false;
-	//}
+	if (mbUseAuthentication) {
+		// Set user for authentication
+		if (!SetOpt(CURLOPT_USERNAME, "CURLOPT_USERNAME", msUser))
+			return false;
 
-	// Set password for authentication
-	//if (msPassword.length() > 0) {
-	if (!SetOpt(CURLOPT_PASSWORD, "CURLOPT_PASSWORD", msPassword))
-		return false;
-	//}
+		// Set password for authentication
+		if (!SetOpt(CURLOPT_PASSWORD, "CURLOPT_PASSWORD", msPassword))
+			return false;
+	}
 
 	// Set time-out - but not the usual brain-dead way
 	{
