@@ -86,7 +86,7 @@ tint32 CKSFile_Controller::New_Project()
 	tchar pszDefault_Folder[1024];
 	gpApplication->GetDefaultProjectFolder(pszDefault_Folder);
 
-	
+	// open new project dialog
 	tchar pszProject_Folder[1024];
 	CAutoDelete<ge::ISaveAsDialog> pDlg(ge::ISaveAsDialog::Create());
 	pDlg->DoDialog(pszProject_Folder, pszDefault_Folder, "", "", "New Project");

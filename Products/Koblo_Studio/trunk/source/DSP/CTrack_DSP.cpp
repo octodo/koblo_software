@@ -515,6 +515,53 @@ void CTrack_DSP::Start()
 			sChannelName = std::string(psz);
 		}
 		
+		// create path and filename without take nr and extencion
+		std::string sPath_And_File	=	gpApplication->Wave_File_Folder();
+		sPath_And_File				+=	sChannelName;
+		
+		// create file to test for
+		std::string sPath_And_File_With_Extencions;//	=	sPath_And_File + "_0.wav" ; 
+		
+		tint32 iIndex = 0;
+		tbool bFoundIt = false;
+		
+		while (bFoundIt == false) {
+			
+			tchar pszExtencion[32];
+			sprintf(pszExtencion, "_%d.wav", iIndex);
+			iIndex++;
+			
+			sPath_And_File_With_Extencions = sPath_And_File + std::string(pszExtencion);
+			
+			// Create files to store recording in
+			CAutoDelete<IFile> pFile(IFile::Create());
+			// Check if file excists
+			if (pFile->Open(sPath_And_File_With_Extencions.c_str(), IFile::FileRead) == false) {
+				
+				// File dont exist, so use file sPath_And_File_With_Extencions
+				
+				// Store name of file so it can be deleted
+				msRecordingName = sPath_And_File_With_Extencions ;
+				sPath_And_File_With_Extencions += ".tmp";
+				bFoundIt = true;
+				
+			}
+			
+		}
+		
+		// create temp file for recording
+		mpFileRecording = IFile::Create();
+		mpFileRecording->Open(sPath_And_File_With_Extencions.c_str(), IFile::FileCreate);
+		mfPeakMono = mfPeak = 1.0f / 32;
+		
+		// (lasse) This is a HACK - need a way to determine
+		miRecordingChannels = 2;//-1;
+		// .. (lasse)
+		
+		miRecordingSongPos = gpApplication->GetSongPos();
+		
+		
+		/*
 		// Generates a UUID
 		tchar* pszUUID = new tchar[128];
 		*pszUUID = '\0';
@@ -524,11 +571,11 @@ void CTrack_DSP::Start()
 		// parth for recording
 		std::string sFile_Name_Path_On_Disk = gpApplication->Wave_File_Folder();
 		sFile_Name_Path_On_Disk += pszUUID;
-		/*
+		
 		sFile_Name_Path_On_Disk += "Recording_";
 		sFile_Name_Path_On_Disk += sChannelName;
 		sFile_Name_Path_On_Disk += "_";
-		 */
+		 
 		std::string sPathName	= gpApplication->Wave_File_Folder();
 		//sPathName += pszUUID;
 		
@@ -575,12 +622,15 @@ void CTrack_DSP::Start()
 		mpFileRecording = IFile::Create();
 		mpFileRecording->Open(sPathName.c_str(), IFile::FileCreate);
 		mfPeakMono = mfPeak = 1.0f / 32;
+		
+		
 
 		// (lasse) This is a HACK - need a way to determine
 		miRecordingChannels = 2;//-1;
 		// .. (lasse)
 
 		miRecordingSongPos = gpApplication->GetSongPos();
+		 */
 	}
 } // Start
 
@@ -611,8 +661,13 @@ void CTrack_DSP::Stop()
 		{
 			CAutoDelete<IFile> pFileSrc(IFile::Create());
 			CAutoDelete<IFile> pFileDest(IFile::Create());
-
+			
+		//	printf( "++++++++++++++++++++++++++++++++++++++++++++++++++\n++++++++++++++++++++++++++++++++++++++++++++++++++\n++++++++++++++++++++++++++++++++++++++++++++++++++\n" );
+			printf( msRecordingName.c_str() );
+			// read from file
 			bSuccess &= pFileSrc->Open((msRecordingName + std::string(".tmp")).c_str(), IFile::FileRead);
+			
+			// write to file
 			bSuccess &= pFileDest->Open(msRecordingName.c_str(), IFile::FileCreate);
 
 			if (!bSuccess) {

@@ -894,7 +894,7 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		 
 		 */
 		
-		Preset_Data_List.push_back(Preset_Data);
+//		Preset_Data_List.push_back(Preset_Data);
 	}
 	
 	 

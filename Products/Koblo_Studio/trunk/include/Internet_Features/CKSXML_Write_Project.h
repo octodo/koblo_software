@@ -157,7 +157,7 @@ private:
 
 	
 	//! list of takes files that needs pict files
-	std::list<CPreset_Data> Preset_Data_List;
+//	std::list<CPreset_Data> Preset_Data_List;
 	
 	
 	
