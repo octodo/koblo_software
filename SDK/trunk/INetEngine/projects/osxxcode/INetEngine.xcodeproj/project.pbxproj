@@ -47,6 +47,13 @@
 			remoteGlobalIDString = D2AAC046055464E500DB518D;
 			remoteInfo = libcurl;
 		};
+		E308ED200F4C186700879503 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 32F77F300F309F850021141C /* libcurl.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D /* libcurl */;
+			remoteInfo = libcurl;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -211,6 +218,7 @@
 			);
 			dependencies = (
 				0B8839F808BB499B00095026 /* PBXTargetDependency */,
+				E308ED210F4C186700879503 /* PBXTargetDependency */,
 			);
 			name = INetEngine;
 			productName = DataEngine;
@@ -281,6 +289,11 @@
 			isa = PBXTargetDependency;
 			name = BaseUtilities;
 			targetProxy = 0B8839F708BB499B00095026 /* PBXContainerItemProxy */;
+		};
+		E308ED210F4C186700879503 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libcurl;
+			targetProxy = E308ED200F4C186700879503 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
