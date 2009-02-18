@@ -7,6 +7,8 @@
 CXloader::CXloader(tbool bIsUploader)
 {
 	mbIsUploader = bIsUploader;
+	mbUseAuthentication = false;
+
 	mpfileForReply = NULL;
 	mpszParamsAssembled = NULL;
 	miParamsAssembledLen = 0;
@@ -56,21 +58,34 @@ void CXloader::Destroy()
 } // Destroy
 
 
-tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort /*= 80*/, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
+tbool CXloader::Init(const tchar* pszFullURL, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
+{
+	SetIsFullBlownURL(true);
+	return _Init(pszFullURL, NULL, NULL, 0, pszUser, pszPassword, iTimeOutSecs);
+} // Init
+
+tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
+{
+	SetIsFullBlownURL(false);
+	return _Init(NULL, pszHost, pszPage, iPort, pszUser, pszPassword, iTimeOutSecs);
+} // Init
+
+
+tbool CXloader::_Init(const tchar* pszFullURL, const tchar* pszHost, const tchar* pszPage, tint32 iPort /*= 80*/, const tchar* pszUser /*= NULL*/, const tchar* pszPassword /*= NULL*/, tint32 iTimeOutSecs /*= 10*/)
 {
 	Abort();
 	WipeParams();
 	ZapReplyBuffer();
 	//mbIsInitialized = false;
 	SetIsUninitialized();
-	
-	// Verify sanity of host
-	{
-		if ((pszHost == NULL) || (*pszHost == '\0')) {
-			SetError("No param name");
+
+	if (mbIsInit_FullBlownURL) {
+		// Loosely verify sanity of full blown URL (libCURL itself will verify it more elaborately)
+		if ((pszFullURL == NULL) || (*pszFullURL == '\0')) {
+			AppendError("No URL");
 			return false;
 		}
-		for (tchar* pc = (tchar*)pszHost; *pc; pc++) {
+		for (tchar* pc = (tchar*)pszFullURL; *pc; pc++) {
 			tchar c = *pc;
 			if (
 				((c < 'A') || (c > 'Z'))
@@ -79,18 +94,28 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort /*
 				&&
 				((c < '0') || (c > '9'))
 				&&
-				((c != '.') && (c != '-'))
-				) {
-				SetError("Not valid url-host");
+				(
+					(c != '.') && (c != '-')
+					&&
+					(c != ':') && (c != '/')
+					&&
+					(c != '_') && (c != '%')
+				)
+			) {
+				std::string sErr = std::string("Not valid URL:\n  ") + pszFullURL;
+				AppendError(sErr.c_str());
 				return false;
 			}
 		}
 	}
-	
-	// Verify sanity of page
-	{
-		if (pszPage != NULL) {
-			for (tchar* pc = (tchar*)pszPage; *pc; pc++) {
+	else {
+		// Verify sanity of host
+		{
+			if ((pszHost == NULL) || (*pszHost == '\0')) {
+				AppendError("No URL-host");
+				return false;
+			}
+			for (tchar* pc = (tchar*)pszHost; *pc; pc++) {
 				tchar c = *pc;
 				if (
 					((c < 'A') || (c > 'Z'))
@@ -100,29 +125,51 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort /*
 					((c < '0') || (c > '9'))
 					&&
 					((c != '.') && (c != '-'))
-					&&
-					(c != '/')
-					) {
-					SetError("Not valid url-document");
+				) {
+					AppendError("Not valid URL-host");
 					return false;
 				}
 			}
 		}
+		
+		// Verify sanity of page
+		{
+			if (pszPage != NULL) {
+				for (tchar* pc = (tchar*)pszPage; *pc; pc++) {
+					tchar c = *pc;
+					if (
+						((c < 'A') || (c > 'Z'))
+						&&
+						((c < 'a') || (c > 'z'))
+						&&
+						((c < '0') || (c > '9'))
+						&&
+						((c != '.') && (c != '-'))
+						&&
+						(c != '/')
+						) {
+						AppendError("Not valid url-document");
+						return false;
+					}
+				}
+			}
+		}
+
+		// Verify sanity of port
+		if (iPort <= 0) {
+			AppendError("Not a valid port");
+			return false;
+		}
 	}
 
-	// Verify sanity of port
-	if (iPort <= 0) {
-		SetError("Not a valid port");
-		return false;
-	}
-	
 	// Verify sanity of time-out
 	if (iTimeOutSecs < 0) {
-		SetError("Negative time-out");
+		AppendError("Negative time-out");
 		return false;
 	}
 	
-	msHost = pszHost;
+	msURL = (pszFullURL == NULL) ? "" : pszFullURL;
+	msHost = (pszHost == NULL) ? "" : pszHost;
 	msPage = (pszPage == NULL) ? "" : pszPage;
 	miPort = iPort;
 	msUser = (pszUser == NULL) ? "" : pszUser;
@@ -143,23 +190,23 @@ tbool CXloader::Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort /*
 
 	mbIsInitialized = true;
 	return true;
-} // Init
+} // _Init
 
 
 tbool CXloader::SetReplyMIMEType(E_MIME_Type eMIME)
 {
 	if (mbIsFailed) {
-		//SetError("Previous error");
+		//AppendError("Previous error");
 		return false;
 	}
 	
 	if (!mbIsInitialized) {
-		SetError("Not initialized");
+		AppendError("Not initialized");
 		return false;
 	}
 	
 	if (mbIsTransfering) {
-		SetError("We can't set media type as we've already begun transfer");
+		AppendError("We can't set media type as we've already begun transfer");
 		return false;
 	}
 	
@@ -192,17 +239,17 @@ const tchar* CXloader::GetMIMEString(E_MIME_Type eMIME)
 tbool CXloader::SetSpecificVerb(EVerbType eVerb)
 {
 	if (mbIsFailed) {
-		//SetError("Previous error");
+		//AppendError("Previous error");
 		return false;
 	}
 	
 	if (!mbIsInitialized) {
-		SetError("Not initialized");
+		AppendError("Not initialized");
 		return false;
 	}
 	
 	if (mbIsTransfering) {
-		SetError("We can't change http-verb as we've already begun transfer");
+		AppendError("We can't change http-verb as we've already begun transfer");
 		return false;
 	}
 	
@@ -286,17 +333,17 @@ const tchar* CXloader::GetVerbString(EVerbType eVerb)
 tbool CXloader::SetAllowRedirects(tbool bAllow)
 {
 	if (mbIsFailed) {
-		//SetError("Previous error");
+		//AppendError("Previous error");
 		return false;
 	}
 	
 	if (!mbIsInitialized) {
-		SetError("Not initialized");
+		AppendError("Not initialized");
 		return false;
 	}
 	
 	if (mbIsTransfering) {
-		SetError("We can't change redirect behaviour as we've already begun transfer");
+		AppendError("We can't change redirect behaviour as we've already begun transfer");
 		return false;
 	}
 
@@ -316,17 +363,17 @@ tbool CXloader::EnableAutoRedirects()
 tbool CXloader::SetFailOnHttpStatus(tbool bFailOnStatus)
 {
 	if (mbIsFailed) {
-		//SetError("Previous error");
+		//AppendError("Previous error");
 		return false;
 	}
 	
 	if (!mbIsInitialized) {
-		SetError("Not initialized");
+		AppendError("Not initialized");
 		return false;
 	}
 	
 	if (mbIsTransfering) {
-		SetError("We can't change http status behaviour as we've already begun transfer");
+		AppendError("We can't change http status behaviour as we've already begun transfer");
 		return false;
 	}
 
@@ -338,17 +385,17 @@ tbool CXloader::SetFailOnHttpStatus(tbool bFailOnStatus)
 tbool CXloader::SetStreamingUpload(tbool bUseStreaming)
 {
 	if (mbIsFailed) {
-		//SetError("Previous error");
+		//AppendError("Previous error");
 		return false;
 	}
 	
 	if (!mbIsInitialized) {
-		SetError("Not initialized");
+		AppendError("Not initialized");
 		return false;
 	}
 	
 	if (mbIsTransfering) {
-		SetError("We can't change streaming behaviour as we've already begun transfer");
+		AppendError("We can't change streaming behaviour as we've already begun transfer");
 		return false;
 	}
 
@@ -362,17 +409,17 @@ tbool CXloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, ti
 	CAutoLock Lock(mMutex_ForParams);
 	
 	if (mbIsFailed) {
-		//SetError("Previous error");
+		//AppendError("Previous error");
 		return false;
 	}
 	
 	if (!mbIsInitialized) {
-		SetError("Not initialized");
+		AppendError("Not initialized");
 		return false;
 	}
 	
 	if (mbIsTransfering) {
-		SetError("We can't add more parameters as we've already begun transfer");
+		AppendError("We can't add more parameters as we've already begun transfer");
 		return false;
 	}
 	
@@ -424,12 +471,12 @@ tbool CXloader::AddParam(const tchar* pszParamName, const tchar* pcParamData, ti
 		if (iUrlEncodedLen > 0) {
 			pszUrlEncoded = new tchar[iUrlEncodedLen + 1];
 			if (pszUrlEncoded == NULL) {
-				SetError("Out of memory");
+				AppendError("Out of memory");
 				return false;
 			}
 			tint32 iActuallyEncoded = IINetUtil::URLEncode(pcParamData, iParamDataLen, pszUrlEncoded);
 			if (iActuallyEncoded != iUrlEncodedLen) {
-				SetError("Insane output length");
+				AppendError("Insane output length");
 				delete[] pszUrlEncoded;
 				return false;
 			}
@@ -458,17 +505,17 @@ tbool CXloader::AddFileParam(const tchar* pszParamName, IFile* pfileToUpload, tc
 	CAutoLock Lock(mMutex_ForParams);
 	
 	if (mbIsFailed) {
-		//SetError("Previous error");
+		//AppendError("Previous error");
 		return false;
 	}
 	
 	if (!mbIsInitialized) {
-		SetError("Not initialized");
+		AppendError("Not initialized");
 		return false;
 	}
 	
 	if (mbIsTransfering) {
-		SetError("We can't add more parameters as we've already begun transfer");
+		AppendError("We can't add more parameters as we've already begun transfer");
 		return false;
 	}
 	
@@ -477,7 +524,7 @@ tbool CXloader::AddFileParam(const tchar* pszParamName, IFile* pfileToUpload, tc
 		return false;
 
 	if (!pfileToUpload) {
-		SetError("File to upload is NULL");
+		AppendError("File to upload is NULL");
 		return false;
 	}
 
@@ -498,7 +545,7 @@ tbool CXloader::AddFileParam(const tchar* pszParamName, IFile* pfileToUpload, tc
 			pfileToUpload->GetPathName(pszFilePathName);
 			tchar* pszColon = strrchr(pszFilePathName, ':');
 			if (pszColon == NULL) {
-				SetError("Internal error: Unexpected format of file path");
+				AppendError("Internal error: Unexpected format of file path");
 				return false;
 			}
 			sNameAndExt = pszColon + 1;
@@ -522,7 +569,7 @@ tbool CXloader::AddFileParam(const tchar* pszParamName, IFile* pfileToUpload, tc
 tbool CXloader::VerifyParamName(const tchar* pszParamName)
 {
 	if ((pszParamName == NULL) || (*pszParamName == '\0')) {
-		SetError("No param name");
+		AppendError("No param name");
 		return false;
 	}
 	for (tchar* pc = (tchar*)pszParamName; *pc; pc++) {
@@ -536,7 +583,7 @@ tbool CXloader::VerifyParamName(const tchar* pszParamName)
 			&&
 			((c != '_') && (c != '[') && (c != ']'))
 			) {
-			SetError("Not valid paramname");
+			AppendError("Not valid paramname");
 			return false;
 		}
 	}
@@ -550,12 +597,12 @@ tbool CXloader::AssembleParams()
 	CAutoLock Lock(mMutex_ForParams);
 	
 	if (!mbIsInitialized) {
-		SetError("Not initialized");
+		AppendError("Not initialized");
 		return false;
 	}
 	
 	if ((mpszParamsAssembled) || (mpFormPost_First)) {
-		SetError("Already assembled parameters");
+		AppendError("Already assembled parameters");
 		return false;
 	}
 	
@@ -564,7 +611,7 @@ tbool CXloader::AssembleParams()
 	tint32 iLens = mlist_iParamDataLen.size();
 	tint32 iDatas = mlist_pszParamData.size();
 	if ((iNames != iLens) || (iLens != iDatas)) {
-		SetError("List lengths aren't all the same");
+		AppendError("List lengths aren't all the same");
 		return false;
 	}
 
@@ -608,7 +655,7 @@ tbool CXloader::AssembleParams_ForUrlEncoded()
 	// Attempt to allocate space for params + trailing zero
 	mpszParamsAssembled = new tchar[miParamsAssembledLen + 1];
 	if (mpszParamsAssembled == NULL) {
-		SetError("Out of memory");
+		AppendError("Out of memory");
 		return false;
 	}
 	
@@ -686,7 +733,7 @@ tbool CXloader::AssembleParams_ForMultiPartForm()
 			if (rc != 0) {
 				tchar pszErr[512];
 				sprintf(pszErr, "curl_formadd(..) returned %d for param %s", rc, rsName.c_str());
-				SetError(pszErr);
+				AppendError(pszErr);
 				return false;
 			}
 
@@ -733,7 +780,7 @@ tbool CXloader::AssembleParams_ForMultiPartForm()
 			// Load entire upload file into memory
 			IFileMemory* pMem = dynamic_cast<IFileMemory*>(pS->mpfile);
 			if (pMem) {
-				SetError("Non-streaming IFileMemory isn't supported yet");
+				AppendError("Non-streaming IFileMemory isn't supported yet");
 				return false;
 			}
 			else {
@@ -758,7 +805,7 @@ tbool CXloader::AssembleParams_ForMultiPartForm()
 		if (rc != 0) {
 			tchar pszErr[128];
 			sprintf(pszErr, "curl_formadd(..) returned %d for file %s", rc, rsNameAndExtOnly.c_str());
-			SetError(pszErr);
+			AppendError(pszErr);
 			return false;
 		}
 	}
@@ -835,7 +882,7 @@ size_t CXloader::ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, si
 	tuint64 uiBytesWanted = (uiBytesAvailable < uiMaxNumberOfBytes) ? uiBytesAvailable : uiMaxNumberOfBytes;
 	tuint64 uiActuallyRead = pfile->Read((tchar*)ptr, uiBytesWanted);
 	if (uiActuallyRead != uiBytesWanted) {
-		SetError("Unable to read file for upload");
+		AppendError("Unable to read file for upload");
 		return CURL_READFUNC_ABORT;
 	}
 
@@ -860,7 +907,7 @@ size_t CXloader::ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, si
 //	uiWantedPos += offset;
 //	tuint64 uiActualPos = pfile->Seek(uiWantedPos);
 //	if (uiActualPos != uiWantedPos) {
-//		SetError("SeekFunction_ForUpload failed");
+//		AppendError("SeekFunction_ForUpload failed");
 //		// We can't continue
 //		return CURL_READFUNC_ABORT;
 //	}
@@ -961,7 +1008,7 @@ tbool CXloader::SetOpt(CURLoption iOption, const tchar* pszOption, const void* p
 	if (rc != 0) {
 		tchar pszErr[512];
 		sprintf(pszErr, "curl_easy_setopt(..) returned error %d for %s%s\n%s", rc, pszOption, pszExtraInfo, mpszErrorBuffer);
-		SetError(pszErr);
+		AppendError(pszErr);
 		return false;
 	}
 	return true;
@@ -1001,6 +1048,17 @@ tbool CXloader::SetOpt(CURLoption iOption, const tchar* pszOption, tbool bData, 
 
 tbool CXloader::OpenConnection()
 {
+	// We must first check to see if we need to kill previous authentication
+	tbool bUseAuthentication_ThisTime = ((msUser.length() > 0) || (msPassword.length() > 0));
+	if (mbUseAuthentication && !bUseAuthentication_ThisTime) {
+		// We have to kill the "easy" handle to reset authentication
+		if (mpCURLEasyHandle) {
+			curl_easy_cleanup(mpCURLEasyHandle);
+			mpCURLEasyHandle = NULL;
+		}
+	}
+	mbUseAuthentication = bUseAuthentication_ThisTime;
+
 	// Get an "easy" handle
 	if (mpCURLEasyHandle == NULL) {
 		mpCURLEasyHandle = curl_easy_init();
@@ -1014,26 +1072,35 @@ tbool CXloader::OpenConnection()
 	if (!SetOpt(CURLOPT_ERRORBUFFER, "CURLOPT_ERRORBUFFER", mpszErrorBuffer))
 		return false;
 
-	EVerbType eVerb = GetActuallyUsedVerb();
-
-	// Assemble URL string
-	std::string sURL = std::string("http://") + msHost;
-	if (miPort != 80) {
-		// Custom port
-		tchar pszPort[16];
-		sprintf(pszPort, ":%d", miPort);
-		sURL += pszPort;
+	// Do we need to assemble URL string ourselves?
+	if (!mbIsInit_FullBlownURL) {
+		// Assemble URL string
+		msURL = std::string("http://") + msHost;
+		if (miPort != 80) {
+			// Custom port
+			tchar pszPort[16];
+			sprintf(pszPort, ":%d", miPort);
+			msURL += pszPort;
+		}
+		msURL += msPage;
 	}
-	sURL += msPage;
+
+	// Maybe add parameters as part of URL string
+	EVerbType eVerb = GetActuallyUsedVerb();
 	if ((eVerb == VERB_GET) && (miParamsAssembledLen > 0)) {
 		// Add URL-encoded params as part of the URL
-		sURL += "?";
-		sURL += std::string(mpszParamsAssembled, miParamsAssembledLen);
+		msURL += "?";
+		msURL += std::string(mpszParamsAssembled, miParamsAssembledLen);
 	}
 
 	// Set URL
-	if (!SetOpt(CURLOPT_URL, "CURLOPT_URL", sURL))
+#ifdef _DEBUG
+	std::string sTest = msURL;
+#endif // _DEBUG
+	if (!SetOpt(CURLOPT_URL, "CURLOPT_URL", msURL)) {
+		AppendError((std::string("Unable to set URL:  ") + msURL).c_str());
 		return false;
+	}
 
 	// Set VERB for x-Loader
 	if (mbIsUploader) {
@@ -1112,17 +1179,15 @@ tbool CXloader::OpenConnection()
 			return false;
 	}
 
-	// Set user for authentication
-	//if (msUser.length() > 0) {
-	if (!SetOpt(CURLOPT_USERNAME, "CURLOPT_USERNAME", msUser))
-		return false;
-	//}
+	if (mbUseAuthentication) {
+		// Set user for authentication
+		if (!SetOpt(CURLOPT_USERNAME, "CURLOPT_USERNAME", msUser))
+			return false;
 
-	// Set password for authentication
-	//if (msPassword.length() > 0) {
-	if (!SetOpt(CURLOPT_PASSWORD, "CURLOPT_PASSWORD", msPassword))
-		return false;
-	//}
+		// Set password for authentication
+		if (!SetOpt(CURLOPT_PASSWORD, "CURLOPT_PASSWORD", msPassword))
+			return false;
+	}
 
 	// Set time-out - but not the usual brain-dead way
 	{
@@ -1182,7 +1247,7 @@ void CXloader::CloseConnection()
 	if (mpCURLEasyHandle) {
 		std::string sErr;
 		if (!CXloader_MultiWrapper::Remove(this, &sErr)) {
-			SetError(sErr.c_str());
+			AppendError(sErr.c_str());
 		}
 	}
 
@@ -1201,17 +1266,17 @@ tbool CXloader::Start(IFile* pfileForDownload /*= NULL*/)
 	CAutoLock Lock(mMutex_Connection);
 
 	if (IsFailed()) {
-		//SetError("Previous error");
+		//AppendError("Previous error");
 		return false;
 	}
 	
 	if (!IsInitialized()) {
-		SetError("Not initialized");
+		AppendError("Not initialized");
 		return false;
 	}
 	
 	if (IsTransfering()) {
-		SetError("Already transfering");
+		AppendError("Already transfering");
 		return false;
 	}
 
@@ -1226,7 +1291,7 @@ tbool CXloader::Start(IFile* pfileForDownload /*= NULL*/)
 
 	std::string sErr;
 	if (!CXloader_MultiWrapper::Add(this, &sErr)) {
-		SetError(sErr.c_str());
+		AppendError(sErr.c_str());
 		return false;
 	}
 
@@ -1240,22 +1305,22 @@ tbool CXloader::GetReplyPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* pi
 	*piPortionSize = 0;
 	
 	if (IsFailed()) {
-		//SetError("Previous error");
+		//AppendError("Previous error");
 		return false;
 	}
 	
 	if (!IsInitialized()) {
-		SetError("Not initialized");
+		AppendError("Not initialized");
 		return false;
 	}
 	
 	if ((!IsTransfering()) && (!IsDone())) {
-		SetError("Not transfering and not done");
+		AppendError("Not transfering and not done");
 		return false;
 	}
 
 	if (mpfileForReply != NULL) {
-		SetError("Download / reply goes directly to a file, so you can't use GetReplyPortion(..)");
+		AppendError("Download / reply goes directly to a file, so you can't use GetReplyPortion(..)");
 		return false;
 	}
 
@@ -1325,7 +1390,7 @@ tbool CXloader::Abort()
 tbool CXloader::GetProgress(tint64* piUploadProgress, tint64* piUploadSize, tint64* piDownloadProgress, tint64* piDownloadSize)
 {
 	if ((!IsFailed()) && (!IsInitialized())) {
-		SetError("Not initialized");
+		AppendError("Not initialized");
 		return false;
 	}
 	
@@ -1348,6 +1413,12 @@ void CXloader::SetIsUninitialized()
 {
 	mbIsInitialized = mbIsTransfering = mbIsMultiDone = mbIsDone = mbIsFailed = false;
 } // SetIsUninitialized
+
+
+void CXloader::SetIsFullBlownURL(tbool bFullBlownURL)
+{
+	mbIsInit_FullBlownURL = bFullBlownURL;
+} // SetIsFullBlownURL
 
 
 void CXloader::SetIsInitialized()
@@ -1453,7 +1524,7 @@ void CXloader::SetMultiSaysDone(CURLcode code)
  			}
 			tchar pszErr[512];
 			sprintf(pszErr, "curl_multi_info_read(..) gave status DONE but code %d %s", code, p);
-			SetError(pszErr);
+			AppendError(pszErr);
 		}
 
 		if (mpfileForReply != NULL) {
@@ -1470,7 +1541,7 @@ void CXloader::SetIsDone()
 	{
 		CAutoLock Lock(mMutex_ForErrors);
 		if (msDelayedStatusError.length() > 0) {
-			SetError(msDelayedStatusError.c_str());
+			AppendError(msDelayedStatusError.c_str());
 			msDelayedStatusError = "";
 			return;
 		}
@@ -1520,7 +1591,7 @@ tbool CXloader::IsFinished()
 } // IsFinished
 
 
-void CXloader::SetError(const tchar* pszError)
+void CXloader::AppendError(const tchar* pszError)
 {
 	CAutoLock Lock(mMutex_ForErrors);
 	
@@ -1533,7 +1604,7 @@ void CXloader::SetError(const tchar* pszError)
 		msLastError = pszError;
 	}
 	SetIsFailed();
-} // SetError
+} // AppendError
 
 
 tbool CXloader::GetError(tchar* pszErrBuff, tint32 iErrBuffSize)

@@ -39,7 +39,17 @@ public:
 		\param iTimeOutSecs [in]: The max allowed amount of seconds without anything happening before error (default 10)
 		\return tbool: True upon success, false upon error.
 	*/
-	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10) = 0;
+	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10) = 0;
+
+	//! Prepare Internet location to connect to
+	/*!
+		\param pszFullURL [in]: Full blown URL for connection - must include protocol keyword ("http://") and host and document part. Can also include port-number (":nnnn" between host and document part of URL)
+		\param pszUser [in]: User for authentication (default none)
+		\param pszPassword [in]: Password for authentication (default none)
+		\param iTimeOutSecs [in]: The max allowed amount of seconds without anything happening before error (default 10)
+		\return tbool: True upon success, false upon error.
+	*/
+	virtual tbool Init(const tchar* pszFullURL, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10) = 0;
 
 	//! Asks the server to give us data of the specified type
 	/*!
