@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 
 // Forward definitions
@@ -70,6 +70,7 @@ public virtual CKSInternet_Features,
 public virtual CKSXML_Create_Sample,
 public virtual CGUI_Controller,
 public virtual CKSFile_Controller,
+public virtual CKSUpload_Controller,
 public virtual CImport_Auido_Controller
 
 // Changes made to VST
@@ -293,9 +294,9 @@ public:
 	virtual void Set_Selected_Track(tint32 iID){ miSelected_Track = iID;};
 
 
-	std::list<CSample_Data*> Get_Sample_Data_List(){return mSample_Data_List;}
-	std::list<CSample_Data*>::const_iterator Get_Sample_Data_List() const {return mSample_Data_List.begin();}
-	std::list<CSample_Data*>::const_iterator Get_Sample_Data_List_End() const {return mSample_Data_List.end();}
+	std::list<CSample_Data> Get_Sample_Data_List(){return mSample_Data_List;}
+	std::list<CSample_Data>::iterator Get_Sample_Data_List_Begin()  {return mSample_Data_List.begin();}
+	std::list<CSample_Data>::iterator Get_Sample_Data_List_End()  {return mSample_Data_List.end();}
 	
 	//! check if take is in use
 	tbool Take_Is_In_Use(std::string sName);
@@ -312,6 +313,7 @@ public:
 	
 	tbool IsClipNameInUse(const tchar* pszClipName, const tchar* pszWaveNameL, const tchar* pszWaveNameR, std::string* psDescription);
 	void AddClipToList(CImportAudioTask* pImportInfo);
+	void AddClipToList(CTake_Data* pTake_Data);
 	
 
 	std::string GetProjDir() const {return msProjectFolder;}
@@ -360,6 +362,8 @@ public:
 	void CloseWindow(void* pWnd);
 
 	tfloat64 GetPixelPrSample(){ return mfPixelPrSample;};
+	
+	//! get samples pr pixel
 	tfloat64 GetSamplesPrPixel(){ return mfSamplesPrPixel;};
 
 	de::IParameterManager* GetParmMan() {return mpParmMan;}
@@ -494,7 +498,7 @@ protected:
 		std::string sWavePathL, std::string sWavePathR,
 		CSample_Data* pSample_Info, ac::EQuality ePreviousQuality);
 
-	std::list<CSample_Data*> mSample_Data_List;
+	std::list<CSample_Data> mSample_Data_List;
 
 	virtual void UpdateGUIFileList();
 public:
@@ -534,10 +538,13 @@ protected:
 
 	CMutex mMutexMeter;
 	
+	
 	tfloat64 mfPixelPrSample;
+	
 	tfloat64 mfSamplesPrPixel;
 	
 	tfloat mfGrid_In_Samples;
+	
 	tfloat32 mfTempo;
 	
 

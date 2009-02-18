@@ -7,13 +7,13 @@ CKSFile_Controller::CKSFile_Controller()
 {
 	msProject_Name = "";
 	
-	mpMIDI_Sequencer = new(CMIDI_Sequencer);
+//	mpMIDI_Sequencer = new(CMIDI_Sequencer);
 	
-	char pszInFile[1024];
-	char pszOutFile[1024];
+//	char pszInFile[1024];
+//	char pszOutFile[1024];
 	
 	
-	mpMIDI_Sequencer->Init( pszInFile, pszOutFile);
+//	mpMIDI_Sequencer->Init( pszInFile, pszOutFile);
 }
 
 CKSFile_Controller::~CKSFile_Controller()
@@ -294,11 +294,12 @@ tbool CKSFile_Controller::Create_Wave_Picts_Folder()
 
 
 
+
 //! create a new project file
 tbool CKSFile_Controller::Create_Project_File()
 {
-	std::string sProject_Name	= gpApplication->Project_Name();
-	std::string sProject_Folder = gpApplication->Project_Folder();
+	std::string sProject_Name	=	gpApplication->Project_Name();
+	std::string sProject_Folder =	gpApplication->Project_Folder();
 	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";
 	
 	
@@ -315,6 +316,9 @@ tbool CKSFile_Controller::Create_Project_File()
 	}
 	return false;
 }
+
+
+
 
 tbool CKSFile_Controller::Copy_Samples()
 {
@@ -363,9 +367,8 @@ tbool CKSFile_Controller::Create_Folders()
 	// create a new MP3 folder
 	if(Create_MP3_Folder() == false ) return false;
 	
-	// create a new upload folder
+	// create a new wave pict folder
 	if(Create_Wave_Picts_Folder() == false ) return false;
-
 	
 	// create a new project file
 	if( Create_Project_File() == false ) return false;
@@ -388,26 +391,6 @@ void CKSFile_Controller::Update_Project_Name(std::string sNew_Name)
 
 	
 }
-tbool CKSFile_Controller::Is_A_Audio_File(std::string sFile)
-{
-	// obsolete use 
-	return Check_Extencion( Get_Extencion(sFile)  );
-}
-
-tbool CKSFile_Controller::Check_Extencion(std::string sFile)
-{
-	if( sFile.size() == 0)						return false;
-	// supported extencions
-	if (sFile.compare(".wav") == 0)				return true;
-	else if (sFile.compare(".WAV") == 0)		return true;
-	else if (sFile.compare(".ogg") == 0)		return true;
-	else if (sFile.compare(".OGG") == 0)		return true;
-	else if (sFile.compare(".mp3") == 0)		return true;
-	else if (sFile.compare(".MP3") == 0)		return true;
-	
-	return false;
-	
-}
 
 std::string  CKSFile_Controller::Get_Extencion(std::string sFile)
 {
@@ -419,19 +402,14 @@ std::string  CKSFile_Controller::Get_Extencion(std::string sFile)
 
 tbool CKSFile_Controller::Readable_Audio(std::string sFile_Path)
 {
-
+	
 	CAutoDelete<IFile> pFile(IFile::Create());
-	
-	
 	
 	
 	if (pFile->Open(sFile_Path.c_str(), IFile::FileRead)) {
 		
 		ac::IDecoder* pDec = ac::IDecoder::Create(pFile);
 		
-		
-		
-
 		if (pDec) {
 			
 			tbool bReturn = pDec->TestFile(pFile);
@@ -441,6 +419,24 @@ tbool CKSFile_Controller::Readable_Audio(std::string sFile_Path)
 	}
 	return false;
 }
+
+
+tbool CKSFile_Controller::Is_A_File(std::string sFile_Path)
+{
+	
+	CAutoDelete<IFile> pFile(IFile::Create());
+	
+	if (pFile->Open(sFile_Path.c_str(), IFile::FileRead)) {
+		return true;
+	}
+	return false;
+}
+
+
+
+
+
+
 
 
 

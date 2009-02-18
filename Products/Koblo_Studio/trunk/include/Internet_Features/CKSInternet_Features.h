@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 //! Called when a buffer of samples needs to be filled
 /*!
@@ -66,7 +66,7 @@ public:
 	// Load project
 	void Load_Project(tint32 iProjectID);
 	//! upload project to koblo.com
-	void Upload_Project();
+//	void CKSUsername_And_Password_Controller();
 	
 	//! prepare wave files for upload
 	void Compress_Wave_File(std::string sSample);

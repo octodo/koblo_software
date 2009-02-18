@@ -34,6 +34,9 @@ public:
 		\param pszHost [in]: Name of Internet host. DO NOT PREPEND WITH "http://" !
 		\param pszPage [in]: Folder+page to connect to on Internet host
 		\param iPort [in]: Port number (default 80)
+		\param pszUser [in]: User for authentication (default none)
+		\param pszPassword [in]: Password for authentication (default none)
+		\param iTimeOutSecs [in]: The max allowed amount of seconds without anything happening before error (default 10)
 		\return tbool: True upon success, false upon error.
 	*/
 	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10) = 0;
@@ -52,6 +55,25 @@ public:
 	*/
 	virtual tbool SetSpecificVerb(EVerbType eVerb) = 0;
 
+	//! By calling this you'll prevent the downloader from following redirect requests. Must be called after Init(..) since that resets this behaviour
+	/*!
+		\return tbool: True upon successfully setting the parameter
+	*/
+	virtual tbool DisableAutoRedirects() = 0;
+
+	//! By calling this you'll allow the downloader to follow redirect requests (default unless DisableAutoRedirects() has been previously called)
+	/*!
+		\return tbool: True upon successfully setting the parameter
+	*/
+	virtual tbool EnableAutoRedirects() = 0;
+
+	//! Tell the downloader whether you want to abort immediately upon error status codes
+	/*!
+		\param bFailOnStatus [in]: True: Abort download immediately if error status is received. False (default, reset by Init(..) ): Error is only reported after all data has been received
+		\return tbool: True upon successfully setting the parameter
+	*/
+	virtual tbool SetFailOnHttpStatus(tbool bFailOnStatus) = 0;
+
 	//! Call this once for each parameter=value set to submit to download location
 	/*!
 		\param pszParamName [in]: Name of parameter. Must be US-ASCII characters and numbers only (a-z, A-Z and 0-9)
@@ -61,20 +83,34 @@ public:
 	*/
 	virtual tbool AddParam(const tchar* pszParamName, const tchar* pcParamData, tint32 iParamDataLen) = 0;
 
-	//! Poll for a portion of download data
+	//! Start background download of data either to buffer in memory or directly to file. Will run until IsDone() == true
+	/*!
+		\param pfileForDownload [in]: File that has been previously opened for write-access. Default NULL means that download is kept in memory instead
+		\return tbool: True upon success, false upon error.
+	*/
+	virtual tbool Start(IFile* pfileForDownload = NULL) = 0;
+
+	//! Ask for a portion of download data (this is only possible if Start(..) was called with NULL)
 	/*!
 		\param pszBuffer [out]: Pre-allocated buffer to recieve the next portion of downloaded data
 		\param iBufferSize [in]: Size of pre-allocated buffer
 		\param piPortionSize [out]: The number of bytes actually returned in this portion. May occationally be 0, caused by e.g. slow network
-		\param puiTotalSize [out]: The total size of the resource/file we're downloading. Is initially 0 and may change, so always use latest return value for progress bar, etc.
 		\return tbool: True upon success, false upon error.
 	*/
-	virtual tbool DownloadPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize, tuint64* puiTotalSize) = 0;
+	virtual tbool GetReplyPortion(tchar* pszBuffer, tint32 iBufferSize, tint32* piPortionSize) = 0;
+
+	//! Get info on download progress
+	/*!
+		\param piDownloadProgress [out]: How much of downloaded data has been either 1) written to file or 2) returned via GetReplyPortion(..)
+		\param piDownloadSize [out]: The total number of bytes in download data (will be unknown (i.e. 1) until reply starts)
+		\return tbool: True upon success, false upon error.
+	*/
+	virtual tbool GetProgress(tint64* piDownloadProgress, tint64* piDownloadSize) = 0;
 
 	//! Breaks an ongoing download operation and releases internal buffers. It's OK to call from different thread.
 	virtual tbool Abort() = 0;
 
-	//! Returns True if download has been succesfully completed
+	//! Returns True if download has been succesfully completed and all data has been either 1) written to file or 2) delivered to calling app by use of GetReplyPortion(..)
 	virtual tbool IsDone() = 0;
 
 	//! Returns True if download has failed and can't continue
@@ -86,7 +122,7 @@ public:
 		\param iErrBuffSize [in]: Size of buffer
 		\return: True upon function success (check buffer to see error - if "" then no error exists)
 	*/
-	virtual tbool GetLatestError(tchar* pszErrBuff, tint32 iErrBuffSize) = 0;
+	virtual tbool GetError(tchar* pszErrBuff, tint32 iErrBuffSize) = 0;
 };
 
 #endif // _ine_i_downloader

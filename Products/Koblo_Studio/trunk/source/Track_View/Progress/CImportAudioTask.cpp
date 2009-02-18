@@ -68,22 +68,22 @@ void CImportAudioTask::Destroy()
 	delete dynamic_cast<CImportAudioTask*>(this);
 } // Destroy
 
-// new one
-tbool CImportAudioTask::Init(std::string sSource_Path, tbool bDoesWaveAlreadyExist , EStereoBehavior eStereoBehavior , tbool bForceOriginalIsLossy )
+
+tbool CImportAudioTask::Init(CKSFile_Item* pFile_Item )
 {
 	// prepare all the different filenames and paths
-	if( mFile_Item.Import( sSource_Path ) == false)
-	   return false; 
+	if( mFile_Item.Import( pFile_Item->Source_Path() ) == false)
+		return false; 
 	
-
+	
 	
 	mpSrc_File = IFile::Create();
 	if (mpSrc_File == NULL) {
-		msExtendedError = std::string("IFile::Create() => NULL for '") + mFile_Item.Disk_Name() + "' (out of memory?).";
+		msExtendedError = std::string("IFile::Create() => NULL for '") + mFile_Item.Screen_Name() + "' (out of memory?).";
 		return false;
 	}
-	if (!mpSrc_File->Open(mFile_Item.Source_Path().c_str(), IFile::FileRead)) {
-		msExtendedError = std::string("Can't open file '") + mFile_Item.Disk_Name() + "'.";
+	if (!mpSrc_File->Open(pFile_Item->Source_Path().c_str(), IFile::FileRead)) {
+		msExtendedError = std::string("Can't open file '") + mFile_Item.Screen_Name() + "'.";
 		return false;
 	}
 	
@@ -94,7 +94,7 @@ tbool CImportAudioTask::Init(std::string sSource_Path, tbool bDoesWaveAlreadyExi
 		if (*pszErrMsgBuff != '\0')
 			msExtendedError = pszErrMsgBuff;
 		else
-			msExtendedError = std::string("Unknown format file '") + mFile_Item.Disk_Name() + "'.";
+			msExtendedError = std::string("Unknown format file '") + mFile_Item.Screen_Name() + "'.";
 		return false;
 	}
 	// We have to do a TestFile here - even though it will fail if it causes mp3
@@ -108,7 +108,7 @@ tbool CImportAudioTask::Init(std::string sSource_Path, tbool bDoesWaveAlreadyExi
 	meCodec = pDecoder->GetAudioCodec();
 	mbSrcLossyCompressed = pDecoder->mbIsLossyCompression;
 	meSrcQuality = pDecoder->meLowestInputQuality;
-
+	
 	mFile_Item.Stereo(pDecoder->miLastInputChannels == 2); //
 	if (mbSrcLossyCompressed)
 		miBitWidth = 24; //pDecoder->miOutputBitWidth;
@@ -119,7 +119,80 @@ tbool CImportAudioTask::Init(std::string sSource_Path, tbool bDoesWaveAlreadyExi
 	pDecoder = NULL;
 	
 	
-//	mbSplit = false;
+	//	mbSplit = false;
+	
+	return true;
+} // Init
+
+tbool CImportAudioTask::Init(CTake_Data* pTake_Data )
+{
+	mbDstIsAlreadyThere = true;
+	mFile_Item.Set_UUID(pTake_Data->Get_UUID() );
+	mFile_Item.Screen_Name(pTake_Data->Screen_Name() );
+//	mFile_Item.Disk_Name(pTake_Data->Disk_Name() );
+	
+	
+	
+	
+	/*
+	// prepare all the different filenames and paths
+	if( mFile_Item.Import( pFile_Item->Source_Path() ) == false)
+		return false; 
+	*/
+	
+	
+	CAutoDelete<IFile> pfile_L(IFile::Create());
+	CAutoDelete<IFile> pfile_R(IFile::Create());
+	tbool bStereo = pTake_Data->Channels() == 2;
+	std::string s_L = pTake_Data->Left_Wave_File_Path();
+	std::string s_R = pTake_Data->Right_Wave_File_Path();
+	if (!pfile_L->Open(s_L.c_str(), IFile::FileRead)) {
+		msExtendedError = std::string("Can't open file '") + s_L.c_str() + "'.";
+		return false;
+	}
+	if (bStereo) {
+		if (!pfile_R->Open(s_R.c_str(), IFile::FileRead)) {
+			msExtendedError = std::string("Can't open file '") + s_R.c_str() + "'.";
+			return false;
+		}
+	}
+	
+	tchar pszErrMsgBuff[1024];
+	*pszErrMsgBuff = '\0';
+	ac::IDecoder* pDecoder = ac::IDecoder::Create(mpSrc_File, pszErrMsgBuff, 1024);
+	if (!pDecoder) {
+		if (*pszErrMsgBuff != '\0')
+			msExtendedError = pszErrMsgBuff;
+		else
+			msExtendedError = std::string("Unknown format file '") + mFile_Item.Screen_Name() + "'.";
+		return false;
+	}
+	if (!pDecoder->TestFile(pfile_L)) {
+		tchar pszErrMsg[1024];
+		pDecoder->GetErrMsg(pszErrMsg, 1024, true);
+		msExtendedError = std::string("Error testing file: ") + pszErrMsg;
+		return false;
+	}
+	if (bStereo) {
+		if (!pDecoder->TestFile(pfile_R)) {
+			tchar pszErrMsg[1024];
+			pDecoder->GetErrMsg(pszErrMsg, 1024, true);
+			msExtendedError = std::string("Error testing file: ") + pszErrMsg;
+			return false;
+		}
+	}
+	meCodec = ac::geAudioCodecWave;
+	mbSrcLossyCompressed = false;
+	meSrcQuality = pDecoder->meLowestInputQuality;
+	miBitWidth = (meSrcQuality == ac::geQualityLossless16) ? 16 : 24;
+	
+	mFile_Item.Stereo(bStereo); //
+
+	// First close decoder, so it won't crash later
+	pDecoder->Destroy();
+	pDecoder = NULL;
+		
+	//	mbSplit = false;
 	
 	return true;
 } // Init
@@ -166,7 +239,7 @@ tbool CImportAudioTask::Open()
 	mpAudio_File_L = IFile::Create();
 	mpAudio_File_R = IFile::Create();
 	
-	printf("pathname is : \%s \n", mFile_Item.Path().c_str() );
+//	printf("pathname is : \%s \n", mFile_Item.Path().c_str() );
 
 	std::string sLeft_File_Name			= mFile_Item.Left_Path();
 	std::string sRight_File_Name		= mFile_Item.Right_Path();
@@ -240,7 +313,8 @@ tbool CImportAudioTask::DoWork()
 					msProgress = "Decoding";
 				else
 					msProgress = "Importing";
-				msProgress += std::string(" '") + mFile_Item.Disk_Name() + "'";
+				msProgress += std::string(" '") + mFile_Item.Screen_Name() + "'";
+				//msProgress += std::string(" '") + mFile_Item.Disk_Name() + "'";
 				muiProgressIx = 0;
 				muiProgressTarget = mpSrc_File->GetSizeWhenOpened();
 
@@ -312,8 +386,8 @@ tbool CImportAudioTask::DoWork()
 				else
 				 */{
 				//	msDstPathName_ForCopy = sCompressedDest + msClipName + msExt;
-					IFile::DeleteFile(mFile_Item.Destination_Path().c_str());
-					if (IFile::CopyFile(mFile_Item.Destination_Path().c_str(), mFile_Item.Path().c_str(), (mFile_Item.Get_UUID() + mFile_Item.Extencion()).c_str())) {
+					IFile::DeleteFile(gpApplication->Wave_File_Folder().c_str()); //!!! destination path????
+					if (IFile::CopyFile(gpApplication->Wave_File_Folder().c_str(), mFile_Item.Path().c_str(), (mFile_Item.Get_UUID() + mFile_Item.Extencion()).c_str())) {
 						// Go to next task
 						miAudioImportOrder++;
 					}

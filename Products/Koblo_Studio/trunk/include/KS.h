@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 
 
@@ -25,6 +25,7 @@
 // XML File parser
 #include "tinyxml.h"
 #include "CKSFile_Controller.h"
+#include "CKSUpload_Controller.h"
 #include "CKSFile_Item.h"
 #include "CImport_TinyXML.h"
 #include "CKSXML_Read_Project.h"
@@ -32,7 +33,7 @@
 #include "CKSXML_Create_Project.h"
 #include "CKSXML_Create_Sample.h"
 
-#include "CKSUsername_And_Password_Model.h"
+#include "CKSUsername_And_Password_Controller.h"
 #include "CKSInternet_Features.h"
 
 
@@ -128,6 +129,7 @@ class CApplication;
 #include "CSample_DSP.h"
 #include "CSample_Controller.h"
 #include "CRegion_Controller.h"
+#include "CRegion_Data.h"
 #include "CImport_Auido_Controller.h"
 #include "CRegion_DSP.h"
 
@@ -161,6 +163,7 @@ class CPlugInManager;
 #include  "CKSExportForWebGUIPane.h"
 #include  "CKSSetupGUIPane.h"
 #include  "CKSSetupGUI.h"
+#include  "CPreset_Data.h"
 
 // Username and Password
 #include  "CKSUsername_And_Password_Pane.h"

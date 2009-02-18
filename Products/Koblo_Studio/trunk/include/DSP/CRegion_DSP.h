@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 
 
@@ -26,7 +26,8 @@
 
 
 class CRegion_DSP:
-public virtual CKSUUID
+//public virtual CKSUUID
+public virtual CRegion_Data
 {
 public:
 
@@ -61,7 +62,7 @@ public:
 		
 	tuint64 Get_Sample_Offset() const {return muiSample_Offset;}
 		
-	const tchar* Get_Sample_Name() const { return msSample_Name.c_str(); }
+	const tchar* Get_Sample_Name() const { return msSample_Screen_Name.c_str(); }
 	
 	//!
 	void SetStartPos(tuint64 uiStartPos)  { muiSample_Offset = uiStartPos ;}
@@ -75,17 +76,17 @@ public:
 		//! Set sample endpos
 	void SetEndPos(tuint64 uiPos);
 		
-	virtual void Set_Fade_In_Duration(tuint64 uiFadeInLength){muiFadeInLength = uiFadeInLength;};
+//	virtual void Set_Fade_In_Duration(tuint64 uiFadeInLength){muiFadeInLength = uiFadeInLength;};
 		
-	virtual void Set_Fade_Out_Duration(tuint64 uiFadeOutLength){muiFadeOutLength = uiFadeOutLength;};
+//	virtual void Set_Fade_Out_Duration(tuint64 uiFadeOutLength){muiFade_Out_Duration = uiFadeOutLength;};
 		
-	virtual void Set_Volume(tfloat32 fVolume){mfVolume = fVolume;};
+//	virtual void Set_Volume(tfloat32 fVolume){mfVolume = fVolume;};
 		
-	tuint64 Get_Fade_In_Duration(){ return muiFadeInLength;};
+//	tuint64 Get_Fade_In_Duration(){ return muiFadeInLength;};
 		
-	tuint64 Get_Fade_Out_Duration(){return muiFadeOutLength;};
+//	tuint64 Get_Fade_Out_Duration(){return muiFade_Out_Duration;};
 		
-	tfloat32 Get_Volume(){return mfVolume;};
+//	tfloat32 Get_Volume(){return mfVolume;};
 		
 	tint32 GetChannels() const {return miChannels;}
 		
@@ -122,23 +123,23 @@ protected:
 	tint32 muiUniqueID;
 		
 	//! First sample to play
-	tuint64 muiSample_Offset;
+//	tuint64 muiSample_Offset;
 		
 	//! Last sample to play
 	tuint64 muiEndPos;
 		
 	//! Name from sample browser in left side of track editor window without path and extencions
-	std::string msSample_Name;
+//	std::string msSample_Name;
 		
 	//! Fade-in length in samples (0 is no fade).
-	tuint64 muiFadeInLength;
+//	tuint64 muiFadeInLength;
 		
 	//! Fade-out length i samples (0 is no fade)
-	tuint64 muiFadeOutLength;
+//	tuint64 muiFadeOutLength;
 		
 	//! Region volume
-	tfloat32 mfVolume;
+//	tfloat32 mfVolume;
 	
 
-	};
+};
 

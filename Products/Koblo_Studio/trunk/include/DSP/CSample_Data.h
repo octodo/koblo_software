@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 
 
@@ -29,26 +29,38 @@ public:
 	//! Constructor
 	CSample_Data();
 	
-	CSample_Data(const CSample_Data& DataOld);
-
 	//! Destructor
 	virtual ~CSample_Data();
 	
-	//! Name of clip as seen in the list
-	std::string sName;
+	//! copy constructer
+	CSample_Data(const CSample_Data& DataNew);
 	
 	//! Set sample name
-	void Name( std::string Name){ sName = Name;};
+	void Name( std::string Name){ msName = Name;};
+	
 	//! get sample name
-	std::string Name(){ return sName;};
+	std::string Name(){ return msName;};
+	
 	//! get a pointer to the takes
 	CTake_Data* Get_Take_Data(){ return mpTake_Data;};
 	
+	//! finds a take from an given UUID
+	CTake_Data* Get_Take_Data(std::string sUUID);
+	
+	//! finds a take from an given UUID
+	CTake_Data* Get_Take_Data(tuint32 uiTake);
+	
+	tuint32 Number_Of_Takes(){ return muiTakes;};
+	
 protected:
 	
-
+	//! name of clip as seen in the list
+	std::string msName;
+	
 	//!!! TO DO turn this in to a stdlist of takes later
 	CTake_Data* mpTake_Data;
+	
+	tuint32 muiTakes;
 	
 	
 };

@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 
 //! tasks shown in the progress bar at the top o the endit window
@@ -78,10 +78,9 @@ public:
 
 	virtual void Destroy();
 
-	tbool Init( std::string sSource_Path, 
-				tbool bDoesWaveAlreadyExist /*= false*/, 
-				EStereoBehavior eStereoBehavior /*= geStereoDoAsk*/, 
-				tbool bForceOriginalIsLossy /*= false*/);
+	tbool Init( CKSFile_Item* pFile_Item);
+	
+	tbool Init( CTake_Data* pTake_Data);
 	
 //	void Init_InsertAsRegionAfterImport(tint32 iTrackID, tint64 iTrackPos);
 
@@ -95,7 +94,7 @@ public:
 	void Stereo( tbool bStereo) { mFile_Item.Stereo(bStereo);};
 	
 	//! take name
-	std::string Name(){ return mFile_Item.Disk_Name();};
+	std::string Disk_Name(){ return mFile_Item.Disk_Name();};
 	
 	//! left take name
 	std::string Left_Name(){ return mFile_Item.Left_Name();};

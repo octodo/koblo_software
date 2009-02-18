@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 //! Called when a buffer of samples needs to be filled
 /*!
@@ -30,6 +30,7 @@
 
 class CSample_Data;
 class CTake_Data;
+class CPreset_Data;
 
 class CKSXML_Write_Project
 {
@@ -46,6 +47,11 @@ public:
 	std::string Create_License_String();
 	
 	tbool Save_Project_As_XML_File_To_Disk();
+	
+	
+	
+	
+	
 	
 	
 	
@@ -99,6 +105,10 @@ private:
 	void Write_Busses(TiXmlElement* pParent);
 	void Write_Bus(TiXmlElement* pParent, tuint uiID);
 	void Write_Bus_Out(TiXmlElement* pParent, tuint uiID);
+	
+	
+	//! create a new plug-in settings file
+	tbool Create_Plugin_Setting(CPreset_Data* pPreset_Data);
 
 	
 	

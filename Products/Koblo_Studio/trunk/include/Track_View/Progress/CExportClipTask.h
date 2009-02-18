@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 
 enum EExportClipOrder {
@@ -27,17 +27,16 @@ enum EExportClipOrder {
 
 class CExportClipTask : public CProgressTask {
 public:
+	std::string sScreenName;
 
-
-	std::string sClipName;
+	//CKSFile_Item mFileItem;
 	tuint64 muiStartIx;
 	tuint64 muiDuration;
 
-	tint32 iFiles;
-	IFile* pfWaveL;
-	IFile* pfWaveR;
+	tint32 miFiles;
+	IFile* mpLeft_Wave_File;
+	IFile* mpRight_Wave_File;
 	
-	std::string sWaveR;
 	
 	tbool bIsDecompressed;
 	std::string sCompressedOriginal;
@@ -45,8 +44,8 @@ public:
 	ac::EAudioCodec eCodecOfOriginal;
 	ac::EQuality eQualityOfOriginal;
 	ac::EQuality eQualityOfCompressed;
-	tint32 iChannels;
-	tint32 iSampleRate;
+	tint32 miChannels;
+	tint32 miSampleRate;
 
 	tchar* mpcSilence;
 
@@ -59,8 +58,8 @@ public:
 	CExportClipTask* pConcatenateNextTask;
 
 	tint32 miActionOrder;
-	std::string sOut;
-	IFile* mpfDst;
+	std::string msDestinatin_File;
+	IFile* mpfDestinatin_File;
 	tint32 miChannelsDst;
 	ac::EAudioCodec meCodecDst;
 	ac::EQuality meQualityDst;
@@ -68,41 +67,16 @@ public:
 	tuint64 muiCurrEncodeIx;
 	tuint64 muiSamplesNeeded;
 
-	CExportClipTask( const tchar* pszClipName, tuint64 uiStartIx, tuint64 uiDuration)
-	{
-		
-
-		sClipName = pszClipName;
-		muiStartIx = uiStartIx;
-		muiDuration = uiDuration;
-
-		mpcSilence = NULL;
-
-		iFiles = 0;
-		pfWaveL = IFile::Create();
-		pfWaveR = IFile::Create();
-		bIsDecompressed = false;
-
-		eCodecOfOriginal = ac::geAudioCodecUndefined;
-		eQualityOfOriginal = eQualityOfCompressed = ac::geQualityUnknown;
-		iChannels = iSampleRate = 0;
-
-		bDoEncode = bDoCopy = bSuccess = false;
-		pConcatenateNextTask = NULL;
-
-		miActionOrder = geExportClip_Before;
-		mpfDst = NULL;
-		miChannelsDst = -1;
-		mpEncoder = NULL;
-		meCodecDst = ac::geAudioCodecUndefined;
-		meQualityDst = ac::geQualityUnknown;
-		muiCurrEncodeIx = uiStartIx;
-		muiSamplesNeeded = uiDuration;
-	} // constructor
+	// Old constructor (should be deleted some time later)
+	CExportClipTask(const tchar* pszClipName, tuint64 uiStartIx, tuint64 uiDuration);
+	// New constructor - use with Init(..)
+	CExportClipTask();
 
 	virtual ~CExportClipTask();
 	virtual void Destroy();
 
+	tbool Init(const CTake_Data* pTake_Input, const tchar* pszFilePathDst, ac::EAudioCodec eCodecDst, ac::EQuality eQuality, tuint64 uiStartIx = 0, tuint64 uiDuration = (tuint64)-1);
+	
 	virtual tbool DoWork();
 	virtual tbool IsDone();
 
@@ -115,6 +89,8 @@ protected:
 	tbool DoCopy();
 
 	tbool IsSilence()
-	{ return (iFiles == 0); };
+	{ return (miFiles == 0); };
+	
+	void constructor_helper(ac::EAudioCodec eCodecDst, tuint64 uiStartIx, tuint64 uiDuration);
 
 }; // CExportClipTask

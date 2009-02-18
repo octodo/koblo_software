@@ -42,12 +42,10 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..\..\BaseUtilities\interface,..\..\interface,..\..\include,..\..\..\DataEngine\interface"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
+				AdditionalIncludeDirectories="..\..\..\BaseUtilities\interface;..\..\interface;..\..\include;..\..\..\DataEngine\interface;..\..\curl\include"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;BUILDING_LIBCURL;CURL_STATICLIB"
 				StringPooling="true"
 				RuntimeLibrary="0"
-				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="ineInternalOS.h"
@@ -120,8 +118,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\BaseUtilities\interface,..\..\interface,..\..\include,..\..\..\DataEngine\interface"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
+				AdditionalIncludeDirectories="..\..\..\BaseUtilities\interface;..\..\interface;..\..\include;..\..\..\DataEngine\interface;..\..\curl\include"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;BUILDING_LIBCURL;CURL_STATICLIB;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -152,6 +150,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				OutputFile=".\Debug\ine.lib"
+				AdditionalLibraryDirectories=""
 				SuppressStartupBanner="true"
 			/>
 			<Tool
@@ -208,27 +207,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\CXloaderOSX.h"
+				RelativePath="..\..\include\CXloader_MultiWrapper.h"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\include\CXloaderWin.h"
+				RelativePath="..\..\include\CXloader_ReplyChainLink.h"
 				>
 			</File>
 			<File
@@ -308,11 +291,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\CXLoader.cpp"
+				RelativePath="..\..\source\CXloader.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\CXLoaderWin.cpp"
+				RelativePath="..\..\source\CXloader_MultiWrapper.cpp"
 				>
 			</File>
 			<File

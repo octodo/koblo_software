@@ -16,53 +16,67 @@ public:
 	void Set_Description(const std::string& sDescription ){msDescription =  sDescription;};
 	
 	//! get the description
-	std::string Get_Description(){ return msDescription;};
+	std::string Get_Description() const { return msDescription;};
 	
 	//! get the Sample URL
 	void URL(const std::string& sURL ){ msURL = sURL;};
 	
 	//! get the description
-	std::string URL(){ return msURL;};
+	std::string URL() const { return msURL;};
 	
 	//! is the take in stereo
-	std::string Mode(){ return msMode;};
+	std::string Mode() const { return msMode;};
 	
 	//! mode stereo and mono
-	void Mode(const std::string& sMode) { msMode = sMode;};
+	void Mode(const std::string& sMode);
 	
-	//! get channel name
+	//! get take name based on channel
 	std::string Disk_Name(tuint uiChannel);
 	
 	//! set screen name
 	void Screen_Name(const std::string& sScreen_Name){ msScreen_Name = sScreen_Name;};
 	
 	//! get screen name
-	std::string Screen_Name(){return msScreen_Name;};
+	std::string Screen_Name() const {return msScreen_Name;};
 	
-	// set left peak file path
+	//! set left peak file path
 	void Left_Peak_File_Path(std::string sLeft_Peak_File_Path){ msLeft_Peak_File_Path = sLeft_Peak_File_Path;};
 	
-	// get left peak file path
+	//! get left peak file path
 	std::string Left_Peak_File_Path(){ return msLeft_Peak_File_Path;};
 	
-	// set left peak file path
+	//! set left peak file path
 	void Right_Peak_File_Path(std::string sRight_Peak_File_Path){ msRight_Peak_File_Path = sRight_Peak_File_Path;};
 	
-	// get left peak file path
+	//! get left peak file path
 	std::string Right_Peak_File_Path(){ return msRight_Peak_File_Path;};
 	
 	
-	// set left wave file path
+	//! set left wave file path
 	void Left_Wave_File_Path(std::string sLeft_Wave_File_Path){ msLeft_Wave_File_Path = sLeft_Wave_File_Path;};
 	
 	// get left wave file path
-	std::string Left_Wave_File_Path(){ return msLeft_Wave_File_Path;};
+	std::string Left_Wave_File_Path() const { return msLeft_Wave_File_Path;};
 	
-	// set right wave file path
+	//! set right wave file path
 	void Right_Wave_File_Path(std::string sRight_Wave_File_Path){ msRight_Wave_File_Path = sRight_Wave_File_Path;};
 	
-	// get right wave file path
-	std::string Right_Wave_File_Path(){ return msRight_Wave_File_Path;};
+	//! get right wave file path
+	std::string Right_Wave_File_Path() const { return msRight_Wave_File_Path;};
+	
+	//! check if take is in a given folder
+	tbool In_Folder(std::string sFolder, std::string sExtencion);
+	
+	/*! check it the wave form pict files are in the "Pict Files" folder
+	\ if they are store the path
+	*/
+	tbool Needs_Pict_Files();
+	
+	
+	
+	tuint32 Channels() {return muiChannels; };
+	
+	tuint32 Channels() const {return muiChannels; };
 	
 
 	
@@ -77,8 +91,15 @@ protected:
 
 	//! url
 	std::string msURL;
-	//! url
+	
+	//! stereo / mono
 	std::string msMode;
+	
+	//! channels
+	tuint muiChannels;
+	
+	//! calculates the number of channels based on the mode
+	tuint32 Get_Channels_From_Mode();
 	
 	//! path to the left peak file
 	std::string msLeft_Peak_File_Path;

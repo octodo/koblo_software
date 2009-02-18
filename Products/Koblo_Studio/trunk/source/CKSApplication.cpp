@@ -42,7 +42,6 @@ mpPlugInManager(NULL),
 mbAreGUIsReady(false),
 mbRecord(false),
 mbTimer(false),
-
 CKSXML_Create_Project(),
 CKSXML_Read_Project(),
 CKSXML_Write_Project(),
@@ -1054,6 +1053,8 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 	// hide export window
 	SetGlobalParm(giParamID_Show_Export_Window,	0,		giSectionGUI);
 	
+	
+	
 } // CleanProject
 
 
@@ -1110,21 +1111,21 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			break;
 			
 		case ID_FILE_SAVE:
-if(mbKSProject_Imported){
-			mbKSProject_Imported = false;
-			if (!Save_As()) {
-				LoadSaveErrDlg("Error saving project");
+			if(mbKSProject_Imported){
+				mbKSProject_Imported = false;
+				if (!Save_As()) {
+					LoadSaveErrDlg("Error saving project");
+				}
 			}
-		}
-		else{
-		// Save
-			if (gpApplication->Project_Folder().length() == 0) 
-				ShowMessageBox("No Project to Save", "Sorry");
-		
-			else
-				Save_Project();
-		}
-		break;
+			else{
+			// Save
+				if (gpApplication->Project_Folder().length() == 0) 
+					ShowMessageBox("No Project to Save", "Sorry");
+			
+				else
+					Save_Project();
+			}
+			break;
 			
 		case ID_FILE_SAVE_AS:
 			try {
@@ -1135,6 +1136,26 @@ if(mbKSProject_Imported){
 			catch (IException* pEx) {
 				// Display reason
 				LoadSaveErrDlg(pEx->GetFullDescription());
+			}
+			break;
+
+		case ID_FILE_CLOSEPROJECT:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_FILE_REVERTTOSAVED:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_FILE_IMPORTKSPROJECT:
+			{
+				mbKSProject_Imported = true;
+				MenuFileLoadProject();
+				Project_Name("Imported");
 			}
 			break;
 			
@@ -1198,11 +1219,34 @@ if(mbKSProject_Imported){
 			break;
 */
 
-		case ID_EDIT_DELETE:
+		case ID_EDIT_UNDO:
+			{
+				// Nothing here yet
+			}
 			break;
 
-		case ID_EDIT_DUPLICATE:
-			gpDSPEngine->Duplicate_Region();
+		case ID_EDIT_COPYREGION:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_EDIT_CUTSELECTION:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_EDIT_PASTEREGION:
+			{
+				// Nothing here yet
+			}
+			break;
+
+		case ID_EDIT_DUPLICATEREGION:
+			{
+				gpDSPEngine->Duplicate_Region();
+			}
 			break;
 
 		case ID_EDIT_INVERSEREGION:
@@ -1235,6 +1279,13 @@ if(mbKSProject_Imported){
 				gpDSPEngine->LoopSelection();
 				CBasePane::SMsg Msg(Msg_Draw_Loop);
 				Send_Msg_To_All_Panes(&Msg);
+			}
+			break;
+
+		case ID_EDIT_LOOP:
+			{
+				tbool bTest = (gpApplication->GetGlobalParm(giParamID_Loop_On, giSectionGlobal) != 0);
+				gpApplication->GetParmMan()->Set(true, !bTest, giParamID_Loop_On, de::IParameterManager::TypeGlobal, giSectionGlobal);
 			}
 			break;
 
@@ -1277,9 +1328,48 @@ if(mbKSProject_Imported){
 			}
 			break;
 
+		case ID_VIEW_ZOOM:
+			{
+				Zoom();
+			}
+			break;
+
+		case ID_VIEW_ZOOMIN:
+			{
+				tint32 iTest = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI) +1;
+				gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+			}
+			break;
+
+		case ID_VIEW_ZOOMOUT:
+			{
+				tint32 iTest = gpApplication->GetGlobalParm(giParamID_Zoom, giSectionGUI) -1;
+				gpApplication->GetParmMan()->Set(true, iTest, giParamID_Zoom, de::IParameterManager::TypeGlobal, giSectionGUI);
+			}
+			break;
+
+		case ID_VIEW_JUMPTOMOUSE:
+			{
+				CBasePane::SMsg Msg(Msg_Go_To_Mouse);
+				Send_Msg_To_All_Panes(&Msg);
+			}
+			break;
+
 		case ID_SETTINGS_AUDIOSETUP:
 			{
 				MenuSetupAudio();
+			}
+			break;
+
+		case ID_SETTINGS_SETUSERNAMEANDPASSWORD:
+			{
+				Open_Username_And_Password_Dialog();
+			}
+			break;
+
+		case ID_SETTINGS_CLEARUSERNAMEANDPASSWORD:
+			{
+				Clear_Username_And_Password();
 			}
 			break;
 
@@ -1288,7 +1378,31 @@ if(mbKSProject_Imported){
 				Set_Project_License();
 			}
 			break;
-			
+
+		case ID_TOOLS_HAND:
+			{
+				gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Hand, giSectionGUI);
+			}
+			break;
+
+		case ID_TOOLS_TRIM:
+			{
+				gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Trim, giSectionGUI);
+			}
+			break;
+
+		case ID_TOOLS_SELECT:
+			{
+				gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Select, giSectionGUI);
+			}
+			break;
+
+		case ID_TOOLS_CUT:
+			{
+				gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Cut, giSectionGUI);
+			}
+			break;
+
 		case ID_APP_EXIT:
 		case IDM_EXIT:
 			::PostQuitMessage(0);
@@ -1542,7 +1656,7 @@ if(mbKSProject_Imported){
 		
 	}
 	//-------------------------------------------
-	// toos Menu
+	// tools Menu
 	//-------------------------------------------
 	else if (s.compare("Tools@Hand") == 0) {
 		gpApplication->SetGlobalParm(giParamID_Tool_Selected,giTool_Hand, giSectionGUI);
@@ -1765,12 +1879,12 @@ void CKSApplication::ExportAllClips(ac::EAudioCodec eCodec, ac::EQuality eQualit
 	}
 	else {
 		std::list<CExportClipTask*> listpInfo;
-		std::list<CSample_Data*>::const_iterator it = mSample_Data_List.begin();
-		for ( ; it != mSample_Data_List.end(); it++) {
-			CSample_Data* pFileInfo = *it;
-			const tchar* pszClipName = pFileInfo->sName.c_str();
-			CExportClipTask* pClipInfo = new CExportClipTask( pszClipName, 0, (tuint64)-1);
-			listpInfo.insert(listpInfo.end(), pClipInfo);
+		std::list<CSample_Data>::iterator it = Get_Sample_Data_List_Begin();
+		for ( ; it != Get_Sample_Data_List_End(); it++) {
+			CSample_Data* pSample_Data = &(*it);
+			const tchar* pszClipName = pSample_Data->Name().c_str();
+			CExportClipTask* pExportClipTask = new CExportClipTask( pszClipName, 0, (tuint64)-1);
+			listpInfo.insert(listpInfo.end(), pExportClipTask);
 		}
 		bSuccess = ExportClipsList(&listpInfo, eCodec, eQuality, iChannels);
 	}
@@ -2017,18 +2131,18 @@ tbool CKSApplication::ExportClipsList(std::list<CExportClipTask*>* plistpInfo, a
 				itStart++;
 			}
 			else {
-				tint32 iChannelsMax_ForConcat = (*itStart)->iChannels;
+				tint32 iChannelsMax_ForConcat = (*itStart)->miChannels;
 				std::list<CExportClipTask*>::iterator itNextStart = itStart;
 				itNextStart++;
 				for ( ; (itNextStart != plistpInfo->end()) && (bConcatenateLast); bConcatenateLast = ((*itNextStart)->pConcatenateNextTask != NULL), itNextStart++) {
 					CExportClipTask* pInfo = *itNextStart;
-					if (pInfo->iChannels > iChannelsMax_ForConcat) {
-						iChannelsMax_ForConcat = pInfo->iChannels;
+					if (pInfo->miChannels > iChannelsMax_ForConcat) {
+						iChannelsMax_ForConcat = pInfo->miChannels;
 					}
 				}
 
 				// Enforce same = highest number of output channels for concatenation
-				(*itStart)->iChannels = iChannelsMax_ForConcat;
+				(*itStart)->miChannels = iChannelsMax_ForConcat;
 
 				// Go to next concatenation - if any
 				itStart = itNextStart;
@@ -2153,7 +2267,7 @@ tbool CKSApplication::ExportClipsList_WarnQuality(
 				&&
 				(eQuality == pInfo->eQualityOfCompressed)
 				&&
-				((iChannels < 1) || (iChannels == pInfo->iChannels))
+				((iChannels < 1) || (iChannels == pInfo->miChannels))
 			) {
 				// Use original compressed file directly
 				pInfo->bDoCopy = true;
@@ -2168,9 +2282,9 @@ tbool CKSApplication::ExportClipsList_WarnQuality(
 				else {
 					// Add warning
 					iWarnings++;
-					sWarningClipLast = pInfo->sClipName;
+					sWarningClipLast = pInfo->sScreenName;
 					eQualityClipLast = pInfo->eQualityOfOriginal;
-					sWarningLast = std::string(" - ") + pInfo->sClipName + "\n";
+					sWarningLast = std::string(" - ") + pInfo->sScreenName + "\n";
 					if (iWarnings < 10)
 						sWarnings += sWarningLast;
 					else
@@ -2287,7 +2401,7 @@ tbool CKSApplication::ExportClipsList_SelectDestination(std::list<CExportClipTas
 
 		std::string sDefaultName;
 		if (pInfo->sDestName_Concatenate.empty())
-			sDefaultName = pInfo->sClipName + kpszExt;
+			sDefaultName = pInfo->sScreenName + kpszExt;
 		else
 			sDefaultName = pInfo->sDestName_Concatenate + kpszExt;
 
@@ -2324,7 +2438,7 @@ tbool CKSApplication::ExportClipsList_SelectDestination(std::list<CExportClipTas
 				CExportClipTask* pInfo = *it;
 				pInfo->sDestFolder = pszDestinationFolder;
 				if (pInfo->sDestName_Concatenate.empty())
-					pInfo->sDestNameAndExt = pInfo->sClipName + kpszExt;
+					pInfo->sDestNameAndExt = pInfo->sScreenName + kpszExt;
 				else
 					pInfo->sDestNameAndExt = pInfo->sDestName_Concatenate + kpszExt;
 				if (IFile::Exists((pInfo->sDestFolder + pInfo->sDestNameAndExt).c_str())) {
@@ -4822,22 +4936,55 @@ tbool CKSApplication::DoProgressTasks()
 
 void CKSApplication::AddClipToList(CImportAudioTask* pImportAudioTask)
 {
-	CSample_Data*	pSample_Data		=	new CSample_Data();
-	CTake_Data*		pTake_Data			=	pSample_Data->Get_Take_Data();
+	CSample_Data	Sample_Data;
+	CTake_Data*		pTake_Data			=	Sample_Data.Get_Take_Data();
 	pTake_Data->Set_UUID(  pImportAudioTask->Get_UUID()  );
 	
-	pSample_Data->sName					=	pImportAudioTask->Name();
-	pTake_Data->Screen_Name(pImportAudioTask->Name());
+	Sample_Data.Name( pImportAudioTask->Screen_Name() );
+	pTake_Data->Screen_Name(pImportAudioTask->Screen_Name());
 	pTake_Data->Mode( pImportAudioTask->Stereo() ? "stereo": "mono");
 	pTake_Data->Left_Wave_File_Path( pImportAudioTask->Left_Path() );
 	pTake_Data->Right_Wave_File_Path( pImportAudioTask->Right_Path() );
 	pTake_Data->Left_Peak_File_Path	(pImportAudioTask->Left_Peak_File_Path());
 	pTake_Data->Right_Peak_File_Path(pImportAudioTask->Right_Peak_File_Path());
+	
 
-	mSample_Data_List.push_back(pSample_Data);
-
+	mSample_Data_List.push_back(Sample_Data);
+	
+	//!!! why does this leak has to stay
+	// if i delete pSample_Date I chrash!!
+//	delete Sample_Data;
+	
 	UpdateGUIFileList();
-} 
+}
+
+void CKSApplication::AddClipToList(CTake_Data* pTake_Data_Input)
+{
+	
+	CSample_Data	Sample_Data;
+	CTake_Data*		pTake_Data			=	Sample_Data.Get_Take_Data();
+	pTake_Data->Set_UUID(  pTake_Data_Input->Get_UUID()  );
+	
+	Sample_Data.Name( pTake_Data_Input->Screen_Name() );
+	pTake_Data->Screen_Name(pTake_Data_Input->Screen_Name());
+	pTake_Data->Mode( pTake_Data_Input->Mode() );
+	pTake_Data->Left_Wave_File_Path( pTake_Data_Input->Left_Wave_File_Path() );
+	pTake_Data->Right_Wave_File_Path( pTake_Data_Input->Right_Wave_File_Path() );
+	pTake_Data->Left_Peak_File_Path	(pTake_Data_Input->Left_Peak_File_Path());
+	pTake_Data->Right_Peak_File_Path(pTake_Data_Input->Right_Peak_File_Path());
+	
+
+	
+	
+	mSample_Data_List.push_back(Sample_Data);
+	
+	//!!! why does this leak has to stay
+	// if i delete pSample_Date I chrash!!
+//	delete pSample_Data;
+	
+	UpdateGUIFileList();
+	 
+}
 
 tbool CKSApplication::OnAudioFileImport()
 {

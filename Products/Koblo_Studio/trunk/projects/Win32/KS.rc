@@ -145,11 +145,14 @@ BEGIN
     POPUP "&File",                          65535,MFT_STRING,MFS_ENABLED
     BEGIN
         MENUITEM "&New Project",                ID_FILE_NEW,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Load Project",               ID_FILE_OPEN,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Open Project",               ID_FILE_OPEN,MFT_STRING,MFS_ENABLED
         MENUITEM "&Save Project",               ID_FILE_SAVE,MFT_STRING,MFS_ENABLED
         MENUITEM "Save Project &As",            ID_FILE_SAVE_AS,MFT_STRING,MFS_ENABLED
+        MENUITEM "C&lose Project",              ID_FILE_CLOSEPROJECT,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Revert to Saved",            ID_FILE_REVERTTOSAVED,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
         MENUITEM "&Import Audio",               ID_FILE_IMPORTAUDIO,MFT_STRING,MFS_ENABLED
+        MENUITEM "Import KS Project",           ID_FILE_IMPORTKSPROJECT,MFT_STRING,MFS_ENABLED
         MENUITEM "Ex&port Audio",               ID_FILE_EXPORTAUDIO,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
         MENUITEM "&Download Project",           ID_FILE_DOWNLOADPROJECT,MFT_STRING,MFS_ENABLED
@@ -161,8 +164,12 @@ BEGIN
     END
     POPUP "&Edit",                          65535,MFT_STRING,MFS_ENABLED
     BEGIN
-        MENUITEM "&Delete",                     ID_EDIT_DELETE,MFT_STRING,MFS_ENABLED
-        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Undo",                       ID_EDIT_UNDO40056,MFT_STRING,MFS_ENABLED
+        MENUITEM MFT_SEPARATOR
+        MENUITEM "&Copy Region",                ID_EDIT_COPYREGION,MFT_STRING,MFS_ENABLED
+        MENUITEM "Cu&t Selection",              ID_EDIT_CUTSELECTION,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Paste Region",               ID_EDIT_PASTEREGION,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Duplicate Region",           ID_EDIT_DUPLICATEREGION,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
         MENUITEM "&Inverse Region",             ID_EDIT_INVERSEREGION,MFT_STRING,MFS_ENABLED
         MENUITEM "&Normalize Region",           ID_EDIT_NORMALIZEREGION,MFT_STRING,MFS_ENABLED
@@ -171,6 +178,7 @@ BEGIN
         MENUITEM "De&lete Track",               ID_EDIT_DELETETRACK,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
         MENUITEM "Loop &Selection",             ID_EDIT_LOOPSELECTION,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Loop",                       ID_EDIT_LOOP,MFT_STRING,MFS_ENABLED
     END
     POPUP "&View",                          65535,MFT_STRING,MFS_ENABLED
     BEGIN
@@ -181,6 +189,12 @@ BEGIN
         MENUITEM "View &Waveforms",             ID_VIEW_VIEWWAVEFORMS,MFT_STRING,MFS_ENABLED
         MENUITEM "View &Grid",                  ID_VIEW_VIEWGRID,MFT_STRING,MFS_ENABLED
         MENUITEM "View &Fades",                 ID_VIEW_VIEWFADES,MFT_STRING,MFS_ENABLED
+        MENUITEM MFT_SEPARATOR
+        MENUITEM "&Zoom",                       ID_VIEW_ZOOM,MFT_STRING,MFS_ENABLED
+        MENUITEM "Zoom &In",                    ID_VIEW_ZOOMIN,MFT_STRING,MFS_ENABLED
+        MENUITEM "Zoom &Out",                   ID_VIEW_ZOOMOUT,MFT_STRING,MFS_ENABLED
+        MENUITEM MFT_SEPARATOR
+        MENUITEM "&Jump to Mouse",              ID_VIEW_JUMPTOMOUSE,MFT_STRING,MFS_ENABLED
     END
     POPUP "&Settings",                      65535,MFT_STRING,MFS_ENABLED
     BEGIN
@@ -191,13 +205,20 @@ BEGIN
         MENUITEM MFT_SEPARATOR
         MENUITEM "Project &License",            ID_SETTINGS_PROJECTLICENSE,MFT_STRING,MFS_ENABLED
     END
+    POPUP "&Tools",                         65535,MFT_STRING,MFS_ENABLED
+    BEGIN
+        MENUITEM "&Hand",                       ID_TOOLS_HAND,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Trim",                       ID_TOOLS_TRIM,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Select",                     ID_TOOLS_SELECT,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Cut",                        ID_TOOLS_CUT,MFT_STRING,MFS_ENABLED
+    END
     POPUP "&Help",                          65535,MFT_STRING | MFT_RIGHTJUSTIFY,MFS_ENABLED
     BEGIN
         MENUITEM "http://koblo&.com",           ID_HELP_KOBLOCOM,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
         MENUITEM "Koblo Studio &Help",          ID_HELP_KOBLOSTUDIOHELP,MFT_STRING,MFS_ENABLED
         MENUITEM "&Getting Started",            ID_HELP_GETTINGSTARTED,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Short Cuts",                 ID_HELP_SHORTCUTS,MFT_STRING,MFS_ENABLED
+        MENUITEM "Keyboard &Short Cuts",        ID_HELP_SHORTCUTS,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
         MENUITEM "&About Koblo Studio",         ID_HELP_ABOUTKOBLOSTUDIO,MFT_STRING,MFS_ENABLED
     END

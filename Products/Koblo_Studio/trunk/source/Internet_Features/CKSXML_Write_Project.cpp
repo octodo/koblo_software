@@ -610,17 +610,16 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 {
 	Add_Comment(pParent, "samples and their takes. only used takes are listed. a sample can be included that's not used on any track");
 	
-	std::list<CSample_Data*> pSample_Data_List = gpApplication->Get_Sample_Data_List();
-	std::list<CSample_Data*>::iterator  itSample_Data = pSample_Data_List.begin();
+	std::list<CSample_Data>::iterator  itSample_Data = gpApplication->Get_Sample_Data_List_Begin();
 	
-	for (; itSample_Data != pSample_Data_List.end(); itSample_Data++) {
+	for (; itSample_Data != gpApplication->Get_Sample_Data_List_End(); itSample_Data++) {
 		
 		// sample tag with uuid as atribute
 		TiXmlElement* pSample = new TiXmlElement( "sample" );
-		pSample->SetAttribute("uuid", (*itSample_Data)->Get_UUID().c_str());
+		pSample->SetAttribute("uuid", (*itSample_Data).Get_UUID().c_str());
 		pParent->LinkEndChild( pSample );
 		
-		Write_Sample( pSample, (*itSample_Data));
+		Write_Sample( pSample, &(*itSample_Data));
 	}
 }
 
@@ -841,13 +840,14 @@ void CKSXML_Write_Project::Write_Track_Inserts(TiXmlElement* pParent, tuint uiTr
 void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert)
 {
 	
+	
+
 	// output
 //	char pszBuff [64];
 	tint32 iInsertId = gpApplication->GetGlobalParm(giParam_ChInsert1 + uiInsert, giSection_First_Track + uiTrack);
 	
 	if(iInsertId){
-		
-		
+		CPreset_Data Preset_Data;
 		// in
 		TiXmlElement* pInsert = new TiXmlElement( "insert" );
 		pParent->LinkEndChild( pInsert );
@@ -872,8 +872,10 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		pProduct->LinkEndChild( pProductTxt );
 		pInsert->LinkEndChild( pProduct );
 		
-
+		Create_Plugin_Setting( &Preset_Data);
 	}
+	
+	 
 }
 
 void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTrack)
@@ -939,7 +941,7 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		pRegion->LinkEndChild( pSample_Duration );
 		
 		// volume
-		tfloat fVolume = pRegion_DSP->Get_Volume();
+		tfloat fVolume = pRegion_DSP->Volume();
 		sprintf(pszBuff, "%f", fVolume);
 		
 		TiXmlElement* pVolume = new TiXmlElement( "volume" );
@@ -952,7 +954,7 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		pRegion->LinkEndChild( pFade );
 		
 		// fade in
-		tuint64 uiFade_In_Duration = pRegion_DSP->Get_Fade_In_Duration();
+		tuint64 uiFade_In_Duration = pRegion_DSP->Fade_In_Duration();
 		sprintf(pszBuff, "%d", uiFade_In_Duration);
 		
 		TiXmlElement* pFade_In_Duration = new TiXmlElement( "in" );
@@ -961,7 +963,7 @@ void CKSXML_Write_Project::Write_Track_Regions(TiXmlElement* pParent, tuint uiTr
 		pFade->LinkEndChild( pFade_In_Duration );
 		
 		// fade out
-		tuint64 uiFade_Out_Duration = pRegion_DSP->Get_Fade_Out_Duration();
+		tuint64 uiFade_Out_Duration = pRegion_DSP->Fade_Out_Duration();
 		sprintf(pszBuff, "%d", uiFade_Out_Duration);
 		
 		TiXmlElement* pFade_Out_Duration = new TiXmlElement( "out" );
@@ -1132,3 +1134,24 @@ void CKSXML_Write_Project::Add_Comment( TiXmlElement* pParent, std::string str)
 	
 }
 
+tbool CKSXML_Write_Project::Create_Plugin_Setting(CPreset_Data* pPreset_Data)
+{
+	
+
+
+	std::string sPlug_in_Setting		=	gpApplication->Plugin_Settings_Folder() + pPreset_Data->Get_UUID() + ".ksprst";
+	
+	
+	
+	CAutoDelete<IFile> pfPlug_In_Setting(IFile::Create());
+	pfPlug_In_Setting->Open(sPlug_in_Setting.c_str(), IFile::FileCreate);
+	
+	//pPeakFileL->Write((const tchar*)pfPeak, iPeakSize * sizeof(tfloat32));
+	
+	
+	if (pfPlug_In_Setting) {
+		return true;
+	}
+	 
+	return false;
+}

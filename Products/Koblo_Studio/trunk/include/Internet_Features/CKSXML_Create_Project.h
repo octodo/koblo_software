@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 
 
@@ -26,8 +26,7 @@
 
 
 /*! \class CKSXML_Create_Project
-  \brief class that creates an empty project on koblo.com 
- \ koblo.com returns a xml document with the project id that KS needs to upload the project.xml
+  \brief class that creates a xml project
  \ based on TinyXml www.sourceforge.net/projects/tinyxml
  */
 
@@ -48,7 +47,7 @@ public:
 	 \ use user id and password
 	 \ pasrses the XML handshake in to the internal data structure
 	 */ 
-	tbool Create_Project_Handshake();
+//	tbool Create_Project_Handshake();
 	
 private:
 

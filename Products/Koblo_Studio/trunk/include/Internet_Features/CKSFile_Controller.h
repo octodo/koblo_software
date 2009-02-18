@@ -13,9 +13,13 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 class CMIDI_Sequencer;
+class CSample_Data;
+class CTake_Data;
+
+
 
 class CKSFile_Controller
 {
@@ -61,17 +65,20 @@ public:
 	//! update project name and folder path
 	//!!! TO DO make private when old fileformat no longer is supported
 	void Update_Project_Name(std::string sNew_Name);
-	
+/*	
 	// Check if the file path points to an audio file
 	tbool Is_A_Audio_File(std::string sFile);
 	
 	// check if extencion is reconized
 	tbool Check_Extencion(std::string sFile);
-	
+*/	
 	std::string  Get_Extencion(std::string sFile);
 	
 	//! opens a audio file at the given path and check if it's readable 
 	tbool Readable_Audio(std::string sFile);
+	
+	//! opens a audio file at the given path and check if it's readable 
+	tbool Is_A_File(std::string sFile_Path);
 	
 	// get wave file folder
 	std::string Wave_File_Folder(){ return msProject_Folder + "Wave Files:";};
@@ -79,9 +86,18 @@ public:
 	// get ogg file folder
 	std::string OGG_File_Folder(){ return msProject_Folder + "OGG Files:";};
 	
+	// get mp3 file folder
+	std::string MP3_File_Folder(){ return msProject_Folder + "MP3 Files:";};
+
+	
 	// get ogg file folder
 	std::string Pict_File_Folder(){ return msProject_Folder + "Wave Picts:";};
 	
+	// get plug-in settings folder
+	std::string Plugin_Settings_Folder(){ return msProject_Folder + "Plug-In's Settings:";};
+	
+
+
 	
 private:	
 	
@@ -109,8 +125,11 @@ private:
 	//! create a new uplaod folder inside the project folder
 	tbool Create_MP3_Folder();
 	
-	//! create a new uplaod wave pict inside the project folder
+	//! create a new "wave pict" folder inside the project folder
 	tbool Create_Wave_Picts_Folder();
+	
+	//! create a new "plug-in settings" folder inside the project folder
+	tbool Create_Plugin_Settings_Folder();
 	
 	//! create a new project file
 	tbool Create_Project_File();
@@ -136,7 +155,10 @@ private:
 	// copy waves from old KSProject file
 	tbool Copy_KSProject_Waves();
 	
-	CMIDI_Sequencer* mpMIDI_Sequencer;
+//	CMIDI_Sequencer* mpMIDI_Sequencer;
+	 
+	 
+
 	
 	
 	

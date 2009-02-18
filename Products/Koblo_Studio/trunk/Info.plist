@@ -1,11 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>xml</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>com.Koblo.KS</string>
+			<key>CFBundleTypeName</key>
+			<string>xml</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>Koblo Studio</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Koblo Studio beta 0.9 rXXXX,
+Copyright © Koblo 2008</string>
 	<key>CFBundleIconFile</key>
 	<string>KS</string>
 	<key>CFBundleIdentifier</key>
@@ -16,16 +38,13 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.9 rXXXX</string>
 	<key>CFBundleSignature</key>
 	<string>KS  </string>
 	<key>CFBundleVersion</key>
 	<string>0.9 rXXXX</string>
-  <key>CFBundleShortVersionString</key>
-  <string>0.9 rXXXX</string>
-  <key>CFBundleGetInfoString</key>
-  <string>Koblo Studio beta 0.9 rXXXX,
-Copyright © Koblo 2008</string>
-  <key>CSResourcesFileMapped</key>
+	<key>CSResourcesFileMapped</key>
 	<true/>
 </dict>
 </plist>

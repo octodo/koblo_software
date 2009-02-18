@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with the Koblo Stools. If not, see <http://www.gnu.org/licenses/>.
+// along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 
 
@@ -57,13 +57,6 @@ public:
 	//! get source path
 	std::string Source_Path(){ return msSource_Path;};
 	
-	// ! set destination path
-//	void Destination_Path(std::string sPath){msDestination_Path = sPath;};
-	
-	//! get destination path
-	std::string Destination_Path();
-	
-	
 	// !set  extencion
 	void Extencion(std::string sExtencion){msExtencion = sExtencion;};
 	
@@ -81,9 +74,9 @@ public:
 	//! get file name and path for right side
 	std::string  Right_Path();
 	
-	//! get file name and path for left side
+	//! get file name for left side
 	std::string  Left_Name();
-	//! get file name and path for right side
+	//! get file name for right side
 	std::string  Right_Name();
 	
 	//! get peak file name for left side

@@ -41,21 +41,17 @@ void CImport_TinyXML::CKSXML_Parse_DOM_To_DAW()
 		tchar* pszTestFile = "/testhest.mp3";
 #endif // _Mac
 		if (pfTest->Open(pszTestFile, IFile::FileCreate)) {
-			tchar pszBuffer[1024];
-			tint32 iPortionSize = 0;
-			tuint64 iTotalSize = 0;
-			while (pDownloader->DownloadPortion(pszBuffer, 1024, &iPortionSize, &iTotalSize)) {
-				if (pDownloader->IsDone()) {
-					// Done
-					break;
-				}
-				if (iPortionSize > 0) {
-					pfTest->Write(pszBuffer, iPortionSize);
+			if (pDownloader->Start(pfTest)) {
+				tbool bDone = false;
+				tbool bFailed = false;
+				while (!bDone && !bFailed) {
+					bDone = pDownloader->IsDone();
+					bFailed = pDownloader->IsFailed();
 				}
 			}
 			if (pDownloader->IsFailed()) {
 				tchar pszErr[1024];
-				pDownloader->GetLatestError(pszErr, 1024);
+				pDownloader->GetError(pszErr, 1024);
 				ge::IWindow::ShowMessageBox(pszErr, "Downloader Error");
 			}
 		}
@@ -555,17 +551,8 @@ tbool CImport_TinyXML::In_OGG_Files(CTake_Data* pTake_Data)
 
 tbool CImport_TinyXML::In_Folder(CTake_Data* pTake_Data, std::string sFolder)
 {
-	tuint32 uiChannels;
 	
-	if(stricmp(		"mono",		pTake_Data->Mode().c_str()) == 0)
-		uiChannels = 1;
-	
-	else if(stricmp("stereo",	pTake_Data->Mode().c_str()) == 0)
-		uiChannels = 2;
-	
-
-	
-	switch(uiChannels) {
+	switch( pTake_Data->Channels()) {
 		case 1:
 		default:
 		{	// mono 
@@ -680,28 +667,6 @@ void CImport_TinyXML::Read_Insert_Parameter(TiXmlElement* pElement)
 		}
 	}
 }
-
-/*
-void CImport_TinyXML::Add_Take_To_Insert_Que(CTake_Data* pTake_Data)
-{
-	
-	mInsert_Que.push_back(pTake_Data);
-	
-}
-
-void CImport_TinyXML::Add_Take_To_Download_Que(CTake_Data* pTake_Data)
-{
-	mDownload_Que.push_back(pTake_Data);
-	
-}
-
-void CImport_TinyXML::Add_Take_To_Decompress_Que(CTake_Data* pTake_Data)
-{
-	mDecompress_Que.push_back(pTake_Data);
-}
-*/
-
-
 
 
 

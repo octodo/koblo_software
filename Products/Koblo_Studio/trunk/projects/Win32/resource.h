@@ -52,13 +52,30 @@
 #define ID_FILE_COMMITCHANGES           40050
 #define ID_EDIT_INVERSEREGION           40051
 #define ID_EDIT_NORMALIZEREGION         40052
+#define ID_FILE_CLOSEPROJECT            40053
+#define ID_FILE_REVERTTOSAVED           40054
+#define ID_FILE_IMPORTKSPROJECT         40055
+#define ID_EDIT_UNDO40056               40056
+#define ID_EDIT_COPYREGION              40057
+#define ID_EDIT_CUTSELECTION            40058
+#define ID_EDIT_PASTEREGION             40059
+#define ID_EDIT_DUPLICATEREGION         40060
+#define ID_EDIT_LOOP                    40061
+#define ID_VIEW_ZOOM                    40062
+#define ID_VIEW_ZOOMIN                  40063
+#define ID_VIEW_ZOOMOUT                 40064
+#define ID_VIEW_JUMPTOMOUSE             40065
+#define ID_TOOLS_HAND                   40066
+#define ID_TOOLS_TRIM                   40067
+#define ID_TOOLS_SELECT                 40068
+#define ID_TOOLS_CUT                    40069
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        104
-#define _APS_NEXT_COMMAND_VALUE         40053
+#define _APS_NEXT_COMMAND_VALUE         40070
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

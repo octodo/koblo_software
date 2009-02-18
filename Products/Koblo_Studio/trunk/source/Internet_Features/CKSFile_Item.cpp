@@ -29,11 +29,12 @@ tbool CKSFile_Item::Import(std::string sFull_Path)
 	
 	iPos			=	msDisk_Name.find_last_of(".");
 	msDisk_Name		=	msDisk_Name.substr(0, iPos);
+	msScreen_Name	=	msDisk_Name;
 	
 	// can not import in to it self
 	if (stricmp( gpApplication->Project_Folder().c_str(), msPath.c_str()) == 0)
 		return false;
-	
+	// is it a file we do understand
 	return gpApplication->Readable_Audio(msSource_Path);
 	
 	
@@ -45,12 +46,12 @@ void CKSFile_Item::Load(std::string sDisk_Name)
 	
 
 }
-
+/*
 std::string  CKSFile_Item::Destination_Path()
 {
 	return gpApplication->Wave_File_Folder();
 }
-
+*/
 std::string CKSFile_Item::Left_Path()
 {
 	std::string sPathL = gpApplication->Wave_File_Folder() + Get_UUID() + "_01.wav";

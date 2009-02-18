@@ -8,6 +8,8 @@ CRegion_Pane::CRegion_Pane(CBasePane* pParent, CBaseGUI* pGUI)
 	mpControl		= NULL;
 
 	mppfPeak[0] = mppfPeak[1] = NULL;
+	// (lasse) It's impossible to see errors if variables aren't initialized!!! Hrmpf!
+	mppfPeak[2] = mppfPeak[3] = NULL;
 
 	// (lasse) It's impossible to see errors if variables aren't initialized!!! Hrmpf!
 	mpTrack_Player2 = NULL;
