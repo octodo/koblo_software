@@ -66,7 +66,6 @@ void CVST2KSPIGUI::MakeWindow(void* p)
 		/*void**/ mhWndParent = p;
 		mpVSTEffect->dispatcher(mpVSTEffect, effEditOpen, 0, 0, p, 0.0);
 #endif
-		
 		tuint32 iSizeX;
 		tuint32 iSizeY;
 		GetSize(&iSizeX, &iSizeY);
@@ -142,7 +141,7 @@ void CVST2KSPIGUI::OnTimer()
 {
 //	CBaseGUI::OnTimer();
 	if (mbWindowMade) {
-		mpVSTEffect->dispatcher(mpVSTEffect, effEditIdle, 0, 0, 0, 0.0);
+//		mpVSTEffect->dispatcher(mpVSTEffect, effEditIdle, 0, 0, 0, 0.0);
 	}
 }
 

@@ -18,6 +18,29 @@ VstIntPtr VSTCALLBACK audioMasterCallbackPlugIn(AEffect* effect, VstInt32 opcode
 
 		case audioMasterIdle:
 			return 0;
+
+		case audioMasterGetVendorString:
+			strcpy((char*)ptr, "Koblo");
+			return 1;
+			
+		case audioMasterGetProductString:
+			strcpy((char*)ptr, "Studio");
+			return 1;
+			
+		case audioMasterCanDo:
+			{
+				char* psz = (char*)ptr;
+				if (strcmp(psz, "supplyIdle") == 0) {
+					return 0;
+				}
+				if (strcmp(psz, "sendVstMidiEvent") == 0) {
+					return 1;
+				}
+				if (strcmp(psz, "sendVstTimeInfo") == 0) {
+					return 1;
+				}
+			}
+			return 0;
 	}
 
 	return 0;
