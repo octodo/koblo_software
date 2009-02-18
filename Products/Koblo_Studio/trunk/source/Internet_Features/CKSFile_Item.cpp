@@ -35,9 +35,10 @@ tbool CKSFile_Item::Import(std::string sFull_Path)
 	if (stricmp( gpApplication->Project_Folder().c_str(), msPath.c_str()) == 0)
 		return false;
 	// is it a file we do understand
-	return gpApplication->Readable_Audio(msSource_Path);
-	
-	
+	tbool bStereo;
+	tbool bReadable = gpApplication->Readable_Audio(msSource_Path, &bStereo);
+	Stereo(bStereo);
+	return bReadable;
 }
 
 void CKSFile_Item::Load(std::string sDisk_Name)

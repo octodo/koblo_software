@@ -74,7 +74,7 @@ public:
 	std::string  Get_Extencion(std::string sFile);
 	
 	//! opens a audio file at the given path and check if it's readable 
-	tbool Readable_Audio(std::string sFile);
+	tbool Readable_Audio(std::string sFile, tbool* pbIsStereo = NULL);
 	
 	//! opens a audio file at the given path and check if it's readable 
 	tbool Is_A_File(std::string sFile_Path);

@@ -1192,8 +1192,9 @@ void CKSXML_Read_Project::Download_Takes()
 		gpApplication->Playback_InProgressTask();
 	}
 	else {
-		gpApplication->Extended_Error("hest");
+		std::string sErr = pTask->GetError();
 		pTask->Destroy();
+		ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
 	}
 
 	/* (lasse) not needed
@@ -1222,6 +1223,56 @@ void CKSXML_Read_Project::Decompress_Takes()
 	for (; it != mDecompress_Que.end(); it++) {
 		Decompress_Take( (*it) );
 	}
+
+	//!!!TODO (lasse) The following code should be adjusted - it doesn't work
+	/*
+	// This code creates regions etc
+	CAfterImportTask* pAfterImportTask = new CAfterImportTask();
+	pAfterImportTask->Init();
+	if (mDecompress_Que.size() > 0) {
+		// Load track names
+		iIndex = 0;
+		tint32 iTrack = -1;
+		while (1) {
+			IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'NAME');
+			if (pChunkOrg == NULL) {
+				// No more chunks
+				break;
+			}
+			pAfterImportTask->mlistIChunkTrackNames.insert(pAfterImportTask->mlistIChunkTrackNames.end(), pChunkOrg);
+		}
+
+		// Load wave regions for tracks
+		iTrack = -1;
+		iIndex = 0;
+		while (1) {
+			IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'REGI');
+			if (pChunkOrg == NULL) {
+				// No more chunks
+				break;
+			}
+			pAfterImportTask->mlistIChunkTrackRegions.insert(pAfterImportTask->mlistIChunkTrackRegions.end(), pChunkOrg);
+		}
+	}
+
+	iIndex = 0;
+	while (1) {
+		IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'INSR');
+		if (pChunkOrg == NULL) {
+			break;
+		}
+		else {
+			pAfterImportTask->mlistIChunkInserts.insert(pAfterImportTask->mlistIChunkInserts.end(), pChunkOrg);
+		}
+	}
+
+	SetGUIsReady(true);
+	GetModule()->GetHost()->ActivateWindow(giMain_Window);
+	Stack_Tracks();
+	Update_Zoom();
+
+	mpProgressTasks->Add(pAfterImportTask);
+	*/
 }
 
 
@@ -1233,8 +1284,14 @@ void CKSXML_Read_Project::Decompress_Take(CTake_Data* Take_Data)
 	// when compleated add files to insert que:
 	// mDecompress_Que.push_back(pTake_Data);
 
+	std::string sUUID = Take_Data->Get_UUID();
+	std::string sOgg = gpApplication->OGG_File_Folder() + sUUID + ".ogg";
+	CKSFile_Item* pItem = new CKSFile_Item();
+	pItem->Import(sOgg);
+	pItem->Screen_Name(Take_Data->Screen_Name());
+
 	CImportAudioTask* pTask = new CImportAudioTask();
-	tbool bInitOK = pTask->Init(Take_Data);
+	tbool bInitOK = pTask->Init(pItem);
 	if (bInitOK) {
 		CAutoLock Lock(gpApplication->mMutex_Progress);
 		gpApplication->mpProgressTasks->Add(pTask);
@@ -1242,9 +1299,8 @@ void CKSXML_Read_Project::Decompress_Take(CTake_Data* Take_Data)
 	}
 	else {
 		std::string sErr = pTask->GetError();
-		ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
-		gpApplication->Extended_Error(sErr);
 		pTask->Destroy();
+		ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
 	}
 }
 
