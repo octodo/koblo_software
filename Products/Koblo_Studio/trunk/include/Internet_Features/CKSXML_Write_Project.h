@@ -156,6 +156,8 @@ private:
 	tbool Create_Plugin_Setting(CPreset_Data* pPreset_Data);
 
 	
+	//! list of takes files that needs pict files
+	std::list<CPreset_Data> Preset_Data_List;
 	
 	
 	

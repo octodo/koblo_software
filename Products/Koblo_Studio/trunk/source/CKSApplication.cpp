@@ -1072,6 +1072,24 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 	SetGlobalParm(giParamID_Show_Export_Window,	0,		giSectionGUI);
 	
 	
+	SetGlobalParm(giParamID_Loop_On,	0,		giSectionGlobal);
+	SetGlobalParm(giParamID_Loop_Start,	0,		giSectionGlobal);
+	SetGlobalParm(giParamID_Loop_End,	0,		giSectionGlobal);
+	
+	// deselect
+	CBasePane::SMsg Msg;
+	Msg = Msg_Deselect_Regions;
+	gpApplication->Send_Msg_To_All_Panes(&Msg);
+	
+	CBasePane::SMsg Redraw_Msg;
+	Redraw_Msg = MSG_Redraw_Track_Editor;
+	gpApplication->Send_Msg_To_All_Panes(&Redraw_Msg);
+	
+	// move playhead
+	gpApplication->MovePlayhead(0);
+	
+	
+	
 	
 } // CleanProject
 
@@ -1160,7 +1178,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 
 		case ID_FILE_CLOSEPROJECT:
 			{
-				// Nothing here yet
+				Close_Project();
 			}
 			break;
 
@@ -1526,7 +1544,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 		}
 	}
 	else if (s.compare("File@Close Project") == 0) {
-		
+		Close_Project();
 	}
 	else if (s.compare("File@Revert to Saved") == 0) {
 		
@@ -4558,6 +4576,38 @@ tbool CKSApplication::MenuFileSaveProject(tbool bOverwrite /*= false*/)
 
 tbool CKSApplication::QueueAudioFileImport(const tchar* pszPathName, tbool bAlwaysKeepStereo, tint32 iTrackID /*=-1*/, tint64 iTrackPos /*= -1*/)
 {
+	
+	
+	if (IsPlayingOrRecording()) PlaybackStop();
+	
+	
+	CKSFile_Item File_Item;
+	if( !File_Item.Import(pszPathName) )
+		return false;
+	
+
+	CImportAudioTask* pImportAudioTask = new CImportAudioTask();
+
+	tbool bSuccess = pImportAudioTask->Init( &File_Item);
+	
+	if (bSuccess) {
+		gpApplication->mpProgressTasks->Add(pImportAudioTask);
+		gpApplication->Playback_InProgressTask();
+	}
+	else {
+		gpApplication->Extended_Error(pImportAudioTask->GetError());
+		pImportAudioTask->Destroy();
+	}
+	
+	
+	
+	
+	
+	return bSuccess;
+	
+	
+	
+	
 	/*
 	if (IsPlayingOrRecording()) {
 		PlaybackStop();

@@ -82,6 +82,8 @@ public:
 	
 	virtual void SetScrollPosHorizontal(tuint64 uiSample);
 	
+	virtual void Redraw_Track_Editor(){ Redraw_Pane_Rect(); };
+	
 	
 	
 

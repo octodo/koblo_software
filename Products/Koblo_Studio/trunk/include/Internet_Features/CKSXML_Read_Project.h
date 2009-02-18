@@ -57,6 +57,12 @@ public:
 	//! read a project XML file from Koblo.comin to the tiny xml DOM
 	void Read_Latest_Revision_From_Koblo(tint32 iProjectID);
 	
+	//! read a project XML file from Koblo.comin to the tiny xml DOM
+	void Read_Latest_Revision_From_Koblo(std::string sProject_UUID);
+	
+	//! read a project XML file from Koblo.comin to the tiny xml DOM
+	void Read_Project_From_Koblo(std::string sProject);
+	
 	//! pass the DOM in to the KS data structure
 	//!!! TO DO rename please look at content
 //	virtual void CKSXML_Parse_DOM_To_DAW();

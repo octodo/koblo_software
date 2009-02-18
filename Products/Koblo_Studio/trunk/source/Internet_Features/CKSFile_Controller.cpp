@@ -192,8 +192,6 @@ tbool CKSFile_Controller::Save_As()
 }
 
 
-
-
 tbool CKSFile_Controller::Copy_Project()
 {
 	if(gpApplication->Project_Is_Imported()) {
@@ -208,6 +206,17 @@ tbool CKSFile_Controller::Copy_Project()
 	return true;
 	
 }
+
+tbool CKSFile_Controller::Close_Project()
+{
+	// take care of not owerwriting a project withour  warning
+	if (Save_Before_Close() == giUser_Canceld_Save) 
+		return giUser_Canceld_Save;
+	
+	// clean project
+	gpApplication->CleanProject(0);
+}
+
 tbool CKSFile_Controller::Copy_KSProject_Waves()
 {
 	CAutoDelete<IFileSearch> pSearch(IFileSearch::Create());
