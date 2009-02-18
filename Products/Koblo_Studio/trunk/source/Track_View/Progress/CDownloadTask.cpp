@@ -317,47 +317,19 @@ tbool CDownloadTask::DoTake_Download_Before()
 		return false;
 	}
 
+	std::string sURL = mpTakeCurr->URL();
+	const tchar* pszSlash = strchr(sURL.c_str(), '/');
 #ifdef _WIN32
-	std::string sURL = mpTakeCurr->URL();
-	tchar pszURL_Lower[1024];
-	strncpy(pszURL_Lower, sURL.c_str(), 1023);
-	pszURL_Lower[1023] = '\0';
-	strlwr(pszURL_Lower);
-	const tchar* pszSlash = strchr(sURL.c_str(), '/');
-	const tchar* pszHTTP = strstr(pszURL_Lower, "http://");
-	std::string sHost, sURI;
-	if (pszSlash == NULL) {
-		// There is no document/URI after host/server
-		sURI = "/";
-		if (pszHTTP != pszURL_Lower) {
-			// Doesn't start with "http://"
-			sHost = sURL;
-		}
-		else {
-			// Skip "http://"
-			sHost = sURL.substr(7);
-		}
-	}
-	else {
-		// First extract document/URI part of URL
-		sURI = pszSlash;
-		tint32 iHostPartLen = sURL.length() - sURI.length();
-		sHost = sURL.substr(0, iHostPartLen);
-		if (pszHTTP == pszURL_Lower) {
-			// Remove "http://"
-			sHost = sHost.substr(7);
-		}
-	}
-#endif // _WIN32
+	tint32 iHTTPCmp = strnicmp(sURL.c_str(), "http://", 7);
+#endif // _WIN32	
 #ifdef _Mac
-	std::string sURL = mpTakeCurr->URL();
-	const tchar* pszSlash = strchr(sURL.c_str(), '/');
-	tint32 iHTTPIx = strncasecmp(sURL.c_str(), "http://", 7);
+	tint32 iHTTPCmp = strncasecmp(sURL.c_str(), "http://", 7);
+#endif // _Mac
 	std::string sHost, sURI;
 	if (pszSlash == NULL) {
 		// There is no document/URI after host/server
 		sURI = "/";
-		if (iHTTPIx != 0) {
+		if (iHTTPCmp != 0) {
 			// Doesn't start with "http://"
 			sHost = sURL;
 		}
@@ -371,12 +343,11 @@ tbool CDownloadTask::DoTake_Download_Before()
 		sURI = pszSlash;
 		tint32 iHostPartLen = sURL.length() - sURI.length();
 		sHost = sURL.substr(0, iHostPartLen);
-		if (iHTTPIx == 0) {
+		if (iHTTPCmp == 0) {
 			// Remove "http://"
 			sHost = sHost.substr(7);
 		}
 	}
-#endif //_Mac
 	
 	if (
 		(!mpDownloader->Init(sHost.c_str(), sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
