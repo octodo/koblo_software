@@ -169,6 +169,15 @@ public:
 	
 	
 	CTake_Data* Get_Take(std::string sTake_UUID);
+	
+	
+	//! called from CDownloadTask::DoWork() when there is no more takes to download
+	void Takes_Downloaded();
+	
+	//! decompress one take
+	void Takes_Decompressed();
+	
+	
 
 private:
 	
@@ -197,8 +206,16 @@ private:
 	//! insert wave files from the mInsert_Que list
 	void Insert_Takes();
 	
-	// insert regions
+	//! insert regions
 	void Insert_Regions();
+	
+	//! 
+//	void Import_Regions();
+	
+	
+	//! setup track editor
+	void Setup_Track_Editor();
+	
 	
 	
 	
@@ -224,6 +241,10 @@ private:
 	std::string Get_Take_Screen_Name(std::string sUUID);
 	
 	tuint32 muiTrack;
+	
+	tbool bInsert_Regions;
+	
+	tbool mbOpen_Dialog;
 	
 	
 };

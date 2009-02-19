@@ -53,6 +53,8 @@ public:
 	
 	tbool Save_Project_As_XML_File_To_Disk();
 	
+	tbool Write_XML_File_To_Disk(std::string sXML);
+	
 	
 	
 	

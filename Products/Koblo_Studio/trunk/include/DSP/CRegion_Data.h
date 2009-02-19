@@ -87,16 +87,16 @@ public:
 	//! set take uuid
 	void Take_UUID( std::string sTake_UUID){ msTake_UUID = sTake_UUID;};
 	
-	tuint64 Track_ID(){ return muiTrack_ID;};
+	tint64 Track_ID(){ return miTrack_ID;};
 	
-	void Track_ID(tuint32 uiTrack_ID) {muiTrack_ID = uiTrack_ID;};
+	void Track_ID(tint32 iTrack_ID) {miTrack_ID = iTrack_ID;};
 	
 	
 	
 	
 protected:
 	//! track nr
-	tuint32 muiTrack_ID;
+	tint32 miTrack_ID;
 	//! sample uuid
 	std::string msSample_UUID;
 	//! take uuid

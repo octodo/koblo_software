@@ -661,9 +661,7 @@ void CTrack_DSP::Stop()
 		{
 			CAutoDelete<IFile> pFileSrc(IFile::Create());
 			CAutoDelete<IFile> pFileDest(IFile::Create());
-			
-		//	printf( "++++++++++++++++++++++++++++++++++++++++++++++++++\n++++++++++++++++++++++++++++++++++++++++++++++++++\n++++++++++++++++++++++++++++++++++++++++++++++++++\n" );
-			printf( msRecordingName.c_str() );
+
 			// read from file
 			bSuccess &= pFileSrc->Open((msRecordingName + std::string(".tmp")).c_str(), IFile::FileRead);
 			

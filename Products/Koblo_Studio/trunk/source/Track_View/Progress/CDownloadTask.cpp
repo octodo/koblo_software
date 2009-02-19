@@ -139,6 +139,7 @@ tbool CDownloadTask::Init_Helper(std::list<CTake_Data*>* plistpTakes)
 		for ( ; it != plistpTakes->end(); it++) {
 			CTake_Data* pTake = *it;
 			CTake_Data* pTake_Copy = new CTake_Data(*pTake);
+			pTake_Copy->Set_UUID( pTake->Get_UUID() );
 			mlistpTakes.push_back(pTake_Copy);
 		}
 	}
@@ -187,16 +188,19 @@ tbool CDownloadTask::DoWork()
 			bSuccess = DoTake_Download_Before();
 			miActionOrder++;
 			break;
+			
 		case geDownload_Take_Download_Action:
 			bSuccess = DoTake_Download_Action(&bActionDone);
 			if (bActionDone) miActionOrder++;
 			break;
+			
 		case geDownload_Take_Download_After:
 			bSuccess = DoTake_Download_After(&bNoMoreTakes);
 			// Where to go?
 			if (bNoMoreTakes) {
 				// Done
 				miActionOrder = geDownload_Done;
+				gpApplication->Takes_Downloaded();
 			}
 			else {
 				// Download next take

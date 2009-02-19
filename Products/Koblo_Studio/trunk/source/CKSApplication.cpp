@@ -4581,7 +4581,7 @@ tbool CKSApplication::QueueAudioFileImport(const tchar* pszPathName, tbool bAlwa
 	if (IsPlayingOrRecording()) PlaybackStop();
 	
 	
-	CKSFile_Item File_Item;
+	CKSFile_Item File_Item;						
 	if( !File_Item.Import(pszPathName) )
 		return false;
 	
@@ -4590,9 +4590,16 @@ tbool CKSApplication::QueueAudioFileImport(const tchar* pszPathName, tbool bAlwa
 
 	tbool bSuccess = pImportAudioTask->Init( &File_Item);
 	
+	if (iTrackID >= 0) {
+		pImportAudioTask->Init_InsertAsRegionAfterImport(iTrackID, iTrackPos);
+	}
+	
 	if (bSuccess) {
 		gpApplication->mpProgressTasks->Add(pImportAudioTask);
 		gpApplication->Playback_InProgressTask();
+		
+		
+		
 	}
 	else {
 		gpApplication->Extended_Error(pImportAudioTask->GetError());

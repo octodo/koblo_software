@@ -108,6 +108,9 @@ tint32 CKSFile_Controller::New_Project()
 	// create new folders for the project
 	Create_Folders();
 	
+	// create a new project file
+	Create_Project_File();
+	
 	// save project so name in file isn't lost
 	Save_Project();
 	
@@ -148,7 +151,7 @@ tint32 CKSFile_Controller::Save_Before_Close()
 
 tbool CKSFile_Controller::Save_Project()
 {
-	printf("Save_Project()\n");
+//	printf("Save_Project()\n");
 	gpApplication->Save_Project_As_XML_File_To_Disk();
 	return true;
 	
@@ -318,12 +321,8 @@ tbool CKSFile_Controller::Create_Project_File()
 	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";
 	
 	
-	//"Macintosh HD:User:maxgronlund:MusicMKoblo Studio:XML:jord:ford.xml"
-	
 	CAutoDelete<IFile> pfProject_File(IFile::Create());
 	pfProject_File->Open(sProject.c_str(), IFile::FileCreate);
-	
-	//pPeakFileL->Write((const tchar*)pfPeak, iPeakSize * sizeof(tfloat32));
 	
 	
 	if (pfProject_File) {
@@ -386,7 +385,7 @@ tbool CKSFile_Controller::Create_Folders()
 	if(Create_Wave_Picts_Folder() == false ) return false;
 	
 	// create a new project file
-	if( Create_Project_File() == false ) return false;
+//	if( Create_Project_File() == false ) return false;
 
 	return true;
 
@@ -403,7 +402,7 @@ void CKSFile_Controller::Update_Project_Name(std::string sNew_Name)
 	sProject_Name = sProject_Name.substr(iPos + 1, sProject_Name.size());
 	gpApplication->Project_Name(sProject_Name);
 	
-	printf( "Update_Project_Name : %s \n", sProject_Name.c_str() );
+//	printf( "Update_Project_Name : %s \n", sProject_Name.c_str() );
 	
 
 	

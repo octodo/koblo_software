@@ -46,24 +46,24 @@ tbool CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	pDoc->Accept(&printer);
 	std::string xml_str =  printer.CStr();
 	
-	// missing code 
-//	std::string sFileName = gpApplication->Project_Name() + ".xml";
+
+	return Write_XML_File_To_Disk(xml_str);
+}
+
+tbool CKSXML_Write_Project::Write_XML_File_To_Disk(std::string sXML)
+{
 	
-	printf("Save_Project_As_XML_File_To_Disk()\n");
 	std::string sProject_Name	= gpApplication->Project_Name();
 	std::string sProject_Folder = gpApplication->Project_Folder();
 	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";
 	
-	printf("sProject_Name = %s \n", sProject_Name.c_str());
-	printf("sProject_Folder = %s \n", sProject_Folder.c_str());
-	printf("sProject = %s \n", sProject.c_str());
-	
 	CAutoDelete<IFile> pfile(IFile::Create());
 	if (pfile->Open(sProject.c_str(), IFile::FileWrite)) {
-		pfile->Write(xml_str.c_str(), xml_str.length());
+		pfile->Write(sXML.c_str(), sXML.length());
 		return true;
 	}
 	return false;
+	
 }
 
 void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID)
