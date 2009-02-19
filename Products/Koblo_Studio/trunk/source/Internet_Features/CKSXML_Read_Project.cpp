@@ -1325,10 +1325,10 @@ void CKSXML_Read_Project::Decompress_Take(CTake_Data* pTake_Data)
 		// if nothing to decompress continue
 =======
 		 */
-		std::string sErr = pTask->GetError();
+//		std::string sErr = pTask->GetError();
 //>>>>>>> 03875535f10ddd4155266eac2be39959a9d16b99:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
 		pTask->Destroy();
-		ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
+//		ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
 	}
 }
 
