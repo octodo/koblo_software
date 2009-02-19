@@ -14,6 +14,8 @@ enum EDownloadOrder {
 	geDownload_Take_Download_Action,
 	geDownload_Take_Download_After,
 
+	geDownload_QueueInsertRegions,
+
 	geDownload_Done
 }; // EDownloadOrder
 
@@ -121,11 +123,13 @@ tbool CDownloadTask::Init_Update(std::list<CTake_Data*>* plistpTakes)
 		return false;
 
 	if (mlistpTakes.size() == 0) {
-		msExtendedError = "No takes to download";
-		return false;
+		// Skip past download - all are there already
+		miActionOrder = geDownload_QueueInsertRegions;
 	}
-
-	miActionOrder = geDownload_Take_Download_Before;
+	else {
+		// Start with download
+		miActionOrder = geDownload_Take_Download_Before;
+	}
 	return true;
 } // Init_Update
 
@@ -198,14 +202,19 @@ tbool CDownloadTask::DoWork()
 			bSuccess = DoTake_Download_After(&bNoMoreTakes);
 			// Where to go?
 			if (bNoMoreTakes) {
-				// Done
-				miActionOrder = geDownload_Done;
+				// Done - queue insert regions
+				miActionOrder++;
 				gpApplication->Takes_Downloaded();
 			}
 			else {
 				// Download next take
 				miActionOrder = geDownload_Take_Download_Before;
 			}
+			break;
+
+		case geDownload_QueueInsertRegions:
+			bSuccess = DoQueueInsertRegions();
+			miActionOrder++;
 			break;
 
 		default:
@@ -382,17 +391,22 @@ tbool CDownloadTask::DoTake_Download_After(tbool* pbNoMoreTakes)
 	if (mlistpTakes.size() == 0) {
 		// No more takes
 		*pbNoMoreTakes = true;
-
-		// Queue insertion of regions
-		CInsertRegionsTask* pInsertRegionsTask = new CInsertRegionsTask();
-		pInsertRegionsTask->Init();
-		{
-			// (lasse) no need - CAutoLock Lock(gpApplication->mMutex_Progress);
-			gpApplication->mpProgressTasks->Add(pInsertRegionsTask);
-			// (lasse) no need - gpApplication->Playback_InProgressTask();
-		}
 	}
 	return true;
 } // DoTake_Download_After
 
+
+tbool CDownloadTask::DoQueueInsertRegions()
+{
+	// Queue insertion of regions
+	CInsertRegionsTask* pInsertRegionsTask = new CInsertRegionsTask();
+	pInsertRegionsTask->Init();
+	{
+		// (lasse) no need - CAutoLock Lock(gpApplication->mMutex_Progress);
+		gpApplication->mpProgressTasks->Add(pInsertRegionsTask);
+		// (lasse) no need - gpApplication->Playback_InProgressTask();
+	}
+
+	return true;
+} // DoQueueInsertRegions
 

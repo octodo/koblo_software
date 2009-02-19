@@ -55,6 +55,8 @@ protected:
 	tbool DoTake_Download_Action(tbool* pbActionDone);
 	tbool DoTake_Download_After(tbool* pbNoMoreTakes);
 
+	tbool DoQueueInsertRegions();
+
 	std::string msUser;
 	std::string msPassword;
 

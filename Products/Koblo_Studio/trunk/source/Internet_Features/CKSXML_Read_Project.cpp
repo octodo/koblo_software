@@ -61,11 +61,11 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		// 
 		Prepare_Samples();
 		
-		// download takes
-	//	Download_Takes();
-		
 		// decompress takes
-	//	Decompress_Takes();
+		Decompress_Takes();
+		
+		// download takes
+		Download_Takes();
 		
 		// set up the track editor with regions
 		Setup_Track_Editor();
@@ -216,11 +216,11 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 				// prepare samples for download and decompression
 				Prepare_Samples();
 				
-				// download takes
-				Download_Takes();
-				
 				// decompress takes
 				Decompress_Takes();
+				
+				// download takes
+				Download_Takes();
 
 			}
 		}
@@ -230,12 +230,12 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 			
 			// prepare samples for download and decompression
 			Prepare_Samples();
-			
-			// download takes
-			Download_Takes();
-			
+						
 			// decompress takes
 			Decompress_Takes();
+
+			// download takes
+			Download_Takes();
 		}
 			
 			
