@@ -416,7 +416,7 @@ std::string  CKSFile_Controller::Get_Extencion(std::string sFile)
 	
 }
 
-tbool CKSFile_Controller::Readable_Audio(std::string sFile_Path)
+tbool CKSFile_Controller::Readable_Audio(std::string sFile_Path, tbool* pbIsStereo /*= NULL*/)
 {
 //	printf(sFile_Path.c_str() );
 //	printf("\n*******************************\n");
@@ -430,9 +430,10 @@ tbool CKSFile_Controller::Readable_Audio(std::string sFile_Path)
 		if (pDec) {
 			
 			tbool bReturn = pDec->TestFile(pFile);
+			if (pbIsStereo) *pbIsStereo = pDec->miChannels >= 2;
 			pDec->Destroy();
-		//	return  bReturn;
-			return true;
+			return  bReturn;
+			//return true;
 		}
 	}
 	return false;

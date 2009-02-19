@@ -1191,9 +1191,18 @@ void CKSXML_Read_Project::Download_Takes()
 	//	bDownloading_Takes = true;
 	}
 	else {
+		/*
+<<<<<<< HEAD:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
 		//gpApplication->Extended_Error("hest");
 		pTask->Destroy();
 		Setup_Track_Editor();
+=======
+		 */
+		std::string sErr = pTask->GetError();
+		pTask->Destroy();
+		Setup_Track_Editor();
+		//ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
+//>>>>>>> 03875535f10ddd4155266eac2be39959a9d16b99:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
 	}
 
 	/* (lasse) not needed
@@ -1222,6 +1231,56 @@ void CKSXML_Read_Project::Decompress_Takes()
 	for (; it != mDecompress_Que.end(); it++) {
 		Decompress_Take( (*it) );
 	}
+
+	//!!!TODO (lasse) The following code should be adjusted - it doesn't work
+	/*
+	// This code creates regions etc
+	CAfterImportTask* pAfterImportTask = new CAfterImportTask();
+	pAfterImportTask->Init();
+	if (mDecompress_Que.size() > 0) {
+		// Load track names
+		iIndex = 0;
+		tint32 iTrack = -1;
+		while (1) {
+			IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'NAME');
+			if (pChunkOrg == NULL) {
+				// No more chunks
+				break;
+			}
+			pAfterImportTask->mlistIChunkTrackNames.insert(pAfterImportTask->mlistIChunkTrackNames.end(), pChunkOrg);
+		}
+
+		// Load wave regions for tracks
+		iTrack = -1;
+		iIndex = 0;
+		while (1) {
+			IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'REGI');
+			if (pChunkOrg == NULL) {
+				// No more chunks
+				break;
+			}
+			pAfterImportTask->mlistIChunkTrackRegions.insert(pAfterImportTask->mlistIChunkTrackRegions.end(), pChunkOrg);
+		}
+	}
+
+	iIndex = 0;
+	while (1) {
+		IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'INSR');
+		if (pChunkOrg == NULL) {
+			break;
+		}
+		else {
+			pAfterImportTask->mlistIChunkInserts.insert(pAfterImportTask->mlistIChunkInserts.end(), pChunkOrg);
+		}
+	}
+
+	SetGUIsReady(true);
+	GetModule()->GetHost()->ActivateWindow(giMain_Window);
+	Stack_Tracks();
+	Update_Zoom();
+
+	mpProgressTasks->Add(pAfterImportTask);
+	*/
 }
 
 
@@ -1242,19 +1301,37 @@ void CKSXML_Read_Project::Decompress_Take(CTake_Data* pTake_Data)
 	File_Item.Screen_Name(pTake_Data->Screen_Name());
 	File_Item.Set_UUID( pTake_Data->Get_UUID() );
 
+	std::string sUUID = pTake_Data->Get_UUID();
+	std::string sOgg = gpApplication->OGG_File_Folder() + sUUID + ".ogg";
+	CKSFile_Item* pItem = new CKSFile_Item();
+	pItem->Import(sOgg);
+	pItem->Screen_Name(pTake_Data->Screen_Name());
+
 	CImportAudioTask* pTask = new CImportAudioTask();
+/*<<<<<<< HEAD:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
 	tbool bInitOK = pTask->Init(&File_Item);
+=======
+ */
+	tbool bInitOK = pTask->Init(pItem);
+//>>>>>>> 03875535f10ddd4155266eac2be39959a9d16b99:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
 	if (bInitOK) {
 		CAutoLock Lock(gpApplication->mMutex_Progress);
 		gpApplication->mpProgressTasks->Add(pTask);
 		gpApplication->Playback_InProgressTask();
 	}
 	else {
+		/*
+<<<<<<< HEAD:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
 	//	std::string sErr = pTask->GetError();
 	//	ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
 	//	gpApplication->Extended_Error(sErr);
 		// if nothing to decompress continue
+=======
+		 */
+		std::string sErr = pTask->GetError();
+//>>>>>>> 03875535f10ddd4155266eac2be39959a9d16b99:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
 		pTask->Destroy();
+		ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
 	}
 }
 
