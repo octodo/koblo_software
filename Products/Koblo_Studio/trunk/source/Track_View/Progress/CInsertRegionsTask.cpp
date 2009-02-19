@@ -68,7 +68,10 @@ tbool CInsertRegionsTask::DoWork()
 				gpApplication->PlaybackGoToStart(true);
 				*/
 
+				// This may take some time
+				CAutoDelete<ge::IWaitCursor> pWait(ge::IWaitCursor::Create());
 				gpApplication->Insert_Regions();
+				gpApplication->Stack_Tracks();
 
 				miInsertRegionsOrder++;
 			}

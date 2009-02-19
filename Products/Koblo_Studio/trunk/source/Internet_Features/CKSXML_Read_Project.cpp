@@ -1228,55 +1228,14 @@ void CKSXML_Read_Project::Decompress_Takes()
 		Decompress_Take( (*it) );
 	}
 
-	//!!!TODO (lasse) The following code should be adjusted - it doesn't work
-	/*
-	// This code creates regions etc
-	CAfterImportTask* pAfterImportTask = new CAfterImportTask();
-	pAfterImportTask->Init();
-	if (mDecompress_Que.size() > 0) {
-		// Load track names
-		iIndex = 0;
-		tint32 iTrack = -1;
-		while (1) {
-			IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'NAME');
-			if (pChunkOrg == NULL) {
-				// No more chunks
-				break;
-			}
-			pAfterImportTask->mlistIChunkTrackNames.insert(pAfterImportTask->mlistIChunkTrackNames.end(), pChunkOrg);
-		}
-
-		// Load wave regions for tracks
-		iTrack = -1;
-		iIndex = 0;
-		while (1) {
-			IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'REGI');
-			if (pChunkOrg == NULL) {
-				// No more chunks
-				break;
-			}
-			pAfterImportTask->mlistIChunkTrackRegions.insert(pAfterImportTask->mlistIChunkTrackRegions.end(), pChunkOrg);
-		}
+	// Queue insertion of regions
+	CInsertRegionsTask* pInsertRegionsTask = new CInsertRegionsTask();
+	pInsertRegionsTask->Init();
+	{
+		CAutoLock Lock(gpApplication->mMutex_Progress);
+		gpApplication->mpProgressTasks->Add(pInsertRegionsTask);
+		gpApplication->Playback_InProgressTask();
 	}
-
-	iIndex = 0;
-	while (1) {
-		IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'INSR');
-		if (pChunkOrg == NULL) {
-			break;
-		}
-		else {
-			pAfterImportTask->mlistIChunkInserts.insert(pAfterImportTask->mlistIChunkInserts.end(), pChunkOrg);
-		}
-	}
-
-	SetGUIsReady(true);
-	GetModule()->GetHost()->ActivateWindow(giMain_Window);
-	Stack_Tracks();
-	Update_Zoom();
-
-	mpProgressTasks->Add(pAfterImportTask);
-	*/
 }
 
 
