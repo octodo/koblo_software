@@ -37,7 +37,7 @@ class CRegion_Data;
 class CKSXML_Read_Project:
 public virtual CImport_TinyXML
 {
-	
+friend class CInsertRegionsTask;	
 
 
 

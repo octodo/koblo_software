@@ -218,7 +218,7 @@ class CPlugInManager;
 #include "CExportClipTask.h"
 #include "CExportDSPTask.h"
 #include "CImportAudioTask.h"
-#include "CAfterImportTask.h"
+#include "CInsertRegionsTask.h"
 #include "CUploadTask.h"
 #include "CDownloadTask.h"
 #include "CProgressTaskList.h"

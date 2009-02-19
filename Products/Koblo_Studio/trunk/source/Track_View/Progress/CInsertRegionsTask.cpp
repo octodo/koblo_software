@@ -1,8 +1,16 @@
 
 #include "KSOS.h"
 
+enum EInsertRegionsOrder {
+	geInsertRegions_Start,
 
-CAfterImportTask::~CAfterImportTask() {
+	geInsertRegions_Done
+}; // EInsertRegionsOrder
+
+
+
+CInsertRegionsTask::~CInsertRegionsTask() {
+/*
 	std::list<IChunk*>::iterator it;
 
 	for (it = mlistIChunkTrackNames.begin(); it != mlistIChunkTrackNames.end(); it++) {
@@ -17,35 +25,35 @@ CAfterImportTask::~CAfterImportTask() {
 		IChunk* pChunk = *it;
 		pChunk->Destroy();
 	}
+*/
 } // destructor
 
 
-void CAfterImportTask::Destroy()
+void CInsertRegionsTask::Destroy()
 {
-	delete dynamic_cast<CAfterImportTask*>(this);
+	delete dynamic_cast<CInsertRegionsTask*>(this);
 } // Destroy
 
 
-tbool CAfterImportTask::Init()
+tbool CInsertRegionsTask::Init()
 {
-//	mpPlugIn = pPlugIn;
-	miAfterImportOrder = 0;
-
 	return true;
 } // Init
 
 
-tbool CAfterImportTask::DoWork()
+tbool CInsertRegionsTask::DoWork()
 {
 	tbool bWorkError = false;
 
-	switch (miAfterImportOrder) {
-		case geAfterImport_Start:
+	switch (miInsertRegionsOrder) {
+		case geInsertRegions_Start:
 			{
+				/*
 				// Update misc after load
 				UpdateTrackNames();
 				UpdateTrackRegions();
 				LoadInserts();
+				
 
 				if (1) {
 					// This may take some time
@@ -58,8 +66,11 @@ tbool CAfterImportTask::DoWork()
 					
 				// Flush effect tails, return to position 0 (and pre-load samples)
 				gpApplication->PlaybackGoToStart(true);
+				*/
 
-				miAfterImportOrder++;
+				gpApplication->Insert_Regions();
+
+				miInsertRegionsOrder++;
 			}
 			break;
 
@@ -71,19 +82,20 @@ tbool CAfterImportTask::DoWork()
 	}
 
 	if (bWorkError) {
-		miAfterImportOrder = geAfterImport_Done;
+		miInsertRegionsOrder = geInsertRegions_Done;
 	}
 	return !bWorkError;
 } // DoWork
 
 
-tbool CAfterImportTask::IsDone()
+tbool CInsertRegionsTask::IsDone()
 {
-	return (miAfterImportOrder >= geAfterImport_Done);
+	return (miInsertRegionsOrder >= geInsertRegions_Done);
 } // IsDone
 
 
-void CAfterImportTask::UpdateTrackNames()
+/*
+void CInsertRegionsTask::UpdateTrackNames()
 {
 	std::list<IChunk*>::iterator it = mlistIChunkTrackNames.begin();
 	tint32 iTrack = 0;
@@ -102,7 +114,7 @@ void CAfterImportTask::UpdateTrackNames()
 } // UpdateTrackNames
 
 
-void CAfterImportTask::UpdateTrackRegions()
+void CInsertRegionsTask::UpdateTrackRegions()
 {
 	std::list<IChunk*>::iterator it = mlistIChunkTrackRegions.begin();
 	tint32 iTrack = 0;
@@ -116,7 +128,7 @@ void CAfterImportTask::UpdateTrackRegions()
 } // UpdateTrackRegions
 
 
-void CAfterImportTask::LoadInserts()
+void CInsertRegionsTask::LoadInserts()
 {
 	std::list<IChunk*>::iterator itChunk = mlistIChunkInserts.begin();
 	for ( ; itChunk != mlistIChunkInserts.end(); itChunk++) {
@@ -139,3 +151,4 @@ void CAfterImportTask::LoadInserts()
 		}
 	}
 } // LoadInserts
+*/
