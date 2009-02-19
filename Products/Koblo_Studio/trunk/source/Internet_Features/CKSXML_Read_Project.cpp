@@ -1182,8 +1182,12 @@ void CKSXML_Read_Project::Import_Take(CTake_Data* pTake)
 	// add take to the download que
 	else {
 		mDownload_Que.push_back(pTake);
+		// (lasse) we can't add to decompress queue yet - download task will do that
+		/*
 		// ... and to decompress queue
 		mDecompress_Que.push_back(pTake);
+		*/
+		// .. (lasse)
 	}
 
 	
@@ -1202,8 +1206,12 @@ void CKSXML_Read_Project::Download_Takes()
 	}
 	else {
 	
-	//	std::string sErr = pTask->GetError();
+		std::string sReason = pTask->GetError();
 		pTask->Destroy();
+		std::string sErr = "Unable to queue download of takes.\n";
+		sErr += "Reason:\  ";
+		sErr += sReason;
+		gpApplication->ShowMessageBox_NonModal(sErr.c_str(), "Error downloading");
 	//	Setup_Track_Editor();
 	}
 
@@ -1225,9 +1233,14 @@ void CKSXML_Read_Project::Decompress_Takes()
 {
 	std::list<CTake_Data*>::iterator it = mDecompress_Que.begin();
 	for (; it != mDecompress_Que.end(); it++) {
-		Decompress_Take( (*it) );
+		if (!Decompress_Take( (*it) )) {
+			std::string sErr = gpApplication->Extended_Error();
+			ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
+		}
 	}
 
+	// (lasse) Not here, must be only once and very last - queued from CDownloadTask
+	/*
 	// Queue insertion of regions
 	CInsertRegionsTask* pInsertRegionsTask = new CInsertRegionsTask();
 	pInsertRegionsTask->Init();
@@ -1236,10 +1249,12 @@ void CKSXML_Read_Project::Decompress_Takes()
 		gpApplication->mpProgressTasks->Add(pInsertRegionsTask);
 		gpApplication->Playback_InProgressTask();
 	}
+	*/
+	// .. (lasse)
 }
 
 
-void CKSXML_Read_Project::Decompress_Take(CTake_Data* pTake_Data)
+tbool CKSXML_Read_Project::Decompress_Take(CTake_Data* pTake_Data)
 {
 	// (lasse) no - std::string sURL = Take_Data->URL();
 	// do decompression here
@@ -1274,6 +1289,7 @@ void CKSXML_Read_Project::Decompress_Take(CTake_Data* pTake_Data)
 		CAutoLock Lock(gpApplication->mMutex_Progress);
 		gpApplication->mpProgressTasks->Add(pTask);
 		gpApplication->Playback_InProgressTask();
+		return true;
 	}
 	else {
 		/*
@@ -1284,10 +1300,12 @@ void CKSXML_Read_Project::Decompress_Take(CTake_Data* pTake_Data)
 		// if nothing to decompress continue
 =======
 		 */
-//		std::string sErr = pTask->GetError();
+		std::string sErr = pTask->GetError();
 //>>>>>>> 03875535f10ddd4155266eac2be39959a9d16b99:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
 		pTask->Destroy();
-//		ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
+		gpApplication->Extended_Error(sErr);
+		//ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
+		return false;
 	}
 }
 

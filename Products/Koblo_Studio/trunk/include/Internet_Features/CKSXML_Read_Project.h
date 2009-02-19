@@ -38,6 +38,7 @@ class CKSXML_Read_Project:
 public virtual CImport_TinyXML
 {
 friend class CInsertRegionsTask;	
+friend class CDownloadTask;	
 
 
 
@@ -195,7 +196,7 @@ private:
 	void Decompress_Takes();
 	
 	//! decompress one take
-	void Decompress_Take(CTake_Data* Take_Data);
+	tbool Decompress_Take(CTake_Data* Take_Data);
 	
 	//! create pict files
 	void Create_Pict_Files();

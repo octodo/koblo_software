@@ -368,10 +368,29 @@ tbool CDownloadTask::DoTake_Download_After(tbool* pbNoMoreTakes)
 		mpfileOgg = NULL;
 	}
 
+	// Queue decompress of take
+	if (!gpApplication->Decompress_Take(mpTakeCurr)) {
+		std::string sReason = gpApplication->Extended_Error();
+		std::string sErr = "Unable to queue decomression of take:\n  ";
+		sErr += mpTakeCurr->Screen_Name();
+		sErr += "\nReason:\n  ";
+		sErr += sReason;
+		gpApplication->ShowMessageBox_NonModal(sErr.c_str(), "Download failed");
+	}
+
 	// Done yet?
 	if (mlistpTakes.size() == 0) {
 		// No more takes
 		*pbNoMoreTakes = true;
+
+		// Queue insertion of regions
+		CInsertRegionsTask* pInsertRegionsTask = new CInsertRegionsTask();
+		pInsertRegionsTask->Init();
+		{
+			// (lasse) no need - CAutoLock Lock(gpApplication->mMutex_Progress);
+			gpApplication->mpProgressTasks->Add(pInsertRegionsTask);
+			// (lasse) no need - gpApplication->Playback_InProgressTask();
+		}
 	}
 	return true;
 } // DoTake_Download_After
