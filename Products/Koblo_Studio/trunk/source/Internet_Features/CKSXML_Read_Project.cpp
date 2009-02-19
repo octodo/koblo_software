@@ -62,7 +62,13 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		Prepare_Samples();
 		
 		// download takes
-		Download_Takes();
+	//	Download_Takes();
+		
+		// decompress takes
+	//	Decompress_Takes();
+		
+		// set up the track editor with regions
+		Setup_Track_Editor();
 		
 		/*
 		// insert regions in track editor
@@ -212,6 +218,9 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 				
 				// download takes
 				Download_Takes();
+				
+				// decompress takes
+				Decompress_Takes();
 
 			}
 		}
@@ -224,6 +233,9 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 			
 			// download takes
 			Download_Takes();
+			
+			// decompress takes
+			Decompress_Takes();
 		}
 			
 			
@@ -239,7 +251,7 @@ void CKSXML_Read_Project::Takes_Downloaded()
 	bInsert_Regions = true;
 	
 	// decompress takes
-	Decompress_Takes();
+//	Decompress_Takes();
 	
 
 }
@@ -1187,30 +1199,14 @@ void CKSXML_Read_Project::Download_Takes()
 		CAutoLock Lock(gpApplication->mMutex_Progress);
 		gpApplication->mpProgressTasks->Add(pTask);
 		gpApplication->Playback_InProgressTask();
-		// wait for download is compleated
-	//	bDownloading_Takes = true;
 	}
 	else {
-		/*
-<<<<<<< HEAD:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
-		//gpApplication->Extended_Error("hest");
+	
+	//	std::string sErr = pTask->GetError();
 		pTask->Destroy();
-		Setup_Track_Editor();
-=======
-		 */
-		std::string sErr = pTask->GetError();
-		pTask->Destroy();
-		Setup_Track_Editor();
-		//ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
-//>>>>>>> 03875535f10ddd4155266eac2be39959a9d16b99:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
+	//	Setup_Track_Editor();
 	}
 
-	/* (lasse) not needed
-	std::list<CTake_Data*>::iterator it = mDownload_Que.begin();
-	for (; it != mDownload_Que.end(); it++) {
-		Download_Take( (*it) );
-	}
-	*/
 }
 
 
@@ -1301,18 +1297,19 @@ void CKSXML_Read_Project::Decompress_Take(CTake_Data* pTake_Data)
 	File_Item.Screen_Name(pTake_Data->Screen_Name());
 	File_Item.Set_UUID( pTake_Data->Get_UUID() );
 
+/*
 	std::string sUUID = pTake_Data->Get_UUID();
 	std::string sOgg = gpApplication->OGG_File_Folder() + sUUID + ".ogg";
 	CKSFile_Item* pItem = new CKSFile_Item();
 	pItem->Import(sOgg);
 	pItem->Screen_Name(pTake_Data->Screen_Name());
-
+*/
 	CImportAudioTask* pTask = new CImportAudioTask();
-/*<<<<<<< HEAD:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
+//<<<<<<< HEAD:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
 	tbool bInitOK = pTask->Init(&File_Item);
-=======
- */
-	tbool bInitOK = pTask->Init(pItem);
+//=======
+
+//	tbool bInitOK = pTask->Init(pItem);
 //>>>>>>> 03875535f10ddd4155266eac2be39959a9d16b99:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
 	if (bInitOK) {
 		CAutoLock Lock(gpApplication->mMutex_Progress);
