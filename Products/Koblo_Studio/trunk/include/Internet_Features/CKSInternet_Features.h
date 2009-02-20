@@ -144,8 +144,6 @@ public:
 	
 	//! get branch revision
 	tuint32 Branch_Revision(  );
-	
-	
 		
 	// get uuid from CKSUUID object
 	std::string Get_Project_UUID(){ return mpProject_UUID->Get_UUID();};

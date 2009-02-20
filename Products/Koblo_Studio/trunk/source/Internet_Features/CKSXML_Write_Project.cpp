@@ -906,7 +906,7 @@ tbool CKSXML_Write_Project::Create_Plugin_Setting(CPreset_Data* pPreset_Data)
 	std::string sPlug_in_Setting		=	gpApplication->Plugin_Settings_Folder() + pPreset_Data->Get_UUID() + ".ksprst";
 
 	// missing code 
-	std::string sFileName			= gpApplication->GetProjectName() + ".xml";
+	std::string sFileName			= gpApplication->Project_Name() + ".xml";
 	std::string sProject_Name		= gpApplication->Project_Name();
 	std::string sProject_Folder		= gpApplication->Project_Folder();
 	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";

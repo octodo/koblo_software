@@ -218,10 +218,13 @@ tbool CKSFile_Controller::Close_Project()
 	
 	// clean project
 	gpApplication->CleanProject(0);
+	
+	return true;
 }
 
 tbool CKSFile_Controller::Copy_KSProject_Waves()
 {
+	/*
 	CAutoDelete<IFileSearch> pSearch(IFileSearch::Create());
 	
 	
@@ -244,7 +247,7 @@ tbool CKSFile_Controller::Copy_KSProject_Waves()
 		IFile::CopyFile(sCopy_To_Folder.c_str(), sCopy_From_Folder.c_str(), sFile_Name.c_str());
 		
 	}
-	
+	*/
 	return true;
 }
 

@@ -172,13 +172,13 @@ tbool CKSInternet_Features::Project_Has_Changed()
 
 	
 }
-
+/*
 void CKSInternet_Features::SetProjectName( const std::string& sName)
 { 
 	msProjectName = sName;
 	gpApplication->Project_Name(sName);
 }
-
+*/
 void CKSInternet_Features::Set_Branch_Name( const std::string& sName)
 {
 	CAutoLock Lock(mMutex_ForUpAndDownloadTask_CallBack);

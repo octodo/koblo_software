@@ -321,18 +321,18 @@ public:
 	void AddClipToList(CTake_Data* pTake_Data);
 	
 
-	std::string GetProjDir() const {return msProjectFolder;}
-	std::string GetProjDir_Contents() const {return GetProjDir() + "Contents:";}
-	std::string GetProjDir_Icons() const {return GetProjDir_Contents() + "Resources:";}
+///	std::string GetProjDir() const {return msProjectFolder;}
+//	std::string GetProjDir_Contents() const {return GetProjDir() + "Contents:";}
+//	std::string GetProjDir_Icons() const {return GetProjDir_Contents() + "Resources:";}
 
-	std::string GetProjDir_Audio() const;
-	std::string GetProjDir_Clips() const;
-	std::string GetProjDir_ClipsDecomp() const;
+//	std::string GetProjDir_Audio() const;
+//	std::string GetProjDir_Clips() const;
+//	std::string GetProjDir_ClipsDecomp() const;
 
-	std::string GetFromWaveName_ClipWave(const tchar* pszWaveName) const;
-	std::string GetFromWaveName_ClipWaveOld(const tchar* pszWaveName) const;
-	std::string GetFromWaveName_ClipDefaultOgg(const tchar* pszWaveName) const;
-	std::string GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveName) const;
+//	std::string GetFromWaveName_ClipWave(const tchar* pszWaveName) const;
+//	std::string GetFromWaveName_ClipWaveOld(const tchar* pszWaveName) const;
+//	std::string GetFromWaveName_ClipDefaultOgg(const tchar* pszWaveName) const;
+//	std::string GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveName) const;
 //	std::string GetFromWaveName_ClipWave_Safe(const tchar* pszWaveName);
 //	std::string GetFromWaveName_ClipComp_Safe(const tchar* pszWaveName) const;
 	tint32 GetFromListName_ClipWavePathNames(const tchar* pszListName, std::string& rsWavePathNameL, std::string& rsWavePathNameR, tbool* pbIsDecompressed = NULL) const;

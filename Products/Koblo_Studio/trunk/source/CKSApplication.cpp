@@ -1635,7 +1635,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	
 	else if (s.compare("Edit@Add Track") == 0) {
 		
-		if (GetProjDir().length() == 0) {
+		if ( No_Project_Is_Loaded()) {
 			ShowMessageBox("You must create or load a project before adding tracks", "Sorry");
 		}
 		else {
@@ -1891,7 +1891,7 @@ void CKSApplication::ExportAllClips(ac::EAudioCodec eCodec, ac::EQuality eQualit
 	tbool bSuccess = false;
 	msExtendedError = "";
 
-	if (msProjectPathName.empty()) {
+	if (No_Project_Is_Loaded()) {
 		msExtendedError = "You must create or load a project first";
 	}
 	else {
@@ -1922,7 +1922,7 @@ void CKSApplication::ExportSelection(tbool bIncludeEffects, ac::EAudioCodec eCod
 	tbool bSuccess = true;
 	msExtendedError = "";
 
-	if (msProjectPathName.empty()) {
+	if (No_Project_Is_Loaded()) {
 		msExtendedError = "You must create or load a project first";
 		bSuccess = false;
 	}
@@ -3985,7 +3985,7 @@ tbool CKSApplication::ExportTracksOrMix(EPlaybackState eExportState, std::list<t
 	tbool bError = false;
 	msExtendedError = "";
 
-	if (msProjectFolder.length() == 0) {
+	if ( No_Project_Is_Loaded() ) {
 		msExtendedError = "You must create or load a project first";
 		return false;
 	}
@@ -5844,7 +5844,7 @@ void CKSApplication::SetChannelName(tint32 iChannel, const std::string& sName)
 
 
 
-
+/*
 
 
 std::string CKSApplication::GetProjDir_Audio() const
@@ -5881,7 +5881,7 @@ std::string CKSApplication::GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveN
 {
 	return GetProjDir_ClipsDecomp() + std::string(pszWaveName) + ".wav";
 }
-
+*/
 
 
 

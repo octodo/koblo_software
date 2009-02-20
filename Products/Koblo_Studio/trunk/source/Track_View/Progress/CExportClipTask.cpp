@@ -353,7 +353,7 @@ tbool CExportClipTask::DoCopy()
 	IFile::DeleteFile((sDestFolder + sDestNameAndExt).c_str());
 	if (!IFile::CopyFile(
 		sDestFolder.c_str(),
-		gpApplication->GetProjDir_Clips().c_str(),
+		gpApplication->Wave_File_Folder().c_str(),
 		sDestNameAndExt.c_str())
 	) {
 		msExtendedError = std::string("Unable to copy compressed file for clip: ") + sScreenName;
