@@ -173,8 +173,8 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 		
 		if(mbOpen_Dialog){
 		
-			// Why this?
-		//	pDlg->SetBundleBehaviour(1);
+			// Don't browse into OS X bundles (special kind of folders)
+			pDlg->SetBundleBehaviour(1);
 
 			tchar pszDefaultFolder[1024];
 			gpApplication->GetDefaultProjectFolder(pszDefaultFolder);
