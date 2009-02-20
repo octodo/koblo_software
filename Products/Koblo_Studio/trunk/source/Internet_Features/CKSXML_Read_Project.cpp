@@ -173,9 +173,6 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 		
 		if(mbOpen_Dialog){
 		
-			// Why this?
-		//	pDlg->SetBundleBehaviour(1);
-
 			tchar pszDefaultFolder[1024];
 			gpApplication->GetDefaultProjectFolder(pszDefaultFolder);
 			
@@ -188,6 +185,10 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 			// open new project dialog
 			tchar pszProject_Folder[1024];
 			CAutoDelete<ge::ISaveAsDialog> pDlg(ge::ISaveAsDialog::Create());
+
+			// Don't browse into OS X bundles (special kind of folders)
+			pDlg->SetBundleBehaviour(1);
+
 			pDlg->DoDialog(pszProject_Folder, pszDefault_Folder, "", "", sProject_Name.c_str() );
 			std::string sProject_Folder = pszProject_Folder;
 			
@@ -248,7 +249,7 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 
 void CKSXML_Read_Project::Takes_Downloaded()
 {
-	bInsert_Regions = true;
+// (lasse) no - 	bInsert_Regions = true;
 	
 	// decompress takes
 //	Decompress_Takes();
@@ -258,10 +259,12 @@ void CKSXML_Read_Project::Takes_Downloaded()
 
 void CKSXML_Read_Project::Takes_Decompressed()
 {
+	/* (lasse) no:
 	if(bInsert_Regions)
 		Insert_Regions();
 	
 	bInsert_Regions = false;
+	*/
 }
 
 /*

@@ -131,7 +131,7 @@
 		FCF954470F125849005147D1 /* CTrack_Side.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9542B0F125849005147D1 /* CTrack_Side.cpp */; };
 		FCF954480F125849005147D1 /* CTrack_Time_Pos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9542C0F125849005147D1 /* CTrack_Time_Pos.cpp */; };
 		FCF954490F125849005147D1 /* CTrack_Top.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9542D0F125849005147D1 /* CTrack_Top.cpp */; };
-		FCF9544A0F125849005147D1 /* CInsertRegionsTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9542F0F125849005147D1 /* CInsertRegionsTask.cpp */; };
+		FCF9544A0F125849005147D1 /* CSetupTrackEditorTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF9542F0F125849005147D1 /* CSetupTrackEditorTask.cpp */; };
 		FCF9544B0F125849005147D1 /* CExportClipTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954300F125849005147D1 /* CExportClipTask.cpp */; };
 		FCF9544C0F125849005147D1 /* CExportDSPTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954310F125849005147D1 /* CExportDSPTask.cpp */; };
 		FCF9544D0F125849005147D1 /* CImportAudioTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCF954320F125849005147D1 /* CImportAudioTask.cpp */; };
@@ -532,7 +532,7 @@
 		FCF9542B0F125849005147D1 /* CTrack_Side.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Side.cpp; sourceTree = "<group>"; };
 		FCF9542C0F125849005147D1 /* CTrack_Time_Pos.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Time_Pos.cpp; sourceTree = "<group>"; };
 		FCF9542D0F125849005147D1 /* CTrack_Top.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTrack_Top.cpp; sourceTree = "<group>"; };
-		FCF9542F0F125849005147D1 /* CInsertRegionsTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CInsertRegionsTask.cpp; sourceTree = "<group>"; };
+		FCF9542F0F125849005147D1 /* CSetupTrackEditorTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSetupTrackEditorTask.cpp; sourceTree = "<group>"; };
 		FCF954300F125849005147D1 /* CExportClipTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CExportClipTask.cpp; sourceTree = "<group>"; };
 		FCF954310F125849005147D1 /* CExportDSPTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CExportDSPTask.cpp; sourceTree = "<group>"; };
 		FCF954320F125849005147D1 /* CImportAudioTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CImportAudioTask.cpp; sourceTree = "<group>"; };
@@ -560,7 +560,7 @@
 		FCF954710F12590F005147D1 /* CTrack_Time_Pos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Time_Pos.h; sourceTree = "<group>"; };
 		FCF954720F12590F005147D1 /* CTrack_Top.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTrack_Top.h; sourceTree = "<group>"; };
 		FCF954730F12590F005147D1 /* Grid_Patterns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid_Patterns.h; sourceTree = "<group>"; };
-		FCF954750F12590F005147D1 /* CInsertRegionsTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CInsertRegionsTask.h; sourceTree = "<group>"; };
+		FCF954750F12590F005147D1 /* CSetupTrackEditorTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSetupTrackEditorTask.h; sourceTree = "<group>"; };
 		FCF954760F12590F005147D1 /* CExportClipTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CExportClipTask.h; sourceTree = "<group>"; };
 		FCF954770F12590F005147D1 /* CExportDSPTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CExportDSPTask.h; sourceTree = "<group>"; };
 		FCF954780F12590F005147D1 /* CImportAudioTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CImportAudioTask.h; sourceTree = "<group>"; };
@@ -1211,7 +1211,7 @@
 			isa = PBXGroup;
 			children = (
 				32B919B40F4BF85C00C1D57F /* CDownloadTask.cpp */,
-				FCF9542F0F125849005147D1 /* CInsertRegionsTask.cpp */,
+				FCF9542F0F125849005147D1 /* CSetupTrackEditorTask.cpp */,
 				FCF954300F125849005147D1 /* CExportClipTask.cpp */,
 				FCF954310F125849005147D1 /* CExportDSPTask.cpp */,
 				FCF954320F125849005147D1 /* CImportAudioTask.cpp */,
@@ -1257,7 +1257,7 @@
 			isa = PBXGroup;
 			children = (
 				32B919B30F4BF85C00C1D57F /* CDownloadTask.h */,
-				FCF954750F12590F005147D1 /* CInsertRegionsTask.h */,
+				FCF954750F12590F005147D1 /* CSetupTrackEditorTask.h */,
 				FCF954760F12590F005147D1 /* CExportClipTask.h */,
 				FCF954770F12590F005147D1 /* CExportDSPTask.h */,
 				FCF954780F12590F005147D1 /* CImportAudioTask.h */,
@@ -1558,7 +1558,7 @@
 				FCF954470F125849005147D1 /* CTrack_Side.cpp in Sources */,
 				FCF954480F125849005147D1 /* CTrack_Time_Pos.cpp in Sources */,
 				FCF954490F125849005147D1 /* CTrack_Top.cpp in Sources */,
-				FCF9544A0F125849005147D1 /* CInsertRegionsTask.cpp in Sources */,
+				FCF9544A0F125849005147D1 /* CSetupTrackEditorTask.cpp in Sources */,
 				FCF9544B0F125849005147D1 /* CExportClipTask.cpp in Sources */,
 				FCF9544C0F125849005147D1 /* CExportDSPTask.cpp in Sources */,
 				FCF9544D0F125849005147D1 /* CImportAudioTask.cpp in Sources */,

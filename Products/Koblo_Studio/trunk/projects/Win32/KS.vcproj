@@ -659,7 +659,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\source\Track_View\Progress\CInsertRegionsTask.cpp"
+						RelativePath="..\..\source\Track_View\Progress\CSetupTrackEditorTask.cpp"
 						>
 					</File>
 					<File
@@ -1263,7 +1263,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\include\Track_View\Progress\CInsertRegionsTask.h"
+						RelativePath="..\..\include\Track_View\Progress\CSetupTrackEditorTask.h"
 						>
 					</File>
 					<File
