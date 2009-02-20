@@ -80,16 +80,16 @@ public:
 	void Upload_OGG_And_MP3_File();
 	
 	//***********************************************
-	/*! Obsolete
+	/* Obsolete
 	 \ keep for campability with old files
-	*/
+
 	//!!! To Do call this
 	void SetProjectName( const std::string& sName);
-	/*{ 
+	{ 
 		msProjectName = sName;
 		gpApplication->Set_Project_Name(sName);
 	};
-	*/
+	
 	//! get the project name
 	std::string GetProjectName(){ return msProjectName;}
 	
@@ -105,7 +105,8 @@ public:
 	std::string msLastWaveImport;
 	std::string msProjectPath;
 
-	
+	*/ 
+	// pip pop
 	//***********************************************
 	
 	
