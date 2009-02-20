@@ -70,8 +70,11 @@ tbool CInsertRegionsTask::DoWork()
 
 				// This may take some time
 				CAutoDelete<ge::IWaitCursor> pWait(ge::IWaitCursor::Create());
+				/*
 				gpApplication->Insert_Regions();
 				gpApplication->Stack_Tracks();
+				*/
+				gpApplication->Setup_Track_Editor();
 
 				miInsertRegionsOrder++;
 			}
