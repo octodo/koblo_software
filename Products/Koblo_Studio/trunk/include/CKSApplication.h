@@ -425,8 +425,7 @@ public:
 	void Extended_Error(std::string sError){ msExtendedError = sError;};
 	
 	
-	virtual void UpdateGUIFileList();
-
+	
 	
 
 protected:
@@ -476,6 +475,7 @@ protected:
 
 	
 	
+
 	
 	
 	
@@ -505,7 +505,7 @@ protected:
 
 	std::list<CSample_Data> mSample_Data_List;
 
-	
+	virtual void UpdateGUIFileList();
 public:
 	void SanitizeProjectFolderPath(std::string& rsProjectFolder, const tchar* pszCorrectExt);
 protected:	
