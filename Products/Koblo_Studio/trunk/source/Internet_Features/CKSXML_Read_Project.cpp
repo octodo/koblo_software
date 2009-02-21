@@ -30,12 +30,12 @@ void CKSXML_Read_Project::Prepare_For_XML()
 
 void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 {
-
+	
 	// read project in to 
 	CAutoDelete<IFile> pFile(IFile::Create());
 	if (pFile->Open(sFile.c_str(), IFile::FileRead)) {
 		
-//		bDownloading_Takes = false;
+		gpApplication->Stop_Timer();
 		
 		// reset/ erase the current DAW project
 		Reset_Project();
@@ -68,7 +68,7 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		Download_Takes();
 		
 		// set up the track editor with regions
-		Setup_Track_Editor();
+//		Setup_Track_Editor();
 		
 		/*
 		// insert regions in track editor
@@ -77,7 +77,10 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		*/
 		
 		
+		
+		gpApplication->Start_Timer();
 			
+		//gpApplication->UpdateGUIFileList();
 	}
 	
 }
@@ -88,7 +91,7 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 void CKSXML_Read_Project::Setup_Track_Editor()
 {
 	
-	
+//	gpApplication->Stop_Timer();
 	// insert takes 
 	Insert_Takes();
 	
@@ -98,6 +101,10 @@ void CKSXML_Read_Project::Setup_Track_Editor()
 	CBasePane::SMsg Msg;
 	Msg = Msg_Deselect_Regions;
 	gpApplication->Send_Msg_To_All_Panes(&Msg);
+	
+	gpApplication->UpdateGUIFileList();
+	
+//	gpApplication->Start_Timer();
 	
 }
 /*
@@ -1331,16 +1338,21 @@ void CKSXML_Read_Project::Create_Pict_File(CTake_Data* Take_Data)
 
 void CKSXML_Read_Project::Insert_Takes()
 {
-
+	gpApplication->Stop_Timer();
 	std::list<CTake_Data*>::iterator it = mInsert_Que.begin();
 	for (; it != mInsert_Que.end(); it++) {
 		gpApplication->AddClipToList( (*it) );
-	}	
+	}
 	
+
 }
 
 void CKSXML_Read_Project::Insert_Regions()
 {
+
+	//dont update graphics until all regions are loaded
+	gpApplication->Stop_Timer();
+	
 	std::list<CRegion_Data>::iterator itRegion_Data = mRegion_Data_List.begin();
 	for (; itRegion_Data != mRegion_Data_List.end(); itRegion_Data++) {
 		
@@ -1351,7 +1363,7 @@ void CKSXML_Read_Project::Insert_Regions()
 		if(sName.size() ) {
 		
 			
-
+			
 			gpDSPEngine->CreateRegion( sName.c_str(), 
 									  (*itRegion_Data).Track_ID(),
 									  (*itRegion_Data).Possition(), 
@@ -1360,14 +1372,14 @@ void CKSXML_Read_Project::Insert_Regions()
 									  (*itRegion_Data).Fade_In_Duration(),
 									  (*itRegion_Data).Fade_Out_Duration(),
 									  (*itRegion_Data).Volume()	);
-			// timer is started inside create region
-			gpApplication->Stop_Timer();
+			
+			
 			
 			
 		}
 
 	}
-	
+	gpApplication->Start_Timer();
 	
 }
 

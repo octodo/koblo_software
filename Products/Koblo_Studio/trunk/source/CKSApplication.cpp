@@ -4012,7 +4012,8 @@ tbool CKSApplication::ExportTracksOrMix(EPlaybackState eExportState, std::list<t
 	switch (eExportState) {
 		case geStateExportingOutMix:
 			{
-				CExportDSPTask* pInfo = new CExportDSPTask( -1, "Mix down", eCodec, eQuality, iChannels, iTailMS);
+				std::string sName = Project_Name() + "Mix down";
+				CExportDSPTask* pInfo = new CExportDSPTask( -1, sName.c_str(), eCodec, eQuality, iChannels, iTailMS);
 				if (!bNormalize) {
 					// Use altitude as it is - no peak search and normalization
 					pInfo->mfNormalizationFactor = 1.0f;
@@ -5036,14 +5037,10 @@ void CKSApplication::AddClipToList(CTake_Data* pTake_Data_Input)
 	
 
 	
-	
 	mSample_Data_List.push_back(Sample_Data);
 	
-	//!!! why does this leak has to stay
-	// if i delete pSample_Date I chrash!!
-//	delete pSample_Data;
 	
-	UpdateGUIFileList();
+//	UpdateGUIFileList();
 	 
 }
 

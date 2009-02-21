@@ -57,7 +57,8 @@ public:
 	
 	tbool Project_Is_Loaded(){ Project_Folder().size() ? true: false;};
 	
-	tbool No_Project_Is_Loaded(){ Project_Folder().size() ? false: true;};
+	tbool No_Project_Is_Loaded(){ tint32 uisize = Project_Folder().size();
+	return uisize? false: true;};
 	
 	
 	
