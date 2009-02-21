@@ -60,7 +60,7 @@ void CKSInternet_Features::Ask_For_Project_ID()
 		gpApplication->GetModule()->GetHost()->ActivateWindow(giProject_ID_Window);
 }
 
-
+/*
 void CKSInternet_Features::On_Menu_Update_Project()
 {
 
@@ -76,7 +76,7 @@ void CKSInternet_Features::On_Menu_Update_Project()
 	}
 	
 }
-
+*/
 void CKSInternet_Features::On_Menu_Upload_Project()
 {
 	
@@ -94,13 +94,6 @@ void CKSInternet_Features::On_Menu_Upload_Project()
 	
 	
 }
-
-
-void CKSInternet_Features::On_Menu_Commit_Project()
-{
-	gpApplication->Upload_Project();
-}
-
 
 void CKSInternet_Features::Download_Project(tint32 iProjectID)
 {

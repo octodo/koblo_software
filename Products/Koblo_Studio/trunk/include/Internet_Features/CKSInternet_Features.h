@@ -52,63 +52,32 @@ public:
 	
 	
 	//! called from the file menu
-	virtual void On_Menu_Update_Project();
+//	virtual void On_Menu_Update_Project();
 	
 	//! called from the file menu
 	virtual void On_Menu_Upload_Project();
 	
-	//! called from the file menu
-	virtual void On_Menu_Commit_Project();
-	
 	//! clean project and read it from koblo.com
 	void Download_Project(tint32 iProjectID);
+	
 	//! read project from koblo.com
 	void Update_Project(tint32 iProjectID);
+	
 	// Load project
 	void Load_Project(tint32 iProjectID);
-	//! upload project to koblo.com
-//	void CKSUsername_And_Password_Controller();
+
 	
 	//! prepare wave files for upload
 	void Compress_Wave_File(std::string sSample);
 	//!
 	void Upload_Sample(std::string sSample);
+	
 	//!
 	void Download_Take();
 	
 	//! upload compressed audio file and mp3 preview.
 	void Upload_OGG_And_MP3_File();
-	
-	//***********************************************
-	/* Obsolete
-	 \ keep for campability with old files
-
-	//!!! To Do call this
-	void SetProjectName( const std::string& sName);
-	{ 
-		msProjectName = sName;
-		gpApplication->Set_Project_Name(sName);
-	};
-	
-	//! get the project name
-	std::string GetProjectName(){ return msProjectName;}
-	
-	//! set project path
-	void SetProjectPath( const std::string& sName){ msProjectPath = sName;}
-	
-	std::string GetProjectPath(){ return msProjectPath;}
-	
-	//! project name
-	std::string msProjectName;
-	std::string msProjectPathName;
-	std::string msProjectFolder;
-	std::string msLastWaveImport;
-	std::string msProjectPath;
-
-	*/ 
-	// pip pop
-	//***********************************************
-	
+		
 	
 	void Set_Project_Description( const std::string& sDescription){ msProject_Description = sDescription;}
 	

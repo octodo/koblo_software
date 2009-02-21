@@ -58,7 +58,7 @@ public:
 	CExportClipTask* pConcatenateNextTask;
 
 	tint32 miActionOrder;
-	std::string msDestinatin_File;
+	std::string msExport_Path_and_File;
 	IFile* mpfDestinatin_File;
 	tint32 miChannelsDst;
 	ac::EAudioCodec meCodecDst;

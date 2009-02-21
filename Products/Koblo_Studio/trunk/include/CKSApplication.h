@@ -182,7 +182,7 @@ public:
 
 	virtual tbool MenuFileCreateNewProject();
 	virtual tbool MenuFileSaveProjectAs(const tchar* pszDefaultName = "", tbool bCompress = false);
-	virtual tbool MenuFileLoadProject();
+//	virtual tbool MenuFileLoadProject();
 	
 	
 	virtual tbool MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::list<CImportAudioTask*>* plistpImportTasks);

@@ -224,11 +224,13 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 				// prepare samples for download and decompression
 				Prepare_Samples();
 				
-				// decompress takes
-				Decompress_Takes();
-				
 				// download takes
 				Download_Takes();
+				
+				// decompress takes // How can samples be decompressed before they are downloaded?
+				Decompress_Takes();
+				
+				
 
 			}
 		}
