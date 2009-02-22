@@ -848,7 +848,7 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 										tuint64	uiFadeOutLength,
 										tfloat fRegionVolume)
 {
-	gpApplication->Stop_Timer();
+//	gpApplication->Stop_Timer();
 	
 	
 	CSample_Data* pSample_Data	= gpDSPEngine->Get_Sample_Data_From_Name(sSample_Name.c_str());
@@ -895,7 +895,7 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 	Insert_Region_Info(pRegionInfo) ;
 	Update_Regions_For_Playback();
 	
-	gpApplication->Start_Timer();
+//	gpApplication->Start_Timer();
 	return pRegion;
 }
 

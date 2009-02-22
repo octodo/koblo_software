@@ -55,7 +55,7 @@ tbool CKSXML_Write_Project::Write_XML_File_To_Disk(std::string sXML)
 	
 	std::string sProject_Name	=	gpApplication->Project_Name();
 	std::string sProject_Folder =	gpApplication->Project_Folder();
-	std::string sProject		=	sProject_Folder + sProject_Name + ".xml";
+	std::string sProject		=	sProject_Folder + sProject_Name;
 	
 	CAutoDelete<IFile> pfile(IFile::Create());
 	if (pfile->Open(sProject.c_str(), IFile::FileWrite)) {
@@ -68,36 +68,7 @@ tbool CKSXML_Write_Project::Write_XML_File_To_Disk(std::string sXML)
 
 void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID)
 {
-	/*
-	TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
-	TiXmlDocument *pDoc		=	new TiXmlDocument("koblo_doc");
-	pDoc->LinkEndChild( decl );
 	
-
-	Write_Project(pDoc);
-	
-	// convert pDoc to a std::string
-	TiXmlPrinter printer;
-	pDoc->Accept(&printer);
-	std::string xml_str =  printer.CStr();
-	
-	//------------------- DUMMY CODE ----------------------
-	
-	// print to console
-//	printf(xml_str.c_str());
-	
-	// write file to disk
-	pDoc->SaveFile("xml_doc.xml");
-	
-	//------------------- REAL CODE INCOMPLETE ----------------------
-	
-	//Get Project ID
-	tint32 iProject_ID = gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
-	
-	char psz[128];
-	sprintf(psz, "branches/%d/revisions", iProject_ID);
-	std::string str = psz;
-	*/
 
 }
 
@@ -122,7 +93,13 @@ void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 	
 	// name
 	TiXmlElement* pName = new TiXmlElement( "name" );
-	TiXmlText* pNameTxt = new TiXmlText(gpApplication->Project_Name().c_str());
+	std::string sName;
+	if(gpApplication->Online_Project_Name().size() > 0)
+		sName = gpApplication->Online_Project_Name();
+	else
+		sName = gpApplication->Project_Name();
+		
+	TiXmlText* pNameTxt = new TiXmlText(sName.c_str());
 	pName->LinkEndChild( pNameTxt );
 	pProject->LinkEndChild( pName );
 	

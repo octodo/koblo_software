@@ -51,7 +51,10 @@ public:
 		const tchar* pszUser, const tchar* pszPassword,
 		const tchar* pszProjUUID,
 		const tchar* pszBranchUUID,
-		const tchar* pszCommitUUID, const tchar* pszfileCommit, const tchar* pszCommitDesc,
+		const tchar* pszCommitUUID, 
+					  const tchar* pszfileCommit,
+					  const tchar* pszOnline_fileCommit,
+					  const tchar* pszCommitDesc,
 		std::list<CTake_Data*>* plistpTakes);
 
 	virtual tbool DoWork();
@@ -104,6 +107,7 @@ protected:
 
 	std::string msCommitUUID;
 	std::string msFileCommitXML;
+	std::string msOnline_FileCommitXML;
 	IFile* mpfileCommitXML;
 	std::string msCommitXML;
 	std::string msCommitDescription;

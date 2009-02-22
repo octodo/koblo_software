@@ -44,12 +44,15 @@ tbool CKSFile_Controller::Open_Project()
 	// Avoid repeated GUI updates on load
 	gpApplication->SetGUIsReady(false);
 	
+	gpApplication->CleanProject(0);
+	
 	CAutoLock Lock( gpApplication->GetMutex() );
 	
 	// find and store project name
 	std::string sProject_Name			= pszXML_Path;
 	tint32 iPosColon					= sProject_Name.find_last_of(':');
 	sProject_Name.erase(0, iPosColon + 1);
+	// store project name
 	Project_Name(sProject_Name);
 	
 	// find and store project folder

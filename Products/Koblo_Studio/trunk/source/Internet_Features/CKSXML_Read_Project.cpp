@@ -35,11 +35,14 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 	CAutoDelete<IFile> pFile(IFile::Create());
 	if (pFile->Open(sFile.c_str(), IFile::FileRead)) {
 		
-//		bDownloading_Takes = false;
-		
+		// store project disk name
+		std::string sProject_Name = gpApplication->Project_Name();
 		// reset/ erase the current DAW project
 		Reset_Project();
+		// restore project disk name
+		gpApplication->Project_Name(sProject_Name);
 		
+		// cleanup xml and take parser
 		Prepare_For_XML();
 		
 		// read project in to char buffer
@@ -58,12 +61,10 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		// Make sure folders are there
 	//	gpApplication->Create_Folders();
 		
-		// 
+		// find what samples is missing
 		Prepare_Samples();
 		
-		
-		
-		
+		// download takes
 		Download_Takes();
 		
 		// decompress takes // How can samples be decompressed before they are downloaded?
@@ -72,7 +73,7 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		
 		
 		// set up the track editor with regions
-		Setup_Track_Editor();
+	//	Setup_Track_Editor();
 		
 		/*
 		// insert regions in track editor
@@ -116,10 +117,10 @@ void CKSXML_Read_Project::Reset_Project()
 void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(std::string sProject_UUID )
 {
 	
+	
 	mbOpen_Dialog = false;
 	
-	Reset_Project();
-	Prepare_For_XML();
+	
 	
 	// read latst revision
 	std::string sProject;
@@ -129,28 +130,30 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(std::string sProject_U
 	sProject = psz;
 	
 	Read_Project_From_Koblo( sProject );
-	
-	
+		
 }	
 	
 void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 {
+
 	
 	mbOpen_Dialog = true;
 	
-	Reset_Project();
-	Prepare_For_XML();
+
 	
 	// read latst revision
 	std::string sProject;
 	char psz[256];
 	
 	//if the project is uploaded
-	gpApplication->Get_Project_UUID().c_str();
+//	gpApplication->Get_Project_UUID().c_str();
 	
 	sprintf(psz, "/projects/%d/trunk/latest/markup.xml", iProjectID);
 	sProject = psz;
 	
+	
+	
+	 // reset and read project
 	Read_Project_From_Koblo( sProject );
 	
 		
@@ -160,13 +163,21 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 
 void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 {
+	// store project name
+	std::string sProject_Name = gpApplication->Project_Name();
 	
+	// clean project
+	Reset_Project();
+	
+	// clean parser
+	Prepare_For_XML();
+	
+	// read xml file
 	tchar* pszBuff = NULL;
 	tint32 iOutLen = 0;
 	ine::IINetUtil::GetWebFile(NULL, "koblo.com", sProject.c_str(), &iOutLen, &pszBuff);
 	
-	
-	
+
 	if ((pszBuff) && (iOutLen > 0)) {
 		
 		// parse XML file in to TinyXml object tree
@@ -184,7 +195,7 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 			tchar pszDefault_Folder[1024];
 			gpApplication->GetDefaultProjectFolder(pszDefault_Folder);
 			
-			std::string sProject_Name = gpApplication->Project_Name();
+			std::string sProject_Name = gpApplication->Online_Project_Name();
 			
 			// open new project dialog
 			tchar pszProject_Folder[1024];
@@ -232,7 +243,10 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 			}
 		}
 		else{
-			// save project 
+			// restore project name
+			gpApplication->Project_Name(sProject_Name);
+			
+			// save project to disk
 			gpApplication->Write_XML_File_To_Disk(pszBuff);
 			
 			// prepare samples for download and decompression
@@ -246,6 +260,10 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 		}
 			
 			
+	}
+	else {
+	// loading failed reload file from disk if any
+		
 	}
 	ine::IINetUtil::ReleaseBuffer(&pszBuff);
 	
@@ -1280,20 +1298,11 @@ tbool CKSXML_Read_Project::Decompress_Take(CTake_Data* pTake_Data)
 	File_Item.Screen_Name(pTake_Data->Screen_Name());
 	File_Item.Set_UUID( pTake_Data->Get_UUID() );
 
-/*
-	std::string sUUID = pTake_Data->Get_UUID();
-	std::string sOgg = gpApplication->OGG_File_Folder() + sUUID + ".ogg";
-	CKSFile_Item* pItem = new CKSFile_Item();
-	pItem->Import(sOgg);
-	pItem->Screen_Name(pTake_Data->Screen_Name());
-*/
-	CImportAudioTask* pTask = new CImportAudioTask();
-//<<<<<<< HEAD:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
-	tbool bInitOK = pTask->Init(&File_Item);
-//=======
 
-//	tbool bInitOK = pTask->Init(pItem);
-//>>>>>>> 03875535f10ddd4155266eac2be39959a9d16b99:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
+	CImportAudioTask* pTask = new CImportAudioTask();
+
+	tbool bInitOK = pTask->Init(&File_Item);
+
 	if (bInitOK) {
 		CAutoLock Lock(gpApplication->mMutex_Progress);
 		gpApplication->mpProgressTasks->Add(pTask);
@@ -1301,19 +1310,11 @@ tbool CKSXML_Read_Project::Decompress_Take(CTake_Data* pTake_Data)
 		return true;
 	}
 	else {
-		/*
-<<<<<<< HEAD:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
-	//	std::string sErr = pTask->GetError();
-	//	ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
-	//	gpApplication->Extended_Error(sErr);
-		// if nothing to decompress continue
-=======
-		 */
+
 		std::string sErr = pTask->GetError();
-//>>>>>>> 03875535f10ddd4155266eac2be39959a9d16b99:Products/Koblo_Studio/trunk/source/Internet_Features/CKSXML_Read_Project.cpp
 		pTask->Destroy();
 		gpApplication->Extended_Error(sErr);
-		//ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
+
 		return false;
 	}
 }
@@ -1337,7 +1338,7 @@ void CKSXML_Read_Project::Create_Pict_File(CTake_Data* Take_Data)
 
 void CKSXML_Read_Project::Insert_Takes()
 {
-
+	
 	std::list<CTake_Data*>::iterator it = mInsert_Que.begin();
 	for (; it != mInsert_Que.end(); it++) {
 		gpApplication->AddClipToList( (*it) );
@@ -1347,6 +1348,8 @@ void CKSXML_Read_Project::Insert_Takes()
 
 void CKSXML_Read_Project::Insert_Regions()
 {
+
+	gpApplication->Stop_Timer();
 	std::list<CRegion_Data>::iterator itRegion_Data = mRegion_Data_List.begin();
 	for (; itRegion_Data != mRegion_Data_List.end(); itRegion_Data++) {
 		
@@ -1367,12 +1370,13 @@ void CKSXML_Read_Project::Insert_Regions()
 									  (*itRegion_Data).Fade_Out_Duration(),
 									  (*itRegion_Data).Volume()	);
 			// timer is started inside create region
-			gpApplication->Stop_Timer();
+			
 			
 			
 		}
 
 	}
+	gpApplication->Start_Timer();
 	
 	
 }

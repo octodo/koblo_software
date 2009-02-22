@@ -182,12 +182,16 @@ tbool CUploadTask::Init_NewProject(
 
 
 tbool CUploadTask::Init_NewBranch(
-	const tchar* pszUser, const tchar* pszPassword,
-	const tchar* pszProjUUID,
-	const tchar* pszBranchUUID_Original,
-	const tchar* pszBranchUUID, const tchar* pszBranchName, const tchar* pszBranchDesc, const tchar* pszBranchLicenseCode,
-	const tchar* pszCommitUUID, const tchar* pszfileCommit,
-	std::list<CTake_Data*>* plistpTakes)
+								  const tchar* pszUser, const tchar* pszPassword,
+								  const tchar* pszProjUUID,
+								  const tchar* pszBranchUUID_Original,
+								  const tchar* pszBranchUUID, 
+								  const tchar* pszBranchName, 
+								  const tchar* pszBranchDesc, 
+								  const tchar* pszBranchLicenseCode,
+								  const tchar* pszCommitUUID, 
+								  const tchar* pszfileCommit,
+								  std::list<CTake_Data*>* plistpTakes)
 {
 	if (miActionOrder != 0) {
 		msExtendedError = "Double initialization";
@@ -222,13 +226,15 @@ tbool CUploadTask::Init_NewBranch(
 
 
 tbool CUploadTask::Init_Commit(
-	const tchar* pszUser, const tchar* pszPassword,
-	const tchar* pszProjUUID,
-	const tchar* pszBranchUUID,
-	const tchar* pszCommitUUID, 
-							   const tchar* pszfileCommit, 
+							   const tchar* pszUser, 
+							   const tchar* pszPassword,
+							   const tchar* pszProjUUID,
+							   const tchar* pszBranchUUID,
+							   const tchar* pszCommitUUID, 
+							   const tchar* pszfileCommit,
+							   const tchar* pszOnline_fileCommit,
 							   const tchar* pszCommitDesc,
-	std::list<CTake_Data*>* plistpTakes)
+							   std::list<CTake_Data*>* plistpTakes)
 {
 	if (miActionOrder != 0) {
 		msExtendedError = "Double initialization";
@@ -244,13 +250,18 @@ tbool CUploadTask::Init_Commit(
 	// not used: msProjectLicense		= pszProjLicenseCode;
 
 	// not used: msBranchUUID_Old		= pBranchUUID_Original->Get_UUID();
-	msBranchUUID			= pszBranchUUID;
+	msBranchUUID						= pszBranchUUID;
 	// not used: msBranchName			= pszBranchName;
 	// not used: msBranchDescription		= pszBranchDesc;
 	// not used: msBranchLicense			= pszBranchLicenseCode;
 
 	msCommitUUID			= pszCommitUUID;
 	msFileCommitXML			= pszfileCommit;
+	msOnline_FileCommitXML	= pszOnline_fileCommit;
+	
+//	printf("++++++++++++++++++++\n %s \n++++++++++++++++++++++\n",msFileCommitXML.c_str() );
+//	printf("++++++++++++++++++++\n %s \n++++++++++++++++++++++\n",msOnline_FileCommitXML.c_str() );
+	
 	msCommitDescription		= pszCommitDesc;
 
 	if (!Init_Helper(plistpTakes))

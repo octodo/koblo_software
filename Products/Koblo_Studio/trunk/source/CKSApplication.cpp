@@ -1033,6 +1033,8 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 		CBaseGUI* pGUI = *it;
 		dynamic_cast<CKSBaseGUI*>(pGUI)->PlaybackStopped();
 	}
+	// wipe online project name
+	Online_Project_Name("");
 	Project_Name("");
 
 	// Delete all tracks
@@ -1045,6 +1047,7 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 	Set_Selected_Track(-1);
 	
 	Set_Branch_Name("");
+
 	
 	
 	for (tint32 i = 0; i < giNumber_Of_Tracks; i++) {
@@ -4794,6 +4797,9 @@ void CKSApplication::AddClipToList(CTake_Data* pTake_Data_Input)
 	pTake_Data->Right_Wave_File_Path( pTake_Data_Input->Right_Wave_File_Path() );
 	pTake_Data->Left_Peak_File_Path	(pTake_Data_Input->Left_Peak_File_Path());
 	pTake_Data->Right_Peak_File_Path(pTake_Data_Input->Right_Peak_File_Path());
+	
+	pTake_Data->URL(pTake_Data_Input->URL());
+	pTake_Data->MP3_URL(pTake_Data_Input->MP3_URL());
 	
 
 	

@@ -18,6 +18,7 @@ CImport_TinyXML::~CImport_TinyXML()
 void CImport_TinyXML::Reset_Project()
 {
 	miTrack_ID	=	0;
+	
 	gpApplication->CleanProject(0);
 	
 	mpTinyXMLDoc->Clear();
@@ -40,7 +41,8 @@ void CImport_TinyXML::Read_Project_Name(TiXmlNode* pParent)
 	if ( pChild ){
 		TiXmlText* pText;
 		pText = pChild->ToText();
-		gpApplication->Project_Name(pText->Value());
+//		gpApplication->Project_Name(pText->Value());
+		gpApplication->Online_Project_Name(pText->Value());
 	}
 }
 

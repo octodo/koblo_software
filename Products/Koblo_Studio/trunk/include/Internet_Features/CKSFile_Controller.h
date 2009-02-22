@@ -57,7 +57,7 @@ public:
 	
 	tbool Project_Is_Loaded(){ Project_Folder().size() ? true: false;};
 	
-	tbool No_Project_Is_Loaded(){ Project_Folder().size() ? false: true;};
+	tbool No_Project_Is_Loaded(){ return Project_Folder().size() == 0 ? true: false;};
 	
 	
 	
@@ -68,7 +68,13 @@ public:
 
 	std::string Project_Name(){ return msProject_Name;};
 	//! set project name
-	void Project_Name(std::string sName){  msProject_Name = sName;};
+	void Project_Name(std::string sName){ msProject_Name = sName; };
+	
+	// get online project name
+	std::string Online_Project_Name(){ return msOnline_Project_Name;};
+	
+	// set online project name
+	void Online_Project_Name(std::string sName){  msOnline_Project_Name = sName;};
 	
 	//! update project name and folder path
 	//!!! TO DO make private when old fileformat no longer is supported
@@ -109,6 +115,9 @@ private:
 	
 	//! project name
 	std::string msProject_Name;
+	
+	//! project name
+	std::string msOnline_Project_Name;
 	
 	//! create a new project folder
 	tbool Create_Project_Folder();
