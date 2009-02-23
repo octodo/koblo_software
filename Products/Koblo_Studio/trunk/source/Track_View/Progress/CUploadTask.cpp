@@ -267,13 +267,14 @@ tbool CUploadTask::Init_Commit(
 	if (!Init_Helper(plistpTakes))
 		return false;
 
+	miActionOrder = geUpload_Branch_PreVerify_Before;
 	if (mlistpTakes.size() > 0) {
 		// Upload takes and then commit project xml
-		miActionOrder = geUpload_Take_PreVerify_Before;
+		miAction_Branch_PreVerify_WhereToGoNow = geUpload_Take_PreVerify_Before;
 	}
 	else {
 		// No takes - go directly to commit project xml
-		miActionOrder = geUpload_Commit_PreVerify_Before;
+		miAction_Branch_PreVerify_WhereToGoNow = geUpload_Commit_PreVerify_Before;
 	}
 	return true;
 } // Init_Commit
@@ -500,7 +501,7 @@ tbool CUploadTask::DoBranch_PreVerify_Before()
 	if (mpDownloader_VerifyBranch == NULL)
 		return false;
 
-	std::string sURI = std::string("/branches/") + msBranchUUID + ".xml";
+	std::string sURI = std::string("/branches/") + msBranchUUID + "/rights.xml";
 	if ((!mpDownloader_VerifyBranch->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
 		||
 		(!mpDownloader_VerifyBranch->Start(mpfileReply_VerifyBranch))
@@ -540,6 +541,7 @@ tbool CUploadTask::DoBranch_PreVerify_Action(tbool* pbActionDone)
 
 tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTakes)
 {
+	tint32 iReplySize = (tint32)mpfileReply_VerifyBranch->GetMemorySize();
 	tbool bBranchThere = mpDownloader_VerifyBranch->IsDone();
 	if (!bBranchThere) {
 		// Status 404 means "page not there" - that's ok ..
@@ -548,7 +550,6 @@ tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTa
 			tchar pszErr[1024];
 			mpDownloader_VerifyBranch->GetError(pszErr, 1024);
 			msExtendedError = std::string("Verify branch failed:\n") + pszErr;
-			tint32 iReplySize = (tint32)mpfileReply_VerifyBranch->GetMemorySize();
 			if (iReplySize > 1) {
 				msExtendedError += "\n\n";
 				msExtendedError += std::string((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr()), iReplySize);
@@ -561,8 +562,22 @@ tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTa
 		// Branch has already been uploaded
 		*pbAlreadyThere = true;
 
-		// We came here because we didn't know branch existed - fix that
-		gpApplication->Set_Branch_Name(msBranchName);
+		// Maybe we came here because we didn't know branch existed - fix that
+		if (msBranchName.length() > 0) {
+			gpApplication->Set_Branch_Name(msBranchName);
+		}
+
+		// Find out if we have write access
+		{
+			tbool bRead = true;
+			tbool bWrite = false;
+			std::string sRigths(std::string((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr()), iReplySize);
+			// gpApplication->Parse_Access_Rigths(sRights, &bRead, &bWrite);
+			if (!bWrite) {
+				msExtendedError = "You don't have upload rights for project/branch.";
+				return false;
+			}
+		}
 
 		if (mlistpTakes.size() == 0) {
 			// No takes to upload
@@ -672,7 +687,7 @@ tbool CUploadTask::DoNewBranch_Before()
 	mpfileReply_Uploader = IFileMemory::Create();
 	mpfileReply_Uploader->Open(IFile::FileCreate);
 
-	std::string sURI = std::string("/branches/") + msBranchUUID_Old + "branch.xml";
+	std::string sURI = std::string("/branches/") + msBranchUUID_Old + "/branch.xml";
 	if (
 		(!mpUploader->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
 		||
