@@ -1196,7 +1196,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 				mbKSProject_Imported = true;
 				MenuFileLoadProject();
 				Project_Name("Imported");
-			}*/
+			*/}
 			break;
 			
 		case ID_FILE_EXPORTAUDIO:
@@ -1233,9 +1233,11 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			On_Menu_Commit_Project();
 			break;
 		*/
+		/*
 		case ID_FILE_UPDATEPROJECT:
 			On_Menu_Update_Project();
 			break;
+		*/
 
 		case ID_FILE_IMPORTAUDIO:
 			Open_Close_Import_Audio_Window();
@@ -1298,9 +1300,17 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			break;
 
 		case ID_EDIT_ADDTRACK:
+			/*
 			if(Project_Folder().size() == 0)
 			
 			if (GetProjDir().length() == 0) {
+				ShowMessageBox("You must create or load a project before adding tracks", "Sorry");
+			}
+			else {
+				AddTrack();
+			}
+			*/
+			if ( No_Project_Is_Loaded()) {
 				ShowMessageBox("You must create or load a project before adding tracks", "Sorry");
 			}
 			else {
