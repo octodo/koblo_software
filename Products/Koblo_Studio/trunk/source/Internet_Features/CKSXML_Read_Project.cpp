@@ -53,6 +53,12 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		
 		// pass the TinyXML DOM in to the DAW data structure
 		Pass_The_Project_Tag( mpTinyXMLDoc );
+		
+		if( !gpApplication->Project_Is_Uploaded()){
+			
+			gpApplication->Project_Name( gpApplication->Online_Project_Name() ); 
+			
+		}
 
 		// Make sure folders are there
 	//	gpApplication->Create_Folders();
