@@ -35,12 +35,8 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 	CAutoDelete<IFile> pFile(IFile::Create());
 	if (pFile->Open(sFile.c_str(), IFile::FileRead)) {
 		
-		// store project disk name
-		std::string sProject_Name = gpApplication->Project_Name();
 		// reset/ erase the current DAW project
 		Reset_Project();
-		// restore project disk name
-		gpApplication->Project_Name(sProject_Name);
 		
 		// cleanup xml and take parser
 		Prepare_For_XML();

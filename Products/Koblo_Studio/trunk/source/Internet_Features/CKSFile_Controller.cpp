@@ -407,6 +407,7 @@ void CKSFile_Controller::Update_Project_Name(std::string sNew_Name)
 	tint iPos = sProject_Name.find_last_of(':');
 	sProject_Name = sProject_Name.substr(iPos + 1, sProject_Name.size());
 	gpApplication->Project_Name(sProject_Name);
+	gpApplication->Online_Project_Name(sProject_Name);
 	
 //	printf( "Update_Project_Name : %s \n", sProject_Name.c_str() );
 	
