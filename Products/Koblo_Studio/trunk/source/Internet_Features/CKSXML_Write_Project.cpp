@@ -4,13 +4,14 @@
 
 CKSXML_Write_Project::CKSXML_Write_Project()
 {
-	
-	
+	mpPlugInDataFile = IChunkFile::Create();
 }
 
 CKSXML_Write_Project::~CKSXML_Write_Project()
 {
-	
+	if (mpPlugInDataFile) {
+		mpPlugInDataFile->Destroy();
+	}
 }
 
 std::string CKSXML_Write_Project::Get_Internal_Data_As_XML()
@@ -667,6 +668,13 @@ void CKSXML_Write_Project::Write_Take(TiXmlElement* pParent, CTake_Data* pTake_D
 
 void CKSXML_Write_Project::Write_Tracks(TiXmlElement* pParent)
 {
+	std::string sPlugInFolderPath = gpApplication->Plugin_Settings_Folder();
+	std::string sPlugInSettingsPathName = sPlugInFolderPath + std::string("Plugin_Setting.prst");
+
+	tint32 iVersionNr = 1;
+	mpPlugInDataFile->Close();
+	mpPlugInDataFile->Open(sPlugInSettingsPathName.c_str(), IFile::FileCreate, iVersionNr);
+
 	tint32 iNrTracks = gpApplication->Get_Number_Of_Tracks();//gpApplication->msStack.iNr_Of_Tracks;
 	
 	for(tint32 i = 0; i<iNrTracks; i++){
@@ -685,6 +693,8 @@ void CKSXML_Write_Project::Write_Tracks(TiXmlElement* pParent)
 		// write track data
 		Write_Track(pTrack, uiTrack);	
 	}
+
+	mpPlugInDataFile->Close();
 }
 
 void CKSXML_Write_Project::Write_Track(TiXmlElement* pParent, tuint uiTrack)
@@ -840,8 +850,23 @@ void CKSXML_Write_Project::Write_Track_Inserts(TiXmlElement* pParent, tuint uiTr
 
 void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert)
 {
-	
-	
+	CTrack_DSP* pTrack = gpDSPEngine->GetTrack(uiTrack);
+	kspi::IPlugIn* pInsert = pTrack->GetInsert(uiInsert);
+	if (pInsert) {
+		tint32 iChunkSize = pInsert->GetChunkSize();
+		tchar* p = new tchar[iChunkSize + sizeof(tint32) * 2];
+		((tint32*)p)[0] = uiTrack;
+		((tint32*)p)[1] = uiInsert;
+
+		pInsert->GetChunk(p + sizeof(tint32) * 2);
+
+		CAutoDelete<IChunk> pChunk(IChunk::Create(p, iChunkSize + sizeof(tint32) * 2, 'nsrt'));
+
+		mpPlugInDataFile->SetChunk(pChunk, true);
+
+		delete[] p;
+	}
+
 	tint32 iInsertId = gpApplication->GetGlobalParm(giParam_ChInsert1 + uiInsert, giSection_First_Track + uiTrack);
 	
 	if(iInsertId){

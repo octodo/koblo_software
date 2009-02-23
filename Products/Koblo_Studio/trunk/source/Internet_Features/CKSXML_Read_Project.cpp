@@ -74,6 +74,38 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 			
 	}
 	
+	std::string sPlugInFolderPath = gpApplication->Plugin_Settings_Folder();
+	std::string sPlugInSettingsPathName = sPlugInFolderPath + std::string("Plugin_Setting.prst");
+
+	{
+		tint32 iVersionNr;
+		CAutoDelete<IChunkFile> pFile(IChunkFile::Create());
+		pFile->Open(sPlugInSettingsPathName.c_str(), IFile::FileRead, iVersionNr);
+		if (iVersionNr == 1) {
+			tint64 iIndex = 0;
+			IChunk* pChunk = pFile->GetNextChunk(iIndex, 'nsrt');
+			while (pChunk != NULL) {
+				tint32 iDataSize = pChunk->GetSize();
+				tchar* pData = new tchar[iDataSize];
+				pChunk->Read(pData, iDataSize);
+				tint32 iTrack = ((tint32*)pData)[0];
+				tint32 iInsert = ((tint32*)pData)[1];
+				pData += sizeof(tint32) * 2;
+				iDataSize -= sizeof(tint32) * 2;
+
+				pChunk->Destroy();
+				pChunk = pFile->GetNextChunk(iIndex, 'nsrt');
+
+				CTrack_DSP* pTrack = gpDSPEngine->GetTrack(iTrack);
+				kspi::IPlugIn* pInsert = pTrack->GetInsert(iInsert);
+				if (pInsert) {
+					pInsert->SetChunk(pData, iDataSize);
+				}
+
+				delete[] pData;
+			}
+		}
+	}
 }
 /*
 void CKSXML_Read_Project::Reset_Project()

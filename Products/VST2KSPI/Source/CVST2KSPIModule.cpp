@@ -220,9 +220,11 @@ void CVST2KSPIModule::DoScanDirectory(const std::string& sPathName)
 				continue;
 			}
 			
-			// Effect appears ok, put it in list
-			msEffectPathNames.push_back(sPathName);
-			
+			if (pEffect->numInputs == 2 && pEffect->numOutputs == 2) {
+				// Effect appears ok, put it in list
+				msEffectPathNames.push_back(sPathName);
+			}
+
 			// Unload it
 			pEffect->dispatcher(pEffect, effClose, 0, 0, 0, 0.0);
 			//			CFBundleUnloadExecutable(BundleRef);
