@@ -155,6 +155,11 @@ public:
 	
 	// set a new commit uuid
 	void Set_New_Commit_UUID(){ mpCommit_UUID->Get_New_UUID();};
+	
+	tbool Read_Permission(std::string sXML_Hand_Shake);
+	
+	//! write permission
+	tbool Write_Permission(std::string sXML_Hand_Shake);
  
 
 	// (lasse) important: mutex for callback

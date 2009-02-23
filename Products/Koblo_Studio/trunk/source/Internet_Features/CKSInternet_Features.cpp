@@ -221,13 +221,13 @@ void CKSInternet_Features::Set_Remember_Me(tbool bRemember_Me)
 }
 
 //! read permission
-tbool CKSInternet_Features::Read_Permission(std::string)
+tbool CKSInternet_Features::Read_Permission(std::string sXML_Hand_Shake)
 {
 	return true;
 }
 
 //! write permission
-tbool CKSInternet_Features::Write_Permission(std::string)
+tbool CKSInternet_Features::Write_Permission(std::string sXML_Hand_Shake)
 {
 	return true;
 }

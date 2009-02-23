@@ -141,13 +141,16 @@ void CKSXML_Write_Project::Write_Branch(TiXmlElement* pParent)
 	pDescription->LinkEndChild( pDescriptionTxt );
 	pBranch->LinkEndChild( pDescription );
 	
+	
 	// revision
-	char pszBuff [64];
-	sprintf(pszBuff, "%d", gpApplication->Branch_Revision());
-	TiXmlElement* pRevision = new TiXmlElement( "revision" );
-	TiXmlText* pRevisionTxt = new TiXmlText(pszBuff);
-	pRevision->LinkEndChild( pRevisionTxt );
-	pBranch->LinkEndChild( pRevision );
+	if( gpApplication->Branch_Revision() != 0 ){
+		char pszBuff [64];
+		sprintf(pszBuff, "%d", gpApplication->Branch_Revision());
+		TiXmlElement* pRevision = new TiXmlElement( "revision" );
+		TiXmlText* pRevisionTxt = new TiXmlText(pszBuff);
+		pRevision->LinkEndChild( pRevisionTxt );
+		pBranch->LinkEndChild( pRevision );
+	}
 	
 	
 }
