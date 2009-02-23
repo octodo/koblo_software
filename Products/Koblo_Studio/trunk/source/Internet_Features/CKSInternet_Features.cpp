@@ -220,7 +220,17 @@ void CKSInternet_Features::Set_Remember_Me(tbool bRemember_Me)
 	//gpDSPEngine->SavePrefs();
 }
 
+//! read permission
+tbool CKSInternet_Features::Read_Permission(std::string);
+{
+	return true;
+}
 
+//! write permission
+tbool CKSInternet_Features::Write_Permission(std::string)
+{
+	return true;
+}
 
 
 
