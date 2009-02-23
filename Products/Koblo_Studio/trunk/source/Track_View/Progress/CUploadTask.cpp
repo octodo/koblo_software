@@ -572,10 +572,8 @@ tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTa
 
 		// Find out if we have write access
 		{
-			tbool bRead = true;
-			tbool bWrite = false;
-			std::string sRigths(std::string((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr()), iReplySize);
-			// gpApplication->Parse_Access_Rigths(sRights, &bRead, &bWrite);
+			std::string sRights((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr()), iReplySize);
+			tbool bWrite = gpApplication->Write_Permission(sRights);
 			if (!bWrite) {
 				msExtendedError = "You don't have upload rights for project/branch.";
 				return false;
