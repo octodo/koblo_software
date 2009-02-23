@@ -112,7 +112,10 @@ public:
 	void Branch_Revision( tuint32 uiBranch_Revision );
 	
 	//! get branch revision
-	tuint32 Branch_Revision(  );
+	tuint32 Branch_Revision();
+	
+	//! get branch revision
+	tbool Project_Is_Uploaded(){ return muiBranch_Revision != 0;} ;
 		
 	// get uuid from CKSUUID object
 	std::string Get_Project_UUID(){ return mpProject_UUID->Get_UUID();};
@@ -152,12 +155,6 @@ public:
 	
 	// set a new commit uuid
 	void Set_New_Commit_UUID(){ mpCommit_UUID->Get_New_UUID();};
-	
-	//! read permission
-	tbool Read_Permission(std::string);
-	
-	//! write permission
-	tbool Write_Permission(std::string);
  
 
 	// (lasse) important: mutex for callback

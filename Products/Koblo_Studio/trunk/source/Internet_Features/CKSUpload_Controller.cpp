@@ -39,7 +39,7 @@ void CKSUpload_Controller::Upload_Project()
 	gpApplication->Compress_MP3_File();
 	
 	// if the project has a UUID it has been uploaded to koblo.com
-	gpApplication->Project_UUID_Is_Set() ? Upload_Existing_Project() : Upload_New_Project();
+	gpApplication->Project_Is_Uploaded() ? Upload_Existing_Project() : Upload_New_Project();
 
 	// sample and take url's has been passed back form koblo snow save them
 	gpApplication->Save_Project_As_XML_File_To_Disk();

@@ -1047,6 +1047,9 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 	Set_Selected_Track(-1);
 	
 	Set_Branch_Name("");
+	
+	
+	Branch_Revision( 0 );
 
 	
 	
