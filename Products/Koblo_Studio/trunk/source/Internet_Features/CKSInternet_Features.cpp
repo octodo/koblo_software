@@ -189,8 +189,15 @@ void CKSInternet_Features::Branch_Revision( tuint32 uiBranch_Revision )
 	CAutoLock Lock(mMutex_ForUpAndDownloadTask_CallBack);
 	muiBranch_Revision = uiBranch_Revision;
 }
+
+void CKSInternet_Features::Branch_Revision( std::string sBranch_Revision )
+{
+	CAutoLock Lock(mMutex_ForUpAndDownloadTask_CallBack);
+	gpApplication->Pass_Branch_Revision(sBranch_Revision);
 	
-tuint32 CKSInternet_Features::Branch_Revision(  )
+}
+	
+tuint32 CKSInternet_Features::Branch_Revision( )
 {
 	CAutoLock Lock(mMutex_ForUpAndDownloadTask_CallBack);
 	return muiBranch_Revision;
@@ -231,6 +238,8 @@ tbool CKSInternet_Features::Write_Permission(std::string sXML_Hand_Shake)
 {
 	return true;
 }
+
+
 
 
 

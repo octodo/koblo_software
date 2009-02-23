@@ -111,6 +111,9 @@ public:
 	// set branch revision
 	void Branch_Revision( tuint32 uiBranch_Revision );
 	
+	// set branch revision
+	void Branch_Revision( std::string sBranch_Revision );
+	
 	//! get branch revision
 	tuint32 Branch_Revision();
 	

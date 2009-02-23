@@ -87,6 +87,8 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 			
 	}
 	
+	gpApplication->Pass_Branch_Revision("POP");
+	
 }
 
 
