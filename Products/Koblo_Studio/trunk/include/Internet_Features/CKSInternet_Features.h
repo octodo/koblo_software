@@ -152,6 +152,12 @@ public:
 	
 	// set a new commit uuid
 	void Set_New_Commit_UUID(){ mpCommit_UUID->Get_New_UUID();};
+	
+	//! read permission
+	tbool Read_Permission(std::string);
+	
+	//! write permission
+	tbool Write_Permission(std::string);
  
 
 	// (lasse) important: mutex for callback

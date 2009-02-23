@@ -51,8 +51,9 @@ void CKSUpload_Controller::Upload_New_Project()
 {
 	
 	// get path to project file
-	std::string sProjectXmlFile = gpApplication->Project_Folder();
-	sProjectXmlFile += gpApplication->Project_Name() + ".xml";
+	std::string sProjectXmlFile		=	gpApplication->Project_Folder();
+	sProjectXmlFile					+=	gpApplication->Project_Name(); 
+	sProjectXmlFile					+=  ".xml";
 	
 	// Make task for first-time upload
 	CUploadTask* pUploadTask = new CUploadTask();
@@ -78,7 +79,7 @@ void CKSUpload_Controller::Upload_Existing_Project()
 {
 	std::string sProjectXmlFile				= gpApplication->Project_Folder();
 	std::string sOnline_ProjectXmlFile		= gpApplication->Project_Folder();
-	sProjectXmlFile							+= gpApplication->Project_Name();
+	sProjectXmlFile							+= gpApplication->Project_Name() + ".xml";
 	sOnline_ProjectXmlFile					+= gpApplication->Online_Project_Name() + ".xml";
 	
 
