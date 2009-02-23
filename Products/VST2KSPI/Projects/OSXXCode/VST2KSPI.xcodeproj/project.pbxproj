@@ -528,7 +528,7 @@
 		0B77338608A63E2A004B30F3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = (
 					ppc,
 					i386,
@@ -549,24 +549,22 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					/Developer/Headers/FlatCarbon/,
-					../../../../../SDK/BaseUtilities/Interface/,
-					../../../../../SDK/DataEngine/Interface/,
-					../../../../../SDK/GUIEngine/Interface,
-					../../../../../SDK/KSPI/Interface/,
-					../../../../../SDK/STools/Interface,
+					../../../../SDK/trunk/BaseUtilities/Interface/,
+					../../../../SDK/trunk/DataEngine/Interface/,
+					../../../../SDK/trunk/GUIEngine/Interface,
+					../../../../SDK/trunk/KSPI/Interface/,
+					../../../../SDK/trunk/STools/Interface,
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/KeyToSound/Kjaerhus;
 				LIBRARY_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../../../SDK/BaseUtilities/projects/OSXXCode/build/Release",
-					"$(SRCROOT)/../../../../../SDK/DataEngine/projects/OSXXCode/build/Release",
-					"$(SRCROOT)/../../../../../SDK/GUIEngine/projects/OSXXCode/build/Release",
-					"$(SRCROOT)/../../../../../SDK/STools/projects/OSXXCode/build/Release",
-					"$(SRCROOT)",
+					"$(SRCROOT)/../../../../SDK/trunk/GUIEngine/projects/OSXXCode/build/Release",
+					"$(SRCROOT)/../../../../SDK/trunk/BaseUtilities/projects/OSXXCode/build/Release",
+					"$(SRCROOT)/../../../../SDK/trunk/DataEngine/projects/OSXXCode/build/Release",
 				);
 				PREBINDING = YES;
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders /usr/local/include";
-				PRODUCT_NAME = Echo;
+				PRODUCT_NAME = VST2KSPI;
 				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers /usr/local/include";
 				WRAPPER_EXTENSION = kspi;
 				ZERO_LINK = NO;
