@@ -44,14 +44,26 @@ tbool CKSFile_Controller::Open_Project()
 	// Avoid repeated GUI updates on load
 	gpApplication->SetGUIsReady(false);
 	
-	gpApplication->CleanProject(0);
+	// delete project name
+	Project_Name("");
+	
+	// delete online project name
+	Online_Project_Name("");
+	
+	// clean project
+	gpApplication->Clean_Project(0);
 	
 	CAutoLock Lock( gpApplication->GetMutex() );
 	
-	// find and store project name
+	// find project name
 	std::string sProject_Name			= pszXML_Path;
 	tint32 iPosColon					= sProject_Name.find_last_of(':');
 	sProject_Name.erase(0, iPosColon + 1);
+	
+	// remove extencion
+
+	tint32 iPosDot					= sProject_Name.find_last_of('.');
+	sProject_Name.erase(iPosDot, sProject_Name.size() );
 	// store project name
 	Project_Name(sProject_Name);
 	
@@ -62,7 +74,7 @@ tbool CKSFile_Controller::Open_Project()
 	Project_Folder(sProject_Folder);
 	
 	// read the project file
-	gpApplication->Read_Project_From_Disk(sProject_Folder +  sProject_Name);
+	gpApplication->Read_Project_From_Disk(Project_Folder() +  Project_Name() + ".xml" );
 	
 	// gui is readdy
 	gpApplication->SetGUIsReady(true);
@@ -101,7 +113,7 @@ tint32 CKSFile_Controller::New_Project()
 		return giUser_Canceld_Create_New_Project;
 		
 	// clean project
-	gpApplication->CleanProject(giDefault_Number_Of_Tracks);
+	gpApplication->Clean_Project(giDefault_Number_Of_Tracks);
 	
 	
 	
@@ -220,7 +232,7 @@ tbool CKSFile_Controller::Close_Project()
 		return giUser_Canceld_Save;
 	
 	// clean project
-	gpApplication->CleanProject(0);
+	gpApplication->Clean_Project(0);
 	
 	return true;
 }

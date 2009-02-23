@@ -125,8 +125,6 @@ void CKSInternet_Features::Update_Project(tint32 iProjectID)
 
 void CKSInternet_Features::Load_Project(tint32 iProjectID)
 {
-	// clean the project
-	gpApplication->CleanProject(0);
 	
 	// reset the project
 	gpApplication->Reset_Project();

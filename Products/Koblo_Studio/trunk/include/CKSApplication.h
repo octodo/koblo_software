@@ -199,7 +199,7 @@ public:
 	//! Get's extra error info for last method that failed 
 	virtual std::string GetExtendedError();
 
-	virtual void CleanProject(tint32 iCreateEmptyTracks);
+	virtual void Clean_Project(tint32 iCreateEmptyTracks);
 
 	virtual tbool OnAudioFileImport();
 

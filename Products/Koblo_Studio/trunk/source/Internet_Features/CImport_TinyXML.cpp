@@ -19,7 +19,7 @@ void CImport_TinyXML::Reset_Project()
 {
 	miTrack_ID	=	0;
 	
-	gpApplication->CleanProject(0);
+	gpApplication->Clean_Project(0);
 	
 	mpTinyXMLDoc->Clear();
 	

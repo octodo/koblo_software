@@ -1022,10 +1022,8 @@ void CKSApplication::SanitizeProjectFolderPath(std::string& rsProjectFolder, con
 } // SanitizeProjectFolderPath
 
 
-void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
+void CKSApplication::Clean_Project(tint32 iCreateEmptyTracks)
 {
-	// Stop playback
-	PlaybackStop();
 	// Reset size of projece
 	gpDSPEngine->Reset_Session_End_Sample();
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
@@ -1033,9 +1031,6 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 		CBaseGUI* pGUI = *it;
 		dynamic_cast<CKSBaseGUI*>(pGUI)->PlaybackStopped();
 	}
-	// wipe online project name
-	Online_Project_Name("");
-	Project_Name("");
 
 	// Delete all tracks
 	Maintain_Number_Of_Tracks(0);

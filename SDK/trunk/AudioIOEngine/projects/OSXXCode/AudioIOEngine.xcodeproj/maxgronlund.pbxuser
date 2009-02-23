@@ -1,7 +1,7 @@
 // !$*UTF8*$!
 {
 	0867D690FE84028FC02AAC07 /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = Release;
 		activeTarget = D2AAC06E0554671400DB518D /* AudioIOEngine */;
 		codeSenseManager = FC3A9B340E9616AA00F3C417 /* Code sense */;
 		perUserDictionary = {

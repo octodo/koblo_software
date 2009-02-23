@@ -1245,6 +1245,8 @@ tbool CUploadTask::DoCommit_Upload_After()
 		std::string sCommitReply(
 			(const tchar*)mpfileReply_Uploader->GetMemoryPtr(),
 			iSize);
+		
+		gpApplication->Pass_Branch_Revision(sCommitReply);
 
 //		tint32 iDummy = 0;
 		//!!! TODO: Set commit number by calling a setter function on gpApplication

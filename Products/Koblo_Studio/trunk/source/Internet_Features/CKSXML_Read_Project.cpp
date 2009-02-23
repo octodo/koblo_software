@@ -36,7 +36,7 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 	if (pFile->Open(sFile.c_str(), IFile::FileRead)) {
 		
 		// reset/ erase the current DAW project
-		Reset_Project();
+	//	Reset_Project();
 		
 		// cleanup xml and take parser
 		Prepare_For_XML();
@@ -85,10 +85,7 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		
 		
 			
-	}
-	
-	gpApplication->Pass_Branch_Revision("POP");
-	
+	}		
 }
 
 

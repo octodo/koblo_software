@@ -244,7 +244,7 @@ void CXML_Hand_Shakes::Read_Branch_Revision_Tag(TiXmlNode* pParent)
 				
 				
 			}
-			Read_Branch_Revision_Object(pChild);
+	//		Read_Branch_Revision_Object(pChild);
 
 		}
 	}
