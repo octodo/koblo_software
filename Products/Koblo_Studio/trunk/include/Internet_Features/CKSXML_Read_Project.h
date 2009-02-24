@@ -217,6 +217,9 @@ private:
 	//! setup track editor
 	void Setup_Track_Editor();
 	
+	//! load plug-in settings
+	void Load_Plug_In_Settings();
+	
 	
 	
 	
