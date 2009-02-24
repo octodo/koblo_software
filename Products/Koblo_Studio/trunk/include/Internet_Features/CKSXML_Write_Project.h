@@ -110,6 +110,8 @@ private:
 	
 	void Write_Sample(TiXmlElement* pParent, CSample_Data* pSample_Data);
 	
+	void Write_Preset_File_UUID(TiXmlElement* pParent);
+	
 	
 	
 	

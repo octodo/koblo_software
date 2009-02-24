@@ -149,6 +149,41 @@ void CTrack_DSP::AddInsert(tint32 iInsert, tuint32 uiCompanyID, tuint32 uiProduc
 	}
 }
 
+void CTrack_DSP::Close_Insert_GUI(tint32 iInsert)
+{
+	CPlugInManager* pPlugManager = gpApplication->GetPlugInManager();
+	
+	
+	if (mppInsert[iInsert]) {
+		pPlugManager->Close_GUI(mhInserts[iInsert], miTrack, iInsert);
+	}
+	
+	/*
+	if (uiCompanyID == 0 && uiProductID == 0) {
+		mppInsert[iInsert] = NULL;
+	}
+	else {
+		// Stop updating of meters
+		gpApplication->All_Plugins_Created(false);
+		mhInserts[iInsert] = pPlugManager->LoadPlugIn(uiCompanyID, uiProductID, miTrack, iInsert);
+		
+		if (mhInserts[iInsert] == CPlugInManager::mInvalidHandleValue) {
+			mhInserts[iInsert] = pPlugManager->LoadPlugIn(2, uiProductID2, miTrack, iInsert);
+		}
+		if (mhInserts[iInsert] == CPlugInManager::mInvalidHandleValue) {
+			mppInsert[iInsert] = NULL;
+		}
+		else {
+			mppInsert[iInsert] = pPlugManager->GetPlugInFromHandle(mhInserts[iInsert]);
+		}
+		// Restart meter updat
+		gpApplication->All_Plugins_Created(true);
+	}
+	 */
+}
+
+
+
 void CTrack_DSP::Process(tint32 iSamples)
 {
 	if (mbIsBusOrMix == true) {

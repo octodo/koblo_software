@@ -83,6 +83,9 @@ public:
 	const std::list<SChannelRegionInfo*>& GetRegionList() {return mRegionInfoList;}
 
 	void AddInsert(tint32 iInsert, tuint32 uiCompanyID, tuint32 uiProductID, tuint32 uiProductID2);
+	
+	//! close a insert gui
+	void Close_Insert_GUI(tint32 iInsert);
 
 	void SetInsertBypass(tint32 iINsert, tbool bBypass);
 

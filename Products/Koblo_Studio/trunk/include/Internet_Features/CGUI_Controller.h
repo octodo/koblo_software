@@ -46,10 +46,10 @@ public:
 	void Select_All_Regions();
 	void Close_Window();
 	void Toggle_Window();
-	void Show_Hide_Plugins();
+	void Show_All_Plugins(tbool bShow);
 	virtual void Update_Windows();
 	
 protected:
-	
+
 };
 

@@ -932,6 +932,10 @@ void CDSP::UpdateChannelData(tint32 iID, tint32 iValue, tint32 iChannel)
 			break;
 	}
 }
+void CDSP::Close_Plug_In_GUI(tuint32 uiTrack, tuint32 uiSlot)
+{
+	mppTracks[uiTrack]->Close_Insert_GUI(uiSlot);
+}
 
 void CDSP::UpdateAUX1Data(tint32 iID, tint32 iValue)
 {

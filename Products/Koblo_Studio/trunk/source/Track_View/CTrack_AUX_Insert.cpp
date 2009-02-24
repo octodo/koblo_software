@@ -153,20 +153,19 @@ void CTrack_AUX_Insert::EventValueChange(ge::IControl* pControl, tint32 iValueNe
 	GetParmMan()->ControlUpdate(miPaneID, iCrl_ID, iValueNew);
 	
 	if (pControl->GetID() == miCtrl_Offset + giCtrl_Trak_Edit_Insert1) {
-	//	iTest = gpApplication->GetGlobalParm(giParam_Ch_Insert1GUIOpen, miSection);
-	//	GetParmMan()->Set(true, !iTest, giParam_Ch_Insert1GUIOpen, de::IParameterManager::TypeGlobal, miSection);
+
 		gpApplication->GetPlugInManager()->OpenGUI(miID, 0);
 	}
 	else if (pControl->GetID() == miCtrl_Offset + giCtrl_Trak_Edit_Insert2) {
-//		GetParmMan()->Set(true, 1, giParam_Ch_Insert2GUIOpen, de::IParameterManager::TypeGlobal, miSection);
+
 		gpApplication->GetPlugInManager()->OpenGUI(miID, 1);
 	}
 	else if (pControl->GetID() == miCtrl_Offset + giCtrl_Trak_Edit_Insert3) {
-//		GetParmMan()->Set(true, 1, giParam_Ch_Insert3GUIOpen, de::IParameterManager::TypeGlobal, miSection);
+
 		gpApplication->GetPlugInManager()->OpenGUI(miID, 2);
 	}
 	else if (pControl->GetID() == miCtrl_Offset + giCtrl_Trak_Edit_Insert4) {
-//		GetParmMan()->Set(true, 1, giParam_Ch_Insert4GUIOpen, de::IParameterManager::TypeGlobal, miSection);
+
 		gpApplication->GetPlugInManager()->OpenGUI(miID, 3);
 	}
 }

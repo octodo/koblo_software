@@ -14,6 +14,7 @@ mbUpload_Project(false)
 	mpProject_UUID = new(CKSUUID);
 	mpBranch_UUID = new(CKSUUID);
 	mpCommit_UUID = new CKSUUID;
+	mpInsert_File_UUID  = new CKSUUID;
 
 }
 
