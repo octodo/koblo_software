@@ -182,6 +182,7 @@ tbool CUploadTask::Init_NewProject(
 
 	miActionOrder					= geUpload_Branch_PreVerify_Before;
 	miAction_Branch_PreVerify_WhereToGoNow	= geUpload_NewProject_Before;
+	mbRequiresWriteAccess = true;
 	return true;
 } // Init_NewProject
 
@@ -226,6 +227,7 @@ tbool CUploadTask::Init_NewBranch(
 
 	miActionOrder					= geUpload_Branch_PreVerify_Before;
 	miAction_Branch_PreVerify_WhereToGoNow	= geUpload_NewBranch_Before;
+	mbRequiresWriteAccess = false;
 	return true;
 } // Init_NewBranch
 
@@ -281,6 +283,7 @@ tbool CUploadTask::Init_Commit(
 		// No takes - go directly to commit project xml
 		miAction_Branch_PreVerify_WhereToGoNow = geUpload_Commit_PreVerify_Before;
 	}
+	mbRequiresWriteAccess = true;
 	return true;
 } // Init_Commit
 
@@ -572,12 +575,19 @@ tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTa
 			gpApplication->Set_Branch_Name(msBranchName);
 		}
 
-		// Find out if we have write access
-		{
-			std::string sRights((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr()), iReplySize);
+		// Find out if we have sufficient access
+		std::string sRights((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr()), iReplySize);
+		if (mbRequiresWriteAccess) {
 			tbool bWrite = gpApplication->Write_Permission(sRights);
 			if (!bWrite) {
 				msExtendedError = "You don't have upload rights for project/branch.";
+				return false;
+			}
+		}
+		else {
+			tbool bRead = gpApplication->Read_Permission(sRights);
+			if (!bRead) {
+				msExtendedError = "You don't have read access to project/branch.";
 				return false;
 			}
 		}

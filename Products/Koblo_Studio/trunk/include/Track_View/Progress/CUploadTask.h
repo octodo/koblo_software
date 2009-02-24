@@ -66,6 +66,7 @@ protected:
 	tbool DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbMoreTakes);
 
 	tint32 miAction_Branch_PreVerify_WhereToGoNow;
+	tbool mbRequiresWriteAccess;
 
 	tbool DoNewProject_Before();
 	tbool DoNewProject_Action(tbool* pbActionDone);
@@ -111,8 +112,6 @@ protected:
 	IFile* mpfileCommitXML;
 	std::string msCommitXML;
 	std::string msCommitDescription;
-	//
-	tint32 miCommit_ReplyNb;
 
 	std::list<CTake_Data*> mlistpTakes;
 	tbool Init_Helper(std::list<CTake_Data*>* plistpTakes);
