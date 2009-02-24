@@ -1027,7 +1027,7 @@ static void HandleNew_Menu()
 	//-----------------------------------
 	// view menu
 	ge::IContext::SMenuItemList MenuItemsWindow;
-	MenuItemsWindow.uiItemCount = 13;
+	MenuItemsWindow.uiItemCount = 15;
 	MenuItemsWindow.pItems[0] = ge::IContext::SMenuItem("Mixer", false, NULL, '=');
 	MenuItemsWindow.pItems[1] = ge::IContext::SMenuItem("Track Editor", false, NULL, '/');
 	MenuItemsWindow.pItems[2] = ge::IContext::SMenuItem("AUX Rack", false, NULL, '*');
@@ -1041,6 +1041,8 @@ static void HandleNew_Menu()
 	MenuItemsWindow.pItems[10] = ge::IContext::SMenuItem("Zoom Out", false, NULL, '-');
 	MenuItemsWindow.pItems[11] = ge::IContext::SMenuItem("-");
 	MenuItemsWindow.pItems[12] = ge::IContext::SMenuItem("Jump to Mouse", false, NULL, 'J');
+	MenuItemsWindow.pItems[13] = ge::IContext::SMenuItem("-");
+	MenuItemsWindow.pItems[14] = ge::IContext::SMenuItem("Plug-In's", false, NULL, 'P');
 	
 	//-----------------------------------
 	// tools menu
@@ -1100,7 +1102,7 @@ void timerCallbackGUI(CFRunLoopTimerRef timer, void *info)
 }
 #endif	// _Mac
 
-CBaseGUI* CMainApplication::CreateExtraWindow(tint32 iGUIIndex, void* pszResName, tbool bAlwaysOnTop)
+CBaseGUI* CMainApplication::CreateExtraWindow(tint32 iGUIIndex, void* pszResName, tbool bAlwaysOnTop, tuint32 iX, tuint32 iY )
 {
 	void* Wnd = pContext->CreateExtraWindow(pszResName, ge::SSize(0, 0), bAlwaysOnTop);
 	CBaseGUI* pGUI = dynamic_cast<CBaseGUI*>(gpPlugIn->CreateGUI(iGUIIndex));

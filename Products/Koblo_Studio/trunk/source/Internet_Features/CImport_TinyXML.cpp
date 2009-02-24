@@ -230,6 +230,16 @@ void CImport_TinyXML::Parse_Edditing_Object(TiXmlElement* pElement)
 		}
 	}
 }
+void CImport_TinyXML::Parse_Preset_File_Object(TiXmlElement* pElement)
+{
+	if ( !pElement ) return ;
+	
+	TiXmlAttribute* pAttrib		=	pElement->FirstAttribute();
+	if(pAttrib)		
+		gpApplication->Set_Insert_File_UUID(pAttrib->Value());
+	
+	
+}
 
 void CImport_TinyXML::Read_Tool_Object(std::string sTool)
 {

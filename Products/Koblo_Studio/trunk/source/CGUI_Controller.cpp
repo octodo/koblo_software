@@ -5,7 +5,6 @@
 CGUI_Controller::CGUI_Controller()
 {
 	
-	
 }
 
 CGUI_Controller::~CGUI_Controller()
@@ -69,9 +68,23 @@ void CGUI_Controller::Toggle_Window()
 	
 }
 
-void CGUI_Controller::Show_Hide_Plugins()
+void CGUI_Controller::Show_All_Plugins(tbool bShow)
 {
-	
+	for (tint32 i = 0; i < giNumber_Of_Tracks; i++) {
+		
+		if(bShow){
+			gpApplication->GetPlugInManager()->OpenGUI(i, 0);
+			gpApplication->GetPlugInManager()->OpenGUI(i, 1);
+			gpApplication->GetPlugInManager()->OpenGUI(i, 2);
+			gpApplication->GetPlugInManager()->OpenGUI(i, 3);
+		}
+		else{
+			gpDSPEngine->Close_Plug_In_GUI(i,0);
+			gpDSPEngine->Close_Plug_In_GUI(i,1);
+			gpDSPEngine->Close_Plug_In_GUI(i,2);
+			gpDSPEngine->Close_Plug_In_GUI(i,3);
+		}
+	}
 }
 
 void CGUI_Controller::Update_Windows() 
