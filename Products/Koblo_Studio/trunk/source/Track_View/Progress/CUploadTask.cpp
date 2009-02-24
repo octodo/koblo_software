@@ -26,6 +26,14 @@ enum EUploadOrder {
 	geUpload_Take_Upload_Action,
 	geUpload_Take_Upload_After,
 
+	geUpload_PresetSettings_PreVerify_Before,
+	geUpload_PresetSettings_PreVerify_Action,
+	geUpload_PresetSettings_PreVerify_After,
+
+	geUpload_PresetSettings_Upload_Before,
+	geUpload_PresetSettings_Upload_Action,
+	geUpload_PresetSettings_Upload_After,
+
 	geUpload_Commit_PreVerify_Before,
 	geUpload_Commit_PreVerify_Action,
 	geUpload_Commit_PreVerify_After,
@@ -43,8 +51,10 @@ CUploadTask::CUploadTask()
 	miActionOrder = 0;
 
 	mpfileCommitXML = NULL;
-	mpDownloader_VerifyCommit = NULL;
-	mpfileReply_VerifyCommit = NULL;
+	mpfilePresetData = NULL;
+
+	mpDownloader_VerifyMisc = NULL;
+	mpfileReply_VerifyMisc = NULL;
 
 	mpDownloader_VerifySample = NULL;
 	mpfileReply_VerifySample = NULL;
@@ -55,9 +65,6 @@ CUploadTask::CUploadTask()
 	mpUploader = NULL;
 	mpfileReply_Uploader = NULL;
 
-	mpDownloader_VerifyBranch = NULL;
-	mpfileReply_VerifyBranch = NULL;
-
 	mpTakeCurr = NULL;
 	mpfileMp3 = NULL;
 	mpfileOgg = NULL;
@@ -66,15 +73,6 @@ CUploadTask::CUploadTask()
 
 CUploadTask::~CUploadTask()
 {
-	if (mpDownloader_VerifyBranch) {
-		mpDownloader_VerifyBranch->Destroy();
-		mpDownloader_VerifyBranch = NULL;
-	}
-	if (mpfileReply_VerifyBranch) {
-		mpfileReply_VerifyBranch->Destroy();
-		mpfileReply_VerifyBranch = NULL;
-	}
-	//
 	if (mpUploader) {
 		mpUploader->Destroy();
 		mpUploader = NULL;
@@ -102,13 +100,13 @@ CUploadTask::~CUploadTask()
 		mpfileReply_VerifyTake = NULL;
 	}
 	//
-	if (mpDownloader_VerifyCommit) {
-		mpDownloader_VerifyCommit->Destroy();
-		mpDownloader_VerifyCommit = NULL;
+	if (mpDownloader_VerifyMisc) {
+		mpDownloader_VerifyMisc->Destroy();
+		mpDownloader_VerifyMisc = NULL;
 	}
-	if (mpfileReply_VerifyCommit) {
-		mpfileReply_VerifyCommit->Destroy();
-		mpfileReply_VerifyCommit = NULL;
+	if (mpfileReply_VerifyMisc) {
+		mpfileReply_VerifyMisc->Destroy();
+		mpfileReply_VerifyMisc = NULL;
 	}
 	//
 	std::list<CTake_Data*>::iterator it = mlistpTakes.begin();
@@ -132,6 +130,10 @@ CUploadTask::~CUploadTask()
 	if (mpfileCommitXML) {
 		mpfileCommitXML->Destroy();
 		mpfileCommitXML = NULL;
+	}
+	if (mpfilePresetData) {
+		mpfilePresetData->Destroy();
+		mpfilePresetData = NULL;
 	}
 } // destructor
 
@@ -274,15 +276,35 @@ tbool CUploadTask::Init_Commit(
 
 	miActionOrder = geUpload_Branch_PreVerify_Before;
 	if (mlistpTakes.size() > 0) {
-		// Upload takes and then commit project xml
+		// Upload takes and then commit preset data and project xml
 		miAction_Branch_PreVerify_WhereToGoNow = geUpload_Take_PreVerify_Before;
 	}
 	else {
-		// No takes - go directly to commit project xml
-		miAction_Branch_PreVerify_WhereToGoNow = geUpload_Commit_PreVerify_Before;
+		// No takes - go directly to commit preset data and project xml
+		miAction_Branch_PreVerify_WhereToGoNow = geUpload_PresetSettings_PreVerify_Before;
 	}
 	return true;
 } // Init_Commit
+
+
+tbool CUploadTask::Add_PresetData(const tchar* pszPresetDataUUID, const tchar* pszFilePresetData)
+{
+	//TODO: Some sort of checking that we're ok to change this now
+	// if (bad) return false;
+
+	msPresetDataUUID = pszPresetDataUUID;
+	mpfilePresetData = IFile::Create();
+	if (!mpfilePresetData->Open(pszFilePresetData, IFile::FileRead)) {
+		msExtendedError = "Unable to read-open file:\n ";
+		msExtendedError += pszFilePresetData;
+		msPresetDataUUID = "";
+		mpfilePresetData = NULL;
+		return false;
+	}
+
+	// Success
+	return true;
+} // Add_PresetData
 
 
 tbool CUploadTask::Init_Helper(std::list<CTake_Data*>* plistpTakes)
@@ -336,8 +358,8 @@ tbool CUploadTask::DoWork()
 			else {
 				// Skip create project/branch
 				if (bNoMoreTakes) {
-					// No takes - go to commit project xml
-					miActionOrder = geUpload_Commit_PreVerify_Before;
+					// No takes - go to commit preset data and project xml
+					miActionOrder = geUpload_PresetSettings_PreVerify_Before;
 				}
 				else {
 					// Go to upload takes and then commit project xml
@@ -358,8 +380,8 @@ tbool CUploadTask::DoWork()
 			bSuccess = DoNewProject_After(&bNoMoreTakes);
 			// Where to go?
 			if (bNoMoreTakes) {
-				// Jump to commit project.xml
-				miActionOrder = geUpload_Commit_PreVerify_Before;
+				// Jump to commit preset data
+				miActionOrder = geUpload_PresetSettings_PreVerify_Before;
 			}
 			else {
 				// Upload takes
@@ -379,8 +401,8 @@ tbool CUploadTask::DoWork()
 			bSuccess = DoNewBranch_After(&bNoMoreTakes);
 			// Where to go?
 			if (bNoMoreTakes) {
-				// Jump to commit project.xml
-				miActionOrder = geUpload_Commit_PreVerify_Before;
+				// Jump to commit preset data
+				miActionOrder = geUpload_PresetSettings_PreVerify_Before;
 			}
 			else {
 				// Upload takes
@@ -406,8 +428,8 @@ tbool CUploadTask::DoWork()
 			else {
 				// Take is already there
 				if (bNoMoreTakes) {
-					// No more takes - go to commit project xml
-					miActionOrder = geUpload_Commit_PreVerify_Before;
+					// No more takes - go to commit preset data
+					miActionOrder = geUpload_PresetSettings_PreVerify_Before;
 				}
 				else {
 					// Go to next take
@@ -435,6 +457,48 @@ tbool CUploadTask::DoWork()
 				// Go to next take
 				miActionOrder = geUpload_Take_PreVerify_Before;
 			}
+			break;
+
+		case geUpload_PresetSettings_PreVerify_Before:
+			bSuccess = DoPresetSettings_PreVerify_Before(&bAlreadyThere);
+			// Where to go?
+			if (!bAlreadyThere) {
+				// Brand new preset data - go ahead
+				miActionOrder++;
+			}
+			else {
+				// Skip upload preset data - go to upload project xml
+				miActionOrder = geUpload_Commit_PreVerify_Before;
+			}
+			break;
+		case geUpload_PresetSettings_PreVerify_Action:
+			bSuccess = DoPresetSettings_PreVerify_Action(&bActionDone);
+			if (bActionDone) miActionOrder++;
+			break;
+		case geUpload_PresetSettings_PreVerify_After:
+			bSuccess = DoPresetSettings_PreVerify_After(&bAlreadyThere);
+			// Where to go?
+			if (!bAlreadyThere) {
+				// Brand new preset data - go ahead
+				miActionOrder++;
+			}
+			else {
+				// Skip upload preset data - go to upload project xml
+				miActionOrder = geUpload_Commit_PreVerify_Before;
+			}
+			break;
+
+		case geUpload_PresetSettings_Upload_Before:
+			bSuccess = DoPresetSettings_Upload_Before();
+			miActionOrder++;
+			break;
+		case geUpload_PresetSettings_Upload_Action:
+			bSuccess = DoPresetSettings_Upload_Action(&bActionDone);
+			if (bActionDone) miActionOrder++;
+			break;
+		case geUpload_PresetSettings_Upload_After:
+			bSuccess = DoPresetSettings_Upload_After();
+			miActionOrder++;
 			break;
 
 		case geUpload_Commit_PreVerify_Before:
@@ -491,28 +555,28 @@ tbool CUploadTask::IsDone()
 
 tbool CUploadTask::DoBranch_PreVerify_Before()
 {
-	if (mpfileReply_VerifyBranch) {
+	if (mpfileReply_VerifyMisc) {
 		// Release file - it was from previous transfer
-		mpfileReply_VerifyBranch->Destroy();
-		mpfileReply_VerifyBranch = NULL;
+		mpfileReply_VerifyMisc->Destroy();
+		mpfileReply_VerifyMisc = NULL;
 	}
-	mpfileReply_VerifyBranch = IFileMemory::Create();
-	if (mpfileReply_VerifyBranch == NULL)
+	mpfileReply_VerifyMisc = IFileMemory::Create();
+	if (mpfileReply_VerifyMisc == NULL)
 		return false;
-	mpfileReply_VerifyBranch->Open(IFile::FileCreate);
+	mpfileReply_VerifyMisc->Open(IFile::FileCreate);
 
-	if (mpDownloader_VerifyBranch == NULL)
-		mpDownloader_VerifyBranch = ine::IDownloader::Create();
-	if (mpDownloader_VerifyBranch == NULL)
+	if (mpDownloader_VerifyMisc == NULL)
+		mpDownloader_VerifyMisc = ine::IDownloader::Create();
+	if (mpDownloader_VerifyMisc == NULL)
 		return false;
 
 	std::string sURI = std::string("/branches/") + msBranchUUID + "/rights.xml";
-	if ((!mpDownloader_VerifyBranch->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
+	if ((!mpDownloader_VerifyMisc->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
 		||
-		(!mpDownloader_VerifyBranch->Start(mpfileReply_VerifyBranch))
+		(!mpDownloader_VerifyMisc->Start(mpfileReply_VerifyMisc))
 	) {
 		tchar pszErr[1024];
-		mpDownloader_VerifyBranch->GetError(pszErr, 1024);
+		mpDownloader_VerifyMisc->GetError(pszErr, 1024);
 		msExtendedError = std::string("Init+start of verify-branch failed:\n") + pszErr;
 		return false;
 	}
@@ -528,9 +592,9 @@ tbool CUploadTask::DoBranch_PreVerify_Action(tbool* pbActionDone)
 {
 	tint64 iVerifyBranch_Progress = 0;
 	tint64 iVerifyBranch_Total = 1;
-	if (!mpDownloader_VerifyBranch->GetProgress(&iVerifyBranch_Progress, &iVerifyBranch_Total)) {
+	if (!mpDownloader_VerifyMisc->GetProgress(&iVerifyBranch_Progress, &iVerifyBranch_Total)) {
 		tchar pszErr[1024];
-		mpDownloader_VerifyBranch->GetError(pszErr, 1024);
+		mpDownloader_VerifyMisc->GetError(pszErr, 1024);
 		msExtendedError = pszErr;
 		return false;
 	}
@@ -539,25 +603,25 @@ tbool CUploadTask::DoBranch_PreVerify_Action(tbool* pbActionDone)
 	muiProgressTarget = (tuint64)(iVerifyBranch_Total);
 
 	// We don't care for the actual status of the download - we test that later
-	*pbActionDone = mpDownloader_VerifyBranch->IsFinished();
+	*pbActionDone = mpDownloader_VerifyMisc->IsFinished();
 
 	return true;
 } // DoBranch_PreVerify_Action
 
 tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTakes)
 {
-	tint32 iReplySize = (tint32)mpfileReply_VerifyBranch->GetMemorySize();
-	tbool bBranchThere = mpDownloader_VerifyBranch->IsDone();
+	tint32 iReplySize = (tint32)mpfileReply_VerifyMisc->GetMemorySize();
+	tbool bBranchThere = mpDownloader_VerifyMisc->IsDone();
 	if (!bBranchThere) {
 		// Status 404 means "page not there" - that's ok ..
-		if (mpDownloader_VerifyBranch->GetHttpStatusCode() != 404) {
+		if (mpDownloader_VerifyMisc->GetHttpStatusCode() != 404) {
 			// .. but this on the other hand is an unexpected error
 			tchar pszErr[1024];
-			mpDownloader_VerifyBranch->GetError(pszErr, 1024);
+			mpDownloader_VerifyMisc->GetError(pszErr, 1024);
 			msExtendedError = std::string("Verify branch failed:\n") + pszErr;
 			if (iReplySize > 1) {
 				msExtendedError += "\n\n";
-				msExtendedError += std::string((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr()), iReplySize);
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifyMisc->GetMemoryPtr()), iReplySize);
 			}
 			return false;
 		}
@@ -574,7 +638,7 @@ tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTa
 
 		// Find out if we have write access
 		{
-			std::string sRights((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr()), iReplySize);
+			std::string sRights((tchar*)(mpfileReply_VerifyMisc->GetMemoryPtr()), iReplySize);
 			tbool bWrite = gpApplication->Write_Permission(sRights);
 			if (!bWrite) {
 				msExtendedError = "You don't have upload rights for project/branch.";
@@ -1061,30 +1125,204 @@ tbool CUploadTask::DoTake_Upload_After(tbool* pbNoMoreTakes)
 } // DoTake_Upload_After
 
 
+tbool CUploadTask::DoPresetSettings_PreVerify_Before(tbool* pbAlreadyThere)
+{
+	if (msPresetDataUUID.length() == 0) {
+		// We don't need to upload preset-data
+		*pbAlreadyThere = true;
+		return true;
+	}
+
+	if (mpfileReply_VerifyMisc) {
+		// Release file - it was from previous transfer
+		mpfileReply_VerifyMisc->Destroy();
+		mpfileReply_VerifyMisc = NULL;
+	}
+	mpfileReply_VerifyMisc = IFileMemory::Create();
+	if (mpfileReply_VerifyMisc == NULL)
+		return false;
+	mpfileReply_VerifyMisc->Open(IFile::FileCreate);
+
+	if (mpDownloader_VerifyMisc == NULL)
+		mpDownloader_VerifyMisc = ine::IDownloader::Create();
+	if (mpDownloader_VerifyMisc == NULL)
+		return false;
+
+	std::string sURI = std::string("/plugindata/") + msPresetDataUUID + ".xml";
+	if ((!mpDownloader_VerifyMisc->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
+		||
+		(!mpDownloader_VerifyMisc->Start(mpfileReply_VerifyMisc))
+	) {
+		tchar pszErr[1024];
+		mpDownloader_VerifyMisc->GetError(pszErr, 1024);
+		msExtendedError = std::string("Init+start of verify preset-data failed:\n") + pszErr;
+		return false;
+	}
+
+	muiProgressIx = 0;
+	muiProgressTarget = 1;
+	msProgress = std::string("Looking up preset-data");
+
+	return true;
+} // DoPresetSettings_PreVerify_Before
+
+tbool CUploadTask::DoPresetSettings_PreVerify_Action(tbool* pbActionDone)
+{
+	tint64 iVerify_Progress = 0;
+	tint64 iVerify_Total = 1;
+	if (!mpDownloader_VerifyMisc->GetProgress(&iVerify_Progress, &iVerify_Total)) {
+		tchar pszErr[1024];
+		mpDownloader_VerifyMisc->GetError(pszErr, 1024);
+		msExtendedError = pszErr;
+		return false;
+	}
+
+	muiProgressIx = (tuint64)(iVerify_Progress);
+	muiProgressTarget = (tuint64)(iVerify_Total);
+
+	// We don't care for the actual status of the download - we test that later
+	*pbActionDone = mpDownloader_VerifyMisc->IsFinished();
+
+	return true;
+} // DoPresetSettings_PreVerify_Action
+
+tbool CUploadTask::DoPresetSettings_PreVerify_After(tbool* pbAlreadyThere)
+{
+	tint32 iReplySize = (tint32)mpfileReply_VerifyMisc->GetMemorySize();
+	tbool bIsThere = mpDownloader_VerifyMisc->IsDone();
+	if (!bIsThere) {
+		// Status 404 means "page not there" - that's ok ..
+		if (mpDownloader_VerifyMisc->GetHttpStatusCode() != 404) {
+			// .. but this on the other hand is an unexpected error
+			tchar pszErr[1024];
+			mpDownloader_VerifyMisc->GetError(pszErr, 1024);
+			msExtendedError = std::string("Verify preset-data failed:\n") + pszErr;
+			if (iReplySize > 1) {
+				msExtendedError += "\n\n";
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifyMisc->GetMemoryPtr()), iReplySize);
+			}
+			return false;
+		}
+	}
+
+	if (bIsThere) {
+		// Preset-data has already been uploaded
+		*pbAlreadyThere = true;
+
+		// We came here because we didn't know preset-data existed - fix that
+		std::string sXML((tchar*)(mpfileReply_VerifyMisc->GetMemoryPtr()), iReplySize);
+		//!!! TODO: Important!!! We must save info that preset-data exists!
+		// How do we do that? Maybe it's not important?
+		// ..... something here
+	}
+
+	return true;
+} // DoPresetSettings_PreVerify_After
+
+
+tbool CUploadTask::DoPresetSettings_Upload_Before()
+{
+	if (mpfileReply_Uploader) {
+		// Previously used - close
+		mpfileReply_Uploader->Destroy();
+		mpfileReply_Uploader = NULL;
+	}
+	mpfileReply_Uploader = IFileMemory::Create();
+	mpfileReply_Uploader->Open(IFile::FileCreate);
+
+	std::string sURI = std::string("/branches/") + msBranchUUID + "/plugindata.xml";
+	if (
+		(!mpUploader->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
+		||
+		(!mpUploader->AddParam("plugindata[uuid]", msPresetDataUUID.c_str(), -1))
+		||
+		(!mpUploader->AddFileParam("plugindata[uploaded_data]", mpfilePresetData, NULL, ine::MIME_TYPE_BINARY))
+		||
+		(!mpUploader->Start(mpfileReply_Uploader))
+	) {
+		tchar pszErr[1024];
+		mpUploader->GetError(pszErr, 1024);
+		msExtendedError = "Init+start of upload preset-data failed:\n";
+		msExtendedError += pszErr;
+		return false;
+	}
+
+	muiProgressIx = 0;
+	muiProgressTarget = 1;
+	msProgress = std::string("Committing preset data");
+
+	return true;
+} // DoPresetSettings_Upload_Before
+
+tbool CUploadTask::DoPresetSettings_Upload_Action(tbool* pbActionDone)
+{
+	if (mpUploader->IsFailed()) {
+		tchar pszErr[1024];
+		mpUploader->GetError(pszErr, 1024);
+		msExtendedError = std::string("Commit of preset data failed:\n") + pszErr;
+		tint32 iReplySize = (tint32)mpfileReply_Uploader->GetMemorySize();
+		if (iReplySize > 1) {
+			msExtendedError += "\n\n";
+			msExtendedError += std::string((tchar*)(mpfileReply_Uploader->GetMemoryPtr()), iReplySize);
+		}
+		return false;
+	}
+
+	tint64 iUp_Progress = 0;
+	tint64 iUp_Total = 1;
+	tint64 iReply_Progress = 0;
+	tint64 iReply_Total = 1;
+	mpUploader->GetProgress(&iUp_Progress, &iUp_Total, &iReply_Progress, &iReply_Total);
+	muiProgressIx = (tuint64)(iUp_Progress + iReply_Progress);
+	muiProgressTarget = (tuint64)(iUp_Total + iReply_Total);
+
+	if (mpUploader->IsDone())
+		*pbActionDone = true;
+
+	return true;
+} // DoPresetSettings_Upload_Action
+
+tbool CUploadTask::DoPresetSettings_Upload_After()
+{
+	// Get commit number
+	tint32 iSize = (tint32)mpfileReply_Uploader->GetMemorySize();
+	if (iSize > 1) {
+		std::string sUrlReplyXML(
+			(const tchar*)mpfileReply_Uploader->GetMemoryPtr(),
+			iSize);
+		
+		//!!! TODO: Set URL in project xml, so it'll know where to get preset-data
+		//gpApplication->Pass_Branch_Revision(sCommitReply);
+	}
+
+	return true;
+} // DoPresetSettings_Upload_After
+
+
 tbool CUploadTask::DoCommit_PreVerify_Before()
 {
-	if (mpfileReply_VerifyCommit) {
+	if (mpfileReply_VerifyMisc) {
 		// Release file - it was from previous transfer
-		mpfileReply_VerifyCommit->Destroy();
-		mpfileReply_VerifyCommit = NULL;
+		mpfileReply_VerifyMisc->Destroy();
+		mpfileReply_VerifyMisc = NULL;
 	}
-	mpfileReply_VerifyCommit = IFileMemory::Create();
-	if (mpfileReply_VerifyCommit == NULL)
+	mpfileReply_VerifyMisc = IFileMemory::Create();
+	if (mpfileReply_VerifyMisc == NULL)
 		return false;
-	mpfileReply_VerifyCommit->Open(IFile::FileCreate);
+	mpfileReply_VerifyMisc->Open(IFile::FileCreate);
 
-	if (mpDownloader_VerifyCommit == NULL)
-		mpDownloader_VerifyCommit = ine::IDownloader::Create();
-	if (mpDownloader_VerifyCommit == NULL)
+	if (mpDownloader_VerifyMisc == NULL)
+		mpDownloader_VerifyMisc = ine::IDownloader::Create();
+	if (mpDownloader_VerifyMisc == NULL)
 		return false;
 
 	std::string sURI = std::string("/commits/") + msCommitUUID + ".xml";
-	if ((!mpDownloader_VerifyCommit->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
+	if ((!mpDownloader_VerifyMisc->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
 		||
-		(!mpDownloader_VerifyCommit->Start(mpfileReply_VerifyCommit))
+		(!mpDownloader_VerifyMisc->Start(mpfileReply_VerifyMisc))
 	) {
 		tchar pszErr[1024];
-		mpDownloader_VerifyCommit->GetError(pszErr, 1024);
+		mpDownloader_VerifyMisc->GetError(pszErr, 1024);
 		msExtendedError = std::string("Init+start of verify-commit failed:\n") + pszErr;
 		return false;
 	}
@@ -1100,9 +1338,9 @@ tbool CUploadTask::DoCommit_PreVerify_Action(tbool* pbActionDone)
 {
 	tint64 iVerifyCommit_Progress = 0;
 	tint64 iVerifyCommit_Total = 1;
-	if (!mpDownloader_VerifyCommit->GetProgress(&iVerifyCommit_Progress, &iVerifyCommit_Total)) {
+	if (!mpDownloader_VerifyMisc->GetProgress(&iVerifyCommit_Progress, &iVerifyCommit_Total)) {
 		tchar pszErr[1024];
-		mpDownloader_VerifyCommit->GetError(pszErr, 1024);
+		mpDownloader_VerifyMisc->GetError(pszErr, 1024);
 		msExtendedError = pszErr;
 		return false;
 	}
@@ -1111,25 +1349,25 @@ tbool CUploadTask::DoCommit_PreVerify_Action(tbool* pbActionDone)
 	muiProgressTarget = (tuint64)(iVerifyCommit_Total);
 
 	// We don't care for the actual status of the download - we test that later
-	*pbActionDone = mpDownloader_VerifyCommit->IsFinished();
+	*pbActionDone = mpDownloader_VerifyMisc->IsFinished();
 
 	return true;
 } // DoCommit_PreVerify_Action
 
 tbool CUploadTask::DoCommit_PreVerify_After(tbool* pbAlreadyThere)
 {
-	tbool bCommitThere = mpDownloader_VerifyCommit->IsDone();
+	tbool bCommitThere = mpDownloader_VerifyMisc->IsDone();
 	if (!bCommitThere) {
 		// Status 404 means "page not there" - that's ok ..
-		if (mpDownloader_VerifyCommit->GetHttpStatusCode() != 404) {
+		if (mpDownloader_VerifyMisc->GetHttpStatusCode() != 404) {
 			// .. but this on the other hand is an unexpected error
 			tchar pszErr[1024];
-			mpDownloader_VerifyCommit->GetError(pszErr, 1024);
+			mpDownloader_VerifyMisc->GetError(pszErr, 1024);
 			msExtendedError = std::string("Verify commit failed:\n") + pszErr;
-			tint32 iReplySize = (tint32)mpfileReply_VerifyCommit->GetMemorySize();
+			tint32 iReplySize = (tint32)mpfileReply_VerifyMisc->GetMemorySize();
 			if (iReplySize > 1) {
 				msExtendedError += "\n\n";
-				msExtendedError += std::string((tchar*)(mpfileReply_VerifyCommit->GetMemoryPtr()), iReplySize);
+				msExtendedError += std::string((tchar*)(mpfileReply_VerifyMisc->GetMemoryPtr()), iReplySize);
 			}
 			return false;
 		}

@@ -57,6 +57,8 @@ public:
 					  const tchar* pszCommitDesc,
 		std::list<CTake_Data*>* plistpTakes);
 
+	tbool Add_PresetData(const tchar* pszPresetDataUUID, const tchar* pszFilePresetData);
+
 	virtual tbool DoWork();
 	virtual tbool IsDone();
 
@@ -83,6 +85,14 @@ protected:
 	tbool DoTake_Upload_Action(tbool* pbActionDone);
 	tbool DoTake_Upload_After(tbool* pbNoMoreTakes);
 
+	tbool DoPresetSettings_PreVerify_Before(tbool* pbAlreadyThere);
+	tbool DoPresetSettings_PreVerify_Action(tbool* pbActionDone);
+	tbool DoPresetSettings_PreVerify_After(tbool* pbAlreadyThere);
+
+	tbool DoPresetSettings_Upload_Before();
+	tbool DoPresetSettings_Upload_Action(tbool* pbActionDone);
+	tbool DoPresetSettings_Upload_After();
+
 	tbool DoCommit_PreVerify_Before();
 	tbool DoCommit_PreVerify_Action(tbool* pbActionDone);
 	tbool DoCommit_PreVerify_After(tbool* pbAlreadyThere);
@@ -104,6 +114,9 @@ protected:
 	std::string msBranchName;
 	std::string msBranchDescription;
 	std::string msBranchLicense;
+
+	std::string msPresetDataUUID;
+	IFile* mpfilePresetData;
 
 	std::string msCommitUUID;
 	std::string msFileCommitXML;
@@ -128,11 +141,8 @@ protected:
 	ine::IDownloader* mpDownloader_VerifyTake;
 	IFileMemory* mpfileReply_VerifyTake;
 
-	ine::IDownloader* mpDownloader_VerifyBranch;
-	IFileMemory* mpfileReply_VerifyBranch;
-
-	ine::IDownloader* mpDownloader_VerifyCommit;
-	IFileMemory* mpfileReply_VerifyCommit;
+	ine::IDownloader* mpDownloader_VerifyMisc;
+	IFileMemory* mpfileReply_VerifyMisc;
 
 	tbool SetTakeURL(IFileMemory* pfile);
 }; // CExportClipTask
