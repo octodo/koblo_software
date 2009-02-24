@@ -1138,7 +1138,7 @@ tbool CUploadTask::DoTake_Upload_After(tbool* pbNoMoreTakes)
 tbool CUploadTask::DoPresetSettings_PreVerify_Before(tbool* pbAlreadyThere)
 {
 	if (msPresetDataUUID.length() == 0) {
-		// We don't need to upload preset-data
+		// We don't need to upload preset data
 		*pbAlreadyThere = true;
 		return true;
 	}
@@ -1165,13 +1165,13 @@ tbool CUploadTask::DoPresetSettings_PreVerify_Before(tbool* pbAlreadyThere)
 	) {
 		tchar pszErr[1024];
 		mpDownloader_VerifyMisc->GetError(pszErr, 1024);
-		msExtendedError = std::string("Init+start of verify preset-data failed:\n") + pszErr;
+		msExtendedError = std::string("Init+start of verify preset data failed:\n") + pszErr;
 		return false;
 	}
 
 	muiProgressIx = 0;
 	muiProgressTarget = 1;
-	msProgress = std::string("Looking up preset-data");
+	msProgress = std::string("Looking up preset data");
 
 	return true;
 } // DoPresetSettings_PreVerify_Before
@@ -1206,7 +1206,7 @@ tbool CUploadTask::DoPresetSettings_PreVerify_After(tbool* pbAlreadyThere)
 			// .. but this on the other hand is an unexpected error
 			tchar pszErr[1024];
 			mpDownloader_VerifyMisc->GetError(pszErr, 1024);
-			msExtendedError = std::string("Verify preset-data failed:\n") + pszErr;
+			msExtendedError = std::string("Verify preset data failed:\n") + pszErr;
 			if (iReplySize > 1) {
 				msExtendedError += "\n\n";
 				msExtendedError += std::string((tchar*)(mpfileReply_VerifyMisc->GetMemoryPtr()), iReplySize);
@@ -1216,12 +1216,12 @@ tbool CUploadTask::DoPresetSettings_PreVerify_After(tbool* pbAlreadyThere)
 	}
 
 	if (bIsThere) {
-		// Preset-data has already been uploaded
+		// preset data has already been uploaded
 		*pbAlreadyThere = true;
 
-		// We came here because we didn't know preset-data existed - fix that
+		// We came here because we didn't know preset data existed - fix that
 		std::string sXML((tchar*)(mpfileReply_VerifyMisc->GetMemoryPtr()), iReplySize);
-		//!!! TODO: Important!!! We must save info that preset-data exists!
+		//!!! TODO: Important!!! We must save info that preset data exists!
 		// How do we do that? Maybe it's not important?
 		// ..... something here
 	}
@@ -1252,7 +1252,7 @@ tbool CUploadTask::DoPresetSettings_Upload_Before()
 	) {
 		tchar pszErr[1024];
 		mpUploader->GetError(pszErr, 1024);
-		msExtendedError = "Init+start of upload preset-data failed:\n";
+		msExtendedError = "Init+start of upload preset data failed:\n";
 		msExtendedError += pszErr;
 		return false;
 	}
@@ -1301,7 +1301,7 @@ tbool CUploadTask::DoPresetSettings_Upload_After()
 			(const tchar*)mpfileReply_Uploader->GetMemoryPtr(),
 			iSize);
 		
-		//!!! TODO: Set URL in project xml, so it'll know where to get preset-data
+		//!!! TODO: Set URL in project xml, so it'll know where to get preset data
 		//gpApplication->Pass_Branch_Revision(sCommitReply);
 	}
 
