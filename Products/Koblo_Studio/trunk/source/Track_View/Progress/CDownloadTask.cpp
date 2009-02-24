@@ -14,6 +14,10 @@ enum EDownloadOrder {
 	geDownload_Take_Download_Action,
 	geDownload_Take_Download_After,
 
+	geDownload_PresetSettings_Before,
+	geDownload_PresetSettings_Action,
+	geDownload_PresetSettings_After,
+
 	geDownload_QueueInsertRegions,
 
 	geDownload_Done
@@ -29,6 +33,7 @@ CDownloadTask::CDownloadTask()
 	mpTakeCurr = NULL;
 	mpfileOgg = NULL;
 	mpfileXML = NULL;
+	mpfilePresetData = NULL;
 } // constructor
 
 
@@ -65,12 +70,29 @@ CDownloadTask::~CDownloadTask()
 		// Delete file
 		if (*pszPath != '\0')
 			IFile::DeleteFile(pszPath);
-
 	}
 	//
 	if (mpfileXML) {
+		// This is a memory file - no delete
 		mpfileXML->Destroy();
 		mpfileXML = NULL;
+	}
+	//
+	if (mpfilePresetData) {
+		// This download file was not complete - it must be deleted!
+
+		// Save path of file
+		tchar pszPath[1024];
+		*pszPath = '\0';
+		mpfilePresetData->GetPathName(pszPath);
+
+		// Close object - release handle
+		mpfilePresetData->Destroy();
+		mpfilePresetData = NULL;
+
+		// Delete file
+		if (*pszPath != '\0')
+			IFile::DeleteFile(pszPath);
 	}
 } // destructor
 
@@ -109,7 +131,8 @@ tbool CDownloadTask::Init_DownloadXML(
 } // Init_DownloadXML
 
 
-tbool CDownloadTask::Init_Update(std::list<CTake_Data*>* plistpTakes)
+tbool CDownloadTask::Init_Update(std::list<CTake_Data*>* plistpTakes,
+	const tchar* pszPresetDataUUID /*= ""*/, const tchar* pszFilePresetData /*= ""*/)
 {
 	if (miActionOrder != 0) {
 		msExtendedError = "Double initialization";
@@ -121,6 +144,18 @@ tbool CDownloadTask::Init_Update(std::list<CTake_Data*>* plistpTakes)
 
 	if (!Init_Helper(plistpTakes))
 		return false;
+
+	msPresetDataUUID = pszPresetDataUUID;
+	if (msPresetDataUUID.size() > 0) {
+		mpfilePresetData = IFile::Create();
+		if (!mpfilePresetData->Open(pszFilePresetData, IFile::FileCreate)) {
+			msExtendedError = "Unable to write-open file:\n ";
+			msExtendedError += pszFilePresetData;
+			msPresetDataUUID = "";
+			mpfilePresetData = NULL;
+			return false;
+		}
+	}
 
 	if (mlistpTakes.size() == 0) {
 		// Skip past download - all are there already
@@ -202,14 +237,34 @@ tbool CDownloadTask::DoWork()
 			bSuccess = DoTake_Download_After(&bNoMoreTakes);
 			// Where to go?
 			if (bNoMoreTakes) {
-				// Done - queue insert regions
-				miActionOrder++;
+				// Done with takes
+				if (msPresetDataUUID.size() == 0) {
+					// Don't get preset data - queue insert regions
+					miActionOrder = geDownload_QueueInsertRegions;
+				}
+				else {
+					// Go to Get preset data
+					miActionOrder++;
+				}
 				gpApplication->Takes_Downloaded();
 			}
 			else {
 				// Download next take
 				miActionOrder = geDownload_Take_Download_Before;
 			}
+			break;
+
+		case geDownload_PresetSettings_Before:
+			bSuccess = DoGetPresetData_Before();
+			miActionOrder++;
+			break;
+		case geDownload_PresetSettings_Action:
+			bSuccess = DoGetPresetData_Action(&bActionDone);
+			if (bActionDone) miActionOrder++;
+			break;
+		case geDownload_PresetSettings_After:
+			bSuccess = DoGetPresetData_After();
+			miActionOrder++;
 			break;
 
 		case geDownload_QueueInsertRegions:
@@ -285,6 +340,7 @@ tbool CDownloadTask::DoGetBranchXml_Action(tbool* pbActionDone)
 
 tbool CDownloadTask::DoGetBranchXml_After(tbool* pbNoTakes)
 {
+	//!!! TODO: Insert functionality
 	// Get project xml parsed
 	//gpApplication->Set_Branch_Name(msBranchName);
 
@@ -370,7 +426,7 @@ tbool CDownloadTask::DoTake_Download_Action(tbool* pbActionDone)
 
 tbool CDownloadTask::DoTake_Download_After(tbool* pbNoMoreTakes)
 {
-	// Close file so it won't get auto-deleted
+	// Close ogg file so it doesn't get auto-deleted when task is destroyed
 	if (mpfileOgg) {
 		// Destroy object (will close file handle, not delete file)
 		mpfileOgg->Destroy();
@@ -409,4 +465,60 @@ tbool CDownloadTask::DoQueueInsertRegions()
 
 	return true;
 } // DoQueueInsertRegions
+
+
+tbool CDownloadTask::DoGetPresetData_Before()
+{
+	std::string sURI = std::string("/plugindata/") + msPresetDataUUID + ".xml";
+	if ((!mpDownloader->Init("koblo.com", sURI.c_str(), 80))
+		||
+		(!mpDownloader->Start(mpfilePresetData))
+	) {
+		tchar pszErr[1024];
+		mpDownloader->GetError(pszErr, 1024);
+		msExtendedError = std::string("Init+start of download preset data failed:\n") + pszErr;
+		return false;
+	}
+
+	muiProgressIx = 0;
+	muiProgressTarget = 1;
+	msProgress = std::string("Downloading preset data");
+
+	return true;
+} // DoGetPresetData_Before
+
+tbool CDownloadTask::DoGetPresetData_Action(tbool* pbActionDone)
+{
+	if (mpDownloader->IsFailed()) {
+		tchar pszErr[1024];
+		mpDownloader->GetError(pszErr, 1024);
+		msExtendedError = std::string("Download preset data failed:\n") + pszErr;
+		tint32 iReplySize = (tint32)mpfileXML->GetMemorySize();
+		if (iReplySize > 1) {
+			msExtendedError += "\n\n";
+			msExtendedError += std::string((tchar*)(mpfileXML->GetMemoryPtr()), iReplySize);
+		}
+		return false;
+	}
+
+	tint64 iProgress = 0;
+	tint64 iTotal = 1;
+	mpDownloader->GetProgress(&iProgress, &iTotal);
+	muiProgressIx = (tuint64)(iProgress);
+	muiProgressTarget = (tuint64)(iTotal);
+
+	if (mpDownloader->IsDone())
+		*pbActionDone = true;
+
+	return true;
+} // DoGetPresetData_Action
+
+tbool CDownloadTask::DoGetPresetData_After()
+{
+	// Close preset data file so it doesn't get auto-deleted when task is destroyed
+	mpfilePresetData->Destroy();
+	mpfilePresetData = NULL;
+
+	return true;
+} // DoGetPresetData_After
 
