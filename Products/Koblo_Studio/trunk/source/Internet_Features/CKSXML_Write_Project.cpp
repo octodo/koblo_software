@@ -865,8 +865,13 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		std::string sProduct = pPlugManager->GetPlugInName(iInsertId);
 		
 		// plug-in ID
-		TiXmlElement* pPlugin_ID = new TiXmlElement( "plugin id" );
-		TiXmlText* pPlugin_IDTxt = new TiXmlText(sVendor.c_str());
+		TiXmlElement* pPlugin_ID = new TiXmlElement( "productId" );
+		
+		tchar pszBuff[16];
+		tint32  iID	=	iInsertId;
+		sprintf(pszBuff, "%d", iID);
+
+		TiXmlText* pPlugin_IDTxt = new TiXmlText(pszBuff);
 		pPlugin_ID->LinkEndChild( pPlugin_IDTxt );
 		pInsert->LinkEndChild( pPlugin_ID );
 		

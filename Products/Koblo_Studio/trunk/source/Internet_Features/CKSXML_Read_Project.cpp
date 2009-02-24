@@ -800,12 +800,13 @@ void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrac
 	if ( !pElement ) return ;
 	
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
-	tint32 iSlot, iPluginId;
+	tint32 iSlot;
 
 	TiXmlNode* pChild;
 	
 	// slot id
-	if(pAttrib->QueryIntValue(&iSlot)==TIXML_SUCCESS) else return;
+	if(pAttrib->QueryIntValue(&iSlot)!=TIXML_SUCCESS) 
+		return;
 		
 	
 	
@@ -813,13 +814,12 @@ void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrac
 		
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
-			if (stricmp("plugin_id", pChild->Value()) == 0) {
-				
-				Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
-				
+			if (stricmp("productId", pChild->Value()) == 0) {
+
+				Set_DAW_Parameter(pChild, giTinyXml_Type_Int, giParam_ChInsert1 + iSlot, giSection_First_Track + uTrack);
 			}
 			
-			if (stricmp("vendor", pChild->Value()) == 0) {
+			else if (stricmp("vendor", pChild->Value()) == 0) {
 				
 				Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
 				
