@@ -57,6 +57,8 @@ public:
 					  const tchar* pszCommitDesc,
 		std::list<CTake_Data*>* plistpTakes);
 
+	tbool Add_PresetData(const tchar* pszPresetDataUUID, const tchar* pszFilePresetData);
+
 	virtual tbool DoWork();
 	virtual tbool IsDone();
 
@@ -66,6 +68,7 @@ protected:
 	tbool DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbMoreTakes);
 
 	tint32 miAction_Branch_PreVerify_WhereToGoNow;
+	tbool mbRequiresWriteAccess;
 
 	tbool DoNewProject_Before();
 	tbool DoNewProject_Action(tbool* pbActionDone);
@@ -82,6 +85,14 @@ protected:
 	tbool DoTake_Upload_Before();
 	tbool DoTake_Upload_Action(tbool* pbActionDone);
 	tbool DoTake_Upload_After(tbool* pbNoMoreTakes);
+
+	tbool DoPresetSettings_PreVerify_Before(tbool* pbAlreadyThere);
+	tbool DoPresetSettings_PreVerify_Action(tbool* pbActionDone);
+	tbool DoPresetSettings_PreVerify_After(tbool* pbAlreadyThere);
+
+	tbool DoPresetSettings_Upload_Before();
+	tbool DoPresetSettings_Upload_Action(tbool* pbActionDone);
+	tbool DoPresetSettings_Upload_After();
 
 	tbool DoCommit_PreVerify_Before();
 	tbool DoCommit_PreVerify_Action(tbool* pbActionDone);
@@ -105,14 +116,15 @@ protected:
 	std::string msBranchDescription;
 	std::string msBranchLicense;
 
+	std::string msPresetDataUUID;
+	IFile* mpfilePresetData;
+
 	std::string msCommitUUID;
 	std::string msFileCommitXML;
 	std::string msOnline_FileCommitXML;
 	IFile* mpfileCommitXML;
 	std::string msCommitXML;
 	std::string msCommitDescription;
-	//
-	tint32 miCommit_ReplyNb;
 
 	std::list<CTake_Data*> mlistpTakes;
 	tbool Init_Helper(std::list<CTake_Data*>* plistpTakes);
@@ -128,11 +140,8 @@ protected:
 	ine::IDownloader* mpDownloader_VerifyTake;
 	IFileMemory* mpfileReply_VerifyTake;
 
-	ine::IDownloader* mpDownloader_VerifyBranch;
-	IFileMemory* mpfileReply_VerifyBranch;
-
-	ine::IDownloader* mpDownloader_VerifyCommit;
-	IFileMemory* mpfileReply_VerifyCommit;
+	ine::IDownloader* mpDownloader_VerifyMisc;
+	IFileMemory* mpfileReply_VerifyMisc;
 
 	tbool SetTakeURL(IFileMemory* pfile);
 }; // CExportClipTask
