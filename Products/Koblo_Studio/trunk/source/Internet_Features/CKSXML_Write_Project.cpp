@@ -860,14 +860,15 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		
 		
 		CPlugInManager* pPlugManager = gpApplication->GetPlugInManager();
+		CPlugInManager::SPlugInInfo* pPlugInInfo = pPlugManager->GetPlugInInfo(iInsertId);
 		
-		std::string sVendor = pPlugManager->GetPlugInVendor(iInsertId);
-		std::string sProduct = pPlugManager->GetPlugInName(iInsertId);
-		
+		std::string sVendor		= pPlugInInfo->sCompanyName;
+		std::string sProduct	= pPlugInInfo->sProductName;
+
 		// plug-in ID
 		TiXmlElement* pPlugin_ID = new TiXmlElement( "productId" );
 		
-		tchar pszBuff[16];
+		tchar pszBuff[1024];
 		tint32  iID	=	iInsertId;
 		sprintf(pszBuff, "%d", iID);
 
@@ -875,16 +876,26 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		pPlugin_ID->LinkEndChild( pPlugin_IDTxt );
 		pInsert->LinkEndChild( pPlugin_ID );
 		
-		// vendor
+		// vendor name
 		TiXmlElement* pVendor = new TiXmlElement( "vendor" );
 		TiXmlText* pVendorTxt = new TiXmlText(sVendor.c_str());
 		pVendor->LinkEndChild( pVendorTxt );
+		
+		// vendor id
+		sprintf(pszBuff, "%d", pPlugInInfo->uiCompanyID);
+		pVendor->SetAttribute("uuid", pszBuff);
 		pInsert->LinkEndChild( pVendor );
 		
 		// product
 		TiXmlElement* pProduct = new TiXmlElement( "product" );
 		TiXmlText* pProductTxt = new TiXmlText(sProduct.c_str());
 		pProduct->LinkEndChild( pProductTxt );
+		
+		// product id
+		sprintf(pszBuff, "%d", pPlugInInfo->uiProductID);
+		pProduct->SetAttribute("uuid", pszBuff);
+		
+		
 		pInsert->LinkEndChild( pProduct );
 		
 		

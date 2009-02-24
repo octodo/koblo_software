@@ -54,6 +54,8 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		// pass the TinyXML DOM in to the DAW data structure
 		Pass_The_Project_Tag( mpTinyXMLDoc );
 		
+		Load_Plug_In_Settings();
+		
 		if( !gpApplication->Project_Is_Uploaded()){
 			
 			gpApplication->Project_Name( gpApplication->Online_Project_Name() ); 
@@ -89,7 +91,42 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 }
 
 
-
+void CKSXML_Read_Project::Load_Plug_In_Settings()
+{
+	std::string sPlugInFolderPath = gpApplication->Plugin_Settings_Folder();
+	std::string sPlugInSettingsPathName = sPlugInFolderPath + std::string("Plugin_Setting.prst");
+	
+	{
+		tint32 iVersionNr;
+		CAutoDelete<IChunkFile> pFile(IChunkFile::Create());
+		pFile->Open(sPlugInSettingsPathName.c_str(), IFile::FileRead, iVersionNr);
+		if (iVersionNr == 1) {
+			tint64 iIndex = 0;
+			IChunk* pChunk = pFile->GetNextChunk(iIndex, 'nsrt');
+			while (pChunk != NULL) {
+				tint32 iDataSize = pChunk->GetSize();
+				tchar* pData = new tchar[iDataSize];
+				pChunk->Read(pData, iDataSize);
+				tint32 iTrack = ((tint32*)pData)[0];
+				tint32 iInsert = ((tint32*)pData)[1];
+				pData += sizeof(tint32) * 2;
+				iDataSize -= sizeof(tint32) * 2;
+				
+				pChunk->Destroy();
+				pChunk = pFile->GetNextChunk(iIndex, 'nsrt');
+				
+				CTrack_DSP* pTrack = gpDSPEngine->GetTrack(iTrack);
+				kspi::IPlugIn* pInsert = pTrack->GetInsert(iInsert);
+				if (pInsert) {
+					pInsert->SetChunk(pData, iDataSize);
+				}
+				
+				delete[] pData;
+			}
+		}
+	}
+	
+}
 
 void CKSXML_Read_Project::Setup_Track_Editor()
 {
@@ -106,39 +143,7 @@ void CKSXML_Read_Project::Setup_Track_Editor()
 	gpApplication->Send_Msg_To_All_Panes(&Msg);
 
 	
-	std::string sPlugInFolderPath = gpApplication->Plugin_Settings_Folder();
-	std::string sPlugInSettingsPathName = sPlugInFolderPath + std::string("Plugin_Setting.prst");
-
-	{
-		tint32 iVersionNr;
-		CAutoDelete<IChunkFile> pFile(IChunkFile::Create());
-		pFile->Open(sPlugInSettingsPathName.c_str(), IFile::FileRead, iVersionNr);
-		if (iVersionNr == 1) {
-			tint64 iIndex = 0;
-			IChunk* pChunk = pFile->GetNextChunk(iIndex, 'nsrt');
-			while (pChunk != NULL) {
-				tint32 iDataSize = pChunk->GetSize();
-				tchar* pData = new tchar[iDataSize];
-				pChunk->Read(pData, iDataSize);
-				tint32 iTrack = ((tint32*)pData)[0];
-				tint32 iInsert = ((tint32*)pData)[1];
-				pData += sizeof(tint32) * 2;
-				iDataSize -= sizeof(tint32) * 2;
-
-				pChunk->Destroy();
-				pChunk = pFile->GetNextChunk(iIndex, 'nsrt');
-
-				CTrack_DSP* pTrack = gpDSPEngine->GetTrack(iTrack);
-				kspi::IPlugIn* pInsert = pTrack->GetInsert(iInsert);
-				if (pInsert) {
-					pInsert->SetChunk(pData, iDataSize);
-				}
-
-				delete[] pData;
-			}
-		}
 	}
-}
 /*
 void CKSXML_Read_Project::Reset_Project()
 {
@@ -802,31 +807,39 @@ void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrac
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
 	tint32 iSlot;
 
-	TiXmlNode* pChild;
-	
 	// slot id
 	if(pAttrib->QueryIntValue(&iSlot)!=TIXML_SUCCESS) 
 		return;
-		
+	
+	tint32 iVendor = -1;
+	tint32 iProduct = -1;
+	tint32 iInternal_Product_ID = -1;
 	
 	
+	TiXmlNode* pChild;
 	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
 		
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
 			if (stricmp("productId", pChild->Value()) == 0) {
 
-				Set_DAW_Parameter(pChild, giTinyXml_Type_Int, giParam_ChInsert1 + iSlot, giSection_First_Track + uTrack);
+				//Set_DAW_Parameter(pChild, giTinyXml_Type_Int, giParam_ChInsert1 + iSlot, giSection_First_Track + uTrack);
 			}
 			
 			else if (stricmp("vendor", pChild->Value()) == 0) {
 				
-				Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
+				TiXmlAttribute* pVendor_Attrib	=	pChild->ToElement()->FirstAttribute();
+				pVendor_Attrib->QueryIntValue(&iVendor);
+				
+				//Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
 				
 			}
 			else if (stricmp("product", pChild->Value()) == 0) {
+				
+				TiXmlAttribute* pProduct_Attrib	=	pChild->ToElement()->FirstAttribute();
+				pProduct_Attrib->QueryIntValue(&iProduct);
 
-				Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
+				//Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
 
 			}
 			else if (stricmp("url", pChild->Value()) == 0) {
@@ -844,6 +857,16 @@ void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrac
 
 			}
 		}
+	}
+	
+	if( iVendor != -1 && iProduct != -1) {
+		
+		// do some math here 
+		
+		tint32 iTest = iVendor +  iProduct; 
+		// set parameter
+	//	Set_DAW_Parameter(pChild, giTinyXml_Type_Int, giParam_ChInsert1 + iSlot, giSection_First_Track + uTrack);
+		
 	}
 }
 
