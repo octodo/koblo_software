@@ -274,6 +274,8 @@ public:
 	const std::string& GetChannelName(tint32 iChannel) {return mpsChannelName[iChannel];}
 
 	void SetChannelName(tint32 iChannel, const std::string& sName);
+	
+	void Set_Track_UUID(tint32 iChannel, const std::string& sUUID);
 
 //	kspi::IPlugIn* GetEffect(tint32 iChannel, tint32 iInsert);
 
@@ -492,6 +494,8 @@ protected:
 	tint32 miTrackToExportNow;
 	
 	std::string mpsChannelName[giNumber_Of_Tracks];
+	
+	std::string mpsTrack_UUID[giNumber_Of_Tracks];
 
 	std::string mpsStreamNames[giNumber_Of_Tracks]; //!!! Max asks is this enough?
 

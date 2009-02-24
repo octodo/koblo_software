@@ -1043,7 +1043,6 @@ void CKSApplication::Clean_Project(tint32 iCreateEmptyTracks)
 	
 	Set_Branch_Name("");
 	
-	
 	Branch_Revision( 0 );
 
 	
@@ -5612,6 +5611,12 @@ void CKSApplication::SetChannelName(tint32 iChannel, const std::string& sName)
 		CBaseGUI* pGUI = *it;
 		dynamic_cast<CKSBaseGUI*>(pGUI)->UpdateChannelName(iChannel, sName);
 	}
+}
+
+void CKSApplication::Set_Track_UUID(tint32 iChannel, const std::string& sUUID)
+{
+	mpsTrack_UUID[iChannel] = sUUID;
+
 }
 
 

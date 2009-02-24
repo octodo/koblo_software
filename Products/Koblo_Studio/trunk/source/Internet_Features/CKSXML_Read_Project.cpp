@@ -104,6 +104,7 @@ void CKSXML_Read_Project::Setup_Track_Editor()
 	CBasePane::SMsg Msg;
 	Msg = Msg_Deselect_Regions;
 	gpApplication->Send_Msg_To_All_Panes(&Msg);
+
 	
 	std::string sPlugInFolderPath = gpApplication->Plugin_Settings_Folder();
 	std::string sPlugInSettingsPathName = sPlugInFolderPath + std::string("Plugin_Setting.prst");
@@ -420,7 +421,7 @@ void CKSXML_Read_Project::Parse_Project_Object(TiXmlNode* pParent)
 	else if (stricmp("insert", pParent->Value()) == 0) {
 		Read_Insert(pParent->ToElement());
 	}
-	 */
+	*/
 	
 	else if (stricmp("track", pParent->Value()) == 0) {
 		Parse_Track_Object(pParent->ToElement());
@@ -599,20 +600,22 @@ void CKSXML_Read_Project::Parse_Track_Object(TiXmlElement* pElement)
 {
 	if ( !pElement ) return ;
 	
-	
-	
+
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
-	tint32 iTrackID;
-	
-	// track id
-	if (pAttrib && pAttrib->QueryIntValue(&iTrackID)==TIXML_SUCCESS)   
-		;
-	
+	//  track uuid
+	std::string sTrack_UUID;
+	if(pAttrib) {
+		sTrack_UUID =  pAttrib->Value() ;
+		
+		
+	}
 	
 	// owerwrite
-	iTrackID = gpApplication->AddTrack();
+	tint32 iTrackID = gpApplication->AddTrack();
 	
 	if(iTrackID == -1) return;
+	
+	gpApplication->Set_Track_UUID(iTrackID, sTrack_UUID.c_str() );
 		
 	
 	TiXmlNode* pChild;
@@ -625,6 +628,11 @@ void CKSXML_Read_Project::Parse_Track_Object(TiXmlElement* pElement)
 			if (stricmp("name", pChild->Value()) == 0) {
 				
 				Read_Track_Name( pChild->ToElement(), iTrackID);
+			}
+			
+			else if (stricmp("description", pChild->Value()) == 0) {
+				
+				//Read_Track_Name( pChild->ToElement(), iTrackID);
 			}
 			
 			
@@ -640,6 +648,12 @@ void CKSXML_Read_Project::Parse_Track_Object(TiXmlElement* pElement)
 				Read_Track_Out(pChild->ToElement(),  iTrackID);
 				
 			}
+			
+			else if (stricmp("insert", pChild->Value() ) == 0) {
+				Read_Track_Insert(pChild->ToElement(), iTrackID);
+				
+			}
+			
 			else if (stricmp("aux", pChild->Value()) == 0) {
 				
 				TiXmlElement* pElement	=	pChild->ToElement();
@@ -653,10 +667,9 @@ void CKSXML_Read_Project::Parse_Track_Object(TiXmlElement* pElement)
 				Set_DAW_Parameter(pElement, giTinyXml_Type_Float, giParam_ChAUX1 + iAux, giSection_First_Track + iTrackID, 10000.0f);
 
 			}
-			else if (stricmp("insert", pChild->Value() ) == 0) {
-				Read_Track_Insert(pChild->ToElement(), iTrackID);
-				
-			}
+			
+			
+			 
 			else if (stricmp("region", pChild->Value()) == 0) {
 				Read_Track_Region(pChild->ToElement(),  iTrackID);
 				
@@ -792,32 +805,24 @@ void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrac
 	TiXmlNode* pChild;
 	
 	// slot id
-	if (pAttrib->QueryIntValue(&iSlot)==TIXML_SUCCESS) {
+	if(pAttrib->QueryIntValue(&iSlot)==TIXML_SUCCESS) else return;
 		
-		pAttrib = pAttrib->Next();
-		// plug-in id
-		if (pAttrib->QueryIntValue(&iPluginId)==TIXML_SUCCESS) {
-			
-		}
-	}
-	
-	
-	
-	
-	
-	gpApplication->SetGlobalParm(giParam_ChInsert1 + iSlot, iPluginId, giSection_First_Track + uTrack);
-	
-	
 	
 	
 	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
 		
 		if(pChild->Type() == TiXmlNode::ELEMENT){
 			
-			if (stricmp("vendor", pChild->Value()) == 0) {
-
+			if (stricmp("plugin_id", pChild->Value()) == 0) {
+				
 				Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
-
+				
+			}
+			
+			if (stricmp("vendor", pChild->Value()) == 0) {
+				
+				Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
+				
 			}
 			else if (stricmp("product", pChild->Value()) == 0) {
 

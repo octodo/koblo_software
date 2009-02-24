@@ -234,6 +234,14 @@ tbool CKSFile_Controller::Close_Project()
 	// clean project
 	gpApplication->Clean_Project(0);
 	
+	// delete project name
+	gpApplication->Project_Name("");
+	
+	// delete online project name
+	gpApplication->Online_Project_Name("");
+	
+	gpApplication->Clear_Project_UUID();
+	
 	return true;
 }
 
