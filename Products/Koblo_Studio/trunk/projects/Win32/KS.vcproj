@@ -643,26 +643,8 @@
 					Name="Progress"
 					>
 					<File
-						RelativePath="..\..\source\Track_View\Progress\CAfterImportTask.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\source\Track_View\Progress\CDownloadTask.cpp"
 						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\..\source\Track_View\Progress\CExportClipTask.cpp"
@@ -674,6 +656,10 @@
 					</File>
 					<File
 						RelativePath="..\..\source\Track_View\Progress\CImportAudioTask.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\source\Track_View\Progress\CSetupTrackEditorTask.cpp"
 						>
 					</File>
 					<File
@@ -1247,10 +1233,6 @@
 					Name="Progress"
 					>
 					<File
-						RelativePath="..\..\include\Track_View\Progress\CAfterImportTask.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\include\Track_View\Progress\CDownloadTask.h"
 						>
 						<FileConfiguration
@@ -1278,6 +1260,10 @@
 					</File>
 					<File
 						RelativePath="..\..\include\Track_View\Progress\CImportAudioTask.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\include\Track_View\Progress\CSetupTrackEditorTask.h"
 						>
 					</File>
 					<File

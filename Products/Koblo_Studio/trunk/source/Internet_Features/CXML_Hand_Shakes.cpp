@@ -38,6 +38,8 @@ tbool CXML_Hand_Shakes::Set_Take_Handshake(std::string sTake_Info)
 	Update_Take_Data();
 	
 	gpApplication->Save_Project_As_XML_File_To_Disk();
+	
+	
 	return true;
 }
 
@@ -204,22 +206,72 @@ void CXML_Hand_Shakes::Update_Take_Data()
 
 
 
+void CXML_Hand_Shakes::Pass_Branch_Revision(std::string sBranch_Revision )
+{
+	//	std::string sTest("<?xml version=1.0 encoding=UTF-8?> \n <revision>9</revision>");
+	//	mpXMLHand_Shake->Parse(sTest.c_str());
+	
+	// clear TinyXML document
+	mpXMLHand_Shake->Clear();
+	
+	// parse pszsTake_Info  in to a TinyXML DOM
+	mpXMLHand_Shake->Parse(sBranch_Revision.c_str());
+	
+	// Pass document in to DAW structure
+	Read_Branch_Revision_Tag(mpXMLHand_Shake);
+	
+}
 
 
+void CXML_Hand_Shakes::Read_Branch_Revision_Tag(TiXmlNode* pParent)
+{
+	// if file is empty return
+	if ( !pParent ) return;
+	
+	TiXmlNode* pChild;
+	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
+	{
+		// filter out comments
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			if (stricmp("revision", pChild->Value()) == 0){
+				
+				
+				TiXmlNode* pSet_Branch_Revision = pChild->FirstChild();
+				if(pSet_Branch_Revision) {
+					std::string sBranch_Revision = pSet_Branch_Revision->Value();
+					gpApplication->Branch_Revision(atoi(sBranch_Revision.c_str()));
+				}
+				
+				
+			}
+	//		Read_Branch_Revision_Object(pChild);
 
+		}
+	}
+	
+	
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+void CXML_Hand_Shakes::Read_Branch_Revision_Object(TiXmlNode* pParent)
+{
+	
+	TiXmlNode* pChild = pParent->FirstChild();
+	
+	if ( !pChild ) return;
+	
+	if (stricmp("revision", pChild->Value()) == 0){
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+}
 
 
 

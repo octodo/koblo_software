@@ -47,58 +47,29 @@ tbool CKSXML_Write_Project::Save_Project_As_XML_File_To_Disk()
 	pDoc->Accept(&printer);
 	std::string xml_str =  printer.CStr();
 	
-	// missing code 
-//	std::string sFileName = gpApplication->Project_Name() + ".xml";
+
+	return Write_XML_File_To_Disk(xml_str);
+}
+
+tbool CKSXML_Write_Project::Write_XML_File_To_Disk(std::string sXML)
+{
 	
-	printf("Save_Project_As_XML_File_To_Disk()\n");
-	std::string sProject_Name	= gpApplication->Project_Name();
-	std::string sProject_Folder = gpApplication->Project_Folder();
-	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";
-	
-	printf("sProject_Name = %s \n", sProject_Name.c_str());
-	printf("sProject_Folder = %s \n", sProject_Folder.c_str());
-	printf("sProject = %s \n", sProject.c_str());
+	std::string sProject_Name	=	gpApplication->Project_Name();
+	std::string sProject_Folder =	gpApplication->Project_Folder();
+	std::string sProject		=	sProject_Folder + sProject_Name + ".xml";
 	
 	CAutoDelete<IFile> pfile(IFile::Create());
 	if (pfile->Open(sProject.c_str(), IFile::FileWrite)) {
-		pfile->Write(xml_str.c_str(), xml_str.length());
+		pfile->Write(sXML.c_str(), sXML.length());
 		return true;
 	}
 	return false;
+	
 }
 
 void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID)
 {
-	/*
-	TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
-	TiXmlDocument *pDoc		=	new TiXmlDocument("koblo_doc");
-	pDoc->LinkEndChild( decl );
 	
-
-	Write_Project(pDoc);
-	
-	// convert pDoc to a std::string
-	TiXmlPrinter printer;
-	pDoc->Accept(&printer);
-	std::string xml_str =  printer.CStr();
-	
-	//------------------- DUMMY CODE ----------------------
-	
-	// print to console
-//	printf(xml_str.c_str());
-	
-	// write file to disk
-	pDoc->SaveFile("xml_doc.xml");
-	
-	//------------------- REAL CODE INCOMPLETE ----------------------
-	
-	//Get Project ID
-	tint32 iProject_ID = gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
-	
-	char psz[128];
-	sprintf(psz, "branches/%d/revisions", iProject_ID);
-	std::string str = psz;
-	*/
 
 }
 
@@ -123,7 +94,13 @@ void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 	
 	// name
 	TiXmlElement* pName = new TiXmlElement( "name" );
-	TiXmlText* pNameTxt = new TiXmlText(gpApplication->Project_Name().c_str());
+	std::string sName;
+	if(gpApplication->Online_Project_Name().size() > 0)
+		sName = gpApplication->Online_Project_Name();
+	else
+		sName = gpApplication->Project_Name();
+		
+	TiXmlText* pNameTxt = new TiXmlText(sName.c_str());
 	pName->LinkEndChild( pNameTxt );
 	pProject->LinkEndChild( pName );
 	
@@ -165,13 +142,16 @@ void CKSXML_Write_Project::Write_Branch(TiXmlElement* pParent)
 	pDescription->LinkEndChild( pDescriptionTxt );
 	pBranch->LinkEndChild( pDescription );
 	
+	
 	// revision
-	char pszBuff [64];
-	sprintf(pszBuff, "%d", gpApplication->Branch_Revision());
-	TiXmlElement* pRevision = new TiXmlElement( "revision" );
-	TiXmlText* pRevisionTxt = new TiXmlText(pszBuff);
-	pRevision->LinkEndChild( pRevisionTxt );
-	pBranch->LinkEndChild( pRevision );
+	if( gpApplication->Branch_Revision() != 0 ){
+		char pszBuff [64];
+		sprintf(pszBuff, "%d", gpApplication->Branch_Revision());
+		TiXmlElement* pRevision = new TiXmlElement( "revision" );
+		TiXmlText* pRevisionTxt = new TiXmlText(pszBuff);
+		pRevision->LinkEndChild( pRevisionTxt );
+		pBranch->LinkEndChild( pRevision );
+	}
 	
 	
 }
@@ -931,10 +911,10 @@ tbool CKSXML_Write_Project::Create_Plugin_Setting(CPreset_Data* pPreset_Data)
 	std::string sPlug_in_Setting		=	gpApplication->Plugin_Settings_Folder() + pPreset_Data->Get_UUID() + ".ksprst";
 
 	// missing code 
-	std::string sFileName			= gpApplication->GetProjectName() + ".xml";
+	std::string sFileName			= gpApplication->Project_Name() + ".xml";
 	std::string sProject_Name		= gpApplication->Project_Name();
 	std::string sProject_Folder		= gpApplication->Project_Folder();
-	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";
+	std::string sProject			=  sProject_Folder + sProject_Name + ".xml";
 /*	
 	CAutoDelete<IFile> pfile(IFile::Create());
 	if (pfile->Open(sProject.c_str(), IFile::FileWrite)) {

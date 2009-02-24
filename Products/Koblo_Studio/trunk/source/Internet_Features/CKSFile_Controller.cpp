@@ -44,12 +44,27 @@ tbool CKSFile_Controller::Open_Project()
 	// Avoid repeated GUI updates on load
 	gpApplication->SetGUIsReady(false);
 	
+	// delete project name
+	Project_Name("");
+	
+	// delete online project name
+	Online_Project_Name("");
+	
+	// clean project
+	gpApplication->Clean_Project(0);
+	
 	CAutoLock Lock( gpApplication->GetMutex() );
 	
-	// find and store project name
+	// find project name
 	std::string sProject_Name			= pszXML_Path;
 	tint32 iPosColon					= sProject_Name.find_last_of(':');
 	sProject_Name.erase(0, iPosColon + 1);
+	
+	// remove extencion
+
+	tint32 iPosDot					= sProject_Name.find_last_of('.');
+	sProject_Name.erase(iPosDot, sProject_Name.size() );
+	// store project name
 	Project_Name(sProject_Name);
 	
 	// find and store project folder
@@ -59,7 +74,7 @@ tbool CKSFile_Controller::Open_Project()
 	Project_Folder(sProject_Folder);
 	
 	// read the project file
-	gpApplication->Read_Project_From_Disk(sProject_Folder +  sProject_Name);
+	gpApplication->Read_Project_From_Disk(Project_Folder() +  Project_Name() + ".xml" );
 	
 	// gui is readdy
 	gpApplication->SetGUIsReady(true);
@@ -98,7 +113,7 @@ tint32 CKSFile_Controller::New_Project()
 		return giUser_Canceld_Create_New_Project;
 		
 	// clean project
-	gpApplication->CleanProject(giDefault_Number_Of_Tracks);
+	gpApplication->Clean_Project(giDefault_Number_Of_Tracks);
 	
 	
 	
@@ -107,6 +122,9 @@ tint32 CKSFile_Controller::New_Project()
 	
 	// create new folders for the project
 	Create_Folders();
+	
+	// create a new project file
+	Create_Project_File();
 	
 	// save project so name in file isn't lost
 	Save_Project();
@@ -148,7 +166,7 @@ tint32 CKSFile_Controller::Save_Before_Close()
 
 tbool CKSFile_Controller::Save_Project()
 {
-	printf("Save_Project()\n");
+//	printf("Save_Project()\n");
 	gpApplication->Save_Project_As_XML_File_To_Disk();
 	return true;
 	
@@ -214,11 +232,14 @@ tbool CKSFile_Controller::Close_Project()
 		return giUser_Canceld_Save;
 	
 	// clean project
-	gpApplication->CleanProject(0);
+	gpApplication->Clean_Project(0);
+	
+	return true;
 }
 
 tbool CKSFile_Controller::Copy_KSProject_Waves()
 {
+	/*
 	CAutoDelete<IFileSearch> pSearch(IFileSearch::Create());
 	
 	
@@ -241,7 +262,7 @@ tbool CKSFile_Controller::Copy_KSProject_Waves()
 		IFile::CopyFile(sCopy_To_Folder.c_str(), sCopy_From_Folder.c_str(), sFile_Name.c_str());
 		
 	}
-	
+	*/
 	return true;
 }
 
@@ -318,12 +339,8 @@ tbool CKSFile_Controller::Create_Project_File()
 	std::string sProject		=  sProject_Folder + sProject_Name + ".xml";
 	
 	
-	//"Macintosh HD:User:maxgronlund:MusicMKoblo Studio:XML:jord:ford.xml"
-	
 	CAutoDelete<IFile> pfProject_File(IFile::Create());
 	pfProject_File->Open(sProject.c_str(), IFile::FileCreate);
-	
-	//pPeakFileL->Write((const tchar*)pfPeak, iPeakSize * sizeof(tfloat32));
 	
 	
 	if (pfProject_File) {
@@ -386,7 +403,7 @@ tbool CKSFile_Controller::Create_Folders()
 	if(Create_Wave_Picts_Folder() == false ) return false;
 	
 	// create a new project file
-	if( Create_Project_File() == false ) return false;
+//	if( Create_Project_File() == false ) return false;
 
 	return true;
 
@@ -402,8 +419,9 @@ void CKSFile_Controller::Update_Project_Name(std::string sNew_Name)
 	tint iPos = sProject_Name.find_last_of(':');
 	sProject_Name = sProject_Name.substr(iPos + 1, sProject_Name.size());
 	gpApplication->Project_Name(sProject_Name);
+	gpApplication->Online_Project_Name(sProject_Name);
 	
-	printf( "Update_Project_Name : %s \n", sProject_Name.c_str() );
+//	printf( "Update_Project_Name : %s \n", sProject_Name.c_str() );
 	
 
 	
@@ -417,10 +435,9 @@ std::string  CKSFile_Controller::Get_Extencion(std::string sFile)
 	
 }
 
-tbool CKSFile_Controller::Readable_Audio(std::string sFile_Path)
+tbool CKSFile_Controller::Readable_Audio(std::string sFile_Path, tbool* pbIsStereo /*= NULL*/)
 {
-//	printf(sFile_Path.c_str() );
-//	printf("\n*******************************\n");
+
 	CAutoDelete<IFile> pFile(IFile::Create());
 	
 	
@@ -431,9 +448,10 @@ tbool CKSFile_Controller::Readable_Audio(std::string sFile_Path)
 		if (pDec) {
 			
 			tbool bReturn = pDec->TestFile(pFile);
+			if (pbIsStereo) *pbIsStereo = pDec->miChannels >= 2;
 			pDec->Destroy();
-		//	return  bReturn;
-			return true;
+			return  bReturn;
+			//return true;
 		}
 	}
 	return false;

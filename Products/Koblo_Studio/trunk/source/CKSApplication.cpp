@@ -1022,10 +1022,8 @@ void CKSApplication::SanitizeProjectFolderPath(std::string& rsProjectFolder, con
 } // SanitizeProjectFolderPath
 
 
-void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
+void CKSApplication::Clean_Project(tint32 iCreateEmptyTracks)
 {
-	// Stop playback
-	PlaybackStop();
 	// Reset size of projece
 	gpDSPEngine->Reset_Session_End_Sample();
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
@@ -1033,7 +1031,6 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 		CBaseGUI* pGUI = *it;
 		dynamic_cast<CKSBaseGUI*>(pGUI)->PlaybackStopped();
 	}
-	Project_Name("");
 
 	// Delete all tracks
 	Maintain_Number_Of_Tracks(0);
@@ -1045,6 +1042,10 @@ void CKSApplication::CleanProject(tint32 iCreateEmptyTracks)
 	Set_Selected_Track(-1);
 	
 	Set_Branch_Name("");
+	
+	
+	Branch_Revision( 0 );
+
 	
 	
 	for (tint32 i = 0; i < giNumber_Of_Tracks; i++) {
@@ -1189,11 +1190,11 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			break;
 
 		case ID_FILE_IMPORTKSPROJECT:
-			{
+			{/*
 				mbKSProject_Imported = true;
 				MenuFileLoadProject();
 				Project_Name("Imported");
-			}
+			*/}
 			break;
 			
 		case ID_FILE_EXPORTAUDIO:
@@ -1225,14 +1226,16 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 		case ID_FILE_UPLOADPROJECT:
 			On_Menu_Upload_Project();
 			break;
-		
+		/*
 		case ID_FILE_COMMITCHANGES:
 			On_Menu_Commit_Project();
 			break;
-		
+		*/
+		/*
 		case ID_FILE_UPDATEPROJECT:
 			On_Menu_Update_Project();
 			break;
+		*/
 
 		case ID_FILE_IMPORTAUDIO:
 			Open_Close_Import_Audio_Window();
@@ -1295,9 +1298,17 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 			break;
 
 		case ID_EDIT_ADDTRACK:
+			/*
 			if(Project_Folder().size() == 0)
 			
 			if (GetProjDir().length() == 0) {
+				ShowMessageBox("You must create or load a project before adding tracks", "Sorry");
+			}
+			else {
+				AddTrack();
+			}
+			*/
+			if ( No_Project_Is_Loaded()) {
 				ShowMessageBox("You must create or load a project before adding tracks", "Sorry");
 			}
 			else {
@@ -1566,13 +1577,13 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	else if (s.compare("File@Import Audio") == 0) {
 		Open_Close_Import_Audio_Window();
 	}
-	
+	/*
 	else if (s.compare("File@Import KSProject") == 0) {
 		mbKSProject_Imported = true;
 		MenuFileLoadProject();
 		Project_Name("Imported");
 	}
-	
+	*/
 	else if (s.compare("File@Download Project") == 0) {
 
 		On_Menu_Download_Project();
@@ -1582,16 +1593,18 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 		
 		On_Menu_Upload_Project();
 	}
-	
+	/*
 	else if (s.compare("File@Commit Changes") == 0) {
 		
 		On_Menu_Commit_Project();
 	}
-	
+	*/
+		/*
 	else if (s.compare("File@Update Project") == 0) {
 		
 		On_Menu_Update_Project();
 	}
+		 */
 	//-------------------------------------------
 	// Edit Menu
 	//-------------------------------------------
@@ -1635,7 +1648,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	
 	else if (s.compare("Edit@Add Track") == 0) {
 		
-		if (GetProjDir().length() == 0) {
+		if ( No_Project_Is_Loaded()) {
 			ShowMessageBox("You must create or load a project before adding tracks", "Sorry");
 		}
 		else {
@@ -1891,7 +1904,7 @@ void CKSApplication::ExportAllClips(ac::EAudioCodec eCodec, ac::EQuality eQualit
 	tbool bSuccess = false;
 	msExtendedError = "";
 
-	if (msProjectPathName.empty()) {
+	if (No_Project_Is_Loaded()) {
 		msExtendedError = "You must create or load a project first";
 	}
 	else {
@@ -1922,7 +1935,7 @@ void CKSApplication::ExportSelection(tbool bIncludeEffects, ac::EAudioCodec eCod
 	tbool bSuccess = true;
 	msExtendedError = "";
 
-	if (msProjectPathName.empty()) {
+	if (No_Project_Is_Loaded()) {
 		msExtendedError = "You must create or load a project first";
 		bSuccess = false;
 	}
@@ -3278,248 +3291,7 @@ tbool CKSApplication::ExportProjectForWeb_Compress(
 
 
 
-tbool CKSApplication::MenuFileLoadProject()
-{
-	/*
-	
-	msExtendedError = "";
 
-	PlaybackStop();
-	Stop_Timer();
-	
-	CAutoDelete<ge::IOpenDialog> pDlg(ge::IOpenDialog::Create());
-
-
-	// Default Name
-	tchar pszDefaultFolder[1024];
-	std::string sDefaultName = "";
-	if (msProjectFolder.length()) {
-		std::string sPath = msProjectFolder;
-		sPath.erase(sPath.find_last_of(':'));
-		tint32 iPosColon = sPath.find_last_of(':');
-		strncpy(pszDefaultFolder, sPath.c_str(), iPosColon + 1);
-		pszDefaultFolder[iPosColon + 1] = '\0';
-		if (sDefaultName.length() == 0) {
-			// Use current project name as default
-			sDefaultName = sPath;
-			sDefaultName.erase(0, iPosColon + 1);
-		}
-	}
-	else
-		GetDefaultProjectFolder(pszDefaultFolder);
-	if (sDefaultName.length() == 0)
-		sDefaultName = "Project.KSProject";
-	
-	tchar pszPathName[1024];
-	//pDlg->DoDialog(pszPathName, pszDefaultFolder, "*.KSProject", "KS Project (*.KSProject)", msProjectFolder.c_str());
-	//pDlg->DoDialog(pszPathName, pszDefaultFolder);//, "*.KSProject", "KS Project (*.KSProject)", msProjectFolder.c_str());	
-	pDlg->SetBundleBehaviour(1);
-	pDlg->DoDialog(pszPathName, pszDefaultFolder, "*.KSProject", "KS Project (*.KSProject)", sDefaultName.c_str());
-
-	if (pszPathName[0] == 0) {
-		// Exit with no error
-		return true;
-	}
-	
-	
-	// Really do it
-	if (1) {
-		CAutoLock Lock(mMutex);
-		//SetGUIsReady(false);
-		CleanProject(0);
-
-		std::string sPathName(pszPathName);
-		SanitizeProjectFolderPath(sPathName, pszCorrectExt);
-		msProjectFolder = sPathName;
-		msProjectPathName = GetProjDir_Contents() + KSPROJ_FILE;
-
-		// Try for license file
-		CAutoDelete<IFile> pfLicense(IFile::Create());
-		if (pfLicense) {
-			if (pfLicense->Open((GetProjDir_Contents() + "license.dat").c_str(), IFile::FileRead)) {
-				tuint64 uiSize = pfLicense->GetSizeWhenOpened();
-				if (uiSize < 4096) {
-					tchar pszLicense[4096 + 1];
-					memset(pszLicense, '\0', 4096);
-					pszLicense[0] = '\0';
-					tuint64 uiActuallyRead = pfLicense->Read(pszLicense, uiSize);
-					if (uiActuallyRead == uiSize) {
-						pszLicense[uiSize] = '\0';
-						for (tint32 iLicense = 0; (miPreviousLicenseNb < 0) && (iLicense < 6); iLicense++) {
-							tchar* pszCode = mapszLicenseCodes[iLicense];
-							if (stricmp(pszCode, pszLicense) == 0) {
-								miPreviousLicenseNb = iLicense;
-								msExportForWeb.iLicenseNb = iLicense;
-								tchar* pszAuthor = pszLicense + (strlen(pszLicense) + 1);
-								tchar* pszUrl = pszAuthor + (strlen(pszAuthor) + 1);
-								tchar* pszStatus = pszUrl + (strlen(pszUrl) + 1);
-								msExportForWeb.sUserName = pszAuthor;
-								msExportForWeb.sUserUrl = pszUrl;
-								msExportForWeb.sUserStatus = pszStatus;
-								CBasePane::SMsg Msg(Msg_Init_ExportForWeb);
-								Send_Msg_To_All_Panes(&Msg);
-							}
-						}
-					}
-				}
-				pfLicense->Close();
-			}
-		}
-
-		//CAutoDelete<ge::IWaitCursor> pWaitCursor(ge::IWaitCursor::Create());
-
-		CAutoDelete<IChunkFile> pFile(IChunkFile::Create());
-		tint32 iVersionNumber;
-		if (pFile->Open(msProjectPathName.c_str(), IFile::FileRead, iVersionNumber) == false) {
-			//throw IException::Create(IException::TypeFile, IException::ReasonFileCannotOpen, EXCEPTION_INFO, "Cannot open file");
-			msExtendedError = "Project open failed: " + msProjectPathName;
-			return false;
-		}
-
-		// Sanitize folders - This will also create project folder
-		IFile::CreateDirectory(GetProjDir_ClipsDecomp().c_str());
-		IFile::CreateDirectory(GetProjDir_Icons().c_str());
-
-		// Note: We should reset parms in non-present sections to default
-
-		tint64 iIndex = 0;
-		tint32 iSection = -1;
-		while (1) {
-			IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, giChunkPerformance);
-			if (pChunkOrg == NULL) {
-				// No more chunks
-				break;
-			}
-			CAutoDelete<IChunk> pChunk = CAutoDelete<IChunk>(pChunkOrg);
-
-			iSection++;
-
-			// Prepare memory
-			tint32 iChunkSize = pChunk->GetSize();
-			tchar* p = new tchar[iChunkSize - (2 * sizeof(tint32))];
-
-			// Read the header
-			tint32 iFirstParameter;
-			tint32 iParameterCount;
-			pChunk->Read((tchar*)&iFirstParameter, sizeof(tint32));
-			iFirstParameter = CPSwap(iFirstParameter);
-			pChunk->Read((tchar*)&iParameterCount, sizeof(tint32));
-			iParameterCount = CPSwap(iParameterCount);
-
-			// Set the parameters not in chunk to default value
-			tint32 iParmCountThisVersion = mpParmMan->GetGlobalDataSize(iSection);
-			tint32 iParm;
-			for (iParm = iParameterCount; iParm < iParmCountThisVersion; iParm++) {
-				const de::IParameter* pParm = mpParmMan->Get(iParm, de::IParameterManager::TypeGlobal, iSection);
-				mpParmMan->Set(true, pParm->GetDefaultValue(), iParm, de::IParameterManager::TypeGlobal, iSection, false);
-			}
-
-			// Read parameters into memory
-			if (pChunk->Read((tchar*)p, iChunkSize - (2 * sizeof(tint32))) != iChunkSize - (2 * sizeof(tint32))) {
-			}
-
-			// Set the parameters
-			mpParmMan->SetGlobalData(iFirstParameter, iParameterCount, (const tint32*)p, iSection, true);
-
-			// Clean up
-			delete[] p;
-		}
-
-		// Load GUI Positions of tracks
-		iIndex = 0;
-		if (1) {
-			IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'TPos');
-			if (pChunkOrg == NULL) {
-				// No chunk - project file is too old to load
-				Maintain_Number_Of_Tracks(0);
-				msStack.iNr_Of_Tracks = 0;
-				//break;
-			}
-			else {
-				CAutoDelete<IChunk> pChunk = CAutoDelete<IChunk>(pChunkOrg);
-
-				if (pChunk->GetSize() == sizeof(msStack)) {
-					pChunk->Read((tchar*)(&msStack), sizeof(msStack));
-					// PPC backward-compatible work-around: Read projects saved without CPSwapping
-					if (msStack.iNr_Of_Tracks > giNumber_Of_Tracks) {
-						// Needs CPSwapping - do manually
-						tint32* pi = (tint32*)&msStack;
-						for (tint32 i = 0; i < (sizeof(msStack) / sizeof(tint32)); i++) {
-							tint32 l = *pi;
-							*pi = (((l>>24) & 0x000000FFL) | ((l>>8) & 0x0000FF00L) | ((l<<8) & 0x00FF0000L) | ((l<<24) & 0xFF000000L));
-							pi++;
-						}
-					}
-				}
-			}
-		}
-
-		SetGUIsReady(true);
-		GetModule()->GetHost()->ActivateWindow(giMain_Window);
-
-		// Queue load of audio clips
-		std::list<CImportAudioTask*> listImportTasks;
-		if (!MenuFileLoadProject_QueueClips(pFile, &listImportTasks))
-			return false;
-		std::list<CImportAudioTask*>::iterator itImports = listImportTasks.begin();
-		for ( ; itImports != listImportTasks.end(); itImports++) {
-			CImportAudioTask* pTask = *itImports;
-			mpProgressTasks->Add(pTask);
-		}
-
-		CAfterImportTask* pAfterImportTask = new CAfterImportTask();
-		pAfterImportTask->Init();
-		if (msStack.iNr_Of_Tracks > 0) {
-			// Load track names
-			iIndex = 0;
-			tint32 iTrack = -1;
-			while (1) {
-				IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'NAME');
-				if (pChunkOrg == NULL) {
-					// No more chunks
-					break;
-				}
-				pAfterImportTask->mlistIChunkTrackNames.insert(pAfterImportTask->mlistIChunkTrackNames.end(), pChunkOrg);
-			}
-
-			// Load wave regions for tracks
-			iTrack = -1;
-			iIndex = 0;
-			while (1) {
-				IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'REGI');
-				if (pChunkOrg == NULL) {
-					// No more chunks
-					break;
-				}
-				pAfterImportTask->mlistIChunkTrackRegions.insert(pAfterImportTask->mlistIChunkTrackRegions.end(), pChunkOrg);
-			}
-		}
-
-		iIndex = 0;
-		while (1) {
-			IChunk* pChunkOrg = pFile->GetNextChunk(iIndex, 'INSR');
-			if (pChunkOrg == NULL) {
-				break;
-			}
-			else {
-				pAfterImportTask->mlistIChunkInserts.insert(pAfterImportTask->mlistIChunkInserts.end(), pChunkOrg);
-			}
-		}
-
-		SetGUIsReady(true);
-		GetModule()->GetHost()->ActivateWindow(giMain_Window);
-		Stack_Tracks();
-		Update_Zoom();
-
-		mpProgressTasks->Add(pAfterImportTask);
-	}
-
-	// Start progress
-	Playback_InProgressTask();
-	*/
-	// No error
-	return true;
-} // MenuFileLoadProject
 
 
 tbool CKSApplication::MenuFileLoadProject_QueueClips(IChunkFile* pFile, std::list<CImportAudioTask*>* plistpImportTasks)
@@ -3985,7 +3757,7 @@ tbool CKSApplication::ExportTracksOrMix(EPlaybackState eExportState, std::list<t
 	tbool bError = false;
 	msExtendedError = "";
 
-	if (msProjectFolder.length() == 0) {
+	if ( No_Project_Is_Loaded() ) {
 		msExtendedError = "You must create or load a project first";
 		return false;
 	}
@@ -4581,7 +4353,7 @@ tbool CKSApplication::QueueAudioFileImport(const tchar* pszPathName, tbool bAlwa
 	if (IsPlayingOrRecording()) PlaybackStop();
 	
 	
-	CKSFile_Item File_Item;
+	CKSFile_Item File_Item;						
 	if( !File_Item.Import(pszPathName) )
 		return false;
 	
@@ -4590,9 +4362,16 @@ tbool CKSApplication::QueueAudioFileImport(const tchar* pszPathName, tbool bAlwa
 
 	tbool bSuccess = pImportAudioTask->Init( &File_Item);
 	
+	if (iTrackID >= 0) {
+		pImportAudioTask->Init_InsertAsRegionAfterImport(iTrackID, iTrackPos);
+	}
+	
 	if (bSuccess) {
 		gpApplication->mpProgressTasks->Add(pImportAudioTask);
 		gpApplication->Playback_InProgressTask();
+		
+		
+		
 	}
 	else {
 		gpApplication->Extended_Error(pImportAudioTask->GetError());
@@ -5026,6 +4805,9 @@ void CKSApplication::AddClipToList(CTake_Data* pTake_Data_Input)
 	pTake_Data->Right_Wave_File_Path( pTake_Data_Input->Right_Wave_File_Path() );
 	pTake_Data->Left_Peak_File_Path	(pTake_Data_Input->Left_Peak_File_Path());
 	pTake_Data->Right_Peak_File_Path(pTake_Data_Input->Right_Peak_File_Path());
+	
+	pTake_Data->URL(pTake_Data_Input->URL());
+	pTake_Data->MP3_URL(pTake_Data_Input->MP3_URL());
 	
 
 	
@@ -5837,7 +5619,7 @@ void CKSApplication::SetChannelName(tint32 iChannel, const std::string& sName)
 
 
 
-
+/*
 
 
 std::string CKSApplication::GetProjDir_Audio() const
@@ -5874,7 +5656,7 @@ std::string CKSApplication::GetFromWaveName_ClipWaveDecomp(const tchar* pszWaveN
 {
 	return GetProjDir_ClipsDecomp() + std::string(pszWaveName) + ".wav";
 }
-
+*/
 
 
 

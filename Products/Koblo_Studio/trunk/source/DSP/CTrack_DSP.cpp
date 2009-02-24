@@ -661,9 +661,7 @@ void CTrack_DSP::Stop()
 		{
 			CAutoDelete<IFile> pFileSrc(IFile::Create());
 			CAutoDelete<IFile> pFileDest(IFile::Create());
-			
-		//	printf( "++++++++++++++++++++++++++++++++++++++++++++++++++\n++++++++++++++++++++++++++++++++++++++++++++++++++\n++++++++++++++++++++++++++++++++++++++++++++++++++\n" );
-			printf( msRecordingName.c_str() );
+
 			// read from file
 			bSuccess &= pFileSrc->Open((msRecordingName + std::string(".tmp")).c_str(), IFile::FileRead);
 			
@@ -850,7 +848,7 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 										tuint64	uiFadeOutLength,
 										tfloat fRegionVolume)
 {
-	gpApplication->Stop_Timer();
+//	gpApplication->Stop_Timer();
 	
 	
 	CSample_Data* pSample_Data	= gpDSPEngine->Get_Sample_Data_From_Name(sSample_Name.c_str());
@@ -897,7 +895,7 @@ CRegion_DSP* CTrack_DSP::CreateRegion(tint32 iUniqueID,
 	Insert_Region_Info(pRegionInfo) ;
 	Update_Regions_For_Playback();
 	
-	gpApplication->Start_Timer();
+//	gpApplication->Start_Timer();
 	return pRegion;
 }
 

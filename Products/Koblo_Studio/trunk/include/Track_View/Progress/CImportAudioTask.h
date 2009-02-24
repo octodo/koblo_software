@@ -82,7 +82,10 @@ public:
 	
 	tbool Init( CTake_Data* pTake_Data);
 	
-//	void Init_InsertAsRegionAfterImport(tint32 iTrackID, tint64 iTrackPos);
+	void Init_InsertAsRegionAfterImport(tint32 iTrackID, tint64 iTrackPos);
+	
+	//!
+	void Init_InsertAsRegionAfterImport(CRegion_Data* pRegion_Data);
 
 	tbool IsOpened() { return (mpAudio_File_L != NULL); };
 	tbool Open();
@@ -100,7 +103,6 @@ public:
 	std::string Left_Name(){ return mFile_Item.Left_Name();};
 	//! right take name
 	std::string Right_Name(){ return mFile_Item.Stereo() ? mFile_Item.Right_Name(): "";};
-	
 	
 	//! left take name
 	std::string Left_Path(){ return mFile_Item.Left_Path();};
@@ -131,6 +133,8 @@ protected:
 //	std::string msSource_File;
 	
 	CKSFile_Item mFile_Item;
+	
+	CRegion_Data mRegion_Data;
 	
 //	tint32 miRegion_TrackID;
 //	tint64 miRegion_TrackPos;

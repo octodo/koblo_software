@@ -23,7 +23,7 @@ class CTake_Data;
 
 class CKSFile_Controller
 {
-	
+friend class CKSXML_Read_Project;	
 public:
 	//! Constructor
 	CKSFile_Controller();
@@ -55,6 +55,10 @@ public:
 	 */
 	tbool Close_Project();
 	
+	tbool Project_Is_Loaded(){ Project_Folder().size() ? true: false;};
+	
+	tbool No_Project_Is_Loaded(){ return Project_Folder().size() == 0 ? true: false;};
+	
 	
 	
 	//! get project folder
@@ -64,7 +68,13 @@ public:
 
 	std::string Project_Name(){ return msProject_Name;};
 	//! set project name
-	void Project_Name(std::string sName){  msProject_Name = sName;};
+	void Project_Name(std::string sName){ msProject_Name = sName; };
+	
+	// get online project name
+	std::string Online_Project_Name(){ return msOnline_Project_Name;};
+	
+	// set online project name
+	void Online_Project_Name(std::string sName){  msOnline_Project_Name = sName;};
 	
 	//! update project name and folder path
 	//!!! TO DO make private when old fileformat no longer is supported
@@ -74,7 +84,7 @@ public:
 	std::string  Get_Extencion(std::string sFile);
 	
 	//! opens a audio file at the given path and check if it's readable 
-	tbool Readable_Audio(std::string sFile);
+	tbool Readable_Audio(std::string sFile, tbool* pbIsStereo = NULL);
 	
 	//! opens a audio file at the given path and check if it's readable 
 	tbool Is_A_File(std::string sFile_Path);
@@ -105,6 +115,9 @@ private:
 	
 	//! project name
 	std::string msProject_Name;
+	
+	//! project name
+	std::string msOnline_Project_Name;
 	
 	//! create a new project folder
 	tbool Create_Project_Folder();

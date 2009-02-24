@@ -33,6 +33,8 @@ public:
 	tbool Set_Take_Handshake(std::string sTake_Info);
 	
 	virtual void Test_Hand_Shakes();
+	
+	void Pass_Branch_Revision(std::string sBranch_Revision ); 
 
 
 	
@@ -80,6 +82,12 @@ protected:
 	TiXmlDocument* mpXMLHand_Shake;
 	
 	CMutex mHands_Shake_Mutex;
+	
+	void Read_Branch_Revision_Tag(TiXmlNode* pParent);
+	
+	void Read_Branch_Revision_Object(TiXmlNode* pParent);
+	
+	void Pass_Branch_Revision (TiXmlNode* pParent);
 	
 };
 

@@ -14,6 +14,8 @@ enum EDownloadOrder {
 	geDownload_Take_Download_Action,
 	geDownload_Take_Download_After,
 
+	geDownload_QueueInsertRegions,
+
 	geDownload_Done
 }; // EDownloadOrder
 
@@ -107,28 +109,27 @@ tbool CDownloadTask::Init_DownloadXML(
 } // Init_DownloadXML
 
 
-tbool CDownloadTask::Init_Update(
-	const tchar* pszUser,
-	const tchar* pszPassword,
-	std::list<CTake_Data*>* plistpTakes)
+tbool CDownloadTask::Init_Update(std::list<CTake_Data*>* plistpTakes)
 {
 	if (miActionOrder != 0) {
 		msExtendedError = "Double initialization";
 		return false;
 	}
 
-	msUser					= pszUser;
-	msPassword				= pszPassword;
+	msUser					= "";//pszUser;
+	msPassword				= "";//pszPassword;
 
 	if (!Init_Helper(plistpTakes))
 		return false;
 
 	if (mlistpTakes.size() == 0) {
-		msExtendedError = "No takes to download";
-		return false;
+		// Skip past download - all are there already
+		miActionOrder = geDownload_QueueInsertRegions;
 	}
-
-	miActionOrder = geDownload_Take_Download_Before;
+	else {
+		// Start with download
+		miActionOrder = geDownload_Take_Download_Before;
+	}
 	return true;
 } // Init_Update
 
@@ -142,6 +143,7 @@ tbool CDownloadTask::Init_Helper(std::list<CTake_Data*>* plistpTakes)
 		for ( ; it != plistpTakes->end(); it++) {
 			CTake_Data* pTake = *it;
 			CTake_Data* pTake_Copy = new CTake_Data(*pTake);
+			pTake_Copy->Set_UUID( pTake->Get_UUID() );
 			mlistpTakes.push_back(pTake_Copy);
 		}
 	}
@@ -190,21 +192,29 @@ tbool CDownloadTask::DoWork()
 			bSuccess = DoTake_Download_Before();
 			miActionOrder++;
 			break;
+			
 		case geDownload_Take_Download_Action:
 			bSuccess = DoTake_Download_Action(&bActionDone);
 			if (bActionDone) miActionOrder++;
 			break;
+			
 		case geDownload_Take_Download_After:
 			bSuccess = DoTake_Download_After(&bNoMoreTakes);
 			// Where to go?
 			if (bNoMoreTakes) {
-				// Done
-				miActionOrder = geDownload_Done;
+				// Done - queue insert regions
+				miActionOrder++;
+				gpApplication->Takes_Downloaded();
 			}
 			else {
 				// Download next take
 				miActionOrder = geDownload_Take_Download_Before;
 			}
+			break;
+
+		case geDownload_QueueInsertRegions:
+			bSuccess = DoQueueInsertRegions();
+			miActionOrder++;
 			break;
 
 		default:
@@ -317,69 +327,9 @@ tbool CDownloadTask::DoTake_Download_Before()
 		return false;
 	}
 
-#ifdef _WIN32
 	std::string sURL = mpTakeCurr->URL();
-	tchar pszURL_Lower[1024];
-	strncpy(pszURL_Lower, sURL.c_str(), 1023);
-	pszURL_Lower[1023] = '\0';
-	strlwr(pszURL_Lower);
-	const tchar* pszSlash = strchr(sURL.c_str(), '/');
-	const tchar* pszHTTP = strstr(pszURL_Lower, "http://");
-	std::string sHost, sURI;
-	if (pszSlash == NULL) {
-		// There is no document/URI after host/server
-		sURI = "/";
-		if (pszHTTP != pszURL_Lower) {
-			// Doesn't start with "http://"
-			sHost = sURL;
-		}
-		else {
-			// Skip "http://"
-			sHost = sURL.substr(7);
-		}
-	}
-	else {
-		// First extract document/URI part of URL
-		sURI = pszSlash;
-		tint32 iHostPartLen = sURL.length() - sURI.length();
-		sHost = sURL.substr(0, iHostPartLen);
-		if (pszHTTP == pszURL_Lower) {
-			// Remove "http://"
-			sHost = sHost.substr(7);
-		}
-	}
-#endif // _WIN32
-#ifdef _Mac
-	std::string sURL = mpTakeCurr->URL();
-	const tchar* pszSlash = strchr(sURL.c_str(), '/');
-	tint32 iHTTPIx = strncasecmp(sURL.c_str(), "http://", 7);
-	std::string sHost, sURI;
-	if (pszSlash == NULL) {
-		// There is no document/URI after host/server
-		sURI = "/";
-		if (iHTTPIx != 0) {
-			// Doesn't start with "http://"
-			sHost = sURL;
-		}
-		else {
-			// Skip "http://"
-			sHost = sURL.substr(7);
-		}
-	}
-	else {
-		// First extract document/URI part of URL
-		sURI = pszSlash;
-		tint32 iHostPartLen = sURL.length() - sURI.length();
-		sHost = sURL.substr(0, iHostPartLen);
-		if (iHTTPIx == 0) {
-			// Remove "http://"
-			sHost = sHost.substr(7);
-		}
-	}
-#endif //_Mac
-	
 	if (
-		(!mpDownloader->Init(sHost.c_str(), sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
+		(!mpDownloader->Init(sURL.c_str(), "", ""))
 		||
 		(!mpDownloader->Start(mpfileOgg))
 	) {
@@ -427,6 +377,16 @@ tbool CDownloadTask::DoTake_Download_After(tbool* pbNoMoreTakes)
 		mpfileOgg = NULL;
 	}
 
+	// Queue decompress of take
+	if (!gpApplication->Decompress_Take(mpTakeCurr)) {
+		std::string sReason = gpApplication->Extended_Error();
+		std::string sErr = "Unable to queue decomression of take:\n  ";
+		sErr += mpTakeCurr->Screen_Name();
+		sErr += "\nReason:\n  ";
+		sErr += sReason;
+		gpApplication->ShowMessageBox_NonModal(sErr.c_str(), "Download failed");
+	}
+
 	// Done yet?
 	if (mlistpTakes.size() == 0) {
 		// No more takes
@@ -435,4 +395,18 @@ tbool CDownloadTask::DoTake_Download_After(tbool* pbNoMoreTakes)
 	return true;
 } // DoTake_Download_After
 
+
+tbool CDownloadTask::DoQueueInsertRegions()
+{
+	// Queue insertion of regions
+	CInsertRegionsTask* pInsertRegionsTask = new CInsertRegionsTask();
+	pInsertRegionsTask->Init();
+	{
+		// (lasse) no need - CAutoLock Lock(gpApplication->mMutex_Progress);
+		gpApplication->mpProgressTasks->Add(pInsertRegionsTask);
+		// (lasse) no need - gpApplication->Playback_InProgressTask();
+	}
+
+	return true;
+} // DoQueueInsertRegions
 

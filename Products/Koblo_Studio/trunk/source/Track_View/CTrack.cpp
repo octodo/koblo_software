@@ -452,12 +452,16 @@ void CTrack::Handle_Mouse_Drop(ge::SPos Pos)
 	if (DragAndDropInfo.pOrigin->GetID() == giCtrl_File_List) {
 		// Drag and drop operation from file list. Add region
 		// List item *display name* is in Info.psz
+		gpApplication->Stop_Timer();
 		gpDSPEngine->CreateRegion(DragAndDropInfo.psz, miTrackID, uiSamplePos, 0);
+		gpApplication->Start_Timer();
 	}
 	else if(Find_Tool() == giTool_Hand) {
+		gpApplication->Stop_Timer();
 		// Drag and drop operation from region (region was moved)
 		tuint32 uiID = strtoul(DragAndDropInfo.psz, NULL, 0);
 		gpDSPEngine->Move_Region(uiID, miTrackID, uiSamplePos);
+		gpApplication->Start_Timer();
 	}
 	Set_Selection_Size_And_Pos();
 	Redraw_Pane_Rect();

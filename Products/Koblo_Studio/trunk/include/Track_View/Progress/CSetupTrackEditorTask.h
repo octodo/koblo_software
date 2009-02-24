@@ -16,38 +16,34 @@
 // along with the Koblo SDK. If not, see <http://www.gnu.org/licenses/>.
 
 
-enum EAfterImportOrder {
-	geAfterImport_Start,
-
-	geAfterImport_Done
-}; // EAfterImportOrder
-
-
-class CAfterImportTask : public CProgressTask {
+class CInsertRegionsTask : public CProgressTask {
 public:
 
-
+/*
 	std::list<IChunk*> mlistIChunkTrackNames;
 	//
 	std::list<IChunk*> mlistIChunkTrackRegions;
 	//
 	std::list<IChunk*> mlistIChunkInserts;
+*/
 
-	tint32 miAfterImportOrder;
+	tint32 miInsertRegionsOrder;
 
-	CAfterImportTask() {
-		
+	CInsertRegionsTask() {
+		miInsertRegionsOrder = 0;		
 	};
 
-	virtual ~CAfterImportTask();
+	virtual ~CInsertRegionsTask();
 
 	virtual void Destroy();
 
 	tbool Init();
 
+/*
 	void UpdateTrackNames();
 	void UpdateTrackRegions();
 	void LoadInserts();
+*/
 
 	virtual tbool DoWork();
 	virtual tbool IsDone();

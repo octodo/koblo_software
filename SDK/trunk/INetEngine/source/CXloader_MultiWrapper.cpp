@@ -201,6 +201,6 @@ void CXloader_MultiWrapper::SetAllError(const tchar* pszErr)
 	std::list<CXloader*>::iterator it = mlistXloaders.begin();
 	for ( ; it != mlistXloaders.end(); it++) {
 		CXloader* p = *it;
-		p->SetError(pszErr);
+		p->AppendError(pszErr);
 	}
 } // SetAllError

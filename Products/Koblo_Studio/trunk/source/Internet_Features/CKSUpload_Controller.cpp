@@ -15,7 +15,9 @@ CKSUpload_Controller::~CKSUpload_Controller()
 
 void CKSUpload_Controller::Upload_Project()
 {
-	
+	if(gpApplication->No_Project_Is_Loaded()) {
+		return;
+	}
 	// clear que's
 	mOGG_Compress_Que.clear();
 	mMp3_Compress_Que.clear();
@@ -37,11 +39,11 @@ void CKSUpload_Controller::Upload_Project()
 	gpApplication->Compress_MP3_File();
 	
 	// if the project has a UUID it has been uploaded to koblo.com
-	gpApplication->Project_UUID_Is_Set() ? Upload_Existing_Project() : Upload_New_Project();
+	gpApplication->Project_Is_Uploaded() ? Upload_Existing_Project() : Upload_New_Project();
 
+	// sample and take url's has been passed back form koblo snow save them
 	gpApplication->Save_Project_As_XML_File_To_Disk();
 	
-//	gpApplication->Test_Hand_Shakes();
 
 }
 
@@ -49,8 +51,9 @@ void CKSUpload_Controller::Upload_New_Project()
 {
 	
 	// get path to project file
-	std::string sProjectXmlFile = gpApplication->Project_Folder();
-	sProjectXmlFile += gpApplication->Project_Name() + ".xml";
+	std::string sProjectXmlFile		=	gpApplication->Project_Folder();
+	sProjectXmlFile					+=	gpApplication->Project_Name(); 
+	sProjectXmlFile					+=  ".xml";
 	
 	// Make task for first-time upload
 	CUploadTask* pUploadTask = new CUploadTask();
@@ -58,7 +61,7 @@ void CKSUpload_Controller::Upload_New_Project()
 								 gpApplication->Get_User_Name().c_str(),
 								 gpApplication->Get_Password().c_str(),
 								 gpApplication->Get_Project_UUID().c_str(),
-								 (gpApplication->Project_Name() +" - dummy project, will be deleted soon").c_str(),
+								 (gpApplication->Project_Name() ).c_str(),
 								 "no description", // project description
 								 "by", // license
 								 gpApplication->Get_Branch_UUID().c_str(),
@@ -74,11 +77,13 @@ void CKSUpload_Controller::Upload_New_Project()
 
 void CKSUpload_Controller::Upload_Existing_Project()
 {
-	std::string sProjectXmlFile = gpApplication->Project_Folder();
-	sProjectXmlFile += gpApplication->Project_Name() + ".xml";
+	std::string sProjectXmlFile				= gpApplication->Project_Folder();
+	std::string sOnline_ProjectXmlFile		= gpApplication->Project_Folder();
+	sProjectXmlFile							+= gpApplication->Project_Name() + ".xml";
+	sOnline_ProjectXmlFile					+= gpApplication->Online_Project_Name() + ".xml";
 	
 
-	// Make task for first-time upload
+	// Make task for upload
 	CUploadTask* pUploadTask = new CUploadTask();
 	pUploadTask->Init_Commit(
 							 gpApplication->Get_User_Name().c_str(),
@@ -87,6 +92,7 @@ void CKSUpload_Controller::Upload_Existing_Project()
 							gpApplication->Get_Branch_UUID().c_str(),
 							gpApplication->Get_New_Commit_UUID().c_str(), 
 							sProjectXmlFile.c_str(),
+							sOnline_ProjectXmlFile.c_str(),
 							"next commit",
 							&mUpload_Que);
 	
@@ -130,11 +136,8 @@ void CKSUpload_Controller::Prepare_Sampel_For_Upload(CSample_Data* pSample_Data)
 
 tbool CKSUpload_Controller::Take_Is_Uploaded(CTake_Data* pTake_Data)
 {
-	if( pTake_Data->URL().size() ) return true;
-	
-	return false;
-	
-	
+	tbool bUploaded = pTake_Data->URL().size() > 0 ? true: false;	
+	return bUploaded;
 }
 
 void CKSUpload_Controller::Prepare_Take_For_Upload(CTake_Data* pTake_Data)

@@ -60,7 +60,7 @@ void CKSInternet_Features::Ask_For_Project_ID()
 		gpApplication->GetModule()->GetHost()->ActivateWindow(giProject_ID_Window);
 }
 
-
+/*
 void CKSInternet_Features::On_Menu_Update_Project()
 {
 
@@ -76,7 +76,7 @@ void CKSInternet_Features::On_Menu_Update_Project()
 	}
 	
 }
-
+*/
 void CKSInternet_Features::On_Menu_Upload_Project()
 {
 	
@@ -94,13 +94,6 @@ void CKSInternet_Features::On_Menu_Upload_Project()
 	
 	
 }
-
-
-void CKSInternet_Features::On_Menu_Commit_Project()
-{
-	gpApplication->Upload_Project();
-}
-
 
 void CKSInternet_Features::Download_Project(tint32 iProjectID)
 {
@@ -132,8 +125,6 @@ void CKSInternet_Features::Update_Project(tint32 iProjectID)
 
 void CKSInternet_Features::Load_Project(tint32 iProjectID)
 {
-	// clean the project
-	gpApplication->CleanProject(0);
 	
 	// reset the project
 	gpApplication->Reset_Project();
@@ -172,13 +163,13 @@ tbool CKSInternet_Features::Project_Has_Changed()
 
 	
 }
-
+/*
 void CKSInternet_Features::SetProjectName( const std::string& sName)
 { 
 	msProjectName = sName;
 	gpApplication->Project_Name(sName);
 }
-
+*/
 void CKSInternet_Features::Set_Branch_Name( const std::string& sName)
 {
 	CAutoLock Lock(mMutex_ForUpAndDownloadTask_CallBack);
@@ -196,8 +187,15 @@ void CKSInternet_Features::Branch_Revision( tuint32 uiBranch_Revision )
 	CAutoLock Lock(mMutex_ForUpAndDownloadTask_CallBack);
 	muiBranch_Revision = uiBranch_Revision;
 }
+
+void CKSInternet_Features::Branch_Revision( std::string sBranch_Revision )
+{
+	CAutoLock Lock(mMutex_ForUpAndDownloadTask_CallBack);
+	gpApplication->Pass_Branch_Revision(sBranch_Revision);
 	
-tuint32 CKSInternet_Features::Branch_Revision(  )
+}
+	
+tuint32 CKSInternet_Features::Branch_Revision( )
 {
 	CAutoLock Lock(mMutex_ForUpAndDownloadTask_CallBack);
 	return muiBranch_Revision;
@@ -225,6 +223,18 @@ void CKSInternet_Features::Set_Remember_Me(tbool bRemember_Me)
 	mbRemember_Me = bRemember_Me;
 	gpDSPEngine->mPrefs_3.mcbKeepInfo = (tchar)bRemember_Me;
 	//gpDSPEngine->SavePrefs();
+}
+
+//! read permission
+tbool CKSInternet_Features::Read_Permission(std::string sXML_Hand_Shake)
+{
+	return true;
+}
+
+//! write permission
+tbool CKSInternet_Features::Write_Permission(std::string sXML_Hand_Shake)
+{
+	return true;
 }
 
 

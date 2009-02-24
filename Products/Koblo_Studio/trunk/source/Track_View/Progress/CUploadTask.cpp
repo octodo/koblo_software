@@ -143,11 +143,16 @@ void CUploadTask::Destroy()
 
 
 tbool CUploadTask::Init_NewProject(
-	const tchar* pszUser, const tchar* pszPassword,
-	const tchar* pszProjUUID, const tchar* pszProjName, const tchar* pszProjDesc, const tchar* pszProjLicenseCode,
-	const tchar* pszBranchUUID,
-	const tchar* pszCommitUUID, const tchar* pszfileCommit,
-	std::list<CTake_Data*>* plistpTakes)
+								   const tchar* pszUser, 
+								   const tchar* pszPassword,
+								   const tchar* pszProjUUID, 
+								   const tchar* pszProjName, 
+								   const tchar* pszProjDesc, 
+								   const tchar* pszProjLicenseCode,
+								   const tchar* pszBranchUUID,
+								   const tchar* pszCommitUUID, 
+								   const tchar* pszfileCommit,
+								   std::list<CTake_Data*>* plistpTakes)
 {
 	if (miActionOrder != 0) {
 		msExtendedError = "Double initialization";
@@ -164,7 +169,7 @@ tbool CUploadTask::Init_NewProject(
 
 	// not used: msBranchUUID_Old		= pBranchUUID_Original->Get_UUID();
 	msBranchUUID			= pszBranchUUID;
-	msBranchName			= "trunk";
+	msBranchName			= "Trunk";
 	// not used: msBranchDescription		= pszBranchDesc;
 	// not used: msBranchLicense			= pszBranchLicenseCode;
 
@@ -182,12 +187,16 @@ tbool CUploadTask::Init_NewProject(
 
 
 tbool CUploadTask::Init_NewBranch(
-	const tchar* pszUser, const tchar* pszPassword,
-	const tchar* pszProjUUID,
-	const tchar* pszBranchUUID_Original,
-	const tchar* pszBranchUUID, const tchar* pszBranchName, const tchar* pszBranchDesc, const tchar* pszBranchLicenseCode,
-	const tchar* pszCommitUUID, const tchar* pszfileCommit,
-	std::list<CTake_Data*>* plistpTakes)
+								  const tchar* pszUser, const tchar* pszPassword,
+								  const tchar* pszProjUUID,
+								  const tchar* pszBranchUUID_Original,
+								  const tchar* pszBranchUUID, 
+								  const tchar* pszBranchName, 
+								  const tchar* pszBranchDesc, 
+								  const tchar* pszBranchLicenseCode,
+								  const tchar* pszCommitUUID, 
+								  const tchar* pszfileCommit,
+								  std::list<CTake_Data*>* plistpTakes)
 {
 	if (miActionOrder != 0) {
 		msExtendedError = "Double initialization";
@@ -222,13 +231,15 @@ tbool CUploadTask::Init_NewBranch(
 
 
 tbool CUploadTask::Init_Commit(
-	const tchar* pszUser, const tchar* pszPassword,
-	const tchar* pszProjUUID,
-	const tchar* pszBranchUUID,
-	const tchar* pszCommitUUID, 
-							   const tchar* pszfileCommit, 
+							   const tchar* pszUser, 
+							   const tchar* pszPassword,
+							   const tchar* pszProjUUID,
+							   const tchar* pszBranchUUID,
+							   const tchar* pszCommitUUID, 
+							   const tchar* pszfileCommit,
+							   const tchar* pszOnline_fileCommit,
 							   const tchar* pszCommitDesc,
-	std::list<CTake_Data*>* plistpTakes)
+							   std::list<CTake_Data*>* plistpTakes)
 {
 	if (miActionOrder != 0) {
 		msExtendedError = "Double initialization";
@@ -244,25 +255,31 @@ tbool CUploadTask::Init_Commit(
 	// not used: msProjectLicense		= pszProjLicenseCode;
 
 	// not used: msBranchUUID_Old		= pBranchUUID_Original->Get_UUID();
-	msBranchUUID			= pszBranchUUID;
+	msBranchUUID						= pszBranchUUID;
 	// not used: msBranchName			= pszBranchName;
 	// not used: msBranchDescription		= pszBranchDesc;
 	// not used: msBranchLicense			= pszBranchLicenseCode;
 
 	msCommitUUID			= pszCommitUUID;
 	msFileCommitXML			= pszfileCommit;
+	msOnline_FileCommitXML	= pszOnline_fileCommit;
+	
+//	printf("++++++++++++++++++++\n %s \n++++++++++++++++++++++\n",msFileCommitXML.c_str() );
+//	printf("++++++++++++++++++++\n %s \n++++++++++++++++++++++\n",msOnline_FileCommitXML.c_str() );
+	
 	msCommitDescription		= pszCommitDesc;
 
 	if (!Init_Helper(plistpTakes))
 		return false;
 
+	miActionOrder = geUpload_Branch_PreVerify_Before;
 	if (mlistpTakes.size() > 0) {
 		// Upload takes and then commit project xml
-		miActionOrder = geUpload_Take_PreVerify_Before;
+		miAction_Branch_PreVerify_WhereToGoNow = geUpload_Take_PreVerify_Before;
 	}
 	else {
 		// No takes - go directly to commit project xml
-		miActionOrder = geUpload_Commit_PreVerify_Before;
+		miAction_Branch_PreVerify_WhereToGoNow = geUpload_Commit_PreVerify_Before;
 	}
 	return true;
 } // Init_Commit
@@ -489,7 +506,7 @@ tbool CUploadTask::DoBranch_PreVerify_Before()
 	if (mpDownloader_VerifyBranch == NULL)
 		return false;
 
-	std::string sURI = std::string("/branches/") + msBranchUUID + ".xml";
+	std::string sURI = std::string("/branches/") + msBranchUUID + "/rights.xml";
 	if ((!mpDownloader_VerifyBranch->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
 		||
 		(!mpDownloader_VerifyBranch->Start(mpfileReply_VerifyBranch))
@@ -529,6 +546,7 @@ tbool CUploadTask::DoBranch_PreVerify_Action(tbool* pbActionDone)
 
 tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTakes)
 {
+	tint32 iReplySize = (tint32)mpfileReply_VerifyBranch->GetMemorySize();
 	tbool bBranchThere = mpDownloader_VerifyBranch->IsDone();
 	if (!bBranchThere) {
 		// Status 404 means "page not there" - that's ok ..
@@ -537,7 +555,6 @@ tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTa
 			tchar pszErr[1024];
 			mpDownloader_VerifyBranch->GetError(pszErr, 1024);
 			msExtendedError = std::string("Verify branch failed:\n") + pszErr;
-			tint32 iReplySize = (tint32)mpfileReply_VerifyBranch->GetMemorySize();
 			if (iReplySize > 1) {
 				msExtendedError += "\n\n";
 				msExtendedError += std::string((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr()), iReplySize);
@@ -550,8 +567,20 @@ tbool CUploadTask::DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbNoTa
 		// Branch has already been uploaded
 		*pbAlreadyThere = true;
 
-		// We came here because we didn't know branch existed - fix that
-		gpApplication->Set_Branch_Name(msBranchName);
+		// Maybe we came here because we didn't know branch existed - fix that
+		if (msBranchName.length() > 0) {
+			gpApplication->Set_Branch_Name(msBranchName);
+		}
+
+		// Find out if we have write access
+		{
+			std::string sRights((tchar*)(mpfileReply_VerifyBranch->GetMemoryPtr()), iReplySize);
+			tbool bWrite = gpApplication->Write_Permission(sRights);
+			if (!bWrite) {
+				msExtendedError = "You don't have upload rights for project/branch.";
+				return false;
+			}
+		}
 
 		if (mlistpTakes.size() == 0) {
 			// No takes to upload
@@ -661,7 +690,7 @@ tbool CUploadTask::DoNewBranch_Before()
 	mpfileReply_Uploader = IFileMemory::Create();
 	mpfileReply_Uploader->Open(IFile::FileCreate);
 
-	std::string sURI = std::string("/branches/") + msBranchUUID_Old + "branch.xml";
+	std::string sURI = std::string("/branches/") + msBranchUUID_Old + "/branch.xml";
 	if (
 		(!mpUploader->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
 		||
@@ -1216,6 +1245,8 @@ tbool CUploadTask::DoCommit_Upload_After()
 		std::string sCommitReply(
 			(const tchar*)mpfileReply_Uploader->GetMemoryPtr(),
 			iSize);
+		
+		gpApplication->Pass_Branch_Revision(sCommitReply);
 
 //		tint32 iDummy = 0;
 		//!!! TODO: Set commit number by calling a setter function on gpApplication

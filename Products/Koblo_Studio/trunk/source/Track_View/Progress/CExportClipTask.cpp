@@ -76,15 +76,15 @@ tbool CExportClipTask::Init(const CTake_Data* pTake_Data, const tchar* pszFilePa
 		return false;
 	}
 
-	msDestinatin_File	=	pszFilePathDst;
-	meCodecDst			=	eCodecDst;
-	meQualityDst		=	eQuality;
-	bDoEncode			=	true;
-	bDoCopy				=	false;
-	bSuccess			=	false;
-	muiStartIx			=	uiStartIx;
-	muiDuration			=	uiDuration;
-	miFiles				=	miChannels; //!!! right?
+	msExport_Path_and_File	=	pszFilePathDst;
+	meCodecDst				=	eCodecDst;
+	meQualityDst			=	eQuality;
+	bDoEncode				=	true;
+	bDoCopy					=	false;
+	bSuccess				=	false;
+	muiStartIx				=	uiStartIx;
+	muiDuration				=	uiDuration;
+	miFiles					=	miChannels; //!!! right?
 	return true;
 } // Init
 
@@ -124,7 +124,7 @@ tbool CExportClipTask::DoWork()
 	switch (miActionOrder) {
 		case geExportClip_Before:
 			{
-		//		msDestinatin_File = sDestFolder + sDestNameAndExt;
+		//		msExport_Path_and_File = sDestFolder + sDestNameAndExt;
 
 				if (bDoEncode) {
 					mpEncoder = ac::IEncoder::Create(meCodecDst);
@@ -201,8 +201,8 @@ tbool CExportClipTask::DoEncode_FirstTimeHere()
 	tbool bError = false;
 
 	mpfDestinatin_File = IFile::Create();
-	if ((mpfDestinatin_File == NULL) || (!mpfDestinatin_File->Open(msDestinatin_File.c_str(), IFile::FileCreate))) {
-		msExtendedError = std::string("Unable to create file:\n  ") + msDestinatin_File;
+	if ((mpfDestinatin_File == NULL) || (!mpfDestinatin_File->Open(msExport_Path_and_File.c_str(), IFile::FileCreate))) {
+		msExtendedError = std::string("Unable to create file:\n  ") + msExport_Path_and_File;
 		bError = true;
 	}
 	else {
@@ -321,7 +321,7 @@ tbool CExportClipTask::DoEncode()
 			mpEncoder = NULL;
 			pConcatenateNextTask->mpfDestinatin_File = mpfDestinatin_File;
 			mpfDestinatin_File = NULL;
-			pConcatenateNextTask->msDestinatin_File = msDestinatin_File;
+			pConcatenateNextTask->msExport_Path_and_File = msExport_Path_and_File;
 		}
 		else {
 			// We're done - close encoder and other stuff
@@ -353,7 +353,7 @@ tbool CExportClipTask::DoCopy()
 	IFile::DeleteFile((sDestFolder + sDestNameAndExt).c_str());
 	if (!IFile::CopyFile(
 		sDestFolder.c_str(),
-		gpApplication->GetProjDir_Clips().c_str(),
+		gpApplication->Wave_File_Folder().c_str(),
 		sDestNameAndExt.c_str())
 	) {
 		msExtendedError = std::string("Unable to copy compressed file for clip: ") + sScreenName;

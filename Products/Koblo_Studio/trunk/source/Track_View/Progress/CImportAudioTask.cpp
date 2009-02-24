@@ -19,8 +19,14 @@ CImportAudioTask::CImportAudioTask() {
 	mbDstIsAlreadyThere = false;
 	mbCopyLossyOriginal = false;
 	
-//	miRegion_TrackID = -1;
-//	miRegion_TrackPos = -1;
+	mRegion_Data.Track_ID( -1);
+	
+	/*
+	
+	miRegion_TrackID = -1;
+	miRegion_TrackPos = -1;
+	 */
+	
 	mbDeleteNonLossyOriginal = false;
 }
 
@@ -35,6 +41,7 @@ CImportAudioTask::~CImportAudioTask() {
 	}
 	
 	if (mpSrc_File) {
+	//	gpApplication->Takes_Decompressed();
 		mpSrc_File->Destroy();
 		mpSrc_File = NULL;
 	}
@@ -75,7 +82,8 @@ tbool CImportAudioTask::Init(CKSFile_Item* pFile_Item )
 	if( mFile_Item.Import( pFile_Item->Source_Path() ) == false)
 		return false; 
 	
-	
+	mFile_Item.Set_UUID( pFile_Item->Get_UUID() );
+	mFile_Item.Screen_Name(pFile_Item->Screen_Name());
 	
 	mpSrc_File = IFile::Create();
 	if (mpSrc_File == NULL) {
@@ -129,17 +137,7 @@ tbool CImportAudioTask::Init(CTake_Data* pTake_Data )
 	mbDstIsAlreadyThere = true;
 	mFile_Item.Set_UUID(pTake_Data->Get_UUID() );
 	mFile_Item.Screen_Name(pTake_Data->Screen_Name() );
-//	mFile_Item.Disk_Name(pTake_Data->Disk_Name() );
-	
-	
-	
-	
-	/*
-	// prepare all the different filenames and paths
-	if( mFile_Item.Import( pFile_Item->Source_Path() ) == false)
-		return false; 
-	*/
-	
+
 	
 	CAutoDelete<IFile> pfile_L(IFile::Create());
 	CAutoDelete<IFile> pfile_R(IFile::Create());
@@ -197,16 +195,25 @@ tbool CImportAudioTask::Init(CTake_Data* pTake_Data )
 	return true;
 } // Init
 
-/*
+
 void CImportAudioTask::Init_InsertAsRegionAfterImport(tint32 iTrackID, tint64 iTrackPos)
 {
 	if (iTrackID >= 0) {
-		miRegion_TrackID = iTrackID;
-		miRegion_TrackPos = iTrackPos;
+		
+		mRegion_Data.Track_ID(iTrackID);
+		mRegion_Data.Possition(iTrackPos);
+		//miRegion_TrackID = iTrackID;
+		//miRegion_TrackPos = iTrackPos;
 		mbDeleteNonLossyOriginal = true;
 	}
 } // Init_InsertAsRegionAfterImport
-*/
+
+void CImportAudioTask::Init_InsertAsRegionAfterImport(CRegion_Data* pRegion_Data)
+{
+	mRegion_Data = *pRegion_Data;
+	
+} // Init_InsertAsRegionAfterImport
+
 
 tbool CImportAudioTask::Open()
 {
@@ -408,7 +415,7 @@ tbool CImportAudioTask::DoWork()
 			}
 			break;
 
-		case geAudioImport_Peak_Before:
+		case geAudioImport_Peak_Before: //7
 			{
 				
 				msProgress = "Creating/verifying peak files";
@@ -419,7 +426,7 @@ tbool CImportAudioTask::DoWork()
 			}
 			break;
 
-		case geAudioImport_Peak_Action:
+		case geAudioImport_Peak_Action://8
 			{
 				tbool bForceCreate = !mbDstIsAlreadyThere;
 				gpApplication->VerifyCreatePeakFiles( &mFile_Item , bForceCreate);
@@ -427,7 +434,7 @@ tbool CImportAudioTask::DoWork()
 			}
 			break;
 
-		case geAudioImport_Peak_After:
+		case geAudioImport_Peak_After://9
 			{
 				if (mpDecoder) {
 					mpDecoder->Destroy();
@@ -438,19 +445,20 @@ tbool CImportAudioTask::DoWork()
 
 				msProgress = "Peak files done";
 				muiProgressIx = muiProgressTarget = 1;
-				/*
-				if (miRegion_TrackID >= 0)
+				
+				if (mRegion_Data.Track_ID() >= 0)
 					miAudioImportOrder++;
 				else {
-				 */
+				 
 					// Done
 					miAudioImportOrder = geAudioImport_Region_After;
 					miAudioImportOrder++;
-				// }
+				 }
 			}
 			break;
+			
 
-		case geAudioImport_Region_Before:
+		case geAudioImport_Region_Before: //9
 			{
 				msProgress = "Inserting as region";
 				muiProgressIx = 0;
@@ -459,27 +467,31 @@ tbool CImportAudioTask::DoWork()
 				miAudioImportOrder++;
 			}
 			break;
-/*
-		case geAudioImport_Region_Action:
+
+		case geAudioImport_Region_Action: //10
 			{
 				muiProgressIx++;
 
-				gpDSPEngine->CreateRegion(msClipName, miRegion_TrackID, miRegion_TrackPos, 0);
+				if(mRegion_Data.Track_ID() != -1){
+					gpDSPEngine->CreateRegion( mFile_Item.Screen_Name(),  mRegion_Data.Track_ID(),  mRegion_Data.Possition(),  0 );
+				}
+				//!!! fix this l8tr
+				/*
 				if (!mbSrcLossyCompressed) {
 					if (mbDeleteNonLossyOriginal) {
 						if (mpfSrc) {
 							mpfSrc->Destroy();
 							mpfSrc = NULL;
 						}
-						IFile::DeleteFile(msSrcPathName.c_str());
+					//	IFile::DeleteFile(msSrcPathName.c_str());
 					}
 				}
-
+				*/
 				miAudioImportOrder++;
 			}
-*/			break;
+			break;
 
-		case geAudioImport_Region_After:
+		case geAudioImport_Region_After://11
 			{
 				muiProgressIx = muiProgressTarget;
 

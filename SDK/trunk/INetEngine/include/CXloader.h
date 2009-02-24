@@ -16,7 +16,9 @@ public:
 	virtual void Destroy();
 
 	//! IDownloader implementation
-	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10);
+	virtual tbool Init(const tchar* pszHost, const tchar* pszPage, tint32 iPort, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10);
+	//! IDownloader implementation
+	virtual tbool Init(const tchar* pszFullURL, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10);
 	//! IDownloader implementation
 	virtual tbool SetReplyMIMEType(E_MIME_Type eMIME);
 	//! IDownloader implementation
@@ -74,11 +76,15 @@ public:
 protected:
 	tbool mbIsUploader;
 
+	tbool _Init(const tchar* pszFullURL, const tchar* pszHost, const tchar* pszPage, tint32 iPort = 80, const tchar* pszUser = NULL, const tchar* pszPassword = NULL, tint32 iTimeOutSecs = 10);
+
+	std::string msURL;
 	std::string msHost;
 	std::string msPage;
 	tint32 miPort;
 	std::string msUser;
 	std::string msPassword;
+	tbool mbUseAuthentication;
 	tuint32 muiTimeOutSecs;
 
 	E_MIME_Type meReplyMIMEType;
@@ -121,7 +127,7 @@ protected:
 	tint32 miHttpStatus;
 
 	std::string msLastError;
-	void SetError(const tchar* pszError);
+	void AppendError(const tchar* pszError);
 	CMutex mMutex_ForErrors;
 
 	//! If true we never get body of message with error status (default false)
@@ -135,6 +141,7 @@ protected:
 	void CloseConnection();
 	
 	void SetIsUninitialized();
+	void SetIsFullBlownURL(tbool bFullBlownURL);
 	void SetIsInitialized();
 	void SetIsTransfering();
 	void SetMultiSaysDone(CURLcode code);
@@ -147,6 +154,7 @@ protected:
 	
 private:
 	volatile tbool mbIsInitialized;
+	volatile tbool mbIsInit_FullBlownURL;
 	volatile tbool mbIsTransfering;
 	volatile tbool mbIsFailed;
 	volatile tbool mbIsMultiDone;

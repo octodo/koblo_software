@@ -34,9 +34,11 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 	// read project in to 
 	CAutoDelete<IFile> pFile(IFile::Create());
 	if (pFile->Open(sFile.c_str(), IFile::FileRead)) {
-		// reset/ erase the current DAW project
-		Reset_Project();
 		
+		// reset/ erase the current DAW project
+	//	Reset_Project();
+		
+		// cleanup xml and take parser
 		Prepare_For_XML();
 		
 		// read project in to char buffer
@@ -52,27 +54,56 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		// pass the TinyXML DOM in to the DAW data structure
 		Pass_The_Project_Tag( mpTinyXMLDoc );
 		
-		// 
+		if( !gpApplication->Project_Is_Uploaded()){
+			
+			gpApplication->Project_Name( gpApplication->Online_Project_Name() ); 
+			
+		}
+
+		// Make sure folders are there
+	//	gpApplication->Create_Folders();
+		
+		// find what samples is missing
 		Prepare_Samples();
 		
 		// download takes
 		Download_Takes();
-		// decompress takes
+		
+		// decompress takes // How can samples be decompressed before they are downloaded?
 		Decompress_Takes();
 		
-		// create pictfiles
 		
-		// insert takes 
-		Insert_Takes();
 		
-		// insert regions
-		Insert_Regions();
+		// set up the track editor with regions
+	//	Setup_Track_Editor();
 		
-		CBasePane::SMsg Msg;
-		Msg = Msg_Deselect_Regions;
-		gpApplication->Send_Msg_To_All_Panes(&Msg);
+		/*
+		// insert regions in track editor
+		if( !bDownloading_Takes)
+			Setup_Track_Editor();
+		*/
+		
+		
 			
-	}
+	}		
+}
+
+
+
+
+void CKSXML_Read_Project::Setup_Track_Editor()
+{
+	
+	
+	// insert takes 
+	Insert_Takes();
+	
+	// insert regions
+	Insert_Regions();
+	
+	CBasePane::SMsg Msg;
+	Msg = Msg_Deselect_Regions;
+	gpApplication->Send_Msg_To_All_Panes(&Msg);
 	
 	std::string sPlugInFolderPath = gpApplication->Plugin_Settings_Folder();
 	std::string sPlugInSettingsPathName = sPlugInFolderPath + std::string("Plugin_Setting.prst");
@@ -119,8 +150,10 @@ void CKSXML_Read_Project::Reset_Project()
 void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(std::string sProject_UUID )
 {
 	
-	Reset_Project();
-	Prepare_For_XML();
+	
+	mbOpen_Dialog = false;
+	
+	
 	
 	// read latst revision
 	std::string sProject;
@@ -130,36 +163,30 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(std::string sProject_U
 	sProject = psz;
 	
 	Read_Project_From_Koblo( sProject );
-	
-	
+		
 }	
 	
 void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 {
+
 	
-	// get the project uuid from koblo.com
+	mbOpen_Dialog = true;
 	
-	// look in file to see if there is a path for the project folder on disk
-	
-	// if there is one store the project file in the "branches" folder
-	
-	// 
-	
-	Reset_Project();
-	Prepare_For_XML();
+
 	
 	// read latst revision
 	std::string sProject;
 	char psz[256];
 	
 	//if the project is uploaded
-	gpApplication->Get_Project_UUID().c_str();
+//	gpApplication->Get_Project_UUID().c_str();
 	
-	//curl koblo.com/branches/176/latest/markup.xml
-	
-	sprintf(psz, "/branches/%d/latest/markup.xml", iProjectID);
+	sprintf(psz, "/projects/%d/trunk/latest/markup.xml", iProjectID);
 	sProject = psz;
 	
+	
+	
+	 // reset and read project
 	Read_Project_From_Koblo( sProject );
 	
 		
@@ -169,15 +196,22 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 
 void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 {
+	// store project name
+	std::string sProject_Name = gpApplication->Project_Name();
 	
+	// clean project
+	Reset_Project();
 	
+	// clean parser
+	Prepare_For_XML();
+	
+	// read xml file
 	tchar* pszBuff = NULL;
 	tint32 iOutLen = 0;
 	ine::IINetUtil::GetWebFile(NULL, "koblo.com", sProject.c_str(), &iOutLen, &pszBuff);
 	
+
 	if ((pszBuff) && (iOutLen > 0)) {
-		
-		printf(pszBuff);
 		
 		// parse XML file in to TinyXml object tree
 		mpTinyXMLDoc->Parse(pszBuff);
@@ -185,35 +219,144 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 		// pass the TinyXML DOM in to the DAW data structure
 		Pass_The_Project_Tag( mpTinyXMLDoc );
 		
-		// 
-		Prepare_Samples();
+		if(mbOpen_Dialog){
 		
-		// download takes
-		Download_Takes();
-		// decompress takes
-		Decompress_Takes();
+			tchar pszDefaultFolder[1024];
+			gpApplication->GetDefaultProjectFolder(pszDefaultFolder);
+			
+			// get default folder
+			tchar pszDefault_Folder[1024];
+			gpApplication->GetDefaultProjectFolder(pszDefault_Folder);
+			
+			std::string sProject_Name = gpApplication->Online_Project_Name();
+			
+			// open new project dialog
+			tchar pszProject_Folder[1024];
+			CAutoDelete<ge::ISaveAsDialog> pDlg(ge::ISaveAsDialog::Create());
+
+			// Don't browse into OS X bundles (special kind of folders)
+			pDlg->SetBundleBehaviour(1);
+
+			pDlg->DoDialog(pszProject_Folder, pszDefault_Folder, "", "", sProject_Name.c_str() );
+			std::string sProject_Folder = pszProject_Folder;
+			
+			// user canceled operation
+			if (pszProject_Folder[0] == 0){
+				// User cancelled - clean
+				Reset_Project();
+				Prepare_For_XML();
+			}
+			// continue
+			else {
+				// update path's and names for files and folders
+				gpApplication->Update_Project_Name(sProject_Folder);
+
+			//	tbool bExists = IFile::Exists(sProject.c_str() , &bIsFolder);
+				
+				// create new folders for the project
+				gpApplication->Create_Folders();
+					
+				// create a new project file
+				gpApplication->Create_Project_File();
+				
+				// save project 
+				gpApplication->Write_XML_File_To_Disk(pszBuff);
+				
+				// prepare samples for download and decompression
+				Prepare_Samples();
+				
+				// download takes
+				Download_Takes();
+				
+				// decompress takes // How can samples be decompressed before they are downloaded?
+				Decompress_Takes();
+				
+				
+
+			}
+		}
+		else{
+			// restore project name
+			gpApplication->Project_Name(sProject_Name);
+			
+			// save project to disk
+			gpApplication->Write_XML_File_To_Disk(pszBuff);
+			
+			// prepare samples for download and decompression
+			Prepare_Samples();
+						
+			// decompress takes
+			Decompress_Takes();
+
+			// download takes
+			Download_Takes();
+		}
+			
+			
+	}
+	else {
+	// loading failed reload file from disk if any
 		
-		// create pictfiles
-		
-		// insert takes 
-		Insert_Takes();
-		
-		// insert regions
-		Insert_Regions();
-		
-		//gpDSPEngine->Deselect_All_Tracks();
-		
-		CBasePane::SMsg Msg;
-		Msg = Msg_Deselect_Regions;
-		gpApplication->Send_Msg_To_All_Panes(&Msg);
 	}
 	ine::IINetUtil::ReleaseBuffer(&pszBuff);
 	
 	
+
+}
+
+void CKSXML_Read_Project::Takes_Downloaded()
+{
+// (lasse) no - 	bInsert_Regions = true;
+	
+	// decompress takes
+//	Decompress_Takes();
+	
+
+}
+
+void CKSXML_Read_Project::Takes_Decompressed()
+{
+	/* (lasse) no:
+	if(bInsert_Regions)
+		Insert_Regions();
+	
+	bInsert_Regions = false;
+	*/
+}
+
+/*
+void CKSXML_Read_Project::Import_Regions()
+{
+	
+	
+	std::list<CRegion_Data>::iterator itRegion_Data = mRegion_Data_List.begin();
+	for (; itRegion_Data != mRegion_Data_List.end(); itRegion_Data++) {
+		
+		std::string uuid = (*itRegion_Data).Take_UUID() ;
+		std::string sName = Get_Take_Screen_Name( uuid );
+		
+	//	if(sName.size() ) {
+			
+			
+			CRegion_Data* pRegion_Data;
+			
+			pRegion_Data = &(*itRegion_Data);
+			CImportAudioTask* pTask = new CImportAudioTask();
+			
+			pTask->Init_InsertAsRegionAfterImport(pRegion_Data);
+			
+			
+			CAutoLock Lock(gpApplication->mMutex_Progress);
+			gpApplication->mpProgressTasks->Add(pTask);
+			gpApplication->Playback_InProgressTask();
+			
+	//	}
+	}
+			
 	
 }
 
-
+*/
 
 
 void CKSXML_Read_Project::Pass_The_Project_Tag( TiXmlNode* pParent )
@@ -1081,6 +1224,7 @@ void CKSXML_Read_Project::Import_Takes(CSample_Data* pSample_Data)
 
 void CKSXML_Read_Project::Import_Take(CTake_Data* pTake)
 {
+//	std::string sUUID = pTake->Get_UUID();
 	
 	// check if take is in Wave folder
 	if( pTake->In_Folder(gpApplication->Wave_File_Folder(), ".wav") ){
@@ -1096,8 +1240,15 @@ void CKSXML_Read_Project::Import_Take(CTake_Data* pTake)
 		mDecompress_Que.push_back(pTake);
 
 	// add take to the download que
-	else
+	else {
 		mDownload_Que.push_back(pTake);
+		// (lasse) we can't add to decompress queue yet - download task will do that
+		/*
+		// ... and to decompress queue
+		mDecompress_Que.push_back(pTake);
+		*/
+		// .. (lasse)
+	}
 
 	
 }
@@ -1106,38 +1257,99 @@ void CKSXML_Read_Project::Import_Take(CTake_Data* pTake)
 
 void CKSXML_Read_Project::Download_Takes()
 {
-	std::list<CTake_Data*>::iterator it = mDownload_Que.begin();
-	for (; it != mDownload_Que.end(); it++) {
-		Download_Take( (*it) );
+	CDownloadTask* pTask = new CDownloadTask();
+	tbool bInitOK = pTask->Init_Update(&mDownload_Que);
+	if (bInitOK) {
+		CAutoLock Lock(gpApplication->mMutex_Progress);
+		gpApplication->mpProgressTasks->Add(pTask);
+		gpApplication->Playback_InProgressTask();
 	}
+	else {
+	
+		std::string sReason = pTask->GetError();
+		pTask->Destroy();
+		std::string sErr = "Unable to queue download of takes.\n";
+		sErr += "Reason:\  ";
+		sErr += sReason;
+		gpApplication->ShowMessageBox_NonModal(sErr.c_str(), "Error downloading");
+	//	Setup_Track_Editor();
+	}
+
 }
 
 
 void CKSXML_Read_Project::Download_Take(CTake_Data* Take_Data)
 {
+	/* (lasse) not needed
 	std::string sURL = Take_Data->URL();
 	// do download here
 	// download to "OGG Files" folder
 	// when compleated add files to decompressing que:
 	// mDecompress_Que.push_back(pTake_Data);
+	*/
 }
 
 void CKSXML_Read_Project::Decompress_Takes()
 {
 	std::list<CTake_Data*>::iterator it = mDecompress_Que.begin();
 	for (; it != mDecompress_Que.end(); it++) {
-		Decompress_Take( (*it) );
+		if (!Decompress_Take( (*it) )) {
+			std::string sErr = gpApplication->Extended_Error();
+			ge::IWindow::ShowMessageBox(sErr.c_str(), "Error");
+		}
 	}
+
+	// (lasse) Not here, must be only once and very last - queued from CDownloadTask
+	/*
+	// Queue insertion of regions
+	CInsertRegionsTask* pInsertRegionsTask = new CInsertRegionsTask();
+	pInsertRegionsTask->Init();
+	{
+		CAutoLock Lock(gpApplication->mMutex_Progress);
+		gpApplication->mpProgressTasks->Add(pInsertRegionsTask);
+		gpApplication->Playback_InProgressTask();
+	}
+	*/
+	// .. (lasse)
 }
 
 
-void CKSXML_Read_Project::Decompress_Take(CTake_Data* Take_Data)
+tbool CKSXML_Read_Project::Decompress_Take(CTake_Data* pTake_Data)
 {
-	std::string sURL = Take_Data->URL();
+	// (lasse) no - std::string sURL = Take_Data->URL();
 	// do decompression here
 	// decompress to "Wave Files" folder
 	// when compleated add files to insert que:
 	// mDecompress_Que.push_back(pTake_Data);
+	
+	std::string sFull_Path	=	gpApplication->OGG_File_Folder();
+	sFull_Path				+=	pTake_Data->Get_UUID();
+	sFull_Path				+= ".ogg";
+	
+	CKSFile_Item File_Item;
+	File_Item.Import(sFull_Path);
+	File_Item.Screen_Name(pTake_Data->Screen_Name());
+	File_Item.Set_UUID( pTake_Data->Get_UUID() );
+
+
+	CImportAudioTask* pTask = new CImportAudioTask();
+
+	tbool bInitOK = pTask->Init(&File_Item);
+
+	if (bInitOK) {
+		CAutoLock Lock(gpApplication->mMutex_Progress);
+		gpApplication->mpProgressTasks->Add(pTask);
+		gpApplication->Playback_InProgressTask();
+		return true;
+	}
+	else {
+
+		std::string sErr = pTask->GetError();
+		pTask->Destroy();
+		gpApplication->Extended_Error(sErr);
+
+		return false;
+	}
 }
 
 
@@ -1159,7 +1371,7 @@ void CKSXML_Read_Project::Create_Pict_File(CTake_Data* Take_Data)
 
 void CKSXML_Read_Project::Insert_Takes()
 {
-
+	
 	std::list<CTake_Data*>::iterator it = mInsert_Que.begin();
 	for (; it != mInsert_Que.end(); it++) {
 		gpApplication->AddClipToList( (*it) );
@@ -1169,6 +1381,8 @@ void CKSXML_Read_Project::Insert_Takes()
 
 void CKSXML_Read_Project::Insert_Regions()
 {
+
+	gpApplication->Stop_Timer();
 	std::list<CRegion_Data>::iterator itRegion_Data = mRegion_Data_List.begin();
 	for (; itRegion_Data != mRegion_Data_List.end(); itRegion_Data++) {
 		
@@ -1178,7 +1392,7 @@ void CKSXML_Read_Project::Insert_Regions()
 		
 		if(sName.size() ) {
 		
-
+			
 
 			gpDSPEngine->CreateRegion( sName.c_str(), 
 									  (*itRegion_Data).Track_ID(),
@@ -1188,9 +1402,14 @@ void CKSXML_Read_Project::Insert_Regions()
 									  (*itRegion_Data).Fade_In_Duration(),
 									  (*itRegion_Data).Fade_Out_Duration(),
 									  (*itRegion_Data).Volume()	);
+			// timer is started inside create region
+			
+			
+			
 		}
 
 	}
+	gpApplication->Start_Timer();
 	
 	
 }

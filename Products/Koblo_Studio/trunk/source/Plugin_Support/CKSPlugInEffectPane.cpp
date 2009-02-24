@@ -4,6 +4,10 @@ int a(int* array[], long newCount) {
 	int* temp=new int[newCount];
 	delete *array;
 	*array=temp;
+
+	// (lasse) it must return something or it won't compile on windows
+	// - what is this anyway?
+	return 0;
 }
 
 CKSPlugInEffectPane::CKSPlugInEffectPane(CBasePane* pPaneParent, CBaseGUI* pGUI)

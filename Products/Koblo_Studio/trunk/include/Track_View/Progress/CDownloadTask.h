@@ -39,14 +39,9 @@ public:
 
 	//! For updating an already downloaded project
 	/*!
-		\param pszUser [in]: Login user
-		\param pszPassword [in]: Login password
 		\param plistpTakes [in]: A list of takes to download
 	*/
-	tbool Init_Update(
-		const tchar* pszUser,
-		const tchar* pszPassword,
-		std::list<CTake_Data*>* plistpTakes);
+	tbool Init_Update(std::list<CTake_Data*>* plistpTakes);
 
 	virtual tbool DoWork();
 	virtual tbool IsDone();
@@ -59,6 +54,8 @@ protected:
 	tbool DoTake_Download_Before();
 	tbool DoTake_Download_Action(tbool* pbActionDone);
 	tbool DoTake_Download_After(tbool* pbNoMoreTakes);
+
+	tbool DoQueueInsertRegions();
 
 	std::string msUser;
 	std::string msPassword;
