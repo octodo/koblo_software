@@ -128,12 +128,13 @@ void CTrack_AUX_Insert::ConnectControls()
 
 void CTrack_AUX_Insert::EventValueChange(ge::IControl* pControl, tint32 iValueNew)
 {
+	
 	if (pControl->GetID() == giCtrl_Track_Insert_Pop1 + miCtrl_Offset ||
 		pControl->GetID() == giCtrl_Track_Insert_Pop2 + miCtrl_Offset ||
 		pControl->GetID() == giCtrl_Track_Insert_Pop3 + miCtrl_Offset ||
 		pControl->GetID() == giCtrl_Track_Insert_Pop4 + miCtrl_Offset) {
 		if (iValueNew != 0) {
-			//			tint32 iInsert = pControl->GetID() - (giCtrl_InsertPop1 + miCtrl_Offset);
+			
 			ge::IPopupMenu* pPopup = dynamic_cast<ge::IDropDownListBox*>(pControl)->GetPopup();
 			tint32* pi = (tint32*)(pPopup->GetData(iValueNew));
 			tint32 iCompanyID = pi[0];
@@ -147,7 +148,10 @@ void CTrack_AUX_Insert::EventValueChange(ge::IControl* pControl, tint32 iValueNe
 		}
 	}
 	
-	GetParmMan()->ControlUpdate(miPaneID, pControl->GetID(), iValueNew);
+	tint iCrl_ID = pControl->GetID();
+	
+	GetParmMan()->ControlUpdate(miPaneID, iCrl_ID, iValueNew);
+	
 	if (pControl->GetID() == miCtrl_Offset + giCtrl_Trak_Edit_Insert1) {
 	//	iTest = gpApplication->GetGlobalParm(giParam_Ch_Insert1GUIOpen, miSection);
 	//	GetParmMan()->Set(true, !iTest, giParam_Ch_Insert1GUIOpen, de::IParameterManager::TypeGlobal, miSection);

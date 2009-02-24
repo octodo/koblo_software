@@ -830,6 +830,7 @@ void CKSXML_Write_Project::Write_Track_Inserts(TiXmlElement* pParent, tuint uiTr
 
 void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTrack, tuint uiInsert)
 {
+	
 	CTrack_DSP* pTrack = gpDSPEngine->GetTrack(uiTrack);
 	kspi::IPlugIn* pInsert = pTrack->GetInsert(uiInsert);
 	if (pInsert) {
@@ -850,42 +851,33 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 	tint32 iInsertId = gpApplication->GetGlobalParm(giParam_ChInsert1 + uiInsert, giSection_First_Track + uiTrack);
 	
 	if(iInsertId){
-		CPreset_Data Preset_Data;
 		
-		Preset_Data.Insert_Track(uiTrack);
-		Preset_Data.Insert_Slot(uiInsert);
-		// uuid
-		// check if insert data alreaddy has a UUID
-		
-		
-		
-		
-		/*
+
 		// in
 		TiXmlElement* pInsert = new TiXmlElement( "insert" );
 		pParent->LinkEndChild( pInsert );
 		pInsert->SetAttribute("slot",uiInsert);
-		pInsert->SetAttribute("id", iInsertId);
+		pInsert->SetAttribute("plug-in id", iInsertId);
 		
 		CPlugInManager* pPlugManager = gpApplication->GetPlugInManager();
 		
-		std::string s = pPlugManager->GetPlugInVendor(iInsertId);
-		std::string u = pPlugManager->GetPlugInName(iInsertId);
+		std::string sVendor = pPlugManager->GetPlugInVendor(iInsertId);
+		std::string sProduct = pPlugManager->GetPlugInName(iInsertId);
 		
 		// vendor
 		TiXmlElement* pVendor = new TiXmlElement( "vendor" );
-		TiXmlText* pVendorTxt = new TiXmlText(s.c_str());
+		TiXmlText* pVendorTxt = new TiXmlText(sVendor.c_str());
 		pVendor->LinkEndChild( pVendorTxt );
 		pInsert->LinkEndChild( pVendor );
 		
 		// product
 		TiXmlElement* pProduct = new TiXmlElement( "product" );
-		TiXmlText* pProductTxt = new TiXmlText(u.c_str());
+		TiXmlText* pProductTxt = new TiXmlText(sProduct.c_str());
 		pProduct->LinkEndChild( pProductTxt );
 		pInsert->LinkEndChild( pProduct );
 		
 		
-
+/*
 		// check if preset file alreaddy is in "Plug-In's Settings" folder
 		
 		
@@ -893,13 +885,8 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		TiXmlText* pUUIDTxt = new TiXmlText(u.c_str());
 		pUUID->LinkEndChild( pUUIDTxt );
 		pInsert->LinkEndChild( pUUID );
+*/		
 		
-		//Create_Plugin_Setting( &Preset_Data);
-		 
-		 
-		 */
-		
-//		Preset_Data_List.push_back(Preset_Data);
 	}
 	
 	 

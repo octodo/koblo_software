@@ -788,17 +788,28 @@ void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrac
 	
 	TiXmlAttribute* pAttrib	=	pElement->FirstAttribute();
 	tint32 iSlot, iPluginId;
+
 	TiXmlNode* pChild;
 	
 	// slot id
 	if (pAttrib->QueryIntValue(&iSlot)==TIXML_SUCCESS) {
-		//printf( "insert:%d,  ", iSlot);
+		
+		pAttrib = pAttrib->Next();
 		// plug-in id
 		if (pAttrib->QueryIntValue(&iPluginId)==TIXML_SUCCESS) {
-			//printf( "plug-in id:%d,  ", iPluginId);
-			gpApplication->SetGlobalParm(giParam_ChInsert1 + iSlot, iPluginId, giSection_First_Track + uTrack);
+			
 		}
 	}
+	
+	
+	
+	
+	
+	gpApplication->SetGlobalParm(giParam_ChInsert1 + iSlot, iPluginId, giSection_First_Track + uTrack);
+	
+	
+	
+	
 	for ( pChild = pElement->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) {
 		
 		if(pChild->Type() == TiXmlNode::ELEMENT){
