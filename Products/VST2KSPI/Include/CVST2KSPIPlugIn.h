@@ -83,6 +83,10 @@ public:
 
 	AEffect* GetEffect() {return mpVSTEffect;}
 
+	IChunkFileMemory* CreateChunkFile();
+
+	void SetChunk(const void* p, tuint32 iChunkSize);
+
 protected:
 	std::string msEffectPathName;
 

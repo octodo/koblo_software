@@ -881,7 +881,7 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		
 		
 		CPlugInManager* pPlugManager = gpApplication->GetPlugInManager();
-		CPlugInManager::SPlugInInfo* pPlugInInfo = pPlugManager->GetPlugInInfo(iInsertId);
+		CPlugInManager::SPlugInInfo* pPlugInInfo = pPlugManager->PlugInInfo(iInsertId);
 		
 		std::string sVendor		= pPlugInInfo->sCompanyName;
 		std::string sProduct	= pPlugInInfo->sProductName;

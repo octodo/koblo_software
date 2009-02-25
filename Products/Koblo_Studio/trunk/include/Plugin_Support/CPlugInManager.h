@@ -129,6 +129,8 @@ public:
 	//! get plug-in name
 	std::string GetPlugInName(tint32 iInsertId);
 	
+	SPlugInInfo* PlugInInfo(tint32 iID);
+
 protected:
 //	CKSPlugIn* mpPlugIn;
 	
