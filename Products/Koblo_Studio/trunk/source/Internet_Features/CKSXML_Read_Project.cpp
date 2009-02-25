@@ -54,6 +54,10 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		// pass the TinyXML DOM in to the DAW data structure
 		Pass_The_Project_Tag( mpTinyXMLDoc );
 		
+		// close all plug-in windows
+		gpApplication->Show_All_Plugins(false);
+		
+		// read plugin data from disk
 		Load_Plug_In_Settings();
 		
 		if( !gpApplication->Project_Is_Uploaded()){
@@ -419,6 +423,9 @@ void CKSXML_Read_Project::Parse_Project_Object(TiXmlNode* pParent)
 	else if (stricmp("editing", pParent->Value()) == 0) {
 		Parse_Edditing_Object(pParent->ToElement());
 	}
+	else if (stricmp("preset_file_uuid", pParent->Value()) == 0) {
+		Parse_Preset_File_Object(pParent->ToElement());
+	}
 	else if (stricmp("sample", pParent->Value()) == 0) {
 		Read_Sample_Object(pParent->ToElement());
 	}
@@ -538,7 +545,7 @@ void CKSXML_Read_Project::Read_Take_Object(TiXmlElement* pElement, CTake_Data* p
 
 	if ( !pElement ) return ;
 	
-	// set take uuid
+	// get take uuid
 	TiXmlAttribute* pAttrib		=	pElement->FirstAttribute();
 	if(pAttrib)		
 		pTake_Data->Set_UUID(pAttrib->Value());   
@@ -829,7 +836,8 @@ void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrac
 			else if (stricmp("vendor", pChild->Value()) == 0) {
 				
 				TiXmlAttribute* pVendor_Attrib	=	pChild->ToElement()->FirstAttribute();
-				pVendor_Attrib->QueryIntValue(&iVendor);
+				if(pVendor_Attrib)
+					pVendor_Attrib->QueryIntValue(&iVendor);
 				
 				//Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
 				
@@ -837,7 +845,8 @@ void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrac
 			else if (stricmp("product", pChild->Value()) == 0) {
 				
 				TiXmlAttribute* pProduct_Attrib	=	pChild->ToElement()->FirstAttribute();
-				pProduct_Attrib->QueryIntValue(&iProduct);
+				if(pProduct_Attrib)
+					pProduct_Attrib->QueryIntValue(&iProduct);
 
 				//Set_DAW_Parameter(pChild, giTinyXml_Type_String, 0, 0);
 

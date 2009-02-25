@@ -71,6 +71,8 @@ public:
 	void UpdateAUX1Data(tint32 iID, tint32 iValue);
 	void UpdateAUX2Data(tint32 iID, tint32 iValue);
 	void UpdateMasterData(tint32 iID, tint32 iValue);
+	
+	void Close_Plug_In_GUI(tuint32 uiTrack, tuint32 uiSlot);
 
 	//! Struct for all meter values in system
 	struct SMeters_All {

@@ -141,6 +141,15 @@ public:
 	// set a new uuid
 	void Set_Branch_UUID(){ mpBranch_UUID->Set_UUID();};
 	
+	// get insert file uuid
+	std::string Get_Insert_File_UUID(){ return mpInsert_File_UUID->Get_UUID();};
+	
+	// set insert file uuid
+	void Set_Insert_File_UUID(std::string  sUUID){ mpInsert_File_UUID->Set_UUID( sUUID);};
+	
+	// set a new insert file uuid
+	std::string Get_New_Insert_File_UUID(){ return mpInsert_File_UUID->Get_New_UUID();};
+	
 	// set a uuid from a string
 	void Set_Branch_UUID(std::string sUUID){ mpBranch_UUID->Set_UUID(sUUID);};
 	
@@ -183,6 +192,9 @@ private:
 	
 	// branch uuid object
 	CKSUUID* mpCommit_UUID;
+	
+	// insert preset file uuid
+	CKSUUID* mpInsert_File_UUID;
 	
 	virtual void Open_Project_Edit_Page_On_Koblo();
 	

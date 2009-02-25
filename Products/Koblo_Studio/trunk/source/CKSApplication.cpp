@@ -1048,12 +1048,19 @@ void CKSApplication::Clean_Project(tint32 iCreateEmptyTracks)
 	
 	
 	for (tint32 i = 0; i < giNumber_Of_Tracks; i++) {
+		
 		// reorder all tracks, so they are straight forward (GUI position)
 		msStack.iTrack[i]		= i;
 		// unmute all tracks
 		SetGlobalParm(giParam_ChSolo,		0,		giSection_First_Track + i);
 		SetGlobalParm(giParam_ChMute,		0,		giSection_First_Track + i);
 		SetGlobalParm(giParam_ChSoftMute,	0,		giSection_First_Track + i);
+		
+		SetGlobalParm(giParam_ChInsert1,	0,		giSection_First_Track + i);
+		SetGlobalParm(giParam_ChInsert2,	0,		giSection_First_Track + i);
+		SetGlobalParm(giParam_ChInsert3,	0,		giSection_First_Track + i);
+		SetGlobalParm(giParam_ChInsert4,	0,		giSection_First_Track + i);
+	
 	}
 
 	// Add empty tracks
@@ -1780,6 +1787,15 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 		Send_Msg_To_All_Panes(&Msg);
 		
 	}
+	
+	// jump to mouse pos
+	else if (s.compare("View@Plug-In's") == 0) {
+		
+		Show_All_Plugins(false);
+		
+	}
+	
+	
 	
 	//-------------------------------------------
 	// Help Menu

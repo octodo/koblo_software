@@ -89,7 +89,7 @@ void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 	// only store attribute if alreaddy set.
 	if( gpApplication->Project_UUID_Is_Set() )
 		pProject->SetAttribute("uuid", gpApplication->Get_Project_UUID().c_str());
-
+		
 	pDoc->LinkEndChild( pProject );
 	
 	// name
@@ -113,6 +113,7 @@ void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 	Write_Branch( pProject);
 	Write_Settings( pProject);
 	Write_Editing( pProject);
+	Write_Preset_File_UUID(pProject);
 	Write_Samples(pProject);
 	Write_Tracks(pProject);
 	Write_Busses(pProject);
@@ -580,6 +581,22 @@ void CKSXML_Write_Project::Write_Window_Size(TiXmlElement* pParent, tuint uiSize
 }
 
 //----------------------------------------------------------------
+// preset file uuid
+//----------------------------------------------------------------
+void CKSXML_Write_Project::Write_Preset_File_UUID(TiXmlElement* pParent)
+{
+	Add_Comment(pParent, "Preset data are stored in a seperate file where audio and vst data can be embedded");
+	
+	// edit
+	TiXmlElement* pPreset_UUID = new TiXmlElement( "preset_file_uuid" );
+	//TiXmlText* pPreset_UUIDTxt = new TiXmlText( gpApplication->Get_Insert_File_UUID().c_str() );
+	//pPreset_UUID->LinkEndChild( pPreset_UUIDTxt );
+	pParent->LinkEndChild( pPreset_UUID );
+	
+	pPreset_UUID->SetAttribute("uuid", gpApplication->Get_Insert_File_UUID().c_str() );
+}
+
+//----------------------------------------------------------------
 // samples
 //----------------------------------------------------------------
 void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
@@ -648,14 +665,17 @@ void CKSXML_Write_Project::Write_Take(TiXmlElement* pParent, CTake_Data* pTake_D
 
 void CKSXML_Write_Project::Write_Tracks(TiXmlElement* pParent)
 {
-	std::string sPlugInFolderPath = gpApplication->Plugin_Settings_Folder();
-	std::string sPlugInSettingsPathName = sPlugInFolderPath + std::string("Plugin_Setting.prst");
-
-	tint32 iVersionNr = 1;
+	// create plug-in preset file
+	std::string sPlugInFolderPath		= gpApplication->Plugin_Settings_Folder();
+	std::string sPlug_In_Name			= gpApplication->Get_Insert_File_UUID() + ".plugindata";
+	std::string sPlugInSettingsPathName = sPlugInFolderPath + sPlug_In_Name;
+	tint32 iVersionNr					= 1;
 	mpPlugInDataFile->Close();
 	mpPlugInDataFile->Open(sPlugInSettingsPathName.c_str(), IFile::FileCreate, iVersionNr);
 
-	tint32 iNrTracks = gpApplication->Get_Number_Of_Tracks();//gpApplication->msStack.iNr_Of_Tracks;
+	
+	// write all tracks
+	tint32 iNrTracks = gpApplication->Get_Number_Of_Tracks();
 	
 	for(tint32 i = 0; i<iNrTracks; i++){
 		
@@ -673,7 +693,8 @@ void CKSXML_Write_Project::Write_Tracks(TiXmlElement* pParent)
 		// write track data
 		Write_Track(pTrack, uiTrack);	
 	}
-
+	
+	// close the preset data file
 	mpPlugInDataFile->Close();
 }
 
@@ -916,7 +937,7 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 
 tbool CKSXML_Write_Project::Create_Plugin_Setting(CPreset_Data* pPreset_Data)
 {
-
+/*
 	std::string sPlug_in_Setting		=	gpApplication->Plugin_Settings_Folder() + pPreset_Data->Get_UUID() + ".ksprst";
 
 	// missing code 
@@ -924,6 +945,9 @@ tbool CKSXML_Write_Project::Create_Plugin_Setting(CPreset_Data* pPreset_Data)
 	std::string sProject_Name		= gpApplication->Project_Name();
 	std::string sProject_Folder		= gpApplication->Project_Folder();
 	std::string sProject			=  sProject_Folder + sProject_Name + ".xml";
+*/	
+	
+	
 /*	
 	CAutoDelete<IFile> pfile(IFile::Create());
 	if (pfile->Open(sProject.c_str(), IFile::FileWrite)) {

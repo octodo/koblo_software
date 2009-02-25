@@ -120,7 +120,7 @@ public:
 	
 	void OpenGUI(tint32 iChannel, tint32 iInsertIndex);
 	
-	void CloseGUI(tint32 iChannel, tint32 iInsertIndex);
+	void Close_GUI(PlugInHandle Handle, tint32 iChannel, tint32 iInsertIndex);
 	
 	void WindowClosed(tint32 iChannel, tint32 iInsertIndex);
 	

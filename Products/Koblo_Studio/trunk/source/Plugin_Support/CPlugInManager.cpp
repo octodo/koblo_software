@@ -486,10 +486,34 @@ void CPlugInManager::UnloadPlugIn(PlugInHandle Handle, tint32 iChannel, tint32 i
 	mPlugInMap.erase(it2);
 }
 
-void CPlugInManager::CloseGUI(tint32 iChannel, tint32 iInsertIndex)
+void CPlugInManager::Close_GUI(PlugInHandle Handle, tint32 iChannel, tint32 iInsertIndex)
 {
 	
+	CAutoLock Lock(gpApplication->GetMeterMutex());
 	
+	if (Handle == mInvalidHandleValue) {
+		throw IException::Create(IException::TypeCode, IException::ReasonCodeInvalidArgument, EXCEPTION_INFO, "Invalid Handle");
+	}
+	
+	std::list<kspi::IPlugIn*>::iterator it = mLoadedPlugIns.begin();
+	for (; it != mLoadedPlugIns.end(); it++) {
+		if (Handle == (PlugInHandle)(*it)) {
+			break;
+		}
+	}
+
+	
+	std::map<tint32, SLoadedPlugInInfo>::iterator it2 = mPlugInMap.find(iChannel << 16 | iInsertIndex);
+	
+	ASSERT(it2 != mPlugInMap.end());
+	
+	SLoadedPlugInInfo* pInfo = &(it2->second);
+	
+	if (pInfo->bGUILoaded) {
+		pInfo->pPlugInGUI->CloseWindow();
+	}
+	 
+
 }
 
 void CPlugInManager::OpenGUI(tint32 iChannel, tint32 iInsertIndex)

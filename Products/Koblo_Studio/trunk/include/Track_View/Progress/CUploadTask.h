@@ -27,6 +27,21 @@ public:
 	virtual ~CUploadTask();
 	virtual void Destroy();
 
+
+	//! Prepare upload of a new project to koblo.com
+	/*!
+		\param pszUser [in]: User for authentication
+		\param pszPassword [in]: Password for authentication
+		\param pszProjUUID [in]: UUID for project "container" to create
+		\param pszProjName [in]: Name for project
+		\param pszProjDesc [in]: Description of project
+		\param pszProjLicenseCode [in]: License for project
+		\param pszBranchUUID [in]: UUID for initial branch (a.k.a. Trunk)
+		\param pszCommitUUID [in]: UUID for first commit of project xml
+		\param pszfileCommit [in]: Path to file of project xml
+		\param plistpTakes [in]: List of takes to upload. May be NULL or empty.
+		\return tbool: True on success. If false error text can be extracted with GetError(..) method
+	*/
 	tbool Init_NewProject(
 						  const tchar* pszUser, 
 						  const tchar* pszPassword,
@@ -39,6 +54,21 @@ public:
 						  const tchar* pszfileCommit,
 						  std::list<CTake_Data*>* plistpTakes);
 
+
+	//! Clone a project branch at koblo.com and create a new branch
+	/*!
+		\param pszUser [in]: User for authentication
+		\param pszPassword [in]: Password for authentication
+		\param pszProjUUID [in]: UUID for existing project "container" where new branch will be created
+		\param pszBranchUUID_Original [in]: UUID for the branch we wish to clone
+		\param pszBranchUUID [in]: UUID for the new branch
+		\param pszBranchName [in]: Name for the new branch
+		\param pszBranchDesc [in]: Description of the new branch
+		\param pszCommitUUID [in]: UUID for first commit to branch of project xml
+		\param pszfileCommit [in]: Path to file of project xml
+		\param plistpTakes [in]: List of takes to upload. May be NULL or empty.
+		\return tbool: True on success. If false error text can be extracted with GetError(..) method
+	*/
 	tbool Init_NewBranch(
 		const tchar* pszUser, const tchar* pszPassword,
 		const tchar* pszProjUUID,
@@ -47,17 +77,38 @@ public:
 		const tchar* pszCommitUUID, const tchar* pszfileCommit,
 		std::list<CTake_Data*>* plistpTakes);
 
+
+	//! Commit to an existing project & branch at koblo.com
+	/*!
+		\param pszUser [in]: User for authentication
+		\param pszPassword [in]: Password for authentication
+		\param pszProjUUID [in]: UUID for existing project "container" where new branch will be created
+		\param pszBranchUUID [in]: UUID for existing branch
+		\param pszCommitUUID [in]: UUID for commit to branch of project xml
+		\param pszfileCommit [in]: Path to file of project xml
+		\param pszOnline_fileCommit [in]:  //!!!TODO: What's this???
+		\param plistpTakes [in]: List of takes to upload. May be NULL or empty.
+		\return tbool: True on success. If false error text can be extracted with GetError(..) method
+	*/
 	tbool Init_Commit(
 		const tchar* pszUser, const tchar* pszPassword,
 		const tchar* pszProjUUID,
 		const tchar* pszBranchUUID,
 		const tchar* pszCommitUUID, 
-					  const tchar* pszfileCommit,
-					  const tchar* pszOnline_fileCommit,
-					  const tchar* pszCommitDesc,
+		const tchar* pszfileCommit,
+		const tchar* pszOnline_fileCommit,
+		const tchar* pszCommitDesc,
 		std::list<CTake_Data*>* plistpTakes);
 
+
+	//! Add a preset-data chunk file to next upload. Must be called after any of the Init_xxx methods.
+	/*!
+		\param pszPresetDataUUID [in]: UUID for this version of preset-data
+		\param pszFilePresetData [in]: Path to file of preset-data
+		\return tbool: True on success. If false error text can be extracted with GetError(..) method
+	*/
 	tbool Add_PresetData(const tchar* pszPresetDataUUID, const tchar* pszFilePresetData);
+
 
 	virtual tbool DoWork();
 	virtual tbool IsDone();

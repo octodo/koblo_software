@@ -85,6 +85,11 @@ public:
 	 */
 	virtual void Parse_Edditing_Object(TiXmlElement* pElement);
 	
+	/*! parse the <preset_file_uuid> TinyXML DOM 
+	 \param TiXmlElement [in]: TiXmlElement.
+	 */
+	virtual void Parse_Preset_File_Object(TiXmlElement* pElement);
+	
 	
 	
 	
