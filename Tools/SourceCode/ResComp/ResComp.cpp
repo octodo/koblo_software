@@ -34,11 +34,11 @@ long lCurId = ID_0;
 #define RESTYPE_FNT 2
 #define RESTYPE_BIN 3
 
-const long lNrOfKnownExt = 4;
-char apszKnownExts[lNrOfKnownExt][20] = {{".tga"}, {".fnt"}, {".ico"}, {".icns"}};
+const long lNrOfKnownExt = 5;
+char apszKnownExts[lNrOfKnownExt][20] = {{".tga"}, {".fnt"}, {".ico"}, {".icns"}, {".wav"}};
 tint32 aiKnownExt2ResType[lNrOfKnownExt] = { 
 	RESTYPE_TGA, RESTYPE_FNT, 
-	RESTYPE_BIN, RESTYPE_BIN
+	RESTYPE_BIN, RESTYPE_BIN, RESTYPE_BIN
 };
 
 
@@ -57,7 +57,11 @@ bool WriteDefineHeader(int iFileOut, list<SResource*>& ResourceList)
 		SResource* pResource = (*it);
 
 		char psz[256];
+#ifdef _WIN32
+		sprintf(psz, "#define %s %d\r\n", pResource->sDefineName.c_str(), pResource->lID);
+#else _WIN32
 		sprintf(psz, "#define %s %d\n", pResource->sDefineName.c_str(), pResource->lID);
+#endif // #else _WIN32
 		_write(iFileOut, psz, strlen(psz));
 	}
 
@@ -70,8 +74,8 @@ bool WriteFile()
 	tint32 iFileVersion = 1;
 	pChunkFile->Open((const tchar*)"res.k2s", IFile::FileCreate, iFileVersion);
 
-	pChunkFile->SetChunk(pChunkList);
-	pChunkFile->SetChunk(pChunkResources);
+	pChunkFile->SetChunk(pChunkList, false);
+	pChunkFile->SetChunk(pChunkResources, false);
 
 	pChunkList->Destroy();
 	pChunkResources->Destroy();
@@ -296,7 +300,7 @@ bool BuildList(int iFileIn, list<SResource*>& ResourceList)
 
 void PrintUsage()
 {
-	printf("Key2Sound Resource Compiler version 1.0\nCopyright (c) 2004 Key2Sound\nAll rights reserved world-wide\n");
+	printf("Koblo Resource Compiler version 1.0\nCopyright (c) 2004 KeyToSound\nCopyright (c) 2009 Koblo\nAll rights reserved world-wide\n");
 }
 
 int main(int argc, char* argv[])
