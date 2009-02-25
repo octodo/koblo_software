@@ -1,0 +1,27 @@
+How to add a binary resource to project
+=======================================
+
+In this example it's a sound file called BEEP.WAV
+
+
+1) Copy BEEP.WAV to resources folder
+
+2) Edit file recources/res.list so it includes this line:
+   BEEP.WAV ID_BEEP_WAV
+
+3) Rebuild resources by running either the _BuildResources script
+   that matches your OS (extension ".bat" for windows, ".sh" for OS X).
+   This will update the files "Resources.h" and "ResourcesInc.cpp".
+
+4) In application/plugin class cpp file insert the following lines:
+   // Get pointer to raw resource
+   ge::IRawResource* pBeepWav = pResMan->GetRawResource(ID_BEEP_WAV);
+   const void* pvoidBeepWav = (void*)pBeepWav->GetData();
+   tuint64 uiSizeBeepWav = (tuint64)pBeepWav->GetDataSize();
+   // Make it look like a file
+   IFileMemory* pfileBeepWav = IFileMemory::Create();
+   if (!pfileBeepWav->Open(IFile::FileRead, pvoidBeepWav, uiSizeBeepWav)) {
+       // Something went wrong....
+       // ..... do something here
+   }
+   
