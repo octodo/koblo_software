@@ -98,7 +98,7 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 void CKSXML_Read_Project::Load_Plug_In_Settings()
 {
 	std::string sPlugInFolderPath = gpApplication->Plugin_Settings_Folder();
-	std::string sPlugInSettingsPathName = sPlugInFolderPath + std::string("Plugin_Setting.prst");
+	std::string sPlugInSettingsPathName = sPlugInFolderPath + gpApplication->Get_Insert_File_UUID() + ".plugindata";
 	
 	{
 		tint32 iVersionNr;
