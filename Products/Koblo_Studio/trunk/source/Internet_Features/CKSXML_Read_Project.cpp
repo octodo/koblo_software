@@ -1312,6 +1312,13 @@ void CKSXML_Read_Project::Download_Takes()
 	tbool bInitOK = pTask->Init_Update(&mDownload_Que);
 	if (bInitOK) {
 		CAutoLock Lock(gpApplication->mMutex_Progress);
+		
+		
+		
+		std::string sFile_And_Path = gpApplication->Plugin_Settings_Folder() + gpApplication->Get_Insert_File_UUID() + ".plugindata";
+		
+		pTask->Get_PresetData(  gpApplication->Get_Insert_File_UUID().c_str() , sFile_And_Path.c_str() );
+		
 		gpApplication->mpProgressTasks->Add(pTask);
 		gpApplication->Playback_InProgressTask();
 	}

@@ -45,7 +45,7 @@ public:
 	std::string Get_Internal_Data_As_XML();
 	
 	//! write the XML file to Koblo.com
-	void Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID);
+//	void Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID);
 	
 	
 	

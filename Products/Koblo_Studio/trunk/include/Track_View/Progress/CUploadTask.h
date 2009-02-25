@@ -139,6 +139,8 @@ protected:
 
 	tbool DoPresetSettings_PreVerify_Before(tbool* pbAlreadyThere);
 	tbool DoPresetSettings_PreVerify_Action(tbool* pbActionDone);
+	
+	//! verify if the file is uploaded
 	tbool DoPresetSettings_PreVerify_After(tbool* pbAlreadyThere);
 
 	tbool DoPresetSettings_Upload_Before();

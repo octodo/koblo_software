@@ -18,12 +18,19 @@ void CKSUpload_Controller::Upload_Project()
 	if(gpApplication->No_Project_Is_Loaded()) {
 		return;
 	}
+	// stop playback
+	gpApplication->PlaybackStop();
+	
 	// clear que's
 	mOGG_Compress_Que.clear();
 	mMp3_Compress_Que.clear();
 	mUpload_Que.clear();
 	
 	gpApplication->Set_Commit_UUID();
+	
+	// give preset file new UUID
+	gpApplication->Get_New_Insert_File_UUID();
+	
 	// save project to secure resent edits is stored
 	gpApplication->Save_Project_As_XML_File_To_Disk();
 	
@@ -41,7 +48,7 @@ void CKSUpload_Controller::Upload_Project()
 	// if the project has a UUID it has been uploaded to koblo.com
 	gpApplication->Project_Is_Uploaded() ? Upload_Existing_Project() : Upload_New_Project();
 
-	// sample and take url's has been passed back form koblo snow save them
+	// sample and take url's has been passed back form koblo now save them
 	gpApplication->Save_Project_As_XML_File_To_Disk();
 	
 
@@ -69,6 +76,11 @@ void CKSUpload_Controller::Upload_New_Project()
 								 sProjectXmlFile.c_str(),
 								 &mUpload_Que);
 	
+	//make full path to preset file
+	std::string sFile_And_Path	=	gpApplication->Plugin_Settings_Folder() + gpApplication->Get_Insert_File_UUID() + ".plugindata";
+	pUploadTask->Add_PresetData( (gpApplication->Get_Insert_File_UUID()).c_str(), sFile_And_Path.c_str() );
+	
+	
 	// Add task to task list
 	CAutoLock Lock(gpApplication->mMutex_Progress);
 	gpApplication->mpProgressTasks->Add(pUploadTask);
@@ -95,6 +107,9 @@ void CKSUpload_Controller::Upload_Existing_Project()
 							sOnline_ProjectXmlFile.c_str(),
 							"next commit",
 							&mUpload_Que);
+	
+
+	pUploadTask->Add_PresetData( (gpApplication->Get_Insert_File_UUID() + ".plugindata").c_str(), gpApplication->Plugin_Settings_Folder().c_str() );
 	
 	// Add task to task list
 	CAutoLock Lock(gpApplication->mMutex_Progress);

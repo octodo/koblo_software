@@ -66,13 +66,13 @@ tbool CKSXML_Write_Project::Write_XML_File_To_Disk(std::string sXML)
 	return false;
 	
 }
-
+/*
 void CKSXML_Write_Project::Upload_Project_As_XML_File_To_Koblo( tint32 iProjectID)
 {
 	
 
 }
-
+*/
 
 
 void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
@@ -670,6 +670,7 @@ void CKSXML_Write_Project::Write_Tracks(TiXmlElement* pParent)
 	std::string sPlug_In_Name			= gpApplication->Get_Insert_File_UUID() + ".plugindata";
 	std::string sPlugInSettingsPathName = sPlugInFolderPath + sPlug_In_Name;
 	tint32 iVersionNr					= 1;
+	
 	mpPlugInDataFile->Close();
 	mpPlugInDataFile->Open(sPlugInSettingsPathName.c_str(), IFile::FileCreate, iVersionNr);
 
