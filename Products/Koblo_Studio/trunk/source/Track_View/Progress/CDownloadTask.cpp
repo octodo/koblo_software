@@ -498,11 +498,6 @@ tbool CDownloadTask::DoGetPresetData_Action(tbool* pbActionDone)
 		tchar pszErr[1024];
 		mpDownloader->GetError(pszErr, 1024);
 		msExtendedError = std::string("Download preset data failed:\n") + pszErr;
-		tint32 iReplySize = (tint32)mpfileXML->GetMemorySize();
-		if (iReplySize > 1) {
-			msExtendedError += "\n\n";
-			msExtendedError += std::string((tchar*)(mpfileXML->GetMemoryPtr()), iReplySize);
-		}
 		return false;
 	}
 
