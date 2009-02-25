@@ -870,14 +870,14 @@ void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrac
 	
 	if( iVendor != -1 && iProduct != -1) {
 		
-		// do some math here 
+		// do some math h
 		
 		tint32 iValue = iProduct;
 		if (iVendor != 2) {
 			iValue = iVendor << 8 | iProduct;
 		}
-		// set parameter
-		Set_DAW_Parameter(pChild, giTinyXml_Type_Int, giParam_ChInsert1 + iSlot, giSection_First_Track + uTrack);
+		
+		gpApplication->SetGlobalParm( giParam_ChInsert1 + iSlot, iValue, giSection_First_Track + uTrack);
 		
 	}
 }
