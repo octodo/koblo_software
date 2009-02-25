@@ -4646,12 +4646,18 @@ tbool CKSApplication::OnTimer_CanStop(tint32 iID)
 					
 					CFStringRef strCaption = CFSTR("Error");
 					if (pszHeader != NULL) {
-						strCaption = CFStringCreateWithCStringNoCopy(NULL, pszHeader, kCFStringEncodingASCII, kCFAllocatorNull); 
+						// (lasse) attempt at quick'n'dirty fix
+						//strCaption = CFStringCreateWithCStringNoCopy(NULL, pszHeader, kCFStringEncodingASCII, kCFAllocatorNull); 
+						strCaption = CFStringCreateWithCString(NULL, pszHeader, kCFStringEncodingASCII, kCFAllocatorNull); 
+						// .. (lasse)
 					}
 					CFStringRef strError = CFSTR("");
 					tint iErrorLen = (pszMessage == NULL) ? 0 : strlen(pszMessage);
 					if (iErrorLen > 0) {
-						strError = CFStringCreateWithCStringNoCopy(NULL, pszMessage, kCFStringEncodingASCII, kCFAllocatorNull);
+						// (lasse) attempt at quick'n'dirty fix
+						//strError = CFStringCreateWithCStringNoCopy(NULL, pszMessage, kCFStringEncodingASCII, kCFAllocatorNull);
+						strError = CFStringCreateWithCString(NULL, pszMessage, kCFStringEncodingASCII, kCFAllocatorNull);
+						// .. (lasse)
 					}
 					
 					AlertStdCFStringAlertParamRec ParamRec;
