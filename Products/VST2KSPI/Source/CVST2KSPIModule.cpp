@@ -207,7 +207,7 @@ void CVST2KSPIModule::DoScanDirectory(const std::string& sPathName)
 				pEffect = mainFunc(audioMasterCallbackModule);
 				// Note: Call setSampleRate and setBlockSize also (part of initialization sequence).
 				pEffect->dispatcher(pEffect, effOpen, 0, 0, 0, 0.0);
-//				int iVersion = pEffect->dispatcher(pEffect, effGetVstVersion, 0, 0, 0, 0.0);
+				int iVersion = pEffect->dispatcher(pEffect, effGetVstVersion, 0, 0, 0, 0.0);
 				
 				// We don't really need the name now, but we want to just try something to see if it crashes. Would be better to get some info about VST version and required host VST version.
 				char pszProductName[1042];

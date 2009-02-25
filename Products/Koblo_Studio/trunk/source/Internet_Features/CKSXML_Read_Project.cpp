@@ -863,9 +863,12 @@ void CKSXML_Read_Project::Read_Track_Insert(TiXmlElement* pElement, tint32 uTrac
 		
 		// do some math here 
 		
-		tint32 iTest = iVendor +  iProduct; 
+		tint32 iValue = iProduct;
+		if (iVendor != 2) {
+			iValue = iVendor << 8 | iProduct;
+		}
 		// set parameter
-	//	Set_DAW_Parameter(pChild, giTinyXml_Type_Int, giParam_ChInsert1 + iSlot, giSection_First_Track + uTrack);
+		Set_DAW_Parameter(pChild, giTinyXml_Type_Int, giParam_ChInsert1 + iSlot, giSection_First_Track + uTrack);
 		
 	}
 }

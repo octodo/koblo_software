@@ -346,6 +346,118 @@ void CVST2KSPIPlugIn::ProcessNonInPlace(tfloat** ppfSamplesOut, const tfloat** p
 	mpVSTEffect->processReplacing(mpVSTEffect, (float**)ppfSamplesIn, (float**)ppfSamplesOut, iNrOfSamples);
 }
 
+IChunkFileMemory* CVST2KSPIPlugIn::CreateChunkFile()
+{
+	CAutoDelete<IChunk> pChunk(IChunk::Create(NULL, 0, 'vstc'));
+	{
+		void* pData;
+		tint32 iSize = mpVSTEffect->dispatcher(mpVSTEffect, effGetChunk, 0, 0, &pData, 0);
+
+		if (iSize != 0) {
+			// Write parms to chunk
+			pChunk->Write((const tchar*)pData, iSize);
+		}
+	}
+	
+	CAutoDelete<IChunk> pChunk2(IChunk::Create(NULL, 0, 'vstp'));
+	{
+		tint32 iNrOfParams = mpVSTEffect->numParams;
+		if (iNrOfParams > 0) {
+			tfloat32* pData = new tfloat32[iNrOfParams];
+			
+			tint32 iParam;
+			for (iParam = 0; iParam < iNrOfParams; iParam++) {
+				tfloat32 fValue = mpVSTEffect->getParameter(mpVSTEffect, iParam);
+				pData[iParam] = fValue;
+			}
+
+			// Write parms to chunk
+			pChunk2->Write((const tchar*)pData, iNrOfParams * sizeof(tfloat32));
+		}
+	}
+
+	// Create a chunk file
+	IChunkFileMemory* pFile = IChunkFileMemory::Create();
+	// Open it
+	tint32 iFileVersion = 1;
+	if (pFile->Open(IFile::FileCreate, iFileVersion) == false) {
+		// Couldn't "open" file, must be wrong format
+		return NULL;
+	}
+
+	// Add chunks to chunk file
+	pFile->SetChunk(pChunk, true);
+	pFile->SetChunk(pChunk2, true);
+
+	return pFile;
+}
+
+void CVST2KSPIPlugIn::SetChunk(const void* p, tuint32 iChunkSize)
+{
+	if (iChunkSize == 0) {
+		return;
+	}
+	
+	CAutoLock Lock(mMutex);
+	
+	// Open file
+	CAutoDelete<IChunkFileMemory> pChunkFile(IChunkFileMemory::Create());
+	tint32 iFileVersion;
+	if (pChunkFile->Open(IFile::FileRead, iFileVersion, p, iChunkSize) == false) {
+		// Couldn't "open" file, must be wrong format
+		return;
+	}
+
+	{
+		IChunk* pChunkOrg = pChunkFile->GetChunk('vstc');
+		if (pChunkOrg == NULL) {
+			// No performance chunk
+			return;
+		}
+		CAutoDelete<IChunk> pChunk = CAutoDelete<IChunk>(pChunkOrg);
+		
+		// Prepare memory
+		tint32 iChunkSize = pChunk->GetSize();
+		tchar* p = new tchar[iChunkSize];
+
+		// Read
+		pChunk->Read(p, iChunkSize);
+
+		mpVSTEffect->dispatcher(mpVSTEffect, effSetChunk, 0, iChunkSize, p, 0);
+
+		// Clean up
+		delete[] p;
+	}
+
+	{
+		IChunk* pChunkOrg = pChunkFile->GetChunk('vstp');
+		if (pChunkOrg == NULL) {
+			// No performance chunk
+			return;
+		}
+		CAutoDelete<IChunk> pChunk = CAutoDelete<IChunk>(pChunkOrg);
+		
+		// Prepare memory
+		tint32 iChunkSize = pChunk->GetSize();
+		tchar* p = new tchar[iChunkSize];
+		
+		// Read
+		pChunk->Read(p, iChunkSize);
+
+		tint32 iParams = iChunkSize / sizeof(tfloat32);
+		tint32 iParam;
+		tfloat32* pData = (tfloat32*)p;
+		for (iParam = 0; iParam < iParams; iParam++) {
+			tfloat32 fValue = pData[iParam];
+			mpVSTEffect->setParameter(mpVSTEffect, iParam, fValue);
+		}
+		
+		// Clean up
+		delete[] p;
+	}
+}
+
+
 
 
 
