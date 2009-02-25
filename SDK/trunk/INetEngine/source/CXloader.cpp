@@ -225,12 +225,13 @@ const tchar* CXloader::GetReplyMIMEString()
 const tchar* CXloader::GetMIMEString(E_MIME_Type eMIME)
 {
 	switch (eMIME) {
-		case MIME_TYPE_TEXT:	return "text/*";
-		case MIME_TYPE_HTML:	return "text/html";
-		case MIME_TYPE_XML:		return "text/xml";
-		case MIME_TYPE_BINARY:	return "application/octet-stream";
-		case MIME_TYPE_OGG:		return "audio/ogg";
-		case MIME_TYPE_MP3:		return "audio/mpeg";
+		case MIME_TYPE_TEXT:				return "text/*";
+		case MIME_TYPE_HTML:				return "text/html";
+		case MIME_TYPE_XML:					return "text/xml";
+		case MIME_TYPE_BINARY:				return "application/octet-stream";
+		case MIME_TYPE_OGG:					return "audio/ogg";
+		case MIME_TYPE_MP3:					return "audio/mpeg";
+		case MIME_TYPE_KOBLO_PLUGINDATA:	return "koblo/plugindata";
 	}
 	return "*/*";
 } // GetMIMEString
