@@ -4648,7 +4648,7 @@ tbool CKSApplication::OnTimer_CanStop(tint32 iID)
 					if (pszHeader != NULL) {
 						// (lasse) attempt at quick'n'dirty fix
 						//strCaption = CFStringCreateWithCStringNoCopy(NULL, pszHeader, kCFStringEncodingASCII, kCFAllocatorNull); 
-						strCaption = CFStringCreateWithCString(NULL, pszHeader, kCFStringEncodingASCII, kCFAllocatorNull); 
+						strCaption = CFStringCreateWithCString(NULL, pszHeader, kCFStringEncodingASCII); 
 						// .. (lasse)
 					}
 					CFStringRef strError = CFSTR("");
@@ -4656,7 +4656,7 @@ tbool CKSApplication::OnTimer_CanStop(tint32 iID)
 					if (iErrorLen > 0) {
 						// (lasse) attempt at quick'n'dirty fix
 						//strError = CFStringCreateWithCStringNoCopy(NULL, pszMessage, kCFStringEncodingASCII, kCFAllocatorNull);
-						strError = CFStringCreateWithCString(NULL, pszMessage, kCFStringEncodingASCII, kCFAllocatorNull);
+						strError = CFStringCreateWithCString(NULL, pszMessage, kCFStringEncodingASCII);
 						// .. (lasse)
 					}
 					
