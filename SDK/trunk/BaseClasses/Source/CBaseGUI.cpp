@@ -32,7 +32,7 @@
 CBaseGUI::CBaseGUI(CBasePlugIn* pPlugIn, de::IParameterManager* pParmMan)
 	: mpContext(NULL), mpResMan(NULL),
 	mpPlugIn(pPlugIn), mpWindow(NULL), mpParmMan(pParmMan), mpPresetBackground(NULL),
-	mbMIDILearn(false), mbMIDIUnLearn(false), mbBufferedDrawing(false)
+	mbMIDILearn(false), mbMIDIUnLearn(false), mbBufferedDrawing(false), mpPane(NULL)
 #ifdef WIN32
 , mhWndParent(NULL)
 #endif	// WIN32
@@ -52,8 +52,9 @@ CBaseGUI::~CBaseGUI()
 		mpPresetBackground->Destroy();
 	}
 
-	//!!! when called from a VST plug-in KS chras here
-	delete GetPane();
+	if (mpPane) {
+		delete GetPane();
+	}
 
 	if (mpWindow) {
 		mpWindow->Destroy();
