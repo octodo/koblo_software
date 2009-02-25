@@ -54,16 +54,21 @@ CBaseGUI::~CBaseGUI()
 
 	if (mpPane) {
 		delete GetPane();
+		
+		mpPane = NULL;
 	}
 
 	if (mpWindow) {
 		mpWindow->Destroy();
+		mpWindow = NULL;
 	}
 	if (mpResMan) {
 		mpResMan->Destroy();
+		mpResMan = NULL;
 	}
 	if (mpContext) {
 		mpContext->Destroy();
+		mpContext = NULL;
 	}
 }
 

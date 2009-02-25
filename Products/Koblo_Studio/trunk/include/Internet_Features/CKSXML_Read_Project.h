@@ -73,6 +73,31 @@ public:
 	 */
 	void Pass_The_Project_Tag( TiXmlNode* pParent );
 	
+	
+	/*! read the  TinyXML DOM file the root level
+	 \ passes one <project> object
+	 */
+	void Get_Project_Name_From_XML( TiXmlNode* pParent );
+	
+	//! read the name from a TiXmlNode
+	void  Read_Project_Name_From_TiXmlNode(TiXmlNode* pParent);
+	
+	
+	//! Read the  parameters from TinyXML <project> DOM
+	/*!
+	 \param TiXmlNode [in]: TiXmlNode.
+	 */
+	void Read_Project_Name_Object(TiXmlNode* pParent);
+	
+	/*! passes the name  objects 
+	 \param TiXmlNode [in]: TiXmlNode.
+	 */
+	void Parse_Project_Name_Object(TiXmlNode* pParent);
+	
+	void Set_Temp_Online_Project_Name(TiXmlNode* pParent);
+	
+	
+	
 	//! Read the  parameters from TinyXML <project> DOM
 	/*!
 	 \param TiXmlNode [in]: TiXmlNode.
@@ -249,6 +274,8 @@ private:
 	tbool bInsert_Regions;
 	
 	tbool mbOpen_Dialog;
+	
+	std::string sTemp_Online_Project_Name;
 	
 	
 };

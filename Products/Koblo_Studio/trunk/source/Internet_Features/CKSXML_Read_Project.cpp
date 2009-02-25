@@ -227,9 +227,13 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 		mpTinyXMLDoc->Parse(pszBuff);
 		
 		// pass the TinyXML DOM in to the DAW data structure
-		Pass_The_Project_Tag( mpTinyXMLDoc );
+		//Pass_The_Project_Tag( mpTinyXMLDoc );
+		
+		
 		
 		if(mbOpen_Dialog){
+			// get the project name from the xml file
+			Get_Project_Name_From_XML( mpTinyXMLDoc );
 		
 			tchar pszDefaultFolder[1024];
 			gpApplication->GetDefaultProjectFolder(pszDefaultFolder);
@@ -238,7 +242,7 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 			tchar pszDefault_Folder[1024];
 			gpApplication->GetDefaultProjectFolder(pszDefault_Folder);
 			
-			std::string sProject_Name = gpApplication->Online_Project_Name();
+			//std::string sProject_Name = gpApplication->Online_Project_Name();
 			
 			// open new project dialog
 			tchar pszProject_Folder[1024];
@@ -247,7 +251,7 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 			// Don't browse into OS X bundles (special kind of folders)
 			pDlg->SetBundleBehaviour(1);
 
-			pDlg->DoDialog(pszProject_Folder, pszDefault_Folder, "", "", sProject_Name.c_str() );
+			pDlg->DoDialog(pszProject_Folder, pszDefault_Folder, "", "", sTemp_Online_Project_Name.c_str() );
 			std::string sProject_Folder = pszProject_Folder;
 			
 			// user canceled operation
@@ -258,6 +262,9 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 			}
 			// continue
 			else {
+				// now pass the xml file
+				Pass_The_Project_Tag( mpTinyXMLDoc );
+				
 				// update path's and names for files and folders
 				gpApplication->Update_Project_Name(sProject_Folder);
 
@@ -286,6 +293,10 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 			}
 		}
 		else{
+			
+			// now pass the xml file
+			Pass_The_Project_Tag( mpTinyXMLDoc );
+
 			// restore project name
 			gpApplication->Project_Name(sProject_Name);
 			
@@ -367,6 +378,92 @@ void CKSXML_Read_Project::Import_Regions()
 }
 
 */
+
+void CKSXML_Read_Project::Get_Project_Name_From_XML( TiXmlNode* pParent )
+{
+	// if there is multiply <project> tags only read the first one
+	tbool read = true;
+	
+	TiXmlNode* pChild;
+	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
+	{
+		if(pChild->Type() == TiXmlNode::ELEMENT && read){
+			Read_Project_Name_Object(pChild);
+			read = false;
+			
+		}
+	}
+
+}
+
+void CKSXML_Read_Project::Read_Project_Name_Object(TiXmlNode* pParent)
+{
+	if ( !pParent ) return ;
+	
+	TiXmlAttribute* pAttrib	=	pParent->ToElement()->FirstAttribute();
+	//  project uuid
+	if(pAttrib) {
+		std::string sProjectUUID =  pAttrib->Value() ;
+		gpApplication->Set_Project_UUID(sProjectUUID);
+	}
+	
+	// parse all childs
+	TiXmlNode* pChild;
+	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
+	{
+		if(pChild->Type() == TiXmlNode::ELEMENT)
+			Parse_Project_Name_Object(pChild);
+	}
+}
+
+void CKSXML_Read_Project::Parse_Project_Name_Object(TiXmlNode* pParent)
+{
+	
+	if (stricmp("name", pParent->Value()) == 0)
+		Set_Temp_Online_Project_Name(pParent);
+	
+	
+}
+
+void CKSXML_Read_Project::Set_Temp_Online_Project_Name(TiXmlNode* pParent)
+{
+	if ( !pParent ) return;
+	
+	TiXmlNode* pChild = pParent->FirstChild();
+	
+	if ( pChild ){
+		TiXmlText* pText;
+		pText = pChild->ToText();
+		
+		sTemp_Online_Project_Name =  pText->Value();
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 void CKSXML_Read_Project::Pass_The_Project_Tag( TiXmlNode* pParent )

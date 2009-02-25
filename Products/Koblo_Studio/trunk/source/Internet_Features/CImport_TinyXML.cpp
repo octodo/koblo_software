@@ -41,7 +41,6 @@ void CImport_TinyXML::Read_Project_Name(TiXmlNode* pParent)
 	if ( pChild ){
 		TiXmlText* pText;
 		pText = pChild->ToText();
-//		gpApplication->Project_Name(pText->Value());
 		gpApplication->Online_Project_Name(pText->Value());
 	}
 }
