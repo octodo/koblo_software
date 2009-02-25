@@ -43,8 +43,15 @@ public:
 		\param plistpTakes [in]: A list of takes to download
 		\return tbool: True on success. If false error text can be extracted with GetError(..) method
 	*/
-	tbool Init_Update(std::list<CTake_Data*>* plistpTakes,
-		const tchar* pszPresetDataUUID = "", const tchar* pszFilePresetData = "");
+	tbool Init_Update(std::list<CTake_Data*>* plistpTakes);
+
+	//! For getting preset data while updating a project. Must be called after Init_Update
+	/*!
+		\param pszPresetDataUUID [in]: UUID for preset data to get from koblo.com
+		\param pszFilePresetData [in]: Full path to preset data file to save
+		\return tbool: True on success. If false error text can be extracted with GetError(..) method
+	*/
+	tbool Get_PresetData(const tchar* pszPresetDataUUID, const tchar* pszFilePresetData);
 
 	virtual tbool DoWork();
 	virtual tbool IsDone();

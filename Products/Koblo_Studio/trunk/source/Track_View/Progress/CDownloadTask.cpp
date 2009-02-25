@@ -131,8 +131,7 @@ tbool CDownloadTask::Init_DownloadXML(
 } // Init_DownloadXML
 
 
-tbool CDownloadTask::Init_Update(std::list<CTake_Data*>* plistpTakes,
-	const tchar* pszPresetDataUUID /*= ""*/, const tchar* pszFilePresetData /*= ""*/)
+tbool CDownloadTask::Init_Update(std::list<CTake_Data*>* plistpTakes)
 {
 	if (miActionOrder != 0) {
 		msExtendedError = "Double initialization";
@@ -145,6 +144,20 @@ tbool CDownloadTask::Init_Update(std::list<CTake_Data*>* plistpTakes,
 	if (!Init_Helper(plistpTakes))
 		return false;
 
+	if (mlistpTakes.size() == 0) {
+		// Skip past download - all are there already
+		miActionOrder = geDownload_QueueInsertRegions;
+	}
+	else {
+		// Start with download
+		miActionOrder = geDownload_Take_Download_Before;
+	}
+	return true;
+} // Init_Update
+
+
+tbool CDownloadTask::Get_PresetData(const tchar* pszPresetDataUUID, const tchar* pszFilePresetData)
+{
 	msPresetDataUUID = pszPresetDataUUID;
 	if (msPresetDataUUID.size() > 0) {
 		mpfilePresetData = IFile::Create();
@@ -157,16 +170,8 @@ tbool CDownloadTask::Init_Update(std::list<CTake_Data*>* plistpTakes,
 		}
 	}
 
-	if (mlistpTakes.size() == 0) {
-		// Skip past download - all are there already
-		miActionOrder = geDownload_QueueInsertRegions;
-	}
-	else {
-		// Start with download
-		miActionOrder = geDownload_Take_Download_Before;
-	}
 	return true;
-} // Init_Update
+} // Get_PresetData
 
 
 tbool CDownloadTask::Init_Helper(std::list<CTake_Data*>* plistpTakes)
