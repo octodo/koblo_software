@@ -1791,7 +1791,7 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 	// jump to mouse pos
 	else if (s.compare("View@Plug-In's") == 0) {
 		
-		Show_All_Plugins(false);
+		Toggle_Showe_Hide_Plugins();
 		
 	}
 	

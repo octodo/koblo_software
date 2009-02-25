@@ -46,10 +46,18 @@ public:
 	void Select_All_Regions();
 	void Close_Window();
 	void Toggle_Window();
+	
+	//! show plug-in's
 	void Show_All_Plugins(tbool bShow);
+	
+	//! toggle show hide plug-in's
+	void Toggle_Showe_Hide_Plugins();
+	
 	virtual void Update_Windows();
 	
 protected:
+	
+	tbool mbShow_Plugins;
 
 };
 

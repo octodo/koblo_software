@@ -55,7 +55,7 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		Pass_The_Project_Tag( mpTinyXMLDoc );
 		
 		// close all plug-in windows
-		gpApplication->Show_All_Plugins(false);
+//		gpApplication->Show_All_Plugins(false);
 		
 		// read plugin data from disk
 		Load_Plug_In_Settings();

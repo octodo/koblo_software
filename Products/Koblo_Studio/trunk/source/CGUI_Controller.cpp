@@ -68,8 +68,20 @@ void CGUI_Controller::Toggle_Window()
 	
 }
 
+void CGUI_Controller::Toggle_Showe_Hide_Plugins()
+{
+	mbShow_Plugins = !mbShow_Plugins;
+	Show_All_Plugins(mbShow_Plugins);
+}
+
 void CGUI_Controller::Show_All_Plugins(tbool bShow)
 {
+	//!!! Dont use for now breaks gui
+	gpApplication->Stop_Timer();
+	
+	mbShow_Plugins = bShow;
+	/*
+	
 	for (tint32 i = 0; i < giNumber_Of_Tracks; i++) {
 		
 		if(bShow){
@@ -85,6 +97,8 @@ void CGUI_Controller::Show_All_Plugins(tbool bShow)
 			gpDSPEngine->Close_Plug_In_GUI(i,3);
 		}
 	}
+	 */
+	gpApplication->Start_Timer();
 }
 
 void CGUI_Controller::Update_Windows() 
