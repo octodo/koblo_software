@@ -495,6 +495,14 @@ tbool CDownloadTask::DoGetPresetData_Before()
 tbool CDownloadTask::DoGetPresetData_Action(tbool* pbActionDone)
 {
 	if (mpDownloader->IsFailed()) {
+		tint32 iStatus = mpDownloader->GetHttpStatusCode();
+		if (iStatus == 404) {
+			// No preset data file - that's ok
+			// We're done
+			*pbActionDone = true;
+			return true;
+		}
+		// Some other (real) error occured
 		tchar pszErr[1024];
 		mpDownloader->GetError(pszErr, 1024);
 		msExtendedError = std::string("Download preset data failed:\n") + pszErr;
