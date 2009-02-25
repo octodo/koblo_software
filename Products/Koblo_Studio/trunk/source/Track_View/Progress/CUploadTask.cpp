@@ -1246,7 +1246,12 @@ tbool CUploadTask::DoPresetSettings_Upload_Before()
 		||
 		(!mpUploader->AddParam("plugindata[uuid]", msPresetDataUUID.c_str(), -1))
 		||
-		(!mpUploader->AddFileParam("plugindata[uploaded_data]", mpfilePresetData, NULL, ine::MIME_TYPE_BINARY))
+		(!mpUploader->AddFileParam(
+			"plugindata[uploaded_data]",
+			mpfilePresetData,
+			NULL,
+			ine::MIME_TYPE_KOBLO_PLUGINDATA)
+		)
 		||
 		(!mpUploader->Start(mpfileReply_Uploader))
 	) {
