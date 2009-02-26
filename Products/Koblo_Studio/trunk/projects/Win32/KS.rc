@@ -114,12 +114,12 @@ IDI_KS                  ICON                    "..\\..\\resources\\KobloStudio.
 
 IDR_KS_ACCELERATOR ACCELERATORS 
 BEGIN
-    "Q",            IDM_EXIT,               VIRTKEY, CONTROL, NOINVERT
-    "X",            IDM_EXIT,               VIRTKEY, ALT, NOINVERT
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
-    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
     "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
     VK_F1,          IDM_ABOUT,              VIRTKEY, NOINVERT
+    "Q",            IDM_EXIT,               VIRTKEY, CONTROL, NOINVERT
+    "X",            IDM_EXIT,               VIRTKEY, ALT, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
 END
 
 #endif    // Danish resources
@@ -145,7 +145,7 @@ BEGIN
     POPUP "&File",                          65535,MFT_STRING,MFS_ENABLED
     BEGIN
         MENUITEM "&New Project",                ID_FILE_NEW,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Open Project",               ID_FILE_OPEN,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Open Project \tCtrl+O",      ID_FILE_OPEN,MFT_STRING,MFS_ENABLED
         MENUITEM "&Save Project",               ID_FILE_SAVE,MFT_STRING,MFS_ENABLED
         MENUITEM "Save Project &As",            ID_FILE_SAVE_AS,MFT_STRING,MFS_ENABLED
         MENUITEM "C&lose Project",              ID_FILE_CLOSEPROJECT,MFT_STRING,MFS_ENABLED
