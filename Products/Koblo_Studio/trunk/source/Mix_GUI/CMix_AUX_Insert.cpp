@@ -164,6 +164,41 @@ void CMix_AUX_Insert::HandleMsg(SMsg* pMsg)
 		case MsgUpdateAudioGUI:
 			PreparePopups();
 			break;
+
+		case MsgInsertPopup:
+			{
+				tint32 iPaneID = ((tint32*)pMsg->pDataIn)[0];
+				tint32 iControlID = ((tint32*)pMsg->pDataIn)[1];
+				tint32 iValue = ((tint32*)pMsg->pDataIn)[2];
+				if (iPaneID == GetPaneID()) {
+					if (iControlID == giCtrl_Mix_Insert_Pop1 + miCtrl_Offset ||
+						iControlID == giCtrl_Mix_Insert_Pop2 + miCtrl_Offset ||
+						iControlID == giCtrl_Mix_Insert_Pop3 + miCtrl_Offset ||
+						iControlID == giCtrl_Mix_Insert_Pop4 + miCtrl_Offset) {
+							ge::IControl* pControl = GetWindow()->GetControl(iControlID);
+							ge::IPopupMenu* pPopup = dynamic_cast<ge::IDropDownListBox*>(pControl)->GetPopup();
+							tint32 iItems = pPopup->GetItems();
+							tint32 iItem;
+							for (iItem = 0; iItem < iItems; iItem++) {
+								tint32* pi = (tint32*)(pPopup->GetData(iItem));
+								if (pi) {
+									tint32 iCompanyID = pi[0];
+									tint32 iProductID = pi[1];
+									tint32 iValuePop = iProductID;
+									if (iCompanyID != 2) {
+										iValuePop = (iCompanyID << 8) | iProductID;
+									}
+
+									if (iValue == iValuePop) {
+										((tint32*)pMsg->pDataIn)[2] = iItem;
+										break;
+									}
+								}
+							}
+					}
+				}
+			}
+			break;
 	}
 }
 

@@ -228,6 +228,10 @@ void CPopupMenu::Init(tint32 iID, IWindow* pWnd, IResourceManager* pResMan, tint
 	// .. Lasse
 } // CPopupMenu::Init
 
+tint32 CPopupMenu::GetItems()
+{
+	return mItems.iItemCount;
+}
 
 void CPopupMenu::SetSizeThis()
 {

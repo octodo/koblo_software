@@ -33,6 +33,7 @@ public:
 
 	//! CBaseGUI override
 	virtual void KSPI_CALL OnTimer();
+	virtual void SetControlValue(tint32 iPaneID, tint32 iControlID, tint32 iValue);
 
 	//! IDestructable override
 	virtual void KSPI_CALL Destroy();
