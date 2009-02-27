@@ -157,6 +157,10 @@ public:
 
 	//! Get the http status code for upload. Is set when transaction is done or failed. Use with care!
 	virtual tint32 GetHttpStatusCode() = 0;
+
+	//! Get the full URL for current (or succeeded/failed) download. This is valid for both Init(..) methods, but not before Start(..) has been called
+	virtual const tchar* GetFullURL() = 0;
+
 };
 
 #endif // _ine_i_uploader

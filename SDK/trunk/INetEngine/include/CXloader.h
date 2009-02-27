@@ -57,6 +57,9 @@ public:
 	virtual tbool GetError(tchar* pszErrBuff, tint32 iErrBuffSize);
 	//! IDownloader implementation
 	virtual tint32 GetHttpStatusCode() { return miHttpStatus; };
+	//! IDownloader implementation
+	virtual const tchar* GetFullURL() { return msURL.c_str(); };
+
 
 	// Callbacks
 	size_t ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, size_t nmemb);
