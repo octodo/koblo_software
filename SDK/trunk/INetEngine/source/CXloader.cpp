@@ -887,14 +887,36 @@ size_t CXloader::ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, si
 		return CURL_READFUNC_ABORT;
 	}
 
-	// Increase upload progress
-	muiUploadProgress += uiActuallyRead;
+	// Attempt to get upload progress
+	double dUpProgress = 0.0;
+	if (!GetInfo(CURLINFO_SIZE_UPLOAD, "CURLINFO_SIZE_UPLOAD", &dUpProgress))
+		return false;
+	tuint64 iNewProgress1 = (tuint64)(dUpProgress + 0.5);
+	tuint64 iNewProgress2 = muiUploadProgress + uiActuallyRead;
+	// Set upload progress
+	muiUploadProgress = max(iNewProgress1, iNewProgress2);
 
 	// Get total upload size
 	double dUpSize = 0.0;
 	if (!GetInfo(CURLINFO_CONTENT_LENGTH_UPLOAD, "CURLINFO_CONTENT_LENGTH_UPLOAD", &dUpSize))
 		return false;
-	muiUploadSize = (tuint64)(dUpSize + 0.5);
+	tuint64 uiNewSize = (tuint64)(dUpSize + 0.5);
+	if (uiNewSize < muiUploadSize) {
+		// We already have a better upload size - use that
+		// Do nothing here
+	}
+	else {
+		// Fix for if we don't have actual size
+		if (uiNewSize == 0) {
+			// This will make the progress bar move a little
+			// The progress bar will slow down as the bytes pour out, but that's OK
+			muiUploadSize = 100000000000 + muiUploadProgress;
+		}
+		else {
+			// Returned size is good - use it as it is
+			muiUploadSize = uiNewSize;
+		}
+	}
 
 	return (size_t)uiActuallyRead;
 } // ReadFunction_ForUpload
@@ -950,19 +972,35 @@ size_t CXloader::WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb)
 		return 0;
 	}
 
-	// Increase download progress
-	muiReplyProgress += uiBytesToWrite;
+	// Attempt to get download progress
+	double dDownProgress = 0.0;
+	if (!GetInfo(CURLINFO_SIZE_DOWNLOAD, "CURLINFO_SIZE_DOWNLOAD", &dDownProgress))
+		return false;
+	tuint64 iNewProgress1 = (tuint64)(dDownProgress + 0.5);
+	tuint64 iNewProgress2 = muiReplyProgress + uiBytesToWrite;
+	// Set upload progress
+	muiReplyProgress = max(iNewProgress1, iNewProgress2);
 
 	// Get total download size
 	double dDownSize = 0.0;
 	if (!GetInfo(CURLINFO_CONTENT_LENGTH_DOWNLOAD, "CURLINFO_CONTENT_LENGTH_DOWNLOAD", &dDownSize))
 		return false;
-	muiReplySize = (tuint64)(dDownSize + 0.5);
-	// Fix for if server doesn't tell actual size
-	if (muiReplySize == 0) {
-		// This will make the progress bar move a little
-		// The progress bar will slow down as the byte pour in, but that's OK
-		muiReplySize = 100000000000 + muiReplyProgress;
+	tuint64 uiNewSize = (tuint64)(dDownSize + 0.5);
+	if (uiNewSize < muiReplySize) {
+		// We already have a better reply size - use that
+		// Do nothing here
+	}
+	else {
+		// Fix for if server doesn't tell actual size
+		if (uiNewSize == 0) {
+			// This will make the progress bar move a little
+			// The progress bar will slow down as the bytes pour in, but that's OK
+			muiReplySize = 100000000000 + muiReplyProgress;
+		}
+		else {
+			// Returned size is good - use it as it is
+			muiReplySize = uiNewSize;
+		}
 	}
 
 	if (mpfileForReply) {
@@ -988,7 +1026,6 @@ size_t CXloader::WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb)
 } // WriteFunction_ForReply
 
 
-/*
 int Static_ProgressFunction(void* p, double dDownloadSize, double dDownloaded, double dUploadSize, double dUploaded)
 {
 	CXloader* pthis = (CXloader*)p;
@@ -1006,7 +1043,6 @@ int CXloader::ProgressFunction(double dDownloadSize, double dDownloaded, double 
 	// Success
 	return 0;
 } // ProgressFunction
-*/
 
 
 void CXloader::ZapReplyBuffer()
@@ -1176,18 +1212,6 @@ tbool CXloader::OpenConnection()
 			if (!SetOpt(CURLOPT_SEEKDATA, "CURLOPT_SEEKDATA", this))
 				return false;
 			*/
-
-			/* (lasse) this doesn't seem to work for downloads?
-			// Set callback function for getting progress info
-			if (!SetOpt(CURLOPT_PROGRESSFUNCTION, "CURLOPT_PROGRESSFUNCTION", (void*)(&Static_ProgressFunction)))
-				return false;
-			// Set pointer so callback function for progress info can find correct contents
-			if (!SetOpt(CURLOPT_PROGRESSDATA, "CURLOPT_PROGRESSDATA", this))
-				return false;
-			// Enable progress info (notice the upside/down bool...)
-			if (!SetOpt(CURLOPT_NOPROGRESS, "CURLOPT_NOPROGRESS", false))
-				return false;
-			*/
 		}
 
 		// Signal to use a POST verb + use multi-part form message body + append message body
@@ -1233,6 +1257,16 @@ tbool CXloader::OpenConnection()
 		if (!SetOpt(CURLOPT_WRITEDATA, "CURLOPT_WRITEDATA", this))
 			return false;
 	}
+
+	// Set callback function for getting progress info
+	if (!SetOpt(CURLOPT_PROGRESSFUNCTION, "CURLOPT_PROGRESSFUNCTION", (void*)(&Static_ProgressFunction)))
+		return false;
+	// Set pointer so callback function for progress info can find correct contents
+	if (!SetOpt(CURLOPT_PROGRESSDATA, "CURLOPT_PROGRESSDATA", this))
+		return false;
+	// Enable progress info (notice the upside/down bool...)
+	if (!SetOpt(CURLOPT_NOPROGRESS, "CURLOPT_NOPROGRESS", false))
+		return false;
 
 	if (mbUseAuthentication) {
 		// Set user for authentication
