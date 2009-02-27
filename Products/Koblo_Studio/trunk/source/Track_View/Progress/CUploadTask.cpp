@@ -1220,10 +1220,10 @@ tbool CUploadTask::DoPresetSettings_PreVerify_After(tbool* pbAlreadyThere)
 		*pbAlreadyThere = true;
 
 		// We came here because we didn't know preset data existed - fix that
-		std::string sXML((tchar*)(mpfileReply_VerifyMisc->GetMemoryPtr()), iReplySize);
-		//!!! TODO: Important!!! We must save info that preset data exists!
-		// How do we do that? Maybe it's not important?
-		// ..... something here
+		std::string sUrlReplyXML((tchar*)(mpfileReply_VerifyMisc->GetMemoryPtr()), iReplySize);
+
+		//!!! TODO: Set URL in project xml, so it'll know where to get preset data
+		//gpApplication->Set_Something_What???(sUrlReplyXML);
 	}
 
 	return true;
@@ -1299,7 +1299,7 @@ tbool CUploadTask::DoPresetSettings_Upload_Action(tbool* pbActionDone)
 
 tbool CUploadTask::DoPresetSettings_Upload_After()
 {
-	// Get commit number
+	// Save URL for just uploaded plugin-settings
 	tint32 iSize = (tint32)mpfileReply_Uploader->GetMemorySize();
 	if (iSize > 1) {
 		std::string sUrlReplyXML(
@@ -1307,7 +1307,7 @@ tbool CUploadTask::DoPresetSettings_Upload_After()
 			iSize);
 		
 		//!!! TODO: Set URL in project xml, so it'll know where to get preset data
-		//gpApplication->Pass_Branch_Revision(sCommitReply);
+		//gpApplication->Set_Something_What???(sUrlReplyXML);
 	}
 
 	return true;
