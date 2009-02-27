@@ -907,10 +907,11 @@ size_t CXloader::ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, si
 	}
 	else {
 		// Fix for if we don't have actual size
-		if (uiNewSize == 0) {
-			// This will make the progress bar move a little
+		if ((uiNewSize == 0) || (uiNewSize < muiUploadProgress)) {
+			// Always assume we've got one mega-byte more than already uploaded.
+			// This will make the progress bar move a little.
 			// The progress bar will slow down as the bytes pour out, but that's OK
-			muiUploadSize = 100000000000 + muiUploadProgress;
+			muiUploadSize = 1000000 + muiUploadProgress;
 		}
 		else {
 			// Returned size is good - use it as it is
@@ -992,10 +993,11 @@ size_t CXloader::WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb)
 	}
 	else {
 		// Fix for if server doesn't tell actual size
-		if (uiNewSize == 0) {
-			// This will make the progress bar move a little
+		if ((uiNewSize == 0) || (uiNewSize < muiReplyProgress)) {
+			// Always assume we've got one mega-byte more coming than already recieved.
+			// This will make the progress bar move a little.
 			// The progress bar will slow down as the bytes pour in, but that's OK
-			muiReplySize = 100000000000 + muiReplyProgress;
+			muiReplySize = 1000000 + muiReplyProgress;
 		}
 		else {
 			// Returned size is good - use it as it is
