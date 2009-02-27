@@ -732,12 +732,13 @@ int main(int argc, char* argv[])
 
 #ifdef WIN32
 	pContext->RunMainLoop(IDR_KS_ACCELERATOR);
+
 #endif
 	
 #ifdef _Mac
 	pContext->RunMainLoop(0);
 #endif	
-	
+
 	gbClosingDown = true;
 	while (gbInAudioEngine) {
 	}

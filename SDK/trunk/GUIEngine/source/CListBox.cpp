@@ -16,7 +16,9 @@ CListBox::CListBox()
 
 CListBox::~CListBox()
 {
-	mpDrawPrimitives->Destroy();
+	if (mpDrawPrimitives) {
+		mpDrawPrimitives->Destroy();
+	}
 } // destructor
 
 

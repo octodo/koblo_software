@@ -62,7 +62,7 @@ public:
 	size_t ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, size_t nmemb);
 	//int SeekFunction_ForUpload(IFile* pfile, curl_off_t offset, int origin);
 	size_t WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb);
-	//int ProgressFunction(double dDownloadSize, double dDownloaded, double dUploadSize, double dUploaded);
+	int ProgressFunction(double dDownloadSize, double dDownloaded, double dUploadSize, double dUploaded);
 
 	struct SUploadStream {
 		CXloader* mpThis;
