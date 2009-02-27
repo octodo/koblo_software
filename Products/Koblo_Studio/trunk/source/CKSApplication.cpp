@@ -151,8 +151,7 @@ CKSApplication::~CKSApplication()
 		delete[] mpPlugInManager;
 	}
 
-	AbortProgressTasks(true);
-	NonModalDialogs_ZapList();
+	Abort_TrackEditor_Related_Timers();
 
 	AudioInput_IntermediateBuffer_Kill();
 } // destructor
@@ -163,6 +162,20 @@ void CKSApplication::Destroy()
 	delete dynamic_cast<CKSApplication*>(this);
 	
 } // Destroy
+
+
+void CKSApplication::Abort_TrackEditor_Related_Timers()
+{
+	// Destroy timer for error dialog thread
+	if (mpTimer_NonModalDialog) {
+		mpTimer_NonModalDialog->Destroy();
+		mpTimer_NonModalDialog = NULL;
+	}
+	NonModalDialogs_ZapList();
+
+	// Stop any ongoing progress tasks (includes destroying timer)
+	AbortProgressTasks(true);
+} // Abort_TrackEditor_Related_Timers
 
 
 kspi::IGUI* CKSApplication::CreateGUI(tint32 iIndex)

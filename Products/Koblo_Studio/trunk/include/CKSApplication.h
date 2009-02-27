@@ -426,7 +426,9 @@ public:
 	//! set extended error
 	void Extended_Error(std::string sError){ msExtendedError = sError;};
 	
-	
+
+	//! Called by CTrack_Editor_Pane before destruction
+	void Abort_TrackEditor_Related_Timers();
 	
 	
 

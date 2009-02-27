@@ -24,6 +24,10 @@ CTrack_Editor_Pane::CTrack_Editor_Pane(CBasePane* pPaneParent, CBaseGUI* pGUI)
 
 CTrack_Editor_Pane::~CTrack_Editor_Pane()
 {
+	// Make sure we don't get a crash from CKSApplication timers
+	// that try to do something with track-editor GUI
+	gpApplication->Abort_TrackEditor_Related_Timers();
+
 	if (mpMouseTrap) {
 		delete mpMouseTrap;
 		mpMouseTrap = NULL;
