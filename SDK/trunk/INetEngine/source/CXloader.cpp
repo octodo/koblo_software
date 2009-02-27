@@ -887,6 +887,15 @@ size_t CXloader::ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, si
 		return CURL_READFUNC_ABORT;
 	}
 
+	// Increase upload progress
+	muiUploadProgress += uiActuallyRead;
+
+	// Get total upload size
+	double dUpSize = 0.0;
+	if (!GetInfo(CURLINFO_CONTENT_LENGTH_UPLOAD, "CURLINFO_CONTENT_LENGTH_UPLOAD", &dUpSize))
+		return false;
+	muiUploadSize = (tuint64)(dUpSize + 0.5);
+
 	return (size_t)uiActuallyRead;
 } // ReadFunction_ForUpload
 
@@ -940,7 +949,21 @@ size_t CXloader::WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb)
 		// That's OK - reply is empty
 		return 0;
 	}
-	muiUploadProgress += uiBytesToWrite;
+
+	// Increase download progress
+	muiReplyProgress += uiBytesToWrite;
+
+	// Get total download size
+	double dDownSize = 0.0;
+	if (!GetInfo(CURLINFO_CONTENT_LENGTH_DOWNLOAD, "CURLINFO_CONTENT_LENGTH_DOWNLOAD", &dDownSize))
+		return false;
+	muiReplySize = (tuint64)(dDownSize + 0.5);
+	// Fix for if server doesn't tell actual size
+	if (muiReplySize == 0) {
+		// This will make the progress bar move a little
+		// The progress bar will slow down as the byte pour in, but that's OK
+		muiReplySize = 100000000000 + muiReplyProgress;
+	}
 
 	if (mpfileForReply) {
 		// Write directly into file buffer
@@ -965,6 +988,7 @@ size_t CXloader::WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb)
 } // WriteFunction_ForReply
 
 
+/*
 int Static_ProgressFunction(void* p, double dDownloadSize, double dDownloaded, double dUploadSize, double dUploaded)
 {
 	CXloader* pthis = (CXloader*)p;
@@ -982,6 +1006,7 @@ int CXloader::ProgressFunction(double dDownloadSize, double dDownloaded, double 
 	// Success
 	return 0;
 } // ProgressFunction
+*/
 
 
 void CXloader::ZapReplyBuffer()
@@ -1045,6 +1070,33 @@ tbool CXloader::SetOpt(CURLoption iOption, const tchar* pszOption, tbool bData, 
 	tint64 iData = bData ? 1 : 0;
 	return SetOpt(iOption, pszOption, (const void*)iData, pszExtraInfo); 
 } // SetOpt(tbool)
+
+
+tbool CXloader::GetInfo(CURLINFO eInfo, const tchar* pszInfo, void* pvoidData)
+{
+	CURLcode rc;
+	rc = curl_easy_getinfo(mpCURLEasyHandle, eInfo, pvoidData);
+	if (rc != 0) {
+		tchar pszErr[256];
+		sprintf(pszErr, "curl_easy_getinfo returned %d for %s", rc, pszInfo);
+		AppendError(pszErr);
+		return false;
+	}
+
+	return true;
+} // GetInfo(void*)
+
+
+tbool CXloader::GetInfo(CURLINFO eInfo, const tchar* pszInfo, tint32* piData)
+{
+	return GetInfo(eInfo, pszInfo, (void*)piData);
+} // GetInfo(tint32*)
+
+
+tbool CXloader::GetInfo(CURLINFO eInfo, const tchar* pszInfo, double* pfData)
+{
+	return GetInfo(eInfo, pszInfo, (void*)pfData);
+} // GetInfo(double*)
 
 
 tbool CXloader::OpenConnection()
@@ -1116,7 +1168,7 @@ tbool CXloader::OpenConnection()
 			if (!SetOpt(CURLOPT_READDATA, "CURLOPT_READDATA", this))
 				return false;
 
-			/*
+			/* (lasse) this doesn't seem to work for multiple files?
 			// Set callback function for seeking upload file
 			if (!SetOpt(CURLOPT_SEEKFUNCTION, "CURLOPT_SEEKFUNCTION", (void*)(&Static_SeekFunction_ForUpload)))
 				return false;
@@ -1125,6 +1177,7 @@ tbool CXloader::OpenConnection()
 				return false;
 			*/
 
+			/* (lasse) this doesn't seem to work for downloads?
 			// Set callback function for getting progress info
 			if (!SetOpt(CURLOPT_PROGRESSFUNCTION, "CURLOPT_PROGRESSFUNCTION", (void*)(&Static_ProgressFunction)))
 				return false;
@@ -1134,6 +1187,7 @@ tbool CXloader::OpenConnection()
 			// Enable progress info (notice the upside/down bool...)
 			if (!SetOpt(CURLOPT_NOPROGRESS, "CURLOPT_NOPROGRESS", false))
 				return false;
+			*/
 		}
 
 		// Signal to use a POST verb + use multi-part form message body + append message body
@@ -1448,6 +1502,10 @@ void CXloader::SetMultiSaysDone(CURLcode code)
 			tchar pszErr[128];
 			sprintf(pszErr, "%s returned status %d", msHost.c_str(), miHttpStatus);
 			msDelayedStatusError = pszErr;
+			switch (miHttpStatus) {
+				case 404: msDelayedStatusError += "\nPage not found."; break;
+				case 503: msDelayedStatusError += "\nServer may be down for maintainance."; break;
+			}
 		}
 		else if (code != 0) {
 			// There's an error

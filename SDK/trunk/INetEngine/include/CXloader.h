@@ -62,7 +62,7 @@ public:
 	size_t ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, size_t nmemb);
 	//int SeekFunction_ForUpload(IFile* pfile, curl_off_t offset, int origin);
 	size_t WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb);
-	int ProgressFunction(double dDownloadSize, double dDownloaded, double dUploadSize, double dUploaded);
+	//int ProgressFunction(double dDownloadSize, double dDownloaded, double dUploadSize, double dUploaded);
 
 	struct SUploadStream {
 		CXloader* mpThis;
@@ -176,5 +176,9 @@ private:
 	tbool SetOpt(CURLoption iOption, const tchar* pszOption, const tchar* pszData, const tchar* pszExtraInfo = "");
 	tbool SetOpt(CURLoption iOption, const tchar* pszOption, const std::string& rsData, const tchar* pszExtraInfo = "");
 	tbool SetOpt(CURLoption iOption, const tchar* pszOption, tbool bData, const tchar* pszExtraInfo = "");
+
+	tbool GetInfo(CURLINFO eInfo, const tchar* pszInfo, void* pvoidData);
+	tbool GetInfo(CURLINFO eInfo, const tchar* pszInfo, tint32* piData);
+	tbool GetInfo(CURLINFO eInfo, const tchar* pszInfo, double* pfData);
 	
 };
