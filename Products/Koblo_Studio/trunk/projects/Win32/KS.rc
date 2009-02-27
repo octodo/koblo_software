@@ -115,11 +115,39 @@ IDI_KS                  ICON                    "..\\..\\resources\\KobloStudio.
 IDR_KS_ACCELERATOR ACCELERATORS 
 BEGIN
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
     "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
     VK_F1,          IDM_ABOUT,              VIRTKEY, NOINVERT
     "Q",            IDM_EXIT,               VIRTKEY, CONTROL, NOINVERT
     "X",            IDM_EXIT,               VIRTKEY, ALT, NOINVERT
-    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    VK_F4,          ID_FILE_CLOSEPROJECT,   VIRTKEY, CONTROL, NOINVERT
+    "R",            ID_FILE_REVERTTOSAVED,  VIRTKEY, CONTROL, NOINVERT
+    "I",            ID_FILE_IMPORTAUDIO,    VIRTKEY, CONTROL, NOINVERT
+    "E",            ID_FILE_EXPORTAUDIO,    VIRTKEY, CONTROL, NOINVERT
+    "T",            ID_FILE_DOWNLOADPROJECT, VIRTKEY, CONTROL, NOINVERT
+    "U",            ID_FILE_UPLOADPROJECT,  VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+    "C",            ID_EDIT_COPYREGION,     VIRTKEY, CONTROL, NOINVERT
+    "X",            ID_EDIT_CUTSELECTION,   VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTEREGION,    VIRTKEY, CONTROL, NOINVERT
+    "D",            ID_EDIT_DUPLICATEREGION, VIRTKEY, CONTROL, NOINVERT
+    "M",            ID_EDIT_ADDTRACK,       VIRTKEY, CONTROL, NOINVERT
+    "K",            ID_EDIT_LOOPSELECTION,  VIRTKEY, CONTROL, NOINVERT
+    "L",            ID_EDIT_LOOP,           VIRTKEY, CONTROL, NOINVERT
+    "=",            ID_VIEW_MIXER,          ASCII,  NOINVERT
+    "/",            ID_VIEW_TRACKEDITOR,    ASCII,  NOINVERT
+    "*",            ID_VIEW_AUXRACK,        ASCII,  NOINVERT
+    "B",            ID_VIEW_WAVEFORMS,      VIRTKEY, CONTROL, NOINVERT
+    "G",            ID_VIEW_VIEWGRID,       VIRTKEY, CONTROL, NOINVERT
+    "F",            ID_VIEW_VIEWFADES,      VIRTKEY, CONTROL, NOINVERT
+    "0",            ID_VIEW_ZOOM,           VIRTKEY, CONTROL, NOINVERT
+    "+",            ID_VIEW_ZOOMIN,         ASCII,  NOINVERT
+    VK_INSERT,      ID_VIEW_ZOOMOUT,        VIRTKEY, NOINVERT
+    "J",            ID_VIEW_JUMPTOMOUSE,    VIRTKEY, CONTROL, NOINVERT
+    "1",            ID_TOOLS_HAND,          VIRTKEY, CONTROL, NOINVERT
+    "2",            ID_TOOLS_TRIM,          VIRTKEY, CONTROL, NOINVERT
+    "3",            ID_TOOLS_SELECT,        VIRTKEY, CONTROL, NOINVERT
+    "4",            ID_TOOLS_CUT,           VIRTKEY, CONTROL, NOINVERT
 END
 
 #endif    // Danish resources
@@ -144,71 +172,67 @@ IDC_KS_MENU MENUEX
 BEGIN
     POPUP "&File",                          65535,MFT_STRING,MFS_ENABLED
     BEGIN
-        MENUITEM "&New Project",                ID_FILE_NEW,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Open Project \tCtrl+O",      ID_FILE_OPEN,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Save Project",               ID_FILE_SAVE,MFT_STRING,MFS_ENABLED
-        MENUITEM "Save Project &As",            ID_FILE_SAVE_AS,MFT_STRING,MFS_ENABLED
-        MENUITEM "C&lose Project",              ID_FILE_CLOSEPROJECT,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Revert to Saved",            ID_FILE_REVERTTOSAVED,MFT_STRING,MFS_ENABLED
+        MENUITEM "&New Project...\tCtrl+N",     ID_FILE_NEW,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Open Project... \tCtrl+O",   ID_FILE_OPEN,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Save Project\tCtrl+S",       ID_FILE_SAVE,MFT_STRING,MFS_ENABLED
+        MENUITEM "Save Project &As...",         ID_FILE_SAVE_AS,MFT_STRING,MFS_ENABLED
+        MENUITEM "C&lose Project\tCtrl+F4",     ID_FILE_CLOSEPROJECT,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Revert to Saved\tCtrl+R",    ID_FILE_REVERTTOSAVED,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
-        MENUITEM "&Import Audio",               ID_FILE_IMPORTAUDIO,MFT_STRING,MFS_ENABLED
-        MENUITEM "Import KS Project",           ID_FILE_IMPORTKSPROJECT,MFT_STRING,MFS_ENABLED
-        MENUITEM "Ex&port Audio",               ID_FILE_EXPORTAUDIO,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Import Audio...\tCtrl+I",    ID_FILE_IMPORTAUDIO,MFT_STRING,MFS_ENABLED
+        MENUITEM "Ex&port Audio...\tCtrl+E",    ID_FILE_EXPORTAUDIO,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
-        MENUITEM "&Download Project",           ID_FILE_DOWNLOADPROJECT,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Upload Project",             ID_FILE_UPLOADPROJECT,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Download Project...\tCtrl+T", ID_FILE_DOWNLOADPROJECT,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Upload Project...\tCtrl+U",  ID_FILE_UPLOADPROJECT,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
-        MENUITEM "E&xit",                       IDM_EXIT,MFT_STRING,MFS_ENABLED
+        MENUITEM "E&xit\tAlt+X",                IDM_EXIT,MFT_STRING,MFS_ENABLED
     END
     POPUP "&Edit",                          65535,MFT_STRING,MFS_ENABLED
     BEGIN
-        MENUITEM "&Undo",                       ID_EDIT_UNDO40056,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO40056,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
-        MENUITEM "&Copy Region",                ID_EDIT_COPYREGION,MFT_STRING,MFS_ENABLED
-        MENUITEM "Cu&t Selection",              ID_EDIT_CUTSELECTION,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Paste Region",               ID_EDIT_PASTEREGION,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Duplicate Region",           ID_EDIT_DUPLICATEREGION,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Copy Region\tCtrl+C",        ID_EDIT_COPYREGION,MFT_STRING,MFS_ENABLED
+        MENUITEM "Cu&t Selection\tCtrl+X",      ID_EDIT_CUTSELECTION,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Paste Region\tCtrl+V",       ID_EDIT_PASTEREGION,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Duplicate Region\tCtrl+D",   ID_EDIT_DUPLICATEREGION,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
-        MENUITEM "&Inverse Region",             ID_EDIT_INVERSEREGION,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Normalize Region",           ID_EDIT_NORMALIZEREGION,MFT_STRING,MFS_ENABLED
-        MENUITEM MFT_SEPARATOR
-        MENUITEM "&Add Track",                  ID_EDIT_ADDTRACK,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Add Track\tCtrl+M",          ID_EDIT_ADDTRACK,MFT_STRING,MFS_ENABLED
         MENUITEM "De&lete Track",               ID_EDIT_DELETETRACK,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
-        MENUITEM "Loop &Selection",             ID_EDIT_LOOPSELECTION,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Loop",                       ID_EDIT_LOOP,MFT_STRING,MFS_ENABLED
+        MENUITEM "Loop &Selection\tCtrl+K",     ID_EDIT_LOOPSELECTION,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Loop\tCtrl+L",               ID_EDIT_LOOP,MFT_STRING,MFS_ENABLED
     END
     POPUP "&View",                          65535,MFT_STRING,MFS_ENABLED
     BEGIN
-        MENUITEM "&Mixer",                      ID_VIEW_MIXER,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Track Editor",               ID_VIEW_TRACKEDITOR,MFT_STRING,MFS_ENABLED
-        MENUITEM "&AUX Rack",                   ID_VIEW_AUXRACK,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Mixer\t=",                   ID_VIEW_MIXER,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Track Editor\t/",            ID_VIEW_TRACKEDITOR,MFT_STRING,MFS_ENABLED
+        MENUITEM "&AUX Rack\t*",                ID_VIEW_AUXRACK,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
-        MENUITEM "View &Waveforms",             ID_VIEW_VIEWWAVEFORMS,MFT_STRING,MFS_ENABLED
-        MENUITEM "View &Grid",                  ID_VIEW_VIEWGRID,MFT_STRING,MFS_ENABLED
-        MENUITEM "View &Fades",                 ID_VIEW_VIEWFADES,MFT_STRING,MFS_ENABLED
+        MENUITEM "View &Waveforms\tCtrl+B",     ID_VIEW_VIEWWAVEFORMS,MFT_STRING,MFS_ENABLED
+        MENUITEM "View &Grid\tCtrl+G",          ID_VIEW_VIEWGRID,MFT_STRING,MFS_ENABLED
+        MENUITEM "View &Fades\tCtrl+F",         ID_VIEW_VIEWFADES,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
-        MENUITEM "&Zoom",                       ID_VIEW_ZOOM,MFT_STRING,MFS_ENABLED
-        MENUITEM "Zoom &In",                    ID_VIEW_ZOOMIN,MFT_STRING,MFS_ENABLED
-        MENUITEM "Zoom &Out",                   ID_VIEW_ZOOMOUT,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Zoom\t0",                    ID_VIEW_ZOOM,MFT_STRING,MFS_ENABLED
+        MENUITEM "Zoom &In\t+",                 ID_VIEW_ZOOMIN,MFT_STRING,MFS_ENABLED
+        MENUITEM "Zoom &Out\t-",                ID_VIEW_ZOOMOUT,MFT_STRING,MFS_ENABLED
         MENUITEM MFT_SEPARATOR
-        MENUITEM "&Jump to Mouse",              ID_VIEW_JUMPTOMOUSE,MFT_STRING,MFS_ENABLED
-    END
-    POPUP "&Settings",                      65535,MFT_STRING,MFS_ENABLED
-    BEGIN
-        MENUITEM "&Audio Setup",                ID_SETTINGS_AUDIOSETUP,MFT_STRING,MFS_ENABLED
-        MENUITEM MFT_SEPARATOR
-        MENUITEM "&Set Username and Password",  ID_SETTINGS_SETUSERNAMEANDPASSWORD,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Clear Username and Password", ID_SETTINGS_CLEARUSERNAMEANDPASSWORD,MFT_STRING,MFS_ENABLED
-        MENUITEM MFT_SEPARATOR
-        MENUITEM "Project &License",            ID_SETTINGS_PROJECTLICENSE,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Jump to Mouse\tCtrl+J",      ID_VIEW_JUMPTOMOUSE,MFT_STRING,MFS_ENABLED
     END
     POPUP "&Tools",                         65535,MFT_STRING,MFS_ENABLED
     BEGIN
-        MENUITEM "&Hand",                       ID_TOOLS_HAND,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Trim",                       ID_TOOLS_TRIM,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Select",                     ID_TOOLS_SELECT,MFT_STRING,MFS_ENABLED
-        MENUITEM "&Cut",                        ID_TOOLS_CUT,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Hand\tCtrl+1",               ID_TOOLS_HAND,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Trim\tCtrl+2",               ID_TOOLS_TRIM,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Select\tCtrl+3",             ID_TOOLS_SELECT,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Cut\tCtrl+4",                ID_TOOLS_CUT,MFT_STRING,MFS_ENABLED
+    END
+    POPUP "&Setup",                         65535,MFT_STRING,MFS_ENABLED
+    BEGIN
+        MENUITEM "&Audio Setup...",             ID_SETTINGS_AUDIOSETUP,MFT_STRING,MFS_ENABLED
+        MENUITEM MFT_SEPARATOR
+        MENUITEM "&Set Username and Password...", ID_SETTINGS_SETUSERNAMEANDPASSWORD,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Clear Username and Password...", ID_SETTINGS_CLEARUSERNAMEANDPASSWORD,MFT_STRING,MFS_ENABLED
+        MENUITEM MFT_SEPARATOR
+        MENUITEM "Project &License...",         ID_SETTINGS_PROJECTLICENSE,MFT_STRING,MFS_ENABLED
     END
     POPUP "&Help",                          65535,MFT_STRING | MFT_RIGHTJUSTIFY,MFS_ENABLED
     BEGIN
