@@ -174,6 +174,11 @@ void CKSApplication::Abort_TrackEditor_Related_Timers()
 	NonModalDialogs_ZapList();
 
 	// Stop any ongoing progress tasks (includes destroying timer)
+	if (IsInProgressTaskState()) {
+		// Don't wait for actual stop, would hang (lasse)
+		// (this is a quick'n'dirty fix - don't have time to figure out why it hangs)
+		mePlaybackState = geStateStopped;
+	}
 	AbortProgressTasks(true);
 } // Abort_TrackEditor_Related_Timers
 
