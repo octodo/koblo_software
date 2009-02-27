@@ -4611,8 +4611,17 @@ void CKSApplication::AbortProgressTasks_NoLock(tbool bNoDialogBoxOnAbort /*= fal
 
 			}
 		}
+		else {
+			// (lasse) last fix of weird behaviour - it seems to work
+			if (mpProgressTasks->IsInProgress()) {
+				// We're "done" but queue isn't empty - what's going on?!?
+				// Try to clean up
+				mpProgressTasks->DeleteList();
+			}
+		}
 
 		// Mark as stopped
+		// (lasse) Why did you comment these out Max?
 		//delete mpTimer_ProgressTasks;
 		//mpTimer_ProgressTasks = NULL;
 	}
