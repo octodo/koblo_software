@@ -730,7 +730,7 @@ int main(int argc, char* argv[])
 	//sprintf(pszMsg, "i1_0=%d, i2_1=%d, i3_2=%d, i43=%d", i1_0, i2_1, i3_2, i4_3);
 	//ShowMessageBox(pszMsg);
 
-	pContext->RunMainLoop();
+	pContext->RunMainLoop(IDR_KS_ACCELERATOR);
 
 	gbClosingDown = true;
 	while (gbInAudioEngine) {

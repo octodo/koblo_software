@@ -46,7 +46,7 @@ public:
 	//! IContext override
 	virtual void* CreateExtraWindow(void* pszResName, SSize Size = SSize(0, 0), tbool bAlwaysOnTop = false);
 	//! IContext override
-	virtual void RunMainLoop();
+	virtual void RunMainLoop(int iAccel);
 	//! IContext override
 	virtual void LimitedHandleEventQueue(tbool bAllowMouseAndKeyboard, tbool* pbBreak);
 	//! IContext override

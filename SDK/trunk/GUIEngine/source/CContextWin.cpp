@@ -358,12 +358,12 @@ void CContextWin::LimitedHandleEventQueue(tbool bAllowMouseAndKeyboard, tbool* p
 	}
 } // LimitedHandleEventQueue
 
-void CContextWin::RunMainLoop()
+void CContextWin::RunMainLoop(int iAccel)
 {
 	MSG msg;
-//!!!
-/*	HACCEL hAccelTable;
-	hAccelTable = LoadAccelerators(ghInstance, (LPCTSTR)IDC_INETSYNTHAPP);*/
+
+	HACCEL hAccelTable;
+	hAccelTable = LoadAccelerators(mhInstance, (LPCTSTR)iAccel);
 
 	tint32 iRunIndex = 0;
 	tbool bStop = false;
@@ -405,12 +405,11 @@ void CContextWin::RunMainLoop()
 	}
 
 	while (GetMessage(&msg, NULL, 0, 0)) {
-//!!!
-//		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) 
-//		{
+		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) 
+		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
-//		}
+		}
 	}
 }
 

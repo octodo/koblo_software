@@ -207,7 +207,7 @@ void CContextOSX::LimitedHandleEventQueue(tbool /*bAllowMouseAndKeyboard*/, tboo
 {
 } // LimitedHandleEventQueue
 
-void CContextOSX::RunMainLoop()
+void CContextOSX::RunMainLoop(int /*iAccel*/)
 {
 //	::RunApplicationEventLoop();
 
