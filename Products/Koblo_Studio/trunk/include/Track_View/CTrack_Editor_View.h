@@ -90,7 +90,8 @@ public:
 
 //	kspi::IPlugIn* GetEffect(tint32 iChannel, tint32 iInsert);
 	
-	
+	void SetControlValue(tint32 iPaneID, tint32 iControlID, tint32 iValue);
+
 
 protected:
 	//! CBaseGUI override

@@ -69,13 +69,17 @@
 #define ID_TOOLS_TRIM                   40067
 #define ID_TOOLS_SELECT                 40068
 #define ID_TOOLS_CUT                    40069
+#define ID_Menu                         40070
+#define c                               40071
+#define ID_FILE_OPENKS                  40073
+#define ID_FILE_OPENx                   40074
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        104
-#define _APS_NEXT_COMMAND_VALUE         40070
+#define _APS_NEXT_COMMAND_VALUE         40076
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

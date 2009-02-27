@@ -245,4 +245,6 @@ public:
 	// .. Lasse
 
 	virtual void* GetData(tint32 iIndex) = 0;
+
+	virtual tint32 GetItems() = 0;
 };

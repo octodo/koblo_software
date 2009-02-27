@@ -563,7 +563,10 @@ LRESULT CALLBACK K2SGEContextWndProc(HWND hWnd, UINT message, WPARAM wParam, LPA
 				return 1;
 			
 				// Lasse, later dude... when we get dynamic menus
-			//case WM_MENUCOMMAND:
+		//	case WM_MENUCOMMAND:
+		//	{
+				
+		//	}
 			//break:
 				// .. Lasse
 

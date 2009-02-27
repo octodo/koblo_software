@@ -33,12 +33,14 @@ ECHO %sResComp%
 SET sResToInc=%sResComp%\..\ResourceToInclude.exe
 
 
+ECHO CD /d "%0\.."
 CD /d "%0\.."
 cd resources
+cd
 IF EXIST res.k2s DEL res.k2s
 
 : ECHO Y|rescomp.exe
-ECHO Y|%sResComp%
+ECHO Y|"%sResComp%"
 
 IF NOT EXIST res.k2s (
 	goto lblError
@@ -46,7 +48,7 @@ IF NOT EXIST res.k2s (
 
 IF EXIST ResourcesInc.cpp DEL ResourcesInc.cpp
 ECHO Prepare include file of .k2s file:
-%sResToInc% ResourcesInc.cpp res.k2s
+"%sResToInc%" ResourcesInc.cpp res.k2s
 @IF ERRORLEVEL 1 GOTO lblError
 
 IF EXIST "%__ProductName%.k2s" DEL "%__ProductName%.k2s"

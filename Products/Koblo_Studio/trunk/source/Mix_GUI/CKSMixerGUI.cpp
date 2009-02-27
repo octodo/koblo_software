@@ -160,3 +160,17 @@ void CKSMixerGUI::UpdateChannelName(tint32 iChannel, const std::string& sName)
 {
 	dynamic_cast<CKSMixerGUIPane*>(GetPane())->UpdateChannelName(iChannel, sName);
 }
+
+void CKSMixerGUI::SetControlValue(tint32 iPaneID, tint32 iControlID, tint32 iValue)
+{
+	tint32 piData[3];
+	piData[0] = iPaneID;
+	piData[1] = iControlID;
+	piData[2] = iValue;
+	CBasePane::SMsg Msg(MsgInsertPopup, piData);
+	if (iValue != 0) {
+		GetPane()->SendMsg(&Msg);
+	}
+
+	CBaseGUI::SetControlValue(piData[0], piData[1], piData[2]);
+}

@@ -659,15 +659,15 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\source\Track_View\Progress\CSetupTrackEditorTask.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\source\Track_View\Progress\CProgressTask.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\..\source\Track_View\Progress\CProgressTaskList.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\source\Track_View\Progress\CSetupTrackEditorTask.cpp"
 						>
 					</File>
 					<File
@@ -1263,15 +1263,15 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\include\Track_View\Progress\CSetupTrackEditorTask.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\include\Track_View\Progress\CProgressTask.h"
 						>
 					</File>
 					<File
 						RelativePath="..\..\include\Track_View\Progress\CProgressTaskList.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\include\Track_View\Progress\CSetupTrackEditorTask.h"
 						>
 					</File>
 					<File
@@ -1661,5 +1661,9 @@
 		</Filter>
 	</Files>
 	<Globals>
+		<Global
+			Name="RESOURCE_FILE"
+			Value="KS.rc"
+		/>
 	</Globals>
 </VisualStudioProject>

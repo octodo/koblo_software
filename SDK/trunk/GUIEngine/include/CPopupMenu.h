@@ -137,4 +137,6 @@ protected:
 	
 	virtual void SetSizeThis();
 	// .. Lasse
+
+	virtual tint32 GetItems();
 };
