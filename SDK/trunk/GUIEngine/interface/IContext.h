@@ -55,7 +55,7 @@ public:
 //	virtual void* CreateExtraWindow(CFStringRef pszResName) = 0;
 	virtual void* CreateExtraWindow(void* pszResName, SSize Size = SSize(0, 0), tbool bAlwaysOnTop = false) = 0;
 
-	virtual void RunMainLoop() = 0;
+	virtual void RunMainLoop(int iAccel) = 0;
 
 	//! Will allow for redraw events
 	/*!
