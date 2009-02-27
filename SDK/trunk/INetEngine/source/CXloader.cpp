@@ -962,7 +962,10 @@ size_t CXloader::WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb)
 	if (muiReplySize == 0) {
 		// This will make the progress bar move a little
 		// The progress bar will slow down as the byte pour in, but that's OK
-		muiReplySize = 100000000000 + muiReplyProgress;
+		//muiReplySize = 100000000000 + muiReplyProgress;
+		
+		//!!! i decresed the size max
+		muiReplySize = 100000000 + muiReplyProgress;
 	}
 
 	if (mpfileForReply) {
