@@ -910,7 +910,7 @@ size_t CXloader::ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, si
 		if (uiNewSize == 0) {
 			// This will make the progress bar move a little
 			// The progress bar will slow down as the bytes pour out, but that's OK
-			muiUploadSize = 1024000 + muiUploadProgress;
+			muiUploadSize = 1048576 + muiUploadProgress;
 		}
 		else {
 			// Returned size is good - use it as it is

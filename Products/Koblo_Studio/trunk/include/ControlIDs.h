@@ -317,6 +317,8 @@ enum E_System_Ctrls
 	giCtrl_User_Name_Display,
 	giCtrl_Password_Display,
 	
+	giCtrl_Projert_UUID,
+	
 	giNr_Of_System_Ctls
 };
 

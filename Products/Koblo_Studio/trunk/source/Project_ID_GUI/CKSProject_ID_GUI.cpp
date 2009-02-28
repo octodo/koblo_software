@@ -21,7 +21,7 @@ void CKSProject_ID_GUI::Destroy()
 
 void CKSProject_ID_GUI::GetSize(tuint32* piSizeX, tuint32* piSizeY)
 {
-	*piSizeX = 245;
+	*piSizeX = 345;
 	*piSizeY = 103;
 }
 
@@ -38,8 +38,8 @@ void CKSProject_ID_GUI::Initialize()
 	ConnectControls();
 
 //#ifdef WIN32
-	mpContext->SetMinWindowSize(mpWindow, ge::SSize(245,103));
-	mpContext->SetMaxWindowSize(mpWindow, ge::SSize(245,103));
+	mpContext->SetMinWindowSize(mpWindow, ge::SSize(345,103));
+	mpContext->SetMaxWindowSize(mpWindow, ge::SSize(345,103));
 //#endif // WIN32
 
 

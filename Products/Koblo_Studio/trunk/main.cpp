@@ -679,7 +679,7 @@ int main(int argc, char* argv[])
 	gWndProjectID = pContext->CreateExtraWindow((void*)CFSTR("ProjectIDWnd"), ge::SSize(244, 102));
 #endif
 #ifdef WIN32
-	gWndProjectID = pContext->CreateExtraWindow((void*)"Koblo Studio Setup", ge::SSize(245, 103));
+	gWndProjectID = pContext->CreateExtraWindow((void*)"Koblo Studio Setup", ge::SSize(	345, 103));
 #endif
 	
 	gpGUIProjectID = dynamic_cast<CKSProject_ID_GUI*>(gpPlugIn->CreateGUI(giProject_ID_Window));

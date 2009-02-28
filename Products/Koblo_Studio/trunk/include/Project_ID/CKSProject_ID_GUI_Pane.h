@@ -50,9 +50,10 @@ public:
 
 protected:
 
+	ge::IURL* mpDownload_Help;
 	
 
-
+	ge::IText*  mpProject_UUID_Txt;
 
 	
 };

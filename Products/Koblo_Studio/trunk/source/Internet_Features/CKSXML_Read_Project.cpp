@@ -161,7 +161,7 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(std::string sProject_U
 {
 	
 	
-	mbOpen_Dialog = false;
+	mbOpen_Dialog = true;
 	
 	
 	
@@ -169,7 +169,9 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(std::string sProject_U
 	std::string sProject;
 	char psz[256];
 	
-	sprintf(psz, "/projects/%s/trunk/latest/markup.xml", sProject_UUID.c_str() );
+//	sprintf(psz, "/branches/%s/commits/latest.xml", sProject_UUID.c_str() );
+//	sprintf(psz, "/branches/%s/commits/latest.xml", sProject_UUID.c_str() );
+	sprintf(psz, "/commits/%s/markup.xml", sProject_UUID.c_str() );
 	sProject = psz;
 	
 	Read_Project_From_Koblo( sProject );
@@ -179,6 +181,7 @@ void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(std::string sProject_U
 void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
 {
 
+	
 	
 	mbOpen_Dialog = true;
 	
