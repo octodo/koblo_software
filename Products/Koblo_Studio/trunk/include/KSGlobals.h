@@ -296,7 +296,8 @@ enum EPaneMsg
 	Msg_Deselect_Regions,
 	MSG_Redraw_Track_Editor,
 
-	MsgInsertPopup
+	MsgInsertPopup,
+	MsgClean_Project
 };
 
 // Track Editor

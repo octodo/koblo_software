@@ -29,17 +29,30 @@ public:
 	std::string Get_Description() const { return msDescription;};
 	
 	//! set take URL
-	void URL(const std::string& sURL ){ msURL = sURL;};
+	//void URL(const std::string& sURL ){ msURL = sURL;};
+	
+	//! set take URL
+	void URL( std::string sURL ){ msURL = sURL;};
 	
 	//! get take url
-	std::string URL() const { return msURL;};
+	//std::string URL() const { return msURL;};
+	
+	//! get take url
+	std::string URL() { return msURL;};
 	
 	
 	//! set mp3 URL
-	void MP3_URL(const std::string& sMP3_URL ){ msMP3_URL = sMP3_URL;};
+	//void MP3_URL(const std::string& sMP3_URL ){ msMP3_URL = sMP3_URL;};
 	
 	//! get mp3 url
-	std::string MP3_URL() const { return msMP3_URL;};
+	//std::string MP3_URL() const { return msMP3_URL;};
+	
+	
+	//! set mp3 URL
+	void MP3_URL( std::string sMP3_URL ){ msMP3_URL = sMP3_URL;};
+	
+	//! get mp3 url
+	std::string MP3_URL() { return msMP3_URL;};
 	
 	
 	

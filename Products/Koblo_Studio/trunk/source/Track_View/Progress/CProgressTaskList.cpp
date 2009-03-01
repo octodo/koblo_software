@@ -36,13 +36,15 @@ tbool CProgressTaskList::DoWork()
 		DeleteList();
 		mbAbort = false;
 		if (!mbAbort_DontTell) {
+			
 			tchar pszMsg[1024];
-			sprintf(
-				pszMsg,
-				"You aborted %d queued task%s",
-				iNumberOfActions,
-				(iNumberOfActions > 1) ? "s" : "");
+			sprintf( pszMsg, "You aborted %d queued task%s", iNumberOfActions, (iNumberOfActions > 1) ? "s" : "");
+			ge::IWindow::ShowMessageBox( std::string("Warning").c_str(),  pszMsg,  ge::IWindow::MsgBoxOK);
+			/*
+			tchar pszMsg[1024];
+			sprintf( pszMsg, "You aborted %d queued task%s", iNumberOfActions, (iNumberOfActions > 1) ? "s" : "");
 				gpApplication->ShowMessageBox_NonModal(pszMsg, "Progress aborted");
+			 */
 		}
 		return true;
 	}

@@ -182,7 +182,7 @@ public:
 private:
 	
 	//! called from the menu and opens the project id dialog 
-	virtual void Ask_For_Project_ID();
+	virtual void Ask_For_Commit_UUID();
 
 	// project uuid object
 	CKSUUID* mpProject_UUID;

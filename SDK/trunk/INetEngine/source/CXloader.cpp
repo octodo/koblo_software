@@ -907,9 +907,11 @@ size_t CXloader::ReadFunction_ForUpload(IFile* pfile, void *ptr, size_t size, si
 	}
 	else {
 		// Fix for if we don't have actual size
-		if (uiNewSize == 0) {
-			// This will make the progress bar move a little
+		if ((uiNewSize == 0) || (uiNewSize < muiUploadProgress)) {
+			// Always assume we've got one mega-byte more than already uploaded.
+			// This will make the progress bar move a little.
 			// The progress bar will slow down as the bytes pour out, but that's OK
+
 			muiUploadSize = 1048576 + muiUploadProgress;
 		}
 		else {
@@ -985,17 +987,23 @@ size_t CXloader::WriteFunction_ForReply(void *ptr, size_t size, size_t nmemb)
 	double dDownSize = 0.0;
 	if (!GetInfo(CURLINFO_CONTENT_LENGTH_DOWNLOAD, "CURLINFO_CONTENT_LENGTH_DOWNLOAD", &dDownSize))
 		return false;
-
-	muiReplySize = (tuint64)(dDownSize + 0.5);
-	// Fix for if server doesn't tell actual size
-	if (muiReplySize == 0) {
-		// This will make the progress bar move a little
-		// The progress bar will slow down as the byte pour in, but that's OK
-		//muiReplySize = 100000000000 + muiReplyProgress;
-		
-		//!!! i decresed the size max
-		muiReplySize = 100000000 + muiReplyProgress;
-
+	tuint64 uiNewSize = (tuint64)(dDownSize + 0.5);
+	if (uiNewSize < muiReplySize) {
+		// We already have a better reply size - use that
+		// Do nothing here
+	}
+	else {
+		// Fix for if server doesn't tell actual size
+		if ((uiNewSize == 0) || (uiNewSize < muiReplyProgress)) {
+			// Always assume we've got one mega-byte more coming than already recieved.
+			// This will make the progress bar move a little.
+			// The progress bar will slow down as the bytes pour in, but that's OK
+			muiReplySize = 1000000 + muiReplyProgress;
+		}
+		else {
+			// Returned size is good - use it as it is
+			muiReplySize = uiNewSize;
+		}
 	}
 
 	if (mpfileForReply) {

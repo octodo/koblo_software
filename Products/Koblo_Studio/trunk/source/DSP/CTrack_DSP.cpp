@@ -855,7 +855,13 @@ void CTrack_DSP::Stop()
 		IFile::DeleteFile((msRecordingName + std::string(".tmp")).c_str());
 
 		if (!bSuccess) {
+			
+			ge::IWindow::ShowMessageBox( std::string("Error").c_str(), 
+										"recording", 
+										ge::IWindow::MsgBoxOK);
+			/*
 			gpApplication->ShowMessageBox_NonModal(pszErrMsg, "Error recording");
+			 */
 		}
 		else if (!bAbortOperation) {
 			gpApplication->QueueAudioFileImport(msRecordingName.c_str(), true, miTrack, miRecordingSongPos);

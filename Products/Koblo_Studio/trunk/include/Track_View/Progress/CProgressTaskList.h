@@ -79,12 +79,15 @@ public:
 		return pInfo->GetProgress(piIx, piAll);
 	}
 
+	// (lasse) This used to be a protected method. Don't use unless you're sure you know why you need it!
+	void DeleteList();
+
 protected:
 
 
 	CMutex mMutex;
 
-	void DeleteList();
+	//void DeleteList();
 
 	tbool IsInProgress_NoLock()
 	{

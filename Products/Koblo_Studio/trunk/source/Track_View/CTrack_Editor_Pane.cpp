@@ -431,6 +431,12 @@ void CTrack_Editor_Pane::OnTimer(tint32 iTimerID)
 				// More than 1 (start of playback) stutter - that's bad
 								
 				mbDisplayStutterWarning_Armed = false;
+				
+				ge::IWindow::ShowMessageBox( std::string("Warning").c_str(), 
+											"System to slow", 
+											ge::IWindow::MsgBoxOK);
+				
+				/*
 
 				gpApplication->ShowMessageBox_NonModal(
 					"It seems your system is too slow to play back this project\n"
@@ -448,6 +454,7 @@ void CTrack_Editor_Pane::OnTimer(tint32 iTimerID)
 					"just keep playing. This warning message won't reappear.",
 					"Sorry"
 					);
+				 */
 			}
 		}
 	}

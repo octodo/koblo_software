@@ -56,13 +56,16 @@ public:
 	void Read_Project_From_Disk(std::string sFile);
 	
 	//! read a project XML file from Koblo.comin to the tiny xml DOM
-	void Read_Latest_Revision_From_Koblo(tint32 iProjectID);
+//	void Read_Latest_Revision_From_Koblo(tint32 iProjectID);
+	
+	//! read a project commit from Koblo.comin to the tiny xml DOM
+	void Get_Commit(std::string sProject_UUID);
+	
+	//! download the latest commit from a branch on koblo.com
+	void Get_Latest_Commit_In_Branch(std::string sProject_UUID);
 	
 	//! read a project XML file from Koblo.comin to the tiny xml DOM
-	void Read_Latest_Revision_From_Koblo(std::string sProject_UUID);
-	
-	//! read a project XML file from Koblo.comin to the tiny xml DOM
-	void Read_Project_From_Koblo(std::string sProject);
+	tbool Read_Project_From_Koblo(std::string sProject);
 	
 	//! pass the DOM in to the KS data structure
 	//!!! TO DO rename please look at content
@@ -77,7 +80,7 @@ public:
 	/*! read the  TinyXML DOM file the root level
 	 \ passes one <project> object
 	 */
-	void Get_Project_Name_From_XML( TiXmlNode* pParent );
+	tbool Get_Project_Name_From_XML( TiXmlNode* pParent );
 	
 	//! read the name from a TiXmlNode
 	void  Read_Project_Name_From_TiXmlNode(TiXmlNode* pParent);
@@ -203,6 +206,10 @@ public:
 	//! decompress one take
 	void Takes_Decompressed();
 	
+	std::string Temp_Online_Project_Name(){ return msTemp_Online_Project_Name;};
+	
+
+	
 	
 
 private:
@@ -275,7 +282,7 @@ private:
 	
 	tbool mbOpen_Dialog;
 	
-	std::string sTemp_Online_Project_Name;
+	std::string msTemp_Online_Project_Name;
 	
 	
 };

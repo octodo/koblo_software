@@ -174,6 +174,11 @@ void CKSApplication::Abort_TrackEditor_Related_Timers()
 	NonModalDialogs_ZapList();
 
 	// Stop any ongoing progress tasks (includes destroying timer)
+	if (IsInProgressTaskState()) {
+		// Don't wait for actual stop, would hang (lasse)
+		// (this is a quick'n'dirty fix - don't have time to figure out why it hangs)
+		mePlaybackState = geStateStopped;
+	}
 	AbortProgressTasks(true);
 } // Abort_TrackEditor_Related_Timers
 
@@ -1104,6 +1109,10 @@ void CKSApplication::Clean_Project(tint32 iCreateEmptyTracks)
 	CBasePane::SMsg Redraw_Msg;
 	Redraw_Msg = MSG_Redraw_Track_Editor;
 	gpApplication->Send_Msg_To_All_Panes(&Redraw_Msg);
+	
+	CBasePane::SMsg Clean_Msg;
+	Clean_Msg = MsgClean_Project;
+	gpApplication->Send_Msg_To_All_Panes(&Clean_Msg);
 	
 	// move playhead
 	gpApplication->MovePlayhead(0);
@@ -3714,7 +3723,11 @@ tbool CKSApplication::CanWaveFilePlay(const std::string& sWaveFilePath, tbool bA
 	}
 	sError += "\nParsing file '" + sWaveFilePath + "'";
 	if (bAllowErrorDialog) {
-		ShowMessageBox_NonModal(sError.c_str(), "Wave file error");
+		ge::IWindow::ShowMessageBox( std::string("Wave file").c_str(), 
+									"error", 
+									ge::IWindow::MsgBoxOK);
+		
+		//ShowMessageBox_NonModal(sError.c_str(), "Wave file error");
 	}
 	return false;
 } // CanWaveFilePlay
@@ -4606,8 +4619,17 @@ void CKSApplication::AbortProgressTasks_NoLock(tbool bNoDialogBoxOnAbort /*= fal
 
 			}
 		}
+		else {
+			// (lasse) last fix of weird behaviour - it seems to work
+			if (mpProgressTasks->IsInProgress()) {
+				// We're "done" but queue isn't empty - what's going on?!?
+				// Try to clean up
+				mpProgressTasks->DeleteList();
+			}
+		}
 
 		// Mark as stopped
+		// (lasse) Why did you comment these out Max?
 		//delete mpTimer_ProgressTasks;
 		//mpTimer_ProgressTasks = NULL;
 	}
@@ -4641,7 +4663,7 @@ tbool CKSApplication::OnTimer_CanStop(tint32 iID)
 				}
 			}
 			break;
-
+			
 		case giTimerID_NonModalDialog:
 			{
 				SNonModalDialogInfo* pInfo = NULL;
@@ -4653,7 +4675,14 @@ tbool CKSApplication::OnTimer_CanStop(tint32 iID)
 						);
 #endif // WIN32
 					
-#ifdef _Mac
+#ifdef _Mac			
+					
+					
+	//				ge::IWindow::ShowMessageBox( std::string("uos").c_str(), "Import as stereo", ge::IWindow::MsgBoxOK);
+					
+					/*
+					 //!!! code chrashes
+					 
 					const tchar* pszHeader = pInfo->sHeader.c_str();
 					const tchar* pszMessage = pInfo->sLongerText.c_str();
 					
@@ -4675,11 +4704,11 @@ tbool CKSApplication::OnTimer_CanStop(tint32 iID)
 					
 					AlertStdCFStringAlertParamRec ParamRec;
 					ParamRec.version = kStdCFStringAlertVersionOne;
-					ParamRec.movable = 1;
+					ParamRec.movable = 0;
 					ParamRec.helpButton = 0;
 					//ParamRec.filterProc = nil;
 					ParamRec.defaultButton = kAlertStdAlertOKButton;
-					ParamRec.cancelButton = kAlertStdAlertCancelButton;
+					//ParamRec.cancelButton = kAlertStdAlertCancelButton;
 					ParamRec.position = kWindowAlertPositionParentWindowScreen;
 					ParamRec.flags = 0;
 					
@@ -4696,6 +4725,7 @@ tbool CKSApplication::OnTimer_CanStop(tint32 iID)
 						ge::IWindow* pWnd = pGUI->GetWindow();
 						WindowRef winref = (WindowRef)(pWnd->GetParent());
 						osStat = ::ShowSheetWindow(GetDialogWindow(DlgRef), winref);
+						
 						if (osStat != 0) {
 							tint32 iSomethingRotten = 0;
 							iSomethingRotten++;
@@ -4705,13 +4735,16 @@ tbool CKSApplication::OnTimer_CanStop(tint32 iID)
 						//DialogItemIndex hit;
 						//::RunStandardAlert(DlgRef, NULL, &hit);
 					}
+					 */
 				
 					
 #endif // _Mac
 					
 					delete pInfo;
 					pInfo = NULL;
+					 
 				}
+					 
 			}
 			break;
 
@@ -4793,10 +4826,18 @@ tbool CKSApplication::DoProgressTasks()
 	}
 
 	if (!bWorkSuccess) {
-		if (msExtendedError.length() == 0)
+		if (msExtendedError.length() == 0){
+			
+			ge::IWindow::ShowMessageBox( std::string("Error").c_str(), 
+										"unknown", 
+										ge::IWindow::MsgBoxOK);
+			
+			/*
 			msExtendedError = "Unknown error.";
 		ShowMessageBox_NonModal(msExtendedError.c_str(), "Task failed");
 		AbortProgressTasks_NoLock(true);
+			 */
+		}
 	}
 	return bWorkSuccess;
 } // DoProgressTasks

@@ -2,48 +2,7 @@
 #include "KSOS.h"
 
 
-// Private enum for state machine
-enum EUploadOrder {
-	geUpload_Uninitialized,
 
-	geUpload_Branch_PreVerify_Before,
-	geUpload_Branch_PreVerify_Action,
-	geUpload_Branch_PreVerify_After,
-
-	geUpload_NewProject_Before,
-	geUpload_NewProject_Action,
-	geUpload_NewProject_After,
-
-	geUpload_NewBranch_Before,
-	geUpload_NewBranch_Action,
-	geUpload_NewBranch_After,
-
-	geUpload_Take_PreVerify_Before,
-	geUpload_Take_PreVerify_Action,
-	geUpload_Take_PreVerify_After,
-
-	geUpload_Take_Upload_Before,
-	geUpload_Take_Upload_Action,
-	geUpload_Take_Upload_After,
-
-	geUpload_PresetSettings_PreVerify_Before,
-	geUpload_PresetSettings_PreVerify_Action,
-	geUpload_PresetSettings_PreVerify_After,
-
-	geUpload_PresetSettings_Upload_Before,
-	geUpload_PresetSettings_Upload_Action,
-	geUpload_PresetSettings_Upload_After,
-
-	geUpload_Commit_PreVerify_Before,
-	geUpload_Commit_PreVerify_Action,
-	geUpload_Commit_PreVerify_After,
-
-	geUpload_Commit_Upload_Before,
-	geUpload_Commit_Upload_Action,
-	geUpload_Commit_Upload_After,
-
-	geUpload_Done
-}; // EUploadOrder
 
 
 CUploadTask::CUploadTask()
@@ -163,7 +122,6 @@ tbool CUploadTask::Init_NewProject(
 
 	msUser					= pszUser;
 	msPassword				= pszPassword;
-
 	msProjectUUID			= pszProjUUID;
 	msProjectName			= pszProjName;
 	msProjectDescription	= pszProjDesc;
@@ -235,11 +193,11 @@ tbool CUploadTask::Init_NewBranch(
 
 
 tbool CUploadTask::Init_Commit(
-							   const tchar* pszUser, 
-							   const tchar* pszPassword,
-							   const tchar* pszProjUUID,
-							   const tchar* pszBranchUUID,
-							   const tchar* pszCommitUUID, 
+						//	   const tchar* pszUser, 
+						//	   const tchar* pszPassword,
+						//	   const tchar* pszProjUUID,
+						//	   const tchar* pszBranchUUID,
+						//	   const tchar* pszCommitUUID, 
 							   const tchar* pszfileCommit,
 							   const tchar* pszOnline_fileCommit,
 							   const tchar* pszCommitDesc,
@@ -250,40 +208,47 @@ tbool CUploadTask::Init_Commit(
 		return false;
 	}
 
-	msUser					= pszUser;
-	msPassword				= pszPassword;
-
-	msProjectUUID			= pszProjUUID;
+	msUser					=	gpApplication->Get_User_Name().c_str();
+	msPassword				=	gpApplication->Get_Password();
+	msProjectUUID			=	gpApplication->Get_Project_UUID();
+	msBranchUUID			=	gpApplication->Get_Branch_UUID();
+	msCommitUUID			=	gpApplication->Get_New_Commit_UUID();
+	msFileCommitXML			=	pszfileCommit;
+	msOnline_FileCommitXML	=	pszOnline_fileCommit;
+	msCommitDescription		= pszCommitDesc;
+	
+	
 	// not used: msProjectName			= pszProjName;
 	// not used: msProjectDescription	= pszProjDesc;
 	// not used: msProjectLicense		= pszProjLicenseCode;
-
 	// not used: msBranchUUID_Old		= pBranchUUID_Original->Get_UUID();
-	msBranchUUID						= pszBranchUUID;
 	// not used: msBranchName			= pszBranchName;
 	// not used: msBranchDescription		= pszBranchDesc;
 	// not used: msBranchLicense			= pszBranchLicenseCode;
 
-	msCommitUUID			= pszCommitUUID;
-	msFileCommitXML			= pszfileCommit;
-	msOnline_FileCommitXML	= pszOnline_fileCommit;
 	
-//	printf("++++++++++++++++++++\n %s \n++++++++++++++++++++++\n",msFileCommitXML.c_str() );
-//	printf("++++++++++++++++++++\n %s \n++++++++++++++++++++++\n",msOnline_FileCommitXML.c_str() );
 	
-	msCommitDescription		= pszCommitDesc;
+
+	
+	
+	
 
 	if (!Init_Helper(plistpTakes))
 		return false;
 
-	miActionOrder = geUpload_Branch_PreVerify_Before;
+	// stage in state machine
+	//miActionOrder = geUpload_Branch_PreVerify_Before;
+	miActionOrder = geUpload_Commit_PreVerify_Before;
+	
+	
+	
 	if (mlistpTakes.size() > 0) {
 		// Upload takes and then commit preset data and project xml
-		miAction_Branch_PreVerify_WhereToGoNow = geUpload_Take_PreVerify_Before;
+		miAction_Branch_PreVerify_WhereToGoNow	= geUpload_Take_PreVerify_Before;
 	}
 	else {
 		// No takes - go directly to commit preset data and project xml
-		miAction_Branch_PreVerify_WhereToGoNow = geUpload_PresetSettings_PreVerify_Before;
+		miAction_Branch_PreVerify_WhereToGoNow	= geUpload_PresetSettings_PreVerify_Before;
 	}
 	mbRequiresWriteAccess = true;
 	return true;
@@ -1220,10 +1185,10 @@ tbool CUploadTask::DoPresetSettings_PreVerify_After(tbool* pbAlreadyThere)
 		*pbAlreadyThere = true;
 
 		// We came here because we didn't know preset data existed - fix that
-		std::string sXML((tchar*)(mpfileReply_VerifyMisc->GetMemoryPtr()), iReplySize);
-		//!!! TODO: Important!!! We must save info that preset data exists!
-		// How do we do that? Maybe it's not important?
-		// ..... something here
+		std::string sUrlReplyXML((tchar*)(mpfileReply_VerifyMisc->GetMemoryPtr()), iReplySize);
+
+		//!!! TODO: Set URL in project xml, so it'll know where to get preset data
+		//gpApplication->Set_Something_What???(sUrlReplyXML);
 	}
 
 	return true;
@@ -1299,7 +1264,7 @@ tbool CUploadTask::DoPresetSettings_Upload_Action(tbool* pbActionDone)
 
 tbool CUploadTask::DoPresetSettings_Upload_After()
 {
-	// Get commit number
+	// Save URL for just uploaded plugin-settings
 	tint32 iSize = (tint32)mpfileReply_Uploader->GetMemorySize();
 	if (iSize > 1) {
 		std::string sUrlReplyXML(
@@ -1307,7 +1272,7 @@ tbool CUploadTask::DoPresetSettings_Upload_After()
 			iSize);
 		
 		//!!! TODO: Set URL in project xml, so it'll know where to get preset data
-		//gpApplication->Pass_Branch_Revision(sCommitReply);
+		//gpApplication->Set_Something_What???(sUrlReplyXML);
 	}
 
 	return true;
@@ -1331,7 +1296,8 @@ tbool CUploadTask::DoCommit_PreVerify_Before()
 	if (mpDownloader_VerifyMisc == NULL)
 		return false;
 
-	std::string sURI = std::string("/commits/") + msCommitUUID + ".xml";
+	//std::string sURI = std::string("/commits/") + msCommitUUID + ".xml";
+	std::string sURI = std::string("/branches/") + msBranchUUID + "commits.xml";
 	if ((!mpDownloader_VerifyMisc->Init("koblo.com", sURI.c_str(), 80, msUser.c_str(), msPassword.c_str()))
 		||
 		(!mpDownloader_VerifyMisc->Start(mpfileReply_VerifyMisc))

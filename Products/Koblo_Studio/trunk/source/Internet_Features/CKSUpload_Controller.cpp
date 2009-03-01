@@ -94,19 +94,22 @@ void CKSUpload_Controller::Upload_Existing_Project()
 	sProjectXmlFile							+= gpApplication->Project_Name() + ".xml";
 	sOnline_ProjectXmlFile					+= gpApplication->Online_Project_Name() + ".xml";
 	
+//	printf("************************ online file ***************************\n");
+//	printf(sOnline_ProjectXmlFile.c_str() );
+//	printf("************************************ ***************************\n");
 
 	// Make task for upload
 	CUploadTask* pUploadTask = new CUploadTask();
 	pUploadTask->Init_Commit(
-							 gpApplication->Get_User_Name().c_str(),
-							gpApplication->Get_Password().c_str(),
-							gpApplication->Get_Project_UUID().c_str(),
-							gpApplication->Get_Branch_UUID().c_str(),
-							gpApplication->Get_New_Commit_UUID().c_str(), 
-							sProjectXmlFile.c_str(),
-							sOnline_ProjectXmlFile.c_str(),
-							"next commit",
-							&mUpload_Que);
+					//		 gpApplication->Get_User_Name().c_str(),
+					//		 gpApplication->Get_Password().c_str(),
+					//		 gpApplication->Get_Project_UUID().c_str(),
+					//		 gpApplication->Get_Branch_UUID().c_str(),
+					//		 gpApplication->Get_New_Commit_UUID().c_str(), 
+							 sProjectXmlFile.c_str(),
+							 sOnline_ProjectXmlFile.c_str(),
+							 "next commit",
+							 &mUpload_Que);
 	
 
 	pUploadTask->Add_PresetData( (gpApplication->Get_Insert_File_UUID() + ".plugindata").c_str(), gpApplication->Plugin_Settings_Folder().c_str() );

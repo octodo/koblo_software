@@ -91,10 +91,11 @@ public:
 		\return tbool: True on success. If false error text can be extracted with GetError(..) method
 	*/
 	tbool Init_Commit(
-		const tchar* pszUser, const tchar* pszPassword,
-		const tchar* pszProjUUID,
-		const tchar* pszBranchUUID,
-		const tchar* pszCommitUUID, 
+	//	const tchar* pszUser, 
+	//	const tchar* pszPassword,
+	//	const tchar* pszProjUUID,
+	//	const tchar* pszBranchUUID,
+	//	const tchar* pszCommitUUID, 
 		const tchar* pszfileCommit,
 		const tchar* pszOnline_fileCommit,
 		const tchar* pszCommitDesc,
@@ -114,6 +115,51 @@ public:
 	virtual tbool IsDone();
 
 protected:
+	
+	// Private enum for state machine
+	enum EUploadOrder {
+		geUpload_Uninitialized,
+		
+		geUpload_Branch_PreVerify_Before,
+		geUpload_Branch_PreVerify_Action,
+		geUpload_Branch_PreVerify_After,
+		
+		geUpload_NewProject_Before,
+		geUpload_NewProject_Action,
+		geUpload_NewProject_After,
+		
+		geUpload_NewBranch_Before,
+		geUpload_NewBranch_Action,
+		geUpload_NewBranch_After,
+		
+		geUpload_Take_PreVerify_Before,
+		geUpload_Take_PreVerify_Action,
+		geUpload_Take_PreVerify_After,
+		
+		geUpload_Take_Upload_Before,
+		geUpload_Take_Upload_Action,
+		geUpload_Take_Upload_After,
+		
+		geUpload_PresetSettings_PreVerify_Before,
+		geUpload_PresetSettings_PreVerify_Action,
+		geUpload_PresetSettings_PreVerify_After,
+		
+		geUpload_PresetSettings_Upload_Before,
+		geUpload_PresetSettings_Upload_Action,
+		geUpload_PresetSettings_Upload_After,
+		
+		geUpload_Commit_PreVerify_Before,
+		geUpload_Commit_PreVerify_Action,
+		geUpload_Commit_PreVerify_After,
+		
+		geUpload_Commit_Upload_Before,
+		geUpload_Commit_Upload_Action,
+		geUpload_Commit_Upload_After,
+		
+		geUpload_Done
+	}; // EUploadOrder
+	
+	
 	tbool DoBranch_PreVerify_Before();
 	tbool DoBranch_PreVerify_Action(tbool* pbActionDone);
 	tbool DoBranch_PreVerify_After(tbool* pbAlreadyThere, tbool* pbMoreTakes);

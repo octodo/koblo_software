@@ -29,28 +29,32 @@ void CKSInternet_Features::On_Menu_Download_Project()
 	// if project is open
 	if(gpApplication->Project_Name().length() != 0 ) {
 
-		// and project has a uuid
+		//  project has a uuid so i has been uploaded
 		if (gpApplication->Project_UUID_Is_Set() ) 
 		{
-			// download from koblo.com
-			gpApplication->Read_Latest_Revision_From_Koblo( gpApplication->Get_Project_UUID() );
+			// ask for overwriting project
+			if( gpApplication->Overwrite_Project() ){
+				// download latest commit in branch
+				gpApplication->Get_Latest_Commit_In_Branch( gpApplication->Get_Branch_UUID() );
+			}
+
 		}
 		else
 		{
 			// close project
 			if( gpApplication->Close_Project() != giUser_Canceld_Save ) {
-				Ask_For_Project_ID();
+				Ask_For_Commit_UUID();
 			}	
 		}
 	}
 	else {
-		// if no project is open ask for a project id
-		Ask_For_Project_ID();
+		// no project is open ask for a project id
+		Ask_For_Commit_UUID();
 	}
 		
 } 
 
-void CKSInternet_Features::Ask_For_Project_ID()
+void CKSInternet_Features::Ask_For_Commit_UUID()
 {
 	// Open the project id dialog
 	tbool bTest = (gpApplication->GetGlobalParm(giParamID_Show_Projec_ID_Window, giSectionGUI) != 0);
@@ -99,7 +103,7 @@ void CKSInternet_Features::On_Menu_Upload_Project()
 void CKSInternet_Features::Download_Project(tint32 iProjectID)
 {
 	// read the project from koblo.com
-	gpApplication->Read_Latest_Revision_From_Koblo(iProjectID);
+//	gpApplication->Read_Latest_Revision_From_Koblo(iProjectID);
 
 	
 }
@@ -107,7 +111,7 @@ void CKSInternet_Features::Download_Project(tint32 iProjectID)
 void CKSInternet_Features::Update_Project(tint32 iProjectID)
 {
 	// read the project from koblo.com
-	gpApplication->Read_Latest_Revision_From_Koblo(iProjectID);
+//	gpApplication->Read_Latest_Revision_From_Koblo(iProjectID);
 
 	/*
 	// check version

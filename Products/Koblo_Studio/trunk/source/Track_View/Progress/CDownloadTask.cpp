@@ -440,12 +440,19 @@ tbool CDownloadTask::DoTake_Download_After(tbool* pbNoMoreTakes)
 
 	// Queue decompress of take
 	if (!gpApplication->Decompress_Take(mpTakeCurr)) {
+		
+		ge::IWindow::ShowMessageBox( std::string("Error").c_str(), 
+									"'Download failed", 
+									ge::IWindow::MsgBoxOK);
+		
+		/*
 		std::string sReason = gpApplication->Extended_Error();
 		std::string sErr = "Unable to queue decomression of take:\n  ";
 		sErr += mpTakeCurr->Screen_Name();
 		sErr += "\nReason:\n  ";
 		sErr += sReason;
 		gpApplication->ShowMessageBox_NonModal(sErr.c_str(), "Download failed");
+		 */
 	}
 
 	// Done yet?

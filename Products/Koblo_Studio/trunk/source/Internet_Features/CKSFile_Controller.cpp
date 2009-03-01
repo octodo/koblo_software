@@ -23,6 +23,13 @@ CKSFile_Controller::~CKSFile_Controller()
 
 tbool CKSFile_Controller::Open_Project()
 {
+	
+	// take care of not owerwriting a project withour  warning
+	if (Save_Before_Close() == giUser_Canceld_Save) {
+		return giUser_Canceld_Save;
+	}
+	
+	
 	// msExtendedError = "";
 	CAutoDelete<ge::IOpenDialog> pDlg(ge::IOpenDialog::Create());
 	
@@ -162,6 +169,31 @@ tint32 CKSFile_Controller::Save_Before_Close()
 		}
 	}
 	return giUser_No_Project_To_Save;
+}
+
+tbool CKSFile_Controller::Overwrite_Project()
+{
+	// If a project is alreaddy loaded
+	if (gpApplication->Project_Name().size()) {
+		
+		// Warning dialog
+		tchar pszMsg[1024];
+		sprintf( pszMsg, "Overwriting project '%s '\n", Project_Name().c_str() );
+		ge::IWindow::EMsgBoxReturn eRet;
+		eRet = ge::IWindow::ShowMessageBox(pszMsg, "!Warning", ge::IWindow::MsgBoxOKCancel);
+		
+		// return value
+		switch (eRet) {
+				
+			case ge::IWindow::MsgBoxRetOK:
+				return true;
+
+			case ge::IWindow::MsgBoxRetCancel: 
+				return false; 
+				
+		}
+	}
+	return false;
 }
 
 tbool CKSFile_Controller::Save_Project()
@@ -427,7 +459,7 @@ void CKSFile_Controller::Update_Project_Name(std::string sNew_Name)
 	tint iPos = sProject_Name.find_last_of(':');
 	sProject_Name = sProject_Name.substr(iPos + 1, sProject_Name.size());
 	gpApplication->Project_Name(sProject_Name);
-	gpApplication->Online_Project_Name(sProject_Name);
+	gpApplication->Online_Project_Name(gpApplication->Temp_Online_Project_Name() );
 	
 //	printf( "Update_Project_Name : %s \n", sProject_Name.c_str() );
 	

@@ -26,13 +26,15 @@ void CKSProject_ID_GUI_Pane::Init()
 	
 	// user name
 	mpProject_UUID_Txt = CreateDisplay(giCtrl_Projert_UUID, 
-									ge::SPos(25, 35),  
+									ge::SPos(22, 32),  
 									ge::SSize(300, 16), 
 									CreateFont(Generic128, IDF_Font_Fuxley_712, ge::SRGB(10, 10, 10)),
 									true);
 	
 	mpProject_UUID_Txt->SetHorzAlignment(ge::IText::HorzAlignLeft);
 	mpProject_UUID_Txt->SetClicksOutsideAsSuccess();
+	
+	mpProject_UUID_Txt->SetText("Paste commit UUID from Koblo here");
 	
 	/*
 	
@@ -68,21 +70,17 @@ void CKSProject_ID_GUI_Pane::OnTimer(tint32 iTimerID)
 
 void CKSProject_ID_GUI_Pane::SendMsgFromTop(SMsg* pMsg)
 {
-	/*
+	
 	switch(pMsg->iOpcode) 
 	{
-		case MsgGUIData:{
-			SGUIData sData = *(SGUIData*)pMsg->pDataIn;
-			switch( sData.iID ){
-				case Msg_Show_Info: {
-				InitAudioDevicePopupValues();
-				break;
-				}
-			default: break;
-			}
+		case MsgClean_Project:{
+			mpProject_UUID_Txt->SetText("Paste commit UUID from Koblo here");
+			break;
 		}
+		default: break;
+		
 	}
-	 */
+	
 }
 
 
@@ -98,7 +96,7 @@ void CKSProject_ID_GUI_Pane::EventValueChange(ge::IControl* pControl, tint32 iVa
 			
 			// project id 
 			tchar pszTxt[1024];
-			sprintf(pszTxt, "Paste UUID from Koblo here");
+			sprintf(pszTxt, "Paste commit UUID from Koblo here");
 			mpProject_UUID_Txt->SetText(pszTxt);
 			
 			//gpApplication->SetGlobalParm(giParamID_Show_Projec_ID_Window, 0, giSectionGUI);
@@ -113,7 +111,7 @@ void CKSProject_ID_GUI_Pane::EventValueChange(ge::IControl* pControl, tint32 iVa
 			// user name
 			tchar pszTxt[1024];
 			mpProject_UUID_Txt->GetText(pszTxt);
-			gpApplication->Read_Latest_Revision_From_Koblo(pszTxt);
+			gpApplication->Get_Commit(pszTxt);
 			break;
 		}
 			

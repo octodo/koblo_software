@@ -148,66 +148,70 @@ void CKSXML_Read_Project::Setup_Track_Editor()
 
 	
 	}
-/*
-void CKSXML_Read_Project::Reset_Project()
+
+void CKSXML_Read_Project::Get_Latest_Commit_In_Branch(std::string sProject_UUID )
 {
-	miTrack_ID	=	0;
-	gpApplication->CleanProject(0);
-	mpTinyXMLDoc->Clear();
 	
+	
+	mbOpen_Dialog = false;
+	
+	
+	// read latst commit from a branch
+	std::string sProject;
+	char psz[256];
+	//sprintf(psz, "/commits/%s/markup.xml", sProject_UUID.c_str() );
+	sprintf(psz, "/branches/%s/commits/latest/markup.xml", sProject_UUID.c_str() );
+	
+//	branches/:uuid/commits/latest/markup.xml
+	
+	sProject = psz;
+	
+	if( !Read_Project_From_Koblo( sProject ) )
+	{
+		
+		ge::IWindow::ShowMessageBox( std::string("Please check project UUID").c_str(), 
+									"Failed to download project", 
+									ge::IWindow::MsgBoxOK);
+		
+		/*gpApplication->ShowMessageBox_NonModal( "Unable to load project from Koblo.com"
+											   "Please check the the project UUID" , "Try again" );
+		 */
+		
+	}
+		
 }
-*/
-void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(std::string sProject_UUID )
+
+void CKSXML_Read_Project::Get_Commit(std::string sProject_UUID )
 {
-	
-	
 	mbOpen_Dialog = true;
 	
 	
-	
-	// read latst revision
+	// read latst commit from a branch
 	std::string sProject;
 	char psz[256];
-	
-//	sprintf(psz, "/branches/%s/commits/latest.xml", sProject_UUID.c_str() );
-//	sprintf(psz, "/branches/%s/commits/latest.xml", sProject_UUID.c_str() );
 	sprintf(psz, "/commits/%s/markup.xml", sProject_UUID.c_str() );
+	
+	//	branches/:uuid/commits/latest/markup.xml
+	
 	sProject = psz;
 	
-	Read_Project_From_Koblo( sProject );
+	if( !Read_Project_From_Koblo( sProject ) )
+	{
 		
-}	
-	
-void CKSXML_Read_Project::Read_Latest_Revision_From_Koblo(tint32 iProjectID )
-{
-
-	
-	
-	mbOpen_Dialog = true;
-	
-
-	
-	// read latst revision
-	std::string sProject;
-	char psz[256];
-	
-	//if the project is uploaded
-//	gpApplication->Get_Project_UUID().c_str();
-	
-	sprintf(psz, "/projects/%d/trunk/latest/markup.xml", iProjectID);
-	sProject = psz;
-	
-	
-	
-	 // reset and read project
-	Read_Project_From_Koblo( sProject );
-	
+		ge::IWindow::ShowMessageBox( std::string("Please check project UUID").c_str(), 
+									"Failed to download project", 
+									ge::IWindow::MsgBoxOK);
 		
-	
+		/*gpApplication->ShowMessageBox_NonModal( "Unable to load project from Koblo.com"
+		 "Please check the the project UUID" , "Try again" );
+		 */
+		
+	}
 	
 }
 
-void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
+
+tbool CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 {
 	// store project name
 	std::string sProject_Name = gpApplication->Project_Name();
@@ -236,7 +240,8 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 		
 		if(mbOpen_Dialog){
 			// get the project name from the xml file
-			Get_Project_Name_From_XML( mpTinyXMLDoc );
+			if (!Get_Project_Name_From_XML( mpTinyXMLDoc ) )
+				return false;
 		
 			tchar pszDefaultFolder[1024];
 			gpApplication->GetDefaultProjectFolder(pszDefaultFolder);
@@ -254,7 +259,7 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 			// Don't browse into OS X bundles (special kind of folders)
 			pDlg->SetBundleBehaviour(1);
 
-			pDlg->DoDialog(pszProject_Folder, pszDefault_Folder, "", "", sTemp_Online_Project_Name.c_str() );
+			pDlg->DoDialog(pszProject_Folder, pszDefault_Folder, "", "", msTemp_Online_Project_Name.c_str() );
 			std::string sProject_Folder = pszProject_Folder;
 			
 			// user canceled operation
@@ -323,6 +328,7 @@ void CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 		
 	}
 	ine::IINetUtil::ReleaseBuffer(&pszBuff);
+	return true;
 	
 	
 
@@ -382,8 +388,9 @@ void CKSXML_Read_Project::Import_Regions()
 
 */
 
-void CKSXML_Read_Project::Get_Project_Name_From_XML( TiXmlNode* pParent )
+tbool CKSXML_Read_Project::Get_Project_Name_From_XML( TiXmlNode* pParent )
 {
+	msTemp_Online_Project_Name.clear();
 	// if there is multiply <project> tags only read the first one
 	tbool read = true;
 	
@@ -396,6 +403,17 @@ void CKSXML_Read_Project::Get_Project_Name_From_XML( TiXmlNode* pParent )
 			
 		}
 	}
+	
+	if (msTemp_Online_Project_Name.size() ==  0){
+		
+		gpApplication->Online_Project_Name("");
+		return false;
+	}
+	else
+		gpApplication->Online_Project_Name(msTemp_Online_Project_Name);
+	
+	return true;
+		
 
 }
 
@@ -424,7 +442,7 @@ void CKSXML_Read_Project::Parse_Project_Name_Object(TiXmlNode* pParent)
 	
 	if (stricmp("name", pParent->Value()) == 0)
 		Set_Temp_Online_Project_Name(pParent);
-	
+
 	
 }
 
@@ -438,7 +456,7 @@ void CKSXML_Read_Project::Set_Temp_Online_Project_Name(TiXmlNode* pParent)
 		TiXmlText* pText;
 		pText = pChild->ToText();
 		
-		sTemp_Online_Project_Name =  pText->Value();
+		msTemp_Online_Project_Name =  pText->Value();
 	}
 	
 }
@@ -1423,7 +1441,11 @@ void CKSXML_Read_Project::Download_Takes()
 		gpApplication->Playback_InProgressTask();
 	}
 	else {
-	
+		ge::IWindow::ShowMessageBox( std::string("Erroe").c_str(), 
+									"Unable download of takes", 
+									ge::IWindow::MsgBoxOK);
+		
+		/*
 		std::string sReason = pTask->GetError();
 		pTask->Destroy();
 		std::string sErr = "Unable to queue download of takes.\n";
@@ -1431,6 +1453,7 @@ void CKSXML_Read_Project::Download_Takes()
 		sErr += sReason;
 		gpApplication->ShowMessageBox_NonModal(sErr.c_str(), "Error downloading");
 	//	Setup_Track_Editor();
+		 */
 	}
 
 }

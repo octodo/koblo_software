@@ -108,7 +108,8 @@ public:
 	// get plug-in settings folder
 //	std::string Plugin_Settings_File_And_Path(){ return Plugin_Settings_Folder() + gpApplication->Get_Insert_File_UUID() + ".plugindata"};
 	
-
+	//! ask user if to owerwrite project
+	tbool Overwrite_Project();
 
 	
 private:	
