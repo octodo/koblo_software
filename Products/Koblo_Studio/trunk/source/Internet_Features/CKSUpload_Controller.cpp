@@ -18,6 +18,7 @@ void CKSUpload_Controller::Upload_Project()
 	if(gpApplication->No_Project_Is_Loaded()) {
 		return;
 	}
+	
 	// stop playback
 	gpApplication->PlaybackStop();
 	
@@ -45,8 +46,10 @@ void CKSUpload_Controller::Upload_Project()
 	gpApplication->Compress_OGG_File();
 	gpApplication->Compress_MP3_File();
 	
+
+	
 	// if the project has a UUID it has been uploaded to koblo.com
-	gpApplication->Project_Is_Uploaded() ? Upload_Existing_Project() : Upload_New_Project();
+	gpApplication->Project_Is_Uploaded() ? Write_Branch() : Upload_New_Project();
 
 	// sample and take url's has been passed back form koblo now save them
 	gpApplication->Save_Project_As_XML_File_To_Disk();
@@ -61,13 +64,17 @@ void CKSUpload_Controller::Upload_New_Project()
 	std::string sProjectXmlFile		=	gpApplication->Project_Folder();
 	sProjectXmlFile					+=	gpApplication->Project_Name(); 
 	sProjectXmlFile					+=  ".xml";
+
+	gpApplication->Branch_Revision(1);
+	
+	
 	
 	// Make task for first-time upload
 	CUploadTask* pUploadTask = new CUploadTask();
 	pUploadTask->Init_NewProject(
 								 gpApplication->Get_User_Name().c_str(),
 								 gpApplication->Get_Password().c_str(),
-								 gpApplication->Get_Project_UUID().c_str(),
+								 gpApplication->Project_UUID().c_str(),
 								 (gpApplication->Project_Name() ).c_str(),
 								 "no description", // project description
 								 "by", // license
@@ -78,7 +85,11 @@ void CKSUpload_Controller::Upload_New_Project()
 	
 	//make full path to preset file
 	std::string sFile_And_Path	=	gpApplication->Plugin_Settings_Folder() + gpApplication->Get_Insert_File_UUID() + ".plugindata";
-	pUploadTask->Add_PresetData( (gpApplication->Get_Insert_File_UUID()).c_str(), sFile_And_Path.c_str() );
+	
+	printf("\n");
+	printf(sFile_And_Path.c_str());
+	
+//	pUploadTask->Add_PresetData( (gpApplication->Get_Insert_File_UUID()).c_str(), sFile_And_Path.c_str() );
 	
 	
 	// Add task to task list
@@ -87,38 +98,135 @@ void CKSUpload_Controller::Upload_New_Project()
 	gpApplication->Playback_InProgressTask();
 }
 
-void CKSUpload_Controller::Upload_Existing_Project()
+
+void CKSUpload_Controller::Write_Branch()
+{
+	/*
+	 
+	 //!!! Crashes
+	
+	std::string sURI = std::string("/branches/") + gpApplication->Get_Branch_UUID() + "/rights.xml";
+	sURI +=  " -u";// + " \"" ;//+ gpApplication->Get_User_Name() + ":" + gpApplication->Get_Password() + "\"";
+	sURI +=  " \"";
+	sURI +=  gpApplication->Get_User_Name();
+	sURI +=  ":";
+	sURI += gpApplication->Get_Password();
+	sURI +=  "\"";
+	
+	// read xml file
+	tchar* pszBuff = NULL;
+	tint32 iOutLen = 0;
+	ine::IINetUtil::GetWebFile(NULL, "koblo.com", sURI.c_str(), &iOutLen, &pszBuff);
+	
+	gpApplication->Pass_Branch_Revision(pszBuff);
+	 */
+	
+	
+	
+	// Make task for upload
+	CUploadTask* pUploadTask = new CUploadTask();
+	
+	pUploadTask->Init_Check_Rights_To_Branch();
+	
+	// Add task to task list
+	CAutoLock Lock(gpApplication->mMutex_Progress);
+	gpApplication->mpProgressTasks->Add(pUploadTask);
+	gpApplication->Playback_InProgressTask();
+	 
+}
+
+
+tbool CKSUpload_Controller::Write_To_My_Branch()
 {
 	std::string sProjectXmlFile				= gpApplication->Project_Folder();
 	std::string sOnline_ProjectXmlFile		= gpApplication->Project_Folder();
 	sProjectXmlFile							+= gpApplication->Project_Name() + ".xml";
 	sOnline_ProjectXmlFile					+= gpApplication->Online_Project_Name() + ".xml";
 	
-//	printf("************************ online file ***************************\n");
-//	printf(sOnline_ProjectXmlFile.c_str() );
-//	printf("************************************ ***************************\n");
-
+	
 	// Make task for upload
 	CUploadTask* pUploadTask = new CUploadTask();
 	pUploadTask->Init_Commit(
-					//		 gpApplication->Get_User_Name().c_str(),
-					//		 gpApplication->Get_Password().c_str(),
-					//		 gpApplication->Get_Project_UUID().c_str(),
-					//		 gpApplication->Get_Branch_UUID().c_str(),
-					//		 gpApplication->Get_New_Commit_UUID().c_str(), 
 							 sProjectXmlFile.c_str(),
 							 sOnline_ProjectXmlFile.c_str(),
 							 "next commit",
 							 &mUpload_Que);
 	
-
-	pUploadTask->Add_PresetData( (gpApplication->Get_Insert_File_UUID() + ".plugindata").c_str(), gpApplication->Plugin_Settings_Folder().c_str() );
+	
+//	pUploadTask->Add_PresetData( (gpApplication->Get_Insert_File_UUID()).c_str(), gpApplication->Plugin_Settings_Folder().c_str() );
 	
 	// Add task to task list
 	CAutoLock Lock(gpApplication->mMutex_Progress);
 	gpApplication->mpProgressTasks->Add(pUploadTask);
 	gpApplication->Playback_InProgressTask();
+	
+	return true;
 }
+
+
+tbool CKSUpload_Controller::Write_To_New_Branch()
+{
+	std::string sProjectXmlFile				= gpApplication->Project_Folder();
+	std::string sOnline_ProjectXmlFile		= gpApplication->Project_Folder();
+	sProjectXmlFile							+= gpApplication->Project_Name() + ".xml";
+	sOnline_ProjectXmlFile					+= gpApplication->Online_Project_Name() + ".xml";
+	
+	std::string sOriginal_UUID				= gpApplication->Get_Branch_UUID();
+	// Set new branch UUID
+	gpApplication->Set_Branch_UUID();
+	
+	
+	// Make task for upload
+	CUploadTask* pUploadTask = new CUploadTask();
+	pUploadTask->Init_NewBranch( sOriginal_UUID.c_str(),
+								"Initial commit of new branch",
+								"by", // license
+								
+								sProjectXmlFile.c_str(),
+								&mUpload_Que);
+	
+	
+//	pUploadTask->Add_PresetData( (gpApplication->Get_Insert_File_UUID() + ".plugindata").c_str(), gpApplication->Plugin_Settings_Folder().c_str() );
+	
+	// Add task to task list
+	CAutoLock Lock(gpApplication->mMutex_Progress);
+	gpApplication->mpProgressTasks->Add(pUploadTask);
+	gpApplication->Playback_InProgressTask();
+
+	
+	
+	return true;
+}
+
+
+void CKSUpload_Controller::Upload_To_My_Branch()
+{
+	
+	std::string sProjectXmlFile				= gpApplication->Project_Folder();
+	std::string sOnline_ProjectXmlFile		= gpApplication->Project_Folder();
+	sProjectXmlFile							+= gpApplication->Project_Name() + ".xml";
+	sOnline_ProjectXmlFile					+= gpApplication->Online_Project_Name() + ".xml";
+	
+	
+	// Make task for upload
+	CUploadTask* pUploadTask = new CUploadTask();
+	pUploadTask->Init_Commit(
+							 sProjectXmlFile.c_str(),
+							 sOnline_ProjectXmlFile.c_str(),
+							 "next commit",
+							 &mUpload_Que);
+	
+	
+//	pUploadTask->Add_PresetData( (gpApplication->Get_Insert_File_UUID() + ".plugindata").c_str(), gpApplication->Plugin_Settings_Folder().c_str() );
+	
+	// Add task to task list
+	CAutoLock Lock(gpApplication->mMutex_Progress);
+	gpApplication->mpProgressTasks->Add(pUploadTask);
+	gpApplication->Playback_InProgressTask();
+	
+}
+
+
 
 void CKSUpload_Controller::Online_Project_Upload_Failed()
 {

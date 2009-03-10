@@ -11,8 +11,8 @@ public:
 	//! Destructor
 	virtual ~CTake_Data();
 
-	//! Assignment operator
-//	CTake_Data operator=(const CTake_Data&);
+	//! coppy constructor
+	CTake_Data(const CTake_Data& Data_Old);
 
 	void SetOwningSample(CSample_Data* p) { mpOwningSample = p; };
 
@@ -113,6 +113,8 @@ public:
 	
 	//! get channels in take
 	tuint32 Channels() const {return muiChannels; };
+	
+	CSample_Data* Sample_Parrent(){ return mpOwningSample;};
 	
 
 	

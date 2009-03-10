@@ -429,12 +429,13 @@ void CTrack_Editor_Pane::OnTimer(tint32 iTimerID)
 			// Maybe display stutter warning - only once
 			if ((mbDisplayStutterWarning_Armed) && (gpDSPEngine->GetStutterCounter() > 1)) {
 				// More than 1 (start of playback) stutter - that's bad
-								
+				/*				
 				mbDisplayStutterWarning_Armed = false;
 				
 				ge::IWindow::ShowMessageBox( std::string("Warning").c_str(), 
 											"System to slow", 
 											ge::IWindow::MsgBoxOK);
+				 */
 				
 				/*
 

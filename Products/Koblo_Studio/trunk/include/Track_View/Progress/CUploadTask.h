@@ -70,11 +70,16 @@ public:
 		\return tbool: True on success. If false error text can be extracted with GetError(..) method
 	*/
 	tbool Init_NewBranch(
-		const tchar* pszUser, const tchar* pszPassword,
-		const tchar* pszProjUUID,
+	//	const tchar* pszUser, 
+	//	const tchar* pszPassword,
+	//	const tchar* pszProjUUID,
 		const tchar* pszBranchUUID_Original,
-		const tchar* pszBranchUUID, const tchar* pszBranchName, const tchar* pszBranchDesc, const tchar* pszBranchLicenseCode,
-		const tchar* pszCommitUUID, const tchar* pszfileCommit,
+	//	const tchar* pszBranchUUID, 
+	//	const tchar* pszBranchName, 
+		const tchar* pszBranchDesc,
+		const tchar* pszBranchLicenseCode,
+		//const tchar* pszCommitUUID, 
+		const tchar* pszfileCommit,
 		std::list<CTake_Data*>* plistpTakes);
 
 
@@ -113,6 +118,10 @@ public:
 
 	virtual tbool DoWork();
 	virtual tbool IsDone();
+	
+	void Init_Check_Rights_To_Branch();
+	
+	
 
 protected:
 	
@@ -156,8 +165,14 @@ protected:
 		geUpload_Commit_Upload_Action,
 		geUpload_Commit_Upload_After,
 		
+		geLookup_Permissions_To_Branch,
+		geRead_Permissions_To_Branch,
+		geSet_Permissions_To_Branch,
+		
 		geUpload_Done
 	}; // EUploadOrder
+	
+	
 	
 	
 	tbool DoBranch_PreVerify_Before();
@@ -230,17 +245,48 @@ protected:
 	CTake_Data* mpTakeCurr;
 	IFile* mpfileMp3;
 	IFile* mpfileOgg;
-
+	
+	//! uploader
 	ine::IUploader* mpUploader;
 	IFileMemory* mpfileReply_Uploader;
-
+	
+	//! sample downloader
 	ine::IDownloader* mpDownloader_VerifySample;
 	IFileMemory* mpfileReply_VerifySample;
+	
+	//! take downloader
 	ine::IDownloader* mpDownloader_VerifyTake;
 	IFileMemory* mpfileReply_VerifyTake;
-
+	
+	
+	//! verify mich downloader
 	ine::IDownloader* mpDownloader_VerifyMisc;
 	IFileMemory* mpfileReply_VerifyMisc;
 
 	tbool SetTakeURL(IFileMemory* pfile);
+	
+	
+	
+	enum EUpload_Stage {
+		geUpload_Branch_Stage_1,
+		geUpload_Branch_Stage_2,
+		geUpload_Branch_Stage_3,
+		
+		geUpload_Branch
+	};
+	
+	//! verify mich downloader
+	ine::IDownloader* mpBranch_Downloader;
+	IFileMemory* mpBranch_Reply_File;
+	
+	// lookup permissions
+	tbool Lookup_Permissions_To_Branch();
+	// read permissions
+	tbool Read_Permissions_To_Branch(tbool* pbActionDone);
+	//! pass permission xml file
+	tbool Set_Permissions_To_Branch();
+	
+	tbool More_Takes(){ return mlistpTakes.size() == 0;};
+
+	
 }; // CExportClipTask

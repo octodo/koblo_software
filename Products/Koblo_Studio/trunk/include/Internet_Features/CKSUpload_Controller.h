@@ -53,7 +53,7 @@ public:
 	virtual void Upload_New_Project();
 	
 	//! upload excisting project
-	virtual void Upload_Existing_Project();
+	virtual void Upload_To_My_Branch();
 	
 	//! check one sample from the mSample_Data_List
 	virtual void Prepare_Sampel_For_Upload(CSample_Data* pSample_Data);
@@ -82,9 +82,16 @@ public:
 	
 	
 	
+	
+	tbool Write_To_My_Branch();
+	
+	//! write permission
+	tbool Write_To_New_Branch();
 
 	
 private:	
+	
+	void Write_Branch();
 	
 	//! check if a take alreaddy has an url. if it does it alreaddy lives on Koblo.com
 	tbool Take_Is_Uploaded(CTake_Data* pTake_Data);
@@ -102,6 +109,8 @@ private:
 	
 	// list of mp3 takes ready to upload to Koblo
 	std::list<CTake_Data*> mUpload_Que;
+	
+	
 
 
 };

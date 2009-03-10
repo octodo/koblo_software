@@ -219,7 +219,6 @@
 				E3F389650BD4A21E00101957 /* CVST2KSPIGUI.h */,
 				E3F389660BD4A21E00101957 /* VST2KSPIOS.h */,
 				E338DAAE0BD494AD009ABE91 /* CParmGlobal.h */,
-				0B7733E108A63EA9004B30F3 /* IP */,
 			);
 			name = Include;
 			sourceTree = "<group>";
@@ -235,14 +234,6 @@
 			);
 			name = Source;
 			sourceTree = "<group>";
-		};
-		0B7733E108A63EA9004B30F3 /* IP */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = IP;
-			path = ../../include/IP;
-			sourceTree = SOURCE_ROOT;
 		};
 		19C28FB4FE9D528D11CA2CBB /* Products */ = {
 			isa = PBXGroup;

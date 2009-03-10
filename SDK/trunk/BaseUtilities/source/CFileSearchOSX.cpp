@@ -90,7 +90,7 @@ void CFileSearchOSX::Init(const tchar* pszPathName)
 		mSearchIndex = 0;
 		miBulkIx = -1;
 		
-		std::cout << "pszFullPath:\n  " << pszFullPath << "\n";
+//		std::cout << "pszFullPath:\n  " << pszFullPath << "\n";
 
 		Boolean bFolder = false;
 		OSStatus rc = FSPathMakeRef((UInt8*)pszFullPath, &mFSRef, &bFolder);
@@ -103,9 +103,11 @@ void CFileSearchOSX::Init(const tchar* pszPathName)
 			// Create iterator
 			rc = FSOpenIterator(&mFSRef, kFSIterateFlat, &mIterator);
 			if (rc != 0) {
-				tchar pszErr[128];
-				sprintf(pszErr, "FSOpenIterator() call failed - OSStatus == %d", rc);
-				throw IException::Create(IException::TypeCode, IException::ReasonCodeInvalidArgument, EXCEPTION_INFO, pszErr);
+				//tchar pszErr[128];
+				//sprintf(pszErr, "FSOpenIterator() call failed - OSStatus == %d", rc);
+				//throw IException::Create(IException::TypeCode, IException::ReasonCodeInvalidArgument, EXCEPTION_INFO, pszErr);
+				//mbInitSuccess = false;
+				return;
 			}
 		}
 	}

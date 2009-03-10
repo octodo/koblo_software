@@ -209,7 +209,7 @@ public:
 	std::string Temp_Online_Project_Name(){ return msTemp_Online_Project_Name;};
 	
 
-	
+	void Clear_Tiny_XML_Doc(){ mpTinyXMLDoc->Clear();};
 	
 
 private:

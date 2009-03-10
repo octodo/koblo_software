@@ -25,7 +25,6 @@ tbool CKSUsername_And_Password_Model::Get_User_Name_And_Password()
 	// load username and password from memory 
 	std::string sUser_Name	= gpApplication->Get_User_Name();
 	std::string sPassword	= gpApplication->Get_Password();
-//	tbool bRemember_Me		= gpApplication->Get_Remember_Me();
 	
 	
 	// Check if we need to load it from pref file on disk

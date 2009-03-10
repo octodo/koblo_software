@@ -1042,6 +1042,18 @@ void CKSApplication::SanitizeProjectFolderPath(std::string& rsProjectFolder, con
 
 void CKSApplication::Clean_Project(tint32 iCreateEmptyTracks)
 {
+	// delete project name
+	Project_Name("");
+	
+	// delete online project name
+	Online_Project_Name("");
+	
+	// clear uuid's
+	Clear_Project_UUID();
+	Clear_Branch_UUID();
+	Clear_Commit_UUID();
+	Branch_Revision(0);
+	
 	// Reset size of projece
 	gpDSPEngine->Reset_Session_End_Sample();
 	std::list<CBaseGUI*>::const_iterator it = mGUIs.begin();
@@ -1621,6 +1633,13 @@ void CKSApplication::OnMenuEvent(const tchar* pszString)
 		
 		On_Menu_Upload_Project();
 	}
+	
+	else if (s.compare("File@New Branch") == 0) {
+		
+		On_Menu_Upload_New_Branch();
+	}
+	
+	
 	/*
 	else if (s.compare("File@Commit Changes") == 0) {
 		
@@ -4827,10 +4846,11 @@ tbool CKSApplication::DoProgressTasks()
 
 	if (!bWorkSuccess) {
 		if (msExtendedError.length() == 0){
-			
+			/*
 			ge::IWindow::ShowMessageBox( std::string("Error").c_str(), 
 										"unknown", 
 										ge::IWindow::MsgBoxOK);
+			 */
 			
 			/*
 			msExtendedError = "Unknown error.";
@@ -4874,6 +4894,12 @@ void CKSApplication::AddClipToList(CTake_Data* pTake_Data_Input)
 	pTake_Data->Set_UUID(  pTake_Data_Input->Get_UUID()  );
 	
 	Sample_Data.Name( pTake_Data_Input->Screen_Name() );
+	
+	
+	std::string sSample_UUID = pTake_Data_Input->Sample_Parrent()->Get_UUID();
+	
+	
+	Sample_Data.Set_UUID( sSample_UUID);
 	pTake_Data->Screen_Name(pTake_Data_Input->Screen_Name());
 	pTake_Data->Mode( pTake_Data_Input->Mode() );
 	pTake_Data->Left_Wave_File_Path( pTake_Data_Input->Left_Wave_File_Path() );

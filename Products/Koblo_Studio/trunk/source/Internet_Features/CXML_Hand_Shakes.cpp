@@ -34,11 +34,11 @@ tbool CXML_Hand_Shakes::Set_Take_Handshake(std::string sTake_Info)
 	// pass the TinyXML DOM in to the DAW data structure
 	Pass_Take_Tag( mpXMLHand_Shake );
 	
-
+	// update take data
 	Update_Take_Data();
 	
+	// save to disk
 	gpApplication->Save_Project_As_XML_File_To_Disk();
-	
 	
 	return true;
 }
@@ -201,16 +201,9 @@ void CXML_Hand_Shakes::Update_Take_Data()
 
 
 
-
-
-
-
-
 void CXML_Hand_Shakes::Pass_Branch_Revision(std::string sBranch_Revision )
 {
-	//	std::string sTest("<?xml version=1.0 encoding=UTF-8?> \n <revision>9</revision>");
-	//	mpXMLHand_Shake->Parse(sTest.c_str());
-	
+
 	// clear TinyXML document
 	mpXMLHand_Shake->Clear();
 	
@@ -241,79 +234,126 @@ void CXML_Hand_Shakes::Read_Branch_Revision_Tag(TiXmlNode* pParent)
 					std::string sBranch_Revision = pSet_Branch_Revision->Value();
 					gpApplication->Branch_Revision(atoi(sBranch_Revision.c_str()));
 				}
-				
-				
 			}
-	//		Read_Branch_Revision_Object(pChild);
-
 		}
-	}
-	
-	
-}
-
-void CXML_Hand_Shakes::Read_Branch_Revision_Object(TiXmlNode* pParent)
-{
-	
-	TiXmlNode* pChild = pParent->FirstChild();
-	
-	if ( !pChild ) return;
-	
-	if (stricmp("revision", pChild->Value()) == 0){
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
-	
+	}	
 }
 
 
 
-
-
-
-
-void CXML_Hand_Shakes::Test_Hand_Shakes()
+void CXML_Hand_Shakes::Pass_Branch_Permissions(std::string sXML)
 {
+	CAutoLock Lock(mHands_Shake_Mutex);
+	
+//	mbRead_Permission = false;
+//	mbWrite_Permission = false;
+	
 	// clear TinyXML document
 	mpXMLHand_Shake->Clear();
 	
-	// clear take uuid
-	msTake_UUID.clear();
-	msTake_Audio_URL.clear();
-	msTake_MP3_URL.clear();
 	
-	std::string sPath = gpApplication->Project_Folder() + "takeinfo.xml";
+	// parse pszsTake_Info  in to a TinyXML DOM
+	mpXMLHand_Shake->Parse(sXML.c_str());
 	
-	// read project in to 
-	CAutoDelete<IFile> pFile(IFile::Create());
-	if (pFile->Open(sPath.c_str(), IFile::FileRead)) {
-		
-		// read project in to char buffer
-		tuint iSize = pFile->GetSizeWhenOpened();
-		CAutoBuffer<char> pszsTake_Info;
-		pszsTake_Info.Allocate(iSize);
-		
-		pFile->Read(pszsTake_Info, iSize);
-
-
-		std::string str(pszsTake_Info);
-		
-		Set_Take_Handshake(str);
-		
-
-		
-	}
-
+	printf(sXML.c_str());
+	
+	Read_Permissions_Tag(mpXMLHand_Shake);
+	
+	
 }
 
 
+void CXML_Hand_Shakes::Read_Permissions_Tag(TiXmlNode* pParent)
+{
+	// if file is empty return
+	if ( !pParent ) return;
+	
+
+	
+	TiXmlNode* pChild;
+	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
+	{
+		// filter out comments
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			
+			if (stricmp("branch", pChild->Value()) == 0){
+				
+				Read_Permissions_Object(pChild);
+				
+			}
+		}
+	}	
+}
+
+void CXML_Hand_Shakes::Read_Permissions_Object(TiXmlNode* pParent)
+{
+	// if file is empty return
+	if ( !pParent ) return;
+	
+	tbool bWrite	=	false;
+//	tbool bRead		=	false;
+	
+	TiXmlNode* pChild;
+	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
+	{
+		// filter out comments
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			
+			
+			if(stricmp("write", pChild->Value()) == 0){
+				
+				bWrite	= true;
+			}
+			
+		}
+	}
+	
+	if(bWrite)
+		gpApplication->Write_To_My_Branch();
+	
+	else 
+		gpApplication->Write_To_New_Branch();
+	
+}
+
+
+
+
+
+
+/*
+void CXML_Hand_Shakes::Read_Branch_Tag(TiXmlNode* pParent)
+{
+	// if file is empty return
+	if ( !pParent ) return;
+	
+	tbool bWrite	=	false;
+	tbool bRead		=	false;
+	
+	TiXmlNode* pChild;
+	for ( pChild = pParent->FirstChild(); pChild != 0; pChild = pChild->NextSibling()) 
+	{
+		// filter out comments
+		if(pChild->Type() == TiXmlNode::ELEMENT){
+			if (stricmp("read", pChild->Value()) == 0){
+				
+				bRead	= true;
+				
+			}
+			else if (stricmp("write", pChild->Value()) == 0){
+				
+				bWrite	= true;
+				
+			}
+			else if (stricmp("branch", pChild->Value()) == 0){
+				
+				bWrite	= true;
+				
+			}
+		}
+	}	
+}
+*/
 
 
 

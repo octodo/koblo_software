@@ -87,28 +87,47 @@ void ModifyPathName(std::string& rsPathName);
 
 void CVST2KSPIModule::DoScanDirectory(const std::string& sPathName)
 {
+	
+	tbool bVST_Folder = false;
+
 	// Scan the system for plug-ins
 	CAutoDelete<IFileSearch> pFileSearch(IFileSearch::Create());
 	pFileSearch->Init(sPathName.c_str());
+	
+	std::string sLast_Path = sPathName;
 	
 	tchar pszName[256];
 	tbool bDirectory;
 	while (pFileSearch->GetNext(pszName, bDirectory)) {
 		std::string sPlugInPath = sPathName;
+		// store path
+		
 
 		std::string sName(pszName);
-
-#ifdef WIN32
-		if (bDirectory) {
-#else	// WIN32
 		std::string sEnding = sName.substr(sName.size() - 4);
-		if (sEnding != ".vst" && sEnding != ".VST" && sName.size() > 4) {
+		
+		if (sEnding == ".vst" || sEnding == ".VST"){
+			// Now we are in the vst folder
+			bVST_Folder = true;
+		}
+		
+		
+#ifdef WIN32 // WIN32
+		if (bDirectory) {
+#else	
+			
+			
+		if (sEnding != ".vst" && sEnding != ".VST" && sName.size() > 4 && !bVST_Folder) {
 #endif	
+
 			sPlugInPath += sName;
 			sPlugInPath += ":";
+				
 			DoScanDirectory(sPlugInPath);
-			continue;
+			//continue;
 		}
+		
+		
 
 		std::string sPathName = sPlugInPath + sName;
 

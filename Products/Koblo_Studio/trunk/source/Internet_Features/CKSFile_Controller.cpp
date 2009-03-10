@@ -23,12 +23,12 @@ CKSFile_Controller::~CKSFile_Controller()
 
 tbool CKSFile_Controller::Open_Project()
 {
-	
+/*	
 	// take care of not owerwriting a project withour  warning
 	if (Save_Before_Close() == giUser_Canceld_Save) {
 		return giUser_Canceld_Save;
 	}
-	
+*/	
 	
 	// msExtendedError = "";
 	CAutoDelete<ge::IOpenDialog> pDlg(ge::IOpenDialog::Create());
@@ -50,13 +50,13 @@ tbool CKSFile_Controller::Open_Project()
 	gpApplication->Stop_Timer();
 	// Avoid repeated GUI updates on load
 	gpApplication->SetGUIsReady(false);
-	
+	/*
 	// delete project name
 	Project_Name("");
 	
 	// delete online project name
 	Online_Project_Name("");
-	
+	*/
 	// clean project
 	gpApplication->Clean_Project(0);
 	
@@ -99,10 +99,14 @@ tbool CKSFile_Controller::Open_Project()
 
 tint32 CKSFile_Controller::New_Project()
 {
+/*
 	// take care of not owerwriting a project withour  warning
-	if (Save_Before_Close() == giUser_Canceld_Save) 
+	if (Save_Before_Close() == giUser_Canceld_Save) {
+		
+	//	gpApplication->Start_Timer();
 		return giUser_Canceld_Save;
-			
+	}
+*/			
 
 	// get default folder
 	tchar pszDefault_Folder[1024];
@@ -136,6 +140,8 @@ tint32 CKSFile_Controller::New_Project()
 	// save project so name in file isn't lost
 	Save_Project();
 	
+//	gpApplication->Start_Timer();
+	
 	return giUser_Created_A_New_Project;
 		
 	
@@ -147,12 +153,14 @@ tint32 CKSFile_Controller::Save_Before_Close()
 	// If a project is alreaddy loaded
 	if (gpApplication->Project_Name().size()) {
 		
+
 		// Warning dialog
 		tchar pszMsg[1024];
 		sprintf( pszMsg, "Save changes to '%s before closing'\n", Project_Name().c_str() );
 		ge::IWindow::EMsgBoxReturn eRet;
 		eRet = ge::IWindow::ShowMessageBox(pszMsg, "!Warning", ge::IWindow::MsgBoxYesNoCancel);
 		
+			
 		// return value
 		switch (eRet) {
 				
@@ -173,6 +181,7 @@ tint32 CKSFile_Controller::Save_Before_Close()
 
 tbool CKSFile_Controller::Overwrite_Project()
 {
+	/*
 	// If a project is alreaddy loaded
 	if (gpApplication->Project_Name().size()) {
 		
@@ -193,7 +202,8 @@ tbool CKSFile_Controller::Overwrite_Project()
 				
 		}
 	}
-	return false;
+	 */
+	return true;
 }
 
 tbool CKSFile_Controller::Save_Project()
@@ -259,10 +269,11 @@ tbool CKSFile_Controller::Copy_Project()
 
 tbool CKSFile_Controller::Close_Project()
 {
+	/*
 	// take care of not owerwriting a project withour  warning
 	if (Save_Before_Close() == giUser_Canceld_Save) 
 		return giUser_Canceld_Save;
-	
+	*/
 	// clean project
 	gpApplication->Clean_Project(0);
 	

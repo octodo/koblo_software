@@ -57,6 +57,9 @@ public:
 	//! called from the file menu
 	virtual void On_Menu_Upload_Project();
 	
+	//! called from the file menu
+	virtual void On_Menu_Upload_New_Branch();
+	
 	//! clean project and read it from koblo.com
 	void Download_Project(tint32 iProjectID);
 	
@@ -121,12 +124,12 @@ public:
 	tbool Project_Is_Uploaded(){ return muiBranch_Revision != 0;} ;
 		
 	// get uuid from CKSUUID object
-	std::string Get_Project_UUID(){ return mpProject_UUID->Get_UUID();};
+	std::string Project_UUID(){ return mpProject_UUID->Get_UUID();};
 	
 	// check if project uuid is set
 	tbool Project_UUID_Is_Set(){ return mpProject_UUID->UUID_Is_Set();};
 	
-	// check if project uuid is set
+	// clear if project uuid is set
 	void Clear_Project_UUID(){  mpProject_UUID->Clear_UUID();};
 	
 	// set a new uuid
@@ -140,6 +143,9 @@ public:
 	
 	// set a new uuid
 	void Set_Branch_UUID(){ mpBranch_UUID->Set_UUID();};
+	
+	// clear if project uuid is set
+	void Clear_Branch_UUID(){  mpBranch_UUID->Clear_UUID();};
 	
 	// get insert file uuid
 	std::string Get_Insert_File_UUID(){ return mpInsert_File_UUID->Get_UUID();};
@@ -158,6 +164,9 @@ public:
 	
 	// set a uuid from a string
 	void Set_Commit_UUID(std::string sUUID){ mpCommit_UUID->Set_UUID(sUUID);};
+	
+	// set a new uuid
+	void Clear_Commit_UUID(){ mpCommit_UUID->Clear_UUID();};
 	
 	// get uuid from CKSUUID object
 	std::string Get_Commit_UUID(){ return mpCommit_UUID->Get_UUID();};

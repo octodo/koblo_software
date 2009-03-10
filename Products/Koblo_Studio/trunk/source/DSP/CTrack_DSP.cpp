@@ -720,6 +720,7 @@ void CTrack_DSP::Stop()
 				}
 				else {
 					if (bSuccess) {
+						/*
 						std::string sMsg =
 							std::string("Do you want to import the recorded part as 24 bit Wave?\n")
 							+
@@ -739,10 +740,13 @@ void CTrack_DSP::Stop()
 							case ge::IWindow::MsgBoxRetNo: eQuality = ac::geQualityLossless16; break;
 							default: bAbortOperation = true; break;
 						}
+						 */
+						eQuality = ac::geQualityLossless16;
 					}
 
 					tbool bDownMix = false;
 					if (bSuccess && !bAbortOperation) {
+						/*
 						tchar pszMsg[] =
 							"Do you want to import as stereo?\n"
 							"\n"
@@ -756,6 +760,7 @@ void CTrack_DSP::Stop()
 							case ge::IWindow::MsgBoxRetNo: bDownMix = true; break;
 							default: bAbortOperation = true; break;
 						}
+						 */
 					}
 
 					if (bSuccess && !bAbortOperation) {

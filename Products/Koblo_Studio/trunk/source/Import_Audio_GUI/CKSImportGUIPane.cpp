@@ -140,7 +140,7 @@ void CKSImportGUIPane::EventValueChange(ge::IControl* pControl, tint32 iValueNew
 	switch(pControl->GetID()) {
 		case giCtrl_Import:{
 			if (mpImport_Files->GetAddedFiles() == 0) {
-				mpGUI->GetWindow()->ShowMessageBox("You must add some files\nbefore clicking import", "Sorry");
+				//mpGUI->GetWindow()->ShowMessageBox("You must add some files\nbefore clicking import", "Sorry");
 			}
 			else {
 				// old version

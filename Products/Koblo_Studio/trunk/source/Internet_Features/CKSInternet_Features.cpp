@@ -65,23 +65,7 @@ void CKSInternet_Features::Ask_For_Commit_UUID()
 		gpApplication->GetModule()->GetHost()->ActivateWindow(giProject_ID_Window);
 }
 
-/*
-void CKSInternet_Features::On_Menu_Update_Project()
-{
 
-//	Sign_In();
-	
-	tint iProjectID = gpApplication->GetGlobalParm(giParamID_Project_ID, giSectionGlobal);
-	// if no project id is set
-	if(iProjectID == -1){
-		gpApplication->LoadSaveErrDlg("No Project ID selected! Check if is project online?");
-	}
-	else{
-		Update_Project(iProjectID);
-	}
-	
-}
-*/
 void CKSInternet_Features::On_Menu_Upload_Project()
 {
 	
@@ -99,6 +83,32 @@ void CKSInternet_Features::On_Menu_Upload_Project()
 	
 	
 }
+
+void CKSInternet_Features::On_Menu_Upload_New_Branch()
+{
+	
+	if(gpApplication->Project_Name().length() != 0 ) {
+		
+		std::string sLink= "http://koblo.com/projects/";
+		sLink += gpApplication->Project_UUID();
+		OpenBrowser(sLink.c_str() );
+	}
+	else {
+
+		// Warning dialog
+		tchar pszMsg[1024];
+		sprintf( pszMsg, "Please open/ create a project first'\n" );
+		ge::IWindow::EMsgBoxReturn eRet;
+		eRet = ge::IWindow::ShowMessageBox(pszMsg, "!No Project loaded", ge::IWindow::MsgBoxOK);
+			
+
+		
+	}
+	
+	
+}
+
+
 
 void CKSInternet_Features::Download_Project(tint32 iProjectID)
 {
@@ -241,6 +251,8 @@ tbool CKSInternet_Features::Write_Permission(std::string sXML_Hand_Shake)
 {
 	return true;
 }
+
+
 
 
 

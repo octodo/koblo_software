@@ -88,7 +88,7 @@ void CKSXML_Write_Project::Write_Project(TiXmlDocument* pDoc)
 	
 	// only store attribute if alreaddy set.
 	if( gpApplication->Project_UUID_Is_Set() )
-		pProject->SetAttribute("uuid", gpApplication->Get_Project_UUID().c_str());
+		pProject->SetAttribute("uuid", gpApplication->Project_UUID().c_str());
 		
 	pDoc->LinkEndChild( pProject );
 	
@@ -585,15 +585,18 @@ void CKSXML_Write_Project::Write_Window_Size(TiXmlElement* pParent, tuint uiSize
 //----------------------------------------------------------------
 void CKSXML_Write_Project::Write_Preset_File_UUID(TiXmlElement* pParent)
 {
+	//!!! remove outcomments
+	/*
 	Add_Comment(pParent, "Preset data are stored in a seperate file where audio and vst data can be embedded");
 	
 	// edit
-	TiXmlElement* pPreset_UUID = new TiXmlElement( "preset_file_uuid" );
+	TiXmlElement* pPreset_UUID = new TiXmlElement( "plugindata" );
 	//TiXmlText* pPreset_UUIDTxt = new TiXmlText( gpApplication->Get_Insert_File_UUID().c_str() );
 	//pPreset_UUID->LinkEndChild( pPreset_UUIDTxt );
 	pParent->LinkEndChild( pPreset_UUID );
 	
 	pPreset_UUID->SetAttribute("uuid", gpApplication->Get_Insert_File_UUID().c_str() );
+	 */
 }
 
 //----------------------------------------------------------------
@@ -609,6 +612,7 @@ void CKSXML_Write_Project::Write_Samples(TiXmlElement* pParent)
 		
 		// sample tag with uuid as atribute
 		TiXmlElement* pSample = new TiXmlElement( "sample" );
+		std::string sUUID = (*itSample_Data).msUUID_X;
 		pSample->SetAttribute("uuid", (*itSample_Data).Get_UUID().c_str());
 		pParent->LinkEndChild( pSample );
 		
@@ -898,6 +902,9 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		pPlugin_ID->LinkEndChild( pPlugin_IDTxt );
 		pInsert->LinkEndChild( pPlugin_ID );
 		
+		
+		
+		
 		// vendor name
 		TiXmlElement* pVendor = new TiXmlElement( "vendor" );
 		TiXmlText* pVendorTxt = new TiXmlText(sVendor.c_str());
@@ -905,8 +912,11 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		
 		// vendor id
 		sprintf(pszBuff, "%d", pPlugInInfo->uiCompanyID);
-		pVendor->SetAttribute("uuid", pszBuff);
+		pVendor->SetAttribute("id", pszBuff);
 		pInsert->LinkEndChild( pVendor );
+		
+		
+		
 		
 		// product
 		TiXmlElement* pProduct = new TiXmlElement( "product" );
@@ -915,7 +925,7 @@ void CKSXML_Write_Project::Write_Track_Insert(TiXmlElement* pParent, tuint uiTra
 		
 		// product id
 		sprintf(pszBuff, "%d", pPlugInInfo->uiProductID);
-		pProduct->SetAttribute("uuid", pszBuff);
+		pProduct->SetAttribute("id", pszBuff);
 		
 		
 		pInsert->LinkEndChild( pProduct );

@@ -17,6 +17,23 @@ CTake_Data::~CTake_Data()
 	
 }
 
+CTake_Data::CTake_Data(const CTake_Data& Data_Old)
+{
+	
+	mpOwningSample				=	Data_Old.mpOwningSample;
+	msScreen_Name				=	Data_Old.msScreen_Name;
+	msDescription				=	Data_Old.msDescription;
+	msURL						=	Data_Old.msURL;
+	msMP3_URL					=	Data_Old.msMP3_URL;
+	msMode						=	Data_Old.msMode;
+	msLeft_Peak_File_Path		=	Data_Old.msLeft_Peak_File_Path;
+	msRight_Peak_File_Path		=	Data_Old.msRight_Peak_File_Path;
+	msLeft_Wave_File_Path		=	Data_Old.msLeft_Wave_File_Path;
+	msRight_Wave_File_Path		=	Data_Old.msRight_Wave_File_Path;
+	msUUID_X					=	Data_Old.msUUID_X;
+}
+
+
 /*
 CTake_Data CTake_Data::operator=(const CTake_Data& DataNew)
 {

@@ -74,7 +74,9 @@ tbool CInsertRegionsTask::DoWork()
 				gpApplication->Insert_Regions();
 				gpApplication->Stack_Tracks();
 				*/
+				gpApplication->Stop_Timer();
 				gpApplication->Setup_Track_Editor();
+				gpApplication->Start_Timer();
 
 				miInsertRegionsOrder++;
 			}

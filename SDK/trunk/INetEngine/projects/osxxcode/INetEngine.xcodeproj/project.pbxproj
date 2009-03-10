@@ -51,7 +51,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 32F77F300F309F850021141C /* libcurl.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D /* libcurl */;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
 			remoteInfo = libcurl;
 		};
 /* End PBXContainerItemProxy section */

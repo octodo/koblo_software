@@ -3,7 +3,7 @@
 CKSUUID::CKSUUID()
 {
 
-	msUUID	=	"";
+	msUUID_X	=	"";
 
 }
 
@@ -11,9 +11,15 @@ CKSUUID::~CKSUUID()
 {
 	
 }
+
+CKSUUID::CKSUUID(const CKSUUID& Data_Old)
+{
+
+}
+
 void CKSUUID::Check_UUID()
 {
-	if(msUUID.size() == 0)
+	if(msUUID_X.size() == 0)
 		Generate_UUID();
 }
 
@@ -21,7 +27,7 @@ void CKSUUID::Check_UUID()
 std::string CKSUUID::Get_UUID()
 {
 	Check_UUID();
-	return msUUID;
+	return msUUID_X;
 }
 
 void CKSUUID::Generate_UUID()
@@ -32,13 +38,13 @@ void CKSUUID::Generate_UUID()
 	tuint32 uiBuffer_Size = 128;
 	
 	Gen_UUID(pszUUID, uiBuffer_Size);
-	msUUID = pszUUID;
+	msUUID_X = pszUUID;
 	
 }
 
 tbool CKSUUID::UUID_Is_Set()
 {
-	return  msUUID.size() != 0;
+	return  msUUID_X.size() != 0;
 }
 
 std::string CKSUUID::Get_New_UUID()

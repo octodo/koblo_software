@@ -38,6 +38,8 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		// reset/ erase the current DAW project
 	//	Reset_Project();
 		
+	//	printf(sFile.c_str());
+		
 		// cleanup xml and take parser
 		Prepare_For_XML();
 		
@@ -47,6 +49,8 @@ void CKSXML_Read_Project::Read_Project_From_Disk(std::string sFile)
 		pszProjectXML.Allocate(iSize);
 
 		pFile->Read(pszProjectXML, iSize);
+		
+		printf(pszProjectXML);
 		
 		// parse pszProjectXML in to a TinyXML DOM
 		mpTinyXMLDoc->Parse(pszProjectXML);
@@ -232,6 +236,8 @@ tbool CKSXML_Read_Project::Read_Project_From_Koblo(std::string sProject )
 		
 		// parse XML file in to TinyXml object tree
 		mpTinyXMLDoc->Parse(pszBuff);
+		
+		printf(pszBuff);
 		
 		// pass the TinyXML DOM in to the DAW data structure
 		//Pass_The_Project_Tag( mpTinyXMLDoc );
@@ -541,7 +547,7 @@ void CKSXML_Read_Project::Parse_Project_Object(TiXmlNode* pParent)
 	else if (stricmp("editing", pParent->Value()) == 0) {
 		Parse_Edditing_Object(pParent->ToElement());
 	}
-	else if (stricmp("preset_file_uuid", pParent->Value()) == 0) {
+	else if (stricmp("plugindata", pParent->Value()) == 0) {
 		Parse_Preset_File_Object(pParent->ToElement());
 	}
 	else if (stricmp("sample", pParent->Value()) == 0) {
@@ -623,8 +629,10 @@ void CKSXML_Read_Project::Read_Sample_Object(TiXmlElement* pElement)
 	CSample_Data Sample_Data;
 	
 	// set sample uuid
-	if(pAttrib)		
-		Sample_Data.Set_UUID(pAttrib->Value());
+	if(pAttrib)	{
+		std::string sUUID = pAttrib->Value();
+		Sample_Data.Set_UUID(sUUID);
+	}
 	
 	TiXmlNode* pChild;
 	TiXmlText* pText;
@@ -1365,11 +1373,6 @@ void CKSXML_Read_Project::Read_Master_Out(TiXmlElement* pElement)
 }
 
 
-
-
-
-
-
 void CKSXML_Read_Project::Prepare_Samples()
 {
 
@@ -1428,6 +1431,8 @@ void CKSXML_Read_Project::Download_Takes()
 {
 	CDownloadTask* pTask = new CDownloadTask();
 	tbool bInitOK = pTask->Init_Update(&mDownload_Que);
+	
+	
 	if (bInitOK) {
 		CAutoLock Lock(gpApplication->mMutex_Progress);
 		
@@ -1441,9 +1446,9 @@ void CKSXML_Read_Project::Download_Takes()
 		gpApplication->Playback_InProgressTask();
 	}
 	else {
-		ge::IWindow::ShowMessageBox( std::string("Erroe").c_str(), 
-									"Unable download of takes", 
-									ge::IWindow::MsgBoxOK);
+	//	ge::IWindow::ShowMessageBox( std::string("Erroe").c_str(), 
+	//								"Unable download of takes", 
+	//								ge::IWindow::MsgBoxOK);
 		
 		/*
 		std::string sReason = pTask->GetError();

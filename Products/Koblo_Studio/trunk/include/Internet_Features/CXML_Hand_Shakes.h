@@ -30,11 +30,19 @@ public:
 	
 	virtual ~CXML_Hand_Shakes();
 	
-	tbool Set_Take_Handshake(std::string sTake_Info);
+	tbool Set_Take_Handshake(std::string sXML);
 	
-	virtual void Test_Hand_Shakes();
+	tbool Set_Branch_Permission_XML(std::string sXML);
 	
-	void Pass_Branch_Revision(std::string sBranch_Revision ); 
+	//! pass revision handshake returned from koblo.com
+	virtual void Pass_Branch_Revision(std::string sXML ); 
+	
+	//! pass permission handshake returned from koblo.com
+	virtual void Pass_Branch_Permissions(std::string sXML ); 
+	
+	
+	
+	
 
 
 	
@@ -83,11 +91,38 @@ protected:
 	
 	CMutex mHands_Shake_Mutex;
 	
+//	void Pass_Branch_Revision (TiXmlNode* pParent);
+	
 	void Read_Branch_Revision_Tag(TiXmlNode* pParent);
 	
-	void Read_Branch_Revision_Object(TiXmlNode* pParent);
+//	void Read_Branch_Revision_Object(TiXmlNode* pParent);
 	
-	void Pass_Branch_Revision (TiXmlNode* pParent);
+	//! pass the branch tag
+	void Read_Branch_Tag(TiXmlNode* pParent);
+	
+	//! pass the permission tags
+	void Read_Permissions_Tag(TiXmlNode* pParent);
+	
+	//! pass the permission tags
+	void Read_Permissions_Object(TiXmlNode* pParent);
+	
+	//! read permission
+	tbool mbRead_Permission;
+	
+	//! write permission
+	tbool mbWrite_Permission;
+	
+	tuint32 uiState;
+	
+	
+	
+	
+	
+
+	
+//	void Read_Branch_Permission_Object(TiXmlNode* pParent);
+	
+	
 	
 };
 

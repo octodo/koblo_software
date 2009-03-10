@@ -62,5 +62,7 @@ protected:
 	
 	tuint32 muiTakes;
 	
+	//std::string sUUUIDX;
+	
 	
 };
